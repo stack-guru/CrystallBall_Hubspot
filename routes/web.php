@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AnnotationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,10 +18,10 @@ Route::redirect('/', '/login', 301);
 
 Auth::routes();
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 Route::get('app',function (){
     return view('ui/app');
 });
 
-Route::resource('annotation', App\Http\Controllers\AnnotationController::class);
+Route::resource('annotation', AnnotationController::class);
