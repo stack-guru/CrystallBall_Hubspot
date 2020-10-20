@@ -13,7 +13,7 @@ import Footer from "./layout/footer"
 
 render() {
         return(
-            <div className="container layout-wrapper">
+            <div className="layout-wrapper" style={{margin: '0%',}}>
 
                 <div className="sidebar">
                     <Sidebar/>
