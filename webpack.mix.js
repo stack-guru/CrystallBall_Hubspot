@@ -14,3 +14,8 @@ const mix = require('laravel-mix');
 
  
 mix.react('resources/js/react/UserInterface/Main.js', 'public/js');
+
+mix.styles([
+    'resources/css/bootstrap.css',
+    'resources/css/floating-labels.css'
+], 'public/css/login.css');
