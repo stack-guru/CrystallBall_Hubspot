@@ -14,14 +14,25 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::group(['prefix' => 'v1'], function () {
+Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
-    Route::group(['middleware' => ['auth:api']], function () {
-        
-        Route::middleware('auth:api')->get('/user', function (Request $request) {
-            return $request->user();
+    Route::post('login', 'API\LoginController@login')->name('api.login')->middleware('cors');
+    Route::post('logout', 'API\LoginController@logout')->name('api.logout')->middleware('cors');
+
+    Route::group(['prefix' => 'v1', 'namespace' => 'API'], function () {
+
+        Route::get('chrome-extension/event-sources', 'EventSourceController@index');
+        Route::group(['middleware' => ['auth:api']], function () {
+
+            Route::get('user', function (Request $request) {return $request->user();});
+
+            Route::group(['prefix' => 'chrome-extension'], function () {
+                Route::get('annotations', 'AnnotationController@extensionIndex');
+                Route::get('membership', 'UserController@showMembership');
+            });
+
         });
 
     });
-    
+
 });
