@@ -18,18 +18,10 @@ Route::redirect('/', '/login', 301);
 
 Auth::routes();
 
-
-Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-
-//Route::get('app', function () {return view('ui/app');});
-
-
 Route::group(['middleware' => ['auth']], function () {
-//Route::resource('annotation', AnnotationController::class);
+
     Route::view('dashboard', 'ui/app');
-    Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except('index');
-    Route::view('annotation', 'ui/app');
+    Route::resource('annotation', App\Http\Controllers\AnnotationController::class);
     Route::get('annotation/index', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
 
 });
-
