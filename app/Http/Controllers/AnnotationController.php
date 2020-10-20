@@ -19,10 +19,7 @@ class AnnotationController extends Controller
      */
     public function index()
     {
-        $session = new Session();
-        $user_data = $session->get('user_data');
-        $annotations = Annotation::where('user_id', $user_data)->paginate(100);
-        return view('annotation/index')->with('annotations', $annotations);
+        return view('ui/app.blade.php');
     }
 
     public function apiIndex(Request $request)
@@ -144,8 +141,7 @@ class AnnotationController extends Controller
      */
     public function store(AnnotationRequest $request)
     {
-        $session = new Session();
-        $user_data = $session->get('user_data');
+        $user_data = Auth::id();
 
         $annotation = new Annotation;
         $annotation->fill($request->validated());
@@ -164,8 +160,7 @@ class AnnotationController extends Controller
      */
     public function update(AnnotationRequest $request, Annotation $annotation)
     {
-        $session = new Session();
-        $user_data = $session->get('user_data');
+        $user_data = Auth::id();
         if($user_data !== $annotation->user_id) abort(404);
 
         $annotation->fill($request->validated());
@@ -182,8 +177,7 @@ class AnnotationController extends Controller
      */
     public function destroy(Annotation $annotation)
     {
-        $session = new Session();
-        $user_data = $session->get('user_data');
+        $user_data = Auth::id();
         if($user_data !== $annotation->user_id) abort(404);
 
         $annotation->delete();
@@ -213,8 +207,7 @@ class AnnotationController extends Controller
             }
         }
 
-        $session = new Session();
-        $user_data = $session->get('user_data');
+        $user_data = Auth::id();
 
         $rows = array();
         foreach ($filecontent as $line) {
