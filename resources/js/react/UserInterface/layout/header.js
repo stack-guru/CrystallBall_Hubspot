@@ -1,10 +1,21 @@
 import React from 'react';
+import Axios from "axios";
 
 
 class header extends React.Component{
 
     constructor() {
         super();
+        this.logout= this.logout.bind(this);
+    }
+
+    logout(e){
+        e.preventDefault();
+        let csrf= document.querySelector('meta[name="csrf-token"]');
+        let token={
+            '_token':csrf,
+        }
+        Axios.post('logout',token);
     }
 
     render() {
@@ -166,8 +177,17 @@ class header extends React.Component{
                                     <a href="email.html" className="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
                                     className="ti-email mR-10"></i> <span>Messages</span></a></li>
                                 <li role="separator" className="divider"></li>
-                                <li><a href={null} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
-                                    className="ti-power-off mR-10"></i> <span>Logout</span></a></li>
+                                <li>
+                                    <a href={null} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                                        <i className="ti-power-off mR-10"></i>
+                                        <form onSubmit={this.logout()}>
+                                            <button type="submit">logout</button>
+                                        </form>
+                                    </a>
+
+
+
+                                </li>
                             </ul>
                         </li>
                     </ul>
