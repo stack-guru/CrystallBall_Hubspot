@@ -17,11 +17,9 @@ Route::redirect('/', '/login', 301);
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-<<<<<<< Updated upstream
+
 Route::get('app',function (){
     return view('ui/app');
 });
-=======
 
 Route::resource('annotation', App\Http\Controllers\AnnotationController::class);
->>>>>>> Stashed changes
