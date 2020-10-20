@@ -1,29 +1,14 @@
-<!DOCTYPE html>
-<html lang="en"><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+@extends('layouts/auth')
 
-    <title>Login | GAnnotations</title>
+@section('page-title', 'Login')
 
-    {{-- <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/floating-labels/"> --}}
-
-    <!-- Bootstrap core CSS -->
-    <link href="{{asset('css/login.css')}}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    {{-- <link href="{{asset('css/floating-labels.css')}}" rel="stylesheet"> --}}
-  </head>
-
-  <body>
+@section('content')
     <form class="form-signin"method="POST" action="{{ route('login') }}">
         @csrf
       <div class="text-center mb-4">
         <img class="mb-4" src="{{asset('images/company_logo.png')}}" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">GAnnotations</h1>
-        <p>Google Analytics Annotations Amplified - Automate your Google Analytics annotations and add the missing pieces to the puzzle uploading bulk annotations via API or CSV.</p>
+        <p>Google Analytics Annotations Amplified</p>
       </div>
 
       <div class="form-label-group">
@@ -52,8 +37,5 @@
         </label>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted text-center">© 2017-2018</p>
     </form>
-  
-
-</body></html>
+@endsection
