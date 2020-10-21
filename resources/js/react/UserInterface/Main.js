@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
-import Index from "./components";
+import Index from "./components/Index";
 import Footer from "./layout/Footer"
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import Annotations from './components/annotations';
 import AnnotationsCreate from './components/annotations/CreateAnnotation';
+import AnnotationsIndex from './components/annotations/IndexAnnotation';
 
 
+import './Main.css';
 
  class Main extends React.Component{
 
@@ -37,7 +38,7 @@ render() {
                                 <Index/>
                             </Route>
                             <Route exact path="/annotation" refresh={true}>
-                                <Annotations/>
+                                <AnnotationsIndex/>
                             </Route>
                             <Route exact path="/annotation/create" refresh={true}>
                                 <AnnotationsCreate/>

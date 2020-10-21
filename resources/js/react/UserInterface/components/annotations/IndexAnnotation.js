@@ -2,32 +2,31 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 
-class index extends React.Component{
+class index extends React.Component {
 
     constructor() {
         super();
-        this.state={
-            annotation:[],
-            error:'',
+        this.state = {
+            annotations: [],
+            error: '',
         }
     }
-componentDidMount() {
-        document.title='Annotation';
-        HttpClient.get('/annotation/index').then(resp=>{
-            this.setState({annotation:resp.data.annotations})
+    componentDidMount() {
+        document.title = 'Annotation';
+        HttpClient.get('/annotation/index').then(resp => {
+            this.setState({ annotations: resp.data.annotations })
             // console.log(resp.data)
-        }).catch(err=>{
+        }).catch(err => {
             console.log(err);
         })
 
-}
+    }
 
     render() {
-        const annotations=this.state.annotation;
-        console.log(annotations);
+        const annotations = this.state.annotations;
         return (
-            <div className="container-xl bg-white p-5 d-flex flex-column justify-content-center" style={{minHeight:'100vh'}}>
-                <section className="ftco-section  p-3 " id="inputs" style={{minHeight:'100vh'}}>
+            <div className="container-xl bg-white p-5 d-flex flex-column justify-content-center" style={{ minHeight: '100vh' }}>
+                <section className="ftco-section  p-3 " id="inputs" style={{ minHeight: '100vh' }}>
                     <div className="container p-5">
                         <div className="row mb-5">
                             <div className="col-md-12">
@@ -37,7 +36,7 @@ componentDidMount() {
                         <div className="row ml-0 mr-0 p-5">
                             <div className="col-12 text-right p-5">
                                 <Link to="/annotation/create">
-                                <span type="button" className="btn btn-sm btn-primary">Add Annotation</span>
+                                    <span type="button" className="btn btn-sm btn-primary">Add Annotation</span>
                                 </Link>
                             </div>
                         </div>
@@ -45,19 +44,19 @@ componentDidMount() {
                             <div className="col-12">
                                 <table className="table table-hover table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Description</th>
-                                        <th>Show At</th>
-                                        <th>Actions</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Show At</th>
+                                            <th>Actions</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
 
 
                                         {
-                                            annotations?
-                                                annotations.map(anno=>(
+                                            annotations ?
+                                                annotations.map(anno => (
                                                     <tr key={anno.id}>
                                                         <td>{anno.title}</td>
                                                         <td>{anno.description}</td>
@@ -70,7 +69,7 @@ componentDidMount() {
                                                             </button>
                                                         </td>
                                                     </tr>
-                                                )):<tr><td colSpan="9">no Annotation found</td></tr>
+                                                )) : <tr><td colSpan="9">no Annotation found</td></tr>
                                         }
 
 
