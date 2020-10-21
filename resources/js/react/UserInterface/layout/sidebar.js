@@ -31,24 +31,24 @@ class sidebar extends React.Component{
                 <ul className="sidebar-menu scrollable pos-r">
                     <li className="nav-item mT-30 actived">
                         <Link to="/dashboard">
-                        <a className="sidebar-link" >
+                        <span className="sidebar-link" >
                             <span className="icon-holder"><i className="c-blue-500 ti-home"></i> </span>
                             <span className="title">Dashboard</span>
-                        </a>
+                        </span>
                         </Link>
                     </li>
                     <li className="nav-item">
                         <Link to="/annotation">
-                        <a className="sidebar-link" >
+                        <span className="sidebar-link" >
                             <span className="icon-holder">
                                 <i className="c-brown-500 ti-email"></i>
                             </span>
                             <span className="title">Annotations</span>
-                        </a>
+                        </span>
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <a className="sidebar-link" href="compose.html">
+                        <a className="sidebar-link" href="">
                             <span className="icon-holder">
                                 <i className="c-blue-500 ti-share"></i>
                             </span>

@@ -1,10 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class index extends React.Component{
 
     constructor() {
         super();
     }
+componentDidMount() {
+        document.title='Annotation';
+}
 
     render() {
         return (
@@ -15,7 +19,13 @@ class index extends React.Component{
                             <div className="col-md-12">
                                 <h2 className="heading-section">Annotations</h2>
                             </div>
-
+                        </div>
+                        <div className="row ml-0 mr-0 p-5">
+                            <div className="col-12 text-right p-5">
+                                <Link to="/annotation/create">
+                                <span type="button" className="btn btn-sm btn-primary">Add Annotation</span>
+                                </Link>
+                            </div>
                         </div>
                         <div className="row">
                             <div className="col-12">
@@ -37,7 +47,7 @@ class index extends React.Component{
                                         <td>
 
                                             <button type="button"
-                                                    onClick="document.getElementById('an-del-form-{{$annotation->id}}').submit();"
+
                                                     className="btn btn-danger">
                                                 <i className="ion-ios-trash"></i>
                                             </button>

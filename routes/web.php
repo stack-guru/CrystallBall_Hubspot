@@ -20,7 +20,9 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::view('dashboard', 'ui/app');
+    Route::get('dashboard/', function(){
+        return view('ui/app');
+    });
     Route::resource('annotation', App\Http\Controllers\AnnotationController::class);
     Route::get('annotation/index', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
 

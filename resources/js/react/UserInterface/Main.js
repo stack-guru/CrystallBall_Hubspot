@@ -6,6 +6,7 @@ import Index from "./Components/index";
 import Footer from "./layout/footer"
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import Annotations from './components/annotations/index';
+import AnnotationsCreate from './components/annotations/create';
 
 
 
@@ -37,6 +38,9 @@ render() {
                             </Route>
                             <Route exact path="/annotation" refresh={true}>
                                 <Annotations/>
+                            </Route>
+                            <Route exact path="/annotation/create" refresh={true}>
+                                <AnnotationsCreate/>
                             </Route>
                         </Switch>
 
