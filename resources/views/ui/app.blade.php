@@ -54,7 +54,7 @@
                 opacity: 0
             }
         }</style>
-{{--    <link href="style.css" rel="stylesheet">--}}
+   <link href="style.css" rel="stylesheet">
 </head>
 <body >
 <div id="loader">
