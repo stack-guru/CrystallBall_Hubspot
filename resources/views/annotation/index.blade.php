@@ -45,11 +45,11 @@
 	        	<li class="dropdown nav-item">
               <a href="#" class="dropdown-toggle nav-link icon d-flex align-items-center" data-toggle="dropdown">
                 <i class="ion-ios-apps mr-2"></i>
-                Components
+                components
                 <b class="caret"></b>
               </a>
               <div class="dropdown-menu dropdown-menu-left">
-                <a href="#" class="dropdown-item"><i class="ion-ios-apps mr-2"></i> All Components</a>
+                <a href="#" class="dropdown-item"><i class="ion-ios-apps mr-2"></i> All components</a>
                 <a href="#" class="dropdown-item"><i class="ion-ios-document mr-2"></i> Documentation</a>
               </div>
             </li>
@@ -272,8 +272,8 @@
         </section>
         <!-- - - - - -end- - - - -  -->
 
-        
-        
+
+
         <footer class="ftco-section ftco-section-2">
             <div class="col-md-12 text-center">
                 <p class="mb-0">

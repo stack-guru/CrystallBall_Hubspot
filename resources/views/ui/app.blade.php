@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <title>Dashboard</title>
-
-    <style>#loader {
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        #loader {
             transition: all .3s ease-in-out;
             opacity: 1;
             visibility: visible;
@@ -54,7 +55,8 @@
                 opacity: 0
             }
         }</style>
-   <link href="style.css" rel="stylesheet">
+
+    <link href="{{asset('style.css')}}" rel="stylesheet">
 </head>
 <body >
 <div id="loader">

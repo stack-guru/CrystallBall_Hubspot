@@ -6,19 +6,21 @@ class header extends React.Component{
 
     constructor() {
         super();
-        this.logout= this.logout.bind(this);
+
     }
 
-    logout(e){
-        e.preventDefault();
-        let csrf= document.querySelector('meta[name="csrf-token"]');
-        let token={
-            '_token':csrf,
-        }
-        Axios.post('logout',token);
-    }
+    // logout(e){
+    //     e.preventDefault();
+    //     let csrf= document.querySelector('meta[name="csrf-token"]');
+    //     let token={
+    //         '_token':csrf,
+    //     }
+    //     Axios.post('logout',token);
+    // }
 
     render() {
+            // let csrf=
+
         return (
             <div>
                 <div className="header-container">
@@ -79,8 +81,8 @@ class header extends React.Component{
                                         </a></li>
                                     </ul>
                                 </li>
-                                <li className="pX-20 pY-15 ta-c bdT"><span><a href={null}
-                                                                              className="c-grey-600 cH-blue fsz-sm td-n">View All Notifications <i
+                                <li className="pX-20 pY-15 ta-c bdT"><span>
+                                    <a href={null} className="c-grey-600 cH-blue fsz-sm td-n">View All Notifications <i
                                     className="ti-angle-right fsz-xs mL-10"></i></a></span></li>
                             </ul>
                         </li>
@@ -112,9 +114,9 @@ class header extends React.Component{
                                         </a></li>
                                         <li><a href={null}
                                                className="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                                            <div className="peer mR-15"><img className="w-3r bdrs-50p"
-                                                                             src="https://randomuser.me/api/portraits/men/2.jpg"
-                                                                             alt=""/></div>
+                                            <div className="peer mR-15">
+                                                <img className="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/2.jpg" alt=""/>
+                                            </div>
                                             <div className="peer peer-greed">
                                                 <div>
                                                     <div className="peers jc-sb fxw-nw mB-5">
@@ -128,7 +130,8 @@ class header extends React.Component{
                                                 </div>
                                             </div>
                                         </a></li>
-                                        <li><a href={null}
+                                        <li>
+                                            <a href={null}
                                                className="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
                                             <div className="peer mR-15"><img className="w-3r bdrs-50p"
                                                                              src="https://randomuser.me/api/portraits/men/3.jpg"
@@ -180,7 +183,8 @@ class header extends React.Component{
                                 <li>
                                     <a href={null} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                                         <i className="ti-power-off mR-10"></i>
-                                        <form onSubmit={this.logout()}>
+                                        <form action={'/logout'} method="POST">
+                                            <input type="hidden" name={"_token"} value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')}/>
                                             <button type="submit">logout</button>
                                         </form>
                                     </a>
