@@ -15,6 +15,7 @@ class index extends React.Component{
                             <div className="col-md-12">
                                 <h2 className="heading-section">Annotations</h2>
                             </div>
+
                         </div>
                         <div className="row">
                             <div className="col-12">
