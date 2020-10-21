@@ -183,13 +183,12 @@ class header extends React.Component{
                                     className="ti-email mR-10"></i> <span>Messages</span></a></li>
                                 <li role="separator" className="divider"></li>
                                 <li>
-                                    <a href={null} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                                        <i className="ti-power-off mR-10"></i>
-                                        <form action={'/logout'} method="POST">
-                                            <input type="hidden" name={"_token"} value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')}/>
-                                            <button type="submit">logout</button>
-                                        </form>
+                                    <a href={null} onClick={() => document.getElementById("header-logout-form").submit() } className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                                        <i className="ti-power-off mR-10"></i><span>Log out</span>
                                     </a>
+                                        <form id="header-logout-form" action={'/logout'} method="POST">
+                                            <input type="hidden" name={"_token"} value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')}/>
+                                        </form>
 
 
 
