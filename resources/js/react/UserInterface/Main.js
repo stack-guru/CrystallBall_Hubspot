@@ -4,6 +4,10 @@ import Sidebar from "./layout/sidebar";
 import Header from "./layout/header";
 import Index from "./Components/index";
 import Footer from "./layout/footer"
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import Annotations from './components/annotations/index';
+
+
 
  class Main extends React.Component{
 
@@ -15,32 +19,31 @@ render() {
         return(
             <div className="layout-wrapper" style={{margin: '0%',}}>
 
+                <Router>
                 <div className="sidebar">
                     <Sidebar/>
-
                 </div>
 
-
-
-
                 <div className="page-container">
-
-
                     <div className="header navbar">
                         <Header/>
-
                     </div>
 
 
                     <main className="main-content bgc-grey-100">
+                        <Switch>
+                            <Route exact path="/dashboard" refresh={true}>
+                                <Index/>
+                            </Route>
+                            <Route exact path="/annotation" refresh={true}>
+                                <Annotations/>
+                            </Route>
+                        </Switch>
 
-                        <Index/>
                     </main>
-
-
                     <Footer/>
-
                 </div>
+                </Router>
             </div>
         )
 }

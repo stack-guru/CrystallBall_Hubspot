@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 class sidebar extends React.Component{
 
@@ -6,7 +7,6 @@ class sidebar extends React.Component{
         super(props);
 
     }
-
 
     render() {
         return(
@@ -29,60 +29,51 @@ class sidebar extends React.Component{
                     </div>
                 </div>
                 <ul className="sidebar-menu scrollable pos-r">
-                    <li className="nav-item mT-30 actived"><a className="sidebar-link" href="index.html"><span
-                        className="icon-holder"><i className="c-blue-500 ti-home"></i> </span><span
-                        className="title">Dashboard</span></a></li>
-                    <li className="nav-item"><a className="sidebar-link" href="email.html"><span
-                        className="icon-holder"><i
-                        className="c-brown-500 ti-email"></i> </span><span className="title">Email</span></a></li>
-                    <li className="nav-item"><a className="sidebar-link" href="compose.html"><span
-                        className="icon-holder"><i
-                        className="c-blue-500 ti-share"></i> </span><span className="title">Compose</span></a></li>
-                    <li className="nav-item"><a className="sidebar-link" href="calendar.html"><span
-                        className="icon-holder"><i
-                        className="c-deep-orange-500 ti-calendar"></i> </span><span
-                        className="title">Calendar</span></a></li>
-                    <li className="nav-item"><a className="sidebar-link" href="chat.html"><span className="icon-holder"><i
-                        className="c-deep-purple-500 ti-comment-alt"></i> </span><span className="title">Chat</span></a>
+                    <li className="nav-item mT-30 actived">
+                        <Link to="/dashboard">
+                        <a className="sidebar-link" >
+                            <span className="icon-holder"><i className="c-blue-500 ti-home"></i> </span>
+                            <span className="title">Dashboard</span>
+                        </a>
+                        </Link>
                     </li>
-                    <li className="nav-item"><a className="sidebar-link" href="charts.html"><span
-                        className="icon-holder"><i
-                        className="c-indigo-500 ti-bar-chart"></i> </span><span className="title">Charts</span></a></li>
-                    <li className="nav-item"><a className="sidebar-link" href="forms.html"><span
-                        className="icon-holder"><i
-                        className="c-light-blue-500 ti-pencil"></i> </span><span className="title">Forms</span></a></li>
-                    <li className="nav-item dropdown"><a className="sidebar-link" href="ui.html"><span
-                        className="icon-holder"><i
-                        className="c-pink-500 ti-palette"></i> </span><span className="title">UI Elements</span></a>
+                    <li className="nav-item">
+                        <Link to="/annotation">
+                        <a className="sidebar-link" >
+                            <span className="icon-holder">
+                                <i className="c-brown-500 ti-email"></i>
+                            </span>
+                            <span className="title">Annotations</span>
+                        </a>
+                        </Link>
                     </li>
-                    <li className="nav-item dropdown"><a className="dropdown-toggle" href={null}><span
-                        className="icon-holder"><i className="c-orange-500 ti-layout-list-thumb"></i> </span><span
-                        className="title">Tables</span> <span className="arrow"><i
-                        className="ti-angle-right"></i></span></a>
+                    <li className="nav-item">
+                        <a className="sidebar-link" href="compose.html">
+                            <span className="icon-holder">
+                                <i className="c-blue-500 ti-share"></i>
+                            </span>
+                            <span className="title">Compose</span>
+                        </a>
+                    </li>
+
+
+                    <li className="nav-item dropdown">
+                        <a className="dropdown-toggle">
+                            <span className="icon-holder">
+                            <i className="c-orange-500 ti-layout-list-thumb"></i>
+                            </span>
+                            <span className="title">Tables</span>
+                            <span className="arrow">
+                            <i className="ti-angle-right"></i>
+                            </span>
+                        </a>
                         <ul className="dropdown-menu">
                             <li><a className="sidebar-link" href="basic-table.html">Basic Table</a></li>
                             <li><a className="sidebar-link" href="datatable.html">Data Table</a></li>
                         </ul>
                     </li>
-                    <li className="nav-item dropdown"><a className="dropdown-toggle" href={null}><span
-                        className="icon-holder"><i className="c-purple-500 ti-map"></i> </span><span
-                        className="title">Maps</span> <span className="arrow"><i className="ti-angle-right"></i></span></a>
-                        <ul className="dropdown-menu">
-                            <li><a href="google-maps.html">Google Map</a></li>
-                            <li><a href="vector-maps.html">Vector Map</a></li>
-                        </ul>
-                    </li>
-                    <li className="nav-item dropdown"><a className="dropdown-toggle" href={null}><span
-                        className="icon-holder"><i className="c-red-500 ti-files"></i> </span><span
-                        className="title">Pages</span> <span className="arrow"><i className="ti-angle-right"></i></span></a>
-                        <ul className="dropdown-menu">
-                            <li><a className="sidebar-link" href="blank.html">Blank</a></li>
-                            <li><a className="sidebar-link" href="404.html">404</a></li>
-                            <li><a className="sidebar-link" href="500.html">500</a></li>
-                            <li><a className="sidebar-link" href="signin.html">Sign In</a></li>
-                            <li><a className="sidebar-link" href="signup.html">Sign Up</a></li>
-                        </ul>
-                    </li>
+
+
                     <li className="nav-item dropdown"><a className="dropdown-toggle" href={null}><span
                         className="icon-holder"><i className="c-teal-500 ti-view-list-alt"></i> </span><span
                         className="title">Multiple Levels</span>

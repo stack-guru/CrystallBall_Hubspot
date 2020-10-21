@@ -25,3 +25,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('annotation/index', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
 
 });
+Route::get('main',function(){
+    return view('annotation/index');
+});
