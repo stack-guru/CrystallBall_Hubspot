@@ -13,7 +13,7 @@ axios.defaults.xsrfCookieName = 'XSRF-TOKEN';
 axios.defaults.trailingSlash = false;
 
 let axiosInst = axios.create({
-    baseURL: "/api",
+    baseURL: "/",
     responseType: "json",
     cancelToken: source.token
 });

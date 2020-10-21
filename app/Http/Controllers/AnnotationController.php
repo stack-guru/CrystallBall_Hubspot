@@ -38,6 +38,7 @@ class AnnotationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function create(){
         return view('ui/app');
     }

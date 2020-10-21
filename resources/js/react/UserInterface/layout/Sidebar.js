@@ -56,7 +56,6 @@ class sidebar extends React.Component{
                         </a>
                     </li>
 
-
                     <li className="nav-item dropdown">
                         <a className="dropdown-toggle">
                             <span className="icon-holder">

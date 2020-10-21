@@ -1,16 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import HttpClient from '../../utils/HttpClient';
 
 class index extends React.Component{
 
     constructor() {
         super();
+        this.state={
+            annotation:[],
+            error:'',
+        }
     }
 componentDidMount() {
         document.title='Annotation';
+        HttpClient.get('/annotation/index').then(resp=>{
+            this.setState({annotation:resp.data.annotations})
+            // console.log(resp.data)
+        }).catch(err=>{
+            console.log(err);
+        })
+
 }
 
     render() {
+        const annotations=this.state.annotation;
+        console.log(annotations);
         return (
             <div className="container-xl bg-white p-5 d-flex flex-column justify-content-center" style={{minHeight:'100vh'}}>
                 <section className="ftco-section  p-3 " id="inputs" style={{minHeight:'100vh'}}>
@@ -40,30 +54,29 @@ componentDidMount() {
                                     </thead>
                                     <tbody>
 
-                                    <tr>
-                                        <td>titles</td>
-                                        <td>descriptions</td>
-                                        <td>show at</td>
-                                        <td>
 
-                                            <button type="button"
+                                        {
+                                            annotations?
+                                                annotations.map(anno=>(
+                                                    <tr key={anno.id}>
+                                                        <td>{anno.title}</td>
+                                                        <td>{anno.description}</td>
+                                                        <td>{anno.show_at}</td>
+                                                        <td>
 
-                                                    className="btn btn-danger">
-                                                <i className="ion-ios-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                                            <button type="button" className="btn btn-danger">
+                                                                <i className="ion-ios-trash"></i>
+                                                                Delete
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                )):<tr><td colSpan="9">no Annotation found</td></tr>
+                                        }
+
 
                                     </tbody>
 
-                                    <tfoot>
-                                    <tr>
-                                        <td>Title</td>
-                                        <td>Description</td>
-                                        <td>Show At</td>
-                                        <td>Actions</td>
-                                    </tr>
-                                    </tfoot>
+
 
                                 </table>
                             </div>

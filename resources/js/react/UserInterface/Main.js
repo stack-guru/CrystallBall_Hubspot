@@ -36,7 +36,7 @@ render() {
                             <Route exact path="/dashboard" refresh={true}>
                                 <Index/>
                             </Route>
-                            <Route exact path="annotation" refresh={true}>
+                            <Route exact path="/annotation" refresh={true}>
                                 <Annotations/>
                             </Route>
                             <Route exact path="/annotation/create" refresh={true}>

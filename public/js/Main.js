@@ -34730,11 +34730,11 @@ var Main = /*#__PURE__*/function (_React$Component) {
         refresh: true
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_4__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
         exact: true,
-        path: "/dashboard/annotation",
+        path: "/annotation",
         refresh: true
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_annotations__WEBPACK_IMPORTED_MODULE_7__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
         exact: true,
-        path: "/dashboard/annotation/create",
+        path: "/annotation/create",
         refresh: true
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_annotations_CreateAnnotation__WEBPACK_IMPORTED_MODULE_8__["default"], null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_layout_Footer__WEBPACK_IMPORTED_MODULE_5__["default"], null))));
     }
@@ -34763,8 +34763,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CreateAnnotation; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _utils_HttpClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/HttpClient */ "./resources/js/react/UserInterface/utils/HttpClient.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -34795,14 +34797,144 @@ var CreateAnnotation = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(CreateAnnotation);
 
   function CreateAnnotation(props) {
+    var _this;
+
     _classCallCheck(this, CreateAnnotation);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      category: '',
+      event_type: '',
+      event_name: '',
+      url: '',
+      description: '',
+      title: '',
+      show_at: '',
+      type: '',
+      validation: {},
+      resp: '',
+      error: ''
+    };
+    _this.changeHandler = _this.changeHandler.bind(_assertThisInitialized(_this));
+    _this.submitHandler = _this.submitHandler.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(CreateAnnotation, [{
+    key: "changeHandler",
+    value: function changeHandler(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "submitHandler",
+    value: function submitHandler(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+
+      if (this.validate()) {
+        var formData = {
+          'category': this.state.category,
+          'event_type': this.state.event_type,
+          'event_name': this.state.event_name,
+          'url': this.state.url,
+          'description': this.state.description,
+          'title': this.state.title,
+          'show_at': this.state.show_at,
+          'type': this.state.type
+        };
+        console.log(formData);
+        _utils_HttpClient__WEBPACK_IMPORTED_MODULE_1__["default"].post("/annotation", formData).then(function (resp) {
+          _this2.setState({
+            resp: resp.data
+          });
+
+          console.log(resp.data);
+        })["catch"](function (err) {
+          _this2.setState({
+            error: err
+          });
+
+          console.log(err);
+        });
+        this.state.category = '';
+        this.state.event_type = '';
+        this.state.event_name = '';
+        this.state.url = '';
+        this.state.description = '';
+        this.state.title = '';
+        this.state.show_at = '';
+        this.state.type = '';
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate() {
+      var category = this.state.category;
+      var event_type = this.state.event_type;
+      var event_name = this.state.event_name;
+      var url = this.state.url;
+      var description = this.state.description;
+      var title = this.state.title;
+      var show_at = this.state.show_at;
+      var type = this.state.type;
+      var errors = {};
+      var isValid = true;
+
+      if (!category) {
+        isValid = false;
+        errors["category"] = "Please enter your category.";
+      }
+
+      if (!event_name) {
+        isValid = false;
+        errors["event_name"] = "Please enter your event_name.";
+      }
+
+      if (!event_type) {
+        isValid = false;
+        errors["event_type"] = "Please enter your event_type.";
+      }
+
+      if (!url) {
+        isValid = false;
+        errors["url"] = "Please enter url here.";
+      }
+
+      if (!description) {
+        isValid = false;
+        errors["description"] = "Please enter your description.";
+      }
+
+      if (!title) {
+        isValid = false;
+        errors["title"] = "Please enter title here.";
+      }
+
+      if (!show_at) {
+        isValid = false;
+        errors["show_at"] = "Please add show_at date.";
+      }
+
+      if (!type) {
+        isValid = false;
+        errors["type"] = "Please enter annotation type.";
+      }
+
+      this.setState({
+        validation: errors
+      });
+      return isValid;
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      document.title = 'Create Annotation';
+    }
+  }, {
     key: "render",
     value: function render() {
+      var validation = this.state.validation;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container-xl bg-white",
         style: {
@@ -34820,37 +34952,37 @@ var CreateAnnotation = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "heading-section"
       }, "Add Annotation ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Enter your annotation details")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        method: "POST",
-        action: ""
+        onSubmit: this.submitHandler
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-3 col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-group @if($errors->has('category')) has-danger @endif"
+        className: "form-group "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "form-control",
         id: "category",
         name: "category",
-        required: true
+        value: this.state.category,
+        onChange: this.changeHandler
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "category",
         className: "form-control-placeholder"
-      }, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "bmd-help"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Category"), validation.category ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "bmd-help text-danger"
+      }, " \xA0 \xA0", validation.category) : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-3 col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group  "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         className: "form-control",
+        onChange: this.changeHandler,
         name: "event_type",
         id: "event_type",
-        required: true
+        value: this.state.event_type
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "Default",
-        selected: true
+        value: "Default"
       }, "Default"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Annotaions"
       }, "Annotaions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
@@ -34862,99 +34994,107 @@ var CreateAnnotation = /*#__PURE__*/function (_React$Component) {
       }, "Holidays"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Gtm"
       }, "Gtm")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        "for": "event_type",
+        htmlFor: "event_type",
         className: "form-control-placeholder"
-      }, "event_type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "bmd-help"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "event_type"), validation.event_type ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "bmd-help text-danger"
+      }, " \xA0 \xA0", validation.event_type) : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-3 col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-group @if($errors->has('event_name')) has-danger @endif"
+        className: "form-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "form-control",
+        value: this.state.event_name,
+        onChange: this.changeHandler,
         id: "event_name",
-        name: "event_name",
-        required: true
+        name: "event_name"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        "for": "event_name",
+        htmlFor: "event_name",
         className: "form-control-placeholder"
-      }, "event_name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "bmd-help"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "event_name"), validation.event_name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "bmd-help text-danger"
+      }, " \xA0 \xA0", validation.event_name) : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-3 col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-group @if($errors->has('url')) has-danger @endif"
+        className: "form-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
+        value: this.state.url,
+        onChange: this.changeHandler,
         className: "form-control",
         id: "url",
         name: "url"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        "for": "url",
+        htmlFor: "url",
         className: "form-control-placeholder"
-      }, "url"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "bmd-help"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "url"), validation.url ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "bmd-help text-danger"
+      }, " \xA0 \xA0", validation.url) : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-3 col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group  has-danger "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         type: "text",
+        value: this.state.description,
+        onChange: this.changeHandler,
         className: "form-control",
         id: "description",
         name: "description"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        "for": "description",
+        htmlFor: "description",
         className: "form-control-placeholder"
-      }, "description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "bmd-help"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "description"), validation.description ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "bmd-help text-danger"
+      }, " \xA0 \xA0", validation.description) : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-3 col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
+        value: this.state.title,
+        onChange: this.changeHandler,
         className: "form-control",
         id: "title",
-        name: "title",
-        required: true
+        name: "title"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        "for": "title",
+        htmlFor: "title",
         className: "form-control-placeholder"
-      }, "title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "bmd-help"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "title"), validation.title ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "bmd-help text-danger"
+      }, " \xA0 \xA0", validation.title) : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-3 col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "date",
+        onChange: this.changeHandler,
+        value: this.state.show_at,
         className: "form-control",
         id: "show_at",
-        name: "show_at",
-        required: true
+        name: "show_at"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        "for": "show_at",
+        htmlFor: "show_at",
         className: "form-control-placeholder"
-      }, "show_at"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "bmd-help"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "show_at"), validation.show_at ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "bmd-help text-danger"
+      }, " \xA0 \xA0", validation.show_at) : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-3 col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-group @if($errors->has('type')) has-danger @endif"
+        className: "form-group "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
+        value: this.state.type,
+        onChange: this.changeHandler,
         className: "form-control",
         id: "type",
-        name: "type",
-        required: true
+        name: "type"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        "for": "type",
+        htmlFor: "type",
         className: "form-control-placeholder"
-      }, "type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "bmd-help"
-      }, "error")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "type"), validation.type ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "bmd-help text-danger"
+      }, " \xA0 \xA0", validation.type) : ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-1 offset-11"
@@ -34987,6 +35127,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _utils_HttpClient__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/HttpClient */ "./resources/js/react/UserInterface/utils/HttpClient.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35012,25 +35153,45 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var index = /*#__PURE__*/function (_React$Component) {
   _inherits(index, _React$Component);
 
   var _super = _createSuper(index);
 
   function index() {
+    var _this;
+
     _classCallCheck(this, index);
 
-    return _super.call(this);
+    _this = _super.call(this);
+    _this.state = {
+      annotation: [],
+      error: ''
+    };
+    return _this;
   }
 
   _createClass(index, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       document.title = 'Annotation';
+      _utils_HttpClient__WEBPACK_IMPORTED_MODULE_2__["default"].get('/annotation/index').then(function (resp) {
+        _this2.setState({
+          annotation: resp.data.annotations
+        }); // console.log(resp.data)
+
+      })["catch"](function (err) {
+        console.log(err);
+      });
     }
   }, {
     key: "render",
     value: function render() {
+      var annotations = this.state.annotation;
+      console.log(annotations);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container-xl bg-white p-5 d-flex flex-column justify-content-center",
         style: {
@@ -35065,12 +35226,18 @@ var index = /*#__PURE__*/function (_React$Component) {
         className: "col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "table table-hover table-bordered"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Show At"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "titles"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "descriptions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "show at"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "button",
-        className: "btn btn-danger"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "ion-ios-trash"
-      }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tfoot", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Show At"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Actions"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Show At"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, annotations ? annotations.map(function (anno) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: anno.id
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, anno.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, anno.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, anno.show_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button",
+          className: "btn btn-danger"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "ion-ios-trash"
+        }), "Delete")));
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        colSpan: "9"
+      }, "no Annotation found"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12"
       }, "pagination")))));
     }
@@ -36377,7 +36544,7 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
       }, "Dashboard")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-item"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/dashboard/annotation"
+        to: "/annotation"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "sidebar-link"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -36462,6 +36629,71 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (sidebar);
+
+/***/ }),
+
+/***/ "./resources/js/react/UserInterface/utils/HttpClient.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/react/UserInterface/utils/HttpClient.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+var CancelToken = axios__WEBPACK_IMPORTED_MODULE_0___default.a.CancelToken;
+var source = CancelToken.source();
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.xsrfHeaderName = "X-CSRFToken";
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common = {
+  'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+  'Accept': 'application/json',
+  'Content-Type': 'application/json'
+};
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.xsrfCookieName = 'XSRF-TOKEN';
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.trailingSlash = false;
+var axiosInst = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
+  baseURL: "/",
+  responseType: "json",
+  cancelToken: source.token
+}); // Add a response interceptor
+
+axiosInst.interceptors.response.use(function (response) {
+  // Do something with response data
+  return response;
+}, function (error) {
+  if (error.response.status === 401) {
+    if (window.location.pathname !== "/") {
+      window.alert("Not logged in. We are redirecting you to the login page. You may login with an account and try the operation again.");
+      window.location.pathname = "/";
+    }
+  }
+
+  if (error.response.status === 403) {
+    console.log(error);
+    window.alert("You tried to perform an operation you are not authorized of. See console for more information.");
+  }
+
+  if (error.response.status === 404) {
+    console.log(error);
+    window.alert("Unkown API triggered. See console for more information.");
+  }
+
+  if (error.response.status === 405) {
+    console.log(error);
+    window.alert("Invalid method tried for a route. See console for more information.");
+  }
+
+  if (error.response.status === 422) {
+    console.log(error);
+    window.alert("Unprocessible request.");
+  }
+
+  return Promise.reject(error);
+});
+/* harmony default export */ __webpack_exports__["default"] = (axiosInst);
 
 /***/ }),
 
