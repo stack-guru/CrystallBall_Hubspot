@@ -56,6 +56,13 @@
             }
         }</style>
 
+{{--
+    /a1ecc3b826d01251edddf29c3e4e1e97.woff
+    /e23a7dcaefbde4e74e263247aa42ecd7.ttf
+    /af7ae505a9eed503f8b8e6982036873e.woff2
+    /fee66e712a8a08eef5805a46892932ad.woff
+    /b06871f281fee6b241d60582ae9369b9.ttf 
+     --}}
     <link href="{{asset('style.css')}}" rel="stylesheet">
 </head>
 <body >

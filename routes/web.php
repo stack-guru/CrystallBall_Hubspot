@@ -18,6 +18,8 @@ Route::redirect('/', '/login', 301);
 
 Auth::routes();
 
+Route::view('documentation', 'api/documentation');
+
 Route::group(['middleware' => ['auth']], function () {
 
     Route::view('dashboard', 'ui/app');

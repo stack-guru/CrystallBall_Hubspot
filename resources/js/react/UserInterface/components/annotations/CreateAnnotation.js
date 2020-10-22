@@ -45,7 +45,8 @@ export default class CreateAnnotation extends React.Component {
             resp: '',
             error: '',
             isBusy: false,
-            isDirty: false
+            isDirty: false,
+            errors: undefined
         });
     }
 

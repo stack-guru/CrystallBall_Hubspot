@@ -1,7 +1,7 @@
 import React from 'react';
 import ErrorAlert from "../../utils/ErrorAlert";
 import HttpClient from "../../utils/HttpClient";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 export default class EditAnnotation extends React.Component {
 
     constructor(props) {
@@ -25,13 +25,13 @@ export default class EditAnnotation extends React.Component {
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
+        this.setDefaultState = this.setDefaultState.bind(this);
 
     }
 
     componentDidMount() {
         document.title = 'Edit Annotation'
         if (this.props.routeParams.match.params.id !== undefined) {
-
             this.setState({ isBusy: true });
             HttpClient.get(`/annotation/${this.props.routeParams.match.params.id}`)
                 .then(response => {
@@ -43,10 +43,12 @@ export default class EditAnnotation extends React.Component {
                     console.log(err)
                     this.setState({ isBusy: false, errors: err });
                 });
-
         }
     }
 
+    setDefaultState() {
+        this.setState({ isBusy: false, isDirty: false, errors: undefined });
+    }
 
     changeHandler(e) {
         this.setState({ isDirty: true, annotation: { ...this.state.annotation, [e.target.name]: e.target.value } });

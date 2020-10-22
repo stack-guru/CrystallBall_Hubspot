@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import EditAnnotation from "./EditAnnotation";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 class index extends React.Component {
 
@@ -12,30 +12,34 @@ class index extends React.Component {
             annotations: [],
             error: '',
         }
-        this.deleteAnnotation=this.deleteAnnotation.bind(this)
+        this.deleteAnnotation = this.deleteAnnotation.bind(this)
     }
     componentDidMount() {
         document.title = 'Annotation';
-        HttpClient.get('/annotation').then(resp => {
-            this.setState({ annotations: resp.data.annotations })
-            // console.log(resp.data)
-        }).catch(err => {
-            console.log(err);
-        })
 
+        this.setState({ isBusy: true });
+        HttpClient.get(`/annotation`)
+            .then(response => {
+                this.setState({ isBusy: false, annotations: response.data.annotations });
+            }, (err) => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                console.log(err)
+                this.setState({ isBusy: false, errors: err });
+            });
     }
 
-    deleteAnnotation(id){
-
+    deleteAnnotation(id) {
+        this.setState({ isBusy: true });
         HttpClient.delete(`/annotation/${id}`).then(resp => {
             toast.success("Annotation deleted.");
-            console.log(resp);
-            this.state.annotations.filter(an=>{
-                if(resp.data.success==true){
-//// remove data which have provided id
-                }
-
-            })
+            let annotations = this.state.annotations;
+            annotations = annotations.filter(a => a.id != id);
+            this.setState({ isBusy: false, annotations: annotations })
+        }, (err) => {
+            console.log(err);
+            this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
             console.log(err);
         });
@@ -82,15 +86,15 @@ class index extends React.Component {
                                                         <td>{anno.show_at}</td>
                                                         <td>
 
-                                                            <button type="button" onClick={()=> {
+                                                            <button type="button" onClick={() => {
                                                                 this.deleteAnnotation(anno.id)
                                                             }} className="btn btn-danger">
                                                                 <i className="ion-ios-trash"></i>
                                                                 Delete
                                                             </button>
                                                             <Link to={`/annotation/${anno.id}/edit`} >
-                                                            <span type="button" className="btn btn-primary" >
-                                                                <i className="ion-ios-trash"></i>
+                                                                <span type="button" className="btn btn-primary" >
+                                                                    <i className="ion-ios-trash"></i>
                                                                 Edit
                                                             </span>
                                                             </Link>
