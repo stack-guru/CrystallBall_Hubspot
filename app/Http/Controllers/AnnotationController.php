@@ -64,13 +64,6 @@ class AnnotationController extends Controller
     public function update(AnnotationRequest $request, $id)
     {
 
-        //      if ($user_id == $annotation->user_id) {
-        //            $annotation->fill($request->validated());
-        //            $annotation->user_id=$user_id;
-        //            $annotation->save();
-        //
-        //        }
-
         $user_id = Auth::id();
         $annotation = Annotation::where(['user_id' => $user_id, 'id' => $id])->first();
         if (!$annotation) {
@@ -90,10 +83,11 @@ class AnnotationController extends Controller
      */
     public function destroy(Annotation $annotation)
     {
-//        $user_data = Auth::id();
-        //        if ($user_data !== $annotation->user_id) {
-        //            abort(404);
-        //        }
+        $user_data = Auth::id();
+                if ($user_data !== $annotation->user_id) {
+
+                    abort(404);
+                }
 
         $annotation->delete();
         return ["success" => true];

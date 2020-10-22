@@ -47,48 +47,48 @@ class sidebar extends React.Component{
                         </span>
                         </Link>
                     </li>
-                    <li className="nav-item">
-                        <a className="sidebar-link" href="">
-                            <span className="icon-holder">
-                                <i className="c-blue-500 ti-share"></i>
-                            </span>
-                            <span className="title">Compose</span>
-                        </a>
-                    </li>
+                    {/*<li className="nav-item">*/}
+                    {/*    <a className="sidebar-link" href="">*/}
+                    {/*        <span className="icon-holder">*/}
+                    {/*            <i className="c-blue-500 ti-share"></i>*/}
+                    {/*        </span>*/}
+                    {/*        <span className="title">Compose</span>*/}
+                    {/*    </a>*/}
+                    {/*</li>*/}
 
-                    <li className="nav-item dropdown">
-                        <a className="dropdown-toggle">
-                            <span className="icon-holder">
-                            <i className="c-orange-500 ti-layout-list-thumb"></i>
-                            </span>
-                            <span className="title">Tables</span>
-                            <span className="arrow">
-                            <i className="ti-angle-right"></i>
-                            </span>
-                        </a>
-                        <ul className="dropdown-menu">
-                            <li><a className="sidebar-link" href="basic-table.html">Basic Table</a></li>
-                            <li><a className="sidebar-link" href="datatable.html">Data Table</a></li>
-                        </ul>
-                    </li>
+                    {/*<li className="nav-item dropdown">*/}
+                    {/*    <a className="dropdown-toggle">*/}
+                    {/*        <span className="icon-holder">*/}
+                    {/*        <i className="c-orange-500 ti-layout-list-thumb"></i>*/}
+                    {/*        </span>*/}
+                    {/*        <span className="title">Tables</span>*/}
+                    {/*        <span className="arrow">*/}
+                    {/*        <i className="ti-angle-right"></i>*/}
+                    {/*        </span>*/}
+                    {/*    </a>*/}
+                    {/*    <ul className="dropdown-menu">*/}
+                    {/*        <li><a className="sidebar-link" href="basic-table.html">Basic Table</a></li>*/}
+                    {/*        <li><a className="sidebar-link" href="datatable.html">Data Table</a></li>*/}
+                    {/*    </ul>*/}
+                    {/*</li>*/}
 
 
-                    <li className="nav-item dropdown"><a className="dropdown-toggle" href={null}><span
-                        className="icon-holder"><i className="c-teal-500 ti-view-list-alt"></i> </span><span
-                        className="title">Multiple Levels</span>
-                        <span className="arrow"><i className="ti-angle-right"></i></span></a>
-                        <ul className="dropdown-menu">
-                            <li className="nav-item dropdown"><a href={null}><span>Menu Item</span></a>
-                            </li>
-                            <li className="nav-item dropdown"><a href={null}><span>Menu Item</span> <span
-                                className="arrow"><i className="ti-angle-right"></i></span></a>
-                                <ul className="dropdown-menu">
-                                    <li><a href={null}>Menu Item</a></li>
-                                    <li><a href={null}>Menu Item</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                    {/*<li className="nav-item dropdown"><a className="dropdown-toggle" href={null}><span*/}
+                    {/*    className="icon-holder"><i className="c-teal-500 ti-view-list-alt"></i> </span><span*/}
+                    {/*    className="title">Multiple Levels</span>*/}
+                    {/*    <span className="arrow"><i className="ti-angle-right"></i></span></a>*/}
+                    {/*    <ul className="dropdown-menu">*/}
+                    {/*        <li className="nav-item dropdown"><a href={null}><span>Menu Item</span></a>*/}
+                    {/*        </li>*/}
+                    {/*        <li className="nav-item dropdown"><a href={null}><span>Menu Item</span> <span*/}
+                    {/*            className="arrow"><i className="ti-angle-right"></i></span></a>*/}
+                    {/*            <ul className="dropdown-menu">*/}
+                    {/*                <li><a href={null}>Menu Item</a></li>*/}
+                    {/*                <li><a href={null}>Menu Item</a></li>*/}
+                    {/*            </ul>*/}
+                    {/*        </li>*/}
+                    {/*    </ul>*/}
+                    {/*</li>*/}
                 </ul>
             </div>
         )
