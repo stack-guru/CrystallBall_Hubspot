@@ -47,9 +47,8 @@ class Main extends React.Component {
                                 <Route exact path="/annotation/create" refresh={true}>
                                     <AnnotationsCreate />
                                 </Route>
-                                <Route exact path="/annotation/${variable}/edit" refresh={true}>
-                                    <AnnotationsUpdate />
-                                </Route>
+                                <Route exact path="/annotation/:id?/edit" refresh={true}
+                                    render={(routeParams) => <AnnotationsUpdate routeParams={routeParams} />} />
                             </Switch>
 
                         </main>

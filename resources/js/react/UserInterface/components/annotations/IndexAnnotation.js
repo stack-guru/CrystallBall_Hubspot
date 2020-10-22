@@ -14,7 +14,7 @@ class index extends React.Component {
     }
     componentDidMount() {
         document.title = 'Annotation';
-        HttpClient.get('/annotation/index').then(resp => {
+        HttpClient.get('/annotation').then(resp => {
             this.setState({ annotations: resp.data.annotations })
             // console.log(resp.data)
         }).catch(err => {
@@ -68,15 +68,15 @@ class index extends React.Component {
                                                                 <i className="ion-ios-trash"></i>
                                                                 Delete
                                                             </button>
-                                                            <Link to={"/annotation/edit"} params={{id: anno.id} }>
+                                                            <Link to={`/annotation/${anno.id}/edit`} >
                                                             <span type="button" className="btn btn-primary" >
                                                                 <i className="ion-ios-trash"></i>
-                                                                edit
+                                                                Edit
                                                             </span>
                                                             </Link>
                                                         </td>
                                                     </tr>
-                                                )) : <tr><td colSpan="9">no Annotation found</td></tr>
+                                                )) : <tr><td colSpan="9">No Annotation found</td></tr>
                                         }
 
 

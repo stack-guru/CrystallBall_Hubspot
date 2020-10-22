@@ -21,11 +21,13 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
 
     Route::view('dashboard', 'ui/app');
-    Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except('show');
-    Route::get('annotation/index', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
-    Route::get('annotation/edit/{id}', [App\Http\Controllers\AnnotationController::class, 'edit']);
 
+    Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except(['store','show' ,'update']);
+    Route::group(['prefix' => 'ui'], function () {
+        Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
+        Route::post('annotation', [App\Http\Controllers\AnnotationController::class, 'store']);
+        Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
+        Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);
+    });
 });
-Route::get('main',function(){
-    return view('annotation/index');
-});
+

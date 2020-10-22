@@ -1,11 +1,11 @@
 import React from 'react';
 import ErrorAlert from "../../utils/ErrorAlert";
 import HttpClient from "../../utils/HttpClient";
-export default class EditAnnotation extends React.Component{
+export default class EditAnnotation extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             annotation: {
                 category: '',
                 event_type: '',
@@ -28,33 +28,22 @@ export default class EditAnnotation extends React.Component{
     }
 
     componentDidMount() {
-        document.title = 'Create Annotation'
-    console.log(this.props.location.id)
-            if(this.props.id !== ''){
-                let id={
-                    'id':this.props.id,
-                }
+        document.title = 'Edit Annotation'
+        if (this.props.routeParams.match.params.id !== undefined) {
 
-                HttpClient.get('/annotation/edit/${id}',id)
-                    .then(resp=>{
-                        this.setState({
-                            annotation: {
-                                category: resp.data.annotation.category,
-                                event_type:resp.data.annotation.event_type,
-                                event_name: resp.data.annotation.event_name,
-                                url:resp.data.annotation.url,
-                                description:resp.data.annotation.description,
-                                title:resp.data.annotation.title,
-                                show_at: resp.data.annotation.show_at,
-                                type: resp.data.annotation.type,
-                            },
+            this.setState({ isBusy: true });
+            HttpClient.get(`/annotation/${this.props.routeParams.match.params.id}`)
+                .then(response => {
+                    this.setState({ isBusy: false, annotation: response.data.annotation });
+                }, (err) => {
+                    console.log(err);
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    console.log(err)
+                    this.setState({ isBusy: false, errors: err });
+                });
 
-                        });
-                        console.log(this.state.annotation)
-                    }).catch(err=>{
-                        this.setState({error:err})
-                })
-            }
+        }
     }
 
 
@@ -64,6 +53,21 @@ export default class EditAnnotation extends React.Component{
 
     submitHandler(e) {
         e.preventDefault();
+
+        if (this.validate() && !this.state.isBusy) {
+            this.setState({ isBusy: true });
+            HttpClient.put(`/annotation/${this.state.annotation.id}`, this.state.annotation)
+                .then(response => {
+                    toast.success("Annotation updated.");
+                    this.setDefaultState();
+                }, (err) => {
+                    console.log(err);
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    console.log(err)
+                    this.setState({ isBusy: false, errors: err });
+                });
+        }
 
     }
 
@@ -126,7 +130,7 @@ export default class EditAnnotation extends React.Component{
 
 
     render() {
-        const validation =this.state.validation;
+        const validation = this.state.validation;
         return (
             <div className="container-xl bg-white" style={{ minHeight: '100vh' }}>
                 <section className="ftco-section" id="buttons">
@@ -151,7 +155,7 @@ export default class EditAnnotation extends React.Component{
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <input type="text" className="form-control" id="category" name="category"
-                                               value={this.state.annotation.category} onChange={this.changeHandler} />
+                                            value={this.state.annotation.category} onChange={this.changeHandler} />
                                         <label htmlFor="category" className="form-control-placeholder">Category</label>
                                         {
                                             validation.category ?
@@ -254,7 +258,7 @@ export default class EditAnnotation extends React.Component{
                             <div className="row">
                                 <div className="col-1 offset-11">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">
-                                        <i className="ion-ios-plus"></i>Add
+                                        <i className="ion-ios-plus"></i>Edit
                                     </button>
                                 </div>
                             </div>

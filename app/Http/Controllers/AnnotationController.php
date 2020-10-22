@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Annotation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
+use App\Models\Annotation;
 use Auth;
+use Illuminate\Http\Request;
 
 class AnnotationController extends Controller
 {
@@ -23,26 +21,16 @@ class AnnotationController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function uiIndex()
-    {
-        $annotations = Annotation::where('user_id', Auth::id())->get();
-        return ['annotations' =>   $annotations];
-    }
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
 
-    public function create(){
+    public function create()
+    {
         return view('ui/app');
     }
-
 
     public function store(AnnotationRequest $request)
     {
@@ -56,9 +44,14 @@ class AnnotationController extends Controller
         return redirect()->back();
     }
 
-    public function edit($id){
-        $annotation=Annotation::find($id);
-        return ['annotation' =>   $annotation];
+    public function show($id)
+    {
+        return view('ui/app');
+    }
+
+    public function edit($id)
+    {
+        return view('ui/app');
     }
 
     /**
@@ -71,7 +64,9 @@ class AnnotationController extends Controller
     public function update(AnnotationRequest $request, Annotation $annotation)
     {
         $user_data = Auth::id();
-        if($user_data !== $annotation->user_id) abort(404);
+        if ($user_data !== $annotation->user_id) {
+            abort(404);
+        }
 
         $annotation->fill($request->validated());
         $annotation->save();
@@ -88,10 +83,23 @@ class AnnotationController extends Controller
     public function destroy(Annotation $annotation)
     {
         $user_data = Auth::id();
-        if($user_data !== $annotation->user_id) abort(404);
+        if ($user_data !== $annotation->user_id) {
+            abort(404);
+        }
 
         $annotation->delete();
         return redirect()->back();
+    }
+
+    public function uiIndex()
+    {
+        $annotations = Annotation::where('user_id', Auth::id())->get();
+        return ['annotations' => $annotations];
+    }
+    public function uiShow($id)
+    {
+        $annotation = Annotation::findOrFail($id);
+        return ['annotation' => $annotation];
     }
 
     public function upload(Request $request)
