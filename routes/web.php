@@ -22,12 +22,13 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::view('dashboard', 'ui/app');
 
-    Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except(['store','show' ,'update']);
+    Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except(['store','show' ,'update','destroy']);
     Route::group(['prefix' => 'ui'], function () {
         Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
         Route::post('annotation', [App\Http\Controllers\AnnotationController::class, 'store']);
         Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
         Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);
+        Route::delete('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
     });
 });
 

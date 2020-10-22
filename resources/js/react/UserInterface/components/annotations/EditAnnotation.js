@@ -1,6 +1,7 @@
 import React from 'react';
 import ErrorAlert from "../../utils/ErrorAlert";
 import HttpClient from "../../utils/HttpClient";
+import {toast} from "react-toastify";
 export default class EditAnnotation extends React.Component {
 
     constructor(props) {

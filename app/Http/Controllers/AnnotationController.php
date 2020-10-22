@@ -61,15 +61,18 @@ class AnnotationController extends Controller
      * @param  \App\Annotation  $annotation
      * @return \Illuminate\Http\Response
      */
-    public function update(AnnotationRequest $request, Annotation $annotation)
+    public function update(AnnotationRequest $request ,$id)
     {
-        $user_data = Auth::id();
-        if ($user_data !== $annotation->user_id) {
-            abort(404);
-        }
 
-        $annotation->fill($request->validated());
-        $annotation->save();
+//        if ($user_id == $annotation->user_id) {
+//            $annotation->fill($request->validated());
+//            $annotation->user_id=$user_id;
+//            $annotation->save();
+//
+//        }
+        $user_id = Auth::id();
+            $annotation= Annotation::where(['user_id'=>$user_id,'id'=>$id])->first();
+            $annotation->update($request->validated());
 
         return redirect()->back();
     }
@@ -82,13 +85,13 @@ class AnnotationController extends Controller
      */
     public function destroy(Annotation $annotation)
     {
-        $user_data = Auth::id();
-        if ($user_data !== $annotation->user_id) {
-            abort(404);
-        }
+//        $user_data = Auth::id();
+//        if ($user_data !== $annotation->user_id) {
+//            abort(404);
+//        }
 
         $annotation->delete();
-        return redirect()->back();
+        return ["success"=>true];
     }
 
     public function uiIndex()

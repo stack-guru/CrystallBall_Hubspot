@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import EditAnnotation from "./EditAnnotation";
+import {toast} from "react-toastify";
 
 class index extends React.Component {
 
@@ -11,6 +12,7 @@ class index extends React.Component {
             annotations: [],
             error: '',
         }
+        this.deleteAnnotation=this.deleteAnnotation.bind(this)
     }
     componentDidMount() {
         document.title = 'Annotation';
@@ -21,6 +23,22 @@ class index extends React.Component {
             console.log(err);
         })
 
+    }
+
+    deleteAnnotation(id){
+
+        HttpClient.delete(`/annotation/${id}`).then(resp => {
+            toast.success("Annotation deleted.");
+            console.log(resp);
+            this.state.annotations.filter(an=>{
+                if(resp.data.success==true){
+//// remove data which have provided id
+                }
+
+            })
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
     render() {
@@ -64,7 +82,9 @@ class index extends React.Component {
                                                         <td>{anno.show_at}</td>
                                                         <td>
 
-                                                            <button type="button" className="btn btn-danger">
+                                                            <button type="button" onClick={()=> {
+                                                                this.deleteAnnotation(anno.id)
+                                                            }} className="btn btn-danger">
                                                                 <i className="ion-ios-trash"></i>
                                                                 Delete
                                                             </button>
