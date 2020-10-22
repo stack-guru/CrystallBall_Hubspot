@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('dashboard', 'ui/app');
     Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except('show');
     Route::get('annotation/index', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
+    Route::get('annotation/edit/{id}', [App\Http\Controllers\AnnotationController::class, 'edit']);
 
 });
 Route::get('main',function(){

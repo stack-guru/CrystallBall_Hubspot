@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
+import EditAnnotation from "./EditAnnotation";
 
 class index extends React.Component {
 
@@ -67,6 +68,12 @@ class index extends React.Component {
                                                                 <i className="ion-ios-trash"></i>
                                                                 Delete
                                                             </button>
+                                                            <Link to={"/annotation/edit"} params={{id: anno.id} }>
+                                                            <span type="button" className="btn btn-primary" >
+                                                                <i className="ion-ios-trash"></i>
+                                                                edit
+                                                            </span>
+                                                            </Link>
                                                         </td>
                                                     </tr>
                                                 )) : <tr><td colSpan="9">no Annotation found</td></tr>

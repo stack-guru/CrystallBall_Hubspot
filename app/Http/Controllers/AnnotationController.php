@@ -56,6 +56,11 @@ class AnnotationController extends Controller
         return redirect()->back();
     }
 
+    public function edit($id){
+        $annotation=Annotation::find($id);
+        return ['annotation' =>   $annotation];
+    }
+
     /**
      * Update the specified resource in storage.
      *

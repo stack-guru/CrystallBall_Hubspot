@@ -9,6 +9,7 @@ import Index from "./components/Index";
 import Footer from "./layout/Footer"
 
 import AnnotationsCreate from './components/annotations/CreateAnnotation';
+import AnnotationsUpdate from './components/annotations/EditAnnotation';
 import AnnotationsIndex from './components/annotations/IndexAnnotation';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -45,6 +46,9 @@ class Main extends React.Component {
                                 </Route>
                                 <Route exact path="/annotation/create" refresh={true}>
                                     <AnnotationsCreate />
+                                </Route>
+                                <Route exact path="/annotation/${variable}/edit" refresh={true}>
+                                    <AnnotationsUpdate />
                                 </Route>
                             </Switch>
 
