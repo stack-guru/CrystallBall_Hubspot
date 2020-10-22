@@ -1,5 +1,7 @@
 import React from 'react';
 import HttpClient from '../../utils/HttpClient';
+import ErrorAlert from '../../utils/ErrorAlert';
+import { toast } from "react-toastify";
 
 export default class CreateAnnotation extends React.Component {
 
@@ -19,6 +21,8 @@ export default class CreateAnnotation extends React.Component {
             validation: {},
             resp: '',
             error: '',
+            isBusy: false,
+            isDirty: false
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
@@ -40,36 +44,44 @@ export default class CreateAnnotation extends React.Component {
             validation: {},
             resp: '',
             error: '',
+            isBusy: false,
+            isDirty: false
         });
     }
 
     changeHandler(e) {
-        this.setState({ annotation: { ...this.state.annotation, [e.target.name]: e.target.value } });
+        this.setState({ isDirty: true, annotation: { ...this.state.annotation, [e.target.name]: e.target.value } });
     }
 
     submitHandler(e) {
         e.preventDefault();
 
-        if (this.validate()) {
-            HttpClient.post("/annotation", this.state.annotation).then(resp => {
-                this.setDefaultState();
-            }).catch(err => {
-                this.setState({ error: err });
-                console.log(err)
-            });
+        if (this.validate() && !this.state.isBusy) {
+            this.setState({ isBusy: true });
+            HttpClient.post('/annotation', this.state.annotation)
+                .then(response => {
+                    toast.success("Annotation added.");
+                    this.setDefaultState();
+                }, (err) => {
+                    console.log(err);
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    console.log(err)
+                    this.setState({ isBusy: false, errors: err });
+                });
         }
 
     }
 
     validate() {
-        let category = this.state.category;
-        let event_type = this.state.event_type;
-        let event_name = this.state.event_name;
-        let url = this.state.url;
-        let description = this.state.description;
-        let title = this.state.title;
-        let show_at = this.state.show_at;
-        let type = this.state.type;
+        let category = this.state.annotation.category;
+        let event_type = this.state.annotation.event_type;
+        let event_name = this.state.annotation.event_name;
+        let url = this.state.annotation.url;
+        let description = this.state.annotation.description;
+        let title = this.state.annotation.title;
+        let show_at = this.state.annotation.show_at;
+        let type = this.state.annotation.type;
 
         let errors = {};
         let isValid = true;
@@ -134,13 +146,19 @@ export default class CreateAnnotation extends React.Component {
                             </div>
                         </div>
 
+                        <div className="row">
+                            <div className="col-md-12">
+                                <ErrorAlert errors={this.state.errors} />
+                            </div>
+                        </div>
+
                         <form onSubmit={this.submitHandler}>
                             <div className="row">
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <input type="text" className="form-control" id="category" name="category"
-                                            value={this.state.category} onChange={this.changeHandler} />
+                                            value={this.state.annotation.category} onChange={this.changeHandler} />
                                         <label htmlFor="category" className="form-control-placeholder">Category</label>
                                         {
                                             validation.category ?
@@ -152,7 +170,7 @@ export default class CreateAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group  ">
-                                        <select className="form-control" onChange={this.changeHandler} name="event_type" id="event_type" value={this.state.event_type} >
+                                        <select className="form-control" onChange={this.changeHandler} name="event_type" id="event_type" value={this.state.annotation.event_type} >
                                             <option value="Default" >Default</option>
                                             <option value="Annotaions">Annotaions</option>
                                             <option value="Api">Api</option>
@@ -171,7 +189,7 @@ export default class CreateAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
-                                        <input type="text" className="form-control" value={this.state.event_name} onChange={this.changeHandler} id="event_name" name="event_name" />
+                                        <input type="text" className="form-control" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" />
                                         <label htmlFor="event_name" className="form-control-placeholder">event_name</label>
 
                                         {
@@ -183,7 +201,7 @@ export default class CreateAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
-                                        <input type="text" value={this.state.url} onChange={this.changeHandler} className="form-control" id="url" name="url" />
+                                        <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control" id="url" name="url" />
                                         <label htmlFor="url" className="form-control-placeholder">url</label>
 
                                         {
@@ -195,7 +213,7 @@ export default class CreateAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group  has-danger ">
-                                        <textarea type="text" value={this.state.description} onChange={this.changeHandler} className="form-control" id="description" name="description"></textarea>
+                                        <textarea type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control" id="description" name="description"></textarea>
                                         <label htmlFor="description" className="form-control-placeholder">description</label>
                                         {
                                             validation.description ?
@@ -205,7 +223,7 @@ export default class CreateAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <input type="text" value={this.state.title} onChange={this.changeHandler} className="form-control" id="title" name="title" />
+                                        <input type="text" value={this.state.annotation.title} onChange={this.changeHandler} className="form-control" id="title" name="title" />
                                         <label htmlFor="title" className="form-control-placeholder">title</label>
 
                                         {
@@ -217,7 +235,7 @@ export default class CreateAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <input type="date" onChange={this.changeHandler} value={this.state.show_at} className="form-control" id="show_at" name="show_at" />
+                                        <input type="date" onChange={this.changeHandler} value={this.state.annotation.show_at} className="form-control" id="show_at" name="show_at" />
                                         <label htmlFor="show_at" className="form-control-placeholder">show_at</label>
 
                                         {
@@ -229,7 +247,7 @@ export default class CreateAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <input type="text" value={this.state.type} onChange={this.changeHandler} className="form-control" id="type" name="type" />
+                                        <input type="text" value={this.state.annotation.type} onChange={this.changeHandler} className="form-control" id="type" name="type" />
                                         <label htmlFor="type" className="form-control-placeholder">type</label>
 
                                         {
@@ -243,9 +261,8 @@ export default class CreateAnnotation extends React.Component {
                             <div className="row">
                                 <div className="col-1 offset-11">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">
-                                        <i className="ion-ios-plus"></i>
-                                        save
-                                    </button>
+                                        <i className="ion-ios-plus"></i>Add
+                                        </button>
                                 </div>
                             </div>
                         </form>
