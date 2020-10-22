@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-class index extends React.Component{
+class Index extends React.Component{
 
     constructor() {
         super();
@@ -501,4 +501,4 @@ class index extends React.Component{
     }
 }
 
-export default index;
+export default Index;

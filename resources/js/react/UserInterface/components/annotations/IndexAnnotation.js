@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
-import EditAnnotation from "./EditAnnotation";
 import { toast } from "react-toastify";
 
-class index extends React.Component {
+class IndexAnnotations extends React.Component {
 
     constructor() {
         super();
@@ -120,4 +119,4 @@ class index extends React.Component {
 
 }
 
-export default index;
+export default IndexAnnotations;

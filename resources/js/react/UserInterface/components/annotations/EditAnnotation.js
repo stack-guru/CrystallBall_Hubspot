@@ -261,7 +261,7 @@ export default class EditAnnotation extends React.Component {
                             <div className="row">
                                 <div className="col-1 offset-11">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">
-                                        <i className="ion-ios-plus"></i>Edit
+                                        <i className="ion-ios-plus"></i>Save
                                     </button>
                                 </div>
                             </div>

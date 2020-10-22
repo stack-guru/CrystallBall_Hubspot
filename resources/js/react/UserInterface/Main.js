@@ -12,10 +12,11 @@ import Footer from "./layout/Footer"
 
 import AnnotationsCreate from './components/annotations/CreateAnnotation';
 import AnnotationsUpdate from './components/annotations/EditAnnotation';
-import AnnotationsIndex from './components/annotations/IndexAnnotation';
+import IndexAnnotations from './components/annotations/IndexAnnotation';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './Main.css';
+import IndexAPIKey from './components/apiKey/IndexAPIKey';
 
 class Main extends React.Component {
 
@@ -62,13 +63,16 @@ class Main extends React.Component {
                                     <Index />
                                 </Route>
                                 <Route exact path="/annotation" refresh={true}>
-                                    <AnnotationsIndex />
+                                    <IndexAnnotations />
                                 </Route>
                                 <Route exact path="/annotation/create" refresh={true}>
                                     <AnnotationsCreate />
                                 </Route>
                                 <Route exact path="/annotation/:id?/edit" refresh={true}
                                     render={(routeParams) => <AnnotationsUpdate routeParams={routeParams} />} />
+                                <Route exact path="/api-key" refresh={true}>
+                                    <IndexAPIKey />
+                                </Route>
                             </Switch>
 
                         </main>
