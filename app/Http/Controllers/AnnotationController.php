@@ -84,10 +84,9 @@ class AnnotationController extends Controller
     public function destroy(Annotation $annotation)
     {
         $user_data = Auth::id();
-                if ($user_data !== $annotation->user_id) {
-
-                    abort(404);
-                }
+        if ($user_data !== $annotation->user_id) {
+            abort(404);
+        }
 
         $annotation->delete();
         return ["success" => true];
