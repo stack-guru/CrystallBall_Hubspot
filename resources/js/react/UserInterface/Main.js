@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 
+import HttpClient from "./utils/HttpClient";
+
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
 import Index from "./components/Index";
@@ -17,8 +19,26 @@ import './Main.css';
 
 class Main extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+             user: undefined
+        }
+    }
+    
+
+    componentWillMount() {
+        HttpClient.get('/user')
+            .then(response => {
+                this.setState({ user: response.data.user });
+            }, (err) => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                console.log(err)
+                this.setState({ isBusy: false, errors: err });
+            });
     }
 
     render() {
@@ -32,7 +52,7 @@ class Main extends React.Component {
 
                     <div className="page-container">
                         <div className="header navbar">
-                            <Header />
+                            <Header user={this.state.user}/>
                         </div>
 
 
@@ -47,7 +67,6 @@ class Main extends React.Component {
                                 <Route exact path="/annotation/create" refresh={true}>
                                     <AnnotationsCreate />
                                 </Route>
-                                {/*/${id}*/}
                                 <Route exact path="/annotation/:id?/edit" refresh={true}
                                     render={(routeParams) => <AnnotationsUpdate routeParams={routeParams} />} />
                             </Switch>

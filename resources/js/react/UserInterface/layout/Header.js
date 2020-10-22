@@ -2,24 +2,12 @@ import React from 'react';
 import Axios from "axios";
 import ReactDOM from 'react-dom';
 
-class header extends React.Component{
+class header extends React.Component {
 
-    constructor() {
-        super();
-
+    constructor(props) {
+        super(props)
+    
     }
-
-    // logout(e){
-    //     e.preventDefault();
-    //     let csrf= document.querySelector('meta[name="csrf-token"]');
-    //     let token={
-    //         '_token':csrf,
-    //     }
-    //     Axios.post('logout',token);
-    // }
-// componentDidMount() {
-//
-// }
 
     render() {
 
@@ -30,14 +18,14 @@ class header extends React.Component{
                     <ul className="nav-left">
                         <li>
                             <a id="sidebar-toggle" className="sidebar-toggle" href={null}><i
-                            className="ti-menu"></i></a>
+                                className="ti-menu"></i></a>
                         </li>
                         <li className="search-box"><a className="search-toggle no-pdd-right" href={null}><i
                             className="search-icon ti-search pdd-right-10"></i> <i
-                            className="search-icon-close ti-close pdd-right-10"></i></a></li>
+                                className="search-icon-close ti-close pdd-right-10"></i></a></li>
                         <li className="search-input">
                             <input className="form-control" type="text"
-                                                            placeholder="Search..."/>
+                                placeholder="Search..." />
                         </li>
                     </ul>
                     <ul className="nav-right">
@@ -165,33 +153,33 @@ class header extends React.Component{
                         {/*</li>*/}
                         <li className="dropdown">
                             <a href={null} className="dropdown-toggle no-after peers fxw-nw ai-c lh-1"
-                               data-toggle="dropdown">
+                                data-toggle="dropdown">
                                 <div className="peer mR-10">
-                                    <img className="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg"
-                                         alt=""/>
+                                    {/* <img className="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg"
+                                         alt=""/> */}
                                 </div>
-                                <div className="peer"><span className="fsz-sm c-grey-900" id="auth"></span></div>
+                                <div className="peer"><span className="fsz-sm c-grey-900">{this.props.user != undefined ? this.props.user.name : null}</span></div>
                             </a>
                             <ul className="dropdown-menu fsz-sm">
-                                <li>
+                                {/* <li>
                                     <a href={null} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                                         <i className="ti-settings mR-10"></i> <span>Setting</span>
-                                    </a></li>
-                                <li>
+                                    </a></li> */}
+                                {/* <li>
                                     <a href={null} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
-                                    className="ti-user mR-10"></i>
-                                    <span>Profile</span></a></li>
-                                <li>
+                                        className="ti-user mR-10"></i>
+                                        <span>Profile</span></a></li> */}
+                                {/* <li>
                                     <a href="email.html" className="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
-                                    className="ti-email mR-10"></i> <span>Messages</span></a></li>
+                                        className="ti-email mR-10"></i> <span>Messages</span></a></li> */}
                                 <li role="separator" className="divider"></li>
                                 <li>
-                                    <a href={null} onClick={() => document.getElementById("header-logout-form").submit() } className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                                    <a href={null} onClick={() => document.getElementById("header-logout-form").submit()} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                                         <i className="ti-power-off mR-10"></i><span>Log out</span>
                                     </a>
-                                        <form id="header-logout-form" action={'/logout'} method="POST">
-                                            <input type="hidden" name={"_token"} value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')}/>
-                                        </form>
+                                    <form id="header-logout-form" action={'/logout'} method="POST">
+                                        <input type="hidden" name={"_token"} value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />
+                                    </form>
 
 
 

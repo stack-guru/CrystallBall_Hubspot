@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AnnotationController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,13 +24,19 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::view('dashboard', 'ui/app');
 
-    Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except(['store','show' ,'update','destroy']);
+    Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except(['store', 'show', 'update', 'destroy']);
     Route::group(['prefix' => 'ui'], function () {
         Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
         Route::post('annotation', [App\Http\Controllers\AnnotationController::class, 'store']);
         Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
         Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);
         Route::delete('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
-    });
-});
 
+        Route::get('user', function () {return ['user' => Auth::user()];});
+    });
+
+    Route::view('api-key', 'ui/app');
+    // GET /oauth/personal-access-tokens to get tokens
+    // POST /oauth/personal-access-tokens
+
+});
