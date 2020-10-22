@@ -14,7 +14,7 @@ class IndexAPIKey extends React.Component {
         this.generateAPIKey = this.generateAPIKey.bind(this)
     }
     componentDidMount() {
-        document.title = 'API';
+        document.title = 'API Keys';
 
         this.setState({ isBusy: true });
         HttpClient({ url: `/oauth/personal-access-tokens`, baseURL: "/" })
@@ -53,8 +53,8 @@ class IndexAPIKey extends React.Component {
                     <div className="container p-5">
                         <div className="row mb-5">
                             <div className="col-md-12">
-                                <h2 className="heading-section">API Key</h2>
-                                <button onClick={() => { this.generateAPIKey() }}>Generate</button>
+                                <h2 className="heading-section">API Keys</h2>
+                                <button className="btn btn-success" onClick={() => { this.generateAPIKey() }}>Generate</button>
                             </div>
                         </div>
                         {this.state.accessToken ? <div className="row">

@@ -55,13 +55,6 @@ class IndexAnnotations extends React.Component {
                                 <h2 className="heading-section">Annotations</h2>
                             </div>
                         </div>
-                        <div className="row ml-0 mr-0 p-5">
-                            <div className="col-12 text-right p-5">
-                                <Link to="/annotation/create">
-                                    <span type="button" className="btn btn-sm btn-primary">Add Annotation</span>
-                                </Link>
-                            </div>
-                        </div>
                         <div className="row">
                             <div className="col-12">
                                 <table className="table table-hover table-bordered">
