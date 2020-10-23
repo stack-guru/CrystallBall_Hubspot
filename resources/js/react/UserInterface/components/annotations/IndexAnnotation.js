@@ -84,6 +84,7 @@ class IndexAnnotations extends React.Component {
                                                                 <i className="ion-ios-trash"></i>
                                                                 Delete
                                                             </button>
+
                                                             <Link to={`/annotation/${anno.id}/edit`} >
                                                                 <span type="button" className="btn btn-primary m-1" >
                                                                     <i className="ion-ios-trash"></i>
