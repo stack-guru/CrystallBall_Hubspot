@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Annotation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
+use App\Models\Annotation;
 use Auth;
+use Illuminate\Http\Request;
 
 class AnnotationController extends Controller
 {
@@ -23,26 +21,16 @@ class AnnotationController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function uiIndex()
-    {
-        $annotations = Annotation::where('user_id', Auth::id())->get();
-        return ['annotations' =>   $annotations];
-    }
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
 
-    public function create(){
+    public function create()
+    {
         return view('ui/app');
     }
-
 
     public function store(AnnotationRequest $request)
     {
@@ -51,9 +39,20 @@ class AnnotationController extends Controller
         $annotation = new Annotation;
         $annotation->fill($request->validated());
         $annotation->user_id = $user_data;
+        $annotation->is_enabled = true;
         $annotation->save();
 
         return redirect()->back();
+    }
+
+    public function show($id)
+    {
+        return view('ui/app');
+    }
+
+    public function edit($id)
+    {
+        return view('ui/app');
     }
 
     /**
@@ -63,15 +62,18 @@ class AnnotationController extends Controller
      * @param  \App\Annotation  $annotation
      * @return \Illuminate\Http\Response
      */
-    public function update(AnnotationRequest $request, Annotation $annotation)
+    public function update(AnnotationRequest $request, $id)
     {
-        $user_data = Auth::id();
-        if($user_data !== $annotation->user_id) abort(404);
 
-        $annotation->fill($request->validated());
-        $annotation->save();
+        $user_id = Auth::id();
+        $annotation = Annotation::where(['user_id' => $user_id, 'id' => $id])->first();
+        if (!$annotation) {
+            abort(404);
+        }
 
-        return redirect()->back();
+        $annotation->update($request->validated());
+
+        return ['annotation' => $annotation];
     }
 
     /**
@@ -83,10 +85,23 @@ class AnnotationController extends Controller
     public function destroy(Annotation $annotation)
     {
         $user_data = Auth::id();
-        if($user_data !== $annotation->user_id) abort(404);
+        if ($user_data !== $annotation->user_id) {
+            abort(404);
+        }
 
         $annotation->delete();
-        return redirect()->back();
+        return ["success" => true];
+    }
+
+    public function uiIndex()
+    {
+        $annotations = Annotation::where('user_id', Auth::id())->get();
+        return ['annotations' => $annotations];
+    }
+    public function uiShow($id)
+    {
+        $annotation = Annotation::findOrFail($id);
+        return ['annotation' => $annotation];
     }
 
     public function upload(Request $request)
@@ -101,14 +116,14 @@ class AnnotationController extends Controller
         $headers = str_getcsv($filecontent[0]);
 
         if (count($headers) !== 8) {
-            return redirect()->back()->with('error', "Kindly use proper formatted CSV.");
+            return response()->json(['message' => 'Invalid number of columns'], 422);
         }
         foreach ($headers as $header) {
             if (!in_array($header, [
                 'category', 'event_type', 'event_name',
                 'url', 'description', 'title', 'show_at', 'type',
             ])) {
-                return redirect()->back()->with('error', "Kindly use proper formatted CSV.");
+            return response()->json(['message' => 'Invalid CSV file headers'], 422);
             }
         }
 

@@ -3,21 +3,44 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 
+import HttpClient from "./utils/HttpClient";
+
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
 import Index from "./components/Index";
 import Footer from "./layout/Footer"
 
 import AnnotationsCreate from './components/annotations/CreateAnnotation';
-import AnnotationsIndex from './components/annotations/IndexAnnotation';
+import AnnotationsUpdate from './components/annotations/EditAnnotation';
+import IndexAnnotations from './components/annotations/IndexAnnotation';
+import AnnotationsUpload from './components/annotations/UploadAnnotation';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './Main.css';
+import IndexAPIKey from './components/apiKey/IndexAPIKey';
 
 class Main extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props)
+
+        this.state = {
+             user: undefined
+        }
+    }
+
+
+    componentWillMount() {
+        HttpClient.get('/user')
+            .then(response => {
+                this.setState({ user: response.data.user });
+            }, (err) => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                console.log(err)
+                this.setState({ isBusy: false, errors: err });
+            });
     }
 
     render() {
@@ -31,7 +54,7 @@ class Main extends React.Component {
 
                     <div className="page-container">
                         <div className="header navbar">
-                            <Header />
+                            <Header user={this.state.user}/>
                         </div>
 
 
@@ -41,10 +64,18 @@ class Main extends React.Component {
                                     <Index />
                                 </Route>
                                 <Route exact path="/annotation" refresh={true}>
-                                    <AnnotationsIndex />
+                                    <IndexAnnotations />
                                 </Route>
                                 <Route exact path="/annotation/create" refresh={true}>
                                     <AnnotationsCreate />
+                                </Route>
+                                <Route exact path="/annotation/:id?/edit" refresh={true}
+                                    render={(routeParams) => <AnnotationsUpdate routeParams={routeParams} />} />
+                                <Route exact path="/api-key" refresh={true}>
+                                    <IndexAPIKey />
+                                </Route>
+                                <Route exact path="/annotation/upload" refresh={true}>
+                                    <AnnotationsUpload />
                                 </Route>
                             </Switch>
 
