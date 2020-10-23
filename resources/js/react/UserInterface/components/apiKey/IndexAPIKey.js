@@ -9,9 +9,11 @@ class IndexAPIKey extends React.Component {
         super();
         this.state = {
             error: '',
-            apiKeys: []
+            apiKeys: [],
+            token_name: ''
         }
         this.generateAPIKey = this.generateAPIKey.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
     componentDidMount() {
         document.title = 'API Keys';
@@ -31,7 +33,7 @@ class IndexAPIKey extends React.Component {
 
     generateAPIKey() {
         this.setState({ isBusy: true });
-        HttpClient({ url: `/oauth/personal-access-tokens`, baseURL: "/", method: 'post', data: { name: 'Laravel Personal Access Client', scopes: [] } })
+        HttpClient({ url: `/oauth/personal-access-tokens`, baseURL: "/", method: 'post', data: { name: this.state.token_name, scopes: [] } })
             .then(response => {
                 toast.success("Token generated.");
                 let tokens = this.state.apiKeys;
@@ -46,6 +48,10 @@ class IndexAPIKey extends React.Component {
             });
     }
 
+    handleChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
     render() {
         return (
             <div className="container-xl bg-white p-5 d-flex flex-column justify-content-center" style={{ minHeight: '100vh' }}>
@@ -54,16 +60,23 @@ class IndexAPIKey extends React.Component {
                         <div className="row mb-5">
                             <div className="col-md-12">
                                 <h2 className="heading-section">API Keys</h2>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-4">
+                                <label>Token Name:</label>
+                                <input type="text" className="form-control" name="token_name" onChange={this.handleChange} value={this.state.token_name} />
+                            </div>
+                            <div className="col-md-4">
+                                <label>Access Token:</label>
+                                <textarea className="form-control" value={this.state.accessToken} readOnly />
+                                <label className="text-danger">Token will only appear here, once.</label>
+                            </div>
+                            <div className="col-1">
                                 <button className="btn btn-success" onClick={() => { this.generateAPIKey() }}>Generate</button>
                             </div>
                         </div>
-                        {this.state.accessToken ? <div className="row">
-                            <div className="col-md-12">
-                                <h4 className="heading-section">New access token generated. This token can only be shown once.</h4>
-                                <textarea className="form-control" value={this.state.accessToken} readOnly/>
-                            </div>
-                        </div>
-                            : null}
+
                         <div className="row">
                             <div className="col-12">
                                 <table className="table table-hover table-bordered">
