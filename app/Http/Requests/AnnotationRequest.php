@@ -47,7 +47,7 @@ class AnnotationRequest extends FormRequest
                     'title' => 'nullable|string|max:100',
                     'show_at' => 'nullable|date',
                     'type' => 'nullable|string|max:100',
-                    'is_enabled' => 'nullable|in:1,0',
+                    'is_enabled' => 'nullable',
                 ];
                 break;
         }
