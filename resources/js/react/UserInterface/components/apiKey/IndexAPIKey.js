@@ -73,13 +73,15 @@ class IndexAPIKey extends React.Component {
                                 <label className="text-danger">Token will only appear here, once.</label>
                             </div>
                             <div className="col-1">
+                                <br />
+                                <br />
                                 <button className="btn btn-success" onClick={() => { this.generateAPIKey() }}>Generate</button>
                             </div>
                         </div>
 
                         <div className="row">
                             <div className="col-12">
-                                <table className="table table-hover table-bordered">
+                                <table className="table table-hover table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>Token</th>

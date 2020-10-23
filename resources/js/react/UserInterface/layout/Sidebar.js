@@ -77,7 +77,7 @@ class sidebar extends React.Component{
                         </span>
                         </Link>
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <a href="https://datastudio.google.com">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
@@ -86,7 +86,7 @@ class sidebar extends React.Component{
                             <span className="title">Google Studio</span>
                         </span>
                         </a>
-                    </li>
+                    </li> */}
                     <li className="nav-item">
                         <Link to="/settings">
                         <span className="sidebar-link" >

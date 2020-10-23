@@ -38,7 +38,7 @@ class AnnotationController extends Controller
             return ['annotations' => [[[]]]];
         }
 
-        $annotationsQuery = Annotation::where('user_id', Auth::id())->orderBy('show_at', 'ASC');
+        $annotationsQuery = Annotation::where('user_id', Auth::id())->where('is_enabled', true)->orderBy('show_at', 'ASC');
         $annotationsQuery->whereBetween('show_at', [$request->query('startDate'), $request->query('endDate')]);
         $annotations = $annotationsQuery->get();
 

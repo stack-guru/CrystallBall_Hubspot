@@ -86,7 +86,7 @@ class IndexAnnotations extends React.Component {
                         </div>
                         <div className="row">
                             <div className="col-12">
-                                <table className="table table-hover table-bordered">
+                                <table className="table table-hover table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>Title</th>
@@ -111,13 +111,13 @@ class IndexAnnotations extends React.Component {
                                                             <button type="button" onClick={() => {
                                                                 this.deleteAnnotation(anno.id)
                                                             }} className="btn btn-sm btn-danger m-2">
-                                                                <i className="ion-ios-trash"></i>
+                                                                <i className="ti-trash"></i>
                                                                 Delete
                                                             </button>
 
                                                             <Link to={`/annotation/${anno.id}/edit`} >
                                                                 <span type="button" className="btn btn-sm btn-primary m-2" >
-                                                                    <i className="ion-ios-trash"></i>
+                                                                    <i className="ti-trash"></i>
                                                                 Edit
                                                             </span>
                                                             </Link>
