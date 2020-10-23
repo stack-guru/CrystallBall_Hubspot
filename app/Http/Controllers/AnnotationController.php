@@ -39,6 +39,7 @@ class AnnotationController extends Controller
         $annotation = new Annotation;
         $annotation->fill($request->validated());
         $annotation->user_id = $user_data;
+        $annotation->is_enabled = true;
         $annotation->save();
 
         return redirect()->back();
