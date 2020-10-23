@@ -116,14 +116,14 @@ class AnnotationController extends Controller
         $headers = str_getcsv($filecontent[0]);
 
         if (count($headers) !== 8) {
-            return redirect()->back()->with('error', "Kindly use proper formatted CSV.");
+            return response()->json(['message' => 'Invalid number of columns'], 422);
         }
         foreach ($headers as $header) {
             if (!in_array($header, [
                 'category', 'event_type', 'event_name',
                 'url', 'description', 'title', 'show_at', 'type',
             ])) {
-                return redirect()->back()->with('error', "Kindly use proper formatted CSV.");
+            return response()->json(['message' => 'Invalid CSV file headers'], 422);
             }
         }
 
