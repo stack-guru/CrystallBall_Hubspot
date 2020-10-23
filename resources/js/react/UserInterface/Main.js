@@ -13,6 +13,7 @@ import Footer from "./layout/Footer"
 import AnnotationsCreate from './components/annotations/CreateAnnotation';
 import AnnotationsUpdate from './components/annotations/EditAnnotation';
 import IndexAnnotations from './components/annotations/IndexAnnotation';
+import AnnotationsUpload from './components/annotations/UploadAnnotation';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './Main.css';
@@ -22,12 +23,12 @@ class Main extends React.Component {
 
     constructor(props) {
         super(props)
-    
+
         this.state = {
              user: undefined
         }
     }
-    
+
 
     componentWillMount() {
         HttpClient.get('/user')
@@ -72,6 +73,9 @@ class Main extends React.Component {
                                     render={(routeParams) => <AnnotationsUpdate routeParams={routeParams} />} />
                                 <Route exact path="/api-key" refresh={true}>
                                     <IndexAPIKey />
+                                </Route>
+                                <Route exact path="/annotation/upload" refresh={true}>
+                                    <AnnotationsUpload />
                                 </Route>
                             </Switch>
 

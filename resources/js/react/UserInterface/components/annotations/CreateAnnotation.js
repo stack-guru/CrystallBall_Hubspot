@@ -136,7 +136,7 @@ export default class CreateAnnotation extends React.Component {
     render() {
         const validation = this.state.validation;
         return (
-            <div className="container-xl bg-white" style={{ minHeight: '100vh' }}>
+            <div className="container-xl bg-white  component-wrapper" >
                 <section className="ftco-section" id="buttons">
                     <div className="container">
                         <div className="row mb-5">
