@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <title>Dashboard</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <style>
         #loader {
             transition: all .3s ease-in-out;
@@ -91,5 +92,6 @@
 <script type="text/javascript" src="{{asset('vendor.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundle.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/Main.js')}}"></script>
+
 </body>
 </html>

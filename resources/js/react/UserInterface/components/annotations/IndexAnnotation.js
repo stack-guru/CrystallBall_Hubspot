@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
 
+
 class IndexAnnotations extends React.Component {
 
     constructor() {
@@ -10,6 +11,9 @@ class IndexAnnotations extends React.Component {
         this.state = {
             annotations: [],
             error: '',
+            check:false,
+            statusText:'Disable',
+            is_enable:0,
         }
         this.deleteAnnotation = this.deleteAnnotation.bind(this)
     }
@@ -44,8 +48,33 @@ class IndexAnnotations extends React.Component {
         });
     }
 
+    statusHandler(id){
+        if(this.state.check==false){
+            this.setState({check:true,is_enable:1})
+            HttpClient.put(`/annotation/${id}`,this.state.is_enable)
+                .then(resp=>{
+                    if(resp.statusText=="ok"){
+                        this.setState({statusText:'Enable'})
+                    }else{
+                        this.setState({statusText:'Disabled'})
+                    }
+                    let annotations = this.state.annotations;
+                    // annotations = annotations.filter(an => an.is_enable !=);
+
+                        })
+                .catch(err=>{
+                        console.log(err)
+                });
+
+
+        }
+
+    }
+
+
     render() {
         const annotations = this.state.annotations;
+        const statusText=this.state.statusText;
         return (
             <div className="container-xl bg-white p-5 d-flex flex-column justify-content-center" style={{ minHeight: '100vh' }}>
                 <section className="ftco-section  p-3 " id="inputs" style={{ minHeight: '100vh' }}>
@@ -64,6 +93,8 @@ class IndexAnnotations extends React.Component {
                                             <th>Description</th>
                                             <th>Show At</th>
                                             <th>Actions</th>
+                                            <th>Status</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -77,21 +108,30 @@ class IndexAnnotations extends React.Component {
                                                         <td>{anno.description}</td>
                                                         <td>{anno.show_at}</td>
                                                         <td>
-
                                                             <button type="button" onClick={() => {
                                                                 this.deleteAnnotation(anno.id)
-                                                            }} className="btn btn-danger m-1">
+                                                            }} className="btn btn-sm btn-danger m-2">
                                                                 <i className="ion-ios-trash"></i>
                                                                 Delete
                                                             </button>
 
                                                             <Link to={`/annotation/${anno.id}/edit`} >
-                                                                <span type="button" className="btn btn-primary m-1" >
+                                                                <span type="button" className="btn btn-sm btn-primary m-2" >
                                                                     <i className="ion-ios-trash"></i>
                                                                 Edit
                                                             </span>
                                                             </Link>
                                                         </td>
+                                            <td>
+                                                <input type="checkbox" onChange={()=> {
+                                                    this.statusHandler(anno.id)
+                                                }} defaultChecked={this.state.check}/>
+                                                <span className=" ml-2 status">
+                                                    {
+                                                        statusText
+                                                    }
+                                                </span>
+                                            </td>
                                                     </tr>
                                                 )) : <tr><td colSpan="9">No Annotation found</td></tr>
                                         }
