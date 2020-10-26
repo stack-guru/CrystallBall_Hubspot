@@ -1,6 +1,7 @@
 import React from 'react';
 import Axios from "axios";
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 
 class header extends React.Component {
 
@@ -161,10 +162,10 @@ class header extends React.Component {
                                 <div className="peer  "><span className="text-white">{this.props.user != undefined ? this.props.user.name : null}</span></div>
                             </a>
                             <ul className="dropdown-menu fsz-sm">
-                                {/* <li>
-                                    <a href={null} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                                <li>
+                                    <Link to="/settings" className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                                         <i className="ti-settings mR-10"></i> <span>Setting</span>
-                                    </a></li> */}
+                                    </Link></li>
                                 {/* <li>
                                     <a href={null} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
                                         className="ti-user mR-10"></i>

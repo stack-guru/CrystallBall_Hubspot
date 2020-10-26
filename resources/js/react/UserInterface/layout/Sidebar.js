@@ -51,7 +51,7 @@ class sidebar extends React.Component{
                         <Link to="/annotation/create">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                <i className="fa fa-plus text-white"></i>
+                                <i className="ti-comment-alt text-white"></i>
                             </span>
                             <span className="title">Add Annotation</span>
                         </span>
@@ -97,7 +97,7 @@ class sidebar extends React.Component{
                         </span>
                         </a>
                     </li> */}
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <Link to="/settings">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
@@ -106,14 +106,14 @@ class sidebar extends React.Component{
                             <span className="title">Settings</span>
                         </span>
                         </Link>
-                    </li>
+                    </li> */}
                     <li className="nav-item">
                         <Link to="#">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
                                 <i className="fa fa-cube text-white"></i>
                             </span>
-                            <span className="title">Download Extension</span>
+                            <span className="title">Add Chrome Extension</span>
                         </span>
                         </Link>
                     </li>

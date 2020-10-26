@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>@yield('page-title') | GAnnotations</title>
+    <title>@yield('page-title') | GAannotations</title>
 
     {{-- <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/floating-labels/"> --}}
 
