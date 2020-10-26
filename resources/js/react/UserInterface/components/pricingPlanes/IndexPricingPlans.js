@@ -9,15 +9,15 @@ export  default class indexPricingPlans extends React.Component{
 
     render() {
         return (
-            <div className=" bg-white">
-                <section className="pricing py-5 bg-white ">
+            <div className=" bg-white component-wrapper">
+                <section className="pricing bg-white ">
                     <div className="container">
-                        <div className="row ml-0 mr-0 p-4">
+                        <div className="row ml-0 mr-0 p-2">
                             <div className="col-12 text-center">
                                 <h2 className="gaa-title">Choose Your Plan</h2>
                             </div>
                         </div>
-                        <div className="row ml-0 mr-0 d-flex flex-row justify-content-center pt-5">
+                        <div className="row ml-0 mr-0 d-flex flex-row justify-content-center pt-3">
 
                             <div className="col-lg-4">
                                 <div className="card mb-5 mb-lg-0">

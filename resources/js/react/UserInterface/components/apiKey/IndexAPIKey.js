@@ -54,8 +54,8 @@ class IndexAPIKey extends React.Component {
 
     render() {
         return (
-            <div className="container-xl bg-white p-5 d-flex flex-column justify-content-center" style={{ minHeight: '100vh' }}>
-                <section className="ftco-section  p-3 " id="inputs" style={{ minHeight: '100vh' }}>
+            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
+                <section className="ftco-section " id="inputs" >
                     <div className="container p-5">
                         <div className="row mb-5">
                             <div className="col-md-12">

@@ -74,8 +74,8 @@ class IndexAnnotations extends React.Component {
         const annotations = this.state.annotations;
 
         return (
-            <div className="container-xl bg-white p-5 d-flex flex-column justify-content-center component-wrapper" >
-                <section className="ftco-section  p-3 " id="inputs">
+            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
+                <section className="ftco-section   " id="inputs">
                     <div className="container p-5">
                         <div className="row mb-5">
                             <div className="col-md-12">
@@ -138,6 +138,7 @@ class IndexAnnotations extends React.Component {
                             <div className="col-12">pagination</div>
                         </div>
                     </div>
+
                 </section>
             </div>
         );
