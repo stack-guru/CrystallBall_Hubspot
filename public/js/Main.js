@@ -38880,14 +38880,18 @@ var Main = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(Main, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
+    key: "componentDidMount",
+    value: function componentDidMount() {
       var _this2 = this;
 
+      var loader = document.getElementById("loader");
+      loader.classList.remove("fadeOut");
       _utils_HttpClient__WEBPACK_IMPORTED_MODULE_4__["default"].get('/user').then(function (response) {
         _this2.setState({
           user: response.data.user
         });
+
+        loader.classList.add("fadeOut");
       }, function (err) {
         console.log(err);
 
@@ -38907,6 +38911,7 @@ var Main = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      if (this.state.user == undefined) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_toastify__WEBPACK_IMPORTED_MODULE_3__["ToastContainer"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidebar"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_layout_Sidebar__WEBPACK_IMPORTED_MODULE_5__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -41240,8 +41245,8 @@ var indexPricingPlans = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(indexPricingPlans, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
+    key: "componentDidMount",
+    value: function componentDidMount() {
       var _this2 = this;
 
       this.setState({
@@ -41286,7 +41291,8 @@ var indexPricingPlans = /*#__PURE__*/function (_React$Component) {
         className: "row ml-0 mr-0 d-flex flex-row justify-content-center pt-3"
       }, this.state.pricePlans.map(function (pricePlan) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col-lg-4"
+          className: "col-lg-4",
+          key: pricePlan.id
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "card mb-5 mb-lg-0"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -41396,11 +41402,18 @@ var indexSettings = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(indexSettings, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      console.log(this.props);
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container-xl bg-white component-wrapper"
-      }, "this is setting page");
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0"
+      }));
     }
   }]);
 

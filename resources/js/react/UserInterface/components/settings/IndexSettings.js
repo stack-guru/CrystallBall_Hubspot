@@ -7,10 +7,16 @@ export default class indexSettings extends React.Component{
 
     }
 
+    componentDidMount() {
+        console.log(this.props)
+    }
+
     render() {
         return (
             <div className="container-xl bg-white component-wrapper">
-                this is setting page
+               <div className="row ml-0 mr-0">
+
+               </div>
             </div>
         );
     }

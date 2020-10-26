@@ -12,7 +12,7 @@ export default class indexPricingPlans extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.setState({ isBusy: true });
         HttpClient.get('/price-plan')
             .then(response => {
@@ -40,7 +40,7 @@ export default class indexPricingPlans extends React.Component {
 
                             {this.state.pricePlans.map(pricePlan => {
 
-                                return <div className="col-lg-4">
+                                return <div className="col-lg-4" key={pricePlan.id}>
                                     <div className="card mb-5 mb-lg-0">
                                         <div className="card-body">
                                             <h5 className="card-title text-white  text-uppercase text-center">{pricePlan.name}</h5>

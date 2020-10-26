@@ -32,10 +32,13 @@ class Main extends React.Component {
     }
 
 
-    componentWillMount() {
+    componentDidMount() {
+        let loader = document.getElementById("loader");
+        loader.classList.remove("fadeOut")
         HttpClient.get('/user')
             .then(response => {
                 this.setState({ user: response.data.user });
+                loader.classList.add("fadeOut")
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });
@@ -46,6 +49,7 @@ class Main extends React.Component {
     }
 
     render() {
+        if (this.state.user == undefined) return null;
         return (
 
             <React.Fragment>
@@ -94,7 +98,7 @@ class Main extends React.Component {
                     </div>
                 </Router>
 
-          </React.Fragment>
+            </React.Fragment>
 
         )
     }
