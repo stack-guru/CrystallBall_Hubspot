@@ -41,7 +41,7 @@ class sidebar extends React.Component{
                         <Link to="/annotation">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                               <i className="fa fa-clipboard text-white"></i>
+                                 <i className="ti-comment-alt text-white"></i>
                             </span>
                             <span className="title">GAannotations</span>
                         </span>
@@ -51,7 +51,7 @@ class sidebar extends React.Component{
                         <Link to="/annotation/create">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                <i className="ti-comment-alt text-white"></i>
+                                <i className="fa fa-plus text-white"></i>
                             </span>
                             <span className="title">Add Annotation</span>
                         </span>

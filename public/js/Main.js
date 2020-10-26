@@ -40566,8 +40566,8 @@ var EditAnnotation = /*#__PURE__*/function (_React$Component) {
         type: "submit",
         className: "btn btn-primary btn-fab btn-round",
         title: "submit"
-      }, "Save", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "ti-save mr-1"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "ti-save mr-2"
       }), "Save")))))));
     }
   }]);
@@ -40799,20 +40799,18 @@ var IndexAnnotations = /*#__PURE__*/function (_React$Component) {
           onClick: function onClick() {
             _this5.deleteAnnotation(anno.id);
           },
-          className: "btn btn-sm btn-danger m-2"
+          className: "btn btn-sm gaa-primary text-white m-2"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: " mr-2 fa fa-trash"
         }), "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           to: "/annotation/".concat(anno.id, "/edit")
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           type: "button",
-          className: "btn btn-sm btn-primary m-2"
+          className: "btn btn-sm gaa-primary text-white m-2"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: " mr-2 fa fa-edit"
         }), "Edit"))));
-      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12"
-      }, "pagination")))));
+      }))))))));
     }
   }]);
 
@@ -41846,7 +41844,7 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "icon-holder"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fa fa-clipboard text-white"
+        className: "ti-comment-alt text-white"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "title"
       }, "GAannotations")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -41858,7 +41856,7 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "icon-holder"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "ti-comment-alt text-white"
+        className: "fa fa-plus text-white"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "title"
       }, "Add Annotation")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
