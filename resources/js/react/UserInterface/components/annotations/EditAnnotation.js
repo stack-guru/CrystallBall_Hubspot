@@ -146,14 +146,14 @@ export default class EditAnnotation extends React.Component {
                             </div>
                         </div>
 
-                        <div className="row">
+                        <div className="row ml-0 mr-0">
                             <div className="col-md-12">
                                 <ErrorAlert errors={this.state.errors} />
                             </div>
                         </div>
 
                         <form onSubmit={this.submitHandler}>
-                            <div className="row">
+                            <div className="row ml-0 mr-0">
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
@@ -258,10 +258,10 @@ export default class EditAnnotation extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row">
-                                <div className="col-1 offset-11">
+                            <div className="row ml-0 mr-0">
+                                <div className="col-12 text-right">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">
-                                        <i className="ti-plus"></i>Save
+                                       Save
                                     </button>
                                 </div>
                             </div>

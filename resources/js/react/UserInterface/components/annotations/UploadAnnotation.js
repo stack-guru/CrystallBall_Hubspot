@@ -37,7 +37,7 @@ export default class UploadAnnotation extends React.Component {
 
     render() {
         return (
-            <div className="container-xl bg-white component-wrapper" style={{ minHeight: '100vh' }}>
+            <div className="container-xl bg-white component-wrapper" >
                 <section className="ftco-section" id="buttons">
                     <div className="container p-5">
                         <div className="row mb-5">

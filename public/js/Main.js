@@ -2087,7 +2087,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".main-content{\n    padding-left:3%!important;\n    padding-right: 3%!important;\n}\n.component-wrapper{\n    width: 100%;\n    height: 100vh;\n}\n.upload-csv-input{\n    height: 2.6rem;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient{\n    background:linear-gradient(to bottom,#0a2950 ,#456287);\n}\n.gaa-primary{\n    background:#456287;\n\n}\n.gaa-title{\n    color:#456287;\n}\n\n\n.sidebar-menu li a {\n    color: white!important;\n}\n.sidebar-menu li a:hover {\n    opacity: .6!important;\n}\n\n/*pricing css start*/\n/*section.pricing {*/\n/*    background: #007bff;*/\n/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/\n/*}*/\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color:white;\n\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: .1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: .1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -.25rem;\n        margin-bottom: .25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n", ""]);
+exports.push([module.i, ".main-content{\n    padding-left:3%!important;\n    padding-right: 3%!important;\n}\n.component-wrapper{\n    width: 100%;\n    height: 500px;\n}\n.upload-csv-input{\n    height: 2.6rem;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient{\n    background:linear-gradient(to bottom,#0a2950 ,#456287);\n}\n.gaa-primary{\n    background:#456287;\n\n}\n.gaa-title{\n    color:#456287;\n}\n\n\n.sidebar-menu li a {\n    color: white!important;\n}\n.sidebar-menu li a:hover {\n    opacity: .6!important;\n}\n\n/*pricing css start*/\n/*section.pricing {*/\n/*    background: #007bff;*/\n/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/\n/*}*/\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color:white;\n\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: .1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: .1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -.25rem;\n        margin-bottom: .25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n", ""]);
 
 // exports
 
@@ -40399,7 +40399,7 @@ var EditAnnotation = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "heading-section gaa-title"
       }, "Edit Annotation ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Update your annotation details")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
+        className: "row ml-0 mr-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_utils_ErrorAlert__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -40407,7 +40407,7 @@ var EditAnnotation = /*#__PURE__*/function (_React$Component) {
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.submitHandler
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
+        className: "row ml-0 mr-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-3 col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -40548,16 +40548,14 @@ var EditAnnotation = /*#__PURE__*/function (_React$Component) {
       }), validation.type ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "bmd-help text-danger"
       }, " \xA0 \xA0", validation.type) : ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
+        className: "row ml-0 mr-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-1 offset-11"
+        className: "col-12 text-right"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
         className: "btn btn-primary btn-fab btn-round",
         title: "submit"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "ti-plus"
-      }), "Save")))))));
+      }, "Save")))))));
     }
   }]);
 
@@ -40757,16 +40755,10 @@ var IndexAnnotations = /*#__PURE__*/function (_React$Component) {
 
       var annotations = this.state.annotations;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "container-xl bg-white p-5 d-flex flex-column justify-content-center",
-        style: {
-          minHeight: '100vh'
-        }
+        className: "container-xl bg-white p-5 d-flex flex-column justify-content-center component-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "ftco-section  p-3 ",
-        id: "inputs",
-        style: {
-          minHeight: '100vh'
-        }
+        id: "inputs"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container p-5"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
