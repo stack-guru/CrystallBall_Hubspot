@@ -11,7 +11,7 @@ class sidebar extends React.Component{
     render() {
         return(
             <div className="sidebar-inner">
-                <div className="sidebar-logo">
+                <div className="sidebar-logo ">
                     <div className="peers ai-c fxw-nw">
                         <div className="peer peer-greed"><a className="sidebar-link td-n" href="index.html">
                             <div className="peers ai-c fxw-nw">
@@ -28,7 +28,7 @@ class sidebar extends React.Component{
                         </div>
                     </div>
                 </div>
-                <ul className="sidebar-menu scrollable pos-r">
+                <ul className="sidebar-menu scrollable pos-r ga-blue-gradient">
                     {/* <li className="nav-item mT-30 actived">
                         <Link to="/dashboard">
                         <span className="sidebar-link" >

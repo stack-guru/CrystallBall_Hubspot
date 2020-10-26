@@ -2087,7 +2087,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".main-content{\n    padding-left:3%!important;\n    padding-right: 3%!important;\n}\n.component-wrapper{\n    width: 100%;\n    height: 100vh;\n}\n\n/*#0a2950*/\n/*#456287*/\n.sidebar-menu{\n    background:linear-gradient(to bottom,#0a2950 ,#456287);\n}\n.sidebar-menu li a {\n    color: white!important;\n}\n.sidebar-menu li a:hover {\n    opacity: .6!important;\n}\n/*.peers .ai-c {*/\n/*    color:white!important;*/\n/*}*/\n\n", ""]);
+exports.push([module.i, ".main-content{\n    padding-left:3%!important;\n    padding-right: 3%!important;\n}\n.component-wrapper{\n    width: 100%;\n    height: 100vh;\n}\n\n/*#0a2950*/\n/*#456287*/\n.ga-blue-gradient{\n    background:linear-gradient(to bottom,#0a2950 ,#456287);\n}\n.ga-red-gradient{\n    background:linear-gradient(to right, rgba(246, 0, 0, 0.7), #fffcfc);\n\n}\n.sidebar-menu li a {\n    color: white!important;\n}\n.sidebar-menu li a:hover {\n    opacity: .6!important;\n}\n/*.peers .ai-c {*/\n/*    color:white!important;*/\n/*}*/\n\n", ""]);
 
 // exports
 
@@ -41315,7 +41315,7 @@ var header = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "header-container"
+        className: "header-container "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "nav-left"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -41439,7 +41439,7 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidebar-inner"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "sidebar-logo"
+        className: "sidebar-logo "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "peers ai-c fxw-nw"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -41472,7 +41472,7 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "ti-arrow-circle-left"
       })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "sidebar-menu scrollable pos-r"
+        className: "sidebar-menu scrollable pos-r ga-blue-gradient"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-item"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {

@@ -9,8 +9,12 @@
 
 /*#0a2950*/
 /*#456287*/
-.sidebar-menu{
+.ga-blue-gradient{
     background:linear-gradient(to bottom,#0a2950 ,#456287);
+}
+.ga-red-gradient{
+    background:linear-gradient(to right, rgba(246, 0, 0, 0.7), #fffcfc);
+
 }
 .sidebar-menu li a {
     color: white!important;
