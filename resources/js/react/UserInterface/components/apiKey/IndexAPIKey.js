@@ -59,7 +59,7 @@ class IndexAPIKey extends React.Component {
                     <div className="container p-5">
                         <div className="row mb-5">
                             <div className="col-md-12">
-                                <h2 className="heading-section">API Keys</h2>
+                                <h2 className="heading-section gaa-title">API Keys</h2>
                             </div>
                         </div>
                         <div className="row">

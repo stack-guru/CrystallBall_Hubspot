@@ -140,7 +140,7 @@ export default class EditAnnotation extends React.Component {
                     <div className="container">
                         <div className="row mb-5">
                             <div className="col-md-12">
-                                <h2 className="heading-section">Edit Annotation <br />
+                                <h2 className="heading-section gaa-title">Edit Annotation <br />
                                     <small>Update your annotation details</small>
                                 </h2>
                             </div>

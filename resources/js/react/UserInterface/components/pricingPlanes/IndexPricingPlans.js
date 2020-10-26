@@ -14,7 +14,7 @@ export  default class indexPricingPlans extends React.Component{
                     <div className="container">
                         <div className="row ml-0 mr-0 p-4">
                             <div className="col-12 text-center">
-                                <h2>Choose Your Plan</h2>
+                                <h2 className="gaa-title">Choose Your Plan</h2>
                             </div>
                         </div>
                         <div className="row ml-0 mr-0 d-flex flex-row justify-content-center pt-5">

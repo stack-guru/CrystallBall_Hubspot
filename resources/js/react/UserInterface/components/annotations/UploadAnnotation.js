@@ -42,7 +42,7 @@ export default class UploadAnnotation extends React.Component {
                     <div className="container p-5">
                         <div className="row mb-5">
                             <div className="col-md-12">
-                                <h2 className="heading-section">Upload Annotations <br />
+                                <h2 className="heading-section gaa-title">Upload Annotations <br />
                                     <small>Upload all your annotations using CSV</small>
                                 </h2>
                             </div>
