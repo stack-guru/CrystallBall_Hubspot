@@ -78,7 +78,7 @@ class Main extends React.Component {
                                 <Route exact path="/annotation/upload" refresh={true}>
                                     <AnnotationsUpload />
                                 </Route>
-                                <Route exact path="/choosePlan" refresh={true}>
+                                <Route exact path="/choose-plan" refresh={true}>
                                     <PricingPlans />
                                 </Route>
                             </Switch>

@@ -14,7 +14,7 @@ class header extends React.Component {
 
         return (
             <div>
-                <div className="header-container ga-primary ">
+                <div className="header-container gaa-primary ">
                     <ul className="nav-left  ">
                         <li>
                             <a id="sidebar-toggle" className="sidebar-toggle  text-white" href={null}><i

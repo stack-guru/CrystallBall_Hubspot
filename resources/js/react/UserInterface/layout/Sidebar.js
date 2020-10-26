@@ -18,7 +18,7 @@ class sidebar extends React.Component{
                                 <div className="peer">
                                     <div className="logo"><img src="/images/company_logo.png"  width="65px" height="65px" alt=""/></div>
                                 </div>
-                                <div className="peer peer-greed "><h5 className="lh-1 mB-0 logo-text ">GAnnotations</h5>
+                                <div className="peer peer-greed "><h5 className="lh-1 mB-0 logo-text ">GAAnnotations</h5>
                                 </div>
                             </div>
                         </a></div>
@@ -28,7 +28,7 @@ class sidebar extends React.Component{
                         </div>
                     </div>
                 </div>
-                <ul className="sidebar-menu scrollable pos-r ga-blue-gradient">
+                <ul className="sidebar-menu scrollable pos-r gaa-blue-gradient">
                     {/* <li className="nav-item mT-30 actived">
                         <Link to="/dashboard">
                         <span className="sidebar-link" >
@@ -43,7 +43,7 @@ class sidebar extends React.Component{
                             <span className="icon-holder">
                                <i className="fa fa-clipboard text-white"></i>
                             </span>
-                            <span className="title">Annotations</span>
+                            <span className="title">GAAnnotations</span>
                         </span>
                         </Link>
                     </li>
@@ -68,7 +68,7 @@ class sidebar extends React.Component{
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/choosePlan">
+                        <Link to="/choose-plan">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
                                 <i className="fa fa-dollar text-white"></i>

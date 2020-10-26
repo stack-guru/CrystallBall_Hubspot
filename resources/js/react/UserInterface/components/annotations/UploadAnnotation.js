@@ -59,7 +59,7 @@ export default class UploadAnnotation extends React.Component {
                                 <div className="col-lg-12 col-sm-12">
                                     <div className="form-group">
                                         <label htmlFor="csv" className="form-control-placeholder">CSV</label>
-                                        <input type="file" className="form-control" id="csv" name="csv" />
+                                        <input type="file" className="form-control upload-csv-input" id="csv" name="csv" />
                                     </div>
                                 </div>
                             </div>
