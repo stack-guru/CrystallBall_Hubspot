@@ -9,13 +9,15 @@
 
 /*#0a2950*/
 /*#456287*/
+
 .ga-blue-gradient{
     background:linear-gradient(to bottom,#0a2950 ,#456287);
 }
-.ga-red-gradient{
-    background:linear-gradient(to right, rgba(246, 0, 0, 0.7), #fffcfc);
+.ga-primary{
+    background:#456287;
 
 }
+
 .sidebar-menu li a {
     color: white!important;
 }

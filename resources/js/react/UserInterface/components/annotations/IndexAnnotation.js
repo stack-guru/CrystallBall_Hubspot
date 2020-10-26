@@ -113,13 +113,13 @@ class IndexAnnotations extends React.Component {
                                                         <button type="button" onClick={() => {
                                                             this.deleteAnnotation(anno.id)
                                                         }} className="btn btn-sm btn-danger m-2">
-                                                            <i className=" mr-2 ti-trash"></i>
+                                                            <i className=" mr-2 fa fa-trash"></i>
                                                                 Delete
                                                             </button>
 
                                                         <Link to={`/annotation/${anno.id}/edit`} >
                                                             <span type="button" className="btn btn-sm btn-primary m-2" >
-                                                                <i className=" mr-2 ti-pencil"></i>
+                                                                <i className=" mr-2 fa fa-edit"></i>
                                                                 Edit
                                                             </span>
                                                         </Link>

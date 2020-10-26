@@ -14,6 +14,7 @@ import AnnotationsCreate from './components/annotations/CreateAnnotation';
 import AnnotationsUpdate from './components/annotations/EditAnnotation';
 import IndexAnnotations from './components/annotations/IndexAnnotation';
 import AnnotationsUpload from './components/annotations/UploadAnnotation';
+import PricingPlans from './components/pricingPlanes/IndexPricingPlans';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './Main.css';
@@ -76,6 +77,9 @@ class Main extends React.Component {
                                 </Route>
                                 <Route exact path="/annotation/upload" refresh={true}>
                                     <AnnotationsUpload />
+                                </Route>
+                                <Route exact path="/choosePlan" refresh={true}>
+                                    <PricingPlans />
                                 </Route>
                             </Switch>
 

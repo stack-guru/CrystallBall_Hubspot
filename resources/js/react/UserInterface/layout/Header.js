@@ -14,21 +14,21 @@ class header extends React.Component {
 
         return (
             <div>
-                <div className="header-container ">
-                    <ul className="nav-left">
+                <div className="header-container ga-primary ">
+                    <ul className="nav-left  ">
                         <li>
-                            <a id="sidebar-toggle" className="sidebar-toggle" href={null}><i
+                            <a id="sidebar-toggle" className="sidebar-toggle  text-white" href={null}><i
                                 className="ti-menu"></i></a>
                         </li>
                         <li className="search-box"><a className="search-toggle no-pdd-right" href={null}><i
-                            className="search-icon ti-search pdd-right-10"></i> <i
+                            className="search-icon  text-white ti-search pdd-right-10"></i> <i
                                 className="search-icon-close ti-close pdd-right-10"></i></a></li>
                         <li className="search-input">
                             <input className="form-control" type="text"
                                 placeholder="Search..." />
                         </li>
                     </ul>
-                    <ul className="nav-right">
+                    <ul className="nav-right  ">
                         {/*<li className="notifications dropdown">*/}
                         {/*    <span className="counter bgc-red">3</span>*/}
                         {/*    <a href={null} className="dropdown-toggle no-after" data-toggle="dropdown"><i*/}
@@ -158,7 +158,7 @@ class header extends React.Component {
                                     {/* <img className="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg"
                                          alt=""/> */}
                                 </div>
-                                <div className="peer"><span className="fsz-sm c-grey-900">{this.props.user != undefined ? this.props.user.name : null}</span></div>
+                                <div className="peer  "><span className="text-white">{this.props.user != undefined ? this.props.user.name : null}</span></div>
                             </a>
                             <ul className="dropdown-menu fsz-sm">
                                 {/* <li>

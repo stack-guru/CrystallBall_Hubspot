@@ -259,9 +259,9 @@ export default class CreateAnnotation extends React.Component {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-1 offset-11">
+                                <div className="col-12 text-right">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">
-                                        <i className="ti-plus"></i>Add
+                                        <i className="fa fa-plus mr-1"></i>Add
                                         </button>
                                 </div>
                             </div>

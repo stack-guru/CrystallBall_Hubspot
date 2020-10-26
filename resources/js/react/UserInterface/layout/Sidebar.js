@@ -11,14 +11,14 @@ class sidebar extends React.Component{
     render() {
         return(
             <div className="sidebar-inner">
-                <div className="sidebar-logo ">
+                <div className="sidebar-logo bg-white">
                     <div className="peers ai-c fxw-nw">
                         <div className="peer peer-greed"><a className="sidebar-link td-n" href="index.html">
                             <div className="peers ai-c fxw-nw">
                                 <div className="peer">
-                                    <div className="logo"><img src="/images/company_logo.png" width="65px" height="65px" alt=""/></div>
+                                    <div className="logo"><img src="/images/company_logo.png"  width="65px" height="65px" alt=""/></div>
                                 </div>
-                                <div className="peer peer-greed"><h5 className="lh-1 mB-0 logo-text">GAnnotations</h5>
+                                <div className="peer peer-greed "><h5 className="lh-1 mB-0 logo-text ">GAnnotations</h5>
                                 </div>
                             </div>
                         </a></div>
@@ -64,6 +64,16 @@ class sidebar extends React.Component{
                                 <i className="fa fa-upload text-white"></i>
                             </span>
                             <span className="title">CSV Upload</span>
+                        </span>
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/choosePlan">
+                        <span className="sidebar-link" >
+                            <span className="icon-holder">
+                                <i className="fa fa-dollar text-white"></i>
+                            </span>
+                            <span className="title">Choose plan</span>
                         </span>
                         </Link>
                     </li>

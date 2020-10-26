@@ -66,7 +66,7 @@ export default class UploadAnnotation extends React.Component {
                             <div className="row ml-0 mr-0 pr-4">
                                 <div className="col-12 offset-11">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round">
-                                        <i className="ti-upload mr-3"></i>
+                                        <i className="fa fa-upload mr-3"></i>
                                         Upload
                                     </button>
                                 </div>
