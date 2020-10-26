@@ -261,7 +261,7 @@ export default class EditAnnotation extends React.Component {
                             <div className="row ml-0 mr-0">
                                 <div className="col-12 text-right">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">
-                                        <i className="ti-save mr-2"></i>
+                                        {/* <i className="ti-save mr-2"></i> */}
                                         Save
                                     </button>
                                 </div>

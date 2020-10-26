@@ -21,7 +21,7 @@ export default class indexSettings extends React.Component{
                         <span>Email: {this.props.user==undefined?'':this.props.user.email}</span>
                         <ul className='list-unstyled list-group mt-3'>
                             <h4><b>Profile</b>{this.props.user.email_verified_at==null?<sub className="text-danger">Non-varified</sub>
-                                :<sub className="text-success">Varified</sub>}</h4>
+                                :<sub className="text-success">Verified</sub>}</h4>
                             <li>
                                 <Link to="/">
                                 <span>Edit profile</span>
@@ -31,7 +31,7 @@ export default class indexSettings extends React.Component{
                                 this.props.user.email_verified_at!=null?'':
                                     <li>
                                     <Link to="/">
-                                        <span >Varify Email</span>
+                                        <span >Verify Email</span>
                                     </Link>
                                 </li>
                             }

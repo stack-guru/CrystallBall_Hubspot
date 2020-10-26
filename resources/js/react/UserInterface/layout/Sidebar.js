@@ -28,7 +28,7 @@ class sidebar extends React.Component{
                         </div>
                     </div>
                 </div>
-                <ul className="sidebar-menu scrollable pos-r gaa-blue-gradient">
+                <ul className="sidebar-menu scrollable pos-r "> {/*gaa-blue-gradient*/}
                     {/* <li className="nav-item mT-30 actived">
                         <Link to="/dashboard">
                         <span className="sidebar-link" >
@@ -38,46 +38,46 @@ class sidebar extends React.Component{
                         </Link>
                     </li> */}
                     <li className="nav-item">
-                        <Link to="/annotation">
+                        <Link to="/annotation" className="text-danger">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                 <i className="ti-comment-alt text-white"></i>
+                                 <i className="ti-comment-alt"></i>
                             </span>
                             <span className="title">GAannotations</span>
                         </span>
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/annotation/create">
+                        <Link to="/annotation/create" className="text-success">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                <i className="fa fa-plus text-white"></i>
+                                <i className="fa fa-plus"></i>
                             </span>
                             <span className="title">Add Annotation</span>
                         </span>
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/annotation/upload">
+                        <Link to="/annotation/upload" className="text-warning">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                <i className="fa fa-upload text-white"></i>
+                                <i className="fa fa-upload"></i>
                             </span>
                             <span className="title">CSV Upload</span>
                         </span>
                         </Link>
                     </li>
-                    <li className="nav-item">
-                        <Link to="/choose-plan">
+                    {/* <li className="nav-item">
+                        <Link to="/choose-plan" className="text-info">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                <i className="fa fa-dollar text-white"></i>
+                                <i className="fa fa-dollar"></i>
                             </span>
                             <span className="title">Choose plan</span>
                         </span>
                         </Link>
-                    </li>
-                    <li className="nav-item">
+                    </li> */}
+                    {/* <li className="nav-item">
                         <Link to="/api-key">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
@@ -86,7 +86,7 @@ class sidebar extends React.Component{
                             <span className="title">API Keys</span>
                         </span>
                         </Link>
-                    </li>
+                    </li> */}
                     {/* <li className="nav-item">
                         <a href="https://datastudio.google.com">
                         <span className="sidebar-link" >
@@ -108,10 +108,10 @@ class sidebar extends React.Component{
                         </Link>
                     </li> */}
                     <li className="nav-item">
-                        <Link to="#">
+                        <Link to="#" className="text-default">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                <i className="fa fa-cube text-white"></i>
+                                <i className="fa fa-cube"></i>
                             </span>
                             <span className="title">Add Chrome Extension</span>
                         </span>

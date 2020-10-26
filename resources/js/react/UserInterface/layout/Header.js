@@ -21,14 +21,14 @@ class header extends React.Component {
 
         return (
             <div>
-                <div className="header-container gaa-primary ">
+                <div className="header-container "> {/* gaa-primary */}
                     <ul className="nav-left  ">
                         <li>
-                            <a id="sidebar-toggle" className="sidebar-toggle  text-white" href="#" onClick={this.toggleSidebar}><i
+                            <a id="sidebar-toggle" className="sidebar-toggle " href="#" onClick={this.toggleSidebar}><i
                                 className="ti-menu"></i></a>
                         </li>
                         <li className="search-box"><a className="search-toggle no-pdd-right" href={null}><i
-                            className="search-icon  text-white ti-search pdd-right-10"></i> <i
+                            className="search-icon ti-search pdd-right-10"></i> <i
                                 className="search-icon-close ti-close pdd-right-10"></i></a></li>
                         <li className="search-input">
                             <input className="form-control" type="text"
@@ -165,7 +165,7 @@ class header extends React.Component {
                                     {/* <img className="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg"
                                          alt=""/> */}
                                 </div>
-                                <div className="peer  "><span className="text-white">{this.props.user != undefined ? this.props.user.name : null}</span></div>
+                                <div className="peer  "><span>{this.props.user != undefined ? this.props.user.name : null}</span></div>
                             </a>
                             <ul className="dropdown-menu fsz-sm">
                                 <li>
