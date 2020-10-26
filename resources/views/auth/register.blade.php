@@ -8,7 +8,7 @@
       <div class="text-center mb-4">
         <img class="mb-4" src="{{asset('images/company_logo.png')}}" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">GAnnotations</h1>
-        <p>Google Analytics Annotations Amplified</p>
+{{--        <p>Google Analytics Annotations Amplified</p>--}}
       </div>
 
       <div class="form-label-group">
@@ -53,5 +53,5 @@
 
       <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
     </form>
-  
+
 @endsection

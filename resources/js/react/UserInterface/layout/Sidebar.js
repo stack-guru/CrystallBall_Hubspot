@@ -41,7 +41,7 @@ class sidebar extends React.Component{
                         <Link to="/annotation">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                <i className="c-brown-500 ti-notepad"></i>
+                               <i className="fa fa-clipboard text-white"></i>
                             </span>
                             <span className="title">Annotations</span>
                         </span>
@@ -51,7 +51,7 @@ class sidebar extends React.Component{
                         <Link to="/annotation/create">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                <i className="c-brown-500 ti-plus"></i>
+                                <i className="fa fa-plus text-white"></i>
                             </span>
                             <span className="title">Add Annotation</span>
                         </span>
@@ -61,7 +61,7 @@ class sidebar extends React.Component{
                         <Link to="/annotation/upload">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                <i className="c-brown-500 ti-upload"></i>
+                                <i className="fa fa-upload text-white"></i>
                             </span>
                             <span className="title">CSV Upload</span>
                         </span>
@@ -71,7 +71,7 @@ class sidebar extends React.Component{
                         <Link to="/api-key">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                <i className="c-brown-500 ti-key"></i>
+                                <i className="fa fa-key text-white"></i>
                             </span>
                             <span className="title">API Keys</span>
                         </span>
@@ -91,7 +91,7 @@ class sidebar extends React.Component{
                         <Link to="/settings">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                <i className="c-brown-500 ti-settings"></i>
+                                <i className="fa fa-cogs text-white"></i>
                             </span>
                             <span className="title">Settings</span>
                         </span>
@@ -101,7 +101,7 @@ class sidebar extends React.Component{
                         <Link to="#">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
-                                <i className="c-brown-500 ti-package"></i>
+                                <i className="fa fa-cube text-white"></i>
                             </span>
                             <span className="title">Download Extension</span>
                         </span>
