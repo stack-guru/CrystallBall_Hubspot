@@ -85,7 +85,7 @@ class Main extends React.Component {
                                     <PricingPlans />
                                 </Route>
                                 <Route exact path="/settings" refresh={true}>
-                                    <Settings />
+                                    <Settings user={this.state.user} />
                                 </Route>
                             </Switch>
 
