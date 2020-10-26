@@ -24,7 +24,7 @@ class header extends React.Component {
                 <div className="header-container gaa-primary ">
                     <ul className="nav-left  ">
                         <li>
-                            <a id="sidebar-toggle" className="sidebar-toggle  text-white" onClick={this.toggleSidebar}><i
+                            <a id="sidebar-toggle" className="sidebar-toggle  text-white" href="#" onClick={this.toggleSidebar}><i
                                 className="ti-menu"></i></a>
                         </li>
                         <li className="search-box"><a className="search-toggle no-pdd-right" href={null}><i

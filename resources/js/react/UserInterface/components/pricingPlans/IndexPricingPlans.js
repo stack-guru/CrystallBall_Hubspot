@@ -1,10 +1,29 @@
 import React from 'react';
 
-export  default class indexPricingPlans extends React.Component{
+import HttpClient from "../../utils/HttpClient";
+
+
+export default class indexPricingPlans extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            pricePlans: []
+        };
+    }
 
+    componentWillMount() {
+        this.setState({ isBusy: true });
+        HttpClient.get('/price-plan')
+            .then(response => {
+                this.setState({ pricePlans: response.data.price_plans });
+            }, (err) => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                console.log(err)
+                this.setState({ isBusy: false, errors: err });
+            });
     }
 
     render() {
@@ -19,82 +38,45 @@ export  default class indexPricingPlans extends React.Component{
                         </div>
                         <div className="row ml-0 mr-0 d-flex flex-row justify-content-center pt-3">
 
-                            <div className="col-lg-4">
-                                <div className="card mb-5 mb-lg-0">
-                                    <div className="card-body">
-                                        <h5 className="card-title text-white  text-uppercase text-center">Free</h5>
-                                        <h6 className="card-price text-center">$0<span className="period">/month</span>
-                                        </h6>
-                                        <hr/>
+                            {this.state.pricePlans.map(pricePlan => {
+
+                                return <div className="col-lg-4">
+                                    <div className="card mb-5 mb-lg-0">
+                                        <div className="card-body">
+                                            <h5 className="card-title text-white  text-uppercase text-center">{pricePlan.name}</h5>
+                                            {pricePlan.price == 0 ?
+                                                <h6 className="card-price text-center">Free<span className="period">forever</span></h6>
+                                                :
+                                                <h6 className="card-price text-center">${pricePlan.price}<span className="period">/month</span></h6>
+                                            }
+                                            <hr />
                                             <ul className="fa-ul">
-                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>Single
-                                                    User
-                                                </li>
-                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>5GB
-                                                    Storage
-                                                </li>
-                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>Unlimited
-                                                    Public Projects
-                                                </li>
-                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>Community
-                                                    Access
-                                                </li>
-                                                <li className="text-white"><span className="fa-li"><i
-                                                    className="fa fa-times"></i></span>Unlimited Private Projects
-                                                </li>
-                                                <li className="text-white"><span className="fa-li"><i
-                                                    className="fa fa-times"></i></span>Dedicated Phone Support
-                                                </li>
-                                                <li className="text-white"><span className="fa-li"><i
-                                                    className="fa fa-times"></i></span>Free Subdomain
-                                                </li>
-                                                <li className="text-white"><span className="fa-li"><i
-                                                    className="fa fa-times"></i></span>Monthly Status Reports
-                                                </li>
+                                                {
+                                                    pricePlan.has_manual_add ?
+                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>Manual Add</li>
+                                                        :
+                                                        <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>Manual Add</li>
+                                                }
+
+                                                {
+                                                    pricePlan.has_csv_upload ?
+                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>CSV Upload</li>
+                                                        :
+                                                        <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>CSV Upload</li>
+                                                }
+
+                                                {
+                                                    pricePlan.has_api ?
+                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>Annotations API</li>
+                                                        :
+                                                        <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>Annotations API</li>
+                                                }
                                             </ul>
                                             <a href="#" className="btn btn-block btn-primary text-uppercase">Subscribe</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {/*    card 2 start*/}
-
-                            <div className="col-lg-4">
-                                <div className="card mb-5 mb-lg-0">
-                                    <div className="card-body">
-                                        <h5 className="card-title text-white text-uppercase text-center">Free</h5>
-                                        <h6 className="card-price text-center">$0<span className="period">/month</span>
-                                        </h6>
-                                        <hr/>
-                                        <ul className="fa-ul">
-                                            <li><span className="fa-li"><i className="fa fa-check"></i></span>Single
-                                                User
-                                            </li>
-                                            <li><span className="fa-li"><i className="fa fa-check"></i></span>5GB
-                                                Storage
-                                            </li>
-                                            <li><span className="fa-li"><i className="fa fa-check"></i></span>Unlimited
-                                                Public Projects
-                                            </li>
-                                            <li><span className="fa-li"><i className="fa fa-check"></i></span>Community
-                                                Access
-                                            </li>
-                                            <li className=" text-white"><span className="fa-li"><i
-                                                className="fa fa-times"></i></span>Unlimited Private Projects
-                                            </li>
-                                            <li className="text-white"><span className="fa-li"><i
-                                                className="fa fa-times"></i></span>Dedicated Phone Support
-                                            </li>
-                                            <li className="text-white"><span className="fa-li"><i
-                                                className="fa fa-times"></i></span>Free Subdomain
-                                            </li>
-                                            <li className="text-white"><span className="fa-li"><i
-                                                className="fa fa-times"></i></span>Monthly Status Reports
-                                            </li>
-                                        </ul>
-                                        <a href="#" className="btn btn-block btn-primary text-uppercase">Subscribe</a>
-                                    </div>
-                                </div>
-                            </div>
+                            })}
 
 
                         </div>
