@@ -92,7 +92,7 @@
 
 <script type="text/javascript" src="{{asset('vendor.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundle.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/Main.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/UI.js')}}"></script>
 
 </body>
 </html>

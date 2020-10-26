@@ -13,7 +13,7 @@ class sidebar extends React.Component{
             <div className="sidebar-inner">
                 <div className="sidebar-logo bg-white">
                     <div className="peers ai-c fxw-nw">
-                        <div className="peer peer-greed"><a className="sidebar-link td-n" href="index.html">
+                        <div className="peer peer-greed"><a className="sidebar-link td-n" href="/">
                             <div className="peers ai-c fxw-nw">
                                 <div className="peer">
                                     <div className="logo"><img src="/images/company_logo.png"  width="65px" height="65px" alt=""/></div>
@@ -38,32 +38,32 @@ class sidebar extends React.Component{
                         </Link>
                     </li> */}
                     <li className="nav-item">
-                        <Link to="/annotation" className="text-danger">
+                        <Link to="/annotation" >
                         <span className="sidebar-link" >
-                            <span className="icon-holder">
+                            <span className="icon-holder text-danger">
                                  <i className="ti-comment-alt"></i>
                             </span>
-                            <span className="title">GAannotations</span>
+                            <span className="title gaa-menu-item">GAannotations</span>
                         </span>
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/annotation/create" className="text-success">
+                        <Link to="/annotation/create">
                         <span className="sidebar-link" >
-                            <span className="icon-holder">
+                            <span className="icon-holder text-success">
                                 <i className="fa fa-plus"></i>
                             </span>
-                            <span className="title">Add Annotation</span>
+                            <span className="title gaa-menu-item">Add Annotation</span>
                         </span>
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/annotation/upload" className="text-warning">
+                        <Link to="/annotation/upload">
                         <span className="sidebar-link" >
-                            <span className="icon-holder">
+                            <span className="icon-holder text-warning">
                                 <i className="fa fa-upload"></i>
                             </span>
-                            <span className="title">CSV Upload</span>
+                            <span className="title gaa-menu-item">CSV Upload</span>
                         </span>
                         </Link>
                     </li>
@@ -77,16 +77,16 @@ class sidebar extends React.Component{
                         </span>
                         </Link>
                     </li> */}
-                    {/* <li className="nav-item">
+                    <li className="nav-item">
                         <Link to="/api-key">
                         <span className="sidebar-link" >
-                            <span className="icon-holder">
-                                <i className="fa fa-key text-white"></i>
+                            <span className="icon-holder text-info">
+                                <i className="fa fa-key"></i>
                             </span>
-                            <span className="title">API Keys</span>
+                            <span className="title gaa-menu-item">API Keys</span>
                         </span>
                         </Link>
-                    </li> */}
+                    </li>
                     {/* <li className="nav-item">
                         <a href="https://datastudio.google.com">
                         <span className="sidebar-link" >
@@ -108,12 +108,12 @@ class sidebar extends React.Component{
                         </Link>
                     </li> */}
                     <li className="nav-item">
-                        <Link to="#" className="text-default">
+                        <Link to="#">
                         <span className="sidebar-link" >
-                            <span className="icon-holder">
+                            <span className="icon-holder text-default">
                                 <i className="fa fa-cube"></i>
                             </span>
-                            <span className="title">Add Chrome Extension</span>
+                            <span className="title gaa-menu-item">Add Chrome Extension</span>
                         </span>
                         </Link>
                     </li>

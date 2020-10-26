@@ -1,7 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
 
 import HttpClient from "./utils/HttpClient";
 
@@ -49,13 +47,36 @@ class Main extends React.Component {
             });
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.location !== prevProps.location) {
+            this.onRouteChanged();
+        }
+    }
+
+    onRouteChanged() {
+        window.scrollTo(0, 0);
+        let anchors = document.getElementsByTagName("a");
+        console.log(anchors)
+        for (var i = 0; i < anchors.length; ++i) {
+            anchors[i].classList.remove("link-active")
+        }
+        for (var i = 0; i < anchors.length; ++i) {
+            if (anchors[i].href == window.location.href) {
+                if (anchors[i].parentElement.localName == "li") {
+                    anchors[i].parentElement.classList.add("link-active")
+                } else {
+                    anchors[i].classList.add("link-active")
+                }
+            }
+        }
+    }
+
     render() {
         if (this.state.user == undefined) return null;
         return (
 
             <React.Fragment>
 
-                <ToastContainer />
                 <Router>
                     <div className="sidebar">
                         <Sidebar />
@@ -92,7 +113,7 @@ class Main extends React.Component {
                                 <Route exact path="/settings" refresh={true}>
                                     <Settings user={this.state.user} />
                                 </Route>
-                                <Route exact path="/change-password" refresh={true}>
+                                <Route exact path="/settings/change-password" refresh={true}>
                                     <ChangePassword />
                                 </Route>
                             </Switch>
@@ -108,7 +129,3 @@ class Main extends React.Component {
     }
 }
 export default Main;
-
-if (document.getElementById('ui')) {
-    ReactDOM.render(<Main />, document.getElementById('ui'));
-}
