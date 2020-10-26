@@ -48,14 +48,14 @@ export default class UploadAnnotation extends React.Component {
                             </div>
                         </div>
 
-                        <div className="row">
+                        <div className="row ml-0 mr-0">
                             <div className="col-md-12">
                                 <ErrorAlert errors={this.state.errors} />
                             </div>
                         </div>
 
                         <form onSubmit={this.handleSubmit} encType="multipart/form-data">
-                            <div className="row">
+                            <div className="row mr-0 ml-0">
                                 <div className="col-lg-12 col-sm-12">
                                     <div className="form-group">
                                         <label htmlFor="csv" className="form-control-placeholder">CSV</label>
@@ -63,8 +63,8 @@ export default class UploadAnnotation extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row ml-0 mr-0 pr-4">
-                                <div className="col-12 offset-11">
+                            <div className="row ml-0 mr-0 ">
+                                <div className="col-12 text-right">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round">
                                         <i className="fa fa-upload mr-3"></i>
                                         Upload
