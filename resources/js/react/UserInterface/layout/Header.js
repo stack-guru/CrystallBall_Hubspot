@@ -1,6 +1,4 @@
 import React from 'react';
-import Axios from "axios";
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
 class header extends React.Component {
@@ -10,15 +8,23 @@ class header extends React.Component {
 
     }
 
+    toggleSidebar(e){
+        e.preventDefault();
+        let body = document.getElementsByTagName("body")[0];
+        if(body.classList.contains("is-collapsed")){
+            body.classList.remove("is-collapsed")
+        }else{
+            body.classList.add("is-collapsed")
+        }
+    }
     render() {
-
 
         return (
             <div>
                 <div className="header-container gaa-primary ">
                     <ul className="nav-left  ">
                         <li>
-                            <a id="sidebar-toggle" className="sidebar-toggle  text-white" href={null}><i
+                            <a id="sidebar-toggle" className="sidebar-toggle  text-white" onClick={this.toggleSidebar}><i
                                 className="ti-menu"></i></a>
                         </li>
                         <li className="search-box"><a className="search-toggle no-pdd-right" href={null}><i
