@@ -42,4 +42,8 @@ Route::group(['middleware' => ['auth']], function () {
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
 
+    Route::view('settings', 'ui/app');
+    Route::view('choose-plan', 'ui/app');
+
+
 });

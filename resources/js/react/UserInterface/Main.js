@@ -46,7 +46,7 @@ class Main extends React.Component {
 
     render() {
         return (
-            <div className="layout-wrapper" style={{ margin: '0%', }}>
+          <React.Fragment>
                 <ToastContainer />
                 <Router>
                     <div className="sidebar">
@@ -87,7 +87,7 @@ class Main extends React.Component {
                         <Footer />
                     </div>
                 </Router>
-            </div>
+          </React.Fragment>
         )
     }
 }
