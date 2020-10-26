@@ -14,7 +14,7 @@ import AnnotationsCreate from './components/annotations/CreateAnnotation';
 import AnnotationsUpdate from './components/annotations/EditAnnotation';
 import IndexAnnotations from './components/annotations/IndexAnnotation';
 import AnnotationsUpload from './components/annotations/UploadAnnotation';
-import PricingPlans from './components/pricingPlanes/IndexPricingPlans';
+import PricingPlans from './components/pricingPlans/IndexPricingPlans';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './Main.css';
