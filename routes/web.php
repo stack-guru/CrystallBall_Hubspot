@@ -35,7 +35,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
         Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);
         Route::delete('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
-        Route::get('user', function () {return ['user' => Auth::user()];});
+        Route::get('user', function () {
+            $user = Auth::user();
+            $user->load('pricePlan');
+            return ['user' => $user];
+        });
 
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
 
@@ -44,9 +48,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('api-key', 'ui/app');
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
-    
+
     Route::view('settings', 'ui/app');
     Route::view('settings/change-password', 'ui/app');
-    Route::view('choose-plan', 'ui/app');
+    Route::view('settings/price-plans', 'ui/app');
 
 });

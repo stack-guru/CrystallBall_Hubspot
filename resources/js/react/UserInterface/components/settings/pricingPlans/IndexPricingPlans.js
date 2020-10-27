@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HttpClient from "../../utils/HttpClient";
+import HttpClient from "../../../utils/HttpClient";
 
 
 export default class indexPricingPlans extends React.Component {
@@ -72,7 +72,11 @@ export default class indexPricingPlans extends React.Component {
                                                         <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>Annotations API</li>
                                                 }
                                             </ul>
-                                            <a href="#" className="btn btn-block btn-primary text-uppercase">Subscribe</a>
+                                            {this.props.currentPricePlan.id == pricePlan.id ?
+                                                <h5>Already subscribed</h5>
+                                                :
+                                                <a href="#" className="btn btn-block btn-primary text-uppercase">Subscribe</a>
+                                            }
                                         </div>
                                     </div>
                                 </div>

@@ -36,13 +36,15 @@ export default class indexSettings extends React.Component{
                                 </li>
                             }
                             <li>
-                                <Link to="/change-password">
+                                <Link to="/settings/change-password">
                                 <span >Change password</span>
                                     </Link>
                             </li>
 
                             <li>
-
+                            <Link to="/settings/price-plans">
+                                <span >Price Plans</span>
+                                    </Link>
                             </li>
                         </ul>
                     </div>

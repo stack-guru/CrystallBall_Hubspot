@@ -68,7 +68,7 @@ class sidebar extends React.Component {
                         </Link>
                     </li>
                     {/* <li className="nav-item">
-                        <Link to="/choose-plan" className="text-info">
+                        <Link to="/price-plans" className="text-info">
                         <span className="sidebar-link" >
                             <span className="icon-holder">
                                 <i className="fa fa-dollar"></i>

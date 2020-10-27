@@ -12,7 +12,7 @@ import AnnotationsCreate from './components/annotations/CreateAnnotation';
 import AnnotationsUpdate from './components/annotations/EditAnnotation';
 import IndexAnnotations from './components/annotations/IndexAnnotation';
 import AnnotationsUpload from './components/annotations/UploadAnnotation';
-import PricingPlans from './components/pricingPlans/IndexPricingPlans';
+import PricingPlans from './components/settings/pricingPlans/IndexPricingPlans';
 import Settings from './components/settings/IndexSettings';
 import ChangePassword from './components/settings/ChangePassword';
 
@@ -112,14 +112,14 @@ class Main extends React.Component {
                             <Route exact path="/annotation/upload" refresh={true}>
                                 <AnnotationsUpload />
                             </Route>
-                            <Route exact path="/choose-plan" refresh={true}>
-                                <PricingPlans />
-                            </Route>
                             <Route exact path="/settings" refresh={true}>
                                 <Settings user={this.state.user} />
                             </Route>
                             <Route exact path="/settings/change-password" refresh={true}>
                                 <ChangePassword />
+                            </Route>
+                            <Route exact path="/settings/price-plans" refresh={true}>
+                                <PricingPlans currentPricePlan={this.state.user.price_plan} />
                             </Route>
                         </Switch>
 
