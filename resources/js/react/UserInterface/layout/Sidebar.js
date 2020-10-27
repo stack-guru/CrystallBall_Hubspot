@@ -46,7 +46,7 @@ class sidebar extends React.Component {
                                 <span className="icon-holder">
                                     <i className="ti-comment-alt"></i>
                                 </span>
-                                <span className="title">GAannotations</span>
+                                <span className="title">Annotations</span>
                             </span>
                         </Link>
                     </li>
