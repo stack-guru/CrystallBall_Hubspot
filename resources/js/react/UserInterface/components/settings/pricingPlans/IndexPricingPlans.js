@@ -76,7 +76,7 @@ export default class indexPricingPlans extends React.Component {
                                             {this.props.currentPricePlan.id == pricePlan.id ?
                                                 <a href="#" className="btn btn-block btn-success text-uppercase">Subscribed</a>
                                                 :
-                                                <a href="#" className="btn btn-block btn-primary text-uppercase">Subscribe</a>
+                                                <a href="#" className="btn btn-block btn-primary text-uppercase">Upgrade</a>
                                             }
                                         </div>
                                     </div>
