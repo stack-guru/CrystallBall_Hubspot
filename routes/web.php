@@ -18,7 +18,7 @@ Route::redirect('/', '/login', 301);
 
 Auth::routes();
 
-Route::view('documentation', 'api/documentation');
+Route::view('documentation', 'documentation');
 
 Route::group(['middleware' => ['auth']], function () {
 
