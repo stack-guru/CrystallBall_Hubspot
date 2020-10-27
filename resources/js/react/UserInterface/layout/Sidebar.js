@@ -5,10 +5,13 @@ class sidebar extends React.Component {
 
     constructor(props) {
         super(props);
-
+            this.state={
+                show:false
+            }
     }
 
     render() {
+        console.log(this.props.user.price_plan)
         return (
             <div className="sidebar-inner">
                 <div className="sidebar-logo bg-white">
@@ -77,13 +80,17 @@ class sidebar extends React.Component {
                         </span>
                         </Link>
                     </li> */}
-                    <li className="nav-item gaa-menu-item">
-                        <Link to="/api-key">
+                    {/*onClick={e => e.preventDefault()}*/}
+                    <li className={"nav-item gaa-menu-item" + (this.props.user.price_plan.id==1? ' disabled-link' :'')} >
+                        <Link to="/api-key" onClick={e =>
+                            this.props.user.price_plan.id==1?
+
+                            e.preventDefault():'' } >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
                                     <i className="fa fa-key"></i>
                                 </span>
-                                <span className="title">API Keys</span>
+                                <span className="title ">API Keys</span>
                             </span>
                         </Link>
                     </li>
@@ -107,10 +114,10 @@ class sidebar extends React.Component {
                         </span>
                         </Link>
                     </li> */}
-                    <li className="nav-item gaa-menu-item">
+                    <li className="nav-item gaa-menu-item gaa-danger">
                         <Link to="#">
-                            <span className="sidebar-link" >
-                                <span className="icon-holder">
+                            <span className="sidebar-link gaa-danger" >
+                                <span className="icon-holder gaa-danger">
                                     <i className="fa fa-cube"></i>
                                 </span>
                                 <span className="title">Add Chrome Extension</span>

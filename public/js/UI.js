@@ -2087,7 +2087,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-primary {\n    background: #456287;\n}\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n/* \n.sidebar-menu li a:hover {\n    opacity: .6!important;\n} */\n\n/*pricing css start*/\n/*section.pricing {*/\n/*    background: #007bff;*/\n/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/\n/*}*/\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}", ""]);
+exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n.disabled-link{\n    opacity:.3;\n    pointer-events: none;\n}\n\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-primary {\n    background: #456287;\n}\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n/*\n.sidebar-menu li a:hover {\n    opacity: .6!important;\n} */\n\n/*pricing css start*/\n/*section.pricing {*/\n/*    background: #007bff;*/\n/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/\n/*}*/\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}\n\n.gaa-danger{\n    color:#bf0c18!important;\n}\n", ""]);
 
 // exports
 
@@ -38944,7 +38944,9 @@ var Main = /*#__PURE__*/function (_React$Component) {
       if (this.state.user == undefined) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidebar"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_layout_Sidebar__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_layout_Sidebar__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        user: this.state.user
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "page-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header navbar"
@@ -41596,7 +41598,10 @@ var indexPricingPlans = /*#__PURE__*/function (_React$Component) {
           className: "fa-li"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fa fa-times"
-        })), "Annotations API")), _this3.props.currentPricePlan.id == pricePlan.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Already subscribed") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        })), "Annotations API")), _this3.props.currentPricePlan.id == pricePlan.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "#",
+          className: "btn btn-block btn-success text-uppercase"
+        }, "Subscribed") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#",
           className: "btn btn-block btn-primary text-uppercase"
         }, "Subscribe"))));
@@ -41858,14 +41863,23 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(sidebar);
 
   function sidebar(props) {
+    var _this;
+
     _classCallCheck(this, sidebar);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      show: false
+    };
+    return _this;
   }
 
   _createClass(sidebar, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
+      console.log(this.props.user.price_plan);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidebar-inner"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -41940,9 +41954,12 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "title"
       }, "CSV Upload")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item gaa-menu-item"
+        className: "nav-item gaa-menu-item" + (this.props.user.price_plan.id == 1 ? ' disabled-link' : '')
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/api-key"
+        to: "/api-key",
+        onClick: function onClick(e) {
+          return _this2.props.user.price_plan.id == 1 ? e.preventDefault() : '';
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "sidebar-link"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -41950,15 +41967,15 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-key"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "title"
+        className: "title "
       }, "API Keys")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item gaa-menu-item"
+        className: "nav-item gaa-menu-item gaa-danger"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "#"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "sidebar-link"
+        className: "sidebar-link gaa-danger"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "icon-holder"
+        className: "icon-holder gaa-danger"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-cube"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -42109,7 +42126,7 @@ axiosInst.interceptors.response.use(function (response) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /media/hamees/AA4C51084C50D0A5/xampp/htdocs/laravel/gannotations/resources/js/react/UserInterface/UI.js */"./resources/js/react/UserInterface/UI.js");
+module.exports = __webpack_require__(/*! F:\laragon\www\dev_gaannotations\resources\js\react\UserInterface\UI.js */"./resources/js/react/UserInterface/UI.js");
 
 
 /***/ })

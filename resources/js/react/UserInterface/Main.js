@@ -84,7 +84,7 @@ class Main extends React.Component {
             <React.Fragment>
 
                 <div className="sidebar">
-                    <Sidebar />
+                    <Sidebar user={this.state.user} />
                 </div>
 
                 <div className="page-container">

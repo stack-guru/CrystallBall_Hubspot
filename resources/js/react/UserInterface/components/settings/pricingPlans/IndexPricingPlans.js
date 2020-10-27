@@ -72,8 +72,9 @@ export default class indexPricingPlans extends React.Component {
                                                         <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>Annotations API</li>
                                                 }
                                             </ul>
+
                                             {this.props.currentPricePlan.id == pricePlan.id ?
-                                                <h5>Already subscribed</h5>
+                                                <a href="#" className="btn btn-block btn-success text-uppercase">Subscribed</a>
                                                 :
                                                 <a href="#" className="btn btn-block btn-primary text-uppercase">Subscribe</a>
                                             }

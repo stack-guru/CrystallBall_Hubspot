@@ -13,6 +13,11 @@
 .upload-csv-input {
     height: 2.6rem;
 }
+.disabled-link{
+    opacity:.3;
+    pointer-events: none;
+}
+
 
 /*#0a2950*/
 /*#456287*/
@@ -30,7 +35,7 @@
 .sidebar-menu li a {
     color: #456287;
 }
-/* 
+/*
 .sidebar-menu li a:hover {
     opacity: .6!important;
 } */
@@ -107,4 +112,8 @@
 
 .link-active {
     color: #2196f3 !important;
+}
+
+.gaa-danger{
+    color:#bf0c18!important;
 }
