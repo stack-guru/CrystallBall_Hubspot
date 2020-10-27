@@ -30,7 +30,7 @@
         </div>
         <div class="content-menu">
             <ul>
-                
+
                 <li class="scroll-to-link active" data-target="get-started"><a>GET STARTED</a></li>
                 <li class="scroll-to-link" data-target="user-details"><a>User Details <span class="badge badge-success">GET</span></a></li>
                 <li class="scroll-to-link" data-target="event-sources-list"><a>Event Sources List <span class="badge badge-success">GET</span></a></li>
@@ -48,9 +48,9 @@
             <div class="overflow-hidden content-section" id="content-get-started">
                 <h1 id="get-started">Get started</h1>
                 <pre>
-     API Endpoint
- 
-         {{url("/")}}
+                        API Endpoint
+
+                        {{url("/")}}
                  </pre>
                 <p>
                     GAannotations provide API for all actions over annotations
@@ -63,10 +63,10 @@
             <div class="overflow-hidden content-section" id="content-user-details">
                 <h2 id="user-details">User Details</h2>
                 <pre><code class="bash">
- # Here is a curl example
- curl \
- -X GET {{route('api.v1.user.show')}} \
- -F 'Authorization=Bearer your_api_key'
+    # Here is a curl example
+    curl \
+    -X GET {{route('api.v1.user.show')}} \
+    -F 'Authorization=Bearer your_api_key'
                  </code></pre>
                 <p>
                     To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
@@ -74,10 +74,10 @@
                 </p>
                 <br>
                 <pre><code class="json">
- 
- Result example :
- 
- {
+
+    Result example :
+
+    {
     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
     dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
     3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
@@ -90,11 +90,14 @@
     w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
     h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
     0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
-  }
+    }
                  </code></pre>
-                <h4>QUERY PARAMETERS</h4>
-                <p>None</p>
+
+                        <h4>QUERY PARAMETERS</h4>
+                        <p>None</p>
+
             </div>
+
             <div class="overflow-hidden content-section" id="content-event-sources-list">
                 <h2 id="event-sources-list">Event Sources List</h2>
                 <pre><code class="bash">
@@ -109,9 +112,9 @@
                 </p>
                 <br>
                 <pre><code class="json">
- 
+
  Result example :
- 
+
  {
     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
     dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
@@ -176,6 +179,261 @@
                     </tbody>
                 </table>
             </div>
+
+
+            <div class="overflow-hidden content-section" id="annotations-list">
+                <h2 id="annotations-list">Annotation List</h2>
+                <pre><code class="bash">
+    # Here is a curl example
+    curl \
+    -X GET {{route('api.v1.annotations.index')}} \
+    -F 'Authorization=Bearer your_api_key'
+                 </code></pre>
+                <p>
+                    To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
+                    <code class="higlighted">{{route('api.v1.annotations.index')}}</code>
+                </p>
+                <br>
+                <pre><code class="json">
+
+    Result example :
+
+    {
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
+    dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
+    3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
+    Q3OWM5MDQ3Y2RjNTliZDUzNjciLCJpYXQiOjE2MDM3OTc4NzUsI
+    m5iZiI6MTYwMzc5Nzg3NSwiZXhwIjoxNjM1MzMzODc1LCJzdWIi
+    OiIxIiwic2NvcGVzIjpbXX0.jZmCTwwEh45va9DCcqYz1LfBTH6
+    Ft5ze7DSDqaiRXlttDP4xq6TO_fFxpptxGOaOeBB773lX4r0Sxn
+    PUFnUXBvIM4-YQfHq0V6rejZgKt6WXLvbJGdqLkkCgzHn6epKZY
+    3lxFCP5NW3pvz9_7lSMwk9mLomFfo72CwpG5kty4SZLSCIZ1TZR
+    w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
+    h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
+    0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
+    }
+                 </code></pre>
+
+                <h4>QUERY PARAMETERS</h4>
+                <p>None</p>
+
+            </div>
+{{--     section of annotation list menu ends here       --}}
+
+{{--   add annotation starts        --}}
+
+
+            <div class="overflow-hidden content-section" id="add-annotation">
+                <h2 id="add-annotation">Add Annotation</h2>
+                <pre><code class="bash">
+    # Here is a curl example
+    curl \
+    -X GET {{route('api.v1.annotations.store')}} \
+    -F 'Authorization=Bearer your_api_key'
+                 </code></pre>
+                <p>
+                    To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
+                    <code class="higlighted">{{route('api.v1.annotations.store')}}</code>
+                </p>
+                <br>
+                <pre><code class="json">
+
+    Result example :
+
+    {
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
+    dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
+    3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
+    Q3OWM5MDQ3Y2RjNTliZDUzNjciLCJpYXQiOjE2MDM3OTc4NzUsI
+    m5iZiI6MTYwMzc5Nzg3NSwiZXhwIjoxNjM1MzMzODc1LCJzdWIi
+    OiIxIiwic2NvcGVzIjpbXX0.jZmCTwwEh45va9DCcqYz1LfBTH6
+    Ft5ze7DSDqaiRXlttDP4xq6TO_fFxpptxGOaOeBB773lX4r0Sxn
+    PUFnUXBvIM4-YQfHq0V6rejZgKt6WXLvbJGdqLkkCgzHn6epKZY
+    3lxFCP5NW3pvz9_7lSMwk9mLomFfo72CwpG5kty4SZLSCIZ1TZR
+    w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
+    h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
+    0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
+    }
+                 </code></pre>
+
+                <h4>QUERY PARAMETERS</h4>
+                <p>None</p>
+            <h4>FORM PARAMETERS</h4>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>category</td>
+                        <td>String</td>
+                        <td>[required] Annotation Category</td>
+                    </tr>
+                    <tr>
+                        <td>event_type</td>
+                        <td>String</td>
+                        <td>[required] Annotation's Event_type</td>
+                    </tr>
+                    <tr>
+                        <td>event_name</td>
+                        <td>String</td>
+                        <td>[required] Annotation's Event_name</td>
+                    </tr>
+                    <tr>
+                        <td>url</td>
+                        <td>mediumText</td>
+                        <td>[required] Annotation's url</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>mediumText</td>
+                        <td>[required] Annotation's description</td>
+                    </tr>
+                    <tr>
+                        <td>title</td>
+                        <td>String</td>
+                        <td>[required] Annotation's title</td>
+                    </tr>
+                    <tr>
+                        <td>show_at</td>
+                        <td>date</td>
+                        <td>[required] Annotation's show_at date from which it will show on google analytics</td>
+                    </tr>
+                    <tr>
+                        <td>type</td>
+                        <td>string</td>
+                        <td>[required] Annotation's type</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+
+{{--annotation add content ends--}}
+
+            <div class="overflow-hidden content-section" id="change-annotation">
+                <h2 id="change-annotation">Change Annotation</h2>
+                <pre><code class="bash">
+    # Here is a curl example
+    curl \
+    -X GET {{route('api.v1.annotations.')}}
+    -F 'Authorization=Bearer your_api_key'
+                 </code></pre>
+                <p>
+                    To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
+                    <code class="higlighted">{{route('api.v1.annotations.update')}}</code>
+                </p>
+                <br>
+                <pre><code class="json">
+
+    Result example :
+
+    {
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
+    dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
+    3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
+    Q3OWM5MDQ3Y2RjNTliZDUzNjciLCJpYXQiOjE2MDM3OTc4NzUsI
+    m5iZiI6MTYwMzc5Nzg3NSwiZXhwIjoxNjM1MzMzODc1LCJzdWIi
+    OiIxIiwic2NvcGVzIjpbXX0.jZmCTwwEh45va9DCcqYz1LfBTH6
+    Ft5ze7DSDqaiRXlttDP4xq6TO_fFxpptxGOaOeBB773lX4r0Sxn
+    PUFnUXBvIM4-YQfHq0V6rejZgKt6WXLvbJGdqLkkCgzHn6epKZY
+    3lxFCP5NW3pvz9_7lSMwk9mLomFfo72CwpG5kty4SZLSCIZ1TZR
+    w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
+    h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
+    0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
+    }
+                 </code></pre>
+
+                <h4>QUERY PARAMETERS</h4>
+                <p>None</p>
+
+            </div>
+
+{{-- annotaion change section ends here--}}
+
+
+            <div class="overflow-hidden content-section" id="delete-annotation">
+                <h2 id="delete-annotation">Delete Annotation</h2>
+                <pre><code class="bash">
+    # Here is a curl example
+    curl \
+    -X GET {{route('api.v1.annotations.index')}} \
+    -F 'Authorization=Bearer your_api_key'
+                 </code></pre>
+                <p>
+                    To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
+                    <code class="higlighted">{{route('api.v1.annotations.index')}}</code>
+                </p>
+                <br>
+                <pre><code class="json">
+
+    Result example :
+
+    {
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
+    dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
+    3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
+    Q3OWM5MDQ3Y2RjNTliZDUzNjciLCJpYXQiOjE2MDM3OTc4NzUsI
+    m5iZiI6MTYwMzc5Nzg3NSwiZXhwIjoxNjM1MzMzODc1LCJzdWIi
+    OiIxIiwic2NvcGVzIjpbXX0.jZmCTwwEh45va9DCcqYz1LfBTH6
+    Ft5ze7DSDqaiRXlttDP4xq6TO_fFxpptxGOaOeBB773lX4r0Sxn
+    PUFnUXBvIM4-YQfHq0V6rejZgKt6WXLvbJGdqLkkCgzHn6epKZY
+    3lxFCP5NW3pvz9_7lSMwk9mLomFfo72CwpG5kty4SZLSCIZ1TZR
+    w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
+    h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
+    0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
+    }
+                 </code></pre>
+
+                <h4>QUERY PARAMETERS</h4>
+                <p>None</p>
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
         <div class="content-code"></div>
     </div>
