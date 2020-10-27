@@ -36,6 +36,7 @@
           <input name="remember" type="checkbox" value="remember-me" {{ old('remember') ? 'checked' : '' }}> Remember me
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      <a class="btn btn-lg btn-primary btn-block" href="{{ route('register') }}">Register</a>
     </form>
 @endsection

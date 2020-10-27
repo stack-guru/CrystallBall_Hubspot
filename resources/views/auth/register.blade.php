@@ -52,6 +52,7 @@
       </div>
 
       <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      <a class="btn btn-lg btn-primary btn-block" href="{{ route('login') }}">Login</a>
     </form>
 
 @endsection
