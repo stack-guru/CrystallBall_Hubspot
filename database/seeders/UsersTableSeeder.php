@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use DB;
-use Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -17,9 +16,10 @@ class UsersTableSeeder extends Seeder
     {
         //
         DB::table('users')->insert([
-            'name' => 'developers',
-            'email' =>'developers786@test.com',
-            'password' => Hash::make('123456aB'),
+            'name' => 'ABC',
+            'email' =>'abc@def.gh',
+            'password' => bcrypt('password'),
+            'price_plan_id' => 1
         ]);
     }
 }

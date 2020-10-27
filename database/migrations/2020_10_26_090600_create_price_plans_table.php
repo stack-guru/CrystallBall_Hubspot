@@ -14,7 +14,7 @@ class CreatePricePlansTable extends Migration
     public function up()
     {
         Schema::create('price_plans', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
 
             $table->string('name', 100)->nullable()->default('Plan');
             $table->integer('annotations_count')->unsigned()->required()->default(0);
