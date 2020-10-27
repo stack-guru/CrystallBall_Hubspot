@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class sidebar extends React.Component{
+class sidebar extends React.Component {
 
     constructor(props) {
         super(props);
@@ -9,14 +9,14 @@ class sidebar extends React.Component{
     }
 
     render() {
-        return(
+        return (
             <div className="sidebar-inner">
                 <div className="sidebar-logo bg-white">
                     <div className="peers ai-c fxw-nw">
                         <div className="peer peer-greed"><a className="sidebar-link td-n" href="/">
                             <div className="peers ai-c fxw-nw">
                                 <div className="peer">
-                                    <div className="logo"><img src="/images/company_logo.png"  width="65px" height="65px" alt=""/></div>
+                                    <div className="logo"><img src="/images/company_logo.png" width="65px" height="65px" alt="" /></div>
                                 </div>
                                 <div className="peer peer-greed "><h5 className="lh-1 mB-0 logo-text ">GAannotations</h5>
                                 </div>
@@ -37,34 +37,34 @@ class sidebar extends React.Component{
                         </span>
                         </Link>
                     </li> */}
-                    <li className="nav-item">
+                    <li className="nav-item gaa-menu-item">
                         <Link to="/annotation" >
-                        <span className="sidebar-link" >
-                            <span className="icon-holder text-danger">
-                                 <i className="ti-comment-alt"></i>
+                            <span className="sidebar-link" >
+                                <span className="icon-holder">
+                                    <i className="ti-comment-alt"></i>
+                                </span>
+                                <span className="title">GAannotations</span>
                             </span>
-                            <span className="title gaa-menu-item">GAannotations</span>
-                        </span>
                         </Link>
                     </li>
-                    <li className="nav-item">
+                    <li className="nav-item gaa-menu-item">
                         <Link to="/annotation/create">
-                        <span className="sidebar-link" >
-                            <span className="icon-holder text-success">
-                                <i className="fa fa-plus"></i>
+                            <span className="sidebar-link" >
+                                <span className="icon-holder">
+                                    <i className="fa fa-plus"></i>
+                                </span>
+                                <span className="title">Add Annotation</span>
                             </span>
-                            <span className="title gaa-menu-item">Add Annotation</span>
-                        </span>
                         </Link>
                     </li>
-                    <li className="nav-item">
+                    <li className="nav-item gaa-menu-item">
                         <Link to="/annotation/upload">
-                        <span className="sidebar-link" >
-                            <span className="icon-holder text-warning">
-                                <i className="fa fa-upload"></i>
+                            <span className="sidebar-link" >
+                                <span className="icon-holder">
+                                    <i className="fa fa-upload"></i>
+                                </span>
+                                <span className="title">CSV Upload</span>
                             </span>
-                            <span className="title gaa-menu-item">CSV Upload</span>
-                        </span>
                         </Link>
                     </li>
                     {/* <li className="nav-item">
@@ -77,14 +77,14 @@ class sidebar extends React.Component{
                         </span>
                         </Link>
                     </li> */}
-                    <li className="nav-item">
+                    <li className="nav-item gaa-menu-item">
                         <Link to="/api-key">
-                        <span className="sidebar-link" >
-                            <span className="icon-holder text-info">
-                                <i className="fa fa-key"></i>
+                            <span className="sidebar-link" >
+                                <span className="icon-holder">
+                                    <i className="fa fa-key"></i>
+                                </span>
+                                <span className="title">API Keys</span>
                             </span>
-                            <span className="title gaa-menu-item">API Keys</span>
-                        </span>
                         </Link>
                     </li>
                     {/* <li className="nav-item">
@@ -107,14 +107,14 @@ class sidebar extends React.Component{
                         </span>
                         </Link>
                     </li> */}
-                    <li className="nav-item">
+                    <li className="nav-item gaa-menu-item">
                         <Link to="#">
-                        <span className="sidebar-link" >
-                            <span className="icon-holder text-default">
-                                <i className="fa fa-cube"></i>
+                            <span className="sidebar-link" >
+                                <span className="icon-holder">
+                                    <i className="fa fa-cube"></i>
+                                </span>
+                                <span className="title">Add Chrome Extension</span>
                             </span>
-                            <span className="title gaa-menu-item">Add Chrome Extension</span>
-                        </span>
                         </Link>
                     </li>
                     {/*<li className="nav-item">*/}

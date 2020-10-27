@@ -32,6 +32,7 @@ class Main extends React.Component {
 
 
     componentDidMount() {
+
         let loader = document.getElementById("loader");
         loader.classList.remove("fadeOut")
         HttpClient.get('/user')
@@ -56,13 +57,18 @@ class Main extends React.Component {
     onRouteChanged() {
         window.scrollTo(0, 0);
         let anchors = document.getElementsByTagName("a");
-        console.log(anchors)
         for (var i = 0; i < anchors.length; ++i) {
-            anchors[i].classList.remove("link-active")
+            if (anchors[i].parentElement.localName == "li") {
+                anchors[i].classList.remove("link-active")
+                anchors[i].parentElement.classList.remove("link-active")
+            } else {
+                anchors[i].classList.remove("link-active")
+            }
         }
         for (var i = 0; i < anchors.length; ++i) {
             if (anchors[i].href == window.location.href) {
                 if (anchors[i].parentElement.localName == "li") {
+                    anchors[i].classList.add("link-active")
                     anchors[i].parentElement.classList.add("link-active")
                 } else {
                     anchors[i].classList.add("link-active")
@@ -77,51 +83,49 @@ class Main extends React.Component {
 
             <React.Fragment>
 
-                <Router>
-                    <div className="sidebar">
-                        <Sidebar />
+                <div className="sidebar">
+                    <Sidebar />
+                </div>
+
+                <div className="page-container">
+                    <div className="header navbar">
+                        <Header user={this.state.user} />
                     </div>
 
-                    <div className="page-container">
-                        <div className="header navbar">
-                            <Header user={this.state.user} />
-                        </div>
 
+                    <main className="main-content bgc-grey-100">
+                        <Switch>
+                            <Route exact path="/dashboard" refresh={true}>
+                                <Index />
+                            </Route>
+                            <Route exact path="/annotation" refresh={true}>
+                                <IndexAnnotations />
+                            </Route>
+                            <Route exact path="/annotation/create" refresh={true}>
+                                <AnnotationsCreate />
+                            </Route>
+                            <Route exact path="/annotation/:id?/edit" refresh={true}
+                                render={(routeParams) => <AnnotationsUpdate routeParams={routeParams} />} />
+                            <Route exact path="/api-key" refresh={true}>
+                                <IndexAPIKey />
+                            </Route>
+                            <Route exact path="/annotation/upload" refresh={true}>
+                                <AnnotationsUpload />
+                            </Route>
+                            <Route exact path="/choose-plan" refresh={true}>
+                                <PricingPlans />
+                            </Route>
+                            <Route exact path="/settings" refresh={true}>
+                                <Settings user={this.state.user} />
+                            </Route>
+                            <Route exact path="/settings/change-password" refresh={true}>
+                                <ChangePassword />
+                            </Route>
+                        </Switch>
 
-                        <main className="main-content bgc-grey-100">
-                            <Switch>
-                                <Route exact path="/dashboard" refresh={true}>
-                                    <Index />
-                                </Route>
-                                <Route exact path="/annotation" refresh={true}>
-                                    <IndexAnnotations />
-                                </Route>
-                                <Route exact path="/annotation/create" refresh={true}>
-                                    <AnnotationsCreate />
-                                </Route>
-                                <Route exact path="/annotation/:id?/edit" refresh={true}
-                                    render={(routeParams) => <AnnotationsUpdate routeParams={routeParams} />} />
-                                <Route exact path="/api-key" refresh={true}>
-                                    <IndexAPIKey />
-                                </Route>
-                                <Route exact path="/annotation/upload" refresh={true}>
-                                    <AnnotationsUpload />
-                                </Route>
-                                <Route exact path="/choose-plan" refresh={true}>
-                                    <PricingPlans />
-                                </Route>
-                                <Route exact path="/settings" refresh={true}>
-                                    <Settings user={this.state.user} />
-                                </Route>
-                                <Route exact path="/settings/change-password" refresh={true}>
-                                    <ChangePassword />
-                                </Route>
-                            </Switch>
-
-                        </main>
-                        <Footer />
-                    </div>
-                </Router>
+                    </main>
+                    <Footer />
+                </div>
 
             </React.Fragment>
 
