@@ -24,6 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::view('dashboard', 'ui/app');
 
+
     Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except(['store', 'show', 'update', 'destroy']);
 
     Route::view('annotation/upload', 'ui/app');

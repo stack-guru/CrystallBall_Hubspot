@@ -324,12 +324,12 @@
                 <pre><code class="bash">
     # Here is a curl example
     curl \
-    -X GET {{route('api.v1.annotations.')}}
+    -X GET {{route('api.v1.annotations.update', "id")}}
     -F 'Authorization=Bearer your_api_key'
                  </code></pre>
                 <p>
                     To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
-                    <code class="higlighted">{{route('api.v1.annotations.update')}}</code>
+                    <code class="higlighted">{{route('api.v1.annotations.update', "id")}}</code>
                 </p>
                 <br>
                 <pre><code class="json">
