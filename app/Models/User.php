@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'price_plan_id',
+        'price_plan_expiry_date',
     ];
 
     /**
