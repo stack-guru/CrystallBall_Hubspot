@@ -20,7 +20,7 @@ export default class indexSettings extends React.Component{
                         <h1><b>{this.props.user==undefined?'':this.props.user.name}</b></h1>
                         <span>Email: {this.props.user==undefined?'':this.props.user.email}</span>
                         <ul className='list-unstyled list-group mt-3'>
-                            <h4><b>Profile</b>{this.props.user.email_verified_at==null?<sub className="text-danger">Non-varified</sub>
+                            <h4><b>Profile</b>{this.props.user.email_verified_at==null?<sub className="text-danger">Non-verified</sub>
                                 :<sub className="text-success">Verified</sub>}</h4>
                             <li>
                                 <Link to="/">
