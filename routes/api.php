@@ -25,6 +25,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::group(['middleware' => ['auth:api']], function () {
 
             Route::get('user', function (Request $request) {return $request->user();});
+            Route::resource('annotations', 'AnnotationController');
 
             Route::group(['prefix' => 'chrome-extension'], function () {
                 Route::get('annotations', 'AnnotationController@extensionIndex');
