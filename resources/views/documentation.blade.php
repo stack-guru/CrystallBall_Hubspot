@@ -32,14 +32,12 @@
             <ul>
                 
                 <li class="scroll-to-link active" data-target="get-started"><a>GET STARTED</a></li>
-                <li class="scroll-to-link" data-target="login"><a>Login</a></li>
-                <li class="scroll-to-link" data-target="user-details"><a>User Details</a></li>
-                <li class="scroll-to-link" data-target="event-sources-list"><a>Event Sources List</a></li>
-                <li class="scroll-to-link" data-target="annotations-list"><a>Annotations List</a></li>
-                <li class="scroll-to-link" data-target="add-annotation"><a>Add Annotation</a></li>
-                <li class="scroll-to-link" data-target="change-annotation"><a>Change Annotation</a></li>
-                <li class="scroll-to-link" data-target="delete-annotation"><a>Delete Annotation</a></li>
-                <li class="scroll-to-link" data-target="logout"><a>Logout</a></li>
+                <li class="scroll-to-link" data-target="user-details"><a>User Details <span class="badge badge-success">GET</span></a></li>
+                <li class="scroll-to-link" data-target="event-sources-list"><a>Event Sources List <span class="badge badge-success">GET</span></a></li>
+                <li class="scroll-to-link" data-target="annotations-list"><a>Annotations List <span class="badge badge-success">GET</span></a></li>
+                <li class="scroll-to-link" data-target="add-annotation"><a>Add Annotation <span class="badge badge-warning">POST</span></a></li>
+                <li class="scroll-to-link" data-target="change-annotation"><a>Change Annotation <span class="badge badge-info">PUT</span></a></li>
+                <li class="scroll-to-link" data-target="delete-annotation"><a>Delete Annotation <span class="badge badge-danger">DELETE</span></a></li>
 
             </ul>
         </div>
@@ -52,159 +50,88 @@
                 <pre>
      API Endpoint
  
-         https://api.westeros.com/
+         {{url("/")}}
                  </pre>
                 <p>
-                    The Westeros API provides programmatic access to read Game of Thrones data. Retrieve a character,
-                    provide an oauth connexion, retrieve a familly, filter them, etc.
+                    GAannotations provide API for all actions over annotations
                 </p>
                 <p>
-                    To use this API, you need an <strong>API key</strong>. Please contact us at <a
-                        href="mailto:jon.snow@nightswatch.wes">jon.snow@nightswatch.wes</a> to get your own API key.
+                    To use this API, you need an <strong>API key</strong>. Please <a
+                        href="{{ route('login') }}">login to dashboard</a> to get your own API key.
                 </p>
             </div>
-            <div class="overflow-hidden content-section" id="content-get-characters">
-                <h2 id="get-characters">get characters</h2>
+            <div class="overflow-hidden content-section" id="content-user-details">
+                <h2 id="user-details">User Details</h2>
                 <pre><code class="bash">
  # Here is a curl example
  curl \
- -X POST http://api.westeros.com/character/get \
- -F 'secret_key=your_api_key' \
- -F 'house=Stark,Bolton' \
- -F 'offset=0' \
- -F 'limit=50'
+ -X GET {{route('api.v1.user.show')}} \
+ -F 'Authorization=Bearer your_api_key'
                  </code></pre>
                 <p>
-                    To get characters you need to make a POST call to the following url :<br>
-                    <code class="higlighted">http://api.westeros.com/character/get</code>
+                    To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
+                    <code class="higlighted">{{route('api.v1.user.show')}}</code>
                 </p>
                 <br>
                 <pre><code class="json">
+ 
  Result example :
  
  {
-   query:{
-     offset: 0,
-     limit: 50,
-     house: [
-       "Stark",
-       "Bolton"
-     ],
-   }
-   result: [
-     {
-       id: 1,
-       first_name: "Jon",
-       last_name: "Snow",
-       alive: true,
-       house: "Stark",
-       gender: "m",
-       age: 14,
-       location: "Winterfell"
-     },
-     {
-       id: 2,
-       first_name: "Eddard",
-       last_name: "Stark",
-       alive: false,
-       house: "Stark",
-       gender: "m",
-       age: 35,
-       location: 'Winterfell'
-     },
-     {
-       id: 3,
-       first_name: "Catelyn",
-       last_name: "Stark",
-       alive: false,
-       house: "Stark",
-       gender: "f",
-       age: 33,
-       location: "Winterfell"
-     },
-     {
-       id: 4,
-       first_name: "Roose",
-       last_name: "Bolton",
-       alive: false,
-       house: "Bolton",
-       gender: "m",
-       age: 40,
-       location: "Dreadfort"
-     },
-     {
-       id: 5,
-       first_name: "Ramsay",
-       last_name: "Snow",
-       alive: false,
-       house: "Bolton",
-       gender: "m",
-       age: 15,
-       location: "Dreadfort"
-     },
-   ]
- }
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
+    dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
+    3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
+    Q3OWM5MDQ3Y2RjNTliZDUzNjciLCJpYXQiOjE2MDM3OTc4NzUsI
+    m5iZiI6MTYwMzc5Nzg3NSwiZXhwIjoxNjM1MzMzODc1LCJzdWIi
+    OiIxIiwic2NvcGVzIjpbXX0.jZmCTwwEh45va9DCcqYz1LfBTH6
+    Ft5ze7DSDqaiRXlttDP4xq6TO_fFxpptxGOaOeBB773lX4r0Sxn
+    PUFnUXBvIM4-YQfHq0V6rejZgKt6WXLvbJGdqLkkCgzHn6epKZY
+    3lxFCP5NW3pvz9_7lSMwk9mLomFfo72CwpG5kty4SZLSCIZ1TZR
+    w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
+    h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
+    0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
+  }
                  </code></pre>
                 <h4>QUERY PARAMETERS</h4>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>secret_key</td>
-                            <td>String</td>
-                            <td>Your API key.</td>
-                        </tr>
-                        <tr>
-                            <td>search</td>
-                            <td>String</td>
-                            <td>(optional) A search word to find character by name.</td>
-                        </tr>
-                        <tr>
-                            <td>house</td>
-                            <td>String</td>
-                            <td>
-                                (optional) a string array of houses:
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>alive</td>
-                            <td>Boolean</td>
-                            <td>
-                                (optional) a boolean to filter alived characters
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>gender</td>
-                            <td>String</td>
-                            <td>
-                                (optional) a string to filter character by gender:<br>
-                                m: male<br>
-                                f: female
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>offset</td>
-                            <td>Integer</td>
-                            <td>(optional - default: 0) A cursor for use in pagination. Pagination starts offset the
-                                specified offset.</td>
-                        </tr>
-                        <tr>
-                            <td>limit</td>
-                            <td>Integer</td>
-                            <td>(optional - default: 10) A limit on the number of objects to be returned, between 1 and
-                                100.</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <p>None</p>
             </div>
-            <div class="overflow-hidden content-section" id="content-errors">
-                <h2 id="errors">Errors</h2>
+            <div class="overflow-hidden content-section" id="content-event-sources-list">
+                <h2 id="event-sources-list">Event Sources List</h2>
+                <pre><code class="bash">
+ # Here is a curl example
+ curl \
+ -X GET {{route('api.v1.user.show')}} \
+ -F 'Authorization=Bearer your_api_key'
+                 </code></pre>
+                <p>
+                    To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
+                    <code class="higlighted">{{route('api.v1.user.show')}}</code>
+                </p>
+                <br>
+                <pre><code class="json">
+ 
+ Result example :
+ 
+ {
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
+    dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
+    3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
+    Q3OWM5MDQ3Y2RjNTliZDUzNjciLCJpYXQiOjE2MDM3OTc4NzUsI
+    m5iZiI6MTYwMzc5Nzg3NSwiZXhwIjoxNjM1MzMzODc1LCJzdWIi
+    OiIxIiwic2NvcGVzIjpbXX0.jZmCTwwEh45va9DCcqYz1LfBTH6
+    Ft5ze7DSDqaiRXlttDP4xq6TO_fFxpptxGOaOeBB773lX4r0Sxn
+    PUFnUXBvIM4-YQfHq0V6rejZgKt6WXLvbJGdqLkkCgzHn6epKZY
+    3lxFCP5NW3pvz9_7lSMwk9mLomFfo72CwpG5kty4SZLSCIZ1TZR
+    w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
+    h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
+    0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
+  }
+                 </code></pre>
+                <h4>QUERY PARAMETERS</h4>
+                <p>None</p>
+            </div>
+            <div class="overflow-hidden content-section" id="content-event-sources-list">
+                <h2 id="event-sources-list">Event Sources List</h2>
                 <p>
                     The Westeros API uses the following error codes:
                 </p>

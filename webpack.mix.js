@@ -19,3 +19,8 @@ mix.styles([
     'resources/css/bootstrap.css',
     'resources/css/floating-labels.css'
 ], 'public/css/auth.css');
+
+mix.styles([
+    'resources/css/bootstrap.css',
+    'resources/css/documentation.css'
+], 'public/css/documentation.css');
