@@ -41532,7 +41532,7 @@ var indexPricingPlans = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "subscribeHandler",
     value: function subscribeHandler(id) {
-      _utils_HttpClient__WEBPACK_IMPORTED_MODULE_1__["default"].post("/subscribe/".concat(id)).then(function (resp) {
+      _utils_HttpClient__WEBPACK_IMPORTED_MODULE_1__["default"].post("/payment/".concat(id)).then(function (resp) {
         console.log(resp.data);
         window.location = resp.data.location;
       })["catch"](function (err) {

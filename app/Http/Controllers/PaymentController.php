@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class PaymentController extends Controller
 {
@@ -10,14 +13,19 @@ class PaymentController extends Controller
 
     public function checkPayment($id){
 
+        return Redirect::route('subscribe',$id);
 
-      $response=$this->subscribePlan($id);
-      return $response;
 }
 
-public function subscribePlan($data){
+public function subscribePlan($id){
 
-        return ['status'=>'plan subscribed '.$data,'location'=>'/annotation'];
+        $AuthUser= Auth::id();
+        $user= User::find($AuthUser);
+        $user->price_plan_id=$id;
+        $user->price_plan_expiry_date=new \DateTime("+1 month");
+        $user->update();
+
+        return ['status'=>'plan subscribed','location'=>'/annotation'];
 
 }
 

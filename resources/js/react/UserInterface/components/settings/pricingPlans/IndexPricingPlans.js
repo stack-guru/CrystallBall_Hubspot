@@ -29,7 +29,7 @@ export default class indexPricingPlans extends React.Component {
 
     subscribeHandler(id){
 
-        HttpClient.post(`/subscribe/${id}`,).then(resp=>{
+        HttpClient.post(`/payment/${id}`,).then(resp=>{
           console.log(resp.data)
             window.location=resp.data.location;
         }).catch(err=>{
@@ -88,7 +88,7 @@ export default class indexPricingPlans extends React.Component {
                                             {this.props.currentPricePlan.id == pricePlan.id ?
                                                 <span onClick={(e)=>{e.target.innerText!=='SUBSCRIBED'?(this.subscribeHandler(pricePlan.id)):''}} value="subscribed" className="btn btn-block btn-success text-uppercase">Subscribed</span>
                                                 :
-                                                <span onClick={(e)=>{e.target.innerText!=='SUBSCRIBED'?(this.subscribeHandler(pricePlan.id)):''}} className="btn btn-block btn-primary text-uppercase">Upgrade</span>
+                                                <span onClick={(e)=>{e.target.innerText!=='SUBSCRIBED'?(this.subscribeHandler(pricePlan.id)):''}} className="btn btn-block btn-primary text-uppercase">Subscribe</span>
                                             }
                                         </div>
                                     </div>

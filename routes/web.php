@@ -36,7 +36,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
         Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);
         Route::delete('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
-        Route::post('subscribe/{id}',[App\Http\Controllers\PaymentController::class,'checkPayment']);
+        Route::post('payment/{id}',[App\Http\Controllers\PaymentController::class,'checkPayment']);
+        Route::get('subscribe/{id}',[App\Http\Controllers\PaymentController::class,'subscribePlan'])->name('subscribe');
         Route::get('user', function () {
             $user = Auth::user();
             $user->load('pricePlan');
