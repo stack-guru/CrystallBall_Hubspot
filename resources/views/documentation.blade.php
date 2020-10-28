@@ -232,7 +232,7 @@
     -F 'Authorization=Bearer your_api_key'
                  </code></pre>
                 <p>
-                    To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
+                    To post characters you need to make a <code class="highlighted">POST</code> call to the following url :<br>
                     <code class="higlighted">{{route('api.v1.annotations.store')}}</code>
                 </p>
                 <br>
@@ -353,7 +353,79 @@
                  </code></pre>
 
                 <h4>QUERY PARAMETERS</h4>
-                <p>None</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>Int</td>
+                        <td>[required] id of specific annotation you want to update</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h4>FORM PARAMETERS</h4>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>category</td>
+                        <td>String</td>
+                        <td>[required] Annotation Category updated value</td>
+                    </tr>
+                    <tr>
+                        <td>event_type</td>
+                        <td>String</td>
+                        <td>[required] Annotation's Event_type updated value</td>
+                    </tr>
+                    <tr>
+                        <td>event_name</td>
+                        <td>String</td>
+                        <td>[required] Annotation's Event_name updated value</td>
+                    </tr>
+                    <tr>
+                        <td>url</td>
+                        <td>mediumText</td>
+                        <td>[required] Annotation's url updated value</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>mediumText</td>
+                        <td>[required] Annotation's description updated value</td>
+                    </tr>
+                    <tr>
+                        <td>title</td>
+                        <td>String</td>
+                        <td>[required] Annotation's title updated value</td>
+                    </tr>
+                    <tr>
+                        <td>show_at</td>
+                        <td>date</td>
+                        <td>[required] Annotation's show_at date from which it will show on google analytics updated value</td>
+                    </tr>
+                    <tr>
+                        <td>type</td>
+                        <td>string</td>
+                        <td>[required] Annotation's type updated value</td>
+                    </tr>
+                    </tbody>
+                </table>
+
 
             </div>
 
@@ -365,12 +437,12 @@
                 <pre><code class="bash">
     # Here is a curl example
     curl \
-    -X GET {{route('api.v1.annotations.index')}} \
+    -X GET {{route('api.v1.annotations.destroy',"id")}} \
     -F 'Authorization=Bearer your_api_key'
                  </code></pre>
                 <p>
-                    To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
-                    <code class="higlighted">{{route('api.v1.annotations.index')}}</code>
+                    To get characters you need to make a <code class="highlighted">DELETE</code> call to the following url :<br>
+                    <code class="higlighted">{{route('api.v1.annotations.destroy','id')}}</code>
                 </p>
                 <br>
                 <pre><code class="json">
@@ -394,7 +466,23 @@
                  </code></pre>
 
                 <h4>QUERY PARAMETERS</h4>
-                <p>None</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>Int</td>
+                        <td>[required] id of specific annotation you want to Delete</td>
+                    </tr>
+                    </tbody>
+                </table>
 
             </div>
 
