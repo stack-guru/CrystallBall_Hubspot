@@ -107,7 +107,7 @@ class Main extends React.Component {
                             <Route exact path="/annotation/:id?/edit" refresh={true}
                                 render={(routeParams) => <AnnotationsUpdate routeParams={routeParams} />} />
                             <Route exact path="/api-key" refresh={true}>
-                                <IndexAPIKey />
+                                <IndexAPIKey user={this.state.user} />
                             </Route>
                             <Route exact path="/annotation/upload" refresh={true}>
                                 <AnnotationsUpload />

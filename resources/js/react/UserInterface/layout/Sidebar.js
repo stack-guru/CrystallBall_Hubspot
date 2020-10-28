@@ -81,11 +81,8 @@ class sidebar extends React.Component {
                         </Link>
                     </li> */}
                     {/*onClick={e => e.preventDefault()}*/}
-                    <li className={"nav-item gaa-menu-item" + (this.props.user.price_plan.id==1? ' disabled-link' :'')} >
-                        <Link to="/api-key" onClick={e =>
-                            this.props.user.price_plan.id==1?
-
-                            e.preventDefault():'' } >
+                    <li className="nav-item gaa-menu-item">
+                        <Link to="/api-key" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
                                     <i className="fa fa-key"></i>

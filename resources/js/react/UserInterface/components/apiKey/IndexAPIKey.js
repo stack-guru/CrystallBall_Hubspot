@@ -75,7 +75,7 @@ class IndexAPIKey extends React.Component {
                             <div className="col-1">
                                 <br />
                                 <br />
-                                <button className="btn btn-success" onClick={() => { this.generateAPIKey() }}>Generate</button>
+                                <button className="btn btn-success" onClick={() => { this.props.user.price_plan_id==1?(window.alert('please upgrade your plan to access api-key')): this.generateAPIKey() }}>Generate</button>
                             </div>
                         </div>
 
