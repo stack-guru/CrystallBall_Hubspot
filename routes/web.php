@@ -29,6 +29,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::view('annotation/upload', 'ui/app');
     Route::post('annotation/upload', [App\Http\Controllers\AnnotationController::class, 'upload']);
+    
+    Route::post('settings/price-plan/payment',[App\Http\Controllers\PaymentController::class,'checkPayment'])->name('payment.check');
+    Route::get('settings/price-plan/subscribe',[App\Http\Controllers\PaymentController::class,'subscribePlan'])->name('payment.subscribe');
 
     Route::group(['prefix' => 'ui'], function () {
         Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
@@ -36,8 +39,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
         Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);
         Route::delete('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
-        Route::post('payment/{id}',[App\Http\Controllers\PaymentController::class,'checkPayment']);
-        Route::get('subscribe/{id}',[App\Http\Controllers\PaymentController::class,'subscribePlan'])->name('subscribe');
         Route::get('user', function () {
             $user = Auth::user();
             $user->load('pricePlan');

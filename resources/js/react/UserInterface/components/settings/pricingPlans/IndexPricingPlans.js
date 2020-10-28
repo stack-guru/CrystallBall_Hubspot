@@ -27,17 +27,6 @@ export default class indexPricingPlans extends React.Component {
             });
     }
 
-    subscribeHandler(id){
-
-        HttpClient.post(`/payment/${id}`,).then(resp=>{
-          console.log(resp.data)
-            window.location=resp.data.location;
-        }).catch(err=>{
-            console.log(err);
-        })
-
-    }
-
     render() {
         return (
             <div className=" bg-white component-wrapper">
@@ -53,45 +42,50 @@ export default class indexPricingPlans extends React.Component {
                             {this.state.pricePlans.map(pricePlan => {
 
                                 return <div className="col-lg-4" key={pricePlan.id}>
-                                    <div className="card mb-5 mb-lg-0">
-                                        <div className="card-body">
-                                            <h5 className="card-title text-white  text-uppercase text-center">{pricePlan.name}</h5>
-                                            {pricePlan.price == 0 ?
-                                                <h6 className="card-price text-center">Free<span className="period">forever</span></h6>
-                                                :
-                                                <h6 className="card-price text-center">${pricePlan.price}<span className="period">/month</span></h6>
-                                            }
-                                            <hr />
-                                            <ul className="fa-ul">
-                                                {
-                                                    pricePlan.has_manual_add ?
-                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>Manual Add</li>
-                                                        :
-                                                        <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>Manual Add</li>
-                                                }
+                                    <form method="post" action="/settings/price-plan/payment">
+                                        <input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />
+                                        <input type="hidden" name="price_plan_id" value={pricePlan.id} />
 
-                                                {
-                                                    pricePlan.has_csv_upload ?
-                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>CSV Upload</li>
-                                                        :
-                                                        <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>CSV Upload</li>
+                                        <div className="card mb-5 mb-lg-0">
+                                            <div className="card-body">
+                                                <h5 className="card-title text-white  text-uppercase text-center">{pricePlan.name}</h5>
+                                                {pricePlan.price == 0 ?
+                                                    <h6 className="card-price text-center">Free<span className="period">forever</span></h6>
+                                                    :
+                                                    <h6 className="card-price text-center">${pricePlan.price}<span className="period">/month</span></h6>
                                                 }
+                                                <hr />
+                                                <ul className="fa-ul">
+                                                    {
+                                                        pricePlan.has_manual_add ?
+                                                            <li><span className="fa-li"><i className="fa fa-check"></i></span>Manual Add</li>
+                                                            :
+                                                            <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>Manual Add</li>
+                                                    }
 
-                                                {
-                                                    pricePlan.has_api ?
-                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>Annotations API</li>
-                                                        :
-                                                        <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>Annotations API</li>
+                                                    {
+                                                        pricePlan.has_csv_upload ?
+                                                            <li><span className="fa-li"><i className="fa fa-check"></i></span>CSV Upload</li>
+                                                            :
+                                                            <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>CSV Upload</li>
+                                                    }
+
+                                                    {
+                                                        pricePlan.has_api ?
+                                                            <li><span className="fa-li"><i className="fa fa-check"></i></span>Annotations API</li>
+                                                            :
+                                                            <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>Annotations API</li>
+                                                    }
+                                                </ul>
+
+                                                {this.props.currentPricePlan.id == pricePlan.id ?
+                                                    <span value="subscribed" className="btn btn-block btn-success text-uppercase">Subscribed</span>
+                                                    :
+                                                    <button className="btn btn-block btn-primary text-uppercase">Subscribe</button>
                                                 }
-                                            </ul>
-
-                                            {this.props.currentPricePlan.id == pricePlan.id ?
-                                                <span onClick={(e)=>{e.target.innerText!=='SUBSCRIBED'?(this.subscribeHandler(pricePlan.id)):''}} value="subscribed" className="btn btn-block btn-success text-uppercase">Subscribed</span>
-                                                :
-                                                <span onClick={(e)=>{e.target.innerText!=='SUBSCRIBED'?(this.subscribeHandler(pricePlan.id)):''}} className="btn btn-block btn-primary text-uppercase">Subscribe</span>
-                                            }
+                                            </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             })}
 
