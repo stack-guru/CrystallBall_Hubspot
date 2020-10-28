@@ -9,6 +9,7 @@ export default class indexPricingPlans extends React.Component {
         super(props);
         this.state = {
             pricePlans: []
+
         };
     }
 
@@ -24,6 +25,17 @@ export default class indexPricingPlans extends React.Component {
                 console.log(err)
                 this.setState({ isBusy: false, errors: err });
             });
+    }
+
+    subscribeHandler(id){
+
+        HttpClient.post(`/subscribe/${id}`,).then(resp=>{
+          console.log(resp.data)
+            window.location=resp.data.location;
+        }).catch(err=>{
+            console.log(err);
+        })
+
     }
 
     render() {
@@ -74,9 +86,9 @@ export default class indexPricingPlans extends React.Component {
                                             </ul>
 
                                             {this.props.currentPricePlan.id == pricePlan.id ?
-                                                <a href="#" className="btn btn-block btn-success text-uppercase">Subscribed</a>
+                                                <span onClick={(e)=>{e.target.innerText!=='SUBSCRIBED'?(this.subscribeHandler(pricePlan.id)):''}} value="subscribed" className="btn btn-block btn-success text-uppercase">Subscribed</span>
                                                 :
-                                                <a href="#" className="btn btn-block btn-primary text-uppercase">Upgrade</a>
+                                                <span onClick={(e)=>{e.target.innerText!=='SUBSCRIBED'?(this.subscribeHandler(pricePlan.id)):''}} className="btn btn-block btn-primary text-uppercase">Upgrade</span>
                                             }
                                         </div>
                                     </div>

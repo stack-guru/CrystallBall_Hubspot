@@ -41530,6 +41530,16 @@ var indexPricingPlans = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "subscribeHandler",
+    value: function subscribeHandler(id) {
+      _utils_HttpClient__WEBPACK_IMPORTED_MODULE_1__["default"].post("/subscribe/".concat(id)).then(function (resp) {
+        console.log(resp.data);
+        window.location = resp.data.location;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -41598,11 +41608,16 @@ var indexPricingPlans = /*#__PURE__*/function (_React$Component) {
           className: "fa-li"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fa fa-times"
-        })), "Annotations API")), _this3.props.currentPricePlan.id == pricePlan.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: "#",
+        })), "Annotations API")), _this3.props.currentPricePlan.id == pricePlan.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          onClick: function onClick(e) {
+            e.target.innerText !== 'SUBSCRIBED' ? _this3.subscribeHandler(pricePlan.id) : '';
+          },
+          value: "subscribed",
           className: "btn btn-block btn-success text-uppercase"
-        }, "Subscribed") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: "#",
+        }, "Subscribed") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          onClick: function onClick(e) {
+            e.target.innerText !== 'SUBSCRIBED' ? _this3.subscribeHandler(pricePlan.id) : '';
+          },
           className: "btn btn-block btn-primary text-uppercase"
         }, "Upgrade"))));
       })))));
