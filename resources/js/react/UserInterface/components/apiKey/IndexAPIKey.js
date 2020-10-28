@@ -32,20 +32,26 @@ class IndexAPIKey extends React.Component {
     }
 
     generateAPIKey() {
-        this.setState({ isBusy: true });
-        HttpClient({ url: `/oauth/personal-access-tokens`, baseURL: "/", method: 'post', data: { name: this.state.token_name, scopes: [] } })
-            .then(response => {
-                toast.success("Token generated.");
-                let tokens = this.state.apiKeys;
-                tokens.push(response.data.token);
-                this.setState({ isBusy: false, apiKeys: tokens, accessToken: response.data.accessToken })
-            }, (err) => {
-                console.log(err);
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-                console.log(err);
-                this.setState({ isBusy: false, errors: err });
-            });
+        if (this.props.currentPricePlan.has_api == 0) {
+            swal("Want premium plan!", "API feature is not available in this package.", "warning")
+        } else {
+            if (!this.state.isBusy) {
+                this.setState({ isBusy: true });
+                HttpClient({ url: `/oauth/personal-access-tokens`, baseURL: "/", method: 'post', data: { name: this.state.token_name, scopes: [] } })
+                    .then(response => {
+                        toast.success("Token generated.");
+                        let tokens = this.state.apiKeys;
+                        tokens.push(response.data.token);
+                        this.setState({ isBusy: false, apiKeys: tokens, accessToken: response.data.accessToken })
+                    }, (err) => {
+                        console.log(err);
+                        this.setState({ isBusy: false, errors: (err.response).data });
+                    }).catch(err => {
+                        console.log(err);
+                        this.setState({ isBusy: false, errors: err });
+                    });
+            }
+        }
     }
 
     handleChange(e) {
@@ -75,7 +81,7 @@ class IndexAPIKey extends React.Component {
                             <div className="col-1">
                                 <br />
                                 <br />
-                                <button className="btn btn-success" onClick={() => { this.props.currentPricePlan.has_api==0?(swal("Want premium plan!", "API feature is not available in this package.", "warning")): this.generateAPIKey() }}>Generate</button>
+                                <button className="btn btn-success" onClick={() => { this.generateAPIKey() }}>Generate</button>
                             </div>
                         </div>
 
