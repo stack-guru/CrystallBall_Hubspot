@@ -123,7 +123,7 @@ class AnnotationController extends Controller
                 'category', 'event_type', 'event_name',
                 'url', 'description', 'title', 'show_at', 'type',
             ])) {
-            return response()->json(['message' => 'Invalid CSV file headers'], 422);
+                return response()->json(['message' => 'Invalid CSV file headers'], 422);
             }
         }
 
@@ -131,6 +131,10 @@ class AnnotationController extends Controller
 
         $rows = array();
         foreach ($filecontent as $line) {
+            if (strlen($line) < (6 + 7)) {
+                continue;
+            }
+
             $row = array();
             $values = str_getcsv($line);
             if ($headers !== $values && count($values) == count($headers)) {
