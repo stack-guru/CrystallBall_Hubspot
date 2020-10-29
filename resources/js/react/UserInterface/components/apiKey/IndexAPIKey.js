@@ -2,9 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
-import Moment from 'react-moment';
-
-
 
 class IndexAPIKey extends React.Component {
 
@@ -103,12 +100,11 @@ class IndexAPIKey extends React.Component {
                                         {this.state.apiKeys.map(apiKey => {
                                             return <tr key={apiKey.id}><td>{apiKey.id}</td>
                                                 <td>
-                                                    <Moment format="YYYY/MM/DD">
-                                                    {apiKey.created_at}
-                                                    </Moment></td>
-                                                <td> <Moment format="YYYY/MM/DD">
-                                                    {apiKey.expires_at}
-                                                </Moment></td>
+                                                    {moment(apiKey.created_at).format("YYYY/MM/DD")}
+                                                </td>
+                                                <td>
+                                                    {moment(apiKey.expires_at).format("YYYY/MM/DD")}
+                                                </td>
                                             </tr>
                                         })}
                                     </tbody>
