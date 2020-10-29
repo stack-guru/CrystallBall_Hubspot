@@ -15,12 +15,20 @@ const mix = require('laravel-mix');
  
 mix.react('resources/js/react/UserInterface/UI.js', 'public/js');
 
-mix.styles([
-    'resources/css/bootstrap.css',
-    'resources/css/floating-labels.css'
-], 'public/css/auth.css');
+// mix.styles([
+//     'resources/css/bootstrap.css',
+//     'resources/css/floating-labels.css'
+// ], 'public/css/auth.css');
 
-mix.styles([
-    'resources/css/bootstrap.css',
-    'resources/css/documentation.css'
-], 'public/css/documentation.css');
+// mix.styles([
+//     'resources/css/bootstrap.css',
+//     'resources/css/documentation.css'
+// ], 'public/css/documentation.css');
+
+// mix.styles([
+//     'resources/css/bootstrap.css',
+// ], 'public/css/admin.css');
+// mix.scripts([
+//     'resources/js/jquery.js',
+//     'resources/js/bootstrap.js',
+// ], 'public/js/admin.js');
