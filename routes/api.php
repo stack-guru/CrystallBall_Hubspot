@@ -21,6 +21,8 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
 
     Route::group(['prefix' => 'v1', 'namespace' => 'API', 'as' => 'v1.'], function () {
 
+        Route::get('event-sources', 'EventSourceController@index')->name('event-sources.index');
+
         Route::get('chrome-extension/event-sources', 'EventSourceController@index');
         Route::group(['middleware' => ['auth:api']], function () {
 

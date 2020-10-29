@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>API - Documentation</title>
     <meta name="description" content="">
-    <meta name="author" content="ticlekiwi">
+
 
     <meta http-equiv="cleartype" content="on">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -33,7 +33,6 @@
 
                 <li class="scroll-to-link active" data-target="get-started"><a>GET STARTED</a></li>
                 <li class="scroll-to-link" data-target="user-details"><a>User Details <span class="badge badge-success">GET</span></a></li>
-                <li class="scroll-to-link" data-target="event-sources-list"><a>Event Sources List <span class="badge badge-success">GET</span></a></li>
                 <li class="scroll-to-link" data-target="annotations-list"><a>Annotations List <span class="badge badge-success">GET</span></a></li>
                 <li class="scroll-to-link" data-target="add-annotation"><a>Add Annotation <span class="badge badge-warning">POST</span></a></li>
                 <li class="scroll-to-link" data-target="change-annotation"><a>Change Annotation <span class="badge badge-info">PUT</span></a></li>
@@ -48,9 +47,9 @@
             <div class="overflow-hidden content-section" id="content-get-started">
                 <h1 id="get-started">Get started</h1>
                 <pre>
-                        API Endpoint
+    API Endpoint
 
-                        {{url("/")}}
+    {{url("/")}}
                  </pre>
                 <p>
                     GAannotations provide API for all actions over annotations
@@ -64,9 +63,9 @@
                 <h2 id="user-details">User Details</h2>
                 <pre><code class="bash">
     # Here is a curl example
-    curl \
-    -X GET {{route('api.v1.user.show')}} \
-    -F 'Authorization=Bearer your_api_key'
+    curl --request GET \
+  --url {{route('api.v1.user.show')}} \
+  --header 'Authorization: Bearer your_api_key'
                  </code></pre>
                 <p>
                     To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
@@ -78,18 +77,15 @@
     Result example :
 
     {
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
-    dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
-    3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
-    Q3OWM5MDQ3Y2RjNTliZDUzNjciLCJpYXQiOjE2MDM3OTc4NzUsI
-    m5iZiI6MTYwMzc5Nzg3NSwiZXhwIjoxNjM1MzMzODc1LCJzdWIi
-    OiIxIiwic2NvcGVzIjpbXX0.jZmCTwwEh45va9DCcqYz1LfBTH6
-    Ft5ze7DSDqaiRXlttDP4xq6TO_fFxpptxGOaOeBB773lX4r0Sxn
-    PUFnUXBvIM4-YQfHq0V6rejZgKt6WXLvbJGdqLkkCgzHn6epKZY
-    3lxFCP5NW3pvz9_7lSMwk9mLomFfo72CwpG5kty4SZLSCIZ1TZR
-    w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
-    h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
-    0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
+        "id": 1,
+        "name": "ABC",
+        "email": "abc@def.gh",
+        "email_verified_at": null,
+        "created_at": null,
+        "updated_at": "2020-10-29T09:51:08.000000Z",
+        "price_plan_id": 2,
+        "price_plan_expiry_date": "2020-11-29",
+        "annotations_count": 0
     }
                  </code></pre>
 
@@ -98,96 +94,13 @@
 
             </div>
 
-            <div class="overflow-hidden content-section" id="content-event-sources-list">
-                <h2 id="event-sources-list">Event Sources List</h2>
-                <pre><code class="bash">
- # Here is a curl example
- curl \
- -X GET {{route('api.v1.user.show')}} \
- -F 'Authorization=Bearer your_api_key'
-                 </code></pre>
-                <p>
-                    To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
-                    <code class="higlighted">{{route('api.v1.user.show')}}</code>
-                </p>
-                <br>
-                <pre><code class="json">
-
- Result example :
-
- {
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
-    dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
-    3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
-    Q3OWM5MDQ3Y2RjNTliZDUzNjciLCJpYXQiOjE2MDM3OTc4NzUsI
-    m5iZiI6MTYwMzc5Nzg3NSwiZXhwIjoxNjM1MzMzODc1LCJzdWIi
-    OiIxIiwic2NvcGVzIjpbXX0.jZmCTwwEh45va9DCcqYz1LfBTH6
-    Ft5ze7DSDqaiRXlttDP4xq6TO_fFxpptxGOaOeBB773lX4r0Sxn
-    PUFnUXBvIM4-YQfHq0V6rejZgKt6WXLvbJGdqLkkCgzHn6epKZY
-    3lxFCP5NW3pvz9_7lSMwk9mLomFfo72CwpG5kty4SZLSCIZ1TZR
-    w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
-    h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
-    0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
-  }
-                 </code></pre>
-                <h4>QUERY PARAMETERS</h4>
-                <p>None</p>
-            </div>
-            <div class="overflow-hidden content-section" id="content-event-sources-list">
-                <h2 id="event-sources-list">Event Sources List</h2>
-                <p>
-                    The Westeros API uses the following error codes:
-                </p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Error Code</th>
-                            <th>Meaning</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>X000</td>
-                            <td>
-                                Some parameters are missing. This error appears when you don't pass every mandatory
-                                parameters.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>X001</td>
-                            <td>
-                                Unknown or unvalid <code class="higlighted">secret_key</code>. This error appears if you
-                                use an unknow API key or if your API key expired.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>X002</td>
-                            <td>
-                                Unvalid <code class="higlighted">secret_key</code> for this domain. This error appears
-                                if you use an API key non specified for your domain. Developper or Universal API keys
-                                doesn't have domain checker.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>X003</td>
-                            <td>
-                                Unknown or unvalid user <code class="higlighted">token</code>. This error appears if you
-                                use an unknow user <code class="higlighted">token</code> or if the user <code
-                                    class="higlighted">token</code> expired.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-
             <div class="overflow-hidden content-section" id="annotations-list">
                 <h2 id="annotations-list">Annotation List</h2>
                 <pre><code class="bash">
     # Here is a curl example
-    curl \
-    -X GET {{route('api.v1.annotations.index')}} \
-    -F 'Authorization=Bearer your_api_key'
+    curl --request GET \
+  --url {{route('api.v1.annotations.index')}} \
+  --header 'Authorization: Bearer your_api_key'
                  </code></pre>
                 <p>
                     To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
@@ -199,18 +112,21 @@
     Result example :
 
     {
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
-    dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
-    3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
-    Q3OWM5MDQ3Y2RjNTliZDUzNjciLCJpYXQiOjE2MDM3OTc4NzUsI
-    m5iZiI6MTYwMzc5Nzg3NSwiZXhwIjoxNjM1MzMzODc1LCJzdWIi
-    OiIxIiwic2NvcGVzIjpbXX0.jZmCTwwEh45va9DCcqYz1LfBTH6
-    Ft5ze7DSDqaiRXlttDP4xq6TO_fFxpptxGOaOeBB773lX4r0Sxn
-    PUFnUXBvIM4-YQfHq0V6rejZgKt6WXLvbJGdqLkkCgzHn6epKZY
-    3lxFCP5NW3pvz9_7lSMwk9mLomFfo72CwpG5kty4SZLSCIZ1TZR
-    w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
-    h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
-    0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
+        "annotations": [
+          {
+            "_id": 1,
+            "category": "Pakistan",
+            "eventSource": {
+              "type": "holidays",
+              "name": "Holidays"
+            },
+            "url": "google.com",
+            "description": "Teting annotation",
+            "title": "Testing Title",
+            "highlighted": false,
+            "publishDate": "2020-10-01UTC00:00:000",
+            "type": "private"
+          }
     }
                  </code></pre>
 
@@ -227,9 +143,18 @@
                 <h2 id="add-annotation">Add Annotation</h2>
                 <pre><code class="bash">
     # Here is a curl example
-    curl \
-    -X GET {{route('api.v1.annotations.store')}} \
-    -F 'Authorization=Bearer your_api_key'
+    curl --request POST \
+        --url {{route('api.v1.annotations.store')}} \
+        --header 'Authorization: Bearer your_api_key' \
+        --header 'Content-Type: application/x-www-form-urlencoded' \
+        --data category=API \
+        --data event_type=technology \
+        --data event_name=Technology \
+        --data url=facebook.com \
+        --data 'description=This is a test.' \
+        --data 'title=Testing Annotation' \
+        --data show_at=2020-11-12 \
+        --data type=private
                  </code></pre>
                 <p>
                     To post characters you need to make a <code class="highlighted">POST</code> call to the following url :<br>
@@ -241,18 +166,20 @@
     Result example :
 
     {
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
-    dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
-    3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
-    Q3OWM5MDQ3Y2RjNTliZDUzNjciLCJpYXQiOjE2MDM3OTc4NzUsI
-    m5iZiI6MTYwMzc5Nzg3NSwiZXhwIjoxNjM1MzMzODc1LCJzdWIi
-    OiIxIiwic2NvcGVzIjpbXX0.jZmCTwwEh45va9DCcqYz1LfBTH6
-    Ft5ze7DSDqaiRXlttDP4xq6TO_fFxpptxGOaOeBB773lX4r0Sxn
-    PUFnUXBvIM4-YQfHq0V6rejZgKt6WXLvbJGdqLkkCgzHn6epKZY
-    3lxFCP5NW3pvz9_7lSMwk9mLomFfo72CwpG5kty4SZLSCIZ1TZR
-    w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
-    h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
-    0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
+        "annotation": {
+          "category": "API",
+          "event_type": "technology",
+          "event_name": "Technology",
+          "url": "facebook.com",
+          "description": "This is a test.",
+          "title": "Testing Annotation",
+          "show_at": "2020-11-12",
+          "type": "private",
+          "user_id": 1,
+          "updated_at": "2020-10-29T10:11:19.000000Z",
+          "created_at": "2020-10-29T10:11:19.000000Z",
+          "id": 71
+        }
     }
                  </code></pre>
 
@@ -323,12 +250,21 @@
                 <h2 id="change-annotation">Change Annotation</h2>
                 <pre><code class="bash">
     # Here is a curl example
-    curl \
-    -X GET {{route('api.v1.annotations.update', "id")}}
-    -F 'Authorization=Bearer your_api_key'
+    curl --request PUT \
+        --url {{route('api.v1.annotations.update', 'id')}} \
+        --header 'Authorization: Bearer your_api_key' \
+        --header 'Content-Type: application/x-www-form-urlencoded' \
+        --data category=API \
+        --data event_type=technology \
+        --data event_name=Technology \
+        --data url=facebook.com \
+        --data 'description=This is a test.' \
+        --data 'title=Testing Annotation' \
+        --data show_at=2020-10-01 \
+        --data type=private
                  </code></pre>
                 <p>
-                    To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
+                    To get characters you need to make a <code class="highlighted">PUT</code> call to the following url :<br>
                     <code class="higlighted">{{route('api.v1.annotations.update', "id")}}</code>
                 </p>
                 <br>
@@ -337,18 +273,21 @@
     Result example :
 
     {
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
-    dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
-    3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
-    Q3OWM5MDQ3Y2RjNTliZDUzNjciLCJpYXQiOjE2MDM3OTc4NzUsI
-    m5iZiI6MTYwMzc5Nzg3NSwiZXhwIjoxNjM1MzMzODc1LCJzdWIi
-    OiIxIiwic2NvcGVzIjpbXX0.jZmCTwwEh45va9DCcqYz1LfBTH6
-    Ft5ze7DSDqaiRXlttDP4xq6TO_fFxpptxGOaOeBB773lX4r0Sxn
-    PUFnUXBvIM4-YQfHq0V6rejZgKt6WXLvbJGdqLkkCgzHn6epKZY
-    3lxFCP5NW3pvz9_7lSMwk9mLomFfo72CwpG5kty4SZLSCIZ1TZR
-    w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
-    h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
-    0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
+        "annotation": {
+          "id": 71,
+          "user_id": 1,
+          "category": "API",
+          "event_type": "technology",
+          "event_name": "Technology",
+          "url": "facebook.com",
+          "description": "This is a test.",
+          "title": "Testing Annotation",
+          "show_at": "2020-10-01",
+          "type": "private",
+          "created_at": "2020-10-29T10:11:19.000000Z",
+          "updated_at": "2020-10-29T10:17:25.000000Z",
+          "is_enabled": 1
+        }
     }
                  </code></pre>
 
@@ -436,9 +375,10 @@
                 <h2 id="delete-annotation">Delete Annotation</h2>
                 <pre><code class="bash">
     # Here is a curl example
-    curl \
-    -X GET {{route('api.v1.annotations.destroy',"id")}} \
-    -F 'Authorization=Bearer your_api_key'
+    curl --request DELETE \
+  --url {{route('api.v1.annotations.destroy', 'id')}} \
+  --header 'Authorization: Bearer your_api_key' \
+  --header 'Content-Type: application/x-www-form-urlencoded'
                  </code></pre>
                 <p>
                     To get characters you need to make a <code class="highlighted">DELETE</code> call to the following url :<br>
@@ -450,18 +390,7 @@
     Result example :
 
     {
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJh
-    dWQiOiIxIiwianRpIjoiMjc5MzU2NWE2MWM5MzU1NTA5YjY2MGE
-    3YjNlNmJiZmRmZDU2NTBmNzU3ZDY4MmU4ZWEwYzFhNWVkMTZjNj
-    Q3OWM5MDQ3Y2RjNTliZDUzNjciLCJpYXQiOjE2MDM3OTc4NzUsI
-    m5iZiI6MTYwMzc5Nzg3NSwiZXhwIjoxNjM1MzMzODc1LCJzdWIi
-    OiIxIiwic2NvcGVzIjpbXX0.jZmCTwwEh45va9DCcqYz1LfBTH6
-    Ft5ze7DSDqaiRXlttDP4xq6TO_fFxpptxGOaOeBB773lX4r0Sxn
-    PUFnUXBvIM4-YQfHq0V6rejZgKt6WXLvbJGdqLkkCgzHn6epKZY
-    3lxFCP5NW3pvz9_7lSMwk9mLomFfo72CwpG5kty4SZLSCIZ1TZR
-    w61fBxFwxcgu1CPhRJlrQNkD_ZC34nOJ4nbmWt3K8dvjQGu2Sar
-    h9eRwSdJk4qjI1viiuvMuoHytUW32eAYW10MbNXQZMV_4bl-25z
-    0jdUTVoFBVkwdF79CbwprozbkmslDTagWZaAturTfLtfvod1ZY"
+        "success": true
     }
                  </code></pre>
 
