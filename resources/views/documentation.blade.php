@@ -113,20 +113,21 @@
 
     {
         "annotations": [
-          {
-            "_id": 1,
-            "category": "Pakistan",
-            "eventSource": {
-              "type": "holidays",
-              "name": "Holidays"
-            },
-            "url": "google.com",
-            "description": "Teting annotation",
-            "title": "Testing Title",
-            "highlighted": false,
-            "publishDate": "2020-10-01UTC00:00:000",
-            "type": "private"
-          }
+            {
+                "_id": 1,
+                "category": "Sales Event",
+                "eventSource": {
+                    "type": "Sales",
+                    "name": "Black Friday"
+                },
+                "url": "https://gaannotations.com/",
+                "description": "Black Friday Deals 2020",
+                "title": "Black Friday",
+                "highlighted": false,
+                "publishDate": "2020-11-27UTC00:00:000",
+                "type": "public"
+            }
+        ]
     }
                  </code></pre>
 
@@ -147,14 +148,14 @@
         --url {{route('api.v1.annotations.store')}} \
         --header 'Authorization: Bearer your_api_key' \
         --header 'Content-Type: application/x-www-form-urlencoded' \
-        --data category=API \
-        --data event_type=technology \
-        --data event_name=Technology \
-        --data url=facebook.com \
-        --data 'description=This is a test.' \
-        --data 'title=Testing Annotation' \
-        --data show_at=2020-11-12 \
-        --data type=private
+        --data category=Sales Event \
+        --data event_type=Sales \
+        --data event_name=Black Friday \
+        --data url=https://gaannotations.com/ \
+        --data 'description=Black Friday Deals 2020' \
+        --data 'title=Black Friday' \
+        --data show_at=2020-11-27 \
+        --data type=public
                  </code></pre>
                 <p>
                     To post characters you need to make a <code class="highlighted">POST</code> call to the following url :<br>
@@ -167,14 +168,14 @@
 
     {
         "annotation": {
-          "category": "API",
-          "event_type": "technology",
-          "event_name": "Technology",
-          "url": "facebook.com",
-          "description": "This is a test.",
-          "title": "Testing Annotation",
-          "show_at": "2020-11-12",
-          "type": "private",
+          "category": "Sales Event",
+          "event_type": "Sales",
+          "event_name": "Black Friday",
+          "url": "https://gaannotations.com/",
+          "description": "Black Friday Deals 2020",
+          "title": "Black Friday",
+          "show_at": "2020-11-27",
+          "type": "public",
           "user_id": 1,
           "updated_at": "2020-10-29T10:11:19.000000Z",
           "created_at": "2020-10-29T10:11:19.000000Z",
@@ -254,14 +255,14 @@
         --url {{route('api.v1.annotations.update', 'id')}} \
         --header 'Authorization: Bearer your_api_key' \
         --header 'Content-Type: application/x-www-form-urlencoded' \
-        --data category=API \
-        --data event_type=technology \
-        --data event_name=Technology \
-        --data url=facebook.com \
-        --data 'description=This is a test.' \
-        --data 'title=Testing Annotation' \
-        --data show_at=2020-10-01 \
-        --data type=private
+        --data category=Sales Event \
+        --data event_type=Sales \
+        --data event_name=Black Friday \
+        --data url=https://gaannotations.com/ \
+        --data 'description=Black Friday Deals 2020' \
+        --data 'title=Black Friday' \
+        --data show_at=2020-11-27 \
+        --data type=public
                  </code></pre>
                 <p>
                     To get characters you need to make a <code class="highlighted">PUT</code> call to the following url :<br>
@@ -276,14 +277,14 @@
         "annotation": {
           "id": 71,
           "user_id": 1,
-          "category": "API",
-          "event_type": "technology",
-          "event_name": "Technology",
-          "url": "facebook.com",
-          "description": "This is a test.",
-          "title": "Testing Annotation",
-          "show_at": "2020-10-01",
-          "type": "private",
+          "category": "Sales Event",
+          "event_type": "Sales",
+          "event_name": "Black Friday",
+          "url": "https://gaannotations.com/",
+          "description": "Black Friday Deals 2020",
+          "title": "Black Friday",
+          "show_at": "2020-11-27",
+          "type": "public",
           "created_at": "2020-10-29T10:11:19.000000Z",
           "updated_at": "2020-10-29T10:17:25.000000Z",
           "is_enabled": 1
@@ -414,40 +415,6 @@
                 </table>
 
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

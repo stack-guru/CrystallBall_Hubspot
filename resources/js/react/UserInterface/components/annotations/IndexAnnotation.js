@@ -84,6 +84,13 @@ class IndexAnnotations extends React.Component {
                         </div>
                         <div className="row">
                             <div className="col-12">
+                                <button type="button" className="btn btn-sm gaa-primary text-white mr-2"><i className=" mr-2 fa fa-upload"></i>CSV Upload</button>
+                                <button type="button" className="btn btn-sm gaa-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add Manual</button>
+
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-12">
                                 <table className="table table-hover table-bordered table-striped">
                                     <thead>
                                         <tr>
