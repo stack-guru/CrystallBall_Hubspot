@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
+import Moment from 'react-moment';
+
+
 
 class IndexAPIKey extends React.Component {
 
@@ -59,6 +62,7 @@ class IndexAPIKey extends React.Component {
     }
 
     render() {
+
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section " id="inputs" >
@@ -97,7 +101,15 @@ class IndexAPIKey extends React.Component {
                                     </thead>
                                     <tbody>
                                         {this.state.apiKeys.map(apiKey => {
-                                            return <tr key={apiKey.id}><td>{apiKey.id}</td><td>{apiKey.created_at}</td><td>{apiKey.expires_at}</td></tr>
+                                            return <tr key={apiKey.id}><td>{apiKey.id}</td>
+                                                <td>
+                                                    <Moment format="YYYY/MM/DD">
+                                                    {apiKey.created_at}
+                                                    </Moment></td>
+                                                <td> <Moment format="YYYY/MM/DD">
+                                                    {apiKey.expires_at}
+                                                </Moment></td>
+                                            </tr>
                                         })}
                                     </tbody>
                                 </table>

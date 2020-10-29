@@ -1,5 +1,9 @@
-"category","event_type","event_name","url","description","title","show_at","type"
-"Pakistan","holidays","Holidays","localhost:8000","Teting annotation","Testing Title","2020-10-01","public"
-"Pakistan","holidays","Holidays","localhost:8000","Testing 2","Title here","2020-09-18","public"
-"Category","holidays","Holidays","google.com","This is the new description","Title 3","2020-10-04","public"
-"United Kingdom","holidays","Holidays","google.com","This is the new description","Title 4","2020-09-04","private"
+category,event_type,event_name,url,description,title,show_at,type
+Sales Event,Sales,Black Friday,https://gaannotations.com/,Black Friday Deals 2020,Black Friday,2020-11-27,public
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
