@@ -11,7 +11,7 @@ class IndexAnnotations extends React.Component {
         this.state = {
             annotations: [],
             error: '',
-            isBusy:false
+            isBusy: false
         }
         this.deleteAnnotation = this.deleteAnnotation.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
@@ -112,16 +112,14 @@ class IndexAnnotations extends React.Component {
                                                     <td>
                                                         <button type="button" onClick={() => {
                                                             this.deleteAnnotation(anno.id)
-                                                        }} className="btn btn-sm gaa-primary text-white m-2">
+                                                        }} className="btn btn-sm gaa-primary text-white mr-2">
                                                             <i className=" mr-2 fa fa-trash"></i>
                                                                 Delete
                                                             </button>
 
-                                                        <Link to={`/annotation/${anno.id}/edit`} >
-                                                            <span type="button" className="btn btn-sm gaa-primary text-white m-2" >
-                                                                <i className=" mr-2 fa fa-edit"></i>
+                                                        <Link to={`/annotation/${anno.id}/edit`} className="btn btn-sm gaa-primary text-white mr-2" >
+                                                            <i className=" mr-2 fa fa-edit"></i>
                                                                 Edit
-                                                            </span>
                                                         </Link>
                                                     </td>
                                                 </tr>

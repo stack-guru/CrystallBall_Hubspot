@@ -100,10 +100,10 @@ class IndexAPIKey extends React.Component {
                                         {this.state.apiKeys.map(apiKey => {
                                             return <tr key={apiKey.id}><td>{apiKey.id}</td>
                                                 <td>
-                                                    {moment(apiKey.created_at).format("YYYY/MM/DD")}
+                                                    {moment(apiKey.created_at).format("YYYY-MM-DD")}
                                                 </td>
                                                 <td>
-                                                    {moment(apiKey.expires_at).format("YYYY/MM/DD")}
+                                                    {moment(apiKey.expires_at).format("YYYY-MM-DD")}
                                                 </td>
                                             </tr>
                                         })}
