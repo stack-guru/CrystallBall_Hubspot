@@ -18,20 +18,25 @@ Route::redirect('/', '/login', 301);
 
 Auth::routes();
 
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
+    Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('logout');
+});
+
 Route::view('documentation', 'documentation');
 
 Route::group(['middleware' => ['auth']], function () {
 
     Route::view('dashboard', 'ui/app');
 
-
     Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except(['store', 'show', 'update', 'destroy']);
 
     Route::view('annotation/upload', 'ui/app');
     Route::post('annotation/upload', [App\Http\Controllers\AnnotationController::class, 'upload']);
-    
-    Route::post('settings/price-plan/payment',[App\Http\Controllers\PaymentController::class,'checkPayment'])->name('payment.check');
-    Route::get('settings/price-plan/subscribe',[App\Http\Controllers\PaymentController::class,'subscribePlan'])->name('payment.subscribe');
+
+    Route::post('settings/price-plan/payment', [App\Http\Controllers\PaymentController::class, 'checkPayment'])->name('payment.check');
+    Route::get('settings/price-plan/subscribe', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.subscribe');
 
     Route::group(['prefix' => 'ui'], function () {
         Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
