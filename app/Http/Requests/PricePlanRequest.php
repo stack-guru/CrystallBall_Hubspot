@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Auth;
 
 class PricePlanRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class PricePlanRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::id('admin');
     }
 
     /**
@@ -27,10 +28,10 @@ class PricePlanRequest extends FormRequest
             'name' => 'required|string',
             'annotations_count' => "required|numeric",
             'price' => "required|numeric",
-            'has_manual_add' => "required",
-            'has_csv_upload' => "required",
-            'has_api' => "required",
-            'is_enabled' => "required"
+            'has_manual_add' => "nullable",
+            'has_csv_upload' => "nullable",
+            'has_api' => "nullable",
+            'is_enabled' => "nullable"
         ];
     }
 }
