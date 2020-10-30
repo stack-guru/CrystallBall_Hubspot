@@ -31,6 +31,10 @@ return [
     ],
 
     'bluesnap' => [
-        'key' => env('BLUESNAP_SELLER_KEY')
+        'environment' => env('BLUESNAP_ENVIRONMENT', 'sandbox'),
+        'api' => [
+            'key' => env('BLUESNAP_API_KEY'),
+            'password' => env('BLUESNAP_API_PASSWORD')
+        ]
     ],
 ];
