@@ -19,6 +19,7 @@ import ChangePassword from './components/settings/ChangePassword';
 import 'react-toastify/dist/ReactToastify.css';
 import './Main.css';
 import IndexAPIKey from './components/apiKey/IndexAPIKey';
+import StorePayment from './components/settings/pricingPlans/StorePayment';
 
 class Main extends React.Component {
 
@@ -120,6 +121,9 @@ class Main extends React.Component {
                             </Route>
                             <Route exact path="/settings/price-plans" refresh={true}>
                                 <PricingPlans currentPricePlan={this.state.user.price_plan} />
+                            </Route>
+                            <Route exact path="/settings/price-plans/payment" refresh={true}>
+                                <StorePayment user={this.state.user} />
                             </Route>
                         </Switch>
 

@@ -19,7 +19,7 @@ class sidebar extends React.Component {
                         <div className="peer peer-greed"><a className="sidebar-link td-n" href="/">
                             <div className="peers ai-c fxw-nw">
                                 <div className="peer">
-                                    <div className="logo"><img src="/images/company_logo.png" width="65px" height="65px" alt="" /></div>
+                                    <div className="logo logo-margin"><img src="/images/company_logo.png" width="40px" height="40px" alt="" /></div>
                                 </div>
                                 <div className="peer peer-greed "><h5 className="lh-1 mB-0 logo-text ">GAannotations</h5>
                                 </div>
@@ -111,10 +111,10 @@ class sidebar extends React.Component {
                         </span>
                         </Link>
                     </li> */}
-                    <li className="nav-item gaa-menu-item gaa-danger">
+                    <li className="nav-item gaa-menu-item gaa-text-danger">
                         <Link to="#">
-                            <span className="sidebar-link gaa-danger" >
-                                <span className="icon-holder gaa-danger">
+                            <span className="sidebar-link gaa-text-danger" >
+                                <span className="icon-holder gaa-text-danger">
                                     <i className="fa fa-cube"></i>
                                 </span>
                                 <span className="title">Add Chrome Extension</span>

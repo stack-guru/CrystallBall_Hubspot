@@ -61,5 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('settings', 'ui/app');
     Route::view('settings/change-password', 'ui/app');
     Route::view('settings/price-plans', 'ui/app');
+    Route::view('settings/price-plans/payment', 'ui/app');
+
 
 });

@@ -13,11 +13,10 @@
 .upload-csv-input {
     height: 2.6rem;
 }
-.disabled-link{
-    opacity:.3;
+.disabled-link {
+    opacity: 0.3;
     pointer-events: none;
 }
-
 
 /*#0a2950*/
 /*#456287*/
@@ -114,6 +113,23 @@
     color: #2196f3 !important;
 }
 
-.gaa-danger{
-    color:#bf0c18!important;
+.gaa-text-danger {
+    color: #bf0c18 !important;
+}
+
+.pos-ab-l-50-t-0 {
+    position: absolute;
+    left: 50%;
+    top: 0px;
+}
+
+.gaa-btn-danger {
+    color: #fff;
+    background-color: #bf0c18;
+    border-color: #bf0c18;
+}
+
+.logo-margin {
+    margin-left: 17%;
+    margin-top: 15%;
 }
