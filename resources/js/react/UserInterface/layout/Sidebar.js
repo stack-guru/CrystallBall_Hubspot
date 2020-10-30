@@ -21,7 +21,7 @@ class sidebar extends React.Component {
                                 <div className="peer">
                                     <div className="logo logo-margin"><img src="/images/company_logo.png" width="40px" height="40px" alt="" /></div>
                                 </div>
-                                <div className="peer peer-greed "><h6 className="lh-1 logo-text ">GAannotations</h6>
+                                <div className="peer peer-greed "><h5 className="lh-1 logo-text ">GAannotations</h5>
                                 </div>
                             </div>
                         </a></div>

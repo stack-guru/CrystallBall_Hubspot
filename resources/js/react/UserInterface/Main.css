@@ -130,6 +130,10 @@
 }
 
 .logo-margin {
-    margin-left: 17%;
+    margin-left: 19%;
     margin-top: 15%;
+}
+
+.logo-text {
+    font-size: 1rem;
 }
