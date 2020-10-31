@@ -8,10 +8,6 @@ export default class indexSettings extends React.Component {
 
     }
 
-    componentDidMount() {
-        console.log(this.props)
-    }
-
     render() {
         return (
             <div className="container-xl bg-white component-wrapper">

@@ -29,7 +29,6 @@ export default function ErrorAlert(props) {
                     </div>
                 )
             } else {
-                console.log(props);
                 return (<div className="alert alert-danger" role="alert">
                     <h4 className="alert-heading"><i className="icon fa fa-info"></i> Unknown error occured</h4>
                 </div>);

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import HttpClient from "../../../utils/HttpClient";
+import { Link } from 'react-router-dom';
 
 
 export default class indexPricingPlans extends React.Component {
@@ -81,7 +82,10 @@ export default class indexPricingPlans extends React.Component {
                                                 {this.props.currentPricePlan.id == pricePlan.id ?
                                                     <span value="subscribed" className="btn btn-block btn-success text-uppercase">Subscribed</span>
                                                     :
-                                                    <button className="btn btn-block btn-primary text-uppercase">Subscribe</button>
+                                                    pricePlan.price == 0 ?
+                                                        <button className="btn btn-block btn-primary text-uppercase" type="submit">Subscribe</button>
+                                                        :
+                                                        <Link to={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn btn-block btn-primary text-uppercase">Subscribe</Link>
                                                 }
                                             </div>
                                         </div>

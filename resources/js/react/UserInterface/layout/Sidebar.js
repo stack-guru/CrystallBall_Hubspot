@@ -11,7 +11,6 @@ class sidebar extends React.Component {
     }
 
     render() {
-        console.log(this.props.user.price_plan)
         return (
             <div className="sidebar-inner">
                 <div className="sidebar-logo bg-white">

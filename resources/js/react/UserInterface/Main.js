@@ -19,7 +19,7 @@ import ChangePassword from './components/settings/ChangePassword';
 import 'react-toastify/dist/ReactToastify.css';
 import './Main.css';
 import IndexAPIKey from './components/apiKey/IndexAPIKey';
-import StorePayment from './components/settings/pricingPlans/StorePayment';
+import CreatePayment from './components/settings/pricingPlans/CreatePayment';
 
 class Main extends React.Component {
 
@@ -40,6 +40,10 @@ class Main extends React.Component {
             .then(response => {
                 this.setState({ user: response.data.user });
                 loader.classList.add("fadeOut")
+
+                var urlSearchParams = new URLSearchParams(window.location.search);
+                if(urlSearchParams.get('payment_successful')) swal("Purchase Done!", "Price plan successfully subscribed.", "success");
+
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });
@@ -123,7 +127,7 @@ class Main extends React.Component {
                                 <PricingPlans currentPricePlan={this.state.user.price_plan} />
                             </Route>
                             <Route exact path="/settings/price-plans/payment" refresh={true}>
-                                <StorePayment user={this.state.user} />
+                                <CreatePayment user={this.state.user} />
                             </Route>
                         </Switch>
 

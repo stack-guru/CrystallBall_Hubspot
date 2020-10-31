@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
         });
 
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
+        Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
 
     });
 
@@ -61,7 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('settings', 'ui/app');
     Route::view('settings/change-password', 'ui/app');
     Route::view('settings/price-plans', 'ui/app');
-    Route::view('settings/price-plans/payment', 'ui/app');
+    Route::view('settings/price-plans/payment', 'ui/app')->name('settings.price-plan.payment');
 
 
 });

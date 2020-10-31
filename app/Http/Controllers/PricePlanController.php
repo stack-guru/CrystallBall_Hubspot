@@ -54,7 +54,7 @@ class PricePlanController extends Controller
      */
     public function show(PricePlan $pricePlan)
     {
-        //
+        return ['price_plan' => $pricePlan];
     }
 
     /**

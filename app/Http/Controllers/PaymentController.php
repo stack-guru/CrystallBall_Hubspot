@@ -2,35 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PricePlan;
 use App\Models\User;
 use Bluesnap;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Log;
 
 class PaymentController extends Controller
 {
-    public function __contruct()
-    {
-        Bluesnap::init(config('services.bluesnap.environment'), config('services.bluesnap.api.key'), config('services.bluesnap.api.password'));
-    }
 
     public function checkPayment(Request $request)
     {
 
-        return Redirect::route('payment.subscribe', ['price_plan_id' => $request->price_plan_id]);
+        $pricePlan = PricePlan::findOrFail($request->price_plan_id);
+
+        $transactionId = 0;
+        if ($pricePlan->price !== 0) {
+            $card = [
+                'cardNumber' => $request->cardNumber,
+                'expirationMonth' => $request->expirationMonth,
+                'expirationYear' => $request->expirationYear,
+                'securityCode' => $request->securityCode,
+            ];
+            $obj = $this->createTransaction($pricePlan, $card);
+            if($obj['success'] == false){
+                return redirect()->route('settings.price-plan.payment', ['price_plan_id' => $pricePlan->id, 'error' => $obj['error']]);
+            }
+        }
+
+        return Redirect::route('payment.subscribe', ['price_plan_id' => $request->price_plan_id, 'transaction_id' => $obj['transactionId']]);
 
     }
 
     public function subscribePlan(Request $request)
     {
 
+        $pricePlan = PricePlan::findOrFail($request->query('price_plan_id'));
+
+        if ($pricePlan->price !== 0) {
+            $obj = $this->getTransaction($pricePlan, $request->query('transaction_id'));
+            if ($obj['success'] == false) {
+                return redirect()->route('settings.price-plan.payment', ['price_plan_id' => $pricePlan->id, 'error' => $obj['error']]);
+            }
+        }
+
         $user = Auth::user();
         $user->price_plan_id = $request->query('price_plan_id');
         $user->price_plan_expiry_date = new \DateTime("+1 month");
         $user->update();
 
-        return Redirect::route('annotation.index', ['payment_successfull' => true]);
+        return Redirect::route('annotation.index', ['payment_successful' => true]);
 
     }
 
@@ -40,19 +63,20 @@ class PaymentController extends Controller
      * @param int $transaction_id
      * @return \tdanielcox\Bluesnap\Models\CardTransaction
      */
-    public function getTransaction($transaction_id)
+    public function getTransaction($pricePlan, $transaction_id)
     {
-        $response = \tdanielcox\Bluesnap\CardTransaction::get($transaction_id);
+        Bluesnap\Bluesnap::init(config('services.bluesnap.environment'), config('services.bluesnap.api.key'), config('services.bluesnap.api.password'));
+        $response = Bluesnap\CardTransaction::get($transaction_id);
 
         if ($response->failed()) {
             $error = $response->data;
 
-            // handle error
+            return ['success' => false, 'error' => $error];
         }
 
         $transaction = $response->data;
 
-        return $transaction;
+        return ['success' => true];
     }
 
     /**
@@ -97,30 +121,36 @@ class PaymentController extends Controller
  *
  * @return \tdanielcox\Bluesnap\Models\CardTransaction
  */
-    public function createTransaction()
+    public function createTransaction($pricePlan, $card)
     {
-        $response = \tdanielcox\Bluesnap\CardTransaction::create([
+        Bluesnap\Bluesnap::init(config('services.bluesnap.environment'), config('services.bluesnap.api.key'), config('services.bluesnap.api.password'));
+
+        $response = Bluesnap\CardTransaction::create([
             'creditCard' => [
-                'cardNumber' => '4263982640269299',
-                'expirationMonth' => '02',
-                'expirationYear' => '2018',
-                'securityCode' => '837',
+                'cardNumber' => $card['cardNumber'],
+                'expirationMonth' => $card['expirationMonth'],
+                'expirationYear' => $card['expirationYear'],
+                'securityCode' => $card['securityCode'],
             ],
-            'amount' => 10.00,
+            'amount' => $pricePlan->price,
             'currency' => 'USD',
             'recurringTransaction' => 'ECOMMERCE',
             'cardTransactionType' => 'AUTH_CAPTURE',
         ]);
 
+        // Bluesnap\Response {#1325 ▼
+        //     -_status: "error"
+        //     +data: "The stated credit card expiration date has already passed."
+        // }
+        
         if ($response->failed()) {
             $error = $response->data;
-
-            // handle error
+            return ['success' => false, 'error' => $error];
         }
 
         $transaction = $response->data;
 
-        return $transaction;
+        return ['success' => true, 'transactionId' => $transaction->id];
     }
 
 }
