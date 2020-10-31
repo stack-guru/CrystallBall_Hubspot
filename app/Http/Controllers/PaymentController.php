@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\PricePlan;
+use App\Models\PricePlanSubscription;
 use App\Models\User;
 use Bluesnap;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Log;
 
 class PaymentController extends Controller
 {
@@ -19,7 +19,7 @@ class PaymentController extends Controller
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
 
         $transactionId = 0;
-        if ($pricePlan->price !== 0) {
+        if ($pricePlan->price != 0) {
             $card = [
                 'cardNumber' => $request->cardNumber,
                 'expirationMonth' => $request->expirationMonth,
@@ -27,12 +27,14 @@ class PaymentController extends Controller
                 'securityCode' => $request->securityCode,
             ];
             $obj = $this->createTransaction($pricePlan, $card);
-            if($obj['success'] == false){
+            if ($obj['success'] == false) {
                 return redirect()->route('settings.price-plan.payment', ['price_plan_id' => $pricePlan->id, 'error' => $obj['error']]);
             }
+            return Redirect::route('payment.subscribe', ['price_plan_id' => $request->price_plan_id, 'transaction_id' => $obj['transactionId']]);
+
         }
 
-        return Redirect::route('payment.subscribe', ['price_plan_id' => $request->price_plan_id, 'transaction_id' => $obj['transactionId']]);
+        return Redirect::route('payment.subscribe', ['price_plan_id' => $request->price_plan_id]);
 
     }
 
@@ -41,11 +43,22 @@ class PaymentController extends Controller
 
         $pricePlan = PricePlan::findOrFail($request->query('price_plan_id'));
 
-        if ($pricePlan->price !== 0) {
+        if ($pricePlan->price != 0) {
             $obj = $this->getTransaction($pricePlan, $request->query('transaction_id'));
             if ($obj['success'] == false) {
                 return redirect()->route('settings.price-plan.payment', ['price_plan_id' => $pricePlan->id, 'error' => $obj['error']]);
             }
+
+            $pricePlanSubscription = new PricePlanSubscription;
+            if ($request->has('coupon_id')) {
+                $pricePlanSubscription->coupon_id = $request->query('coupon_id');
+            }
+            $pricePlanSubscription->price_plan_id = $request->query('price_plan_id');
+            $pricePlanSubscription->transaction_id = $request->query('transaction_id');
+            $pricePlanSubscription->expires_at = new \DateTime("+1 month");
+            $pricePlanSubscription->user_id = Auth::id();
+            $pricePlanSubscription->save();
+
         }
 
         $user = Auth::user();
@@ -142,7 +155,7 @@ class PaymentController extends Controller
         //     -_status: "error"
         //     +data: "The stated credit card expiration date has already passed."
         // }
-        
+
         if ($response->failed()) {
             $error = $response->data;
             return ['success' => false, 'error' => $error];
