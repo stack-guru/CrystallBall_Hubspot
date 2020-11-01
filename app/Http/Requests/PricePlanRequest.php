@@ -14,7 +14,7 @@ class PricePlanRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::id('admin');
+        return Auth::guard('admin')->id();
     }
 
     /**
