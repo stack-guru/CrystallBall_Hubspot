@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import HttpClient from "../../../utils/HttpClient";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
+import { Redirect } from 'react-router';
 
 export default class CreatePayment extends Component {
     constructor(props) {
@@ -8,16 +9,17 @@ export default class CreatePayment extends Component {
 
         this.state = {
             pricePlan: undefined,
-            cardDetails:{
-                cardNumber:'',
-                expirationMonth:'',
-                expirationYear:'',
-                securityCode:'',
+            cardDetails: {
+                cardNumber: '',
+                expirationMonth: '',
+                expirationYear: '',
+                securityCode: '',
             },
-            isBusy:false,
-            isDirty:false,
-            validation:{},
-            errors:'',
+            isBusy: false,
+            isDirty: false,
+            redirectTo: null,
+            validation: {},
+            errors: '',
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
@@ -29,9 +31,9 @@ export default class CreatePayment extends Component {
         var urlSearchParams = new URLSearchParams(window.location.search);
         HttpClient.get('/price-plan/' + urlSearchParams.get('price_plan_id'))
             .then(response => {
-                this.setState({ pricePlan: response.data.price_plan, isBusy:false });
+                this.setState({ pricePlan: response.data.price_plan, isBusy: false });
                 var urlSearchParams = new URLSearchParams(window.location.search);
-                if(urlSearchParams.get('error')) swal("Error!", urlSearchParams.get('error'), "error");
+                if (urlSearchParams.get('error')) swal("Error!", urlSearchParams.get('error'), "error");
 
             }, (err) => {
                 console.log(err);
@@ -54,19 +56,17 @@ export default class CreatePayment extends Component {
         if (this.validate() && !this.state.isBusy) {
             this.setState({ isBusy: true });
             console.log(e);
-            HttpClient.post('/settings/price-plan/payment', this.state.cardDetails)
+            HttpClient.post('/settings/price-plan/payment', { ...this.state.cardDetails, 'price_plan_id': this.state.pricePlan.id })
                 .then(response => {
-                    // toast.success("Anno added.");
-                    console.log(response)
-                    this.setDefaultState();
-
+                    swal("Plan purchased", "New plan purchased.", "success")
+                    this.setState({ redirectTo: '/annotation' });
                 }, (err) => {
                     console.log(err);
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                console.log(err)
-                this.setState({ isBusy: false, errors: err });
-            });
+                    console.log(err)
+                    this.setState({ isBusy: false, errors: err });
+                });
         }
 
     }
@@ -82,12 +82,12 @@ export default class CreatePayment extends Component {
         let errors = {};
         let isValid = true;
 
-        if (!cardNumber ) {
+        if (!cardNumber) {
             isValid = false;
             errors["cardNumber"] = "Please enter your card number.";
 
         }
-        if (cardNumber.length < 16 ) {
+        if (cardNumber.length < 16) {
             isValid = false;
             errors["cardNumber"] = "card number can't be less then 16 digits.";
         }
@@ -120,10 +120,10 @@ export default class CreatePayment extends Component {
     setDefaultState() {
         this.setState({
             cardDetails: {
-                cardNumber:'',
-                expirationMonth:'',
-                expirationYear:'',
-                securityCode:'',
+                cardNumber: '',
+                expirationMonth: '',
+                expirationYear: '',
+                securityCode: '',
             },
             validation: {},
             isBusy: false,
@@ -136,7 +136,7 @@ export default class CreatePayment extends Component {
 
 
     expiration_years() {
-        let date=new Date();
+        let date = new Date();
         let current_year = date.getFullYear();
         let max_years = current_year + 20;
         let expiration_years = [];
@@ -147,9 +147,10 @@ export default class CreatePayment extends Component {
     }
 
     render() {
-        if(!this.state.pricePlan) return <h5>Loading...</h5>;
-        const expYears= this.expiration_years();
-        const validation= this.state.validation;
+        if (!this.state.pricePlan) return <h5>Loading...</h5>;
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+        const expYears = this.expiration_years();
+        const validation = this.state.validation;
         return (
             <div className="container-xl bg-white component-wrapper">
                 <div className="row ml-0 mr-0">
@@ -157,21 +158,19 @@ export default class CreatePayment extends Component {
                         <div className="bgc-white p-20 bd">
                             <h6 className="c-grey-900">Card Details</h6>
                             <div className="mT-30">
-                                <form  onSubmit={this.submitHandler}>
-                                    <input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />
-                                    <input type="hidden" name="price_plan_id" value={this.state.pricePlan.id} />
+                                <form onSubmit={this.submitHandler}>
                                     <div className="form-group">
                                         <label htmlFor="cardNumber">Card Number</label>
                                         <input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} placeholder="4242 4242 4242 4242" />
                                         {
-                                            validation.cardNumber?
-                                                <span className="text-danger">{validation.cardNumber}</span>:''
+                                            validation.cardNumber ?
+                                                <span className="text-danger">{validation.cardNumber}</span> : ''
                                         }
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col-md-3">
                                             <label htmlFor="expirationMonth">Expiry Month</label>
-                                           <select name="expirationMonth"  placeholder="MM" onChange={this.changeHandler} id="expirationMonth" className="form-control">
+                                            <select name="expirationMonth" placeholder="MM" onChange={this.changeHandler} id="expirationMonth" className="form-control">
                                                 <option value="1">01</option>
                                                 <option value="2">02</option>
                                                 <option value="3">03</option>
@@ -186,31 +185,31 @@ export default class CreatePayment extends Component {
                                                 <option value="12">12</option>
                                             </select>
                                             {
-                                                validation.expirationMonth?
-                                                    <span className="text-danger">{validation.expirationMonth}</span>:''
+                                                validation.expirationMonth ?
+                                                    <span className="text-danger">{validation.expirationMonth}</span> : ''
                                             }
                                         </div>
                                         <div className="form-group col-md-3">
                                             <label htmlFor="expirationYear">Year</label>
                                             <select name="expirationYear" id="expirationYear" onChange={this.changeHandler} className="form-control">
                                                 {
-                                                    expYears.map(year=>(
+                                                    expYears.map(year => (
                                                         <option value={year} key={year}>{year}</option>
                                                     ))
 
                                                 }
                                             </select>
                                             {
-                                                validation.expirationYear?
-                                                    <span className="text-danger">{validation.expirationYear}</span>:''
+                                                validation.expirationYear ?
+                                                    <span className="text-danger">{validation.expirationYear}</span> : ''
                                             }
                                         </div>
                                         <div className="form-group col-md-3">
                                             <label htmlFor="securityCode">CVV</label>
                                             <input type="number" className="form-control" onChange={this.changeHandler} id="securityCode" name="securityCode" placeholder="---" />
                                             {
-                                                validation.securityCode?
-                                                    <span className="text-danger">{validation.securityCode}</span>:''
+                                                validation.securityCode ?
+                                                    <span className="text-danger">{validation.securityCode}</span> : ''
                                             }
                                         </div>
                                     </div>

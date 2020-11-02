@@ -35,8 +35,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('annotation/upload', 'ui/app');
     Route::post('annotation/upload', [App\Http\Controllers\AnnotationController::class, 'upload']);
 
-//    Route::get('settings/price-plan/subscribe', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.subscribe');
-
     Route::group(['prefix' => 'ui'], function () {
         Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
         Route::post('annotation', [App\Http\Controllers\AnnotationController::class, 'store']);

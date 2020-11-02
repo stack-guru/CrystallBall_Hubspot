@@ -41,9 +41,6 @@ class Main extends React.Component {
                 this.setState({ user: response.data.user });
                 loader.classList.add("fadeOut")
 
-                var urlSearchParams = new URLSearchParams(window.location.search);
-                if(urlSearchParams.get('payment_successful')) swal("Purchase Done!", "Price plan successfully subscribed.", "success");
-
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });
