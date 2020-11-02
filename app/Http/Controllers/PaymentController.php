@@ -16,19 +16,23 @@ class PaymentController extends Controller
     public function subscribePlan(Request $request)
     {
 
-         $this->validate($request, [
-            'cardNumber' => 'required',
-            'expirationMonth' => 'required',
-            'expirationYear' => 'required',
-            'securityCode' => 'required',
+        $this->validate($request, [
             'price_plan_id'=>'required',
-
         ]);
 
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
 
         $transactionId = 0;
         if ($pricePlan->price != 0) {
+
+            $this->validate($request, [
+                'cardNumber' => 'required',
+                'expirationMonth' => 'required',
+                'expirationYear' => 'required',
+                'securityCode' => 'required',
+            ]);
+
+
 
             $card = [
                 'cardNumber' => $request->cardNumber,
@@ -62,6 +66,7 @@ class PaymentController extends Controller
                 $user->price_plan_id = $pricePlan->id;
                 $user->price_plan_expiry_date = new \DateTime("+1 month");
                 $user->update();
+
 
         return ['success' => true, 'transaction_id' => $transactionId];
     }

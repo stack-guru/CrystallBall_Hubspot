@@ -28,6 +28,22 @@ export default class indexPricingPlans extends React.Component {
             });
     }
 
+    freeSubscribe(id){
+        this.setState({ isBusy: true });
+        HttpClient.post('/settings/price-plan/payment', {'price_plan_id': id })
+            .then(response => {
+                swal("Plan downgrade", "plan downgraded successfully .", "success")
+                window.location('/annotation');
+            }, (err) => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+            console.log(err)
+            this.setState({ isBusy: false, errors: err });
+        });
+
+    }
+
     render() {
         return (
             <div className=" bg-white component-wrapper">
@@ -43,9 +59,9 @@ export default class indexPricingPlans extends React.Component {
                             {this.state.pricePlans.map(pricePlan => {
 
                                 return <div className="col-lg-4" key={pricePlan.id}>
-                                    <form method="post" action="/settings/price-plan/payment">
-                                        <input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />
-                                        <input type="hidden" name="price_plan_id" value={pricePlan.id} />
+
+                                        {/*<input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />*/}
+                                        {/*<input type="hidden" name="price_plan_id" value={pricePlan.id} />*/}
 
                                         <div className="card mb-5 mb-lg-0">
                                             <div className="card-body">
@@ -83,13 +99,13 @@ export default class indexPricingPlans extends React.Component {
                                                     <span value="subscribed" className="btn btn-block btn-success text-uppercase">Subscribed</span>
                                                     :
                                                     pricePlan.price == 0 ?
-                                                        <button className="btn btn-block btn-primary text-uppercase" type="submit">Subscribe</button>
+                                                        <button className="btn btn-block btn-primary text-uppercase " onClick={()=>{this.freeSubscribe(pricePlan.id)}} >Subscribe</button>
                                                         :
                                                         <Link to={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn btn-block btn-primary text-uppercase">Subscribe</Link>
                                                 }
                                             </div>
                                         </div>
-                                    </form>
+
                                 </div>
                             })}
 
