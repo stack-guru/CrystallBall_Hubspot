@@ -82,7 +82,7 @@ class IndexAnnotations extends React.Component {
                                 <h2 className="heading-section gaa-title">Annotations</h2>
                             </div>
                         </div>
-                        <div className="row mb-2">
+                        <div className="row mb-4">
                             <div className="col-12 text-right">
                                 <Link to="/annotation/create" className="btn btn-sm gaa-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add Manual</Link>
                                 <Link to="/annotation/upload" className="btn btn-sm gaa-primary text-white"><i className=" mr-2 fa fa-upload"></i>CSV Upload</Link>
