@@ -42,6 +42,7 @@ export default class CreatePayment extends Component {
                 console.log(err)
                 this.setState({ isBusy: false, errors: err });
             });
+
     }
 
 
@@ -147,6 +148,7 @@ export default class CreatePayment extends Component {
     }
 
     render() {
+
         if (!this.state.pricePlan) return <h5>Loading...</h5>;
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         const expYears = this.expiration_years();
