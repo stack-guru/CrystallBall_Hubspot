@@ -4,11 +4,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <form action="{{ route('admin.price-plan.store') }}" method="POST">
             <div class="card">
                 <div class="card-header">Create Price Plan</div>
 
                 <div class="card-body">
-                    <form action="{{ route('admin.price-plan.store') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label>Name</label>
@@ -38,10 +38,12 @@
                             <label>Enabled?</label>
                             <input type="checkbox" name="is_enabled" id="isEnabled" class="form-control" />
                         </div>
+                    </div>
+                    <div class="card-footer">
                         <input type="submit" value="Add" class="btn btn-primary" />
-                    </form>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

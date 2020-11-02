@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
+use App\Models\PricePlan;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -16,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin/user/index')->with('users', User::all());
+        return view('admin/user/index')->with('users', User::with('pricePlan')->get());
     }
 
     /**
@@ -27,6 +28,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $user->with('pricePlan');
         return view('admin/user/show')->with('user', $user);
     }
 
@@ -38,7 +40,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin/user/edit')->with('user', $user);
+        $user->with('pricePlan');
+        return view('admin/user/edit')->with('user', $user)
+            ->with('pricePlans', PricePlan::all());
     }
 
     /**
@@ -52,7 +56,7 @@ class UserController extends Controller
     {
         $user->fill($request->validated());
         $user->save();
-        return redirect()->route('admin.user.show', $user->id)->with('success', true);
+        return redirect()->route('admin.user.index')->with('success', true);
     }
 
     /**
