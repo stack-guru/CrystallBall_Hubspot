@@ -19,6 +19,7 @@
                                     <td>{{ $pricePlan->name }}</td>
                                     <td>{{ $pricePlan->price }}</td>
                                     <td>
+                                        <a class="btn btn-default" href="{{ route('admin.price-plan.edit', $pricePlan->id) }}">Edit</a>
                                         <form id="deletePricePlanForm{{$pricePlan->id}}" method="POST" action="{{ route('admin.price-plan.destroy', $pricePlan->id) }}">
                                             @csrf @method("DELETE")
                                         </form>

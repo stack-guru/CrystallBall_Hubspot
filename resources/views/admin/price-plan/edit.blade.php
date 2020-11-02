@@ -1,0 +1,48 @@
+@extends('layouts.admin')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Edit Price Plan</div>
+
+                <div class="card-body">
+                    <form action="{{ route('admin.price-plan.update', $pricePlan->id) }}" method="POST">
+                        @csrf @method('PUT')
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" id="name" class="form-control" value="{{ $pricePlan->name }}" />
+                        </div>
+                        <div class="form-group">
+                            <label>Price</label>
+                            <input type="number" name="price" id="price" class="form-control" value="{{ $pricePlan->price }}" />
+                        </div>
+                        <div class="form-group">
+                            <label>Number of annotations</label>
+                            <input type="number" name="annotations_count" id="annotationsCount" class="form-control" value="{{ $pricePlan->annotations_count }}" />
+                        </div>
+                        <div class="form-group">
+                            <label>Has manual add?</label>
+                            <input type="checkbox" name="has_manual_add" id="hasManualAdd" class="form-control" @if($pricePlan->has_manual_add) checked @endif />
+                        </div>
+                        <div class="form-group">
+                            <label>Has CSV upload?</label>
+                            <input type="checkbox" name="has_csv_upload" id="hasCSVUpload" class="form-control" @if($pricePlan->has_csv_upload) checked @endif />
+                        </div>
+                        <div class="form-group">
+                            <label>Has API?</label>
+                            <input type="checkbox" name="has_api" id="hasAPI" class="form-control" @if($pricePlan->has_api) checked @endif />
+                        </div>
+                        <div class="form-group">
+                            <label>Enabled?</label>
+                            <input type="checkbox" name="is_enabled" id="isEnabled" class="form-control" @if($pricePlan->is_enabled) checked @endif />
+                        </div>
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

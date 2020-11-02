@@ -87,7 +87,7 @@ class PricePlanController extends Controller
         $pricePlan->is_enabled = $request->is_enabled == 'on'; 
         $pricePlan->save();
 
-        return redirect()->route('admin.price-plan.show', $pricePlan->id);
+        return redirect()->route('admin.price-plan.index');
     }
 
     /**
