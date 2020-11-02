@@ -13,8 +13,9 @@ export default class indexSettings extends React.Component {
             <div className="container-xl bg-white component-wrapper">
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
-                        <h1><b>{this.props.user == undefined ? '' : this.props.user.name}</b></h1>
-                        <span>Email: {this.props.user == undefined ? '' : this.props.user.email}</span>
+                        <h1><b>{this.props.user.name}</b></h1>
+                        <span>Email: {this.props.user.email}</span><br />
+                        <span>Price Plan: {this.props.user.price_plan.name}</span>
                         <ul className='list-unstyled list-group mt-3'>
                             <h4><b>Profile</b>{this.props.user.email_verified_at == null ? <sub className="text-danger">Non-verified</sub>
                                 : <sub className="text-success">Verified</sub>}</h4>

@@ -47,7 +47,7 @@ export default class indexPricingPlans extends React.Component {
     }
 
     render() {
-        if(this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
             <div className=" bg-white component-wrapper">
                 <section className="pricing bg-white ">
@@ -69,11 +69,7 @@ export default class indexPricingPlans extends React.Component {
                                     <div className="card mb-5 mb-lg-0">
                                         <div className="card-body">
                                             <h5 className="card-title text-white  text-uppercase text-center">{pricePlan.name}</h5>
-                                            {pricePlan.price == 0 ?
-                                                <h6 className="card-price text-center">Free<span className="period">forever</span></h6>
-                                                :
-                                                <h6 className="card-price text-center">${pricePlan.price}<span className="period">/month</span></h6>
-                                            }
+                                            <h6 className="card-price text-center">${pricePlan.price}<span className="period">/month</span></h6>
                                             <hr />
                                             <ul className="fa-ul">
                                                 {
@@ -104,7 +100,10 @@ export default class indexPricingPlans extends React.Component {
                                                 pricePlan.price == 0 ?
                                                     <button className="btn btn-block btn-primary text-uppercase " onClick={() => { this.freeSubscribe(pricePlan.id) }} >Subscribe</button>
                                                     :
-                                                    <Link to={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn btn-block btn-primary text-uppercase">Subscribe</Link>
+                                                    pricePlan.price < 0 ?
+                                                        <button className="btn btn-block btn-primary text-uppercase " type="button" >Coming Soon</button>
+                                                        :
+                                                        <Link to={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn btn-block btn-primary text-uppercase">Subscribe</Link>
                                             }
                                         </div>
                                     </div>
