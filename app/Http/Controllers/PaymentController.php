@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 class PaymentController extends Controller
 {
 
-    public function checkPayment(Request $request)
+    public function subscribePlan(Request $request)
     {
 
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
@@ -28,47 +28,50 @@ class PaymentController extends Controller
             ];
             $obj = $this->createTransaction($pricePlan, $card);
             if ($obj['success'] == false) {
-                return redirect()->route('settings.price-plan.payment', ['price_plan_id' => $pricePlan->id, 'error' => $obj['error']]);
-            }
-            return Redirect::route('payment.subscribe', ['price_plan_id' => $request->price_plan_id, 'transaction_id' => $obj['transactionId']]);
+//                return redirect()->route('settings.price-plan.payment', ['price_plan_id' => $pricePlan->id, 'error' => $obj['error']]);
+           return ['error'=>$obj['error']];
 
+            }
+//            return Redirect::route('payment.subscribe', ['price_plan_id' => $request->price_plan_id, 'transaction_id' => $obj['transactionId']]);
+                return ['success transaction_id'=> $obj['transactionId']];
         }
 
         return Redirect::route('payment.subscribe', ['price_plan_id' => $request->price_plan_id]);
 
-    }
-
-    public function subscribePlan(Request $request)
-    {
-
-        $pricePlan = PricePlan::findOrFail($request->query('price_plan_id'));
-
-        if ($pricePlan->price != 0) {
-            $obj = $this->getTransaction($pricePlan, $request->query('transaction_id'));
-            if ($obj['success'] == false) {
-                return redirect()->route('settings.price-plan.payment', ['price_plan_id' => $pricePlan->id, 'error' => $obj['error']]);
-            }
-
-            $pricePlanSubscription = new PricePlanSubscription;
-            if ($request->has('coupon_id')) {
-                $pricePlanSubscription->coupon_id = $request->query('coupon_id');
-            }
-            $pricePlanSubscription->price_plan_id = $request->query('price_plan_id');
-            $pricePlanSubscription->transaction_id = $request->query('transaction_id');
-            $pricePlanSubscription->expires_at = new \DateTime("+1 month");
-            $pricePlanSubscription->user_id = Auth::id();
-            $pricePlanSubscription->save();
-
-        }
-
-        $user = Auth::user();
-        $user->price_plan_id = $request->query('price_plan_id');
-        $user->price_plan_expiry_date = new \DateTime("+1 month");
-        $user->update();
-
-        return Redirect::route('annotation.index', ['payment_successful' => true]);
 
     }
+
+//    public function subscribePlan(Request $request)
+//    {
+//
+//        $pricePlan = PricePlan::findOrFail($request->query('price_plan_id'));
+//
+//        if ($pricePlan->price != 0) {
+//            $obj = $this->getTransaction($pricePlan, $request->query('transaction_id'));
+//            if ($obj['success'] == false) {
+//                return redirect()->route('settings.price-plan.payment', ['price_plan_id' => $pricePlan->id, 'error' => $obj['error']]);
+//            }
+//
+//            $pricePlanSubscription = new PricePlanSubscription;
+//            if ($request->has('coupon_id')) {
+//                $pricePlanSubscription->coupon_id = $request->query('coupon_id');
+//            }
+//            $pricePlanSubscription->price_plan_id = $request->query('price_plan_id');
+//            $pricePlanSubscription->transaction_id = $request->query('transaction_id');
+//            $pricePlanSubscription->expires_at = new \DateTime("+1 month");
+//            $pricePlanSubscription->user_id = Auth::id();
+//            $pricePlanSubscription->save();
+//
+//        }
+//
+//        $user = Auth::user();
+//        $user->price_plan_id = $request->query('price_plan_id');
+//        $user->price_plan_expiry_date = new \DateTime("+1 month");
+//        $user->update();
+//
+//        return Redirect::route('annotation.index', ['payment_successful' => true]);
+//
+//    }
 
     /**
      * Get a Transaction
