@@ -8,7 +8,6 @@ use Bluesnap;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
 {
@@ -17,10 +16,11 @@ class PaymentController extends Controller
     {
 
         $this->validate($request, [
-            'price_plan_id'=>'required',
+            'price_plan_id' => 'required',
         ]);
 
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
+        $user = Auth::user();
 
         $transactionId = 0;
         if ($pricePlan->price != 0) {
@@ -32,8 +32,6 @@ class PaymentController extends Controller
                 'securityCode' => 'required',
             ]);
 
-
-
             $card = [
                 'cardNumber' => $request->cardNumber,
                 'expirationMonth' => $request->expirationMonth,
@@ -44,33 +42,29 @@ class PaymentController extends Controller
             if ($obj['success'] == false) {
                 return response()->json(['success' => false, 'error' => $obj['error']], 422);
             }
-          $transactionId=$obj['transactionId'];
+            $transactionId = $obj['transactionId'];
 
-        $verification = $this->getTransaction($pricePlan, $transactionId);
+            $verification = $this->getTransaction($pricePlan, $transactionId);
             if ($verification['success'] == false) {
                 return response()->json(['success' => false, 'error' => $verification['error']], 422);
             }
-        $pricePlanSubscription = new PricePlanSubscription;
-                    if ($request->has('coupon_id')) {
-                        $pricePlanSubscription->coupon_id = $request->query('coupon_id');
-                    }
-                    $pricePlanSubscription->price_plan_id = $pricePlan->id;
-                    $pricePlanSubscription->transaction_id = $transactionId;
-                    $pricePlanSubscription->expires_at = new \DateTime("+1 month");
-                    $pricePlanSubscription->user_id = Auth::id();
-                    $pricePlanSubscription->save();
+            $pricePlanSubscription = new PricePlanSubscription;
+            if ($request->has('coupon_id')) {
+                $pricePlanSubscription->coupon_id = $request->query('coupon_id');
+            }
+            $pricePlanSubscription->price_plan_id = $pricePlan->id;
+            $pricePlanSubscription->transaction_id = $transactionId;
+            $pricePlanSubscription->expires_at = new \DateTime("+1 month");
+            $pricePlanSubscription->user_id = $user->id;
+            $pricePlanSubscription->save();
         }
 
-
-        $user = Auth::user();
-                $user->price_plan_id = $pricePlan->id;
-                $user->price_plan_expiry_date = new \DateTime("+1 month");
-                $user->update();
-
+        $user->price_plan_id = $pricePlan->id;
+        $user->price_plan_expiry_date = new \DateTime("+1 month");
+        $user->update();
 
         return ['success' => true, 'transaction_id' => $transactionId];
     }
-
 
     /**
      * Get a Transaction

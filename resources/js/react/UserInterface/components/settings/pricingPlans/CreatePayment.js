@@ -59,8 +59,9 @@ export default class CreatePayment extends Component {
             console.log(e);
             HttpClient.post('/settings/price-plan/payment', { ...this.state.cardDetails, 'price_plan_id': this.state.pricePlan.id })
                 .then(response => {
-                    swal("Plan purchased", "New plan purchased.", "success")
-                    this.setState({ redirectTo: '/annotation' });
+                    swal("Plan purchased", "New plan purchased.", "success").then(value => {
+                        window.location = "/annotation"
+                    });
                 }, (err) => {
                     console.log(err);
                     this.setState({ isBusy: false, errors: (err.response).data });
