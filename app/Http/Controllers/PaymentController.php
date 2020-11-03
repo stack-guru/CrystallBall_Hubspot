@@ -29,7 +29,7 @@ class PaymentController extends Controller
                 'cardNumber' => 'required',
                 'expirationMonth' => 'required',
                 'expirationYear' => 'required',
-                'securityCode' => 'required',
+                'securityCode' => 'nullable',
             ]);
 
             $card = [
@@ -40,13 +40,13 @@ class PaymentController extends Controller
             ];
             $obj = $this->createTransaction($pricePlan, $card);
             if ($obj['success'] == false) {
-                return response()->json(['success' => false, 'error' => $obj['error']], 422);
+                return response()->json(['success' => false, 'message' => $obj['message']], 422);
             }
             $transactionId = $obj['transactionId'];
 
             $verification = $this->getTransaction($pricePlan, $transactionId);
             if ($verification['success'] == false) {
-                return response()->json(['success' => false, 'error' => $verification['error']], 422);
+                return response()->json(['success' => false, 'message' => $verification['message']], 422);
             }
             $pricePlanSubscription = new PricePlanSubscription;
             if ($request->has('coupon_id')) {
@@ -80,7 +80,7 @@ class PaymentController extends Controller
         if ($response->failed()) {
             $error = $response->data;
 
-            return ['success' => false, 'error' => $error];
+            return ['success' => false, 'message' => $error];
         }
 
         $transaction = $response->data;
@@ -154,7 +154,7 @@ class PaymentController extends Controller
 
         if ($response->failed()) {
             $error = $response->data;
-            return ['success' => false, 'error' => $error];
+            return ['success' => false, 'message' => $error];
         }
 
         $transaction = $response->data;
