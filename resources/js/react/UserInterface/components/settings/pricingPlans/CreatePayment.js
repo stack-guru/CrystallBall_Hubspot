@@ -528,12 +528,20 @@ export default class CreatePayment extends Component {
                                                         <div className="col-6">Total</div>
                                                         <div className="col-6 text-right">${this.state.pricePlan.price}</div>
                                                     </div>
+
+                                                    <div className="form-check mt-3">
+                                                        <input type="checkbox" className="form-check-input" name="remember_card"
+                                                               id="rememberCard"/>
+                                                            <label className="form-check-label" htmlFor="exampleCheck1">
+                                                                Remember Card </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-12 text-right p-5">
+
                                                 <button type="submit" className="btn btn-primary btn-lg">Pay</button>
                                             </div>
                                         </div>
