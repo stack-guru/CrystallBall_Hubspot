@@ -253,6 +253,11 @@ export default class CreatePayment extends Component {
                     </div>
 
                 </div>
+                <div className="row">
+                    <div className="col-12 text-right">
+                        <img src="/images/bluesnap_secured_payment.png" />
+                    </div>
+                </div>
             </div >
 
 
