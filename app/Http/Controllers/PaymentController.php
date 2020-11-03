@@ -8,6 +8,7 @@ use Bluesnap;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Coupon;
 
 class PaymentController extends Controller
 {
@@ -50,7 +51,10 @@ class PaymentController extends Controller
             }
             $pricePlanSubscription = new PricePlanSubscription;
             if ($request->has('coupon_id')) {
-                $pricePlanSubscription->coupon_id = $request->query('coupon_id');
+                $coupon = Coupon::find($request->query('coupon_id'));
+                if(!$coupon) return response()->json(['success' => false, 'message' => 'Invalid coupon.'], 422);
+                if($coupon->expires_at <= Carbon::now()) return response()->json(['success' => false, 'message' => 'Expired coupon used!'], 422);
+                $pricePlanSubscription->coupon_id = $coupon->id;
             }
             $pricePlanSubscription->price_plan_id = $pricePlan->id;
             $pricePlanSubscription->transaction_id = $transactionId;
