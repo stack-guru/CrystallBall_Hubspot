@@ -549,24 +549,35 @@ export default class CreatePayment extends Component {
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div className="row ml-0 mr-0 mt-4">
+                                            <div className="col-12 text-right p-5">
+                                                <div className="input-group mb-3">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">Coupon</span>
+                                                    </div>
+                                                    <input name="coupon_code" type="text" className="form-control" placeholder="AXJ1243" />
+                                                    <div className="input-group-append">
+                                                        <button className="btn btn-outline-secondary" type="button">Apply</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row ml-0 mr-0 mt-1">
+                                            <div className="col-12 text-right p-5">
+                                                <button type="submit" className="btn btn-primary btn-lg">Pay</button>
+                                            </div>
+                                        </div>
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-12 text-right p-5">
 
-                                                <button type="submit" className="btn btn-primary btn-lg">Pay</button>
+                                                <img src="/images/bluesnap_secured_payment.png" />
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                    </div>
-                </div>
-
-
-                <div className="row ml-0 mr-0 mt-3">
-                    <div className="col-12 text-right">
-                        <img src="/images/bluesnap_secured_payment.png" />
                     </div>
                 </div>
             </div >

@@ -2087,7 +2087,11 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
+<<<<<<< Updated upstream
 exports.push([module.i, ".main-content {\r\n    padding-left: 3% !important;\r\n    padding-right: 3% !important;\r\n    /*height: 480px;*/\r\n    /*overflow-y: scroll;*/\r\n    /*overflow-x: hidden;*/\r\n}\r\n.component-wrapper {\r\n    width: 100%;\r\n    height: 100%;\r\n    padding: 5%;\r\n}\r\n.upload-csv-input {\r\n    height: 2.6rem;\r\n}\r\n.disabled-link {\r\n    opacity: 0.3;\r\n    pointer-events: none;\r\n}\r\n\r\n/*#0a2950*/\r\n/*#456287*/\r\n\r\n.gaa-blue-gradient {\r\n    background: linear-gradient(to bottom, #0a2950, #456287);\r\n}\r\n.gaa-primary {\r\n    background: #456287;\r\n}\r\n.gaa-title {\r\n    color: #456287;\r\n}\r\n\r\n.sidebar-menu li a {\r\n    color: #456287;\r\n}\r\n/*\r\n.sidebar-menu li a:hover {\r\n    opacity: .6!important;\r\n} */\r\n\r\n/*pricing css start*/\r\n/*section.pricing {*/\r\n/*    background: #007bff;*/\r\n/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/\r\n/*}*/\r\n\r\n.pricing .card {\r\n    border: none;\r\n    border-radius: 1rem;\r\n    transition: all 0.2s;\r\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\r\n    background: #456287;\r\n    color: white;\r\n}\r\n\r\n.pricing hr {\r\n    margin: 1.5rem 0;\r\n}\r\n\r\n.pricing .card-title {\r\n    margin: 0.5rem 0;\r\n    font-size: 0.9rem;\r\n    letter-spacing: 0.1rem;\r\n    font-weight: bold;\r\n}\r\n\r\n.pricing .card-price {\r\n    font-size: 3rem;\r\n    margin: 0;\r\n}\r\n\r\n.pricing .card-price .period {\r\n    font-size: 0.8rem;\r\n}\r\n\r\n.pricing ul li {\r\n    margin-bottom: 1rem;\r\n}\r\n\r\n.pricing .text-muted {\r\n    opacity: 0.7;\r\n}\r\n\r\n.pricing .btn {\r\n    font-size: 80%;\r\n    border-radius: 5rem;\r\n    letter-spacing: 0.1rem;\r\n    font-weight: bold;\r\n    padding: 1rem;\r\n    opacity: 0.7;\r\n    transition: all 0.2s;\r\n}\r\n\r\n/* Hover Effects on Card */\r\n\r\n@media (min-width: 992px) {\r\n    .pricing .card:hover {\r\n        margin-top: -0.25rem;\r\n        margin-bottom: 0.25rem;\r\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\r\n    }\r\n    .pricing .card:hover .btn {\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n.gaa-menu-item {\r\n    color: #456287;\r\n}\r\n\r\n.link-active {\r\n    color: #2196f3 !important;\r\n}\r\n\r\n.gaa-text-danger {\r\n    color: #bf0c18 !important;\r\n}\r\n\r\n.pos-ab-l-50-t-0 {\r\n    position: absolute;\r\n    left: 50%;\r\n    top: 0px;\r\n}\r\n\r\n.gaa-btn-danger {\r\n    color: #fff;\r\n    background-color: #bf0c18;\r\n    border-color: #bf0c18;\r\n}\r\n\r\n.logo-margin {\r\n    margin-left: 19%;\r\n    margin-top: 15%;\r\n}\r\n\r\n.logo-text {\r\n    font-size: 1rem;\r\n}", ""]);
+=======
+exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n.disabled-link {\n    opacity: 0.3;\n    pointer-events: none;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-primary {\n    background: #456287;\n}\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n/*\n.sidebar-menu li a:hover {\n    opacity: .6!important;\n} */\n\n/*pricing css start*/\n/*section.pricing {*/\n/*    background: #007bff;*/\n/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/\n/*}*/\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}\n\n.gaa-text-danger {\n    color: #bf0c18 !important;\n}\n\n.pos-ab-l-50-t-0 {\n    position: absolute;\n    left: 50%;\n    top: 0px;\n}\n\n.gaa-btn-danger {\n    color: #fff;\n    background-color: #bf0c18;\n    border-color: #bf0c18;\n}\n\n.logo-margin {\n    margin-left: 19%;\n    margin-top: 15%;\n}\n\n.logo-text {\n    font-size: 1rem;\n}", ""]);
+>>>>>>> Stashed changes
 
 // exports
 
@@ -43715,12 +43719,21 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
         placeholder: "4242 4242 4242 4242",
         "aria-label": "Username",
         "aria-describedby": "basic-addon1"
+<<<<<<< Updated upstream
       }))), validation.cardNumber ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "text-danger"
       }, validation.cardNumber) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row ml-0 mr-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group  col pl-0"
+=======
+      })), validation.cardNumber ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, validation.cardNumber) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group col-md-3"
+>>>>>>> Stashed changes
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "expirationMonth"
       }, "Expiry Month"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
@@ -43756,7 +43769,11 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
       }, "12")), validation.expirationMonth ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "text-danger"
       }, validation.expirationMonth) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+<<<<<<< Updated upstream
         className: "form-group col pr-0"
+=======
+        className: "form-group col-md-3"
+>>>>>>> Stashed changes
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "expirationYear"
       }, "Year"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
@@ -43784,7 +43801,11 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
         placeholder: "---"
       }), validation.securityCode ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "text-danger"
+<<<<<<< Updated upstream
       }, validation.securityCode) : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+=======
+      }, validation.securityCode) : ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+>>>>>>> Stashed changes
         className: "col-6"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: ""
@@ -43836,6 +43857,7 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
         className: "row ml-0 mr-0 mt-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 text-right p-5"
+<<<<<<< Updated upstream
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
         className: "btn btn-primary btn-lg"
@@ -43846,6 +43868,38 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "/images/bluesnap_secured_payment.png"
       }))));
+=======
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group mb-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, "Coupon")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "coupon_code",
+        type: "text",
+        className: "form-control",
+        placeholder: "AXJ1243"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-append"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-outline-secondary",
+        type: "button"
+      }, "Apply"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0 mt-1"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 text-right p-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn-primary btn-lg"
+      }, "Pay"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0 mt-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 text-right p-5"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "/images/bluesnap_secured_payment.png"
+      }))))))))));
+>>>>>>> Stashed changes
     }
   }]);
 
@@ -44570,7 +44624,11 @@ axiosInst.interceptors.response.use(function (response) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< Updated upstream
 module.exports = __webpack_require__(/*! F:\laragon\www\dev_gaannotations\resources\js\react\UserInterface\UI.js */"./resources/js/react/UserInterface/UI.js");
+=======
+module.exports = __webpack_require__(/*! /media/hamees/AA4C51084C50D0A5/xampp/htdocs/laravel/gannotations/resources/js/react/UserInterface/UI.js */"./resources/js/react/UserInterface/UI.js");
+>>>>>>> Stashed changes
 
 
 /***/ })
