@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
+import ErrorAlert from '../../utils/ErrorAlert';
 
 class IndexAPIKey extends React.Component {
 
@@ -62,7 +63,7 @@ class IndexAPIKey extends React.Component {
     }
 
     render() {
-        if(this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section " id="inputs" >
@@ -71,6 +72,9 @@ class IndexAPIKey extends React.Component {
                             <div className="col-md-12">
                                 <h2 className="heading-section gaa-title">API Keys</h2>
                                 <sub className="float-right"><a href="/documentation">Check documentation</a></sub>
+                            </div>
+                            <div className="col-md-12">
+                                <ErrorAlert errors={this.state.errors} />
                             </div>
                         </div>
                         <div className="row">

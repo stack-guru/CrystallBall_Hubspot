@@ -39,7 +39,7 @@ axiosInst.interceptors.response.use(function (response) {
 
     if (error.response.status === 404) {
         console.log(error);
-        window.alert("Unkown API triggered. See console for more information.");
+        swal("Error!", "Not found.", "error");
     }
 
     if (error.response.status === 405) {
@@ -49,7 +49,7 @@ axiosInst.interceptors.response.use(function (response) {
 
     if (error.response.status === 422) {
         console.log(error);
-        window.alert("Unprocessible request.");
+        swal("Error!", "Unprocessible request.", "error");
     }
 
     return Promise.reject(error);
