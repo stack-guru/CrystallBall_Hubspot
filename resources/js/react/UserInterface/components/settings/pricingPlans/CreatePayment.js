@@ -3,6 +3,7 @@ import HttpClient from "../../../utils/HttpClient";
 import { toast } from "react-toastify";
 import { Redirect } from 'react-router';
 import ErrorAlert from '../../../utils/ErrorAlert';
+import Cleave from '../../../../../../../public/js/cleave/Cleave';
 
 export default class CreatePayment extends Component {
     constructor(props) {
@@ -21,10 +22,12 @@ export default class CreatePayment extends Component {
             redirectTo: null,
             validation: {},
             errors: '',
+            // cardType:'',
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
         this.setDefaultState = this.setDefaultState.bind(this)
+        this.cardDetector = this.cardDetector.bind(this)
     }
 
     componentDidMount() {
@@ -46,6 +49,7 @@ export default class CreatePayment extends Component {
 
     changeHandler(e) {
         this.setState({ isDirty: true, paymentDetails: { ...this.state.paymentDetails, [e.target.name]: e.target.value } });
+
     }
 
 
@@ -146,12 +150,25 @@ export default class CreatePayment extends Component {
         return expiration_years;
     }
 
+    cardDetector(e){
+
+        var cleave = new Cleave(e.target, {
+            creditCard: true,
+            delimiter: '-',
+            onCreditCardTypeChanged: function (type) {
+                document.querySelector('.ct').innerText=type;
+            }
+        });
+
+    }
+
     render() {
 
         if (!this.state.pricePlan) return <h5>Loading...</h5>;
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         const expYears = this.expiration_years();
         const validation = this.state.validation;
+
         return (
             <div className="container-xl bg-white component-wrapper">
                 <ErrorAlert errors={this.state.errors} />
@@ -167,20 +184,23 @@ export default class CreatePayment extends Component {
                                         <h4>Billing Info</h4>
                                         <div className="form-group">
                                             <label htmlFor="">Full Name</label>
-                                            <input type="text" className="form-control" placeholder="Full Name" name="fullName" id="" />
+                                            <input type="text" className="form-control" placeholder="Full Name" name="fullName" id="fullName" />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="">Billing Address</label>
-                                            <input type="text" className="form-control" placeholder="Your Billing Address " name="billingAddress" id="" />
+                                            <input type="text" className="form-control" placeholder="Your Billing Address " name="billingAddress"
+                                                   id="billingAddress" />
                                         </div>
                                         <div className="row ml-0 mr-0">
                                             <div className="form-group col-6 p-3">
                                                 <label htmlFor="">City</label>
-                                                <input type="text" className="form-control" placeholder="City" name="city" id="" />
+                                                <input type="text" className="form-control" placeholder="City" name="city"
+                                                       id="city" />
                                             </div>
                                             <div className="form-group col-6 p-3">
                                                 <label htmlFor="">Zip Code</label>
-                                                <input type="text" className="form-control" placeholder="12300" name="zipCode" id="" />
+                                                <input type="text" className="form-control" placeholder="12300" name="zipCode"
+                                                       id="zipCard" />
                                             </div>
                                         </div>
                                         <div className="form-group">
@@ -414,18 +434,26 @@ export default class CreatePayment extends Component {
                                                 <option value="Zimbabwe">Zimbabwe</option>
                                             </select>
                                         </div>
-                                    </div>
+
                                     {/* second column start*/}
-                                    <div className="col-6">
+                                    <div className="mt-4">
                                         <h4>Credit Card Info</h4>
                                         <div className="form-group">
                                             <label htmlFor="cardNumber">Card Number</label>
-                                            <input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} placeholder="4242 4242 4242 4242" />
+                                            <div className="input-group mb-3">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text ct" id="basic-addon1"></span>
+                                                </div>
+                                                <input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} onChange={this.cardDetector} placeholder="4242 4242 4242 4242"
+                                                       aria-label="Username" aria-describedby="basic-addon1"/>
+                                            </div>
+                                            {/*<input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} onChange={this.cardDetector} placeholder="4242 4242 4242 4242" />*/}
                                             {
                                                 validation.cardNumber ?
                                                     <span className="text-danger">{validation.cardNumber}</span> : ''
                                             }
                                         </div>
+
                                         <div className="form-row">
                                             <div className="form-group col-md-3">
                                                 <label htmlFor="expirationMonth">Expiry Month</label>
@@ -473,59 +501,52 @@ export default class CreatePayment extends Component {
                                             }
                                         </div>
                                     </div>
-                                </div>
+                                    </div>
+                                    <div className="col-6">
+                                        <div className="">
+                                            <div className="bgc-white  ">
+                                                <h4 >Details</h4>
+                                                <div className="mT-30">
+                                                    <div className="row">
+                                                        <div className="col-6">Name</div>
+                                                        <div className="col-6 text-right">{this.state.pricePlan.name}</div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-6">Subscription Date</div>
+                                                        <div className="col-6 text-right">{moment().format("YYYY-MM-DD")}</div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-6">Expiry Date</div>
+                                                        <div className="col-6 text-right">{moment().add(1, 'M').format("YYYY-MM-DD")}</div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-6">Price</div>
+                                                        <div className="col-6 text-right">${this.state.pricePlan.price}</div>
+                                                    </div>
+                                                    <hr />
+                                                    <div className="row">
+                                                        <div className="col-6">Total</div>
+                                                        <div className="col-6 text-right">${this.state.pricePlan.price}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-
-
-                                {/*total data show row*/}
-                                <div className="row ml-0 mr-0 d-flex flex-row justify-content-end mt-4">
-                                    <div className="masonry-item col-md-6 mr-0">
-                                        <div className="bgc-white p-20 ">
-                                            <h4 className="c-grey-900">Details</h4>
-                                            <div className="mT-30">
-                                                <div className="row">
-                                                    <div className="col-6">Name</div>
-                                                    <div className="col-6 text-right">{this.state.pricePlan.name}</div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-6">Subscription Date</div>
-                                                    <div className="col-6 text-right">{moment().format("YYYY-MM-DD")}</div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-6">Expiry Date</div>
-                                                    <div className="col-6 text-right">{moment().add(1, 'M').format("YYYY-MM-DD")}</div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-6">Price</div>
-                                                    <div className="col-6 text-right">${this.state.pricePlan.price}</div>
-                                                </div>
-                                                <hr />
-                                                <div className="row">
-                                                    <div className="col-6">Total</div>
-                                                    <div className="col-6 text-right">${this.state.pricePlan.price}</div>
-                                                </div>
+                                        <div className="row ml-0 mr-0 mt-4">
+                                            <div className="col-12 text-right p-5">
+                                                <button type="submit" className="btn btn-primary btn-lg">Pay</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-
-                                {/*submit btn row*/}
-                                <div className="row ml-0 mr-0 mt-4">
-                                    <div className="col-12 text-right p-5">
-                                        <button type="submit" className="btn btn-primary btn-lg">Pay</button>
-                                    </div>
-                                </div>
-
                             </form>
                         </div>
                     </div>
                 </div>
 
 
-                <div className="row ml-0 mr-0 mt-5">
-                    <div className="col-12 text-left">
+                <div className="row ml-0 mr-0 mt-3">
+                    <div className="col-12 text-right">
                         <img src="/images/bluesnap_secured_payment.png" />
                     </div>
                 </div>
