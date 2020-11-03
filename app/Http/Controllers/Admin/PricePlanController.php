@@ -47,7 +47,7 @@ class PricePlanController extends Controller
         $pricePlan->has_data_sources = $request->has_data_sources == 'on';
         $pricePlan->save();
 
-        return redirect()->route('admin.price-plan.show', $pricePlan->id);
+        return redirect()->route('admin.price-plan.index');
     }
 
     /**
