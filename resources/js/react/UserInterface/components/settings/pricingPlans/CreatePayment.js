@@ -9,7 +9,7 @@ export default class CreatePayment extends Component {
 
         this.state = {
             pricePlan: undefined,
-            cardDetails: {
+            paymentDetails: {
                 cardNumber: '',
                 expirationMonth: '',
                 expirationYear: '',
@@ -47,7 +47,7 @@ export default class CreatePayment extends Component {
 
 
     changeHandler(e) {
-        this.setState({ isDirty: true, cardDetails: { ...this.state.cardDetails, [e.target.name]: e.target.value } });
+        this.setState({ isDirty: true, paymentDetails: { ...this.state.paymentDetails, [e.target.name]: e.target.value } });
     }
 
 
@@ -57,7 +57,7 @@ export default class CreatePayment extends Component {
         if (this.validate() && !this.state.isBusy) {
             this.setState({ isBusy: true });
             console.log(e);
-            HttpClient.post('/settings/price-plan/payment', { ...this.state.cardDetails, 'price_plan_id': this.state.pricePlan.id })
+            HttpClient.post('/settings/price-plan/payment', { ...this.state.paymentDetails, 'price_plan_id': this.state.pricePlan.id })
                 .then(response => {
                     swal("Plan purchased", "New plan purchased.", "success").then(value => {
                         window.location = "/annotation"
@@ -75,10 +75,10 @@ export default class CreatePayment extends Component {
 
 
     validate() {
-        let cardNumber = this.state.cardDetails.cardNumber;
-        let expirationMonth = this.state.cardDetails.expirationMonth;
-        let expirationYear = this.state.cardDetails.expirationYear;
-        let securityCode = this.state.cardDetails.securityCode;
+        let cardNumber = this.state.paymentDetails.cardNumber;
+        let expirationMonth = this.state.paymentDetails.expirationMonth;
+        let expirationYear = this.state.paymentDetails.expirationYear;
+        let securityCode = this.state.paymentDetails.securityCode;
 
 
         let errors = {};
@@ -121,7 +121,7 @@ export default class CreatePayment extends Component {
 
     setDefaultState() {
         this.setState({
-            cardDetails: {
+            paymentDetails: {
                 cardNumber: '',
                 expirationMonth: '',
                 expirationYear: '',
@@ -230,6 +230,14 @@ export default class CreatePayment extends Component {
                                 <div className="row">
                                     <div className="col-6">Name</div>
                                     <div className="col-6 text-right">{this.state.pricePlan.name}</div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-6">Subscription Date</div>
+                                    <div className="col-6 text-right">{moment().format("YYYY-MM-DD")}</div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-6">Expiry Date</div>
+                                    <div className="col-6 text-right">{moment().add(1, 'M').format("YYYY-MM-DD")}</div>
                                 </div>
                                 <div className="row">
                                     <div className="col-6">Price</div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
 
@@ -10,7 +10,8 @@ class IndexAPIKey extends React.Component {
         this.state = {
             error: '',
             apiKeys: [],
-            token_name: ''
+            token_name: '',
+            redirectTo: null
         }
         this.generateAPIKey = this.generateAPIKey.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -33,7 +34,9 @@ class IndexAPIKey extends React.Component {
 
     generateAPIKey() {
         if (this.props.currentPricePlan.has_api == 0) {
-            swal("Want premium plan!", "API feature is not available in this package.", "warning")
+            swal("Upgrade to Basic Plan!", "API feature is not available in this package.", "warning").then(value => {
+                this.setState({ redirectTo: '/settings/price-plans' });
+            })
         } else {
             if (!this.state.isBusy) {
                 this.setState({ isBusy: true });
@@ -59,7 +62,7 @@ class IndexAPIKey extends React.Component {
     }
 
     render() {
-
+        if(this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section " id="inputs" >
