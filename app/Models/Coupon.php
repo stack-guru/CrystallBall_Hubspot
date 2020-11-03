@@ -13,6 +13,11 @@ class Coupon extends Model
         'name', 'code', 'discount_percent', 'expires_at',
     ];
 
+    protected $hidden = [
+        'name', 'expires_at', 'created_at', 'updated_at',
+        'code', 'usage_count'
+    ];
+
     protected $casts = [
         'expires_at' => 'datetime',
     ];
