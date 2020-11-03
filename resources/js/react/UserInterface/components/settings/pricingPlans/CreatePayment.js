@@ -462,34 +462,11 @@ export default class CreatePayment extends Component {
                                             }
                                         </div>
 
-                                        <div className="form-row">
-                                            <div className="form-group col-md-3">
-                                                <label htmlFor="expirationMonth">Expiry Month</label>
-                                                <select name="expirationMonth" placeholder="MM" onChange={this.changeHandler} id="expirationMonth" className="form-control">
-                                                    <option value="1">01</option>
-                                                    <option value="2">02</option>
-                                                    <option value="3">03</option>
-                                                    <option value="4">04</option>
-                                                    <option value="5">05</option>
-                                                    <option value="6">06</option>
-                                                    <option value="7">07</option>
-                                                    <option value="8">08</option>
-                                                    <option value="9">09</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                </select>
-=======
-                                                {/*<input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} onChange={this.cardDetector} placeholder="4242 4242 4242 4242" />*/}
->>>>>>> 1402d1aa86b579977c3a57369ed03e6c78dfeb0a
-                                                {
-                                                    validation.cardNumber ?
-                                                        <span className="text-danger">{validation.cardNumber}</span> : ''
-                                                }
-                                            </div>
+                                        {/*<div className="form-row">*/}
 
-                                            <div className="form-row">
-                                                <div className="form-group col-md-3">
+
+                                            <div className="row ml-0 mr-0">
+                                                <div className="form-group  col pl-0">
                                                     <label htmlFor="expirationMonth">Expiry Month</label>
                                                     <select name="expirationMonth" placeholder="MM" onChange={this.changeHandler} id="expirationMonth" className="form-control">
                                                         <option value="1">01</option>
@@ -510,7 +487,7 @@ export default class CreatePayment extends Component {
                                                             <span className="text-danger">{validation.expirationMonth}</span> : ''
                                                     }
                                                 </div>
-                                                <div className="form-group col-md-3">
+                                                <div className="form-group col pr-0">
                                                     <label htmlFor="expirationYear">Year</label>
                                                     <select name="expirationYear" id="expirationYear" onChange={this.changeHandler} className="form-control">
                                                         {
@@ -534,7 +511,7 @@ export default class CreatePayment extends Component {
                                                         <span className="text-danger">{validation.securityCode}</span> : ''
                                                 }
                                             </div>
-                                        </div>
+                                        {/*</div>*/}
                                     </div>
                                     <div className="col-6">
                                         <div className="">
