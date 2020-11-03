@@ -444,7 +444,7 @@ export default class CreatePayment extends Component {
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text ct" id="basic-addon1"></span>
                                                 </div>
-                                                <input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} onChange={this.cardDetector} placeholder="4242 4242 4242 4242"
+                                                <input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={(e) => {this.cardDetector(e); this.changeHandler(e)}}  placeholder="4242 4242 4242 4242"
                                                        aria-label="Username" aria-describedby="basic-addon1"/>
                                             </div>
                                             {/*<input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} onChange={this.cardDetector} placeholder="4242 4242 4242 4242" />*/}

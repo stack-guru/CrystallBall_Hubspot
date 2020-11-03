@@ -43810,7 +43810,7 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
       }, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6 text-right"
       }, "$", this.state.pricePlan.price)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-check mt-5"
+        className: "form-check mt-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "checkbox",
         className: "form-check-input",
