@@ -23,6 +23,8 @@ class PricePlansSeeder extends Seeder
                 'has_csv_upload' => true,
                 'has_api' => false,
                 'is_enabled' => true,
+                'has_integrations'=>0,
+                'has_data_sources'=>0
             ]
         );
         DB::table('price_plans')->insert(
@@ -34,6 +36,8 @@ class PricePlansSeeder extends Seeder
                 'has_csv_upload' => true,
                 'has_api' => true,
                 'is_enabled' => true,
+                'has_integrations'=>0,
+                'has_data_sources'=>0
             ]
         );
     }

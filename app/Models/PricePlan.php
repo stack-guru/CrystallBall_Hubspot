@@ -11,7 +11,7 @@ class PricePlan extends Model
 
     protected $fillable = [
         'name', 'annotations_count', 'price', 'has_manual_add',
-        'has_csv_upload', 'has_api', 'is_enabled',
+        'has_csv_upload', 'has_api', 'is_enabled','has_integrations',"has_data_sources"
     ];
 
     public function users()

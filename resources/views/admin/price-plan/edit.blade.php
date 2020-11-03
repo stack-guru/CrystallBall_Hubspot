@@ -38,6 +38,15 @@
                             <label>Enabled?</label>
                             <input type="checkbox" name="is_enabled" id="isEnabled" class="form-control" @if($pricePlan->is_enabled) checked @endif />
                         </div>
+                    <div class="form-group">
+                        <label>Has Integrations?</label>
+                        <input type="checkbox" name="has_integrations" id="hasIntegrations" class="form-control" @if($pricePlan->has_integrations) checked @endif />
+                    </div>
+                    <div class="form-group">
+                        <label>Has Data Sources?</label>
+                        <input type="checkbox" name="has_data_sources" id="hasDataSources" class="form-control" @if($pricePlan->has_data_sources) checked @endif />
+                    </div>
+
                     </div>
                     <div class="card-footer">
                         <input type="submit" value="Save" class="btn btn-primary" />
