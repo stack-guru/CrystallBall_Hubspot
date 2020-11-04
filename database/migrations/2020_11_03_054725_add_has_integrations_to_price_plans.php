@@ -27,7 +27,7 @@ class AddHasIntegrationsToPricePlans extends Migration
     public function down()
     {
         Schema::table('price_plans', function (Blueprint $table) {
-            //
+            $table->dropColumn('has_integrations');
         });
     }
 }
