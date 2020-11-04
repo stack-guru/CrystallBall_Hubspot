@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 
 class CouponController extends Controller
@@ -26,6 +27,7 @@ class CouponController extends Controller
     public function create()
     {
         //
+        return view('admin/coupon/add');
     }
 
     /**
@@ -37,6 +39,19 @@ class CouponController extends Controller
     public function store(Request $request)
     {
         //
+
+        $request->validate([
+            'name'=>'required',
+            'code'=>'required',
+            'discount_percent'=>'required',
+            'expires_at'=>'date|required'
+
+        ]);
+
+        $coupon =new Coupon;
+        $coupon->fill($request->all());
+        $coupon->save();
+
     }
 
     /**

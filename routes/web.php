@@ -25,6 +25,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
 });
 
+
 Route::view('documentation', 'documentation');
 
 Route::group(['middleware' => ['auth']], function () {

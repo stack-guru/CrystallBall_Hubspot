@@ -20,7 +20,6 @@ class CreateCouponsTable extends Migration
             $table->string('code', 100)->required();
             $table->bigInteger("usage_count")->unsigned()->default(0);
             $table->double('discount_percent', 15, 8)->required()->default(0.00);
-
             $table->timestamps();
         });
     }

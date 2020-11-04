@@ -8,8 +8,8 @@
                 <div class="card">
                     <div class="card-header">Coupons</div>
                     <div class="card-body">
-                        <a href="">Add Coupon</a>
-                        <table>
+                        <a href="{{route('admin.coupon.create')}}" class="btn btn-primary mr-auto">Add Coupon</a>
+                        <table class="table table-hoved table-bordered">
                             <thead>
                             <th>Id</th>
                             <th>Coupon</th>
