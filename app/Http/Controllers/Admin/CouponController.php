@@ -16,7 +16,8 @@ class CouponController extends Controller
     public function index()
     {
         //
-        return view('admin/coupon/index');
+        $data['coupons']=Coupon::all();
+        return view('admin/coupon/index',$data);
     }
 
     /**
@@ -49,8 +50,9 @@ class CouponController extends Controller
         ]);
 
         $coupon =new Coupon;
-        $coupon->fill($request->all());
+        $coupon->fill($request->except('_token'));
         $coupon->save();
+        return redirect()->route('admin.coupon.index')->with('msg','new coupon added successfully');
 
     }
 
@@ -74,6 +76,8 @@ class CouponController extends Controller
     public function edit($id)
     {
         //
+        $data['coupon']=Coupon::find($id);
+        return view('admin/coupon/edit',$data);
     }
 
     /**
@@ -86,6 +90,20 @@ class CouponController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $request->validate([
+            'name'=>'required',
+            'code'=>'required',
+            'discount_percent'=>'required',
+            'expires_at'=>'date|required'
+
+        ]);
+
+        $coupon =Coupon::find($id);
+        $coupon->fill($request->except('_token','_method'));
+        $coupon->update();
+        return redirect()->route('admin.coupon.index')->with('msg','Coupon updated successfully');
+
     }
 
     /**
@@ -97,5 +115,8 @@ class CouponController extends Controller
     public function destroy($id)
     {
         //
+        $coupon=Coupon::find($id);
+        $coupon->delete();
+        return redirect()->route('admin.coupon.index')->with('msg','Coupon deleted successfully');
     }
 }

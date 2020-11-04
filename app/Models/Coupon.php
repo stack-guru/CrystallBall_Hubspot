@@ -21,4 +21,6 @@ class Coupon extends Model
     protected $casts = [
         'expires_at' => 'datetime',
     ];
+
+
 }
