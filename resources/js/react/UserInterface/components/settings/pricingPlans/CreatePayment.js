@@ -22,12 +22,15 @@ export default class CreatePayment extends Component {
             redirectTo: null,
             validation: {},
             errors: '',
+            'couponCode': ''
             // cardType:'',
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
         this.setDefaultState = this.setDefaultState.bind(this)
         this.cardDetector = this.cardDetector.bind(this)
+        this.applyCoupon = this.applyCoupon.bind(this)
+
     }
 
     componentDidMount() {
@@ -168,12 +171,32 @@ export default class CreatePayment extends Component {
 
     }
 
-    render() {
+    applyCoupon() {
+        HttpClient.get('/coupon?coupon_code=' + this.state.couponCode)
+            .then(response => {
+                this.setState({ coupon: response.data.coupon, paymentDetails: { ...this.state.paymentDetails, coupon_id: response.data.coupon.id }, isBusy: false });
+                toast.success("Coupon applied.");
+            }, (err) => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                console.log(err)
+                this.setState({ isBusy: false, errors: err });
+            });
+    }
 
+    render() {
+        let totalPrice = 0.00, discountPrice = 0.00;
         if (!this.state.pricePlan) return <h5>Loading...</h5>;
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         const expYears = this.expiration_years();
         const validation = this.state.validation;
+
+        if (this.state.pricePlan) totalPrice += this.state.pricePlan.price
+        if (this.state.coupon){
+            discountPrice = parseFloat(((this.state.coupon.discount_percent / 100) * this.state.pricePlan.price)).toFixed(2);
+            totalPrice -= discountPrice;
+        } 
 
         return (
             <div className="container-xl bg-white component-wrapper">
@@ -465,52 +488,52 @@ export default class CreatePayment extends Component {
                                         {/*<div className="form-row">*/}
 
 
-                                            <div className="row ml-0 mr-0">
-                                                <div className="form-group  col pl-0">
-                                                    <label htmlFor="expirationMonth">Expiry Month</label>
-                                                    <select name="expirationMonth" placeholder="MM" onChange={this.changeHandler} id="expirationMonth" className="form-control">
-                                                        <option value="1">01</option>
-                                                        <option value="2">02</option>
-                                                        <option value="3">03</option>
-                                                        <option value="4">04</option>
-                                                        <option value="5">05</option>
-                                                        <option value="6">06</option>
-                                                        <option value="7">07</option>
-                                                        <option value="8">08</option>
-                                                        <option value="9">09</option>
-                                                        <option value="10">10</option>
-                                                        <option value="11">11</option>
-                                                        <option value="12">12</option>
-                                                    </select>
-                                                    {
-                                                        validation.expirationMonth ?
-                                                            <span className="text-danger">{validation.expirationMonth}</span> : ''
-                                                    }
-                                                </div>
-                                                <div className="form-group col pr-0">
-                                                    <label htmlFor="expirationYear">Year</label>
-                                                    <select name="expirationYear" id="expirationYear" onChange={this.changeHandler} className="form-control">
-                                                        {
-                                                            expYears.map(year => (
-                                                                <option value={year} key={year}>{year}</option>
-                                                            ))
-
-                                                        }
-                                                    </select>
-                                                    {
-                                                        validation.expirationYear ?
-                                                            <span className="text-danger">{validation.expirationYear}</span> : ''
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div className="form-group ">
-                                                <label htmlFor="securityCode">CVV</label>
-                                                <input type="number" className="form-control" onChange={this.changeHandler} id="securityCode" name="securityCode" placeholder="---" />
+                                        <div className="row ml-0 mr-0">
+                                            <div className="form-group  col pl-0">
+                                                <label htmlFor="expirationMonth">Expiry Month</label>
+                                                <select name="expirationMonth" placeholder="MM" onChange={this.changeHandler} id="expirationMonth" className="form-control">
+                                                    <option value="1">01</option>
+                                                    <option value="2">02</option>
+                                                    <option value="3">03</option>
+                                                    <option value="4">04</option>
+                                                    <option value="5">05</option>
+                                                    <option value="6">06</option>
+                                                    <option value="7">07</option>
+                                                    <option value="8">08</option>
+                                                    <option value="9">09</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                </select>
                                                 {
-                                                    validation.securityCode ?
-                                                        <span className="text-danger">{validation.securityCode}</span> : ''
+                                                    validation.expirationMonth ?
+                                                        <span className="text-danger">{validation.expirationMonth}</span> : ''
                                                 }
                                             </div>
+                                            <div className="form-group col pr-0">
+                                                <label htmlFor="expirationYear">Year</label>
+                                                <select name="expirationYear" id="expirationYear" onChange={this.changeHandler} className="form-control">
+                                                    {
+                                                        expYears.map(year => (
+                                                            <option value={year} key={year}>{year}</option>
+                                                        ))
+
+                                                    }
+                                                </select>
+                                                {
+                                                    validation.expirationYear ?
+                                                        <span className="text-danger">{validation.expirationYear}</span> : ''
+                                                }
+                                            </div>
+                                        </div>
+                                        <div className="form-group ">
+                                            <label htmlFor="securityCode">CVV</label>
+                                            <input type="number" className="form-control" onChange={this.changeHandler} id="securityCode" name="securityCode" placeholder="---" />
+                                            {
+                                                validation.securityCode ?
+                                                    <span className="text-danger">{validation.securityCode}</span> : ''
+                                            }
+                                        </div>
                                         {/*</div>*/}
                                     </div>
                                     <div className="col-6">
@@ -535,9 +558,20 @@ export default class CreatePayment extends Component {
                                                         <div className="col-6 text-right">${this.state.pricePlan.price}</div>
                                                     </div>
                                                     <hr />
+                                                    {
+                                                        this.state.coupon ?
+                                                            <React.Fragment>
+                                                                <div className="row">
+                                                                    <div className="col-6">Discount Price</div>
+                                                                    <div className="col-6 text-right">${discountPrice}</div>
+                                                                </div>
+                                                                <hr />
+                                                            </React.Fragment>
+                                                            : null
+                                                    }
                                                     <div className="row">
                                                         <div className="col-6">Total</div>
-                                                        <div className="col-6 text-right">${this.state.pricePlan.price}</div>
+                                                        <div className="col-6 text-right">${totalPrice}</div>
                                                     </div>
 
                                                     <div className="form-check mt-3">
@@ -549,24 +583,35 @@ export default class CreatePayment extends Component {
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div className="row ml-0 mr-0 mt-4">
+                                            <div className="col-12 text-right p-5">
+                                                <div className="input-group mb-3">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">Coupon</span>
+                                                    </div>
+                                                    <input name="couponCode" type="text" className="form-control" placeholder="AXJ1243" value={this.state.couponCode} onChange={e => { this.setState({ [e.target.name]: e.target.value }); }} />
+                                                    <div className="input-group-append">
+                                                        <button className="btn btn-outline-secondary" type="button" onClick={this.applyCoupon}>Apply</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row ml-0 mr-0 mt-1">
+                                            <div className="col-12 text-right p-5">
+                                                <button type="submit" className="btn btn-primary btn-lg">Pay</button>
+                                            </div>
+                                        </div>
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-12 text-right p-5">
 
-                                                <button type="submit" className="btn btn-primary btn-lg">Pay</button>
+                                                <img src="/images/bluesnap_secured_payment.png" />
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                    </div>
-                </div>
-
-
-                <div className="row ml-0 mr-0 mt-3">
-                    <div className="col-12 text-right">
-                        <img src="/images/bluesnap_secured_payment.png" />
                     </div>
                 </div>
             </div >

@@ -9,6 +9,7 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Coupon;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -39,7 +40,16 @@ class PaymentController extends Controller
                 'expirationYear' => $request->expirationYear,
                 'securityCode' => $request->securityCode,
             ];
-            $obj = $this->createTransaction($pricePlan, $card);
+            $pricePlanSubscription = new PricePlanSubscription;
+            $price = $pricePlan->price;
+            if ($request->has('coupon_id')) {
+                $coupon = Coupon::find($request->coupon_id);
+                if(!$coupon) return response()->json(['success' => false, 'message' => 'Invalid coupon.'], 422);
+                if($coupon->expires_at <= Carbon::now()) return response()->json(['success' => false, 'message' => 'Expired coupon used!'], 422);
+                $pricePlanSubscription->coupon_id = $coupon->id;
+                $price -= ($coupon->discount_percent / 100) * $price;
+            }
+            $obj = $this->createTransaction($price, $card);
             if ($obj['success'] == false) {
                 return response()->json(['success' => false, 'message' => $obj['message']], 422);
             }
@@ -49,13 +59,7 @@ class PaymentController extends Controller
             if ($verification['success'] == false) {
                 return response()->json(['success' => false, 'message' => $verification['message']], 422);
             }
-            $pricePlanSubscription = new PricePlanSubscription;
-            if ($request->has('coupon_id')) {
-                $coupon = Coupon::find($request->query('coupon_id'));
-                if(!$coupon) return response()->json(['success' => false, 'message' => 'Invalid coupon.'], 422);
-                if($coupon->expires_at <= Carbon::now()) return response()->json(['success' => false, 'message' => 'Expired coupon used!'], 422);
-                $pricePlanSubscription->coupon_id = $coupon->id;
-            }
+            
             $pricePlanSubscription->price_plan_id = $pricePlan->id;
             $pricePlanSubscription->transaction_id = $transactionId;
             $pricePlanSubscription->expires_at = new \DateTime("+1 month");
@@ -134,7 +138,7 @@ class PaymentController extends Controller
  *
  * @return \tdanielcox\Bluesnap\Models\CardTransaction
  */
-    public function createTransaction($pricePlan, $card)
+    public function createTransaction($price, $card)
     {
         Bluesnap\Bluesnap::init(config('services.bluesnap.environment'), config('services.bluesnap.api.key'), config('services.bluesnap.api.password'));
 
@@ -145,7 +149,7 @@ class PaymentController extends Controller
                 'expirationYear' => $card['expirationYear'],
                 'securityCode' => $card['securityCode'],
             ],
-            'amount' => $pricePlan->price,
+            'amount' => $price,
             'currency' => 'USD',
             'recurringTransaction' => 'ECOMMERCE',
             'cardTransactionType' => 'AUTH_CAPTURE',
