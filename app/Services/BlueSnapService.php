@@ -37,47 +37,10 @@ class BlueSnapService
     }
 
     /**
-     * Authorize a New Transaction (with vendor, vaultedShopper, saved card)
+     * Create a New Transaction (simple)
      *
-     * @param int $vaulted_shopper_id
-     * @param int $vendor_id
      * @return \Bluesnap\Models\CardTransaction
      */
-    public function authorizeTransaction($vaulted_shopper_id, $vendor_id)
-    {
-        $response = \Bluesnap\CardTransaction::create([
-            'vendorInfo' => [
-                'vendorId' => $vendor_id,
-                'commissionAmount' => 4.00,
-            ],
-            'vaultedShopperId' => $vaulted_shopper_id,
-            'creditCard' => [
-                'cardLastFourDigits' => '1111',
-                'securityCode' => '111',
-                'cardType' => 'VISA',
-            ],
-            'amount' => 10.00,
-            'currency' => 'USD',
-            'recurringTransaction' => 'ECOMMERCE',
-            'cardTransactionType' => 'AUTH_ONLY',
-            'softDescriptor' => 'Your description',
-        ]);
-
-        if ($response->failed()) {
-            $error = $response->data;
-
-            // handle error
-        }
-
-        $transaction = $response->data;
-
-        return $transaction;
-    }
-/**
- * Create a New Transaction (simple)
- *
- * @return \Bluesnap\Models\CardTransaction
- */
     public function createTransaction($price, $card)
     {
 
@@ -192,4 +155,42 @@ class BlueSnapService
 
         return $vaulted_shopper;
     }
+    /**
+     * Authorize a New Transaction (with vendor, vaultedShopper, saved card)
+     *
+     * @param int $vaulted_shopper_id
+     * @param int $vendor_id
+     * @return \Bluesnap\Models\CardTransaction
+     */
+    public function authorizeTransaction($vaulted_shopper_id, $vendor_id)
+    {
+        $response = \Bluesnap\CardTransaction::create([
+            'vendorInfo' => [
+                'vendorId' => $vendor_id,
+                'commissionAmount' => 4.00,
+            ],
+            'vaultedShopperId' => $vaulted_shopper_id,
+            'creditCard' => [
+                'cardLastFourDigits' => '1111',
+                'securityCode' => '111',
+                'cardType' => 'VISA',
+            ],
+            'amount' => 10.00,
+            'currency' => 'USD',
+            'recurringTransaction' => 'ECOMMERCE',
+            'cardTransactionType' => 'AUTH_ONLY',
+            'softDescriptor' => 'Your description',
+        ]);
+
+        if ($response->failed()) {
+            $error = $response->data;
+
+            // handle error
+        }
+
+        $transaction = $response->data;
+
+        return $transaction;
+    }
+
 }

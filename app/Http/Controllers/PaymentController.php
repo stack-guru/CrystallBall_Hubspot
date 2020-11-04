@@ -70,11 +70,9 @@ class PaymentController extends Controller
             if ($obj['success'] == false) {
                 return response()->json(['success' => false, 'message' => $obj['message']], 422);
             }
-            if ($request->has('coupon_id')) {
-                if ($coupon) {
-                    $coupon->usage_count += 1;
-                    $coupon->save();
-                }
+            if (isset($coupon)) {
+                $coupon->usage_count += 1;
+                $coupon->save();
             }
 
             $transactionId = $obj['transactionId'];
