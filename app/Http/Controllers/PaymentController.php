@@ -10,6 +10,7 @@ use Auth;
 use Carbon\Carbon;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use App\Models\PaymentDetail;
 
 class PaymentController extends Controller
 {
@@ -81,6 +82,20 @@ class PaymentController extends Controller
             if ($verification['success'] == false) {
                 return response()->json(['success' => false, 'message' => $verification['message']], 422);
             }
+
+            $paymentDetail = new PaymentDetail;
+            $paymentDetail->cardholder_name = $request->cardholderName;
+            $paymentDetail->card_number = $request->cardNumber;
+            $paymentDetail->expiry_month = $request->expirtationMonth;
+            $paymentDetail->expiry_year = $request->expirationYear;
+            
+            $paymentDetail->full_name = $request->full_name;
+            $paymentDetail->billing_address = $request->billing_address;
+            $paymentDetail->city = $request->city;
+            $paymentDetail->zip_code = $request->zip_code;
+            $paymentDetail->country = $request->country;
+            $paymentDetail->save();
+
             $pricePlanSubscription->price_plan_id = $pricePlan->id;
             $pricePlanSubscription->transaction_id = $transactionId;
             $pricePlanSubscription->expires_at = new \DateTime("+1 month");
