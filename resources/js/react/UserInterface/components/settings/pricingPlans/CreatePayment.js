@@ -13,6 +13,7 @@ export default class CreatePayment extends Component {
         this.state = {
             pricePlan: undefined,
             paymentDetails: {
+                cardHolderName:'',
                 cardNumber: '',
                 expirationMonth: '',
                 expirationYear: '',
@@ -92,15 +93,22 @@ export default class CreatePayment extends Component {
 
 
     validate() {
+        let cardHolderName=this.state.paymentDetails.cardHolderName;
         let cardNumber = this.state.paymentDetails.cardNumber;
         let expirationMonth = this.state.paymentDetails.expirationMonth;
         let expirationYear = this.state.paymentDetails.expirationYear;
         let securityCode = this.state.paymentDetails.securityCode;
 
 
+
         let errors = {};
         let isValid = true;
 
+        if (!cardHolderName) {
+            isValid = false;
+            errors["cardHolderName"] = "Please enter card holder name.";
+
+        }
         if (!cardNumber) {
             isValid = false;
             errors["cardNumber"] = "Please enter your card number.";
@@ -139,6 +147,7 @@ export default class CreatePayment extends Component {
     setDefaultState() {
         this.setState({
             paymentDetails: {
+                cardHolderName:'',
                 cardNumber: '',
                 expirationMonth: '',
                 expirationYear: '',
@@ -483,6 +492,15 @@ export default class CreatePayment extends Component {
                                         {/* second column start*/}
                                         <div className="mt-4">
                                             <h4>Credit Card Info</h4>
+
+                                            <div className="form-group ">
+                                                <label htmlFor="cardHolderName">Card Holder Name</label>
+                                                <input type="text" className="form-control" onChange={this.changeHandler} id="cardHolderName" name="cardHolderName" placeholder="Card Holder Name" />
+                                                {
+                                                    validation.cardHolderName ?
+                                                        <span className="text-danger">{validation.cardHolderName}</span> : ''
+                                                }
+                                            </div>
                                             <div className="form-group">
                                                 <label htmlFor="cardNumber">Card Number</label>
                                                 <div className="input-group mb-3">

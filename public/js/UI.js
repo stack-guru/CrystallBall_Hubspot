@@ -42996,6 +42996,7 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
     _this.state = {
       pricePlan: undefined,
       paymentDetails: {
+        cardHolderName: '',
         cardNumber: '',
         expirationMonth: '',
         expirationYear: '',
@@ -43104,12 +43105,18 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
   }, {
     key: "validate",
     value: function validate() {
+      var cardHolderName = this.state.paymentDetails.cardHolderName;
       var cardNumber = this.state.paymentDetails.cardNumber;
       var expirationMonth = this.state.paymentDetails.expirationMonth;
       var expirationYear = this.state.paymentDetails.expirationYear;
       var securityCode = this.state.paymentDetails.securityCode;
       var errors = {};
       var isValid = true;
+
+      if (!cardHolderName) {
+        isValid = false;
+        errors["cardHolderName"] = "Please enter card holder name.";
+      }
 
       if (!cardNumber) {
         isValid = false;
@@ -43145,6 +43152,7 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
     value: function setDefaultState() {
       this.setState({
         paymentDetails: {
+          cardHolderName: '',
           cardNumber: '',
           expirationMonth: '',
           expirationYear: '',
@@ -43763,6 +43771,19 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
       }, "Zimbabwe"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "mt-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Credit Card Info"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group "
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "cardHolderName"
+      }, "Card Holder Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        onChange: this.changeHandler,
+        id: "cardHolderName",
+        name: "cardHolderName",
+        placeholder: "Card Holder Name"
+      }), validation.cardHolderName ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, validation.cardHolderName) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "cardNumber"
