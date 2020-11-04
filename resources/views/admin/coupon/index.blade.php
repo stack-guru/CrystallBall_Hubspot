@@ -9,9 +9,6 @@
                     <div class="card-header">Coupons</div>
                     <div class="card-body">
                         <div class="row ml-0 mr-0">
-                            @if(session()->has('msg'))
-                                <div class="alert alert-success">  {{session()->get('msg')}}</div>&nbsp;&nbsp;
-                            @endif
                             <div class="col-12 text-right">
                                 <a href="{{route('admin.coupon.create')}}" class="btn btn-primary my-3">Add Coupon</a>
 

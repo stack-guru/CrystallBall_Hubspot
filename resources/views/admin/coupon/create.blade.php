@@ -5,11 +5,6 @@
         <div class="row ml-0 mr-0">
             <div class="col-12 d-flex justify-content-center align-items-center flex-column">
                 <div style="width: 50%">
-                    @if($errors->any())
-                        @foreach($errors->all() as $error)
-                            <div class="alert alert-danger">{{$error}}</div>&nbsp;&nbsp;
-                        @endforeach
-                    @endif
                 <form action="{{route('admin.coupon.store')}}" method="post">
                     @csrf
                     <div class="form-group">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
+use App\Http\Requests\CouponRequest;
 
 class CouponController extends Controller
 {
@@ -28,7 +29,7 @@ class CouponController extends Controller
     public function create()
     {
         //
-        return view('admin/coupon/add');
+        return view('admin/coupon/create');
     }
 
     /**
@@ -37,22 +38,12 @@ class CouponController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CouponRequest $request)
     {
-        //
-
-        $request->validate([
-            'name'=>'required',
-            'code'=>'required',
-            'discount_percent'=>'required',
-            'expires_at'=>'date|required'
-
-        ]);
-
         $coupon =new Coupon;
-        $coupon->fill($request->except('_token'));
+        $coupon->fill($request->validated());
         $coupon->save();
-        return redirect()->route('admin.coupon.index')->with('msg','new coupon added successfully');
+        return redirect()->route('admin.coupon.index')->with('success','New coupon added successfully');
 
     }
 
@@ -62,7 +53,7 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Coupon $coupon)
     {
         //
     }
@@ -73,10 +64,10 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Coupon $coupon)
     {
         //
-        $data['coupon']=Coupon::find($id);
+        $data['coupon']=$coupon;
         return view('admin/coupon/edit',$data);
     }
 
@@ -87,22 +78,11 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CouponRequest $request, Coupon $coupon)
     {
-        //
-
-        $request->validate([
-            'name'=>'required',
-            'code'=>'required',
-            'discount_percent'=>'required',
-            'expires_at'=>'date|required'
-
-        ]);
-
-        $coupon =Coupon::find($id);
-        $coupon->fill($request->except('_token','_method'));
-        $coupon->update();
-        return redirect()->route('admin.coupon.index')->with('msg','Coupon updated successfully');
+        $coupon->fill($request->validated());
+        $coupon->save();
+        return redirect()->route('admin.coupon.index')->with('success','Coupon updated successfully');
 
     }
 
@@ -112,11 +92,9 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Coupon $coupon)
     {
-        //
-        $coupon=Coupon::find($id);
         $coupon->delete();
-        return redirect()->route('admin.coupon.index')->with('msg','Coupon deleted successfully');
+        return redirect()->route('admin.coupon.index')->with('success','Coupon deleted successfully');
     }
 }
