@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { Redirect } from 'react-router';
 import ErrorAlert from '../../../utils/ErrorAlert';
 import Cleave from '../../../../../../../public/js/cleave/Cleave';
-import Axios from 'axios';
 
 export default class CreatePayment extends Component {
     constructor(props) {
@@ -13,7 +12,7 @@ export default class CreatePayment extends Component {
         this.state = {
             pricePlan: undefined,
             paymentDetails: {
-                cardHolderName:'',
+                cardHolderName: '',
                 cardNumber: '',
                 expirationMonth: '',
                 expirationYear: '',
@@ -25,8 +24,7 @@ export default class CreatePayment extends Component {
             validation: {},
             errors: '',
             couponCode: '',
-            tax:0,
-            userLocation:'',
+            taxPercent: 0,
 
 
         }
@@ -53,12 +51,14 @@ export default class CreatePayment extends Component {
             });
 
 
-        var xhr = new XMLHttpRequest;
+        let taxPercent = 0;
+        let xhr = new XMLHttpRequest;
         xhr.open("GET", "https://ipapi.co/json", !1), xhr.send();
-        var resp = JSON.parse(xhr.responseText);
-        if(resp.country_name=="Pakistan"){
-        this.setState({userLocation:resp.country_name,tax:17})
+        let resp = JSON.parse(xhr.responseText);
+        if (['Pakistan', 'Israel'].indexOf(resp.country_name) != -1) {
+            taxPercent = 17;
         }
+        this.setState({ taxPercent: taxPercent, paymentDetails: { ...this.state.paymentDetails, city: resp.city, country: resp.country_name } });
 
     }
 
@@ -93,7 +93,7 @@ export default class CreatePayment extends Component {
 
 
     validate() {
-        let cardHolderName=this.state.paymentDetails.cardHolderName;
+        let cardHolderName = this.state.paymentDetails.cardHolderName;
         let cardNumber = this.state.paymentDetails.cardNumber;
         let expirationMonth = this.state.paymentDetails.expirationMonth;
         let expirationYear = this.state.paymentDetails.expirationYear;
@@ -147,7 +147,7 @@ export default class CreatePayment extends Component {
     setDefaultState() {
         this.setState({
             paymentDetails: {
-                cardHolderName:'',
+                cardHolderName: '',
                 cardNumber: '',
                 expirationMonth: '',
                 expirationYear: '',
@@ -207,21 +207,22 @@ export default class CreatePayment extends Component {
     }
 
     render() {
-        let totalPrice = 0.00, discountPrice = 0.00;
         if (!this.state.pricePlan) return <h5>Loading...</h5>;
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+
         const expYears = this.expiration_years();
         const validation = this.state.validation;
+        let totalPrice = 0.00, discountPrice = 0.00, taxAmount = 0.00;
 
         if (this.state.pricePlan) totalPrice += this.state.pricePlan.price
-        if (this.state.coupon){
+        if (this.state.coupon) {
             discountPrice = parseFloat(((this.state.coupon.discount_percent / 100) * this.state.pricePlan.price)).toFixed(2);
-            totalPrice -= discountPrice;
         }
-        if(this.state.tax){
-           let tax= parseFloat(((this.state.tax / 100) * this.state.pricePlan.price)).toFixed(2);
-          totalPrice=parseFloat(totalPrice) + parseFloat(tax);
+        if (this.state.taxPercent) {
+            taxAmount = parseFloat(((this.state.taxPercent / 100) * this.state.pricePlan.price)).toFixed(2);
         }
+        totalPrice = totalPrice - discountPrice + +taxAmount;
+        totalPrice = totalPrice.toFixed(2);
 
         return (
             <div className="container-xl bg-white component-wrapper">
@@ -238,28 +239,28 @@ export default class CreatePayment extends Component {
                                         <h4>Billing Info</h4>
                                         <div className="form-group">
                                             <label htmlFor="">Full Name</label>
-                                            <input type="text" className="form-control" placeholder="Full Name" name="fullName" id="fullName" />
+                                            <input type="text" className="form-control" placeholder="Full Name" name="fullName" id="fullName" onChange={this.changeHandler} value={this.state.paymentDetails[this.name]} />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="">Billing Address</label>
-                                            <input type="text" className="form-control" placeholder="Your Billing Address " name="billingAddress"
-                                                id="billingAddress" />
+                                            <input type="text" className="form-control" placeholder="Your Billing Address " name="billing_address"
+                                                id="billingAddress" onChange={this.changeHandler} value={this.state.paymentDetails.billing_address} />
                                         </div>
                                         <div className="row ml-0 mr-0">
                                             <div className="form-group col-6 p-3">
                                                 <label htmlFor="">City</label>
                                                 <input type="text" className="form-control" placeholder="City" name="city"
-                                                    id="city" />
+                                                    id="city" onChange={this.changeHandler} value={this.state.paymentDetails.city} />
                                             </div>
                                             <div className="form-group col-6 p-3">
                                                 <label htmlFor="">Zip Code</label>
-                                                <input type="text" className="form-control" placeholder="12300" name="zipCode"
-                                                    id="zipCard" />
+                                                <input type="text" className="form-control" placeholder="12300" name="zip_code"
+                                                    id="zipCard" onChange={this.changeHandler} value={this.state.paymentDetails.zip_code} />
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="">Country</label>
-                                            <select name="country" className="form-control">
+                                            <select name="country" className="form-control" onChange={this.changeHandler} value={this.state.paymentDetails.country}>
                                                 <option value="Afghanistan">Afghanistan</option>
                                                 <option value="Albania">Albania</option>
                                                 <option value="Algeria">Algeria</option>
@@ -592,15 +593,12 @@ export default class CreatePayment extends Component {
                                                         <div className="col-6 text-right">${this.state.pricePlan.price}</div>
                                                     </div>
                                                     {
-                                                        this.state.userLocation ?
+                                                        this.state.taxPercent ?
                                                             <div className="row">
-                                                                <div className="col-6">{this.state.userLocation} Tax</div>
-                                                                <div className="col-6 text-right">{this.state.tax?this.state.tax:''}%</div>
+                                                                <div className="col-6">Value Added Tax (%{this.state.taxPercent})</div>
+                                                                <div className="col-6 text-right">${taxAmount}</div>
                                                             </div> :
-                                                            <div className="row">
-                                                                <div className="col-6">Country Tax</div>
-                                                                <div className="col-6 text-right">0%</div>
-                                                            </div>
+                                                            null
                                                     }
                                                     <hr />
                                                     {
