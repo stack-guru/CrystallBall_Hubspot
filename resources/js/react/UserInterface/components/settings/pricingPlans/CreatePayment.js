@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { Redirect } from 'react-router';
 import ErrorAlert from '../../../utils/ErrorAlert';
 import Cleave from '../../../../../../../public/js/cleave/Cleave';
+import Axios from 'axios';
 
 export default class CreatePayment extends Component {
     constructor(props) {
@@ -22,8 +23,11 @@ export default class CreatePayment extends Component {
             redirectTo: null,
             validation: {},
             errors: '',
-            'couponCode': ''
-            // cardType:'',
+            couponCode: '',
+            tax:0,
+            userLocation:'',
+
+
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
@@ -46,6 +50,14 @@ export default class CreatePayment extends Component {
                 console.log(err)
                 this.setState({ isBusy: false, errors: err });
             });
+
+
+        var xhr = new XMLHttpRequest;
+        xhr.open("GET", "https://ipapi.co/json", !1), xhr.send();
+        var resp = JSON.parse(xhr.responseText);
+        if(resp.country_name=="Pakistan"){
+        this.setState({userLocation:resp.country_name,tax:17})
+        }
 
     }
 
@@ -196,7 +208,11 @@ export default class CreatePayment extends Component {
         if (this.state.coupon){
             discountPrice = parseFloat(((this.state.coupon.discount_percent / 100) * this.state.pricePlan.price)).toFixed(2);
             totalPrice -= discountPrice;
-        } 
+        }
+        if(this.state.tax){
+           let tax= parseFloat(((this.state.tax / 100) * this.state.pricePlan.price)).toFixed(2);
+          totalPrice=parseFloat(totalPrice) + parseFloat(tax);
+        }
 
         return (
             <div className="container-xl bg-white component-wrapper">
@@ -557,6 +573,17 @@ export default class CreatePayment extends Component {
                                                         <div className="col-6">Price</div>
                                                         <div className="col-6 text-right">${this.state.pricePlan.price}</div>
                                                     </div>
+                                                    {
+                                                        this.state.userLocation ?
+                                                            <div className="row">
+                                                                <div className="col-6">{this.state.userLocation} Tax</div>
+                                                                <div className="col-6 text-right">{this.state.tax?this.state.tax:''}%</div>
+                                                            </div> :
+                                                            <div className="row">
+                                                                <div className="col-6">Country Tax</div>
+                                                                <div className="col-6 text-right">0%</div>
+                                                            </div>
+                                                    }
                                                     <hr />
                                                     {
                                                         this.state.coupon ?
@@ -573,6 +600,7 @@ export default class CreatePayment extends Component {
                                                         <div className="col-6">Total</div>
                                                         <div className="col-6 text-right">${totalPrice}</div>
                                                     </div>
+
 
                                                     <div className="form-check mt-3">
                                                         <input type="checkbox" className="form-check-input" name="remember_card"

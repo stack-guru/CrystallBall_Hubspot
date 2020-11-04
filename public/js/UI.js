@@ -42944,6 +42944,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_ErrorAlert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../utils/ErrorAlert */ "./resources/js/react/UserInterface/utils/ErrorAlert.js");
 /* harmony import */ var _public_js_cleave_Cleave__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../../../public/js/cleave/Cleave */ "./public/js/cleave/Cleave.js");
 /* harmony import */ var _public_js_cleave_Cleave__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_public_js_cleave_Cleave__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -42979,6 +42981,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var CreatePayment = /*#__PURE__*/function (_Component) {
   _inherits(CreatePayment, _Component);
 
@@ -43003,8 +43006,9 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
       redirectTo: null,
       validation: {},
       errors: '',
-      'couponCode': '' // cardType:'',
-
+      couponCode: '',
+      tax: 0,
+      userLocation: ''
     };
     _this.changeHandler = _this.changeHandler.bind(_assertThisInitialized(_this));
     _this.submitHandler = _this.submitHandler.bind(_assertThisInitialized(_this));
@@ -43043,6 +43047,16 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
           errors: err
         });
       });
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "https://ipapi.co/json", !1), xhr.send();
+      var resp = JSON.parse(xhr.responseText);
+
+      if (resp.country_name == "Pakistan") {
+        this.setState({
+          userLocation: resp.country_name,
+          tax: 17
+        });
+      }
     }
   }, {
     key: "changeHandler",
@@ -43222,6 +43236,11 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
       if (this.state.coupon) {
         discountPrice = parseFloat(this.state.coupon.discount_percent / 100 * this.state.pricePlan.price).toFixed(2);
         totalPrice -= discountPrice;
+      }
+
+      if (this.state.tax) {
+        var tax = parseFloat(this.state.tax / 100 * this.state.pricePlan.price).toFixed(2);
+        totalPrice = parseFloat(totalPrice) + parseFloat(tax);
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -43868,7 +43887,19 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
         className: "col-6"
       }, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6 text-right"
-      }, "$", this.state.pricePlan.price)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.state.coupon ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "$", this.state.pricePlan.price)), this.state.userLocation ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
+      }, this.state.userLocation, " Tax"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 text-right"
+      }, this.state.tax ? this.state.tax : '', "%")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
+      }, "Country Tax"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 text-right"
+      }, "0%")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.state.coupon ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6"
