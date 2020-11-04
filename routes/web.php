@@ -22,7 +22,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
     Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('logout');
+
 });
+Route::
 
 Route::view('documentation', 'documentation');
 
