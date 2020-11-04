@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Coupon;
 use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
+use App\Services\BlueSnapService;
 use Auth;
-use Bluesnap;
 use Carbon\Carbon;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -48,7 +48,10 @@ class PaymentController extends Controller
                 'expirationYear' => $request->expirationYear,
                 'securityCode' => $request->securityCode,
             ];
+
             $pricePlanSubscription = new PricePlanSubscription;
+            $blueSnapService = new BlueSnapService;
+
             $price = $pricePlan->price;
             if ($request->has('coupon_id')) {
                 $coupon = Coupon::find($request->coupon_id);
@@ -63,18 +66,20 @@ class PaymentController extends Controller
                 $pricePlanSubscription->coupon_id = $coupon->id;
                 $price -= ($coupon->discount_percent / 100) * $price;
             }
-            $obj = $this->createTransaction($price, $card);
+            $obj = $blueSnapService->createTransaction($price, $card);
             if ($obj['success'] == false) {
                 return response()->json(['success' => false, 'message' => $obj['message']], 422);
             }
-            if ($coupon) {
-                $coupon->usage_count += 1;
-                $coupon->save();
+            if ($request->has('coupon_id')) {
+                if ($coupon) {
+                    $coupon->usage_count += 1;
+                    $coupon->save();
+                }
             }
 
             $transactionId = $obj['transactionId'];
 
-            $verification = $this->getTransaction($pricePlan, $transactionId);
+            $verification = $blueSnapService->getTransaction($pricePlan, $transactionId);
             if ($verification['success'] == false) {
                 return response()->json(['success' => false, 'message' => $verification['message']], 422);
             }
@@ -91,102 +96,6 @@ class PaymentController extends Controller
         $user->save();
 
         return ['success' => true, 'transaction_id' => $transactionId];
-    }
-
-    /**
-     * Get a Transaction
-     *
-     * @param int $transaction_id
-     * @return \tdanielcox\Bluesnap\Models\CardTransaction
-     */
-    public function getTransaction($pricePlan, $transaction_id)
-    {
-        Bluesnap\Bluesnap::init(config('services.bluesnap.environment'), config('services.bluesnap.api.key'), config('services.bluesnap.api.password'));
-        $response = Bluesnap\CardTransaction::get($transaction_id);
-
-        if ($response->failed()) {
-            $error = $response->data;
-
-            return ['success' => false, 'message' => $error];
-        }
-
-        $transaction = $response->data;
-
-        return ['success' => true];
-    }
-
-    /**
-     * Authorize a New Transaction (with vendor, vaultedShopper, saved card)
-     *
-     * @param int $vaulted_shopper_id
-     * @param int $vendor_id
-     * @return \tdanielcox\Bluesnap\Models\CardTransaction
-     */
-    public function authorizeTransaction($vaulted_shopper_id, $vendor_id)
-    {
-        $response = \tdanielcox\Bluesnap\CardTransaction::create([
-            'vendorInfo' => [
-                'vendorId' => $vendor_id,
-                'commissionAmount' => 4.00,
-            ],
-            'vaultedShopperId' => $vaulted_shopper_id,
-            'creditCard' => [
-                'cardLastFourDigits' => '1111',
-                'securityCode' => '111',
-                'cardType' => 'VISA',
-            ],
-            'amount' => 10.00,
-            'currency' => 'USD',
-            'recurringTransaction' => 'ECOMMERCE',
-            'cardTransactionType' => 'AUTH_ONLY',
-            'softDescriptor' => 'Your description',
-        ]);
-
-        if ($response->failed()) {
-            $error = $response->data;
-
-            // handle error
-        }
-
-        $transaction = $response->data;
-
-        return $transaction;
-    }
-/**
- * Create a New Transaction (simple)
- *
- * @return \tdanielcox\Bluesnap\Models\CardTransaction
- */
-    public function createTransaction($price, $card)
-    {
-        Bluesnap\Bluesnap::init(config('services.bluesnap.environment'), config('services.bluesnap.api.key'), config('services.bluesnap.api.password'));
-
-        $response = Bluesnap\CardTransaction::create([
-            'creditCard' => [
-                'cardNumber' => $card['cardNumber'],
-                'expirationMonth' => $card['expirationMonth'],
-                'expirationYear' => $card['expirationYear'],
-                'securityCode' => $card['securityCode'],
-            ],
-            'amount' => $price,
-            'currency' => 'USD',
-            'recurringTransaction' => 'ECOMMERCE',
-            'cardTransactionType' => 'AUTH_CAPTURE',
-        ]);
-
-        // Bluesnap\Response {#1325 ▼
-        //     -_status: "error"
-        //     +data: "The stated credit card expiration date has already passed."
-        // }
-
-        if ($response->failed()) {
-            $error = $response->data;
-            return ['success' => false, 'message' => $error];
-        }
-
-        $transaction = $response->data;
-
-        return ['success' => true, 'transactionId' => $transaction->id];
     }
 
 }
