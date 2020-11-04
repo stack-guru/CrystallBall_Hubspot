@@ -40247,12 +40247,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_settings_pricingPlans_IndexPricingPlans__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/settings/pricingPlans/IndexPricingPlans */ "./resources/js/react/UserInterface/components/settings/pricingPlans/IndexPricingPlans.js");
 /* harmony import */ var _components_settings_IndexSettings__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/settings/IndexSettings */ "./resources/js/react/UserInterface/components/settings/IndexSettings.js");
 /* harmony import */ var _components_settings_ChangePassword__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/settings/ChangePassword */ "./resources/js/react/UserInterface/components/settings/ChangePassword.js");
-/* harmony import */ var react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-toastify/dist/ReactToastify.css */ "./node_modules/react-toastify/dist/ReactToastify.css");
-/* harmony import */ var react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _Main_css__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Main.css */ "./resources/js/react/UserInterface/Main.css");
-/* harmony import */ var _Main_css__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Main_css__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _components_apiKey_IndexAPIKey__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/apiKey/IndexAPIKey */ "./resources/js/react/UserInterface/components/apiKey/IndexAPIKey.js");
-/* harmony import */ var _components_settings_pricingPlans_CreatePayment__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/settings/pricingPlans/CreatePayment */ "./resources/js/react/UserInterface/components/settings/pricingPlans/CreatePayment.js");
+/* harmony import */ var _components_settings_pricingPlans_PaymentHistory__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/settings/pricingPlans/PaymentHistory */ "./resources/js/react/UserInterface/components/settings/pricingPlans/PaymentHistory.js");
+/* harmony import */ var react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-toastify/dist/ReactToastify.css */ "./node_modules/react-toastify/dist/ReactToastify.css");
+/* harmony import */ var react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _Main_css__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Main.css */ "./resources/js/react/UserInterface/Main.css");
+/* harmony import */ var _Main_css__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_Main_css__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _components_apiKey_IndexAPIKey__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/apiKey/IndexAPIKey */ "./resources/js/react/UserInterface/components/apiKey/IndexAPIKey.js");
+/* harmony import */ var _components_settings_pricingPlans_CreatePayment__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/settings/pricingPlans/CreatePayment */ "./resources/js/react/UserInterface/components/settings/pricingPlans/CreatePayment.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40274,6 +40275,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -40414,7 +40416,7 @@ var Main = /*#__PURE__*/function (_React$Component) {
         exact: true,
         path: "/api-key",
         refresh: true
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_apiKey_IndexAPIKey__WEBPACK_IMPORTED_MODULE_16__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_apiKey_IndexAPIKey__WEBPACK_IMPORTED_MODULE_17__["default"], {
         currentPricePlan: this.state.user.price_plan
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
@@ -40440,7 +40442,13 @@ var Main = /*#__PURE__*/function (_React$Component) {
         exact: true,
         path: "/settings/price-plans/payment",
         refresh: true
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_settings_pricingPlans_CreatePayment__WEBPACK_IMPORTED_MODULE_17__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_settings_pricingPlans_CreatePayment__WEBPACK_IMPORTED_MODULE_18__["default"], {
+        user: this.state.user
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+        exact: true,
+        path: "/settings/payment-history",
+        refresh: true
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_settings_pricingPlans_PaymentHistory__WEBPACK_IMPORTED_MODULE_14__["default"], {
         user: this.state.user
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_layout_Footer__WEBPACK_IMPORTED_MODULE_6__["default"], null)));
     }
@@ -42903,7 +42911,9 @@ var indexSettings = /*#__PURE__*/function (_React$Component) {
         to: "/settings/change-password"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Change password"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/settings/price-plans"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Price Plans"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Price Plans"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/settings/payment-history"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Payment History"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "/documentation"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "API Documentation")))))));
     }
@@ -44134,6 +44144,119 @@ var indexPricingPlans = /*#__PURE__*/function (_React$Component) {
   }]);
 
   return indexPricingPlans;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/react/UserInterface/components/settings/pricingPlans/PaymentHistory.js":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/react/UserInterface/components/settings/pricingPlans/PaymentHistory.js ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PaymentHistory; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_HttpClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/HttpClient */ "./resources/js/react/UserInterface/utils/HttpClient.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var PaymentHistory = /*#__PURE__*/function (_React$Component) {
+  _inherits(PaymentHistory, _React$Component);
+
+  var _super = _createSuper(PaymentHistory);
+
+  function PaymentHistory(props) {
+    var _this;
+
+    _classCallCheck(this, PaymentHistory);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      history: [],
+      isBusy: false,
+      errors: ''
+    };
+    return _this;
+  }
+
+  _createClass(PaymentHistory, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.setState({
+        isBusy: true
+      });
+      _utils_HttpClient__WEBPACK_IMPORTED_MODULE_1__["default"].get('/paymentHistory').then(function (response) {
+        _this2.setState({
+          history: response.data.history,
+          isBusy: false
+        });
+
+        console.log(response.data.history);
+      }, function (err) {
+        console.log(err);
+
+        _this2.setState({
+          isBusy: false,
+          errors: err.response.data
+        });
+      })["catch"](function (err) {
+        console.log(err);
+
+        _this2.setState({
+          isBusy: false,
+          errors: err
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var history = this.state.history;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "bg-white component-wrapper"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Payment History"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        className: "table table-hover table-bordered mt-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Id"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Transaction Id"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Amount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Paid At"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Card end with"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, history ? history.map(function (history) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: history.id
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, history.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, history.transaction_id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "amount "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, history.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "digits"));
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        colSpan: "5"
+      }, "No history found")))));
+    }
+  }]);
+
+  return PaymentHistory;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 

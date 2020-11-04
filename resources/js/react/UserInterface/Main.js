@@ -15,6 +15,7 @@ import AnnotationsUpload from './components/annotations/UploadAnnotation';
 import PricingPlans from './components/settings/pricingPlans/IndexPricingPlans';
 import Settings from './components/settings/IndexSettings';
 import ChangePassword from './components/settings/ChangePassword';
+import PaymentHistory from './components/settings/pricingPlans/PaymentHistory';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './Main.css';
@@ -125,6 +126,9 @@ class Main extends React.Component {
                             </Route>
                             <Route exact path="/settings/price-plans/payment" refresh={true}>
                                 <CreatePayment user={this.state.user} />
+                            </Route>
+                            <Route exact path="/settings/payment-history" refresh={true}>
+                                <PaymentHistory user={this.state.user} />
                             </Route>
                         </Switch>
 

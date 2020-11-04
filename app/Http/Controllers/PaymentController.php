@@ -14,6 +14,23 @@ use Carbon\Carbon;
 class PaymentController extends Controller
 {
 
+    public function paymentHistory(){
+        $data =PricePlanSubscription::all();
+
+        return response()->json(['history'=>$data],200);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
     public function subscribePlan(Request $request)
     {
 

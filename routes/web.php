@@ -39,7 +39,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'ui'], function () {
         Route::get('coupon', [App\Http\Controllers\CouponController::class, 'verify']);
-
         Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
         Route::post('annotation', [App\Http\Controllers\AnnotationController::class, 'store']);
         Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
@@ -47,7 +46,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
         Route::post('settings/price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');
         Route::post('settings/price-plan/downGrade', [App\Http\Controllers\PaymentController::class, ''])->name('payment.check');
-
+        Route::get('paymentHistory',[App\Http\Controllers\PaymentController::class, 'paymentHistory']);
         Route::get('user', function () {
             $user = Auth::user();
             $user->load('pricePlan');
@@ -67,7 +66,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('settings/change-password', 'ui/app');
     Route::view('settings/price-plans', 'ui/app');
     Route::view('settings/price-plans/payment', 'ui/app')->name('settings.price-plan.payment');
-
+    Route::view('settings/payment-history', 'ui/app');
 
 });
 

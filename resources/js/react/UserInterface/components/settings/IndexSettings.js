@@ -36,6 +36,12 @@ export default class indexSettings extends React.Component {
                             </li>
 
                             <li>
+                                <Link to="/settings/payment-history">
+                                    <span >Payment History</span>
+                                </Link>
+                            </li>
+
+                            <li>
                                 <a href="/documentation">
                                     <span >API Documentation</span>
                                 </a>
