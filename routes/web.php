@@ -46,7 +46,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
         Route::post('settings/price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');
         Route::post('settings/price-plan/downGrade', [App\Http\Controllers\PaymentController::class, ''])->name('payment.check');
-        Route::get('paymentHistory',[App\Http\Controllers\PaymentController::class, 'paymentHistory']);
+        Route::get('settings/price-plan-subscription',[App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
         Route::get('user', function () {
             $user = Auth::user();
             $user->load('pricePlan');
