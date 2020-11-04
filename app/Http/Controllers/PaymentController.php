@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coupon;
+use App\Models\PaymentDetail;
 use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
 use App\Services\BlueSnapService;
@@ -10,7 +11,6 @@ use Auth;
 use Carbon\Carbon;
 use http\Env\Response;
 use Illuminate\Http\Request;
-use App\Models\PaymentDetail;
 
 class PaymentController extends Controller
 {
@@ -28,6 +28,11 @@ class PaymentController extends Controller
 
         $this->validate($request, [
             'price_plan_id' => 'required',
+            'full_name' => 'required',
+            'billing_address' => 'required',
+            'city' => 'required',
+            'zip_code' => 'nullable',
+            'country' => 'required',
         ]);
 
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
@@ -37,6 +42,7 @@ class PaymentController extends Controller
         if ($pricePlan->price != 0) {
 
             $this->validate($request, [
+                'cardholder_name' => 'required',
                 'cardNumber' => 'required',
                 'expirationMonth' => 'required',
                 'expirationYear' => 'required',
@@ -84,16 +90,15 @@ class PaymentController extends Controller
             }
 
             $paymentDetail = new PaymentDetail;
+            $paymentDetail->fill($request->all());
+
             $paymentDetail->cardholder_name = $request->cardholderName;
             $paymentDetail->card_number = $request->cardNumber;
             $paymentDetail->expiry_month = $request->expirtationMonth;
             $paymentDetail->expiry_year = $request->expirationYear;
-            
-            $paymentDetail->full_name = $request->full_name;
-            $paymentDetail->billing_address = $request->billing_address;
-            $paymentDetail->city = $request->city;
-            $paymentDetail->zip_code = $request->zip_code;
-            $paymentDetail->country = $request->country;
+
+            $blueSnapService->createVaultedShopper($request);
+
             $paymentDetail->save();
 
             $pricePlanSubscription->price_plan_id = $pricePlan->id;

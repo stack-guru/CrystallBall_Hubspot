@@ -37,6 +37,7 @@ export default class CreatePayment extends Component {
     }
 
     componentDidMount() {
+
         this.setState({ isBusy: true });
         var urlSearchParams = new URLSearchParams(window.location.search);
         HttpClient.get('/price-plan/' + urlSearchParams.get('price_plan_id'))
@@ -174,9 +175,9 @@ export default class CreatePayment extends Component {
         return expiration_years;
     }
 
-    cardDetector(e) {
+    cardDetector() {
 
-        var cleave = new Cleave(e.target, {
+        var cleave = new Cleave("#cardNumber", {
             creditCard: true,
             delimiter: '-',
             onCreditCardTypeChanged: function (type) {
@@ -238,8 +239,10 @@ export default class CreatePayment extends Component {
                                     <div className="col-6">
                                         <h4>Billing Info</h4>
                                         <div className="form-group">
-                                            <label htmlFor="">Full Name</label>
-                                            <input type="text" className="form-control" placeholder="Full Name" name="fullName" id="fullName" onChange={this.changeHandler} value={this.state.paymentDetails[this.name]} />
+                                            <label htmlFor="">Name</label>
+                                            <input type="text" className="form-control" placeholder="First Name" name="first_name" id="first_name" onChange={this.changeHandler} value={this.state.paymentDetails.first_name} />
+                                            <input type="text" className="form-control" placeholder="Last Name" name="last_name" id="last_name" onChange={this.changeHandler} value={this.state.paymentDetails.last_name} />
+
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="">Billing Address</label>
@@ -508,8 +511,8 @@ export default class CreatePayment extends Component {
                                                     <div className="input-group-prepend">
                                                         <span className="input-group-text ct" id="basic-addon1">card</span>
                                                     </div>
-                                                    <input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={(e) => { this.cardDetector(e); this.changeHandler(e) }} placeholder="4242 4242 4242 4242"
-                                                        aria-label="Username" aria-describedby="basic-addon1" />
+                                                    <input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} placeholder="4242 4242 4242 4242"
+                                                        onFocus={() => this.cardDetector()} />
                                                 </div>
 
                                             </div>

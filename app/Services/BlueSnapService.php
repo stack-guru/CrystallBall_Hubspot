@@ -77,11 +77,12 @@ class BlueSnapService
      *
      * @return \Bluesnap\Models\VaultedShopper
      */
-    public function createVaultedShopper()
+    public function createVaultedShopper($data)
     {
         $response = \Bluesnap\VaultedShopper::create([
-            'firstName' => 'John',
-            'lastName' => 'Smith',
+            'firstName' => $data->first_name,
+            'lastName' => $data->last_name,
+            'country' => $data->country
         ]);
 
         if ($response->failed()) {
