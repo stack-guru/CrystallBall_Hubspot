@@ -24,7 +24,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('logout');
 
 });
-Route::
 
 Route::view('documentation', 'documentation');
 
