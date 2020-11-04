@@ -81,7 +81,7 @@ class CouponController extends Controller
     public function update(CouponRequest $request, Coupon $coupon)
     {
         $coupon->fill($request->validated());
-        $coupon->save();
+        $coupon->update();
         return redirect()->route('admin.coupon.index')->with('success','Coupon updated successfully');
 
     }
