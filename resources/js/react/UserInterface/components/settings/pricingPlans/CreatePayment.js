@@ -229,10 +229,12 @@ export default class CreatePayment extends Component {
                                     <div className="col-6">
                                         <h4>Billing Info</h4>
                                         <div className="form-group">
-                                            <label htmlFor="">Name</label>
+                                            <label htmlFor="first_name">First Name</label>
                                             <input type="text" className="form-control" placeholder="First Name" name="first_name" id="first_name" onChange={this.changeHandler} value={this.state.paymentDetails.first_name} />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="last_name">Last Name</label>
                                             <input type="text" className="form-control" placeholder="Last Name" name="last_name" id="last_name" onChange={this.changeHandler} value={this.state.paymentDetails.last_name} />
-
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="">Billing Address</label>
