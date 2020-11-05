@@ -47,7 +47,7 @@ export default class UploadAnnotation extends React.Component {
                                 </h2>
                             </div>
                         </div>
-
+                                <div className="text-primary mt-3 mb-3"><b>Notice:</b>Please upload CSV with date formatted as "yyyy-mm-dd"</div>
                         <div className="row ml-0 mr-0">
                             <div className="col-md-12">
                                 <ErrorAlert errors={this.state.errors} />
