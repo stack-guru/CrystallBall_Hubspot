@@ -28,11 +28,6 @@ class PaymentController extends Controller
 
         $this->validate($request, [
             'price_plan_id' => 'required',
-            'full_name' => 'required',
-            'billing_address' => 'required',
-            'city' => 'required',
-            'zip_code' => 'nullable',
-            'country' => 'required',
         ]);
 
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
@@ -42,11 +37,17 @@ class PaymentController extends Controller
         if ($pricePlan->price != 0) {
 
             $this->validate($request, [
-                'cardholder_name' => 'required',
+                'cardHolderName' => 'required',
                 'cardNumber' => 'required',
                 'expirationMonth' => 'required',
                 'expirationYear' => 'required',
                 'securityCode' => 'nullable',
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'billing_address' => 'required',
+                'city' => 'required',
+                'zip_code' => 'nullable',
+                'country' => 'required',
             ]);
 
             $card = [
@@ -89,16 +90,66 @@ class PaymentController extends Controller
                 return response()->json(['success' => false, 'message' => $verification['message']], 422);
             }
 
+            return [
+                'firstName' => $request->first_name,
+                'lastName' => $request->last_name,
+                'country' => $request->country,
+                'city' => $request->city,
+                'zip' => $request->zip_code,
+                'shopperCurrency' => 'USD',
+                'paymentSources' => [
+                    'creditCardInfo' => [
+                        [
+                            'billingContactInfo' => [
+                                'firstName' => $request->first_name,
+                                'lastName' => $request->last_name,
+                                'country' => $request->country,
+                                'zip' => $request->zip_code,
+                            ],
+                            'creditCard' => [
+                                'cardNumber' => $request->cardNumber,
+                                'expirationMonth' => $request->expirationMonth,
+                                'expirationYear' => $request->expirationYear,
+                                'securityCode' => $request->securityCode,
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+            $vaultedShopper = $blueSnapService->createVaultedShopper([
+                'firstName' => $request->first_name,
+                'lastName' => $request->last_name,
+                'country' => $request->country,
+                'city' => $request->city,
+                'zip' => $request->zip_code,
+                'paymentSources' => [
+                    'creditCardInfo' => [
+                        [
+                            'billingContactInfo' => [
+                                'firstName' => $request->first_name,
+                                'lastName' => $request->last_name,
+                                'country' => $request->country,
+                                'zip' => $request->zip_code,
+                            ],
+                            'creditCard' => [
+                                'cardNumber' => $request->cardNumber,
+                                'expirationMonth' => $request->expirationMonth,
+                                'expirationYear' => $request->expirationYear,
+                                'securityCode' => $request->securityCode,
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
+
+            return $vaultedShopper;
+
             $paymentDetail = new PaymentDetail;
             $paymentDetail->fill($request->all());
-
-            $paymentDetail->cardholder_name = $request->cardholderName;
+            $paymentDetail->cardholder_name = $request->cardHolderName;
             $paymentDetail->card_number = $request->cardNumber;
             $paymentDetail->expiry_month = $request->expirtationMonth;
             $paymentDetail->expiry_year = $request->expirationYear;
-
-            $blueSnapService->createVaultedShopper($request);
-
             $paymentDetail->save();
 
             $pricePlanSubscription->price_plan_id = $pricePlan->id;

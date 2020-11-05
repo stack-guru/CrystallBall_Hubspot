@@ -22,7 +22,8 @@ class CreatePaymentDetailsTable extends Migration
             $table->bigInteger('expiry_year')->required();
             $table->string('bluesnap_card_id');
 
-            $table->string('full_name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->string('billing_address');
             $table->string('city');
             $table->bigInteger('zip_code')->required();

@@ -15,7 +15,8 @@ class PaymentDetail extends Model
         'expiry_month',
         'expiry_year',
         
-        'full_name',
+        'first_name',
+        'last_name',
         'billing_address',
         'city',
         'zip_code',

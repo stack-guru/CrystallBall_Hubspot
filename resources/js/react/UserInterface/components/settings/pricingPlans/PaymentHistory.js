@@ -18,7 +18,6 @@ export default class PaymentHistory extends React.Component {
         HttpClient.get('/settings/price-plan-subscription')
             .then(response => {
                 this.setState({ pricePlanSubscriptions: response.data.price_plan_subscriptions, isBusy: false });
-                console.log(response.data.pricePlanSubscriptions);
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });

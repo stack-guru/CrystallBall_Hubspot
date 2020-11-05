@@ -64,12 +64,12 @@ export default class CreatePayment extends Component {
 
 
     changeHandler(e) {
-        if (e.target.name = "cardNumber") {
+        if (e.target.name == "cardNumber") {
             let cardType = CCDetector.getInfo(e.target.value, false, 'card').type;
             if (this.state.cardType !== cardType) this.setState({ cardType: cardType });
-           let cn=e.target.value;
-          let x= cn.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, "$1-$2-$3-$4")
-         e.target.value=x;
+            let cn = e.target.value;
+            let x = cn.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, "$1-$2-$3-$4")
+            e.target.value = x;
         };
 
         this.setState({ isDirty: true, paymentDetails: { ...this.state.paymentDetails, [e.target.name]: e.target.value } });
@@ -82,7 +82,6 @@ export default class CreatePayment extends Component {
 
         if (this.validate() && !this.state.isBusy) {
             this.setState({ isBusy: true });
-            console.log(e);
             HttpClient.post('/settings/price-plan/payment', { ...this.state.paymentDetails, 'price_plan_id': this.state.pricePlan.id })
                 .then(response => {
                     swal("Plan purchased", "New plan purchased.", "success").then(value => {

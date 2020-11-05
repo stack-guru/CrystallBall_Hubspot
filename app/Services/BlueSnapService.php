@@ -79,21 +79,21 @@ class BlueSnapService
      */
     public function createVaultedShopper($data)
     {
-        $response = \Bluesnap\VaultedShopper::create([
-            'firstName' => $data->first_name,
-            'lastName' => $data->last_name,
-            'country' => $data->country
-        ]);
+        $response = \Bluesnap\VaultedShopper::create($data);
 
         if ($response->failed()) {
             $error = $response->data;
 
-            //  handle error
+            return ['success' => false, 'message' => $error];
         }
 
         $vaulted_shopper = $response->data;
 
-        return $vaulted_shopper;
+        return [
+            'success' => true,
+            'vaultedShopperId' => $vaulted_shopper->vaultedShopperId,
+            'networkTransactionId' => $vaulted_shopper->paymentSources->creditCardInfo[0]->processingInfo->networkTransactionId,
+        ];
     }
 
     /**

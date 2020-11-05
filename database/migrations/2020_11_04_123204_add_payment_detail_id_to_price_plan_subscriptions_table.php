@@ -27,8 +27,8 @@ class AddPaymentDetailIdToPricePlanSubscriptionsTable extends Migration
     public function down()
     {
         Schema::table('price_plan_subscriptions', function (Blueprint $table) {
-            $table->dropForeign('price_plan_subscriptions_price_plan_id_foreign');
-            $table->dropColumn('price_plan_id');
+            $table->dropForeign('price_plan_subscriptions_payment_detail_id_foreign');
+            $table->dropColumn('payment_detail_id');
         });
     }
 }
