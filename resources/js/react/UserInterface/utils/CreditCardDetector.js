@@ -67,7 +67,7 @@ var CreditCardDetector = {
       return block.concat(19 - total);
     },
 
-    getInfo: function (value, strictMode) {
+    getInfo: function (value, strictMode, unknownLabel) {
         var blocks = CreditCardDetector.blocks,
             re = CreditCardDetector.re;
 
@@ -88,7 +88,7 @@ var CreditCardDetector = {
         }
 
         return {
-            type: 'unknown',
+            type: unknownLabel,
             blocks: strictMode ? this.getStrictBlocks(blocks.general) : blocks.general
         };
     }

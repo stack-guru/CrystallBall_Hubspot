@@ -25,16 +25,13 @@ export default class CreatePayment extends Component {
             errors: '',
             couponCode: '',
             taxPercent: 0,
-
+            cardType: 'card'
 
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
         this.setDefaultState = this.setDefaultState.bind(this)
-        this.cardDetector = this.cardDetector.bind(this)
         this.applyCoupon = this.applyCoupon.bind(this)
-
-        console.log(CCDetector.getInfo('4242424242424242', false))
 
     }
 
@@ -67,6 +64,10 @@ export default class CreatePayment extends Component {
 
 
     changeHandler(e) {
+        if (e.target.name = "cardNumber") {
+            let cardType = CCDetector.getInfo(e.target.value, false, 'card').type;
+            if (this.state.cardType !== cardType) this.setState({ cardType: cardType })
+        };
         this.setState({ isDirty: true, paymentDetails: { ...this.state.paymentDetails, [e.target.name]: e.target.value } });
 
     }
@@ -177,7 +178,7 @@ export default class CreatePayment extends Component {
         return expiration_years;
     }
 
-    
+
     applyCoupon() {
         HttpClient.get('/coupon?coupon_code=' + this.state.couponCode)
             .then(response => {
@@ -494,10 +495,9 @@ export default class CreatePayment extends Component {
                                                 <label htmlFor="cardNumber">Card Number</label>
                                                 <div className="input-group mb-3">
                                                     <div className="input-group-prepend">
-                                                        <span className="input-group-text ct" id="basic-addon1">card</span>
+                                                        <span className="input-group-text ct" id="basic-addon1">{this.state.cardType}</span>
                                                     </div>
-                                                    <input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} placeholder="4242 4242 4242 4242"
-                                                        onFocus={() => this.cardDetector()} />
+                                                    <input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} placeholder="4242 4242 4242 4242" value={this.state.paymentDetails.cardNumber} />
                                                 </div>
 
                                             </div>
