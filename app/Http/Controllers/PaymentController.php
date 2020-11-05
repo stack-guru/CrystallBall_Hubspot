@@ -90,38 +90,13 @@ class PaymentController extends Controller
                 return response()->json(['success' => false, 'message' => $verification['message']], 422);
             }
 
-            return [
-                'firstName' => $request->first_name,
-                'lastName' => $request->last_name,
-                'country' => $request->country,
-                'city' => $request->city,
-                'zip' => $request->zip_code,
-                'shopperCurrency' => 'USD',
-                'paymentSources' => [
-                    'creditCardInfo' => [
-                        [
-                            'billingContactInfo' => [
-                                'firstName' => $request->first_name,
-                                'lastName' => $request->last_name,
-                                'country' => $request->country,
-                                'zip' => $request->zip_code,
-                            ],
-                            'creditCard' => [
-                                'cardNumber' => $request->cardNumber,
-                                'expirationMonth' => $request->expirationMonth,
-                                'expirationYear' => $request->expirationYear,
-                                'securityCode' => $request->securityCode,
-                            ],
-                        ],
-                    ],
-                ],
-            ];
             $vaultedShopper = $blueSnapService->createVaultedShopper([
                 'firstName' => $request->first_name,
                 'lastName' => $request->last_name,
                 'country' => $request->country,
                 'city' => $request->city,
                 'zip' => $request->zip_code,
+                'shopperCurrency' => 'USD',
                 'paymentSources' => [
                     'creditCardInfo' => [
                         [
