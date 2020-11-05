@@ -88,10 +88,10 @@ class BlueSnapService
         }
 
         $vaulted_shopper = $response->data;
-
+        dd($vaulted_shopper);
         return [
             'success' => true,
-            'vaultedShopperId' => $vaulted_shopper->vaultedShopperId,
+            'vaultedShopperId' => $vaulted_shopper->id,
             'networkTransactionId' => $vaulted_shopper->paymentSources->creditCardInfo[0]->processingInfo->networkTransactionId,
         ];
     }

@@ -1,15 +1,8 @@
 import React from "react";
 
-
-export default class countryCodeSelect extends React.Component{
-    constructor(props) {
-        super(props);
-
-    }
-
-    render() {
+export default function CountryCodeSelect(props) {
         return (
-            <select className={this.props.class} name={this.props.name} onChange={this.props.changeHandler} value={this.props.value}>
+            <select className={props.class} name={props.name} onChange={props.changeHandler} value={props.value}>
                 <option value="AF">Afghanistan</option>
                 <option value="AX">Åland Islands</option>
                 <option value="AL">Albania</option>
@@ -262,4 +255,3 @@ export default class countryCodeSelect extends React.Component{
             </select>
         );
     }
-}
