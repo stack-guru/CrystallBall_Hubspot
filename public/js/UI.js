@@ -41638,6 +41638,9 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
         if (this.state.cardType !== cardType) this.setState({
           cardType: cardType
         });
+        var cn = e.target.value;
+        var x = cn.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, "$1-$2-$3-$4");
+        e.target.value = x;
       }
 
       ;
