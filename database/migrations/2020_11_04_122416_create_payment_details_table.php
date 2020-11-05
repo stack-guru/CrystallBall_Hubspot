@@ -20,7 +20,7 @@ class CreatePaymentDetailsTable extends Migration
             $table->string('card_number');
             $table->tinyInteger('expiry_month')->required();
             $table->bigInteger('expiry_year')->required();
-            $table->string('bluesnap_card_id');
+            $table->string('bluesnap_card_id')->nullable();
 
             $table->string('first_name');
             $table->string('last_name');
@@ -28,7 +28,7 @@ class CreatePaymentDetailsTable extends Migration
             $table->string('city');
             $table->bigInteger('zip_code')->required();
             $table->string('country');
-            $table->string('bluesnap_vaulted_shopper_id');
+            $table->string('bluesnap_vaulted_shopper_id')->nullable();
 
             $table->foreignId("user_id")->required();
 
