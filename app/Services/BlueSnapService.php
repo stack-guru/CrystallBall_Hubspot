@@ -88,7 +88,7 @@ class BlueSnapService
         }
 
         $vaulted_shopper = $response->data;
-        dd($vaulted_shopper);
+
         return [
             'success' => true,
             'vaultedShopperId' => $vaulted_shopper->id,
