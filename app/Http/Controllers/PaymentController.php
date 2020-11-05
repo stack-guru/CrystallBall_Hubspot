@@ -123,15 +123,17 @@ class PaymentController extends Controller
             $paymentDetail->fill($request->all());
             $paymentDetail->cardholder_name = $request->cardHolderName;
             $paymentDetail->card_number = $request->cardNumber;
-            $paymentDetail->expiry_month = $request->expirtationMonth;
+            $paymentDetail->expiry_month = $request->expirationMonth;
             $paymentDetail->expiry_year = $request->expirationYear;
             $paymentDetail->bluesnap_vaulted_shopper_id = $vaultedShopper['vaultedShopperId'];
+            $paymentDetail->user_id = $user->id;
             $paymentDetail->save();
 
             $pricePlanSubscription->price_plan_id = $pricePlan->id;
             $pricePlanSubscription->transaction_id = $transactionId;
             $pricePlanSubscription->expires_at = new \DateTime("+1 month");
             $pricePlanSubscription->user_id = $user->id;
+            $pricePlanSubscription->payment_detail_id = $paymentDetail->id;
             $pricePlanSubscription->save();
 
         }
