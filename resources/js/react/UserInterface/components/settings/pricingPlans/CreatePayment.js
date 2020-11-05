@@ -409,14 +409,20 @@ export default class CreatePayment extends Component {
                                         </div>
                                         <div className="row ml-0 mr-0 mt-1">
                                             <div className="col-12 text-right p-5">
-                                                <button type="submit" className="btn btn-primary btn-lg">Pay</button>
+                                                <button type="submit" className={"btn btn-primary btn-lg"+(this.state.isBusy=true?"disabled":'')}>
+                                                    {
+                                                        this.state.isBusy=true?
+                                                            <i className="fa fa-spinner fa-pulse"></i>:
+                                                            'Pay'
+                                                    }
+
+
+                                                </button>
                                             </div>
                                         </div>
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-12 text-right p-5">
-
                                                 <img src="/images/bluesnap_secured_payment.png" />
-
                                             </div>
                                         </div>
                                     </div>

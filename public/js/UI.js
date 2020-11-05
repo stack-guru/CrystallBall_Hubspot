@@ -41513,7 +41513,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_ErrorAlert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../utils/ErrorAlert */ "./resources/js/react/UserInterface/utils/ErrorAlert.js");
 /* harmony import */ var _utils_CreditCardDetector__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../utils/CreditCardDetector */ "./resources/js/react/UserInterface/utils/CreditCardDetector.js");
 /* harmony import */ var _utils_CreditCardDetector__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_CreditCardDetector__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_CountryCode__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../utils/CountryCode */ "./resources/js/react/UserInterface/utils/CountryCode.js");
+/* harmony import */ var _utils_CountryCodeSelect__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../utils/CountryCodeSelect */ "./resources/js/react/UserInterface/utils/CountryCodeSelect.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -41900,7 +41900,7 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
         className: "form-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: ""
-      }, "Country"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_utils_CountryCode__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      }, "Country"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_utils_CountryCodeSelect__WEBPACK_IMPORTED_MODULE_6__["default"], {
         "class": "form-control",
         name: "country",
         changeHandler: this.changeHandler,
@@ -42099,8 +42099,10 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
         className: "col-12 text-right p-5"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
-        className: "btn btn-primary btn-lg"
-      }, "Pay"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "btn btn-primary btn-lg" + (this.state.isBusy = true ? "disabled" : undefined)
+      }, this.state.isBusy = true ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fa fa-spinner fa-pulse"
+      }) : undefined))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row ml-0 mr-0 mt-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 text-right p-5"
@@ -42806,16 +42808,16 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ "./resources/js/react/UserInterface/utils/CountryCode.js":
-/*!***************************************************************!*\
-  !*** ./resources/js/react/UserInterface/utils/CountryCode.js ***!
-  \***************************************************************/
+/***/ "./resources/js/react/UserInterface/utils/CountryCodeSelect.js":
+/*!*********************************************************************!*\
+  !*** ./resources/js/react/UserInterface/utils/CountryCodeSelect.js ***!
+  \*********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return countryCode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return countryCodeSelect; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -42842,18 +42844,18 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var countryCode = /*#__PURE__*/function (_React$Component) {
-  _inherits(countryCode, _React$Component);
+var countryCodeSelect = /*#__PURE__*/function (_React$Component) {
+  _inherits(countryCodeSelect, _React$Component);
 
-  var _super = _createSuper(countryCode);
+  var _super = _createSuper(countryCodeSelect);
 
-  function countryCode(props) {
-    _classCallCheck(this, countryCode);
+  function countryCodeSelect(props) {
+    _classCallCheck(this, countryCodeSelect);
 
     return _super.call(this, props);
   }
 
-  _createClass(countryCode, [{
+  _createClass(countryCodeSelect, [{
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
@@ -43363,7 +43365,7 @@ var countryCode = /*#__PURE__*/function (_React$Component) {
     }
   }]);
 
-  return countryCode;
+  return countryCodeSelect;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 
