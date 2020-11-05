@@ -85,6 +85,7 @@ export default class CreatePayment extends Component {
             this.setState({ isBusy: true });
             HttpClient.post('/settings/price-plan/payment', { ...this.state.paymentDetails, 'price_plan_id': this.state.pricePlan.id })
                 .then(response => {
+                    this.setState({ isBusy: false, errors: undefined });
                     swal("Plan purchased", "New plan purchased.", "success").then(value => {
                         window.location = "/annotation"
                     });
@@ -184,6 +185,7 @@ export default class CreatePayment extends Component {
 
 
     applyCoupon() {
+        this.setState({ isBusy: true });
         HttpClient.get('/coupon?coupon_code=' + this.state.couponCode)
             .then(response => {
                 this.setState({ coupon: response.data.coupon, paymentDetails: { ...this.state.paymentDetails, coupon_id: response.data.coupon.id }, isBusy: false });
@@ -409,14 +411,12 @@ export default class CreatePayment extends Component {
                                         </div>
                                         <div className="row ml-0 mr-0 mt-1">
                                             <div className="col-12 text-right p-5">
-                                                <button type="submit" className={"btn btn-primary btn-lg"+(this.state.isBusy=true?"disabled":'')}>
+                                                <button type="submit" className={"btn btn-primary btn-lg" + (this.state.isBusy ? "disabled" : '')}>
                                                     {
-                                                        this.state.isBusy=true?
-                                                            <i className="fa fa-spinner fa-pulse"></i>:
+                                                        this.state.isBusy ?
+                                                            <i className="fa fa-spinner fa-pulse"></i> :
                                                             'Pay'
                                                     }
-
-
                                                 </button>
                                             </div>
                                         </div>
