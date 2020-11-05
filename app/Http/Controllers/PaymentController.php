@@ -116,7 +116,7 @@ class PaymentController extends Controller
                     ],
                 ],
             ]);
-
+            
             if (!$vaultedShopper['success']) {return $vaultedShopper;}
 
             $paymentDetail = new PaymentDetail;
@@ -125,7 +125,7 @@ class PaymentController extends Controller
             $paymentDetail->card_number = $request->cardNumber;
             $paymentDetail->expiry_month = $request->expirtationMonth;
             $paymentDetail->expiry_year = $request->expirationYear;
-            $paymentDetail->bluesnap_vaulted_shopper_id = $vaultedShopper->vaultedShopperId;
+            $paymentDetail->bluesnap_vaulted_shopper_id = $vaultedShopper['vaultedShopperId'];
             $paymentDetail->save();
 
             $pricePlanSubscription->price_plan_id = $pricePlan->id;
