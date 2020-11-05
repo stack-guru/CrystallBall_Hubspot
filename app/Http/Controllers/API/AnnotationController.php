@@ -111,7 +111,7 @@ class AnnotationController extends Controller
                     "description" => $annotations[$i]->description,
                     "title" => $annotations[$i]->title,
                     "highlighted" => false,
-                    "publishDate" => $showDate->format('Y-m-dTH:i:sZ'), //"2020-08-30T00:00:00.000Z"
+                    "publishDate" => $showDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
                     "type" => "private",
                 ]);
             }
