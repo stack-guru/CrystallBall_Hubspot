@@ -1,7 +1,7 @@
 import React from "react";
 
 
-export default class countryCode extends React.Component{
+export default class countryCodeSelect extends React.Component{
     constructor(props) {
         super(props);
 

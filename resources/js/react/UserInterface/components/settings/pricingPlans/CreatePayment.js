@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Redirect } from 'react-router';
 import ErrorAlert from '../../../utils/ErrorAlert';
 import CCDetector from '../../../utils/CreditCardDetector';
-import CountryCode from "../../../utils/CountryCode";
+import CountryCodeSelect from "../../../utils/CountryCodeSelect";
 
 export default class CreatePayment extends Component {
     constructor(props) {
@@ -255,7 +255,7 @@ export default class CreatePayment extends Component {
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="">Country</label>
-                                            <CountryCode class="form-control" name="country" changeHandler={this.changeHandler} value={this.state.paymentDetails.country} ></CountryCode>
+                                            <CountryCodeSelect class="form-control" name="country" changeHandler={this.changeHandler} value={this.state.paymentDetails.country} ></CountryCodeSelect>
                                         </div>
 
                                         {/* second column start*/}
