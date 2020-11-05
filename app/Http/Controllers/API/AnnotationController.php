@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Annotation;
+use App\Http\Resources\annotation as annotationResource;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
-use App\Http\Resources\annotation as annotationResource;
-use App\Models\Annotation;
-use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Auth;
 
 class AnnotationController extends Controller
 {
@@ -20,15 +21,13 @@ class AnnotationController extends Controller
     public function index()
     {
         $annotations = Annotation::where('user_id', Auth::id())->get();
-        $resource = new annotationResource($annotations);
-        return ['annotations' => $resource];
+            $resource= new annotationResource($annotations);
+        return ['annotations' =>   $resource];
     }
 
     public function show(Annotation $annotation)
     {
-        if ($annotation->user_id != Auth::id()) {
-            abort(404);
-        }
+        if($annotation->user_id != Auth::id()) abort(404);
 
         return ['annotation' => $annotation];
     }
@@ -80,11 +79,11 @@ class AnnotationController extends Controller
                         "description" => $annotations[$i]->description,
                         "title" => $annotations[$i]->title,
                         "highlighted" => false,
-                        "publishDate" => $showDate->format('Y-m-dTH:i:sZ'), //"2020-08-30T00:00:00.000Z"
+                        "publishDate" => $showDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
                         "type" => "private",
                     ]);
                     continue;
-                } else {
+                }else{
                     array_push($combineAnnotations, [
                         "_id" => $annotations[$i]->id,
                         "category" => $annotations[$i]->category,
@@ -96,11 +95,11 @@ class AnnotationController extends Controller
                         "description" => $annotations[$i]->description,
                         "title" => $annotations[$i]->title,
                         "highlighted" => false,
-                        "publishDate" => $showDate->format('Y-m-dTH:i:sZ'), //"2020-08-30T00:00:00.000Z"
+                        "publishDate" => $showDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
                         "type" => "private",
                     ]);
                 }
-            } else {
+            }else{
                 array_push($combineAnnotations, [
                     "_id" => $annotations[$i]->id,
                     "category" => $annotations[$i]->category,
@@ -112,7 +111,7 @@ class AnnotationController extends Controller
                     "description" => $annotations[$i]->description,
                     "title" => $annotations[$i]->title,
                     "highlighted" => false,
-                    "publishDate" => $showDate->format('Y-m-d') . "T" . $showDate->format('H:i:s') . "Z", //"2020-08-30T00:00:00.000Z"
+                    "publishDate" => $showDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
                     "type" => "private",
                 ]);
             }
@@ -169,10 +168,7 @@ class AnnotationController extends Controller
      */
     public function update(AnnotationRequest $request, Annotation $annotation)
     {
-        if ($annotation->user_id != Auth::id()) {
-            abort(404);
-        }
-
+        if($annotation->user_id != Auth::id()) abort(404);
         $annotation->fill($request->validated());
         $annotation->save();
 
@@ -187,12 +183,10 @@ class AnnotationController extends Controller
      */
     public function destroy(Annotation $annotation)
     {
-        if ($annotation->user_id != Auth::id()) {
-            abort(404);
-        }
-
+        if($annotation->user_id != Auth::id()) abort(404);
         $annotation->delete();
         return ['success' => true];
     }
 
+    
 }
