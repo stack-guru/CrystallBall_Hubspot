@@ -3,7 +3,7 @@ import HttpClient from "../../../utils/HttpClient";
 import { toast } from "react-toastify";
 import { Redirect } from 'react-router';
 import ErrorAlert from '../../../utils/ErrorAlert';
-import Cleave from '../../../../../../../public/js/cleave/Cleave';
+import CCDetector from '../../../utils/CreditCardDetector';
 
 export default class CreatePayment extends Component {
     constructor(props) {
@@ -33,6 +33,8 @@ export default class CreatePayment extends Component {
         this.setDefaultState = this.setDefaultState.bind(this)
         this.cardDetector = this.cardDetector.bind(this)
         this.applyCoupon = this.applyCoupon.bind(this)
+
+        console.log(CCDetector.getInfo('4242424242424242', false))
 
     }
 
@@ -175,24 +177,7 @@ export default class CreatePayment extends Component {
         return expiration_years;
     }
 
-    cardDetector() {
-
-        var cleave = new Cleave("#cardNumber", {
-            creditCard: true,
-            delimiter: '-',
-            onCreditCardTypeChanged: function (type) {
-                if (type == '') {
-                    document.querySelector('.ct').innerText = 'card';
-                } else if (type == 'unknown') {
-                    document.querySelector('.ct').innerText = 'card';
-                } else {
-                    document.querySelector('.ct').innerText = type;
-                }
-            }
-        });
-
-    }
-
+    
     applyCoupon() {
         HttpClient.get('/coupon?coupon_code=' + this.state.couponCode)
             .then(response => {
