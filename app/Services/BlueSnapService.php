@@ -92,7 +92,7 @@ class BlueSnapService
         return [
             'success' => true,
             'vaultedShopperId' => $vaulted_shopper->id,
-            'networkTransactionId' => $vaulted_shopper->paymentSources->creditCardInfo[0]->processingInfo->networkTransactionId,
+            //'networkTransactionId' => $vaulted_shopper->paymentSources->creditCardInfo[0]->processingInfo->networkTransactionId,
         ];
     }
 
