@@ -57,10 +57,10 @@ export default class CreatePayment extends Component {
         let xhr = new XMLHttpRequest;
         xhr.open("GET", "https://ipapi.co/json", !1), xhr.send();
         let resp = JSON.parse(xhr.responseText);
-        if (['Pakistan', 'Israel'].indexOf(resp.country_name) != -1) {
+        if (['PK', 'IL'].indexOf(resp.country) != -1) {
             taxPercent = 17;
         }
-        this.setState({ taxPercent: taxPercent, paymentDetails: { ...this.state.paymentDetails, city: resp.city, country: resp.country_name } });
+        this.setState({ taxPercent: taxPercent, paymentDetails: { ...this.state.paymentDetails, city: resp.city, country: resp.country } });
 
     }
 
