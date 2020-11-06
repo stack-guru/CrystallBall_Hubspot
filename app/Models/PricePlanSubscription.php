@@ -11,7 +11,7 @@ class PricePlanSubscription extends Model
 
     protected $fillable = [
         'user_id', 'expires_at', 'coupon_id',
-        'transaction_id'
+        'transaction_id', 'charged_price'
     ];
     
 }

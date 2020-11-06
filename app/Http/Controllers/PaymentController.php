@@ -74,6 +74,10 @@ class PaymentController extends Controller
                 $pricePlanSubscription->coupon_id = $coupon->id;
                 $price -= ($coupon->discount_percent / 100) * $price;
             }
+            if (array_search($request->country, ["PK", "IL"]) !== false) {
+                $price += (17 / 100) * $pricePlan->price;
+            }
+            
             $obj = $blueSnapService->createTransaction($price, $card);
             if ($obj['success'] == false) {
                 return response()->json(['success' => false, 'message' => $obj['message']], 422);
@@ -116,17 +120,17 @@ class PaymentController extends Controller
                     ],
                 ],
             ]);
-            
+
             if (!$vaultedShopper['success']) {return $vaultedShopper;}
 
             $paymentDetail = new PaymentDetail;
             $paymentDetail->fill($request->all());
-            $paymentDetail->cardholder_name = $request->cardHolderName;
             $paymentDetail->card_number = $request->cardNumber;
             $paymentDetail->expiry_month = $request->expirationMonth;
             $paymentDetail->expiry_year = $request->expirationYear;
             $paymentDetail->bluesnap_vaulted_shopper_id = $vaultedShopper['vaultedShopperId'];
             $paymentDetail->user_id = $user->id;
+            $paymentDetail->charged_price = $price;
             $paymentDetail->save();
 
             $pricePlanSubscription->price_plan_id = $pricePlan->id;

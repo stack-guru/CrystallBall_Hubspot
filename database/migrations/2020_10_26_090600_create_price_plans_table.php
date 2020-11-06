@@ -17,7 +17,7 @@ class CreatePricePlansTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 100)->nullable()->default('Plan');
             $table->integer('annotations_count')->unsigned()->required()->default(0);
-            $table->double('price', 15, 8)->unsigned()->required()->default(0.00);
+            $table->double('price', 5, 2)->unsigned()->required()->default(0.00);
             $table->boolean('has_manual_add')->required()->default(false);
             $table->boolean('has_csv_upload')->required()->default(false);
             $table->boolean('has_api')->required()->default(false);
