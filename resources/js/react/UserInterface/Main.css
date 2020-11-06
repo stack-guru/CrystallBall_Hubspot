@@ -151,7 +151,8 @@
 }
 
 .form-group{
-    transition: all .3s
+    transition: all .3s;
+    margin-bottom:0px!important;
 }
 .floating-labels{
     position :relative;

@@ -265,7 +265,7 @@ export default class CreatePayment extends Component {
 
 
                                         {/* second column start*/}
-                                        <div className="mt-4">
+                                        <div className="mt-2">
                                             <h4>Credit Card Info</h4>
 
                                             <div className="row ml-0 mr-0">
@@ -285,7 +285,7 @@ export default class CreatePayment extends Component {
 
                                             </div>
 
-                                            <div className="form-group  mb-5">
+                                            <div className="form-group ">
                                                 <label htmlFor="cardNumber">Card Number</label>
                                                 <div className="input-group mb-3">
                                                     <div className="input-group-prepend">
@@ -304,7 +304,7 @@ export default class CreatePayment extends Component {
                                         {/*<div className="form-row">*/}
 
 
-                                        <div className="row ml-0 mr-0">
+                                        <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-4 pl-0">
                                                 <div className="form-group ">
                                                     <label htmlFor="expirationMonth">Expiry Month</label>
