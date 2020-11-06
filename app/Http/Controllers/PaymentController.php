@@ -37,7 +37,6 @@ class PaymentController extends Controller
         if ($pricePlan->price != 0) {
 
             $this->validate($request, [
-                'cardHolderName' => 'required',
                 'cardNumber' => 'required',
                 'expirationMonth' => 'required',
                 'expirationYear' => 'required',
