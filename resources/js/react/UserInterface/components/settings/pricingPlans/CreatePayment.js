@@ -251,7 +251,7 @@ export default class CreatePayment extends Component {
                                             </div>
                                             <div className="form-group col-6 p-3">
                                                 <label htmlFor="">Zip Code</label>
-                                                <input type="text" className="form-control" placeholder="12300" name="zip_code"
+                                                <input type="text" className="form-control" placeholder="Zip" name="zip_code"
                                                     id="zipCard" onChange={this.changeHandler} value={this.state.paymentDetails.zip_code} />
                                             </div>
                                         </div>
@@ -332,7 +332,7 @@ export default class CreatePayment extends Component {
                                         </div>
                                         <div className="form-group ">
                                             <label htmlFor="securityCode">CVV</label>
-                                            <input type="number" className="form-control" onChange={this.changeHandler} id="securityCode" name="securityCode" placeholder="---" />
+                                            <input type="number" className="form-control" onChange={this.changeHandler} id="securityCode" name="securityCode"  />
                                             {
                                                 validation.securityCode ?
                                                     <span className="text-danger">{validation.securityCode}</span> : ''
@@ -402,7 +402,7 @@ export default class CreatePayment extends Component {
                                                     <div className="input-group-prepend">
                                                         <span className="input-group-text">Coupon</span>
                                                     </div>
-                                                    <input name="couponCode" type="text" className="form-control" placeholder="AXJ1243" value={this.state.couponCode} onChange={e => { this.setState({ [e.target.name]: e.target.value }); }} />
+                                                    <input name="couponCode" type="text" className="form-control"  value={this.state.couponCode} onChange={e => { this.setState({ [e.target.name]: e.target.value }); }} />
                                                     <div className="input-group-append">
                                                         <button className="btn btn-outline-secondary" type="button" onClick={this.applyCoupon}>Apply</button>
                                                     </div>

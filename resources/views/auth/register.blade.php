@@ -50,6 +50,12 @@
             </span>
         @enderror
       </div>
+        <div className="form-check mt-3">
+            <input type="checkbox" className="form-check-input" name="read_confirmation"
+                   id="read_confirmation" />
+            <label className="form-check-label" htmlFor="read_confirmation">
+                By clicking register you agree to our <a href="https://gaannotations.com/privacy-policy">Privacy Policy</a> </label>
+        </div>
 
       <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
       <a class="btn btn-lg btn-primary btn-block" href="{{ route('login') }}">Login</a>
