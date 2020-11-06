@@ -5,6 +5,7 @@ import { Redirect } from 'react-router';
 import ErrorAlert from '../../../utils/ErrorAlert';
 import CCDetector from '../../../utils/CreditCardDetector';
 import CountryCodeSelect from "../../../utils/CountryCodeSelect";
+require("../../../Main.css");
 
 export default class CreatePayment extends Component {
     constructor(props) {
@@ -221,7 +222,7 @@ export default class CreatePayment extends Component {
             <div className="container-xl bg-white component-wrapper">
                 <ErrorAlert errors={this.state.errors} />
                 <div className="masonry-item">
-                    <div className="bgc-white p-20 bd">
+                    <div className="bgc-white bd">
                         <div className="mT-30">
                             <form onSubmit={this.submitHandler}>
                                 <div className="row ml-0 mr-0">
@@ -421,8 +422,13 @@ export default class CreatePayment extends Component {
                                             </div>
                                         </div>
                                         <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-12 text-right p-5">
-                                                <img src="/images/bluesnap_secured_payment.png" />
+                                            <div className="col-12 text-right p-5 secure-img">
+                                                <img src="/images/bluesnap_secured_payment.png" className="img-fluid " />
+                                                <img src="/images/PCl-2.png" className="img-fluid " />
+                                                <img src="/images/PSD2-1.png"  className="img-fluid "/>
+                                                <img src="/images/shi.png"  className="img-fluid "/>
+                                                <img src="/images/3dsecure.jpg"  className="img-fluid "/>
+                                                <img src="/images/3dnew.png" className="img-fluid " />
                                             </div>
                                         </div>
                                     </div>

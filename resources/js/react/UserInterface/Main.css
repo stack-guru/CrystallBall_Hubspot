@@ -137,3 +137,15 @@
 .logo-text {
     font-size: 1rem;
 }
+.secure-img{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    white-space: unset;
+}
+.secure-img img{
+    width:142px;
+    height: 80px;
+    margin:5px;
+}
