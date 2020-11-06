@@ -76,7 +76,7 @@ class PaymentController extends Controller
             if (array_search($request->country, ["PK", "IL"]) !== false) {
                 $price += (17 / 100) * $pricePlan->price;
             }
-            
+
             $obj = $blueSnapService->createTransaction($price, $card);
             if ($obj['success'] == false) {
                 return response()->json(['success' => false, 'message' => $obj['message']], 422);
@@ -124,7 +124,7 @@ class PaymentController extends Controller
 
             $paymentDetail = new PaymentDetail;
             $paymentDetail->fill($request->all());
-            $paymentDetail->card_number = $request->cardNumber;
+            $paymentDetail->card_number = substr($request->cardNumber, strlen($request->cardNumber) - 4);
             $paymentDetail->expiry_month = $request->expirationMonth;
             $paymentDetail->expiry_year = $request->expirationYear;
             $paymentDetail->bluesnap_vaulted_shopper_id = $vaultedShopper['vaultedShopperId'];
