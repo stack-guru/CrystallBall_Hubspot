@@ -231,49 +231,61 @@ export default class CreatePayment extends Component {
 
                                     <div className="col-6">
                                         <h4>Billing Info</h4>
-                                        <div className="form-group">
-                                            <label htmlFor="first_name">First Name</label>
-                                            <input type="text" className="form-control" placeholder="First Name" name="first_name" id="first_name" onChange={this.changeHandler} value={this.state.paymentDetails.first_name} />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="last_name">Last Name</label>
-                                            <input type="text" className="form-control" placeholder="Last Name" name="last_name" id="last_name" onChange={this.changeHandler} value={this.state.paymentDetails.last_name} />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="">Billing Address</label>
-                                            <input type="text" className="form-control" placeholder="Your Billing Address " name="billing_address"
+
+                                        <div className="form-group floating-labels">
+                                            <input type="text" className="form-control " placeholder="Billing address"  name="billing_address"
                                                 id="billingAddress" onChange={this.changeHandler} value={this.state.paymentDetails.billing_address} />
+                                            <label htmlFor="">Billing Address</label>
                                         </div>
                                         <div className="row ml-0 mr-0">
-                                            <div className="form-group col-6 p-3">
-                                                <label htmlFor="">City</label>
-                                                <input type="text" className="form-control" placeholder="City" name="city"
-                                                    id="city" onChange={this.changeHandler} value={this.state.paymentDetails.city} />
+                                            <div className="col-4  pl-0">
+                                                <div className="form-group ">
+                                                    <label htmlFor="">Country</label>
+                                                    <CountryCodeSelect class="form-control" name="country" changeHandler={this.changeHandler} value={this.state.paymentDetails.country} ></CountryCodeSelect>
+                                                </div>
                                             </div>
-                                            <div className="form-group col-6 p-3">
-                                                <label htmlFor="">Zip Code</label>
-                                                <input type="text" className="form-control" placeholder="Zip" name="zip_code"
-                                                    id="zipCard" onChange={this.changeHandler} value={this.state.paymentDetails.zip_code} />
+                                            <div className="col-4">
+                                                <div className="form-group floating-labels">
+                                                    <input type="text" className="form-control" placeholder="City" name="city"
+                                                           id="city" onChange={this.changeHandler} value={this.state.paymentDetails.city} />
+                                                    <label htmlFor="">City</label>
+                                                </div>
                                             </div>
+                                            <div className="col-4 pr-0">
+                                                <div className="form-group floating-labels">
+                                                    <input type="text" className="form-control" placeholder="Zip" name="zip_code"
+                                                           id="zipCard" onChange={this.changeHandler} value={this.state.paymentDetails.zip_code} />
+                                                    <label htmlFor="">Zip Code</label>
+                                                </div>
+                                            </div>
+
+
+
                                         </div>
-                                        <div className="form-group">
-                                            <label htmlFor="">Country</label>
-                                            <CountryCodeSelect class="form-control" name="country" changeHandler={this.changeHandler} value={this.state.paymentDetails.country} ></CountryCodeSelect>
-                                        </div>
+
 
                                         {/* second column start*/}
                                         <div className="mt-4">
                                             <h4>Credit Card Info</h4>
 
-                                            <div className="form-group ">
-                                                <label htmlFor="cardHolderName">Card Holder Name</label>
-                                                <input type="text" className="form-control" onChange={this.changeHandler} id="cardHolderName" name="cardHolderName" placeholder="Card Holder Name" />
-                                                {
-                                                    validation.cardHolderName ?
-                                                        <span className="text-danger">{validation.cardHolderName}</span> : ''
-                                                }
+                                            <div className="row ml-0 mr-0">
+                                                <div className="col-6 p-3">
+                                                    <div className="form-group floating-labels">
+                                                        <input type="text" className="form-control" placeholder="First Name"  name="first_name" id="first_name" onChange={this.changeHandler} value={this.state.paymentDetails.first_name} />
+                                                        <label htmlFor="first_name">First Name</label>
+                                                    </div>
+                                                </div>
+                                                <div className="col-6 p-3">
+                                                    <div className="form-group floating-labels">
+                                                        <input type="text" className="form-control" placeholder="Last Name" name="last_name" id="last_name" onChange={this.changeHandler} value={this.state.paymentDetails.last_name} />
+                                                        <label htmlFor="last_name">Last Name</label>
+                                                    </div>
+                                                </div>
+
+
                                             </div>
-                                            <div className="form-group">
+
+                                            <div className="form-group ">
                                                 <label htmlFor="cardNumber">Card Number</label>
                                                 <div className="input-group mb-3">
                                                     <div className="input-group-prepend">
@@ -283,7 +295,6 @@ export default class CreatePayment extends Component {
                                                 </div>
 
                                             </div>
-                                            {/*<input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} onChange={this.cardDetector} placeholder="4242 4242 4242 4242" />*/}
                                             {
                                                 validation.cardNumber ?
                                                     <span className="text-danger">{validation.cardNumber}</span> : ''
@@ -294,51 +305,59 @@ export default class CreatePayment extends Component {
 
 
                                         <div className="row ml-0 mr-0">
-                                            <div className="form-group  col pl-0">
-                                                <label htmlFor="expirationMonth">Expiry Month</label>
-                                                <select name="expirationMonth" placeholder="MM" onChange={this.changeHandler} id="expirationMonth" className="form-control">
-                                                    <option value="1">01</option>
-                                                    <option value="2">02</option>
-                                                    <option value="3">03</option>
-                                                    <option value="4">04</option>
-                                                    <option value="5">05</option>
-                                                    <option value="6">06</option>
-                                                    <option value="7">07</option>
-                                                    <option value="8">08</option>
-                                                    <option value="9">09</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                </select>
-                                                {
-                                                    validation.expirationMonth ?
-                                                        <span className="text-danger">{validation.expirationMonth}</span> : ''
-                                                }
-                                            </div>
-                                            <div className="form-group col pr-0">
-                                                <label htmlFor="expirationYear">Year</label>
-                                                <select name="expirationYear" id="expirationYear" onChange={this.changeHandler} className="form-control">
+                                            <div className="col-4 pl-0">
+                                                <div className="form-group ">
+                                                    <label htmlFor="expirationMonth">Expiry Month</label>
+                                                    <select name="expirationMonth"  onChange={this.changeHandler} id="expirationMonth" className="form-control">
+                                                        <option value="1">01</option>
+                                                        <option value="2">02</option>
+                                                        <option value="3">03</option>
+                                                        <option value="4">04</option>
+                                                        <option value="5">05</option>
+                                                        <option value="6">06</option>
+                                                        <option value="7">07</option>
+                                                        <option value="8">08</option>
+                                                        <option value="9">09</option>
+                                                        <option value="10">10</option>
+                                                        <option value="11">11</option>
+                                                        <option value="12">12</option>
+                                                    </select>
                                                     {
-                                                        expYears.map(year => (
-                                                            <option value={year} key={year}>{year}</option>
-                                                        ))
-
+                                                        validation.expirationMonth ?
+                                                            <span className="text-danger">{validation.expirationMonth}</span> : ''
                                                     }
-                                                </select>
-                                                {
-                                                    validation.expirationYear ?
-                                                        <span className="text-danger">{validation.expirationYear}</span> : ''
-                                                }
+                                                </div>
+                                            </div>
+                                            <div className="col-4 p-2">
+                                                <div className="form-group ">
+                                                    <label htmlFor="expirationYear">Year</label>
+                                                    <select name="expirationYear" id="expirationYear" onChange={this.changeHandler} className="form-control">
+                                                        {
+                                                            expYears.map(year => (
+                                                                <option value={year} key={year}>{year}</option>
+                                                            ))
+
+                                                        }
+                                                    </select>
+                                                    {
+                                                        validation.expirationYear ?
+                                                            <span className="text-danger">{validation.expirationYear}</span> : ''
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div className="col-4 pr-0">
+                                                <div className="form-group  floating-labels">
+
+                                                    <input type="text" className="form-control"  placeholder="CVV" onChange={this.changeHandler} id="securityCode" name="securityCode"  />
+                                                    {
+                                                        validation.securityCode ?
+                                                            <span className="text-danger">{validation.securityCode}</span> : ''
+                                                    }
+                                                    <label htmlFor="securityCode">CVV</label>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="form-group ">
-                                            <label htmlFor="securityCode">CVV</label>
-                                            <input type="number" className="form-control" onChange={this.changeHandler} id="securityCode" name="securityCode"  />
-                                            {
-                                                validation.securityCode ?
-                                                    <span className="text-danger">{validation.securityCode}</span> : ''
-                                            }
-                                        </div>
+
                                         {/*</div>*/}
                                     </div>
                                     <div className="col-6">

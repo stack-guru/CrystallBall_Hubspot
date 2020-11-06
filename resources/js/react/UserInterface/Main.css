@@ -149,3 +149,28 @@
     height: 80px;
     margin:5px;
 }
+
+.form-group{
+    transition: all .3s
+}
+.floating-labels{
+    position :relative;
+    padding-top:29px;
+
+}
+.floating-labels > label{
+   transform:translate(1em ,-2em);
+    transform-origin:0 0;
+    transition: all .3s;
+    z-index: -1;
+}
+.floating-labels > input::placeholder{
+    color: transparent;
+}
+
+/* :blank*/
+.floating-labels > input:focus + label ,
+.floating-labels > input:not(:placeholder-shown) + label
+{
+  transform:translateY(-4.3em);
+}
