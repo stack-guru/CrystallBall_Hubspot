@@ -14,7 +14,6 @@ export default class CreatePayment extends Component {
         this.state = {
             pricePlan: undefined,
             paymentDetails: {
-                cardHolderName: '',
                 cardNumber: '',
                 expirationMonth: '',
                 expirationYear: '',
@@ -103,7 +102,6 @@ export default class CreatePayment extends Component {
 
 
     validate() {
-        let cardHolderName = this.state.paymentDetails.cardHolderName;
         let cardNumber = this.state.paymentDetails.cardNumber;
         let expirationMonth = this.state.paymentDetails.expirationMonth;
         let expirationYear = this.state.paymentDetails.expirationYear;
@@ -114,11 +112,6 @@ export default class CreatePayment extends Component {
         let errors = {};
         let isValid = true;
 
-        if (!cardHolderName) {
-            isValid = false;
-            errors["cardHolderName"] = "Please enter card holder name.";
-
-        }
         if (!cardNumber) {
             isValid = false;
             errors["cardNumber"] = "Please enter your card number.";
@@ -157,7 +150,6 @@ export default class CreatePayment extends Component {
     setDefaultState() {
         this.setState({
             paymentDetails: {
-                cardHolderName: '',
                 cardNumber: '',
                 expirationMonth: '',
                 expirationYear: '',
