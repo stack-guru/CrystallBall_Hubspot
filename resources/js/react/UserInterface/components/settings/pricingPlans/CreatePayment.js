@@ -217,7 +217,7 @@ export default class CreatePayment extends Component {
                     <div className="bgc-white bd">
                         <div className="mT-30">
                             <form onSubmit={this.submitHandler}>
-                                <div className="row ml-0 mr-0">
+                                <div className="row ml-0 mr-0 seperator">
 
                                     {/*firs  column start*/}
 
@@ -352,6 +352,7 @@ export default class CreatePayment extends Component {
 
                                         {/*</div>*/}
                                     </div>
+
                                     <div className="col-6">
                                         <div className="">
                                             <div className="bgc-white  ">
@@ -422,12 +423,14 @@ export default class CreatePayment extends Component {
                                         </div>
                                         <div className="row ml-0 mr-0 mt-1">
                                             <div className="col-12 text-right p-5">
-                                                {
-                                                    this.state.isBusy ?
-                                                        <i className="fa fa-spinner fa-pulse"></i> :null
-                                                }
-                                                <button type="submit" className={"btn btn-primary btn-lg" + (this.state.isBusy ? "disabled" : '')}>
-                                                 PAY NOW
+
+                                                <button type="submit" className={"btn btn-primary btn-md payBtn" + (this.state.isBusy ? "disabled" : '')}>
+                                                    {
+                                                        this.state.isBusy ?
+                                                            <i className="fa fa-spinner fa-pulse"></i> :
+                                                            "PAY NOW"
+                                                    }
+
                                                 </button>
                                             </div>
                                         </div>

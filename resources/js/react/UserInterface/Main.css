@@ -180,3 +180,15 @@
   transform:translateY(-4.3em);
 }
 
+.seperator > [class*="col-"]:nth-child(n + 2)::after {
+    content: "";
+    background-color: #909090;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left:0px;
+width: 1px;
+}
+.payBtn{
+width:100%;
+}
