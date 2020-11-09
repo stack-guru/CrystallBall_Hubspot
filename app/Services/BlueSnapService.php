@@ -41,7 +41,7 @@ class BlueSnapService
      *
      * @return \Bluesnap\Models\CardTransaction
      */
-    public function createTransaction($price, $card)
+    public function createTransaction($price, $card, $vaultedShopperId = null)
     {
 
         $response = Bluesnap\CardTransaction::create([
@@ -55,6 +55,8 @@ class BlueSnapService
             'currency' => 'USD',
             'recurringTransaction' => 'ECOMMERCE',
             'cardTransactionType' => 'AUTH_CAPTURE',
+            'vaultedShopperId' => $vaultedShopperId,
+            'storeCard' => $vaultedShopperId == null,
         ]);
 
         // Bluesnap\Response {#1325 ▼
@@ -69,7 +71,11 @@ class BlueSnapService
 
         $transaction = $response->data;
 
-        return ['success' => true, 'transactionId' => $transaction->id];
+        return [
+            'success' => true,
+            'transactionId' => $transaction->id,
+            'vaultedShopperId' => property_exists($transaction, 'vaultedShopperId') ? $transaction->vaultedShopperId : null,
+        ];
     }
 
     /**

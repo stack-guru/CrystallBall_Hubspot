@@ -48,4 +48,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\PricePlan');
     }
+
+    public function paymentDetails()
+    {
+        return $this->hasMany('App\Models\PaymentDetail');
+    }
+
+    public function lastPaymentDetail(){
+        return $this->hasOne('App\Models\PaymentDetail')->orderBy('created_at', 'DESC');
+    }
 }
