@@ -37,7 +37,7 @@ export default class CreatePayment extends Component {
     }
 
     componentDidMount() {
-
+document.title="Payment"
         this.setState({ isBusy: true });
         var urlSearchParams = new URLSearchParams(window.location.search);
         HttpClient.get('/price-plan/' + urlSearchParams.get('price_plan_id'))
@@ -359,8 +359,8 @@ export default class CreatePayment extends Component {
                                                 <h4 className="gaa-text-primary">Details</h4>
                                                 <div className="mT-30">
                                                     <div className="row">
-                                                        <div className="col-6">Plan</div>
-                                                        <div className="col-6 text-right">{this.state.pricePlan.name}</div>
+                                                        <div className="col-6"><b>Plan</b></div>
+                                                        <div className="col-6 text-right"><b>{this.state.pricePlan.name}</b></div>
                                                     </div>
 
                                                     <br/>
@@ -387,8 +387,8 @@ export default class CreatePayment extends Component {
                                                             : null
                                                     }
                                                     <div className="row">
-                                                        <div className="col-6">Total</div>
-                                                        <div className="col-6 text-right">${totalPrice}</div>
+                                                        <div className="col-6"> <b>Total</b></div>
+                                                        <div className="col-6 text-right"><b>${totalPrice}</b></div>
                                                     </div>
                                                             <br/>
                                                     <div className="row">
