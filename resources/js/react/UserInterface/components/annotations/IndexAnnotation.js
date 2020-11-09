@@ -84,8 +84,8 @@ class IndexAnnotations extends React.Component {
                         </div>
                         <div className="row mb-4">
                             <div className="col-12 text-right">
-                                <Link to="/annotation/create" className="btn btn-sm gaa-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add Manual</Link>
-                                <Link to="/annotation/upload" className="btn btn-sm gaa-primary text-white"><i className=" mr-2 fa fa-upload"></i>CSV Upload</Link>
+                                <Link to="/annotation/create" className="btn btn-sm gaa-bg-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add Manual</Link>
+                                <Link to="/annotation/upload" className="btn btn-sm gaa-bg-primary text-white"><i className=" mr-2 fa fa-upload"></i>CSV Upload</Link>
 
                             </div>
                         </div>
@@ -124,7 +124,7 @@ class IndexAnnotations extends React.Component {
                                                                 Delete
                                                             </button>
 
-                                                        <Link to={`/annotation/${anno.id}/edit`} className="btn btn-sm gaa-primary text-white" >
+                                                        <Link to={`/annotation/${anno.id}/edit`} className="btn btn-sm gaa-bg-primary text-white" >
                                                             <i className=" mr-2 fa fa-edit"></i>
                                                                 Edit
                                                         </Link>

@@ -21,7 +21,7 @@ class header extends React.Component {
 
         return (
             <div>
-                <div className="header-container "> {/* gaa-primary */}
+                <div className="header-container "> {/* gaa-bg-primary */}
                     <ul className="nav-left  ">
                         <li>
                             <a id="sidebar-toggle" className="sidebar-toggle " href="#" onClick={this.toggleSidebar}><i
