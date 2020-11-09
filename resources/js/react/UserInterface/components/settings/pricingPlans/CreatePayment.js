@@ -222,7 +222,7 @@ document.title="Payment"
                                     {/*firs  column start*/}
 
                                     <div className="col-6">
-                                        <h4 className="gaa-text-primary">Billing Info</h4>
+                                        <h4 className="gaa-text-primary">Billing Information</h4>
 
                                         <div className="form-group floating-labels">
                                             <input type="text" className="form-control " placeholder="Billing address"  name="billing_address"
@@ -258,7 +258,7 @@ document.title="Payment"
 
                                         {/* second column start*/}
                                         <div className="mt-2">
-                                            <h4 className="gaa-text-primary">Credit Card Info</h4>
+                                            <h4 className="gaa-text-primary">Credit Card</h4>
 
                                             <div className="row ml-0 mr-0">
                                                 <div className="col-6 p-3">
@@ -424,7 +424,7 @@ document.title="Payment"
                                         <div className="row ml-0 mr-0 mt-1">
                                             <div className="col-12 text-right p-5">
 
-                                                <button type="submit" className={"btn btn-primary btn-md payBtn" + (this.state.isBusy ? "disabled" : '')}>
+                                                <button type="submit" className={"btn btn-primary btn-md payBtn  " + (this.state.isBusy ? "disabled" : '')}>
                                                     {
                                                         this.state.isBusy ?
                                                             <i className="fa fa-spinner fa-pulse"></i> :

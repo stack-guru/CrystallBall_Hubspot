@@ -41849,7 +41849,7 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
         className: "col-6"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         className: "gaa-text-primary"
-      }, "Billing Info"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Billing Information"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group floating-labels"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -41906,7 +41906,7 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
         className: "mt-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         className: "gaa-text-primary"
-      }, "Credit Card Info"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Credit Card"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row ml-0 mr-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6 p-3"
@@ -42111,7 +42111,7 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
         className: "col-12 text-right p-5"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
-        className: "btn btn-primary btn-md payBtn" + (this.state.isBusy ? "disabled" : '')
+        className: "btn btn-primary btn-md payBtn  " + (this.state.isBusy ? "disabled" : '')
       }, this.state.isBusy ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-spinner fa-pulse"
       }) : "PAY NOW"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
