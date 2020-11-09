@@ -182,7 +182,7 @@
 
 .seperator > [class*="col-"]:nth-child(n + 2)::after {
     content: "";
-    background-color: #cecece;
+    background-color: rgba(0,0,0,.0625);
     position: absolute;
     top: 0;
     bottom: 0;
