@@ -56,7 +56,7 @@ export default class CreatePayment extends Component {
         let xhr = new XMLHttpRequest;
         xhr.open("GET", "https://ipapi.co/json", !1), xhr.send();
         let resp = JSON.parse(xhr.responseText);
-        if (['PK', 'IL'].indexOf(resp.country) != -1) {
+        if (['IL'].indexOf(resp.country) != -1) {
             taxPercent = 17;
         }
         this.setState({ taxPercent: taxPercent, paymentDetails: { ...this.state.paymentDetails, city: resp.city, country: resp.country } });
@@ -222,7 +222,7 @@ export default class CreatePayment extends Component {
                                     {/*firs  column start*/}
 
                                     <div className="col-6">
-                                        <h4>Billing Info</h4>
+                                        <h4 className="gaa-text-primary">Billing Info</h4>
 
                                         <div className="form-group floating-labels">
                                             <input type="text" className="form-control " placeholder="Billing address"  name="billing_address"
@@ -258,7 +258,7 @@ export default class CreatePayment extends Component {
 
                                         {/* second column start*/}
                                         <div className="mt-2">
-                                            <h4>Credit Card Info</h4>
+                                            <h4 className="gaa-text-primary">Credit Card Info</h4>
 
                                             <div className="row ml-0 mr-0">
                                                 <div className="col-6 p-3">
@@ -355,32 +355,24 @@ export default class CreatePayment extends Component {
                                     <div className="col-6">
                                         <div className="">
                                             <div className="bgc-white  ">
-                                                <h4 >Details</h4>
+                                                <h4 className="gaa-text-primary">Details</h4>
                                                 <div className="mT-30">
                                                     <div className="row">
-                                                        <div className="col-6">Name</div>
+                                                        <div className="col-6">Plan</div>
                                                         <div className="col-6 text-right">{this.state.pricePlan.name}</div>
                                                     </div>
-                                                    <div className="row">
-                                                        <div className="col-6">Subscription Date</div>
-                                                        <div className="col-6 text-right">{moment().format("YYYY-MM-DD")}</div>
-                                                    </div>
-                                                    <div className="row">
-                                                        <div className="col-6">Expiry Date</div>
-                                                        <div className="col-6 text-right">{moment().add(1, 'M').format("YYYY-MM-DD")}</div>
-                                                    </div>
+
+                                                    <br/>
                                                     <div className="row">
                                                         <div className="col-6">Price</div>
                                                         <div className="col-6 text-right">${this.state.pricePlan.price}</div>
                                                     </div>
-                                                    {
-                                                        this.state.taxPercent ?
+
                                                             <div className="row">
-                                                                <div className="col-6">Value Added Tax (%{this.state.taxPercent})</div>
+                                                                <div className="col-6">Value Added Tax ({this.state.taxPercent}%)</div>
                                                                 <div className="col-6 text-right">${taxAmount}</div>
-                                                            </div> :
-                                                            null
-                                                    }
+                                                            </div>
+
                                                     <hr />
                                                     {
                                                         this.state.coupon ?
@@ -397,14 +389,21 @@ export default class CreatePayment extends Component {
                                                         <div className="col-6">Total</div>
                                                         <div className="col-6 text-right">${totalPrice}</div>
                                                     </div>
-
-
-                                                    <div className="form-check mt-3">
+                                                            <br/>
+                                                    <div className="row">
+                                                        <div className="col-6">Subscription start at</div>
+                                                        <div className="col-6 text-right">{moment().format("YYYY-MM-DD")}</div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-6">Next billing at</div>
+                                                        <div className="col-6 text-right">{moment().add(1, 'M').format("YYYY-MM-DD")}</div>
+                                                    </div>
+                                                    {/* <div className="form-check mt-3">
                                                         <input type="checkbox" className="form-check-input" name="remember_card"
                                                             id="rememberCard" />
                                                         <label className="form-check-label" htmlFor="exampleCheck1">
                                                             Remember Card </label>
-                                                    </div>
+                                                    </div>*/}
                                                 </div>
                                             </div>
                                         </div>
@@ -423,12 +422,12 @@ export default class CreatePayment extends Component {
                                         </div>
                                         <div className="row ml-0 mr-0 mt-1">
                                             <div className="col-12 text-right p-5">
+                                                {
+                                                    this.state.isBusy ?
+                                                        <i className="fa fa-spinner fa-pulse"></i> :null
+                                                }
                                                 <button type="submit" className={"btn btn-primary btn-lg" + (this.state.isBusy ? "disabled" : '')}>
-                                                    {
-                                                        this.state.isBusy ?
-                                                            <i className="fa fa-spinner fa-pulse"></i> :
-                                                            'Pay'
-                                                    }
+                                                 PAY NOW
                                                 </button>
                                             </div>
                                         </div>

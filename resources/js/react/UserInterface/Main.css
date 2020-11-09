@@ -24,9 +24,13 @@
 .gaa-blue-gradient {
     background: linear-gradient(to bottom, #0a2950, #456287);
 }
-.gaa-primary {
+.gaa-primary{
     background: #456287;
 }
+.gaa-text-primary{
+    color:#456287;
+}
+
 .gaa-title {
     color: #456287;
 }
