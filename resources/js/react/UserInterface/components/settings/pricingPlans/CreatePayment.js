@@ -369,7 +369,7 @@ export default class CreatePayment extends Component {
                                                     </div>
 
                                                             <div className="row">
-                                                                <div className="col-6">Value Added Tax ({this.state.taxPercent}%)</div>
+                                                                <div className="col-6">Tax ({this.state.taxPercent}%)</div>
                                                                 <div className="col-6 text-right">${taxAmount}</div>
                                                             </div>
 
