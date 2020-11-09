@@ -42278,6 +42278,7 @@ var indexPricingPlans = /*#__PURE__*/function (_React$Component) {
       if (this.state.redirectTo) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
         to: this.state.redirectTo
       });
+      console.log(this.state.pricePlans);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: " bg-white component-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {

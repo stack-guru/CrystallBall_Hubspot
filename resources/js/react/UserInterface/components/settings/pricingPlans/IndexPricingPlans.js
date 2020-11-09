@@ -48,6 +48,7 @@ export default class indexPricingPlans extends React.Component {
 
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+        console.log(this.state.pricePlans);
         return (
             <div className=" bg-white component-wrapper">
                 <section className="pricing bg-white ">
