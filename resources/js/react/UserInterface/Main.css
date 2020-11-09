@@ -182,12 +182,13 @@
 
 .seperator > [class*="col-"]:nth-child(n + 2)::after {
     content: "";
-    background-color: #909090;
+    background-color: #cecece;
     position: absolute;
     top: 0;
     bottom: 0;
     left:0px;
 width: 1px;
+    height: 95%;
 }
 .payBtn{
 width:100%;
