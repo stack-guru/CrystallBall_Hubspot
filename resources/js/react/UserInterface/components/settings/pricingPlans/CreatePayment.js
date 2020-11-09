@@ -433,12 +433,12 @@ export default class CreatePayment extends Component {
                                         </div>
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-12 text-right p-5 secure-img">
-                                                <img src="/images/bluesnap_secured_payment.png" className="img-fluid " />
-                                                <img src="/images/PCl-2.png" className="img-fluid " />
-                                                <img src="/images/PSD2-1.png"  className="img-fluid "/>
-                                                <img src="/images/shi.png"  className="img-fluid "/>
-                                                <img src="/images/3dsecure.jpg"  className="img-fluid "/>
-                                                <img src="/images/3dnew.png" className="img-fluid " />
+                                                <img src="/images/masterCard.jpg" className="img-fluid " alt="mastercard image"/>
+                                                <img src="/images/Visa.png" className="img-fluid " alt="visa card image"/>
+                                                <img src="/images/PS.png"  className="img-fluid " alt="ps image"/>
+                                                <img src="/images/PSD2.png"  className="img-fluid " alt="psd2 image"/>
+                                                <img src="/images/safeKey.png"  className="img-fluid " alt="safekey image"/>
+                                                <img src="/images/pciDss.png" className="img-fluid " alt="pciDss image"/>
                                             </div>
                                         </div>
                                     </div>

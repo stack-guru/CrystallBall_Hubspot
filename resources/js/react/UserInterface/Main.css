@@ -144,13 +144,13 @@
 .secure-img{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
     white-space: unset;
 }
 .secure-img img{
-    width:142px;
-    height: 80px;
+    width:68px;
+    height: 34px;
     margin:5px;
 }
 
