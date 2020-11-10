@@ -26,7 +26,7 @@ export default class CreatePayment extends Component {
             errors: '',
             couponCode: '',
             taxPercent: 0,
-            cardType: 'card'
+            cardType: 'Card'
 
         }
         this.changeHandler = this.changeHandler.bind(this)
@@ -66,7 +66,7 @@ document.title="Payment"
 
     changeHandler(e) {
         if (e.target.name == "cardNumber") {
-            let cardType = CCDetector.getInfo(e.target.value, false, 'card').type;
+            let cardType = CCDetector.getInfo(e.target.value, false, 'Card').type;
             if (this.state.cardType !== cardType) this.setState({ cardType: cardType });
             let cn = e.target.value;
             let x = cn.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, "$1-$2-$3-$4")
@@ -434,15 +434,17 @@ document.title="Payment"
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-12 text-right p-5 secure-img">
-                                                <img src="/images/masterCard.jpg" className="img-fluid " alt="mastercard image"/>
-                                                <img src="/images/Visa.png" className="img-fluid " alt="visa card image"/>
-                                                <img src="/images/PS.png"  className="img-fluid " alt="ps image"/>
-                                                <img src="/images/PSD2.png"  className="img-fluid " alt="psd2 image"/>
-                                                <img src="/images/safeKey.png"  className="img-fluid " alt="safekey image"/>
-                                                <img src="/images/pciDss.png" className="img-fluid " alt="pciDss image"/>
-                                            </div>
+                                        <div className="row ml-0 mr-0 mt-4 d-flex flex-row justify-content-center align-items-center">
+                                           <div className="img-col-wrap">
+                                                <div className="col-12 text-right p-5 secure-img">
+                                                    <img src="/images/masterCard.jpg" className="img-fluid " alt="mastercard image"/>
+                                                    <img src="/images/Visa.png" className="img-fluid " alt="visa card image"/>
+                                                    <img src="/images/PS.png"  className="img-fluid " alt="ps image"/>
+                                                    <img src="/images/PSD2.png"  className="img-fluid " alt="psd2 image"/>
+                                                    <img src="/images/safeKey.png"  className="img-fluid " alt="safekey image"/>
+                                                    <img src="/images/pciDss.png" className="img-fluid " alt="pciDss image"/>
+                                                </div>
+                                           </div>
                                         </div>
                                     </div>
                                 </div>

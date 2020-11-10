@@ -141,12 +141,18 @@
 .logo-text {
     font-size: 1rem;
 }
+.img-col-wrap{
+    height: 115px;
+    position: relative;
+}
 .secure-img{
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
     white-space: unset;
+    height: 100%;
 }
 .secure-img img{
     width:68px;
@@ -185,11 +191,11 @@
     background-color: rgba(0,0,0,.0625);
     position: absolute;
     top: 0;
-    bottom: 0;
+    bottom:0;
     left:0px;
-width: 1px;
+    width: 1px;
     height: 95%;
 }
 .payBtn{
-width:100%;
+    width:100%;
 }
