@@ -30,7 +30,7 @@ class CreatePaymentDetailsTable extends Migration
             $table->string('country');
             $table->string('bluesnap_vaulted_shopper_id')->nullable();
 
-            $table->foreignId("user_id")->required();
+            $table->foreignId("user_id")->constrained()->required();
 
             $table->timestamps();
         });
