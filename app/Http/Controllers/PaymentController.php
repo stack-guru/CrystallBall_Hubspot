@@ -93,41 +93,12 @@ class PaymentController extends Controller
                 return response()->json(['success' => false, 'message' => $verification['message']], 422);
             }
 
-            $vaultedShopper = $blueSnapService->createVaultedShopper([
-                'firstName' => $request->first_name,
-                'lastName' => $request->last_name,
-                'country' => $request->country,
-                'city' => $request->city,
-                'zip' => $request->zip_code,
-                'shopperCurrency' => 'USD',
-                'paymentSources' => [
-                    'creditCardInfo' => [
-                        [
-                            'billingContactInfo' => [
-                                'firstName' => $request->first_name,
-                                'lastName' => $request->last_name,
-                                'country' => $request->country,
-                                'zip' => $request->zip_code,
-                            ],
-                            'creditCard' => [
-                                'cardNumber' => $request->cardNumber,
-                                'expirationMonth' => $request->expirationMonth,
-                                'expirationYear' => $request->expirationYear,
-                                'securityCode' => $request->securityCode,
-                            ],
-                        ],
-                    ],
-                ],
-            ]);
-
-            if (!$vaultedShopper['success']) {return $vaultedShopper;}
-
             $paymentDetail = new PaymentDetail;
             $paymentDetail->fill($request->all());
             $paymentDetail->card_number = substr($request->cardNumber, strlen($request->cardNumber) - 4);
             $paymentDetail->expiry_month = $request->expirationMonth;
             $paymentDetail->expiry_year = $request->expirationYear;
-            $paymentDetail->bluesnap_vaulted_shopper_id = $vaultedShopper['vaultedShopperId'];
+            $paymentDetail->bluesnap_vaulted_shopper_id = $obj['vaultedShopperId'];
             $paymentDetail->user_id = $user->id;
             $paymentDetail->charged_price = $price;
             $paymentDetail->save();
