@@ -22,7 +22,16 @@
                             <label>Number of annotations</label>
                             <input type="number" name="annotations_count" id="annotationsCount" class="form-control" value="0" />
                         </div>
-                        <div class="form-group">
+                    <div class="form-group">
+                        <label>Ga Account Count</label>
+                        <input type="number" name="ga_account_count" id="ga_account_count" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>User per ga-account count?</label>
+                        <input type="number" name="user_per_ga_account_count" id="user_per_ga_account_count" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
                             <label>Has manual add?</label>
                             <input type="checkbox" name="has_manual_add" id="hasManualAdd" class="form-control" />
                         </div>
@@ -43,6 +52,7 @@
                         <label>Has Data Sources?</label>
                         <input type="checkbox" name="has_data_sources" id="hasDataSources" class="form-control" />
                     </div>
+
 
                     <div class="form-group">
                         <label>Enabled?</label>

@@ -22,6 +22,14 @@
                             <label>Number of annotations</label>
                             <input type="number" name="annotations_count" id="annotationsCount" class="form-control" value="{{ $pricePlan->annotations_count }}" />
                         </div>
+                    <div class="form-group">
+                        <label>Ga Account Count</label>
+                        <input type="number" name="ga_account_count" id="ga_account_count" value="{{old('ga_account_count',$pricePlan->ga_account_count)}}" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>User per ga-account count?</label>
+                        <input type="number" name="user_per_ga_account_count" id="user_per_ga_account_count" value="{{'user_per_ga_account_count',$pricePlan->user_per_ga_account_count}}" class="form-control" />
+                    </div>
                         <div class="form-group">
                             <label>Has manual add?</label>
                             <input type="checkbox" name="has_manual_add" id="hasManualAdd" class="form-control" @if($pricePlan->has_manual_add) checked @endif />

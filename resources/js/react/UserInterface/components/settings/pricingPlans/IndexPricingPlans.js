@@ -73,25 +73,39 @@ export default class indexPricingPlans extends React.Component {
                                             <h6 className="card-price text-center">${pricePlan.price}<span className="period">/month</span></h6>
                                             <hr />
                                             <ul className="fa-ul">
+
+                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>Chrome extension</li>
+
+                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>{pricePlan.ga_account_count?pricePlan.ga_account_count:'Unlimted'} GA account</li>
+
+                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>{pricePlan.user_per_ga_account_count?pricePlan.user_per_ga_account_count:'Unlimited'} user per GA account</li>
+
                                                 {
                                                     pricePlan.has_manual_add ?
                                                         <li><span className="fa-li"><i className="fa fa-check"></i></span>Manual Add</li>
-                                                        :
-                                                        <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>Manual Add</li>
+                                                        :''
                                                 }
 
                                                 {
                                                     pricePlan.has_csv_upload ?
                                                         <li><span className="fa-li"><i className="fa fa-check"></i></span>CSV Upload</li>
-                                                        :
-                                                        <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>CSV Upload</li>
+                                                        :''
                                                 }
 
                                                 {
                                                     pricePlan.has_api ?
                                                         <li><span className="fa-li"><i className="fa fa-check"></i></span>Annotations API</li>
-                                                        :
-                                                        <li className="text-white"><span className="fa-li"><i className="fa fa-times"></i></span>Annotations API</li>
+                                                        :''
+                                                }
+                                                {
+                                                    pricePlan.has_integrations ?
+                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>Integrations</li>
+                                                        :''
+                                                }
+                                                {
+                                                    pricePlan.has_data_sources ?
+                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>Data sources</li>
+                                                        :''
                                                 }
                                             </ul>
 
