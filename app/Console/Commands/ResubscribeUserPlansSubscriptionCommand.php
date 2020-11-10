@@ -3,10 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Models\PricePlan;
+use App\Models\PricePlanSubscription;
 use App\Models\User;
 use App\Services\BlueSnapService;
 use Illuminate\Console\Command;
-use App\Models\PricePlanSubscription;
 
 class ResubscribeUserPlansSubscriptionCommand extends Command
 {
@@ -35,8 +35,6 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
     {
         parent::__construct();
 
-        $this->freePlanId = PricePlan::where('price', 0)->first()->id;
-        $this->nextExpiryDate = new \DateTime("+1 month");
     }
 
     /**
@@ -46,6 +44,11 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
      */
     public function handle()
     {
+        $freePlan = PricePlan::where('price', 0)->first();
+        if ($freePlan) {
+            $this->freePlanId = $freePlan->id;
+        }
+        $this->nextExpiryDate = new \DateTime("+1 month");
 
         $this->resubscribeFreePlanUsers();
         $this->resubscribePaidPlanUsers();
