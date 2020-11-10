@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class PaymentDetail extends Model
 {
@@ -13,7 +14,6 @@ class PaymentDetail extends Model
         'card_number',
         'expiry_month',
         'expiry_year',
-
         'first_name',
         'last_name',
         'billing_address',
@@ -27,5 +27,8 @@ class PaymentDetail extends Model
     public function scopeLastCreated($query)
     {
         return $query->orderBy('created_at', 'DESC')->first();
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

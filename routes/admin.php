@@ -4,3 +4,4 @@ Route::resource('price-plan', App\Http\Controllers\Admin\PricePlanController::cl
 Route::resource('user', App\Http\Controllers\Admin\UserController::class)->except(['create', 'store']);
 
 Route::resource('coupon',App\Http\Controllers\Admin\CouponController::class);
+Route::get('/payment-history',[App\Http\Controllers\Admin\PaymentDetailsController::class,'paymentHistory'])->name('payment-history');
