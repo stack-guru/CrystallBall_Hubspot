@@ -31,18 +31,29 @@ export default class indexPricingPlans extends React.Component {
 
     freeSubscribe(id) {
         this.setState({ isBusy: true });
-        HttpClient.post('/settings/price-plan/payment', { 'price_plan_id': id })
-            .then(response => {
-                swal("Plan downgraded", "Plan downgraded successfully.", "success").then(value => {
-                    window.location = "/annotation"
-                })
-            }, (err) => {
-                console.log(err);
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-                console.log(err)
-                this.setState({ isBusy: false, errors: err });
-            });
+        swal({
+            title: "Downgrade!",
+            text: "Do you really want to downgrade your current plan after current billing cycle?",
+            icon: "warning",
+            buttons: ['No', 'Yes'],
+            dangerMode: true,
+        }).then(value => {
+            if (value) {
+                HttpClient.post('/settings/price-plan/payment', { 'price_plan_id': id })
+                    .then(response => {
+                        swal("Plan downgraded", "Plan downgraded successfully.", "success").then(value => {
+                            window.location = "/annotation"
+                        })
+                    }, (err) => {
+                        console.log(err);
+                        this.setState({ isBusy: false, errors: (err.response).data });
+                    }).catch(err => {
+                        console.log(err)
+                        this.setState({ isBusy: false, errors: err });
+                    });
+
+            }
+        })
 
     }
 
@@ -76,36 +87,36 @@ export default class indexPricingPlans extends React.Component {
 
                                                 <li><span className="fa-li"><i className="fa fa-check"></i></span>Chrome extension</li>
 
-                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>{pricePlan.ga_account_count?pricePlan.ga_account_count:'Unlimted'} GA account</li>
+                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>{pricePlan.ga_account_count ? pricePlan.ga_account_count : 'Unlimted'} GA account</li>
 
-                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>{pricePlan.user_per_ga_account_count?pricePlan.user_per_ga_account_count:'Unlimited'} user per GA account</li>
+                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>{pricePlan.user_per_ga_account_count ? pricePlan.user_per_ga_account_count : 'Unlimited'} user per GA account</li>
 
                                                 {
                                                     pricePlan.has_manual_add ?
                                                         <li><span className="fa-li"><i className="fa fa-check"></i></span>Manual Add</li>
-                                                        :''
+                                                        : ''
                                                 }
 
                                                 {
                                                     pricePlan.has_csv_upload ?
                                                         <li><span className="fa-li"><i className="fa fa-check"></i></span>CSV Upload</li>
-                                                        :''
+                                                        : ''
                                                 }
 
                                                 {
                                                     pricePlan.has_api ?
                                                         <li><span className="fa-li"><i className="fa fa-check"></i></span>Annotations API</li>
-                                                        :''
+                                                        : ''
                                                 }
                                                 {
                                                     pricePlan.has_integrations ?
                                                         <li><span className="fa-li"><i className="fa fa-check"></i></span>Integrations</li>
-                                                        :''
+                                                        : ''
                                                 }
                                                 {
                                                     pricePlan.has_data_sources ?
                                                         <li><span className="fa-li"><i className="fa fa-check"></i></span>Data sources</li>
-                                                        :''
+                                                        : ''
                                                 }
                                             </ul>
 
