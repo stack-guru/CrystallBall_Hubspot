@@ -110,10 +110,11 @@ class PaymentController extends Controller
             $pricePlanSubscription->payment_detail_id = $paymentDetail->id;
             $pricePlanSubscription->save();
 
+            $user->price_plan_id = $pricePlan->id;
+            $user->price_plan_expiry_date = new \DateTime("+1 month");
+        } else {
+            $user->is_billing_enabled = false;
         }
-
-        $user->price_plan_id = $pricePlan->id;
-        $user->price_plan_expiry_date = new \DateTime("+1 month");
         $user->save();
 
         return ['success' => true, 'transaction_id' => $transactionId];

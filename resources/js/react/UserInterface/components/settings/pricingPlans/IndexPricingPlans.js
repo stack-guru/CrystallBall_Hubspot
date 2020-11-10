@@ -41,7 +41,7 @@ export default class indexPricingPlans extends React.Component {
             if (value) {
                 HttpClient.post('/settings/price-plan/payment', { 'price_plan_id': id })
                     .then(response => {
-                        swal("Plan downgraded", "Plan downgraded successfully.", "success").then(value => {
+                        swal("Plan downgraded", "Your account will be automatically downgraded to $0 plan on next billing cycle.", "success").then(value => {
                             window.location = "/annotation"
                         })
                     }, (err) => {
@@ -64,6 +64,14 @@ export default class indexPricingPlans extends React.Component {
             <div className=" bg-white component-wrapper">
                 <section className="pricing bg-white ">
                     <div className="container">
+                        {
+                            this.props.user.price_plan.price != 0 && this.props.user.is_billing_enabled == 0 ?
+                                <div className="alert alert-info" role="alert">
+                                    <h4 className="alert-heading"><i className="icon fa fa-info"></i> Downgrade scheduled!</h4>
+                                    <p>Your account will be automatically downgraded to $0 plan on next billing cycle.</p>
+                                </div>
+                                : null
+                        }
                         <div className="row ml-0 mr-0 p-2">
                             <div className="col-12 text-center">
                                 <h2 className="gaa-title">Choose Your Plan</h2>
@@ -120,7 +128,7 @@ export default class indexPricingPlans extends React.Component {
                                                 }
                                             </ul>
 
-                                            {this.props.currentPricePlan.id == pricePlan.id ?
+                                            {this.props.user.price_plan.id == pricePlan.id ?
                                                 <span value="subscribed" className="btn btn-block btn-success text-uppercase">Subscribed</span>
                                                 :
                                                 pricePlan.price == 0 ?

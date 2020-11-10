@@ -15,6 +15,10 @@ class PricePlan extends Model
         'ga_account_count', 'user_per_ga_account_count'
     ];
 
+    protected $hidden = [
+        'is_enabled', 'created_at', 'updated_at'
+    ];
+
     public function users()
     {
         return $this->hasMany('App\Models\User');
