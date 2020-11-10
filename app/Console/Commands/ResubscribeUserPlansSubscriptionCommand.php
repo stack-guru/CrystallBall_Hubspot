@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\AutoPaymentLog;
 use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
 use App\Models\User;
@@ -15,7 +16,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'db:resubscribe-user-plans';
+    protected $signature = 'gaa:resubscribe-user-plans';
 
     private $freePlanId;
     private $nextExpiryDate;
@@ -82,27 +83,15 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                 ];
                 $responseArr = $blueSnapService->createTransaction($lastPaymentDetail->charged_price, $card, $lastPaymentDetail->bluesnap_vaulted_shopper_id);
                 if ($responseArr['success'] == false) {
-                    print $responseArr['message'] . "\n";
-                    print "Payment transaction failed. Downgrading to free plan.\n";
-                    exit;
-                    $user->price_plan_id = $this->freePlanId;
-                    $user->price_plan_expiry_date = $this->nextExpiryDate;
-                    $user->save();
+                    $this->addTransactionToLog($user->id, $user->price_plan_id, null, $lastPaymentDetail->id, $lastPaymentDetail->card_number, $responseArr['message'], $lastPaymentDetail->charged_price, false);
+                    $this->subscribeUserToPlan($user, $this->freePlanId);
                 } else {
-                    $pricePlanSubscription = new PricePlanSubscription;
-                    $pricePlanSubscription->transaction_id = $responseArr['transactionId'];
-                    $pricePlanSubscription->expires_at = new \DateTime("+1 month");
-                    $pricePlanSubscription->user_id = $user->id;
-                    $pricePlanSubscription->payment_detail_id = $lastPaymentDetail->id;
-                    $pricePlanSubscription->save();
-                    $user->price_plan_expiry_date = $this->nextExpiryDate;
-                    $user->save();
+                    $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id);
+                    $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $lastPaymentDetail->id, $lastPaymentDetail->card_number, null, $lastPaymentDetail->charged_price, true);
+                    $this->subscribeUserToPlan($user, $user->price_plan_id);
                 }
             } else {
-                print "Unable to find payment details.\n";
-                $user->price_plan_id = $this->freePlanId;
-                $user->price_plan_expiry_date = $this->nextExpiryDate;
-                $user->save();
+                $this->subscribeUserToPlan($user, $this->freePlanId);
             }
         }
         // update([
@@ -122,5 +111,38 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             ]);
 
         print "$updateCount Users have been resubscribed to their free plans.\n";
+    }
+
+    private function addPricePlanSubscription($transactionId, $userId, $paymentDetailId, $pricePlanId)
+    {
+        $pricePlanSubscription = new PricePlanSubscription;
+        $pricePlanSubscription->transaction_id = $transactionId;
+        $pricePlanSubscription->expires_at = new \DateTime("+1 month");
+        $pricePlanSubscription->user_id = $userId;
+        $pricePlanSubscription->payment_detail_id = $paymentDetailId;
+        $pricePlanSubscription->price_plan_id = $pricePlanId;
+        $pricePlanSubscription->save();
+        return $pricePlanSubscription->id;
+    }
+
+    private function addTransactionToLog($userId, $pricePlanId, $pricePlanSubscriptionId, $paymentDetailId, $cardNumber, $message, $chargedPrice, $wasSuccessful)
+    {
+        $autoPaymentLog = new AutoPaymentLog;
+        $autoPaymentLog->user_id = $userId;
+        $autoPaymentLog->price_plan_id = $pricePlanId;
+        $autoPaymentLog->price_plan_subscription_id = $pricePlanSubscriptionId;
+        $autoPaymentLog->payment_detail_id = $paymentDetailId;
+        $autoPaymentLog->card_number = $cardNumber;
+        $autoPaymentLog->transaction_message = $message;
+        $autoPaymentLog->charged_price = $chargedPrice;
+        $autoPaymentLog->was_successful = $wasSuccessful;
+        $autoPaymentLog->save();
+    }
+
+    private function subscribeUserToPlan($user, $planId)
+    {
+        $user->price_plan_id = $planId;
+        $user->price_plan_expiry_date = $this->nextExpiryDate;
+        $user->save();
     }
 }
