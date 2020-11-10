@@ -26,7 +26,7 @@ export default class CreatePayment extends Component {
             errors: '',
             couponCode: '',
             taxPercent: 0,
-            cardType: 'card'
+            cardType: 'Card'
 
         }
         this.changeHandler = this.changeHandler.bind(this)
@@ -66,7 +66,7 @@ document.title="Payment"
 
     changeHandler(e) {
         if (e.target.name == "cardNumber") {
-            let cardType = CCDetector.getInfo(e.target.value, false, 'card').type;
+            let cardType = CCDetector.getInfo(e.target.value, false, 'Card').type;
             if (this.state.cardType !== cardType) this.setState({ cardType: cardType });
             let cn = e.target.value;
             let x = cn.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, "$1-$2-$3-$4")
