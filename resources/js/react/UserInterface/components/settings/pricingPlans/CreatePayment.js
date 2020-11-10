@@ -117,7 +117,7 @@ document.title="Payment"
             errors["cardNumber"] = "Please enter your card number.";
 
         }
-        if (cardNumber.length < 16) {
+        if (cardNumber.length < 12) {
             isValid = false;
             errors["cardNumber"] = "card number can't be less then 16 digits.";
         }
@@ -301,6 +301,7 @@ document.title="Payment"
                                                 <div className="form-group ">
                                                     <label htmlFor="expirationMonth">Expiry Month</label>
                                                     <select name="expirationMonth"  onChange={this.changeHandler} id="expirationMonth" className="form-control">
+                                                       <option value="null">Select Month</option>
                                                         <option value="1">01</option>
                                                         <option value="2">02</option>
                                                         <option value="3">03</option>
@@ -322,8 +323,9 @@ document.title="Payment"
                                             </div>
                                             <div className="col-4 p-2">
                                                 <div className="form-group ">
-                                                    <label htmlFor="expirationYear">Year</label>
+                                                    <label htmlFor="expirationYear">Expiry Year</label>
                                                     <select name="expirationYear" id="expirationYear" onChange={this.changeHandler} className="form-control">
+                                                        <option value="null">Select Year</option>
                                                         {
                                                             expYears.map(year => (
                                                                 <option value={year} key={year}>{year}</option>

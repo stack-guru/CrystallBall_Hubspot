@@ -13,5 +13,9 @@ class PricePlanSubscription extends Model
         'user_id', 'expires_at', 'coupon_id',
         'transaction_id', 'charged_price'
     ];
-    
+
+    public function paymentDetail(){
+        return $this->belongsTo(PaymentDetail::class);
+    }
+
 }

@@ -31,6 +31,7 @@ export default class PaymentHistory extends React.Component {
 
     render() {
         const pricePlanSubscriptions = this.state.pricePlanSubscriptions;
+
         return (
             <div className="bg-white component-wrapper">
                 <h3>Payment History</h3>
@@ -51,10 +52,9 @@ export default class PaymentHistory extends React.Component {
                                 <tr key={pricePlanSubscription.id}>
                                     <td>{pricePlanSubscription.id}</td>
                                     <td>{pricePlanSubscription.transaction_id}</td>
-                                    <td>amount </td>
+                                    <td>${pricePlanSubscription.payment_detail.charged_price}</td>
                                     <td>{moment(pricePlanSubscription.created_at).format("YYYY-MM-DD")}</td>
-                                    <td>digits</td>
-
+                                    <td>{pricePlanSubscription.payment_detail.card_number}</td>
                                 </tr>
                             ))
                         }
