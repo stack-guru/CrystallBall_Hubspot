@@ -2,12 +2,16 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\AdminFailedPaymentTransactionMail;
+use App\Mail\UserFailedPaymentTransactionMail;
 use App\Models\AutoPaymentLog;
 use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
 use App\Models\User;
 use App\Services\BlueSnapService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Admin;
 
 class ResubscribeUserPlansSubscriptionCommand extends Command
 {
@@ -20,6 +24,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
     private $freePlanId;
     private $nextExpiryDate;
+    private $admin;
     /**
      * The console command description.
      *
@@ -48,6 +53,10 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $freePlan = PricePlan::where('price', 0)->first();
         if ($freePlan) {
             $this->freePlanId = $freePlan->id;
+        }
+        $admin = Admin::first();
+        if ($admin) {
+            $this->admin = $admin;
         }
         $this->nextExpiryDate = new \DateTime("+1 month");
 
@@ -85,6 +94,8 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                 if ($responseArr['success'] == false) {
                     $this->addTransactionToLog($user->id, $user->price_plan_id, null, $lastPaymentDetail->id, $lastPaymentDetail->card_number, $responseArr['message'], $lastPaymentDetail->charged_price, false);
                     $this->subscribeUserToPlan($user, $this->freePlanId);
+                    Mail::to($this->admin)->send(new AdminFailedPaymentTransactionMail($lastPaymentDetail, $this->admin));
+                    Mail::to($user)->send(new UserFailedPaymentTransactionMail($lastPaymentDetail));
                 } else {
                     $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id);
                     $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $lastPaymentDetail->id, $lastPaymentDetail->card_number, null, $lastPaymentDetail->charged_price, true);

@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
+use App\Models\PricePlanSubscription;
 
 class PaymentDetail extends Model
 {
@@ -28,10 +29,13 @@ class PaymentDetail extends Model
     {
         return $query->orderBy('created_at', 'DESC')->first();
     }
-    public function user(){
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    public function pricePlanSubscription(){
+    public function pricePlanSubscription()
+    {
         return $this->hasMany(PricePlanSubscription::class);
     }
 }

@@ -18,8 +18,8 @@ class CreateAutoPaymentLogsTable extends Migration
 
             $table->foreignId("user_id")->constrained()->required();
             $table->foreignId("payment_detail_id")->constrained()->required();
-            $table->foreignId("price_plan_subscription_id")->constrained()->nullable();
-            $table->foreignId("price_plan_id")->constrained()->nullable();
+            $table->foreignId("price_plan_subscription_id")->nullable()->constrained();
+            $table->foreignId("price_plan_id")->nullable()->constrained();
             
             $table->string('card_number')->nullable();
             $table->mediumText('transaction_message')->nullable()->default(null);
