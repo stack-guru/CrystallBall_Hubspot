@@ -141,12 +141,18 @@
 .logo-text {
     font-size: 1rem;
 }
+.img-col-wrap{
+    height: 115px;
+    position: relative;
+}
 .secure-img{
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
     white-space: unset;
+    height: 100%;
 }
 .secure-img img{
     width:68px;
