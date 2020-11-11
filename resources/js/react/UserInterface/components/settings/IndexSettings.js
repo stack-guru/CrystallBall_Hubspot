@@ -7,6 +7,9 @@ export default class indexSettings extends React.Component {
         super(props);
 
     }
+componentDidMount() {
+        document.title='Settings';
+}
 
     render() {
         return (
