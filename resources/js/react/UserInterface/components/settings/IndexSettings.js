@@ -23,7 +23,7 @@ componentDidMount() {
                         </div>
 
                         <div className="profile bg-white my-3  user-setting-box box-shadow rounded">
-                            <h4 className="border-bottom "><b>Profile</b></h4>
+                            <h4 className="border-bottom gaa-text-primary"><b>Profile</b></h4>
                             <ul className='list-unstyled list-group mt-2 ml-4'>
                                 <li className='nav-item border-bottom'>
                                     <Link to="/">
@@ -39,7 +39,7 @@ componentDidMount() {
                         </div>
 
                         <div className="plan bg-white my-3 user-setting-box  box-shadow rounded">
-                            <h4 className="border-bottom "><b>Plan</b></h4>
+                            <h4 className="border-bottom gaa-text-primary"><b>Plan</b></h4>
                             <ul className='list-unstyled list-group mt-2 ml-4'>
                                 <li className='nav-item border-bottom'>
                                     <Link to="/settings/price-plans">
@@ -50,7 +50,7 @@ componentDidMount() {
                         </div>
 
                         <div className="payments bg-white my-3 user-setting-box  box-shadow rounded">
-                            <h4 className="border-bottom "><b>Payments</b></h4>
+                            <h4 className="border-bottom gaa-text-primary"><b>Payments</b></h4>
                             <ul className='list-unstyled list-group mt-2 ml-4'>
                                 <li className='nav-item border-bottom'>
                                     <Link to="/settings/payment-history" >
@@ -61,7 +61,7 @@ componentDidMount() {
                         </div>
 
                         <div className="developers bg-white my-3 user-setting-box  box-shadow rounded">
-                            <h4 className="border-bottom "><b>Developers</b></h4>
+                            <h4 className="border-bottom gaa-text-primary"><b>Developers</b></h4>
                             <ul className='list-unstyled list-group mt-2 ml-4'>
                                 <li className='nav-item border-bottom'>
                                     <a href="/documentation">
