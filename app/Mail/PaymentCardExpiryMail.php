@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -11,14 +10,18 @@ class PaymentCardExpiryMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $expiryYear, $expiryMonth, $cardNumber, $username;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($expiryYear, $expiryMonth, $cardNumber)
+    public function __construct($expiryYear, $expiryMonth, $cardNumber, $username)
     {
-        //
+        $this->expiryMonth = $expiryMonth;
+        $this->expiryYear = $expiryYear;
+        $this->cardNumber = $cardNumber;
+        $this->username = $username;
     }
 
     /**
@@ -28,6 +31,6 @@ class PaymentCardExpiryMail extends Mailable
      */
     public function build()
     {
-        // return $this->view('view.name');
+        return $this->view('mails/user/cardExpiry');
     }
 }

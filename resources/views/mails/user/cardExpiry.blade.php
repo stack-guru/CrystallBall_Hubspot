@@ -36,8 +36,8 @@
                             <div class="card-header">Card is about to expire</div>
 
                             <div class="card-body">
-                                <h3>Hi, {{ $user->name }}!</h3>
-                                <p>Your card is about to expire at {{ $paymentDetail->expiry_month }}/{{ $paymentDetail->expiry_year }}.</p>
+                                <h3>Hi, {{ $username }}!</h3>
+                                <p>Your card is about to expire at {{ $expiryMonth }}/{{ $expiryYear }}.</p>
                                 <p>Kindly renew your card and register it with us.</p>
                                 <p>Please login to your dashboard for more details.</p>
                             </div>

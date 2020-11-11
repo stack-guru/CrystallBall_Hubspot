@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Console\Command;
-use App\Mail\PaymentCardExpiryMail;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\PaymentCardExpiryMail;
 
 class SendCardExpiryEmail extends Command
 {
@@ -40,9 +41,14 @@ class SendCardExpiryEmail extends Command
      */
     public function handle()
     {
-        $expiryMonth;
-        $expiryYear;
-        $rows = DB::statement("
+        $expiryMonth = Carbon::now()->format('m') + 1;
+        $expiryYear = Carbon::now()->format('Y');
+        if ($expiryMonth == 13) {
+            $expiryMonth = 1;
+            $expiryYear++;
+        }
+
+        $rows = DB::select("
             SELECT
                 users.*,
                 payment_details.expiry_month,
@@ -57,10 +63,11 @@ class SendCardExpiryEmail extends Command
                 AND payment_details.expiry_year = $expiryYear
         ");
 
-        foreach($rows as $row){
-            Mail::to($user)->send(new PaymentCardExpiryMail($row->expiry_year, $row->expiry_month, $row->card_number));
+        foreach ($rows as $row) {
+            Mail::to($row->email)->send(new PaymentCardExpiryMail($row->expiry_year, $row->expiry_month, $row->card_number, $row->name));
         }
 
+        print count($rows) . " users have been notified.\n";
         return 0;
     }
 }
