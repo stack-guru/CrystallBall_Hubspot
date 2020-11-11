@@ -2,7 +2,7 @@ import React from 'react';
 
 import HttpClient from "../../../utils/HttpClient";
 import { Link, Redirect } from 'react-router-dom';
-
+require("../../../Main.css");
 
 export default class indexPricingPlans extends React.Component {
 
@@ -129,15 +129,15 @@ export default class indexPricingPlans extends React.Component {
                                             </ul>
 
                                             {this.props.user.price_plan.id == pricePlan.id ?
-                                                <span value="subscribed" className="btn btn-block btn-success text-uppercase">Subscribed</span>
+                                                <span value="subscribed" className="btn btn-block btn-success text-uppercase mt-auto">Subscribed</span>
                                                 :
                                                 pricePlan.price == 0 ?
-                                                    <button className="btn btn-block btn-primary text-uppercase " onClick={() => { this.freeSubscribe(pricePlan.id) }} >Subscribe</button>
+                                                    <button className="btn btn-block btn-primary text-uppercase mt-auto " onClick={() => { this.freeSubscribe(pricePlan.id) }} >Subscribe</button>
                                                     :
                                                     pricePlan.price < 0 ?
-                                                        <button className="btn btn-block btn-primary text-uppercase " type="button" >Coming Soon</button>
+                                                        <button className="btn btn-block btn-primary text-uppercase mt-auto " type="button" >Coming Soon</button>
                                                         :
-                                                        <Link to={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn btn-block btn-primary text-uppercase">Subscribe</Link>
+                                                        <Link to={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn btn-block btn-primary text-uppercase mt-auto">Subscribe</Link>
                                             }
                                         </div>
                                     </div>
