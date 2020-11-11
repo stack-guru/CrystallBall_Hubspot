@@ -32,12 +32,13 @@ export default class CreatePayment extends Component {
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
         this.setDefaultState = this.setDefaultState.bind(this)
+        this.cancelSubscription = this.cancelSubscription.bind(this)
         this.applyCoupon = this.applyCoupon.bind(this)
 
     }
 
     componentDidMount() {
-document.title="Payment"
+        document.title = "Payment"
         this.setState({ isBusy: true });
         var urlSearchParams = new URLSearchParams(window.location.search);
         HttpClient.get('/price-plan/' + urlSearchParams.get('price_plan_id'))
@@ -86,6 +87,24 @@ document.title="Payment"
             HttpClient.post('/settings/price-plan/payment', { ...this.state.paymentDetails, 'price_plan_id': this.state.pricePlan.id })
                 .then(response => {
                     this.setState({ isBusy: false, errors: undefined });
+
+                    fbq('track', 'Purchase', { value: 0.00, currency: 'USD' });
+
+
+                    gtag('event', 'conversion', {
+                        'send_to': 'AW-645973826/pJ_PCIrI0egBEMKOg7QC',
+                        'value': 1.0,
+                        'currency': 'USD',
+                        'transaction_id': ''
+                    });
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'Purchase',
+                        eventAction: 'Purchase',
+                        eventLabel: this.state.pricePlan.name,
+                        eventValue: this.state.pricePlan.price
+                    });
+
                     swal("Plan purchased", "New plan purchased.", "success").then(value => {
                         window.location = "/annotation"
                     });
@@ -192,6 +211,29 @@ document.title="Payment"
             });
     }
 
+    cancelSubscription() {
+
+        swal({
+            title: "Cancel Purchase?",
+            text: "Do you really want to cancel this subscription purchase?",
+            icon: "warning",
+            buttons: ['No', 'Yes'],
+            dangerMode: true,
+        }).then(value => {
+            if (value) {
+                fbq('track', 'Cancellation');
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'Cancellation',
+                    eventAction: 'Cancellation',
+                    eventLabel: this.state.pricePlan.name,
+                    eventValue: this.state.pricePlan.price
+                });
+                this.setState({ redirectTo: '/annotation' });
+            }
+        })
+    }
+
     render() {
         if (!this.state.pricePlan) return <h5>Loading...</h5>;
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
@@ -225,7 +267,7 @@ document.title="Payment"
                                         <h4 className="gaa-text-primary">Billing Information</h4>
 
                                         <div className="form-group floating-labels">
-                                            <input type="text" className="form-control " placeholder="Billing address"  name="billing_address"
+                                            <input type="text" className="form-control " placeholder="Billing address" name="billing_address"
                                                 id="billingAddress" onChange={this.changeHandler} value={this.state.paymentDetails.billing_address} />
                                             <label htmlFor="">Billing Address</label>
                                         </div>
@@ -239,14 +281,14 @@ document.title="Payment"
                                             <div className="col-4">
                                                 <div className="form-group floating-labels">
                                                     <input type="text" className="form-control" placeholder="City" name="city"
-                                                           id="city" onChange={this.changeHandler} value={this.state.paymentDetails.city} />
+                                                        id="city" onChange={this.changeHandler} value={this.state.paymentDetails.city} />
                                                     <label htmlFor="">City</label>
                                                 </div>
                                             </div>
                                             <div className="col-4 pr-0">
                                                 <div className="form-group floating-labels">
                                                     <input type="text" className="form-control" placeholder="Zip" name="zip_code"
-                                                           id="zipCard" onChange={this.changeHandler} value={this.state.paymentDetails.zip_code} />
+                                                        id="zipCard" onChange={this.changeHandler} value={this.state.paymentDetails.zip_code} />
                                                     <label htmlFor="">Zip Code</label>
                                                 </div>
                                             </div>
@@ -263,7 +305,7 @@ document.title="Payment"
                                             <div className="row ml-0 mr-0">
                                                 <div className="col-6 p-3">
                                                     <div className="form-group floating-labels">
-                                                        <input type="text" className="form-control" placeholder="First Name"  name="first_name" id="first_name" onChange={this.changeHandler} value={this.state.paymentDetails.first_name} />
+                                                        <input type="text" className="form-control" placeholder="First Name" name="first_name" id="first_name" onChange={this.changeHandler} value={this.state.paymentDetails.first_name} />
                                                         <label htmlFor="first_name">First Name</label>
                                                     </div>
                                                 </div>
@@ -300,8 +342,8 @@ document.title="Payment"
                                             <div className="col-4 pl-0">
                                                 <div className="form-group ">
                                                     <label htmlFor="expirationMonth">Expiry Month</label>
-                                                    <select name="expirationMonth"  onChange={this.changeHandler} id="expirationMonth" className="form-control">
-                                                       <option value="null">Select Month</option>
+                                                    <select name="expirationMonth" onChange={this.changeHandler} id="expirationMonth" className="form-control">
+                                                        <option value="null">Select Month</option>
                                                         <option value="1">01</option>
                                                         <option value="2">02</option>
                                                         <option value="3">03</option>
@@ -342,7 +384,7 @@ document.title="Payment"
                                             <div className="col-4 pr-0">
                                                 <div className="form-group  floating-labels">
 
-                                                    <input type="text" className="form-control"  placeholder="CVV" onChange={this.changeHandler} id="securityCode" name="securityCode"  />
+                                                    <input type="text" className="form-control" placeholder="CVV" onChange={this.changeHandler} id="securityCode" name="securityCode" />
                                                     {
                                                         validation.securityCode ?
                                                             <span className="text-danger">{validation.securityCode}</span> : ''
@@ -365,16 +407,16 @@ document.title="Payment"
                                                         <div className="col-6 text-right"><b>{this.state.pricePlan.name}</b></div>
                                                     </div>
 
-                                                    <br/>
+                                                    <br />
                                                     <div className="row">
                                                         <div className="col-6">Price</div>
                                                         <div className="col-6 text-right">${this.state.pricePlan.price}</div>
                                                     </div>
 
-                                                            <div className="row">
-                                                                <div className="col-6">Tax ({this.state.taxPercent}%)</div>
-                                                                <div className="col-6 text-right">${taxAmount}</div>
-                                                            </div>
+                                                    <div className="row">
+                                                        <div className="col-6">Tax ({this.state.taxPercent}%)</div>
+                                                        <div className="col-6 text-right">${taxAmount}</div>
+                                                    </div>
 
                                                     <hr />
                                                     {
@@ -392,7 +434,7 @@ document.title="Payment"
                                                         <div className="col-6"> <b>Total</b></div>
                                                         <div className="col-6 text-right"><b>${totalPrice}</b></div>
                                                     </div>
-                                                            <br/>
+                                                    <br />
                                                     <div className="row">
                                                         <div className="col-6">Subscription start at</div>
                                                         <div className="col-6 text-right">{moment().format("YYYY-MM-DD")}</div>
@@ -416,7 +458,7 @@ document.title="Payment"
                                                     <div className="input-group-prepend">
                                                         <span className="input-group-text">Coupon</span>
                                                     </div>
-                                                    <input name="couponCode" type="text" className="form-control"  value={this.state.couponCode} onChange={e => { this.setState({ [e.target.name]: e.target.value }); }} />
+                                                    <input name="couponCode" type="text" className="form-control" value={this.state.couponCode} onChange={e => { this.setState({ [e.target.name]: e.target.value }); }} />
                                                     <div className="input-group-append">
                                                         <button className="btn btn-outline-secondary" type="button" onClick={this.applyCoupon}>Apply</button>
                                                     </div>
@@ -434,19 +476,20 @@ document.title="Payment"
                                                     }
 
                                                 </button>
+                                                <button type="button" className={"btn btn-default btn-md "} onClick={this.cancelSubscription}>Cancel</button>
                                             </div>
                                         </div>
                                         <div className="row ml-0 mr-0 mt-4 d-flex flex-row justify-content-center align-items-center">
-                                           <div className="img-col-wrap">
+                                            <div className="img-col-wrap">
                                                 <div className="col-12 text-right p-5 secure-img">
-                                                    <img src="/images/masterCard.jpg" className="img-fluid " alt="mastercard image"/>
-                                                    <img src="/images/Visa.png" className="img-fluid " alt="visa card image"/>
-                                                    <img src="/images/PS.png"  className="img-fluid " alt="ps image"/>
-                                                    <img src="/images/PSD2.png"  className="img-fluid " alt="psd2 image"/>
-                                                    <img src="/images/safeKey.png"  className="img-fluid " alt="safekey image"/>
-                                                    <img src="/images/pciDss.png" className="img-fluid " alt="pciDss image"/>
+                                                    <img src="/images/masterCard.jpg" className="img-fluid " alt="mastercard image" />
+                                                    <img src="/images/Visa.png" className="img-fluid " alt="visa card image" />
+                                                    <img src="/images/PS.png" className="img-fluid " alt="ps image" />
+                                                    <img src="/images/PSD2.png" className="img-fluid " alt="psd2 image" />
+                                                    <img src="/images/safeKey.png" className="img-fluid " alt="safekey image" />
+                                                    <img src="/images/pciDss.png" className="img-fluid " alt="pciDss image" />
                                                 </div>
-                                           </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
