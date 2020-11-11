@@ -2087,7 +2087,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n.disabled-link {\n    opacity: 0.3;\n    pointer-events: none;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-bg-primary{\n    background: #456287;\n}\n.gaa-text-primary{\n    color:#456287;\n}\n\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n/*\n.sidebar-menu li a:hover {\n    opacity: .6!important;\n} */\n\n/*pricing css start*/\n/*section.pricing {*/\n/*    background: #007bff;*/\n/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/\n/*}*/\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}\n\n.gaa-text-danger {\n    color: #bf0c18 !important;\n}\n\n.pos-ab-l-50-t-0 {\n    position: absolute;\n    left: 50%;\n    top: 0px;\n}\n\n.gaa-btn-danger {\n    color: #fff;\n    background-color: #bf0c18;\n    border-color: #bf0c18;\n}\n\n.logo-margin {\n    margin-left: 19%;\n    margin-top: 15%;\n}\n\n.logo-text {\n    font-size: 1rem;\n}\n.img-col-wrap{\n    height: 115px;\n    position: relative;\n}\n.secure-img{\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: space-between;\n    align-items: center;\n    white-space: unset;\n    height: 100%;\n}\n.secure-img img{\n    width:68px;\n    height: 34px;\n    margin:5px;\n}\n\n.form-group{\n    transition: all .3s;\n    margin-bottom:0px!important;\n}\n.floating-labels{\n    position :relative;\n    padding-top:29px;\n\n}\n.floating-labels > label{\n   transform:translate(1em ,-2em);\n    transform-origin:0 0;\n    transition: all .3s;\n    z-index: -1;\n}\n.floating-labels > input::placeholder{\n    color: transparent;\n}\n\n/* :blank*/\n.floating-labels > input:focus + label ,\n.floating-labels > input:not(:placeholder-shown) + label\n{\n  transform:translateY(-4.3em);\n}\n\n.seperator > [class*=\"col-\"]:nth-child(n + 2)::after {\n    content: \"\";\n    background-color: rgba(0,0,0,.0625);\n    position: absolute;\n    top: 0;\n    bottom:0;\n    left:0px;\n    width: 1px;\n    height: 95%;\n}\n.payBtn{\n    width:100%;\n}\n.card{\n    min-height:545px;\nmax-height: 550px;\n    position :relative;\n}\n.card .card-body{\n    align-items: center;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n}\n\n", ""]);
+exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n.disabled-link {\n    opacity: 0.3;\n    pointer-events: none;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-bg-primary{\n    background: #456287;\n}\n.gaa-text-primary{\n    color:#456287;\n}\n\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n/*\n.sidebar-menu li a:hover {\n    opacity: .6!important;\n} */\n\n/*pricing css start*/\n/*section.pricing {*/\n/*    background: #007bff;*/\n/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/\n/*}*/\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}\n\n.gaa-text-danger {\n    color: #bf0c18 !important;\n}\n\n.pos-ab-l-50-t-0 {\n    position: absolute;\n    left: 50%;\n    top: 0px;\n}\n\n.gaa-btn-danger {\n    color: #fff;\n    background-color: #bf0c18;\n    border-color: #bf0c18;\n}\n\n.logo-margin {\n    margin-left: 19%;\n    margin-top: 15%;\n}\n\n.logo-text {\n    font-size: 1rem;\n}\n.img-col-wrap{\n    height: 115px;\n    position: relative;\n}\n.secure-img{\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: space-between;\n    align-items: center;\n    white-space: unset;\n    height: 100%;\n}\n.secure-img img{\n    width:68px;\n    height: 34px;\n    margin:5px;\n}\n\n.form-group{\n    transition: all .3s;\n    margin-bottom:0px!important;\n}\n.floating-labels{\n    position :relative;\n    padding-top:29px;\n\n}\n.floating-labels > label{\n   transform:translate(1em ,-2em);\n    transform-origin:0 0;\n    transition: all .3s;\n    z-index: -1;\n}\n.floating-labels > input::placeholder{\n    color: transparent;\n}\n\n/* :blank*/\n.floating-labels > input:focus + label ,\n.floating-labels > input:not(:placeholder-shown) + label\n{\n  transform:translateY(-4.3em);\n}\n\n.seperator > [class*=\"col-\"]:nth-child(n + 2)::after {\n    content: \"\";\n    background-color: rgba(0,0,0,.0625);\n    position: absolute;\n    top: 0;\n    bottom:0;\n    left:0px;\n    width: 1px;\n    height: 95%;\n}\n.payBtn{\n    width:100%;\n}\n.card{\n    min-height:545px;\nmax-height: 550px;\n    position :relative;\n}\n.card .card-body{\n    align-items: center;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n}\n.user-setting-head{\n    padding:1.2%;\n}\n.user-setting-box {\n    padding:1.5%\n}\n.box-shadow{\n   box-shadow:  0 0.25rem 0.75rem rgba(0, 0, 0, .05);\n}\n.lh-100 {\n    line-height: 1;\n}\n", ""]);
 
 // exports
 
@@ -41467,34 +41467,70 @@ var indexSettings = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "container-xl bg-white component-wrapper"
+        className: "container-xl  component-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row ml-0 mr-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, this.props.user.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Email: ", this.props.user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Price Plan: ", this.props.user.price_plan.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "list-unstyled list-group mt-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Profile")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "user-setting-head box-shadow gaa-bg-primary text-white  rounded"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "mb-0 lh-100"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, this.props.user.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Email: ", this.props.user.email)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Price Plan: ", this.props.user.price_plan.name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "profile bg-white my-3  user-setting-box box-shadow rounded"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        className: "border-bottom "
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Profile")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "list-unstyled list-group mt-2 ml-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-item border-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Edit profile"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "nav-link"
+      }, "Edit profile"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-item border-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/settings/change-password"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Change password"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "nav-link"
+      }, "Change password"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "plan bg-white my-3 user-setting-box  box-shadow rounded"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        className: "border-bottom "
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Plan")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "list-unstyled list-group mt-2 ml-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-item border-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/settings/price-plans"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Price Plans"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "nav-link"
+      }, "Price Plans"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "payments bg-white my-3 user-setting-box  box-shadow rounded"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        className: "border-bottom "
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Payments")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "list-unstyled list-group mt-2 ml-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-item border-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/settings/payment-history"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Payment History"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "nav-link"
+      }, "Payment History"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "developers bg-white my-3 user-setting-box  box-shadow rounded"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        className: "border-bottom "
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Developers")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "list-unstyled list-group mt-2 ml-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-item border-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "/documentation"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "API Documentation")))))));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "nav-link"
+      }, "API Documentation"))))))));
     }
   }]);
 
