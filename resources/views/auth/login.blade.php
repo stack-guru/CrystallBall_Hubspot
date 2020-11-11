@@ -3,7 +3,7 @@
 @section('page-title', 'Login')
 
 @section('content')
-    <form class="form-signin"method="POST" action="{{ route('login') }}">
+    <form class="form-signin" method="POST" action="{{ route('login') }}">
         @csrf
       <div class="text-center mb-4">
         <img class="mb-4" src="{{asset('images/company_logo.png')}}" alt="" width="72" height="72">
