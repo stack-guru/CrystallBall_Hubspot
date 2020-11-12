@@ -42,6 +42,16 @@ class Main extends React.Component {
                 this.setState({ user: response.data.user });
                 loader.classList.add("fadeOut")
 
+                if (response.data.user.last_login_at == null) {
+                    fbq('track', 'CompleteRegistration');
+                    gtag('event', 'conversion', { 'send_to': 'AW-645973826/wQD3CJnzvugBEMKOg7QC' });
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'SignUp',
+                        eventAction: 'SignUp',
+                        eventLabel: 'SignUp'
+                    });
+                }
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });

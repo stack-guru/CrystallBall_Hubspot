@@ -3,7 +3,7 @@
 @section('page-title', 'Register')
 
 @section('content')
-    <form class="form-signin" method="POST" action="{{ route('register') }}" onsubmit="registerFormSubmit">
+    <form class="form-signin" method="POST" action="{{ route('register') }}">
         @csrf
       <div class="text-center mb-4">
         <img class="mb-4" src="{{asset('images/company_logo.png')}}" alt="" width="72" height="72">
@@ -60,18 +60,4 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
       <a class="btn btn-lg btn-primary btn-block" href="{{ route('login') }}">Login</a>
     </form>
-<script>
-  function registerFormSubmit(e){
-
-    fbq('track', 'CompleteRegistration');
-    gtag('event', 'conversion', {'send_to': 'AW-645973826/wQD3CJnzvugBEMKOg7QC'});
-    ga('send', {
-      hitType: 'event',
-      eventCategory: 'SignUp',
-      eventAction: 'SignUp',
-      eventLabel: 'SignUp'
-    });
-
-  }
-</script>
 @endsection

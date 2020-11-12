@@ -47,11 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('settings/price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');
         Route::post('settings/price-plan/downGrade', [App\Http\Controllers\PaymentController::class, ''])->name('payment.check');
         Route::get('settings/price-plan-subscription',[App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
-        Route::get('user', function () {
-            $user = Auth::user();
-            $user->load('pricePlan');
-            return ['user' => $user];
-        });
+        Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
 
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);

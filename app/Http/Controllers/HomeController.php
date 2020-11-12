@@ -2,27 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Auth;
+use App\Models\User;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function uiUserShow()
     {
-        $this->middleware('auth');
+        $user = Auth::user();
+        $user->load('pricePlan');
+        if ($user->last_login_at == null) {
+            User::where('id', $user->id)
+                ->update([
+                    'last_login_at' => new \DateTime,
+                ]);
+        }
+
+        return ['user' => $user];
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return view('home');
-    }
 }
