@@ -12,15 +12,15 @@
                         @csrf @method('PUT')
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" name="name" id="name" class="form-control" value="{{ $pricePlan->name }}" />
+                            <input type="text" name="name" id="name" class="form-control" value="{{old('name',$pricePlan->name ) }}" />
                         </div>
                         <div class="form-group">
                             <label>Price</label>
-                            <input type="number" name="price" id="price" class="form-control" value="{{ $pricePlan->price }}" />
+                            <input type="number" name="price" id="price" class="form-control" value="{{ old('price',$pricePlan->price) }}" />
                         </div>
                         <div class="form-group">
                             <label>Number of annotations</label>
-                            <input type="number" name="annotations_count" id="annotationsCount" class="form-control" value="{{ $pricePlan->annotations_count }}" />
+                            <input type="number" name="annotations_count" id="annotationsCount" class="form-control" value="{{ old('annotation_count',$pricePlan->annotations_count) }}" />
                         </div>
                     <div class="form-group">
                         <label>Ga Account Count</label>
@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-group">
                         <label>User per ga-account count?</label>
-                        <input type="number" name="user_per_ga_account_count" id="user_per_ga_account_count" value="{{'user_per_ga_account_count',$pricePlan->user_per_ga_account_count}}" class="form-control" />
+                        <input type="number" name="user_per_ga_account_count" id="user_per_ga_account_count" value="{{old('user_per_ga_account_count',$pricePlan->user_per_ga_account_count)}}" class="form-control" />
                     </div>
                         <div class="form-group">
                             <label>Has manual add?</label>

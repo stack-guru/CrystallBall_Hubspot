@@ -101,7 +101,7 @@ export default class indexPricingPlans extends React.Component {
 
                                                 {
                                                     pricePlan.has_manual_add ?
-                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>Manual Add</li>
+                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>Manual Annotations</li>
                                                         : ''
                                                 }
 
