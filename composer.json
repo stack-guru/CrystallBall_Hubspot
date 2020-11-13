@@ -13,6 +13,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "laravel/framework": "^8.0",
         "laravel/passport": "^10.0",
+        "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "ventepos/bluesnap-php": "^0.3.5"

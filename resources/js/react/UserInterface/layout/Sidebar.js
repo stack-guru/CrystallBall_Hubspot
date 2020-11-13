@@ -5,9 +5,9 @@ class sidebar extends React.Component {
 
     constructor(props) {
         super(props);
-            this.state={
-                show:false
-            }
+        this.state = {
+            show: false
+        }
     }
 
     render() {
@@ -111,14 +111,14 @@ class sidebar extends React.Component {
                         </Link>
                     </li> */}
                     <li className="nav-item gaa-menu-item gaa-text-danger">
-                        <Link to="#">
+                        <a href="https://chrome.google.com/webstore/detail/google-analytics-annotati/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en&authuser=1">
                             <span className="sidebar-link gaa-text-danger" >
                                 <span className="icon-holder gaa-text-danger">
                                     <i className="fa fa-cube"></i>
                                 </span>
                                 <span className="title">Add Chrome Extension</span>
                             </span>
-                        </Link>
+                        </a>
                     </li>
                     {/*<li className="nav-item">*/}
                     {/*    <a className="sidebar-link" href="">*/}

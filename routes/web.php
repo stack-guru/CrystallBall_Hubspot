@@ -25,7 +25,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
 });
 
-
 Route::view('documentation', 'documentation');
 
 Route::group(['middleware' => ['auth']], function () {
@@ -46,7 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
         Route::post('settings/price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');
         Route::post('settings/price-plan/downGrade', [App\Http\Controllers\PaymentController::class, ''])->name('payment.check');
-        Route::get('settings/price-plan-subscription',[App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
+        Route::get('settings/price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
         Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
 
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
@@ -58,11 +57,19 @@ Route::group(['middleware' => ['auth']], function () {
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
 
-    Route::view('settings', 'ui/app');
-    Route::view('settings/change-password', 'ui/app');
-    Route::view('settings/price-plans', 'ui/app');
-    Route::view('settings/price-plans/payment', 'ui/app')->name('settings.price-plan.payment');
-    Route::view('settings/payment-history', 'ui/app');
+    Route::group(['prefix' => 'settings'], function () {
+        Route::view('/', 'ui/app');
+
+        Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->except(['store', 'show', 'update', 'edit', 'destroy']);
+        Route::group(['prefix' => 'ui'], function () {
+            Route::post('google-account', [App\Http\Controllers\GoogleAccountController::class, 'store']);
+            Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
+        });
+
+        Route::view('change-password', 'ui/app');
+        Route::view('price-plans', 'ui/app');
+        Route::view('price-plans/payment', 'ui/app')->name('settings.price-plan.payment');
+        Route::view('payment-history', 'ui/app');
+    });
 
 });
-
