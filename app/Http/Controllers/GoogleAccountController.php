@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\GoogleAccount;
-use Illuminate\Http\Request;
-use Laravel\Socialite\Facades\Socialite;
 use Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class GoogleAccountController extends Controller
 {
@@ -17,7 +16,8 @@ class GoogleAccountController extends Controller
 
     public function uiIndex()
     {
-        return view('ui/app');
+        $googleAccounts = GoogleAccount::where('user_id', Auth::id())->get();
+        return ['google_accounts' => $googleAccounts];
     }
 
     public function create()

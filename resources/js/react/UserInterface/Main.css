@@ -223,3 +223,9 @@ max-height: 550px;
 .lh-100 {
     line-height: 1;
 }
+
+.social-profile-picture {
+    width:25px;
+    height:25px;
+    border-radius: 100%;
+}

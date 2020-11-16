@@ -7,9 +7,10 @@ export default class indexSettings extends React.Component {
         super(props);
 
     }
-componentDidMount() {
-        document.title='Settings';
-}
+    
+    componentDidMount() {
+        document.title = 'Settings';
+    }
 
     render() {
         return (
@@ -17,8 +18,8 @@ componentDidMount() {
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
                         <div className="user-setting-head box-shadow gaa-bg-primary text-white  rounded">
-                        <h1 className="mb-0 lh-100"><b>{this.props.user.name}</b></h1>
-                            <small><b>Email: {this.props.user.email}</b></small><br/>
+                            <h1 className="mb-0 lh-100"><b>{this.props.user.name}</b></h1>
+                            <small><b>Email: {this.props.user.email}</b></small><br />
                             <small><b>Price Plan: {this.props.user.price_plan.name}</b></small>
                         </div>
 

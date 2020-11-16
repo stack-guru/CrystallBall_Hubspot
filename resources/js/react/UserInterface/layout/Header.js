@@ -8,12 +8,12 @@ class header extends React.Component {
 
     }
 
-    toggleSidebar(e){
+    toggleSidebar(e) {
         e.preventDefault();
         let body = document.getElementsByTagName("body")[0];
-        if(body.classList.contains("is-collapsed")){
+        if (body.classList.contains("is-collapsed")) {
             body.classList.remove("is-collapsed")
-        }else{
+        } else {
             body.classList.add("is-collapsed")
         }
     }

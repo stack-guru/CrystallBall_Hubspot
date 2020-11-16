@@ -37,18 +37,25 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('annotation/upload', [App\Http\Controllers\AnnotationController::class, 'upload']);
 
     Route::group(['prefix' => 'ui'], function () {
+        Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
+
         Route::get('coupon', [App\Http\Controllers\CouponController::class, 'verify']);
+
         Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
         Route::post('annotation', [App\Http\Controllers\AnnotationController::class, 'store']);
         Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
         Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);
         Route::delete('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
-        Route::post('settings/price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');
-        Route::post('settings/price-plan/downGrade', [App\Http\Controllers\PaymentController::class, ''])->name('payment.check');
-        Route::get('settings/price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
-        Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
-        Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
 
+        Route::group(['prefix' => 'settings'], function () {
+
+            Route::post('price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');
+            Route::get('price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
+
+            Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
+            Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
+
+        });
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
 
@@ -60,12 +67,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'settings'], function () {
         Route::view('/', 'ui/app');
-        Route::view('/google-account', [App\Http\Controllers\GoogleAccountController::class,'uiIndex']);
-        Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->except([ 'store', 'show', 'update', 'edit', 'destroy']);
+
+        Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->except(['store', 'show', 'update', 'edit', 'destroy']);
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store']);
-        Route::group(['prefix' => 'ui'], function () {
-            Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
-        });
 
         Route::view('change-password', 'ui/app');
         Route::view('price-plans', 'ui/app');
