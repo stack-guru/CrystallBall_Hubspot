@@ -17,7 +17,10 @@ class GoogleAccountController extends Controller
     public function create()
     {
         return Socialite::driver('google')
-            ->scopes(['read:user'])
+            ->scopes([
+                'https://www.googleapis.com/auth/userinfo.profile',
+                'https://www.googleapis.com/auth/userinfo.email',
+            ])
             ->redirect();
     }
 
@@ -37,7 +40,7 @@ class GoogleAccountController extends Controller
         $googleAccount->avatar = $user->getAvatar();
 
         $googleAccount->save();
-        
+
         return ['google_account' => $googleAccount];
 
     }
