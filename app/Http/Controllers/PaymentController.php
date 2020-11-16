@@ -74,7 +74,7 @@ class PaymentController extends Controller
                 $price -= ($coupon->discount_percent / 100) * $price;
             }
             if (array_search($request->country, ["PK", "IL"]) !== false) {
-                $price += (17 / 100) * $pricePlan->price;
+                $price += (17 / 100) * $price;
             }
 
             $obj = $blueSnapService->createTransaction($price, $card);

@@ -245,11 +245,12 @@ export default class CreatePayment extends Component {
         if (this.state.pricePlan) totalPrice += this.state.pricePlan.price
         if (this.state.coupon) {
             discountPrice = parseFloat(((this.state.coupon.discount_percent / 100) * this.state.pricePlan.price)).toFixed(2);
+            totalPrice -= discountPrice;
         }
         if (this.state.taxPercent) {
-            taxAmount = parseFloat(((this.state.taxPercent / 100) * this.state.pricePlan.price)).toFixed(2);
+            taxAmount = parseFloat(((this.state.taxPercent / 100) * totalPrice)).toFixed(2);
+            totalPrice += +taxAmount
         }
-        totalPrice = totalPrice - discountPrice + +taxAmount;
         totalPrice = totalPrice.toFixed(2);
 
         return (
