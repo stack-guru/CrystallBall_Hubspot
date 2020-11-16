@@ -24,11 +24,11 @@
 .gaa-blue-gradient {
     background: linear-gradient(to bottom, #0a2950, #456287);
 }
-.gaa-bg-primary{
+.gaa-bg-primary {
     background: #456287;
 }
-.gaa-text-primary{
-    color:#456287;
+.gaa-text-primary {
+    color: #456287;
 }
 
 .gaa-title {
@@ -141,11 +141,11 @@
 .logo-text {
     font-size: 1rem;
 }
-.img-col-wrap{
+.img-col-wrap {
     height: 115px;
     position: relative;
 }
-.secure-img{
+.secure-img {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -154,78 +154,76 @@
     white-space: unset;
     height: 100%;
 }
-.secure-img img{
-    width:68px;
+.secure-img img {
+    width: 68px;
     height: 34px;
-    margin:5px;
+    margin: 5px;
 }
 
-.form-group{
-    transition: all .3s;
-    margin-bottom:0px!important;
+.form-group {
+    transition: all 0.3s;
+    margin-bottom: 0px !important;
 }
-.floating-labels{
-    position :relative;
-    padding-top:29px;
-
+.floating-labels {
+    position: relative;
+    padding-top: 29px;
 }
-.floating-labels > label{
-   transform:translate(1em ,-2em);
-    transform-origin:0 0;
-    transition: all .3s;
+.floating-labels > label {
+    transform: translate(1em, -2em);
+    transform-origin: 0 0;
+    transition: all 0.3s;
     z-index: -1;
 }
-.floating-labels > input::placeholder{
+.floating-labels > input::placeholder {
     color: transparent;
 }
 
 /* :blank*/
-.floating-labels > input:focus + label ,
-.floating-labels > input:not(:placeholder-shown) + label
-{
-  transform:translateY(-4.3em);
+.floating-labels > input:focus + label,
+.floating-labels > input:not(:placeholder-shown) + label {
+    transform: translateY(-4.3em);
 }
 
 .seperator > [class*="col-"]:nth-child(n + 2)::after {
     content: "";
-    background-color: rgba(0,0,0,.0625);
+    background-color: rgba(0, 0, 0, 0.0625);
     position: absolute;
     top: 0;
-    bottom:0;
-    left:0px;
+    bottom: 0;
+    left: 0px;
     width: 1px;
     height: 95%;
 }
-.payBtn{
-    width:100%;
+.payBtn {
+    width: 100%;
 }
-.card{
-    min-height:545px;
-max-height: 550px;
-    position :relative;
+.card {
+    min-height: 545px;
+    max-height: 550px;
+    position: relative;
 }
-.card .card-body{
+.card .card-body {
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
 }
-.user-setting-head{
-    padding:1.2%;
+.user-setting-head {
+    padding: 1.2%;
 }
 .user-setting-box {
-    padding:1.5%
+    padding: 1.5%;
 }
-.box-shadow{
-   box-shadow:  0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+.box-shadow {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 }
 .lh-100 {
     line-height: 1;
 }
 
 .social-profile-picture {
-    width:25px;
-    height:25px;
+    width: 35px;
+    height: 35px;
     border-radius: 100%;
 }

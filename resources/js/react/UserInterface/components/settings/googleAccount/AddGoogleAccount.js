@@ -1,14 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import HttpClient from './../../../utils/HttpClient';
+import { toast } from 'react-toastify'
 export default class AddGoogleAccount extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isBusy: false,
-            google_accounts: []
+            googleAccounts: []
         }
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
 
@@ -16,12 +17,28 @@ export default class AddGoogleAccount extends React.Component {
 
         this.setState({ isBusy: true })
         HttpClient.get('/settings/google-account').then(resp => {
-            this.setState({ google_accounts: resp.data.google_accounts, isBusy: false });
+            this.setState({ googleAccounts: resp.data.google_accounts, isBusy: false });
         }, (err) => {
             console.log(err);
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
             console.log(err)
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
+    handleDelete(id) {
+        this.setState({ isBusy: true });
+        HttpClient.delete(`/settings/google-account/${id}`).then(resp => {
+            toast.success("Account removed.");
+            let googleAccounts = this.state.googleAccounts;
+            googleAccounts = googleAccounts.filter(ga => ga.id != id);
+            this.setState({ isBusy: false, googleAccounts: googleAccounts })
+        }, (err) => {
+            console.log(err);
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            console.log(err);
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -51,12 +68,14 @@ export default class AddGoogleAccount extends React.Component {
                                 </thead>
                                 <tbody>
                                     {
-                                        this.state.google_accounts.map(googleAccount => {
+                                        this.state.googleAccounts.map(googleAccount => {
                                             return <tr key={googleAccount.id}>
                                                 <td><img src={googleAccount.avatar} className="social-profile-picture" /></td>
                                                 <td>{googleAccount.name}</td>
                                                 <td>{googleAccount.email}</td>
-                                                <td></td>
+                                                <td>
+                                                    <button onClick={() => this.handleDelete(googleAccount.id)} className="btn gaa-btn-danger"><i className="fa fa-trash"></i></button>
+                                                </td>
                                             </tr>
                                         })
                                     }
