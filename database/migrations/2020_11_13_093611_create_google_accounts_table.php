@@ -16,8 +16,8 @@ class CreateGoogleAccountsTable extends Migration
         Schema::create('google_accounts', function (Blueprint $table) {
             $table->id();
 
-            $table->string('token', 100)->nullable()->default(null);
-            $table->string('refresh_token', 100)->nullable()->default(null);
+            $table->longText('token')->nullable()->default(null);
+            $table->longText('refresh_token')->nullable()->default(null);
             $table->timestamp('expires_in')->nullable();
             $table->string('account_id', 100)->nullable()->default(null);
             $table->string('nick_name', 100)->nullable()->default(null);
