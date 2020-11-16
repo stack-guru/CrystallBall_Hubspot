@@ -39,6 +39,18 @@ componentDidMount() {
                         </div>
 
                         <div className="plan bg-white my-3 user-setting-box  box-shadow rounded">
+                            <h4 className="border-bottom gaa-text-primary"><b>Accounts</b></h4>
+                            <ul className='list-unstyled list-group mt-2 ml-4'>
+                                <li className='nav-item border-bottom'>
+                                    <Link to="/settings/google-account">
+                                        <span className="nav-link">Add google account</span>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        <div className="plan bg-white my-3 user-setting-box  box-shadow rounded">
                             <h4 className="border-bottom gaa-text-primary"><b>Plan</b></h4>
                             <ul className='list-unstyled list-group mt-2 ml-4'>
                                 <li className='nav-item border-bottom'>

@@ -188,8 +188,6 @@ class header extends React.Component {
                                         <input type="hidden" name={"_token"} value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />
                                     </form>
 
-
-
                                 </li>
                             </ul>
                         </li>

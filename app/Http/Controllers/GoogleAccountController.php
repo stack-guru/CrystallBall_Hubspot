@@ -15,6 +15,11 @@ class GoogleAccountController extends Controller
         return view('ui/app');
     }
 
+    public function uiIndex()
+    {
+        return view('ui/app');
+    }
+
     public function create()
     {
         return Socialite::driver('google')

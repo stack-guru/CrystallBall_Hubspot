@@ -16,6 +16,7 @@ import PricingPlans from './components/settings/pricingPlans/IndexPricingPlans';
 import Settings from './components/settings/IndexSettings';
 import ChangePassword from './components/settings/ChangePassword';
 import PaymentHistory from './components/settings/pricingPlans/PaymentHistory';
+import GoogleAccount from './components/settings/googleAccount/AddGoogleAccount';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './Main.css';
@@ -139,6 +140,9 @@ class Main extends React.Component {
                             </Route>
                             <Route exact path="/settings/payment-history" refresh={true}>
                                 <PaymentHistory user={this.state.user} />
+                            </Route>
+                            <Route exact path="/settings/google-account" refresh={true}>
+                                <GoogleAccount user={this.state.user} />
                             </Route>
                         </Switch>
 

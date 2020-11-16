@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('settings/price-plan/downGrade', [App\Http\Controllers\PaymentController::class, ''])->name('payment.check');
         Route::get('settings/price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
         Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
+        Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
 
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
@@ -59,7 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'settings'], function () {
         Route::view('/', 'ui/app');
-
+        Route::view('/google-account', [App\Http\Controllers\GoogleAccountController::class,'uiIndex']);
         Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->except([ 'store', 'show', 'update', 'edit', 'destroy']);
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store']);
         Route::group(['prefix' => 'ui'], function () {
