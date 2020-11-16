@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\GoogleAccount;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
+use Auth;
 
 class GoogleAccountController extends Controller
 {
@@ -24,24 +25,26 @@ class GoogleAccountController extends Controller
             ->redirect();
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $user = Socialite::driver('google')->user();
+        $user = Socialite::driver('google')->stateless()->user();
 
         $googleAccount = new GoogleAccount;
 
         $googleAccount->token = $user->token;
         $googleAccount->refresh_token = $user->refreshToken;
-        $googleAccount->expires_in = $user->expiresIn;
+        $googleAccount->expires_in = \Carbon\Carbon::now()->addSeconds($user->expiresIn);
         $googleAccount->account_id = $user->getId();
         $googleAccount->nick_name = $user->getNickname();
         $googleAccount->name = $user->getName();
         $googleAccount->email = $user->getEmail();
         $googleAccount->avatar = $user->getAvatar();
 
+        $googleAccount->user_id = Auth::id();
+
         $googleAccount->save();
 
-        return ['google_account' => $googleAccount];
+        return redirect()->route('google-account.index');
 
     }
 
@@ -52,7 +55,7 @@ class GoogleAccountController extends Controller
 
     public function getProfileFromToken($token)
     {
-        $user = Socialite::driver('github')->userFromToken($token);
+        $user = Socialite::driver('google')->userFromToken($token);
         return $user;
     }
 }
