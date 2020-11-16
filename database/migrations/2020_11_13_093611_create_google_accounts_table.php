@@ -23,7 +23,7 @@ class CreateGoogleAccountsTable extends Migration
             $table->string('nick_name', 100)->nullable()->default(null);
             $table->string('name', 100)->nullable()->default(null);
             $table->string('email', 100)->nullable()->default(null);
-            $table->string('avatar', 100)->nullable()->default(null);
+            $table->longText('avatar', 100)->nullable()->default(null);
 
             $table->foreignId("user_id")->constrained()->required();
 
