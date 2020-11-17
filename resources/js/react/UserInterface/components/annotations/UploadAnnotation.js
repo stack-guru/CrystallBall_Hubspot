@@ -67,8 +67,8 @@ export default class UploadAnnotation extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row ml-0 mr-0 ">
-                                <div className="col-4">
+                            <div className="row ml-0 mr-0  mt-3">
+                                <div className="col-4 d-flex flex-column justify-content-center">
                                     <a href="/csv/upload_sample.csv" target="_blank" download>Download sample CSV file</a>
                                 </div>
                                 <div className="col-8 text-right">
