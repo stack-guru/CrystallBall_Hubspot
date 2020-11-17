@@ -17,7 +17,7 @@ class PaymentController extends Controller
 
     public function indexPaymentHistory()
     {
-        $pricePlanSubscriptions = PricePlanSubscription::with(['paymentDetail'])->where('user_id', Auth::id())->get();
+        $pricePlanSubscriptions = PricePlanSubscription::with('paymentDetail')->orderBy('created_at', 'DESC')->where('user_id', Auth::id())->get();
 
         return ['price_plan_subscriptions' => $pricePlanSubscriptions];
 

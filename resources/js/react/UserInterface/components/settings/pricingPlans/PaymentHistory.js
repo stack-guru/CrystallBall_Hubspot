@@ -14,7 +14,7 @@ export default class PaymentHistory extends React.Component {
     }
 
     componentDidMount() {
-        document.title='Payment History';
+        document.title = 'Payment History';
         this.setState({ isBusy: true });
         HttpClient.get('/settings/price-plan-subscription')
             .then(response => {
@@ -40,7 +40,7 @@ export default class PaymentHistory extends React.Component {
                 <table className="table table-hover table-bordered mt-4">
                     <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>S#</th>
                             <th>Transaction Id</th>
                             <th>Amount</th>
                             <th>Paid At</th>
@@ -49,13 +49,15 @@ export default class PaymentHistory extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            pricePlanSubscriptions.map(pricePlanSubscription => (
+                            pricePlanSubscriptions.map((pricePlanSubscription, index) => (
                                 <tr key={pricePlanSubscription.id}>
-                                    <td>{pricePlanSubscription.id}</td>
+                                    <td>{index + 1}</td>
                                     <td>{pricePlanSubscription.transaction_id}</td>
-                                    <td>${pricePlanSubscription.payment_detail?pricePlanSubscription.payment_detail.charged_price:'0'}</td>
-                                    <td>{moment(pricePlanSubscription.created_at).format("YYYY-MM-DD")}</td>
-                                    <td>{pricePlanSubscription.payment_detail?pricePlanSubscription.payment_detail.card_number:'error'}</td>
+                                    <td>${pricePlanSubscription.payment_detail ? pricePlanSubscription.payment_detail.charged_price : '0'}</td>
+                                    <td>
+                                        {moment(pricePlanSubscription.created_at).format("YYYY-MM-DD")}&nbsp;&nbsp;&nbsp;{moment(pricePlanSubscription.created_at).format("hh:mm")}
+                                    </td>
+                                    <td>****-****-****-{pricePlanSubscription.payment_detail ? pricePlanSubscription.payment_detail.card_number : '****'}</td>
                                 </tr>
                             ))
                         }
