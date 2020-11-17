@@ -53,9 +53,9 @@ export default class PaymentHistory extends React.Component {
                                 <tr key={pricePlanSubscription.id}>
                                     <td>{pricePlanSubscription.id}</td>
                                     <td>{pricePlanSubscription.transaction_id}</td>
-                                    <td>${pricePlanSubscription.payment_detail.charged_price}</td>
+                                    <td>${pricePlanSubscription.payment_detail?pricePlanSubscription.payment_detail.charged_price:'0'}</td>
                                     <td>{moment(pricePlanSubscription.created_at).format("YYYY-MM-DD")}</td>
-                                    <td>{pricePlanSubscription.payment_detail.card_number}</td>
+                                    <td>{pricePlanSubscription.payment_detail?pricePlanSubscription.payment_detail.card_number:'error'}</td>
                                 </tr>
                             ))
                         }
