@@ -14,6 +14,7 @@ export default class PaymentHistory extends React.Component {
     }
 
     componentDidMount() {
+        document.title='Payment History';
         this.setState({ isBusy: true });
         HttpClient.get('/settings/price-plan-subscription')
             .then(response => {

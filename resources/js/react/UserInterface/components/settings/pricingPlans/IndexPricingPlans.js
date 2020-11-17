@@ -16,6 +16,7 @@ export default class indexPricingPlans extends React.Component {
     }
 
     componentDidMount() {
+        document.title='Price Plan';
         this.setState({ isBusy: true });
         HttpClient.get('/price-plan')
             .then(response => {

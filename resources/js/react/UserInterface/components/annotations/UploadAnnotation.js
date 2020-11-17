@@ -35,6 +35,10 @@ export default class UploadAnnotation extends React.Component {
         }
     }
 
+    componentDidMount() {
+        document.title='Upload Csv';
+    }
+
     render() {
         return (
             <div className="container-xl bg-white component-wrapper" >

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('page-title','Coupons')
 @section('content')
 
     <div class="container">

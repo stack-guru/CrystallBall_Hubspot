@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('page-title','Add Price Plan')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

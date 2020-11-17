@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('page-title','Edit Coupon')
 @section('content')
     <div class="container-xl bg-white  " >
         <div class="row ml-0 mr-0">

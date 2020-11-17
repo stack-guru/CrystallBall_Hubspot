@@ -14,6 +14,7 @@ export default class AddGoogleAccount extends React.Component {
 
 
     componentDidMount() {
+        document.title='Google Accounts';
         this.setState({ isBusy: true })
         HttpClient.get('/settings/google-account').then(resp => {
             this.setState({ googleAccounts: resp.data.google_accounts, isBusy: false });

@@ -1,5 +1,5 @@
 @extends('layouts/admin')
-
+@section('page-title','Payment History')
 @section('content')
 
     <div class="contianer">

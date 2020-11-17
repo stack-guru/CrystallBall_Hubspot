@@ -6,6 +6,9 @@ export default class ChangePassword extends React.Component{
         super(props);
 
     }
+    componentDidMount() {
+        document.title='Forget Password'
+    }
 
     render() {
         return (
@@ -14,15 +17,15 @@ export default class ChangePassword extends React.Component{
                     <div className="col-12">
                         <h3 className="gaa-title">New Password</h3>
                         <form action="">
-                            <div className="form-group">
+                            <div className="form-group my-2">
                                 <label htmlFor="">Password</label>
                                 <input type="text" className="form-control" name="password" placeholder="New Password" id=""/>
                             </div>
-                            <div className="form-group">
+                            <div className="form-group my-3">
                                 <label htmlFor="">Repeat-Password</label>
                                 <input type="text"  className="form-control" placeholder="Repeat Password" name="R-password" id=""/>
                             </div>
-                            <div className="row ml-0 mr-0">
+                            <div className="row ml-0 mr-0 my-3">
                                 <div className="col-12 text-right p-0">
                                     <button className="btn btn-primary">Reset</button>
                                 </div>
