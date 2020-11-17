@@ -33,18 +33,21 @@ class GoogleAccountController extends Controller
     public function store()
     {
         $user = Socialite::driver('google')->stateless()->user();
+        $googleAccountId=$user->getId();
+        if(GoogleAccount::where('account_id',$googleAccountId)->where('user_id',\Auth::id())->first()){
+            return redirect()->route('google-account.index',['success'=>'false','message'=>'Account already linked']);
+        }
 
         $googleAccount = new GoogleAccount;
 
         $googleAccount->token = $user->token;
         $googleAccount->refresh_token = $user->refreshToken;
         $googleAccount->expires_in = \Carbon\Carbon::now()->addSeconds($user->expiresIn);
-        $googleAccount->account_id = $user->getId();
+        $googleAccount->account_id = $googleAccountId;
         $googleAccount->nick_name = $user->getNickname();
         $googleAccount->name = $user->getName();
         $googleAccount->email = $user->getEmail();
         $googleAccount->avatar = $user->getAvatar();
-
         $googleAccount->user_id = Auth::id();
 
         $googleAccount->save();

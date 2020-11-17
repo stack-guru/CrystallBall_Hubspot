@@ -14,7 +14,6 @@ export default class AddGoogleAccount extends React.Component {
 
 
     componentDidMount() {
-
         this.setState({ isBusy: true })
         HttpClient.get('/settings/google-account').then(resp => {
             this.setState({ googleAccounts: resp.data.google_accounts, isBusy: false });
@@ -25,6 +24,13 @@ export default class AddGoogleAccount extends React.Component {
             console.log(err)
             this.setState({ isBusy: false, errors: err });
         });
+      let searchParams= new URLSearchParams(document.location.search);
+        let message, success;
+        if(searchParams.get('message') && searchParams.get('success')){
+            success= searchParams.get('success');
+            message= searchParams.get('message');
+        }
+        swal( "Error", message, success ? "success" : "error");
     }
 
     handleDelete(id) {
@@ -60,7 +66,7 @@ export default class AddGoogleAccount extends React.Component {
                             <table className="table table-hover table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Avatar</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Actions</th>
@@ -74,7 +80,7 @@ export default class AddGoogleAccount extends React.Component {
                                                 <td>{googleAccount.name}</td>
                                                 <td>{googleAccount.email}</td>
                                                 <td>
-                                                    <button onClick={() => this.handleDelete(googleAccount.id)} className="btn gaa-btn-danger"><i className="fa fa-trash"></i></button>
+                                                    <button onClick={() => this.handleDelete(googleAccount.id)} className="btn gaa-btn-danger"><i className="fa fa-unlink mr-2"></i>Disconnect</button>
                                                 </td>
                                             </tr>
                                         })
