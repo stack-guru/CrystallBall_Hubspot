@@ -111,7 +111,7 @@ class sidebar extends React.Component {
                         </Link>
                     </li> */}
                     <li className="nav-item gaa-menu-item gaa-text-danger">
-                        <a href="https://chrome.google.com/webstore/detail/google-analytics-annotati/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en&authuser=1">
+                        <a href="https://chrome.google.com/webstore/detail/google-analytics-annotati/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en&authuser=1" target="_blank">
                             <span className="sidebar-link gaa-text-danger" >
                                 <span className="icon-holder gaa-text-danger">
                                     <i className="fa fa-cube"></i>

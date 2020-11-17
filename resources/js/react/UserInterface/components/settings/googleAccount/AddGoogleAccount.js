@@ -24,13 +24,12 @@ export default class AddGoogleAccount extends React.Component {
             console.log(err)
             this.setState({ isBusy: false, errors: err });
         });
-      let searchParams= new URLSearchParams(document.location.search);
-        let message, success;
-        if(searchParams.get('message') && searchParams.get('success')){
-            success= searchParams.get('success');
-            message= searchParams.get('message');
+        let searchParams = new URLSearchParams(document.location.search);
+        if (searchParams.has('message') && searchParams.has('success')) {
+            let success = searchParams.get('success');
+            let message = searchParams.get('message');
+            swal("Error", message, success == "false" ? "error" : "success");
         }
-        swal( "Error", message, success ? "success" : "error");
     }
 
     handleDelete(id) {
