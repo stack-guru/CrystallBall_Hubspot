@@ -7,7 +7,7 @@ export default class indexSettings extends React.Component {
         super(props);
 
     }
-    
+
     componentDidMount() {
         document.title = 'Settings';
     }
@@ -26,11 +26,11 @@ export default class indexSettings extends React.Component {
                         <div className="profile bg-white my-3  user-setting-box box-shadow rounded">
                             <h4 className="border-bottom gaa-text-primary"><b>Profile</b></h4>
                             <ul className='list-unstyled list-group mt-2 ml-4'>
-                                <li className='nav-item border-bottom'>
+                                {/*<li className='nav-item border-bottom'>
                                     <Link to="/">
-                                        <span className="nav-link">Edit profile</span>
-                                    </Link>
-                                </li>
+                                       <span className="nav-link">Edit profile</span>
+                                 </Link>
+                                </li>*/}
                                 <li className='nav-item border-bottom'>
                                     <Link to="/settings/change-password">
                                         <span className="nav-link">Change password</span>
