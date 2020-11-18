@@ -40,10 +40,11 @@ export default class ChangePassword extends React.Component {
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });
-            }).then(err => {
+            }).catch(err => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: err });
             })
+
         }
 
     }
