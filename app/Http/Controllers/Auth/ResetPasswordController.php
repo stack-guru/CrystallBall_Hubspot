@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,7 +20,7 @@ class ResetPasswordController extends Controller
     | and uses a simple trait to include this behavior. You're free to
     | explore this trait and override any methods you wish to tweak.
     |
-    */
+     */
 
     use ResetsPasswords;
 
@@ -31,18 +31,22 @@ class ResetPasswordController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    public function updatePassword(Request $request){
-        //
-        $this->validate($request,[
-            'prePassword'=>'required',
-            'password'=>'required',
-            'rPassword'=>'required'
+    public function updatePassword(Request $request)
+    {
+        $this->validate($request, [
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed|string|min:8',
         ]);
-        $user=Auth::user();
-        if(Hash::check($request->prePassword, $user->password)  && $request->password == $request->rPassword){
-            $user->update(['password'=>$request->password]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json(['success' => 'false', 'message' => 'Invalid current password.'], 422);
         }
-        return response()->json(['success'=>'true','message'=>'password updated successfully'],200);
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+        return response()->json(['success' => 'true', 'message' => 'password updated successfully'], 200);
     }
 
 }
