@@ -20,6 +20,7 @@ export default class ChangePassword extends React.Component {
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
+        this.setDefaultState = this.setDefaultState.bind(this)
     }
     componentDidMount() {
         document.title = 'Change Password'
@@ -36,15 +37,16 @@ export default class ChangePassword extends React.Component {
             this.setState({ isBusy: true });
             HttpClient.post('/settings/change-password', this.state.passwords).then(resp => {
                 toast.success("Password changed successfully.");
+                this.setDefaultState();
                 this.setState({ isBusy: false });
+
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
+            }).then(err => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: err });
             })
-
         }
 
     }
@@ -89,6 +91,20 @@ export default class ChangePassword extends React.Component {
         return isValid;
     }
 
+    setDefaultState() {
+        this.setState({
+            passwords: {
+                old_password: '',
+                new_password: '',
+                new_password_confirmation: '',
+            },
+            validation: {},
+            isBusy: false,
+            isDirty: false,
+            errors: undefined
+        });
+    }
+
     render() {
         return (
             <div className="container-xl bg-white component-wrapper">
@@ -103,7 +119,7 @@ export default class ChangePassword extends React.Component {
                         <form onSubmit={this.submitHandler}>
                             <div className="form-group my-3">
                                 <label htmlFor="">Previous Password</label>
-                                <input type="text" className="form-control" name="old_password" value={this.state.passwords.old_password} onChange={this.changeHandler} placeholder="your last used Password" id="" />
+                                <input type="text" className="form-control" name="old_password" value={this.state.passwords.old_password} onChange={this.changeHandler} placeholder="old password" id="" />
                                 {
                                     this.state.validation.old_password ?
                                         <span className="text-danger mt-1">{this.state.validation.old_password}</span> : ''
