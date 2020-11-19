@@ -117,15 +117,12 @@
                 "_id": 1,
                 "category": "Sales Event",
                 "eventSource": {
-                    "type": "Sales",
                     "name": "Black Friday"
                 },
                 "url": "https://gaannotations.com/",
                 "description": "Black Friday Deals 2020",
-                "title": "Black Friday",
                 "highlighted": false,
                 "publishDate": "2020-11-27UTC00:00:000",
-                "type": "public"
             }
         ]
     }
@@ -149,13 +146,10 @@
         --header 'Authorization: Bearer your_api_key' \
         --header 'Content-Type: application/x-www-form-urlencoded' \
         --data category=Sales Event \
-        --data event_type=Sales \
         --data event_name=Black Friday \
         --data url=https://gaannotations.com/ \
         --data 'description=Black Friday Deals 2020' \
-        --data 'title=Black Friday' \
         --data show_at=2020-11-27 \
-        --data type=public
                  </code></pre>
                 <p>
                     To post characters you need to make a <code class="highlighted">POST</code> call to the following url :<br>
@@ -169,13 +163,10 @@
     {
         "annotation": {
           "category": "Sales Event",
-          "event_type": "Sales",
           "event_name": "Black Friday",
           "url": "https://gaannotations.com/",
           "description": "Black Friday Deals 2020",
-          "title": "Black Friday",
           "show_at": "2020-11-27",
-          "type": "public",
           "user_id": 1,
           "updated_at": "2020-10-29T10:11:19.000000Z",
           "created_at": "2020-10-29T10:11:19.000000Z",
@@ -204,11 +195,7 @@
                         <td>String</td>
                         <td>[required] Annotation Category</td>
                     </tr>
-                    <tr>
-                        <td>event_type</td>
-                        <td>String</td>
-                        <td>[required] Annotation's Event_type</td>
-                    </tr>
+
                     <tr>
                         <td>event_name</td>
                         <td>String</td>
@@ -225,20 +212,11 @@
                         <td>[required] Annotation's description</td>
                     </tr>
                     <tr>
-                        <td>title</td>
-                        <td>String</td>
-                        <td>[required] Annotation's title</td>
-                    </tr>
-                    <tr>
                         <td>show_at</td>
                         <td>date</td>
                         <td>[required] Annotation's show_at date from which it will show on google analytics</td>
                     </tr>
-                    <tr>
-                        <td>type</td>
-                        <td>string</td>
-                        <td>[required] Annotation's type</td>
-                    </tr>
+
                     </tbody>
                 </table>
 
@@ -256,13 +234,10 @@
         --header 'Authorization: Bearer your_api_key' \
         --header 'Content-Type: application/x-www-form-urlencoded' \
         --data category=Sales Event \
-        --data event_type=Sales \
         --data event_name=Black Friday \
         --data url=https://gaannotations.com/ \
         --data 'description=Black Friday Deals 2020' \
-        --data 'title=Black Friday' \
         --data show_at=2020-11-27 \
-        --data type=public
                  </code></pre>
                 <p>
                     To get characters you need to make a <code class="highlighted">PUT</code> call to the following url :<br>
@@ -278,13 +253,10 @@
           "id": 71,
           "user_id": 1,
           "category": "Sales Event",
-          "event_type": "Sales",
           "event_name": "Black Friday",
           "url": "https://gaannotations.com/",
           "description": "Black Friday Deals 2020",
-          "title": "Black Friday",
           "show_at": "2020-11-27",
-          "type": "public",
           "created_at": "2020-10-29T10:11:19.000000Z",
           "updated_at": "2020-10-29T10:17:25.000000Z",
           "is_enabled": 1
@@ -329,11 +301,6 @@
                         <td>[required] Annotation Category updated value</td>
                     </tr>
                     <tr>
-                        <td>event_type</td>
-                        <td>String</td>
-                        <td>[required] Annotation's Event_type updated value</td>
-                    </tr>
-                    <tr>
                         <td>event_name</td>
                         <td>String</td>
                         <td>[required] Annotation's Event_name updated value</td>
@@ -349,19 +316,9 @@
                         <td>[required] Annotation's description updated value</td>
                     </tr>
                     <tr>
-                        <td>title</td>
-                        <td>String</td>
-                        <td>[required] Annotation's title updated value</td>
-                    </tr>
-                    <tr>
                         <td>show_at</td>
                         <td>date</td>
                         <td>[required] Annotation's show_at date from which it will show on google analytics updated value</td>
-                    </tr>
-                    <tr>
-                        <td>type</td>
-                        <td>string</td>
-                        <td>[required] Annotation's type updated value</td>
                     </tr>
                     </tbody>
                 </table>

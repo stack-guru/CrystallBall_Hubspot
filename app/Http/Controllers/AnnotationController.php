@@ -115,13 +115,13 @@ class AnnotationController extends Controller
         $filecontent = file($filepath);
         $headers = str_getcsv($filecontent[0]);
 
-        if (count($headers) !== 8) {
+        if (count($headers) !== 5) {
             return response()->json(['message' => 'Invalid number of columns'], 422);
         }
         foreach ($headers as $header) {
             if (!in_array($header, [
-                'category', 'event_type', 'event_name',
-                'url', 'description', 'title', 'show_at', 'type',
+                'category', 'event_name',
+                'url', 'description',  'show_at',
             ])) {
                 return response()->json(['message' => 'Invalid CSV file headers'], 422);
             }

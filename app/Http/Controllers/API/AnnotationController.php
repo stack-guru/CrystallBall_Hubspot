@@ -72,12 +72,12 @@ class AnnotationController extends Controller
                         "_id" => $annotations[$i]->id,
                         "category" => $annotations[$i]->category,
                         "eventSource" => [
-                            "type" => $annotations[$i]->event_type,
+                            "type" => 'annotation',
                             "name" => $annotations[$i]->event_name,
                         ],
                         "url" => $annotations[$i]->url,
                         "description" => $annotations[$i]->description,
-                        "title" => $annotations[$i]->title,
+                        "title" => "NA",
                         "highlighted" => false,
                         "publishDate" => $showDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
                         "type" => "private",
@@ -88,12 +88,12 @@ class AnnotationController extends Controller
                         "_id" => $annotations[$i]->id,
                         "category" => $annotations[$i]->category,
                         "eventSource" => [
-                            "type" => $annotations[$i]->event_type,
+                            "type" => "annotation",
                             "name" => $annotations[$i]->event_name,
                         ],
                         "url" => $annotations[$i]->url,
                         "description" => $annotations[$i]->description,
-                        "title" => $annotations[$i]->title,
+                        "title" => "NA",
                         "highlighted" => false,
                         "publishDate" => $showDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
                         "type" => "private",
@@ -104,12 +104,12 @@ class AnnotationController extends Controller
                     "_id" => $annotations[$i]->id,
                     "category" => $annotations[$i]->category,
                     "eventSource" => [
-                        "type" => $annotations[$i]->event_type,
+                        "type" => 'annotation',
                         "name" => $annotations[$i]->event_name,
                     ],
                     "url" => $annotations[$i]->url,
                     "description" => $annotations[$i]->description,
-                    "title" => $annotations[$i]->title,
+                    "title" => "NA",
                     "highlighted" => false,
                     "publishDate" => $showDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
                     "type" => "private",
@@ -188,5 +188,5 @@ class AnnotationController extends Controller
         return ['success' => true];
     }
 
-    
+
 }

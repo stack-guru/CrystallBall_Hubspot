@@ -94,7 +94,7 @@ class IndexAnnotations extends React.Component {
                                 <table className="table table-hover table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Title</th>
+                                            <th>Event Name</th>
                                             <th>Description</th>
                                             <th>Status</th>
                                             <th>Show At</th>
@@ -108,7 +108,7 @@ class IndexAnnotations extends React.Component {
                                         {
                                             annotations.map(anno => (
                                                 <tr key={anno.id}>
-                                                    <td>{anno.title}</td>
+                                                    <td>{anno.event_name}</td>
                                                     <td>{anno.description}</td>
                                                     <td>
                                                         <button className={"btn btn-sm" + (anno.is_enabled ? " btn-success" : " btn-danger") + (this.state.isBusy ? " disabled" : "")} onClick={() => this.toggleStatus(anno.id)}>

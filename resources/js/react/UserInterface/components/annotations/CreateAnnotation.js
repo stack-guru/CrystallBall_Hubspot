@@ -10,13 +10,10 @@ export default class CreateAnnotation extends React.Component {
         this.state = {
             annotation: {
                 category: '',
-                event_type: '',
                 event_name: '',
                 url: '',
                 description: '',
-                title: '',
                 show_at: '',
-                type: '',
             },
             validation: {},
             resp: '',
@@ -33,13 +30,10 @@ export default class CreateAnnotation extends React.Component {
         this.setState({
             annotation: {
                 category: '',
-                event_type: '',
                 event_name: '',
                 url: '',
                 description: '',
-                title: '',
                 show_at: '',
-                type: '',
             },
             validation: {},
             resp: '',
@@ -76,13 +70,11 @@ export default class CreateAnnotation extends React.Component {
 
     validate() {
         let category = this.state.annotation.category;
-        let event_type = this.state.annotation.event_type;
         let event_name = this.state.annotation.event_name;
         let url = this.state.annotation.url;
         let description = this.state.annotation.description;
-        let title = this.state.annotation.title;
         let show_at = this.state.annotation.show_at;
-        let type = this.state.annotation.type;
+
 
         let errors = {};
         let isValid = true;
@@ -97,10 +89,7 @@ export default class CreateAnnotation extends React.Component {
             errors["event_name"] = "Please enter your event_name.";
         }
 
-        if (!event_type) {
-            isValid = false;
-            errors["event_type"] = "Please enter your event_type.";
-        }
+
         if (!url) {
             isValid = false;
             errors["url"] = "Please enter url here.";
@@ -109,18 +98,12 @@ export default class CreateAnnotation extends React.Component {
             isValid = false;
             errors["description"] = "Please enter your description.";
         }
-        if (!title) {
-            isValid = false;
-            errors["title"] = "Please enter title here.";
-        }
+
         if (!show_at) {
             isValid = false;
             errors["show_at"] = "Please add show_at date.";
         }
-        if (!type) {
-            isValid = false;
-            errors["type"] = "Please enter annotation type.";
-        }
+
 
         this.setState({
             validation: errors
@@ -157,37 +140,6 @@ export default class CreateAnnotation extends React.Component {
                             <div className="row">
 
                                 <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group ">
-                                        <label htmlFor="category" className="form-control-placeholder">Category</label>
-                                        <input type="text" className="form-control" id="category" name="category"
-                                            value={this.state.annotation.category} onChange={this.changeHandler} />
-                                        {
-                                            validation.category ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : ''
-                                        }
-
-
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group  ">
-                                        <label htmlFor="event_type" className="form-control-placeholder">event_type</label>
-                                        <select className="form-control" onChange={this.changeHandler} name="event_type" id="event_type" value={this.state.annotation.event_type} >
-                                            <option value="Default" >Default</option>
-                                            <option value="Annotaions">Annotaions</option>
-                                            <option value="Api">Api</option>
-                                            <option value="Google-updates">Google-updates</option>
-                                            <option value="Holidays">Holidays</option>
-                                            <option value="Gtm">Gtm</option>
-                                        </select>
-                                        {
-                                            validation.event_type ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_type}</span> : ''
-                                        }
-
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
                                         <label htmlFor="event_name" className="form-control-placeholder">event_name</label>
                                         <input type="text" className="form-control" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" />
@@ -199,6 +151,32 @@ export default class CreateAnnotation extends React.Component {
 
                                     </div>
                                 </div>
+
+                                <div className="col-lg-3 col-sm-4">
+                                    <div className="form-group ">
+                                        <label htmlFor="category" className="form-control-placeholder">Category</label>
+                                        <input type="text" className="form-control" id="category" name="category"
+                                               value={this.state.annotation.category} onChange={this.changeHandler} />
+                                        {
+                                            validation.category ?
+                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : ''
+                                        }
+
+
+                                    </div>
+                                </div>
+
+                                <div className="col-lg-3 col-sm-4">
+                                    <div className="form-group  has-danger ">
+                                        <label htmlFor="description" className="form-control-placeholder">description</label>
+                                        <textarea type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control" id="description" name="description"></textarea>
+                                        {
+                                            validation.description ?
+                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : ''
+                                        }
+                                    </div>
+                                </div>
+
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
                                         <label htmlFor="url" className="form-control-placeholder">url</label>
@@ -211,28 +189,8 @@ export default class CreateAnnotation extends React.Component {
 
                                     </div>
                                 </div>
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group  has-danger ">
-                                        <label htmlFor="description" className="form-control-placeholder">description</label>
-                                        <textarea type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control" id="description" name="description"></textarea>
-                                        {
-                                            validation.description ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : ''
-                                        }
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group ">
-                                        <label htmlFor="title" className="form-control-placeholder">title</label>
-                                        <input type="text" value={this.state.annotation.title} onChange={this.changeHandler} className="form-control" id="title" name="title" />
 
-                                        {
-                                            validation.title ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.title}</span> : ''
-                                        }
 
-                                    </div>
-                                </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="show_at" className="form-control-placeholder">show_at</label>
@@ -245,18 +203,7 @@ export default class CreateAnnotation extends React.Component {
 
                                     </div>
                                 </div>
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group ">
-                                        <label htmlFor="type" className="form-control-placeholder">type</label>
-                                        <input type="text" value={this.state.annotation.type} onChange={this.changeHandler} className="form-control" id="type" name="type" />
 
-                                        {
-                                            validation.type ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.type}</span> : ''
-                                        }
-
-                                    </div>
-                                </div>
                             </div>
                             <div className="row">
                                 <div className="col-12 text-right">

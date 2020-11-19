@@ -22,15 +22,12 @@ class annotation extends JsonResource
           "_id" =>$annotation->id,
           "category" => $annotation->category,
           "eventSource" => [
-              "type" => $annotation->event_type,
               "name" => $annotation->event_name,
           ],
           "url" => $annotation->url,
           "description" => $annotation->description,
-          "title" => $annotation->title,
           "highlighted" => false,
           "publishDate" =>  Carbon::parse($annotation->show_at)->format('Y-m-dTH:i:sZ'), //"2020-08-30T00:00:00.000Z"
-          "type" => "private",
       ]);
   }
     return $combineAnnotations;
