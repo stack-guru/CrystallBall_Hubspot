@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
-
+require('../../Main.css');
 
 class IndexAnnotations extends React.Component {
 
@@ -91,7 +91,7 @@ class IndexAnnotations extends React.Component {
                         </div>
                         <div className="row">
                             <div className="col-12">
-                                <table className="table table-hover table-bordered table-striped">
+                                <table className="table table-hover table-bordered table-striped annotation-table">
                                     <thead>
                                         <tr>
                                             <th>Event Name</th>
@@ -109,7 +109,11 @@ class IndexAnnotations extends React.Component {
                                             annotations.map(anno => (
                                                 <tr key={anno.id}>
                                                     <td>{anno.event_name}</td>
-                                                    <td>{anno.description}</td>
+                                                    <td >
+                                                        <div className="desc-td">
+                                                            {anno.description}
+                                                        </div>
+                                                    </td>
                                                     <td>
                                                         <button className={"btn btn-sm" + (anno.is_enabled ? " btn-success" : " btn-danger") + (this.state.isBusy ? " disabled" : "")} onClick={() => this.toggleStatus(anno.id)}>
                                                             {anno.is_enabled ? "On" : "Off"}

@@ -38,6 +38,20 @@
 .sidebar-menu li a {
     color: #456287;
 }
+
+.annotation-table td{
+    width: 200px;
+}
+
+.desc-td{
+    word-break: break-word;
+    overflow-y: auto;
+    height: 180px;
+    max-width: 520px;
+    min-width:300px
+
+}
+
 /*
 .sidebar-menu li a:hover {
     opacity: .6!important;
