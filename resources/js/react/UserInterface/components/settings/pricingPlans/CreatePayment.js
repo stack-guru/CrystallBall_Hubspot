@@ -480,21 +480,22 @@ export default class CreatePayment extends Component {
                                                 <button type="button" className={"btn btn-default btn-md "} onClick={this.cancelSubscription}>Cancel</button>
                                             </div>
                                         </div>
-                                        <div className="row ml-0 mr-0 mt-4 d-flex flex-row justify-content-center align-items-center">
-                                            <div className="img-col-wrap">
-                                                <div className="col-12 text-right p-5 secure-img">
-                                                    <img src="/images/masterCard.jpg" className="img-fluid " alt="mastercard image" />
-                                                    <img src="/images/Visa.png" className="img-fluid " alt="visa card image" />
-                                                    <img src="/images/PS.png" className="img-fluid " alt="ps image" />
-                                                    <img src="/images/PSD2.png" className="img-fluid " alt="psd2 image" />
-                                                    <img src="/images/safeKey.png" className="img-fluid " alt="safekey image" />
-                                                    <img src="/images/pciDss.png" className="img-fluid " alt="pciDss image" />
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                             </form>
+                            <div className="row ml-0 mr-0 mt-4 d-flex flex-row justify-content-center align-items-center bg-white">
+                                <div className="img-col-wrap">
+                                    <div className="col-12 text-right p-5 secure-img">
+                                        <img src="/images/masterCard.jpg" className="img-fluid " alt="mastercard image" />
+                                        <img src="/images/Visa.png" className="img-fluid " alt="visa card image" />
+                                        <img src="/images/safeKey.png" className="img-fluid " alt="safekey image" />
+                                        <img src="/images/PSD2.png" className="img-fluid " alt="psd2 image" />
+                                        <img src="/images/PS.png" className="img-fluid " alt="ps image" />
+                                        <img src="/images/pciDss.png" className="img-fluid " alt="pciDss image" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
