@@ -1,2 +1,2 @@
-category,event_type,event_name,url,description,title,show_at,type
-Sales Event,Sales,Black Friday,https://gaannotations.com/,Black Friday Deals 2020,Black Friday,2020-11-27,public
+category,event_name,url,description,show_at
+Sales Event,Black Friday,https://gaannotations.com/,Black Friday Deals 2020,2020-11-27
