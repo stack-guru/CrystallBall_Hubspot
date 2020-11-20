@@ -39,22 +39,20 @@
     color: #456287;
 }
 
-/*.annotation-table td{*/
-/*    width: 200px;*/
-/*}*/
 .description{
    position: relative;
     display: block;
 border:none;
 }
 .desc-td{
-    /*position: absolute;*/
-    min-height: 60px;
     overflow-y: auto;
 max-height: 180px;
   width: 25vw;
     scroll-margin: 0px;
 
+}
+.desc-td p{
+    margin:0px;
 }
 
 /*
