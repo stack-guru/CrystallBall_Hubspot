@@ -168,10 +168,13 @@ class header extends React.Component {
                                 <div className="peer  "><span>{this.props.user != undefined ? this.props.user.name : null}</span></div>
                             </a>
                             <ul className="dropdown-menu fsz-sm">
-                                <li>
-                                    <Link to="/settings" className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                                        <i className="ti-settings mR-10"></i> <span>Setting</span>
-                                    </Link></li>
+                                <li >
+                                    <div className="p-5">
+                                    <h4 className="mb-0 gaa-text-primary border-bottom-1"><b>{this.props.user.name}</b></h4>
+                                    <small className="gaa-text-primary"><b>Email: {this.props.user.email}</b></small><br />
+                                    <small className="gaa-text-primary"><b>Price Plan: {this.props.user.price_plan.name}</b></small>
+                                    </div>
+                                </li>
                                 {/* <li>
                                     <a href={null} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
                                         className="ti-user mR-10"></i>
