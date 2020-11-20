@@ -12,7 +12,7 @@ return [
     | location for this type of information, allowing packages to have
     | a conventional file to locate the various service credentials.
     |
-    */
+     */
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
@@ -34,8 +34,13 @@ return [
         'environment' => env('BLUESNAP_ENVIRONMENT', 'sandbox'),
         'api' => [
             'key' => env('BLUESNAP_API_KEY'),
-            'password' => env('BLUESNAP_API_PASSWORD')
-        ]
+            'password' => env('BLUESNAP_API_PASSWORD'),
+        ],
+        'client' => [
+            'encryption' => [
+                'key' => env('BLUESNAP_CLIENT_ENCRYPTION_KEY'),
+            ],
+        ],
     ],
 
     'google' => [

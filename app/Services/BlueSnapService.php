@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use Bluesnap;
+use Illuminate\Encryption\Encrypter;
 
 class BlueSnapService
 {
+    protected $encrypter;
     /**
      * Initialize the library in your constructor using
      * your environment, api key, and password
@@ -13,6 +15,7 @@ class BlueSnapService
     public function __construct()
     {
         Bluesnap\Bluesnap::init(config('services.bluesnap.environment'), config('services.bluesnap.api.key'), config('services.bluesnap.api.password'));
+        $this->encrypter = new Encrypter(config('services.bluesnap.client.encryption.key'));
     }
 
     /**
@@ -47,9 +50,11 @@ class BlueSnapService
         $response = Bluesnap\CardTransaction::create([
             'creditCard' => [
                 'cardNumber' => $card['cardNumber'],
+                'securityCode' => $card['securityCode'],
+                // 'encryptedCardNumber' => $this->encrypter->encryptString($card['cardNumber']),
+                // 'encryptedSecurityNumber' => $this->encrypter->encryptString($card['securityCode']),
                 'expirationMonth' => $card['expirationMonth'],
                 'expirationYear' => $card['expirationYear'],
-                'securityCode' => $card['securityCode'],
             ],
             'amount' => $price,
             'currency' => 'USD',
