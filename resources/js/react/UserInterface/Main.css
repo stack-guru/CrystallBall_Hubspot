@@ -39,17 +39,12 @@
     color: #456287;
 }
 
-/*.annotation-table td{*/
-/*    width: 200px;*/
-/*}*/
 .description{
    position: relative;
     display: block;
 border:none;
 }
 .desc-td{
-    /*position: absolute;*/
-
     overflow-y: auto;
 max-height: 180px;
   width: 25vw;
