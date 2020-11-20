@@ -39,16 +39,21 @@
     color: #456287;
 }
 
-.annotation-table td{
-    width: 200px;
+/*.annotation-table td{*/
+/*    width: 200px;*/
+/*}*/
+.description{
+   position: relative;
+    display: block;
+border:none;
 }
-
 .desc-td{
-    word-break: break-word;
+    /*position: absolute;*/
+    min-height: 60px;
     overflow-y: auto;
-    height: 180px;
-    max-width: 520px;
-    min-width:300px
+max-height: 180px;
+  width: 25vw;
+    scroll-margin: 0px;
 
 }
 

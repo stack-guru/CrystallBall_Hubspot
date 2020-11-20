@@ -109,9 +109,11 @@ class IndexAnnotations extends React.Component {
                                             annotations.map(anno => (
                                                 <tr key={anno.id}>
                                                     <td>{anno.event_name}</td>
-                                                    <td >
+                                                    <td className="description">
+                                                        <div className="desc-wrap">
                                                         <div className="desc-td">
-                                                            {anno.description}
+                                                            <p>{anno.description}</p>
+                                                        </div>
                                                         </div>
                                                     </td>
                                                     <td>
