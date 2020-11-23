@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 class sidebar extends React.Component {
 
     constructor(props) {
@@ -129,21 +128,45 @@ class sidebar extends React.Component {
                     {/*    </a>*/}
                     {/*</li>*/}
 
-                    {/*<li className="nav-item dropdown">*/}
-                    {/*    <a className="dropdown-toggle">*/}
-                    {/*        <span className="icon-holder">*/}
-                    {/*        <i className="c-orange-500 ti-layout-list-thumb"></i>*/}
-                    {/*        </span>*/}
-                    {/*        <span className="title">Tables</span>*/}
-                    {/*        <span className="arrow">*/}
-                    {/*        <i className="ti-angle-right"></i>*/}
-                    {/*        </span>*/}
-                    {/*    </a>*/}
-                    {/*    <ul className="dropdown-menu">*/}
-                    {/*        <li><a className="sidebar-link" href="basic-table.html">Basic Table</a></li>*/}
-                    {/*        <li><a className="sidebar-link" href="datatable.html">Data Table</a></li>*/}
-                    {/*    </ul>*/}
-                    {/*</li>*/}
+                    <li className="nav-item dropdown collapseMenu">
+                        <a className="dropdown-toggle" data-toggle="collapse" data-target="#multiCollapseExample2" >
+                            <span className="icon-holder">
+                              <i className="ti-settings mR-10"></i>
+                            </span>
+                            <span className="title">Settings</span>
+                            <span className="arrow">
+                            <i className="ti-angle-right"></i>
+                            </span>
+                        </a>
+                        <ul className="dropdown-menu collapse" id="multiCollapseExample2">
+                            <li>
+                                <Link to="/settings/change-password" className="sidebar-link">
+                                    <span className="nav-link">Change password</span>
+                                </Link>
+                            </li>
+                            <li>
+
+                                <Link to="/settings/google-account"  className="sidebar-link" >
+                                    <span className="nav-link">Add google account</span>
+                                </Link>
+                            </li>
+                            <li>
+
+                                <Link to="/settings/price-plans" className="sidebar-link">
+                                    <span className="nav-link">Price Plans</span>
+                                </Link>
+                            </li>
+                            <li>
+
+                                <Link to="/settings/payment-history" className="sidebar-link">
+                                    <span className="nav-link">Payment History</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <a className="sidebar-link" href="/documentation" target="_blank">API Documentation</a>
+                            </li>
+                        </ul>
+                    </li>
 
 
                     {/*<li className="nav-item dropdown"><a className="dropdown-toggle" href={null}><span*/}

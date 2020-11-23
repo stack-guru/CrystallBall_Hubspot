@@ -58,4 +58,12 @@ class User extends Authenticatable
     public function lastPaymentDetail(){
         return $this->hasOne('App\Models\PaymentDetail')->orderBy('created_at', 'DESC');
     }
+
+    public function lastAnnotation(){
+        return $this->hasOne('App\Models\Annotation')->orderBy('created_at', 'DESC');
+    }
+    public function annotations()
+    {
+        return $this->hasMany('App\Models\Annotation');
+    }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import HttpClient from "./utils/HttpClient";
-
+import './Sidebarjs.js';
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
 import Index from "./components/Index";

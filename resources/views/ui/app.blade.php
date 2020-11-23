@@ -101,6 +101,7 @@
 
 <div id="ui"></div>
 
+<script type="text/javascript" src="{{asset('js/jquery3.4.1.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendor.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundle.js')}}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -110,5 +111,8 @@
     var bluesnap = new BlueSnap("{{ config('services.bluesnap.client.encryption.key') }}", {{ config('services.bluesnap.environment') == 'sandbox' ? 'true' : 'false' }});
 </script>
 <script type="text/javascript" src="{{asset('js/UI.js')}}"></script>
+<script>
+
+</script>
 </body>
 </html>

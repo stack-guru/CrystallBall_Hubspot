@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\Annotation;
 use App\Models\PricePlan;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -17,7 +19,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin/user/index')->with('users', User::with('pricePlan')->get());
+
+
+        $data['users']= User::with(['pricePlan','lastAnnotation'])->get();
+
+
+        return view('admin/user/index' ,$data);
     }
 
     /**
