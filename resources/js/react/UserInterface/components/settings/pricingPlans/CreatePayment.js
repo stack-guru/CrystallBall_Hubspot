@@ -84,7 +84,22 @@ export default class CreatePayment extends Component {
 
         if (this.validate() && !this.state.isBusy) {
             this.setState({ isBusy: true });
-            HttpClient.post('/settings/price-plan/payment', { ...this.state.paymentDetails, 'price_plan_id': this.state.pricePlan.id })
+
+            bluesnap.encrypt("paymentDetailsForm");
+
+            HttpClient.post('/settings/price-plan/payment', {
+                'price_plan_id': this.state.pricePlan.id,
+                expirationMonth: this.state.paymentDetails.expirationMonth,
+                expirationYear: this.state.paymentDetails.expirationYear,
+                ccLast4Digits: document.getElementsByName('ccLast4Digits')[0].value,
+                encryptedCreditCard: document.getElementsByName('encryptedCreditCard')[0].value,
+                encryptedCvv: document.getElementsByName('encryptedCvv')[0].value,
+                first_name: this.state.paymentDetails.first_name,
+                last_name: this.state.paymentDetails.last_name,
+                billing_address: this.state.paymentDetails.billing_address,
+                city: this.state.paymentDetails.city,
+                country: this.state.paymentDetails.country,
+            })
                 .then(response => {
                     this.setState({ isBusy: false, errors: undefined });
 
@@ -259,7 +274,7 @@ export default class CreatePayment extends Component {
                 <div className="masonry-item">
                     <div className="bgc-white bd">
                         <div className="mT-30">
-                            <form onSubmit={this.submitHandler}>
+                            <form onSubmit={this.submitHandler} id="paymentDetailsForm">
                                 <div className="row ml-0 mr-0 seperator">
 
                                     {/*firs  column start*/}
@@ -326,7 +341,7 @@ export default class CreatePayment extends Component {
                                                     <div className="input-group-prepend">
                                                         <span className="input-group-text ct" id="basic-addon1">{this.state.cardType}</span>
                                                     </div>
-                                                    <input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} placeholder="4242 4242 4242 4242" value={this.state.paymentDetails.cardNumber} />
+                                                    <input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} placeholder="4242 4242 4242 4242" value={this.state.paymentDetails.cardNumber} data-bluesnap="encryptedCreditCard" />
                                                 </div>
 
                                             </div>
@@ -385,7 +400,7 @@ export default class CreatePayment extends Component {
                                             <div className="col-4 pr-0">
                                                 <div className="form-group  floating-labels">
 
-                                                    <input type="text" className="form-control" placeholder="CVV" onChange={this.changeHandler} id="securityCode" name="securityCode" />
+                                                    <input type="text" className="form-control" placeholder="CVV" onChange={this.changeHandler} id="securityCode" name="securityCode" data-bluesnap="encryptedCvv" />
                                                     {
                                                         validation.securityCode ?
                                                             <span className="text-danger">{validation.securityCode}</span> : ''

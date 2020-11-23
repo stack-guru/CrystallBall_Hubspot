@@ -37,10 +37,11 @@ class PaymentController extends Controller
         if ($pricePlan->price != 0) {
 
             $this->validate($request, [
-                'cardNumber' => 'required',
+                'encryptedCreditCard' => 'required',
+                'ccLast4Digits' => 'required',
                 'expirationMonth' => 'required',
                 'expirationYear' => 'required',
-                'securityCode' => 'nullable',
+                'encryptedCvv' => 'nullable',
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'billing_address' => 'required',
@@ -50,10 +51,10 @@ class PaymentController extends Controller
             ]);
 
             $card = [
-                'cardNumber' => $request->cardNumber,
+                'encryptedCreditCard' => $request->encryptedCreditCard,
                 'expirationMonth' => $request->expirationMonth,
                 'expirationYear' => $request->expirationYear,
-                'securityCode' => $request->securityCode,
+                'encryptedCvv' => $request->encryptedCvv,
             ];
 
             $pricePlanSubscription = new PricePlanSubscription;
@@ -95,7 +96,7 @@ class PaymentController extends Controller
 
             $paymentDetail = new PaymentDetail;
             $paymentDetail->fill($request->all());
-            $paymentDetail->card_number = substr($request->cardNumber, strlen($request->cardNumber) - 4);
+            $paymentDetail->card_number = $request->ccLast4Digits;
             $paymentDetail->expiry_month = $request->expirationMonth;
             $paymentDetail->expiry_year = $request->expirationYear;
             $paymentDetail->bluesnap_vaulted_shopper_id = $obj['vaultedShopperId'];
