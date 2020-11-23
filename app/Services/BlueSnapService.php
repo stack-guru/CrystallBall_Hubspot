@@ -50,7 +50,7 @@ class BlueSnapService
                 // 'cardNumber' => $card['cardNumber'],
                 // 'securityCode' => $card['securityCode'],
                 'encryptedCardNumber' => $card['encryptedCreditCard'],
-                'encryptedSecurityNumber' => $card['encryptedCvv'],
+                'encryptedSecurityCode' => $card['encryptedCvv'],
                 'expirationMonth' => $card['expirationMonth'],
                 'expirationYear' => $card['expirationYear'],
             ],
