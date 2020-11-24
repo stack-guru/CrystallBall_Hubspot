@@ -23,6 +23,18 @@ class PaymentController extends Controller
 
     }
 
+    public function show(Request $request){
+
+        if(! $request->query('_token')){
+            $blueSnapService = new BlueSnapService;
+            $token = $blueSnapService->getToken();
+
+            return redirect()->route('settings.price-plan.payment', [ 'price_plan_id' => $request->query('price_plan_id'), '_token' => $token ]);
+        }
+
+        return view('ui/app');
+    }
+
     public function subscribePlan(Request $request)
     {
 
@@ -37,25 +49,17 @@ class PaymentController extends Controller
         if ($pricePlan->price != 0) {
 
             $this->validate($request, [
-                'encryptedCreditCard' => 'required',
                 'ccLast4Digits' => 'required',
                 'expirationMonth' => 'required',
                 'expirationYear' => 'required',
-                'encryptedCvv' => 'nullable',
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'billing_address' => 'required',
                 'city' => 'required',
                 'zip_code' => 'nullable',
                 'country' => 'required',
+                'pfToken' => 'required'
             ]);
-
-            $card = [
-                'encryptedCreditCard' => $request->encryptedCreditCard,
-                'expirationMonth' => $request->expirationMonth,
-                'expirationYear' => $request->expirationYear,
-                'encryptedCvv' => $request->encryptedCvv,
-            ];
 
             $pricePlanSubscription = new PricePlanSubscription;
             $blueSnapService = new BlueSnapService;
@@ -78,7 +82,7 @@ class PaymentController extends Controller
                 $price += (17 / 100) * $price;
             }
 
-            $obj = $blueSnapService->createTransaction($price, $card);
+            $obj = $blueSnapService->createTransaction($price, null, null, $request->pfToken);
             if ($obj['success'] == false) {
                 return response()->json(['success' => false, 'message' => $obj['message']], 422);
             }

@@ -34,6 +34,7 @@ export default class CreatePayment extends Component {
         this.setDefaultState = this.setDefaultState.bind(this)
         this.cancelSubscription = this.cancelSubscription.bind(this)
         this.applyCoupon = this.applyCoupon.bind(this)
+        this.preSubmitBlueSnap = this.preSubmitBlueSnap.bind(this)
 
     }
 
@@ -62,6 +63,7 @@ export default class CreatePayment extends Component {
         }
         this.setState({ taxPercent: taxPercent, paymentDetails: { ...this.state.paymentDetails, city: resp.city, country: resp.country } });
 
+        setTimeout(this.attachFieldsToBlueSnap, 5000)
     }
 
 
@@ -80,59 +82,58 @@ export default class CreatePayment extends Component {
 
 
     submitHandler(e) {
-        e.preventDefault();
-
-        if (this.validate() && !this.state.isBusy) {
-            this.setState({ isBusy: true });
-
-            bluesnap.encrypt("paymentDetailsForm");
-
-            HttpClient.post('/settings/price-plan/payment', {
-                'price_plan_id': this.state.pricePlan.id,
-                expirationMonth: this.state.paymentDetails.expirationMonth,
-                expirationYear: this.state.paymentDetails.expirationYear,
-                ccLast4Digits: document.getElementsByName('ccLast4Digits')[0].value,
-                encryptedCreditCard: document.getElementsByName('encryptedCreditCard')[0].value,
-                encryptedCvv: document.getElementsByName('encryptedCvv')[0].value,
-                first_name: this.state.paymentDetails.first_name,
-                last_name: this.state.paymentDetails.last_name,
-                billing_address: this.state.paymentDetails.billing_address,
-                city: this.state.paymentDetails.city,
-                country: this.state.paymentDetails.country,
-            })
-                .then(response => {
-                    this.setState({ isBusy: false, errors: undefined });
-
-                    fbq('track', 'Purchase', { value: 0.00, currency: 'USD' });
+        // e.preventDefault();
 
 
-                    gtag('event', 'conversion', {
-                        'send_to': 'AW-645973826/pJ_PCIrI0egBEMKOg7QC',
-                        'value': 1.0,
-                        'currency': 'USD',
-                        'transaction_id': ''
-                    });
-                    ga('send', {
-                        hitType: 'event',
-                        eventCategory: 'Purchase',
-                        eventAction: 'Purchase',
-                        eventLabel: this.state.pricePlan.name,
-                        eventValue: this.state.pricePlan.price
-                    });
+        this.setState({ isBusy: true });
+        var urlSearchParams = new URLSearchParams(window.location.search);
+        let _token = urlSearchParams.get('_token')
+        HttpClient.post(`/settings/price-plan/payment`, {
+            '_token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            pfToken: _token,
+            'price_plan_id': this.state.pricePlan.id,
+            expirationMonth: this.state.cardData.exp.split('/')[0],
+            expirationYear: this.state.cardData.exp.split('/')[1],
+            ccLast4Digits: this.state.cardData.last4Digits,
+            first_name: this.state.paymentDetails.first_name,
+            last_name: this.state.paymentDetails.last_name,
+            billing_address: this.state.paymentDetails.billing_address,
+            city: this.state.paymentDetails.city,
+            country: this.state.paymentDetails.country,
+            zip_code: this.state.paymentDetails.zip_code,
+        })
+            .then(response => {
+                this.setState({ isBusy: false, errors: undefined });
 
-                    swal("Plan purchased", "New plan purchased.", "success").then(value => {
-                        window.location = "/annotation"
-                    });
-                }, (err) => {
-                    console.log(err);
-                    this.setState({ isBusy: false, errors: (err.response).data });
-                }).catch(err => {
-                    console.log(err)
-                    this.setState({ isBusy: false, errors: err });
+                fbq('track', 'Purchase', { value: 0.00, currency: 'USD' });
+
+
+                // gtag('event', 'conversion', {
+                //     'send_to': 'AW-645973826/pJ_PCIrI0egBEMKOg7QC',
+                //     'value': 1.0,
+                //     'currency': 'USD',
+                //     'transaction_id': ''
+                // });
+                // ga('send', {
+                //     hitType: 'event',
+                //     eventCategory: 'Purchase',
+                //     eventAction: 'Purchase',
+                //     eventLabel: this.state.pricePlan.name,
+                //     eventValue: this.state.pricePlan.price
+                // });
+
+                swal("Plan purchased", "New plan purchased.", "success").then(value => {
+                    window.location = "/annotation"
                 });
-        }
-
+            }, (err) => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                console.log(err)
+                this.setState({ isBusy: false, errors: err });
+            });
     }
+
 
 
     validate() {
@@ -274,7 +275,7 @@ export default class CreatePayment extends Component {
                 <div className="masonry-item">
                     <div className="bgc-white bd">
                         <div className="mT-30">
-                            <form onSubmit={this.submitHandler} id="paymentDetailsForm">
+                            <form onSubmit={this.preSubmitBlueSnap} id="paymentDetailsForm">
                                 <div className="row ml-0 mr-0 seperator">
 
                                     {/*firs  column start*/}
@@ -335,82 +336,26 @@ export default class CreatePayment extends Component {
 
                                             </div>
 
-                                            <div className="form-group ">
-                                                <label htmlFor="cardNumber">Card Number</label>
-                                                <div className="input-group mb-3">
-                                                    <div className="input-group-prepend">
-                                                        <span className="input-group-text ct" id="basic-addon1">{this.state.cardType}</span>
-                                                    </div>
-                                                    <input type="text" className="form-control" id="cardNumber" name="cardNumber" onChange={this.changeHandler} placeholder="4242 4242 4242 4242" value={this.state.paymentDetails.cardNumber} data-bluesnap="encryptedCreditCard" />
+                                            <div className="row">
+                                                <div className="col-6">
+                                                    <div data-bluesnap="ccn"></div>
+                                                </div>
+                                                <div className="col-3">
+                                                    <div data-bluesnap="exp"></div>
+                                                </div>
+                                                <div className="col-3">
+                                                    <div data-bluesnap="cvv"></div>
                                                 </div>
 
                                             </div>
-                                            {
-                                                validation.cardNumber ?
-                                                    <span className="text-danger">{validation.cardNumber}</span> : ''
-                                            }
                                         </div>
-
-                                        {/*<div className="form-row">*/}
-
 
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-4 pl-0">
-                                                <div className="form-group ">
-                                                    <label htmlFor="expirationMonth">Expiry Month</label>
-                                                    <select name="expirationMonth" onChange={this.changeHandler} id="expirationMonth" className="form-control">
-                                                        <option value="null">Select Month</option>
-                                                        <option value="1">01</option>
-                                                        <option value="2">02</option>
-                                                        <option value="3">03</option>
-                                                        <option value="4">04</option>
-                                                        <option value="5">05</option>
-                                                        <option value="6">06</option>
-                                                        <option value="7">07</option>
-                                                        <option value="8">08</option>
-                                                        <option value="9">09</option>
-                                                        <option value="10">10</option>
-                                                        <option value="11">11</option>
-                                                        <option value="12">12</option>
-                                                    </select>
-                                                    {
-                                                        validation.expirationMonth ?
-                                                            <span className="text-danger">{validation.expirationMonth}</span> : ''
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div className="col-4 p-2">
-                                                <div className="form-group ">
-                                                    <label htmlFor="expirationYear">Expiry Year</label>
-                                                    <select name="expirationYear" id="expirationYear" onChange={this.changeHandler} className="form-control">
-                                                        <option value="null">Select Year</option>
-                                                        {
-                                                            expYears.map(year => (
-                                                                <option value={year} key={year}>{year}</option>
-                                                            ))
-
-                                                        }
-                                                    </select>
-                                                    {
-                                                        validation.expirationYear ?
-                                                            <span className="text-danger">{validation.expirationYear}</span> : ''
-                                                    }
-                                                </div>
                                             </div>
                                             <div className="col-4 pr-0">
-                                                <div className="form-group  floating-labels">
-
-                                                    <input type="text" className="form-control" placeholder="CVV" onChange={this.changeHandler} id="securityCode" name="securityCode" data-bluesnap="encryptedCvv" />
-                                                    {
-                                                        validation.securityCode ?
-                                                            <span className="text-danger">{validation.securityCode}</span> : ''
-                                                    }
-                                                    <label htmlFor="securityCode">CVV</label>
-                                                </div>
                                             </div>
                                         </div>
-
-                                        {/*</div>*/}
                                     </div>
 
                                     <div className="col-6">
@@ -514,9 +459,49 @@ export default class CreatePayment extends Component {
                         </div>
                     </div>
                 </div>
-            </div >
+            </div>
 
 
         )
+    }
+
+    preSubmitBlueSnap(e) {
+        e.preventDefault();
+
+        if (this.state.isBusy) {
+            console.log('Form is busy')
+            return;
+        }
+        this.setState({ isBusy: true })
+
+        bluesnap.hostedPaymentFieldsSubmitData((callback) => {
+            if (null != callback.cardData) {
+                console.log('card type: ' + callback.cardData.ccType +
+                    ', last 4 digits: ' + callback.cardData.last4Digits +
+                    ', exp: ' + callback.cardData.exp +
+                    ', issuing Country: ' + callback.cardData.issuingCountry +
+                    ', isRegulatedCard: ' + callback.cardData.isRegulatedCard +
+                    ', cardSubType: ' + callback.cardData.cardSubType +
+                    ', binCategory: ' + callback.cardData.binCategory +
+                    ' and ccBin: ' + callback.cardData.ccBin +
+                    ', after that I can call final submit');
+
+                let cardData = callback.cardData;
+                this.setState({ cardData });
+                this.submitHandler(e);
+
+            } else {
+                var errorArray = callback.error;
+                for (i in errorArray) {
+                    console.log("Received error: tagId= " +
+                        errorArray[i].tagId + ", errorCode= " +
+                        errorArray[i].errorCode + ", errorDescription= " +
+                        errorArray[i].errorDescription);
+                }
+            }
+        });
+    }
+    attachFieldsToBlueSnap() {
+        bluesnap.hostedPaymentFieldsCreate(bsObj)
     }
 }

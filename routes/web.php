@@ -73,7 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::view('change-password', 'ui/app');
         Route::view('price-plans', 'ui/app');
-        Route::view('price-plans/payment', 'ui/app')->name('settings.price-plan.payment');
+        Route::get('price-plans/payment', [App\Http\Controllers\PaymentController::class, 'show'])->name('settings.price-plan.payment');
         Route::view('payment-history', 'ui/app');
     });
 
