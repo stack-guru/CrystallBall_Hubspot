@@ -137,7 +137,7 @@ export default class indexPricingPlans extends React.Component {
                                                     pricePlan.price < 0 ?
                                                         <button className="btn btn-block btn-primary text-uppercase mt-auto " type="button" >Coming Soon</button>
                                                         :
-                                                        <a to={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn btn-block btn-primary text-uppercase mt-auto">Subscribe</a>
+                                                        <a href={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn btn-block btn-primary text-uppercase mt-auto">Subscribe</a>
                                             }
                                         </div>
                                     </div>
