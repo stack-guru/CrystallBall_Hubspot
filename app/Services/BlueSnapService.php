@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Bluesnap;
+use Log;
 
 class BlueSnapService
 {
@@ -63,8 +64,14 @@ class BlueSnapService
         curl_close($curl);
 
         if ($err) {
-            info($err);
-            return false;
+            Log::error($err);
+            abort(500);
+        }
+
+        if(! array_key_exists('location', $headers)){
+            Log::debug($headers);
+            Log::debug($response);
+            abort(500);
         }
 
         $tokenURL = $headers['location'][0];
