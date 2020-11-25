@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('coupon', [App\Http\Controllers\CouponController::class, 'verify']);
 
         Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
+        Route::get('annotation/sortBy', [App\Http\Controllers\AnnotationController::class, 'sort']);
         Route::post('annotation', [App\Http\Controllers\AnnotationController::class, 'store']);
         Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
         Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);

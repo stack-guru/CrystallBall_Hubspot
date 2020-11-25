@@ -20,7 +20,7 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->pricePlan->name }}</td>
                                     <td>{{ @$user->created_at }}</td>
-                                    <td>{{ $user->lastAnnotation->updated_at}}</td>
+                                    <td>{{ $user->lastAnnotation->updated_at?$user->lastAnnotation->updated_at:$user->lastAnnotation->created_at}}</td>
                                     <td>
                                         <div class="row ml-0 mr-0 d-flex flex-row ">
 

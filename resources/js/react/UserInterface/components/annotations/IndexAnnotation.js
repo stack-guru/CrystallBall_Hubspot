@@ -10,11 +10,16 @@ class IndexAnnotations extends React.Component {
         super();
         this.state = {
             annotations: [],
+            sortBy:'',
+            accounts:[],
+            googleAccount:'',
             error: '',
             isBusy: false
         }
         this.deleteAnnotation = this.deleteAnnotation.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.sort = this.sort.bind(this)
+        this.sortByAccount = this.sortByAccount.bind(this)
     }
     componentDidMount() {
         document.title = 'Annotation';
@@ -22,14 +27,26 @@ class IndexAnnotations extends React.Component {
         this.setState({ isBusy: true });
         HttpClient.get(`/annotation`)
             .then(response => {
-                this.setState({ isBusy: false, annotations: response.data.annotations });
+                this.setState({  annotations: response.data.annotations });
+            }, (err) => {
+                console.log(err);
+                this.setState({  errors: (err.response).data });
+            }).catch(err => {
+                console.log(err)
+                this.setState({  errors: err });
+            });
+
+        HttpClient.get(`/settings/google-account`)
+            .then(response => {
+                this.setState({ isBusy: false, accounts: response.data.google_accounts });
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
-                this.setState({ isBusy: false, errors: err });
-            });
+            console.log(err)
+            this.setState({ isBusy: false, errors: err });
+        });
+
     }
 
     deleteAnnotation(id) {
@@ -69,9 +86,36 @@ class IndexAnnotations extends React.Component {
         }
     }
 
+    sort(e){
+        this.setState({sortBy:e.target.value});
+        if(this.state.sortBy!=='ga-account'){
+            this.setState({ isBusy: true });
+            HttpClient.get(`/annotation/sortBy`,{sortBy: this.state.sortBy})
+                .then(response => {
+                    this.setState({ isBusy: false, annotations: response.data.annotations });
+                }, (err) => {
+                    console.log(err);
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                console.log(err)
+                this.setState({ isBusy: false, errors: err });
+            });
+        }
+
+    }
+    sortByAccount(e){
+        this.setState({googleAccount:e.target.value});
+
+       window.alert('function under development');
+
+    }
+
+
+
 
     render() {
         const annotations = this.state.annotations;
+        const accounts = this.state.accounts;
 
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
@@ -83,7 +127,30 @@ class IndexAnnotations extends React.Component {
                             </div>
                         </div>
                         <div className="row mb-4">
-                            <div className="col-12 text-right">
+                            <div className="col-6 text-left ">
+                                <div className="d-flex flex-row ">
+
+                                <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control mr-3" onChange={this.sort}>
+                                    <option value="Null">Sort By</option>
+                                    <option value="added">Added</option>
+                                    <option value="date">By Date</option>
+                                    <option value="ga-account">By Ga-annotation-account</option>
+                                </select>
+
+                                <select name="googleAccount" disabled={this.state.sortBy!=="ga-account"?true:false} value={this.state.googleAccount} onChange={this.sortByAccount} id="google-accounts" className="form-control ">
+                                    <option value="Null">Select google account</option>
+                                    {
+                                        accounts?
+                                            accounts.map(acc=>(
+                                                <option value={acc.account_id} key={acc.id}>{acc.email}</option>
+                                            ))
+                                            :
+                                            <option value="Null">No google account found</option>
+                                    }
+                                </select>
+                                </div>
+                            </div>
+                            <div className="col-6 text-right">
                                 <Link to="/annotation/create" className="btn btn-sm gaa-bg-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add Manual</Link>
                                 <Link to="/annotation/upload" className="btn btn-sm gaa-bg-primary text-white"><i className=" mr-2 fa fa-upload"></i>CSV Upload</Link>
 
@@ -91,6 +158,7 @@ class IndexAnnotations extends React.Component {
                         </div>
                         <div className="row">
                             <div className="col-12">
+
                                 <table className="table table-hover table-bordered table-striped annotation-table">
                                     <thead>
                                         <tr>

@@ -93,6 +93,27 @@ class AnnotationController extends Controller
         return ["success" => true];
     }
 
+
+    public function sort(Request $request){
+
+        $annotations=Annotation::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        if($request->sortBy=="added")
+          $annotations=Annotation::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+
+        if($request->sortBy=="date")
+            $annotations=Annotation::where('user_id', Auth::id())->orderBy('show_at', 'desc')->get();
+
+        if($request->ga_account){
+
+            $annotations=Annotation::where('user_id', Auth::id())->orderBy('show_at', 'desc')->get();
+        }
+
+            return ['annotations'=>$annotations];
+    }
+
+
+
+
     public function uiIndex()
     {
         $annotations = Annotation::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
