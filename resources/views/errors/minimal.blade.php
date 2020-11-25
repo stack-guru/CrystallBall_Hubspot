@@ -18,18 +18,55 @@
             body {
                 font-family: 'Nunito';
             }
+
+            .main-div {
+                flex-direction: column;
+                justify-content: center;
+                justify-content: space-around;
+                align-content: stretch;
+            }
+            .code-div {
+                color: black;
+            }
+
+            .message-div {
+                color: black;
+            }
+
+            h1 {
+                font-weight: bolder;
+            }
+
+            .action-button {
+                background-color: #367ca5;
+                padding: 10px 20px 10px 20px;
+                font-size: 15px;
+                color: white;
+            }
         </style>
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-            <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex items-center pt-8 sm:justify-start sm:pt-0">
-                    <div class="px-4 text-lg text-gray-500 border-r border-gray-400 tracking-wider">
-                        @yield('code')
+            {{-- sm:px-6 lg:px-8 --}}
+            <div class="max-w-xl mx-auto">
+                <div class="flex main-div items-center pt-8 sm:justify-start sm:pt-0">
+                    <img src="{{ asset('images/unplugged.png') }}" alt="unplugged" width="100%" height="auto">
+                    {{-- border-r border-gray-400 --}}
+                    <div class="code-div text-lg tracking-wider">
+                        <h1>@yield('code')</h1>
                     </div>
 
-                    <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
-                        @yield('message')
+                    <div class="message-div text-lg tracking-wider">
+                        <p>@yield('message')</p>
+                    </div>
+                    <div class="message-div text-lg tracking-wider">
+                        <p></p>
+                    </div>
+                    <div class="message-div text-lg tracking-wider">
+                        <p></p>
+                    </div>
+                    <div class="button-div text-lg tracking-wider">
+                        <a href="{{ url('/') }}" class="action-button">Go to Home</a>
                     </div>
                 </div>
             </div>
