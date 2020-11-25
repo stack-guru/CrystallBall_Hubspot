@@ -53633,7 +53633,6 @@ var indexPricingPlans = /*#__PURE__*/function (_React$Component) {
       if (this.state.redirectTo) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
         to: this.state.redirectTo
       });
-      console.log(this.state.pricePlans);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: " bg-white component-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
@@ -53714,7 +53713,7 @@ var indexPricingPlans = /*#__PURE__*/function (_React$Component) {
         }, "Subscribe") : pricePlan.price < 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "btn btn-block btn-primary text-uppercase mt-auto ",
           type: "button"
-        }, "Coming Soon") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        }, "Coming Soon") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           to: "/settings/price-plans/payment?price_plan_id=".concat(pricePlan.id),
           className: "btn btn-block btn-primary text-uppercase mt-auto"
         }, "Subscribe"))));
@@ -55001,7 +55000,7 @@ axiosInst.interceptors.response.use(function (response) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\laragon\www\dev_gaannotations\resources\js\react\UserInterface\UI.js */"./resources/js/react/UserInterface/UI.js");
+module.exports = __webpack_require__(/*! /media/hamees/AA4C51084C50D0A5/xampp/htdocs/laravel/gannotations/resources/js/react/UserInterface/UI.js */"./resources/js/react/UserInterface/UI.js");
 
 
 /***/ })

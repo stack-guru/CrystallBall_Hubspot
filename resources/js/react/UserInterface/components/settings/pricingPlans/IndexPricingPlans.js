@@ -60,7 +60,6 @@ export default class indexPricingPlans extends React.Component {
 
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
-        console.log(this.state.pricePlans);
         return (
             <div className=" bg-white component-wrapper">
                 <section className="pricing bg-white ">
@@ -138,7 +137,7 @@ export default class indexPricingPlans extends React.Component {
                                                     pricePlan.price < 0 ?
                                                         <button className="btn btn-block btn-primary text-uppercase mt-auto " type="button" >Coming Soon</button>
                                                         :
-                                                        <Link to={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn btn-block btn-primary text-uppercase mt-auto">Subscribe</Link>
+                                                        <a to={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn btn-block btn-primary text-uppercase mt-auto">Subscribe</a>
                                             }
                                         </div>
                                     </div>
