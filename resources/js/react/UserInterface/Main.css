@@ -38,6 +38,10 @@
 .sidebar-menu li a {
     color: #456287;
 }
+.sidebar-menu li:last-child{
+    position: absolute;
+    bottom:5%;
+}
 
 .description{
    position: relative;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+require('../Main.css');
 class sidebar extends React.Component {
 
     constructor(props) {
@@ -109,16 +110,16 @@ class sidebar extends React.Component {
                         </span>
                         </Link>
                     </li> */}
-                    <li className="nav-item gaa-menu-item gaa-text-danger">
-                        <a href="https://chrome.google.com/webstore/detail/google-analytics-annotati/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en&authuser=1" target="_blank">
-                            <span className="sidebar-link gaa-text-danger" >
-                                <span className="icon-holder gaa-text-danger">
-                                    <i className="fa fa-cube"></i>
-                                </span>
-                                <span className="title">Add Chrome Extension</span>
-                            </span>
-                        </a>
-                    </li>
+                    {/*<li className="nav-item gaa-menu-item gaa-text-danger">*/}
+                    {/*    <a href="https://chrome.google.com/webstore/detail/google-analytics-annotati/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en&authuser=1" target="_blank">*/}
+                    {/*        <span className="sidebar-link gaa-text-danger" >*/}
+                    {/*            <span className="icon-holder gaa-text-danger">*/}
+                    {/*                <i className="fa fa-cube"></i>*/}
+                    {/*            </span>*/}
+                    {/*            <span className="title">Add Chrome Extension</span>*/}
+                    {/*        </span>*/}
+                    {/*    </a>*/}
+                    {/*</li>*/}
                     {/*<li className="nav-item">*/}
                     {/*    <a className="sidebar-link" href="">*/}
                     {/*        <span className="icon-holder">*/}
@@ -185,7 +186,20 @@ class sidebar extends React.Component {
                     {/*        </li>*/}
                     {/*    </ul>*/}
                     {/*</li>*/}
+                    <li className="nav-item align-bottom d-flex gaa-menu-item gaa-text-danger">
+                        <a href="https://chrome.google.com/webstore/detail/google-analytics-annotati/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en&authuser=1" target="_blank">
+                            <span className="sidebar-link gaa-text-danger" >
+                                <span className="icon-holder gaa-text-danger">
+                                    <i className="fa fa-cube"></i>
+                                </span>
+                                <span className="title">Add Chrome Extension</span>
+                            </span>
+                        </a>
+                    </li>
                 </ul>
+                <div className="row ml-0 mr-0 ">
+
+                </div>
             </div>
         )
     }
