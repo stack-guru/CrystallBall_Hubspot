@@ -31,6 +31,7 @@ class AnnotationRequest extends FormRequest
                     'url' => 'nullable|string',
                     'description' => 'nullable|string',
                     'show_at' => 'required|date',
+                    'google_account_id' => 'nullable|exists:google_accounts,id',
                 ];
                 break;
 
@@ -42,6 +43,7 @@ class AnnotationRequest extends FormRequest
                     'description' => 'nullable|string',
                     'show_at' => 'nullable|date',
                     'is_enabled' => 'nullable',
+                    'google_account_id' => 'nullable|exists:google_accounts,id',
                 ];
                 break;
         }
