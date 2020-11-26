@@ -51370,8 +51370,8 @@ var EditAnnotation = /*#__PURE__*/function (_React$Component) {
         className: "form-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "event_name",
-        className: "form-control-placeholder"
-      }, "event_name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control-placeholder lead text-dark font-weight-bold"
+      }, "Event Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "form-control",
         value: this.state.annotation.event_name,
@@ -51386,7 +51386,7 @@ var EditAnnotation = /*#__PURE__*/function (_React$Component) {
         className: "form-group "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "category",
-        className: "form-control-placeholder"
+        className: "form-control-placeholder lead text-dark font-weight-bold"
       }, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "form-control",
@@ -51402,8 +51402,8 @@ var EditAnnotation = /*#__PURE__*/function (_React$Component) {
         className: "form-group  has-danger "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "description",
-        className: "form-control-placeholder"
-      }, "description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        className: "form-control-placeholder lead text-dark font-weight-bold"
+      }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         type: "text",
         value: this.state.annotation.description,
         onChange: this.changeHandler,
@@ -51418,8 +51418,8 @@ var EditAnnotation = /*#__PURE__*/function (_React$Component) {
         className: "form-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "url",
-        className: "form-control-placeholder"
-      }, "url"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control-placeholder text-dark lead font-weight-bold"
+      }, "Link"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.annotation.url,
         onChange: this.changeHandler,
@@ -51434,8 +51434,8 @@ var EditAnnotation = /*#__PURE__*/function (_React$Component) {
         className: "form-group "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "show_at",
-        className: "form-control-placeholder"
-      }, "show_at"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control-placeholder text-dark font-weight-bold lead"
+      }, "Shaw at"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "date",
         onChange: this.changeHandler,
         value: this.state.annotation.show_at,
