@@ -11,9 +11,9 @@ class IndexAnnotations extends React.Component {
         super();
         this.state = {
             annotations: [],
-            sortBy:'',
-            accounts:[],
-            googleAccount:'',
+            sortBy: '',
+            accounts: [],
+            googleAccount: '',
             error: '',
             isBusy: false
         }
@@ -28,13 +28,13 @@ class IndexAnnotations extends React.Component {
         this.setState({ isBusy: true });
         HttpClient.get(`/annotation`)
             .then(response => {
-                this.setState({isBusy: false,  annotations: response.data.annotations });
+                this.setState({ isBusy: false, annotations: response.data.annotations });
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
                 console.log(err)
-                this.setState({isBusy: false,  errors: err });
+                this.setState({ isBusy: false, errors: err });
             });
 
 
@@ -77,38 +77,38 @@ class IndexAnnotations extends React.Component {
         }
     }
 
-    sort(e){
-        this.setState({sortBy:e.target.value});
-        if(this.state.sortBy!=='ga-account'){
+    sort(e) {
+        this.setState({ sortBy: e.target.value });
+        if (e.target.value !== 'ga-account') {
             this.setState({ isBusy: true });
-            HttpClient.get(`/annotation?sortBy=${this.state.sortBy}`)
+            HttpClient.get(`/annotation?sortBy=${e.target.value}`)
                 .then(response => {
                     this.setState({ isBusy: false, annotations: response.data.annotations });
                 }, (err) => {
                     console.log(err);
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                console.log(err)
-                this.setState({ isBusy: false, errors: err });
-            });
+                    console.log(err)
+                    this.setState({ isBusy: false, errors: err });
+                });
         }
 
     }
-    sortByAccount(e){
-        this.setState({googleAccount:e.target.value});
-if(this.state.googleAccount){
-        this.setState({ isBusy: true });
-        HttpClient.get(`/annotation?google_account_id=${this.state.googleAccount}`)
-            .then(response => {
-                this.setState({ isBusy: false, annotations: response.data.annotations });
-            }, (err) => {
-                console.log(err);
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-            console.log(err)
-            this.setState({ isBusy: false, errors: err });
-        });
-}
+    sortByAccount(gaAccountId) {
+        this.setState({ googleAccount: gaAccountId });
+        if (gaAccountId !== "") {
+            this.setState({ isBusy: true });
+            HttpClient.get(`/annotation?google_account_id=${gaAccountId}`)
+                .then(response => {
+                    this.setState({ isBusy: false, annotations: response.data.annotations });
+                }, (err) => {
+                    console.log(err);
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    console.log(err)
+                    this.setState({ isBusy: false, errors: err });
+                });
+        }
 
     }
 
@@ -132,14 +132,14 @@ if(this.state.googleAccount){
                             <div className="col-6 text-left ">
                                 <div className="d-flex flex-row ">
 
-                                <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control mr-3" onChange={this.sort}>
-                                    <option value="Null">Sort By</option>
-                                    <option value="added">Added</option>
-                                    <option value="date">By Date</option>
-                                    <option value="ga-account">By Ga-annotation-account</option>
-                                </select>
+                                    <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control mr-3" onChange={this.sort}>
+                                        <option value="Null">Sort By</option>
+                                        <option value="added">Added</option>
+                                        <option value="date">By Date</option>
+                                        <option value="ga-account">By Ga-annotation-account</option>
+                                    </select>
 
-                                <GoogleAccountSelect name={'googleAccount'}  disabled={this.state.sortBy!=="ga-account"?true:false} id={'googleAccount'} value={this.state.googleAccount} function={this.sortByAccount}></GoogleAccountSelect>
+                                    <GoogleAccountSelect name={'googleAccount'} disabled={this.state.sortBy !== "ga-account"} id={'googleAccount'} value={this.state.googleAccount} onChangeCallback={(e) => { this.sortByAccount(e.target.value) }} />
 
                                 </div>
                             </div>
@@ -172,9 +172,9 @@ if(this.state.googleAccount){
                                                     <td>{anno.event_name}</td>
                                                     <td className="description">
                                                         <div className="desc-wrap">
-                                                        <div className="desc-td">
-                                                            <p>{anno.description}</p>
-                                                        </div>
+                                                            <div className="desc-td">
+                                                                <p>{anno.description}</p>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td>
