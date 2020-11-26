@@ -190,9 +190,9 @@ class header extends React.Component {
                             </a>
                             <ul className="dropdown-menu fsz-sm">
                                 <li >
-                                    <div className="p-5">
-                                    <h4 className="mb-0 gaa-text-primary border-bottom-1"><b>{this.props.user.name}</b></h4>
-                                    <small className="gaa-text-primary"><b>Email: {this.props.user.email}</b></small><br />
+                                    <div className="p-5  header-profile-info">
+                                    <h6 className="mb-0 gaa-text-primary border-bottom-1"><b>{this.props.user.name}</b></h6>
+                                    <small className="gaa-text-primary"><b>Email: {this.props.user.email}</b></small>
                                     <small className="gaa-text-primary"><b>Price Plan: {this.props.user.price_plan.name}</b></small>
                                     </div>
                                 </li>

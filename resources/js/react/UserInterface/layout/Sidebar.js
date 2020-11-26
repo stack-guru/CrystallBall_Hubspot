@@ -139,7 +139,7 @@ class sidebar extends React.Component {
                             <i className="ti-angle-right"></i>
                             </span>
                         </a>
-                        <ul className="dropdown-menu collapse" aria-labelledby="dropdownMenuButton">
+                        <ul className="dropdown-menu " aria-labelledby="dropdownMenuButton">
                             <li className="nav-item dropdown">
                                 <Link to="/settings/change-password" className="sidebar-link">
                                     <span className="nav-link">Change password</span>
@@ -151,12 +151,12 @@ class sidebar extends React.Component {
                                     <span className="nav-link">Add google account</span>
                                 </Link>
                             </li>
-                            <li className="nav-item dropdown">
+                            {/*<li className="nav-item dropdown">*/}
 
-                                <Link to="/settings/price-plans" className="sidebar-link">
-                                    <span className="nav-link">Price Plans</span>
-                                </Link>
-                            </li>
+                            {/*    <Link to="/settings/price-plans" className="sidebar-link">*/}
+                            {/*        <span className="nav-link">Price Plans</span>*/}
+                            {/*    </Link>*/}
+                            {/*</li>*/}
                             <li className="nav-item dropdown">
 
                                 <Link to="/settings/payment-history" className="sidebar-link">
@@ -164,7 +164,7 @@ class sidebar extends React.Component {
                                 </Link>
                             </li>
                             <li className="nav-item dropdown">
-                                <div className="sidebar-link">
+                                <div className="sidebar-link nav-link">
                                 <a  href="/documentation" target="_blank">API Documentation</a>
                                 </div>
                             </li>

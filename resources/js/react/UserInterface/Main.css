@@ -40,6 +40,7 @@
 }
 .sidebar-menu li:last-child{
     position: absolute;
+    top:90%;
     bottom:5%;
 }
 
@@ -55,8 +56,21 @@ max-height: 180px;
     scroll-margin: 0px;
 
 }
-.desc-td p{
-    margin:0px;
+.desc-td p {
+    margin: 0px;
+}
+.header-profile-info h6{
+    font-size: 12px;
+    border-bottom: 1px solid rgb(234 233 233);
+}
+.header-profile-info small {
+    font-size: 10px;
+    display: block;
+    margin-top: 3px;
+    border-bottom: 1px solid rgb(234 233 233);
+}
+.header-profile-info small:last-child{
+    border-bottom: none;
 }
 
 /*
