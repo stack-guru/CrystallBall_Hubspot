@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
+import GoogleAccountSelect from "../../utils/GoogleAccountSelect";
 require('../../Main.css');
 
 class IndexAnnotations extends React.Component {
@@ -27,25 +28,15 @@ class IndexAnnotations extends React.Component {
         this.setState({ isBusy: true });
         HttpClient.get(`/annotation`)
             .then(response => {
-                this.setState({  annotations: response.data.annotations });
-            }, (err) => {
-                console.log(err);
-                this.setState({  errors: (err.response).data });
-            }).catch(err => {
-                console.log(err)
-                this.setState({  errors: err });
-            });
-
-        HttpClient.get(`/settings/google-account`)
-            .then(response => {
-                this.setState({ isBusy: false, accounts: response.data.google_accounts });
+                this.setState({isBusy: false,  annotations: response.data.annotations });
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-            console.log(err)
-            this.setState({ isBusy: false, errors: err });
-        });
+                console.log(err)
+                this.setState({isBusy: false,  errors: err });
+            });
+
 
     }
 
@@ -90,7 +81,7 @@ class IndexAnnotations extends React.Component {
         this.setState({sortBy:e.target.value});
         if(this.state.sortBy!=='ga-account'){
             this.setState({ isBusy: true });
-            HttpClient.get(`/annotation/sortBy`,{sortBy: this.state.sortBy})
+            HttpClient.get(`/annotation?sortBy=${this.state.sortBy}`)
                 .then(response => {
                     this.setState({ isBusy: false, annotations: response.data.annotations });
                 }, (err) => {
@@ -105,8 +96,19 @@ class IndexAnnotations extends React.Component {
     }
     sortByAccount(e){
         this.setState({googleAccount:e.target.value});
-
-       window.alert('function under development');
+if(this.state.googleAccount){
+        this.setState({ isBusy: true });
+        HttpClient.get(`/annotation?google_account_id=${this.state.googleAccount}`)
+            .then(response => {
+                this.setState({ isBusy: false, annotations: response.data.annotations });
+            }, (err) => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+            console.log(err)
+            this.setState({ isBusy: false, errors: err });
+        });
+}
 
     }
 
@@ -115,7 +117,7 @@ class IndexAnnotations extends React.Component {
 
     render() {
         const annotations = this.state.annotations;
-        const accounts = this.state.accounts;
+
 
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
@@ -137,17 +139,8 @@ class IndexAnnotations extends React.Component {
                                     <option value="ga-account">By Ga-annotation-account</option>
                                 </select>
 
-                                <select name="googleAccount" disabled={this.state.sortBy!=="ga-account"?true:false} value={this.state.googleAccount} onChange={this.sortByAccount} id="google-accounts" className="form-control ">
-                                    <option value="Null">Select google account</option>
-                                    {
-                                        accounts?
-                                            accounts.map(acc=>(
-                                                <option value={acc.account_id} key={acc.id}>{acc.email}</option>
-                                            ))
-                                            :
-                                            <option value="Null">No google account found</option>
-                                    }
-                                </select>
+                                <GoogleAccountSelect name={'googleAccount'}  disabled={this.state.sortBy!=="ga-account"?true:false} id={'googleAccount'} value={this.state.googleAccount} function={this.sortByAccount}></GoogleAccountSelect>
+
                                 </div>
                             </div>
                             <div className="col-6 text-right">

@@ -2,7 +2,7 @@ import React from 'react';
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
 import { toast } from "react-toastify";
-
+import GoogleAccountSelect from "../../utils/GoogleAccountSelect";
 export default class CreateAnnotation extends React.Component {
 
     constructor(props) {
@@ -14,6 +14,7 @@ export default class CreateAnnotation extends React.Component {
                 url: '',
                 description: '',
                 show_at: '',
+                google_account_id:'',
             },
             validation: {},
             resp: '',
@@ -199,6 +200,18 @@ export default class CreateAnnotation extends React.Component {
                                         {
                                             validation.show_at ?
                                                 <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.show_at}</span> : ''
+                                        }
+
+                                    </div>
+                                </div>
+                                <div className="col-lg-3 col-sm-4">
+                                    <div className="form-group ">
+                                        <label htmlFor="show_at" className="form-control-placeholder">Google Accounts</label>
+                                <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.annotation.google_account_id} function={this.changeHandler}></GoogleAccountSelect>
+
+                                        {
+                                            validation.google_account_id ?
+                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.google_account_id}</span> : ''
                                         }
 
                                     </div>

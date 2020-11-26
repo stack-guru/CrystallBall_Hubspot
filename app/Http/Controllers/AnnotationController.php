@@ -42,7 +42,7 @@ class AnnotationController extends Controller
         $annotation->is_enabled = true;
         $annotation->save();
 
-        return redirect()->back();
+        return ['annotation'=>$annotation];
     }
 
     public function show($id)
@@ -94,29 +94,26 @@ class AnnotationController extends Controller
     }
 
 
-    public function sort(Request $request){
 
-        $annotations=Annotation::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
-        if($request->sortBy=="added")
-          $annotations=Annotation::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
 
-        if($request->sortBy=="date")
-            $annotations=Annotation::where('user_id', Auth::id())->orderBy('show_at', 'desc')->get();
 
-        if($request->ga_account){
 
-            $annotations=Annotation::where('user_id', Auth::id())->orderBy('show_at', 'desc')->get();
+
+    public function uiIndex(Request $request)
+    {
+        $annotationQuery=Annotation::where('user_id', Auth::id());
+
+        if($request->query('sortBy')=="added"){
+            $annotationQuery->orderBy('created_at', 'desc');
+        }elseif($request->query('sortBy')=="date"){
+            $annotationQuery->orderBy('show_at', 'desc');
+        }elseif($request->query('google_account_id')){
+         $annotationQuery->where('google_account_id',$request->query('google_account_id'))->orderBy('created_at', 'desc');
+        }else{
+            $annotationQuery->orderBy('updated_at','desc');
         }
 
-            return ['annotations'=>$annotations];
-    }
-
-
-
-
-    public function uiIndex()
-    {
-        $annotations = Annotation::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        $annotations =  $annotationQuery->get();
         return ['annotations' => $annotations];
     }
     public function uiShow($id)
