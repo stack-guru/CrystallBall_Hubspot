@@ -13,7 +13,7 @@ class AddGoogleAccountIdColumnToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('annotations', function (Blueprint $table) {
             $table->foreignId('google_account_id')->nullable()->constrained();
         });
     }
@@ -25,7 +25,7 @@ class AddGoogleAccountIdColumnToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('annotations', function (Blueprint $table) {
             $table->dropForeign('users_google_account_id_foreign');
             $table->dropColumn('google_account_id');
         });
