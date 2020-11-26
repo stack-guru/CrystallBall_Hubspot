@@ -130,41 +130,43 @@ class sidebar extends React.Component {
                     {/*</li>*/}
 
                     <li className="nav-item dropdown collapseMenu">
-                        <a className="dropdown-toggle" data-toggle="collapse" data-target="#multiCollapseExample2" >
+                        <a className="dropdown-toggle"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                             <span className="icon-holder">
-                              <i className="ti-settings mR-10"></i>
+                              <i className="ti-settings "></i>
                             </span>
                             <span className="title">Settings</span>
                             <span className="arrow">
                             <i className="ti-angle-right"></i>
                             </span>
                         </a>
-                        <ul className="dropdown-menu collapse" id="multiCollapseExample2">
-                            <li>
+                        <ul className="dropdown-menu collapse" aria-labelledby="dropdownMenuButton">
+                            <li className="nav-item dropdown">
                                 <Link to="/settings/change-password" className="sidebar-link">
                                     <span className="nav-link">Change password</span>
                                 </Link>
                             </li>
-                            <li>
+                            <li className="nav-item dropdown">
 
                                 <Link to="/settings/google-account"  className="sidebar-link" >
                                     <span className="nav-link">Add google account</span>
                                 </Link>
                             </li>
-                            <li>
+                            <li className="nav-item dropdown">
 
                                 <Link to="/settings/price-plans" className="sidebar-link">
                                     <span className="nav-link">Price Plans</span>
                                 </Link>
                             </li>
-                            <li>
+                            <li className="nav-item dropdown">
 
                                 <Link to="/settings/payment-history" className="sidebar-link">
                                     <span className="nav-link">Payment History</span>
                                 </Link>
                             </li>
-                            <li>
-                                <a className="sidebar-link" href="/documentation" target="_blank">API Documentation</a>
+                            <li className="nav-item dropdown">
+                                <div className="sidebar-link">
+                                <a  href="/documentation" target="_blank">API Documentation</a>
+                                </div>
                             </li>
                         </ul>
                     </li>

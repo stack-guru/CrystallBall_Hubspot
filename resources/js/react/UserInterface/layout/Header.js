@@ -158,13 +158,34 @@ class header extends React.Component {
                         {/*        </span></li>*/}
                         {/*    </ul>*/}
                         {/*</li>*/}
-                        <li className="dropdown">
-                            <a href={null} className="dropdown-toggle no-after peers fxw-nw ai-c lh-1"
-                                data-toggle="dropdown">
-                                <div className="peer mR-10">
-                                    {/* <img className="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg"
-                                         alt=""/> */}
+
+
+                    <li>
+                        <a href={null} className="peers fxw-nw td-n bdB c-grey-800 cH-blue bgcH-grey-100">
+
+                                {/*<div className="peer peer-greed">*/}
+
+                                <div className="peers jc-sb fxw-nw ">
+                                <div className="peer">
+                                        <Link to="/settings/price-plans"  className="fw-500 mB-0 gaa-text-primary" >
+                                            <span >Upgrade Now</span>
+                                        </Link>
                                 </div>
+                                </div>
+
+
+                                {/*</div>*/}
+                        </a>
+                    </li>
+
+
+                        <li className="dropdown">
+                            <a href={null} className="dropdown-toggle no-after peers fxw-nw ai-c lh-1 c-grey-800 cH-blue bgcH-grey-100"
+                                data-toggle="dropdown">
+                                {/*<div className="peer mR-10">*/}
+                                {/*    /!* <img className="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg"*/}
+                                {/*         alt=""/> *!/*/}
+                                {/*</div>*/}
                                 <div className="peer  "><span>{this.props.user != undefined ? this.props.user.name : null}</span></div>
                             </a>
                             <ul className="dropdown-menu fsz-sm">
