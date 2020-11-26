@@ -167,9 +167,9 @@ class header extends React.Component {
 
                                 <div className="peers jc-sb fxw-nw ">
                                 <div className="peer">
-                                        <Link to="/settings/price-plans"  className="fw-500 mB-0 gaa-text-primary" >
+                                        {/* <Link to="/settings/price-plans"  className="fw-500 mB-0 gaa-text-primary" >
                                             <span >Upgrade Now</span>
-                                        </Link>
+                                        </Link> */}
                                 </div>
                                 </div>
 
