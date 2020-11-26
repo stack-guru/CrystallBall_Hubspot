@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Bluesnap;
-use Log;
+use Illuminate\Support\Facades\Http;
 
 class BlueSnapService
 {
@@ -29,54 +29,12 @@ class BlueSnapService
 
         $url = $this->blueSnapDomain . '/services/2/payment-fields-tokens';
 
-        $headers = [];
+        $response = Http::withBasicAuth($this->key, $this->password)
+            ->post($url);
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        // curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        // curl_setopt($curl, CURLOPT_HEADER, 1);
+        $tokenURL = $response->header('location');
 
-        curl_setopt($curl, CURLOPT_HTTPHEADER,
-            [
-                'Content-Type:application/json',
-                'Accept:application/json',
-                'Authorization: Basic ' . base64_encode( $this->key . ":" . $this->password ),
-            ]
-        );
-
-        curl_setopt($curl, CURLOPT_HEADERFUNCTION,
-            function ($ch, $header) use (&$headers) {
-                $len = strlen($header);
-                $header = explode(':', $header, 2);
-                // ignore invalid headers
-                if (count($header) < 2) {
-                    return $len;
-                }
-                $headers[strtolower(trim($header[0]))][] = trim($header[1]);
-                return $len;
-            });
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        curl_close($curl);
-
-        if ($err) {
-            Log::error($err);
-            abort(500);
-        }
-
-        if(! array_key_exists('location', $headers)){
-            Log::debug($headers);
-            Log::debug($response);
-            abort(500);
-        }
-
-        $tokenURL = $headers['location'][0];
-
-        return substr($tokenURL, strlen($url)+1);
+        return substr($tokenURL, strlen($url) + 1);
     }
 
     /**
