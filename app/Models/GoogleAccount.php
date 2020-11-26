@@ -27,4 +27,9 @@ class GoogleAccount extends Model
     protected $casts = [
         'expires_in' => 'datetime',
     ];
+
+    public function annotations()
+    {
+        return $this->hasMany('App\Models\Annotation');
+    }
 }

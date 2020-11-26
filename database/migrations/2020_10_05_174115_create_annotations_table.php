@@ -30,7 +30,6 @@ class CreateAnnotationsTable extends Migration
             $table->date('show_at')->required();
             $table->string('type', 100)->required()->default('type');
 
-
             $table->timestamps();
         });
     }
