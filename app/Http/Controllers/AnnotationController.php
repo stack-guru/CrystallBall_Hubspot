@@ -145,7 +145,7 @@ class AnnotationController extends Controller
             }
         }
 
-        $user_data = Auth::id();
+        $user_id = Auth::id();
 
         $rows = array();
         foreach ($filecontent as $line) {
@@ -159,7 +159,8 @@ class AnnotationController extends Controller
                 for ($i = 0; $i < count($headers); $i++) {
                     $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
                 }
-                $row['user_id'] = $user_data;
+                $row['user_id'] = $user_id;
+                $row['google_account_id']=$request->google_account_id;
                 array_push($rows, $row);
 
             }

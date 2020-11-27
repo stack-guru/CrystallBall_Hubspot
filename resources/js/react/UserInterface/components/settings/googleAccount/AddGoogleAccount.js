@@ -1,15 +1,18 @@
 import React from 'react';
 import HttpClient from './../../../utils/HttpClient';
 import { toast } from 'react-toastify'
+import {Redirect} from "react-router-dom";
 export default class AddGoogleAccount extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isBusy: false,
-            googleAccounts: []
+            googleAccounts: [],
+            redirectTo:null,
         }
         this.handleDelete = this.handleDelete.bind(this);
+        this.restrictionHandler = this.restrictionHandler.bind(this);
     }
 
 
@@ -49,14 +52,26 @@ export default class AddGoogleAccount extends React.Component {
         });
     }
 
+    restrictionHandler(e){
+        e.preventDefault();
+        if(this.props.user.price_plan.price!==0){
+            window.location="/settings/google-account/create";
+        }else{
+            swal("Upgrade to Basic Plan!", "Google account feature is not available in this package.", "warning").then(value => {
+                this.setState({ redirectTo: '/settings/price-plans' });
+            })
+        }
+    }
+
     render() {
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
 
                 <div className="container p-5">
                     <div className="row ml-0 mr-0 my-5">
                         <div className="col-12 text-right">
-                            <a href="/settings/google-account/create" className="btn gaa-bg-primary text-white" >
+                            <a href="/settings/google-account/create" onClick={this.restrictionHandler} className="btn gaa-bg-primary text-white" >
                                 Connect New Account
                             </a>
                         </div>

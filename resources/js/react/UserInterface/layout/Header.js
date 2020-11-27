@@ -161,32 +161,31 @@ class header extends React.Component {
 
 
                     <li>
-                        <a href={null} className="peers fxw-nw td-n bdB c-grey-800 cH-blue bgcH-grey-100">
 
-                                {/*<div className="peer peer-greed">*/}
+                                    {
+                                        this.props.user.price_plan.price==0?
+                                            <Link to="/settings/price-plans"    className="peers fxw-nw td-n bdB c-grey-800 cH-blue bgcH-grey-100">
+                                                <div className="peers jc-sb fxw-nw ">
+                                                    <div className="peer">
+                                                         <span className="fw-500 mB-0 gaa-text-primary">Upgrade Now</span>
+                                                    </div>
+                                                </div>
 
-                                <div className="peers jc-sb fxw-nw ">
-                                <div className="peer">
-                                        {/* <Link to="/settings/price-plans"  className="fw-500 mB-0 gaa-text-primary" >
-                                            <span >Upgrade Now</span>
-                                        </Link> */}
-                                </div>
-                                </div>
+                                            </Link>:''
+                                    }
 
-
-                                {/*</div>*/}
-                        </a>
                     </li>
 
 
                         <li className="dropdown">
                             <a href={null} className="dropdown-toggle no-after peers fxw-nw ai-c lh-1 c-grey-800 cH-blue bgcH-grey-100"
                                 data-toggle="dropdown">
+
                                 {/*<div className="peer mR-10">*/}
                                 {/*    /!* <img className="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg"*/}
                                 {/*         alt=""/> *!/*/}
                                 {/*</div>*/}
-                                <div className="peer  "><span>{this.props.user != undefined ? this.props.user.name : null}</span></div>
+                                <div className="peer"><span>{this.props.user != undefined ? this.props.user.name : null}</span></div>
                             </a>
                             <ul className="dropdown-menu fsz-sm">
                                 <li >
