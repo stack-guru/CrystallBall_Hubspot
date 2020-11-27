@@ -83,6 +83,7 @@
         "email_verified_at": null,
         "created_at": null,
         "updated_at": "2020-10-29T09:51:08.000000Z",
+        "google_account_id":"1",
         "price_plan_id": 2,
         "price_plan_expiry_date": "2020-11-29",
         "annotations_count": 0
@@ -121,6 +122,7 @@
                 },
                 "url": "https://gaannotations.com/",
                 "description": "Black Friday Deals 2020",
+                "google_account_id":"1",
                 "highlighted": false,
                 "publishDate": "2020-11-27UTC00:00:000",
             }
@@ -147,6 +149,7 @@
         --header 'Content-Type: application/x-www-form-urlencoded' \
         --data category=Sales Event \
         --data event_name=Black Friday \
+        --data google_account_id:user@example.com,
         --data url=https://gaannotations.com/ \
         --data 'description=Black Friday Deals 2020' \
         --data show_at=2020-11-27 \
@@ -168,6 +171,7 @@
           "description": "Black Friday Deals 2020",
           "show_at": "2020-11-27",
           "user_id": 1,
+          "google_account_id":"1",
           "updated_at": "2020-10-29T10:11:19.000000Z",
           "created_at": "2020-10-29T10:11:19.000000Z",
           "id": 71
@@ -216,6 +220,11 @@
                         <td>date</td>
                         <td>[required] Annotation's show_at date from which it will show on google analytics</td>
                     </tr>
+                    <tr>
+                        <td>google_account_id</td>
+                        <td>int</td>
+                        <td>[required] Annotation's google account id with which it will be attached </td>
+                    </tr>
 
                     </tbody>
                 </table>
@@ -235,6 +244,7 @@
         --header 'Content-Type: application/x-www-form-urlencoded' \
         --data category=Sales Event \
         --data event_name=Black Friday \
+        --data google_account_id:user@example.com,
         --data url=https://gaannotations.com/ \
         --data 'description=Black Friday Deals 2020' \
         --data show_at=2020-11-27 \
@@ -256,6 +266,7 @@
           "event_name": "Black Friday",
           "url": "https://gaannotations.com/",
           "description": "Black Friday Deals 2020",
+          "google_account_id": "1",
           "show_at": "2020-11-27",
           "created_at": "2020-10-29T10:11:19.000000Z",
           "updated_at": "2020-10-29T10:17:25.000000Z",
@@ -319,6 +330,11 @@
                         <td>show_at</td>
                         <td>date</td>
                         <td>[required] Annotation's show_at date from which it will show on google analytics updated value</td>
+                    </tr>
+                    <tr>
+                        <td>google_account_id</td>
+                        <td>int</td>
+                        <td>[required] Annotation's google account id with which it will be attached </td>
                     </tr>
                     </tbody>
                 </table>
