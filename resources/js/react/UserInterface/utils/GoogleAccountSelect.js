@@ -1,5 +1,6 @@
 import React from "react";
 import HttpClient from "./HttpClient";
+import {Link} from "react-router-dom";
 
 export default class GoogleAccountSelect extends React.Component {
 
@@ -40,16 +41,20 @@ export default class GoogleAccountSelect extends React.Component {
                 onChange={this.props.onChangeCallback}
                 className="form-control">
 
-                <option value="" >Select Google account</option>
+                <option value=" " >Select Google account</option>
+
                 {
                     accounts ?
                         accounts.map(acc => (
+                            <React.Fragment key={acc.id}>
                             <option value={acc.id}>{acc.email}</option>
+
+                            </React.Fragment>
                         ))
-                        : <option >No account found</option>
+
+                        : <option aria-readonly={true}>No account found</option>
 
                 }
-
             </select>
         )
     }
