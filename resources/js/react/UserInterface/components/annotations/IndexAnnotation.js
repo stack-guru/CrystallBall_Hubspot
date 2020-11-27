@@ -117,10 +117,10 @@ class IndexAnnotations extends React.Component {
 
     render() {
         const annotations = this.state.annotations;
-
+console.log(annotations);
 
         return (
-            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
+            <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section   " id="inputs">
                     <div className="container p-5">
                         <div className="row mb-5">
@@ -157,6 +157,7 @@ class IndexAnnotations extends React.Component {
                                         <tr>
                                             <th>Event Name</th>
                                             <th>Description</th>
+                                            <th>Google Account</th>
                                             <th>Status</th>
                                             <th>Show At</th>
                                             <th>Actions</th>
@@ -176,6 +177,9 @@ class IndexAnnotations extends React.Component {
                                                                 <p>{anno.description}</p>
                                                             </div>
                                                         </div>
+                                                    </td>
+                                                    <td>
+                                                        {anno.google_account_id?anno.google_account.email:'All accounts'}
                                                     </td>
                                                     <td>
                                                         <button className={"btn btn-sm" + (anno.is_enabled ? " btn-success" : " btn-danger") + (this.state.isBusy ? " disabled" : "")} onClick={() => this.toggleStatus(anno.id)}>

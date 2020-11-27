@@ -101,7 +101,7 @@ class AnnotationController extends Controller
 
     public function uiIndex(Request $request)
     {
-        $annotationQuery=Annotation::where('user_id', Auth::id());
+        $annotationQuery=Annotation::with('googleAccount')->where('user_id', Auth::id());
 
         if($request->query('sortBy')=="added"){
             $annotationQuery->orderBy('created_at', 'desc');

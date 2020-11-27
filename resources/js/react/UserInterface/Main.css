@@ -43,7 +43,9 @@
     top:90%;
     bottom:5%;
 }
-
+.anno-container{
+    padding:2%!important;
+}
 .description{
    position: relative;
     display: block;
@@ -52,7 +54,7 @@ border:none;
 .desc-td{
     overflow-y: auto;
 max-height: 180px;
-  width: 25vw;
+  width: 16vw;
     scroll-margin: 0px;
 
 }
