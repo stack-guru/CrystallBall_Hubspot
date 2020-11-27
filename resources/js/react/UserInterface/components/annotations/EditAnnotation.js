@@ -162,7 +162,7 @@ export default class EditAnnotation extends React.Component {
                                     <div className="form-group ">
                                         <label htmlFor="category" className="form-control-placeholder lead text-dark font-weight-bold">Category</label>
                                         <input type="text" className="form-control" id="category" name="category"
-                                               value={this.state.annotation.category} onChange={this.changeHandler} />
+                                            value={this.state.annotation.category} onChange={this.changeHandler} />
                                         {
                                             validation.category ?
                                                 <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : ''
@@ -210,7 +210,7 @@ export default class EditAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="show_at" className="form-control-placeholder">Google Accounts</label>
-                                        <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.annotation.google_account_id} function={this.changeHandler}></GoogleAccountSelect>
+                                        <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.annotation.google_account_id} onChangeCallback={this.changeHandler}></GoogleAccountSelect>
 
                                         {
                                             validation.google_account_id ?

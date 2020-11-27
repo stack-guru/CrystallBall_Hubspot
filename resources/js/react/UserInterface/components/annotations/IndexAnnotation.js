@@ -96,7 +96,7 @@ class IndexAnnotations extends React.Component {
     }
     sortByAccount(gaAccountId) {
         this.setState({ googleAccount: gaAccountId });
-        if (gaAccountId !== "") {
+        if (gaAccountId !== "select-ga-account") {
             this.setState({ isBusy: true });
             HttpClient.get(`/annotation?google_account_id=${gaAccountId}`)
                 .then(response => {

@@ -1,6 +1,6 @@
 import React from "react";
 import HttpClient from "./HttpClient";
-import {Link} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 export default class GoogleAccountSelect extends React.Component {
 
@@ -10,7 +10,10 @@ export default class GoogleAccountSelect extends React.Component {
             accounts: [],
             isBusy: false,
             errors: '',
+            redirectTo: null,
         }
+
+        this.onChangeHandler = this.onChangeHandler.bind(this)
     }
 
 
@@ -26,11 +29,18 @@ export default class GoogleAccountSelect extends React.Component {
                 console.log(err)
                 this.setState({ isBusy: false, errors: err });
             });
+    }
 
-
+    onChangeHandler(e) {
+        if (e.target.value == 'new-google-account') {
+            this.setState({ redirectTo: '/settings/price-plans' });
+        } else {
+            this.props.onChangeCallback(e);
+        }
     }
 
     render() {
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         let accounts = this.state.accounts;
         return (
             <select
@@ -38,23 +48,16 @@ export default class GoogleAccountSelect extends React.Component {
                 disabled={this.props.disabled}
                 value={this.props.value}
                 id={this.props.id}
-                onChange={this.props.onChangeCallback}
+                onChange={this.onChangeHandler}
                 className="form-control">
 
-                <option value=" " >Select Google account</option>
-
+                <option value="select-ga-account" >Select Google account</option>
                 {
-                    accounts ?
-                        accounts.map(acc => (
-                            <React.Fragment key={acc.id}>
-                            <option value={acc.id}>{acc.email}</option>
-
-                            </React.Fragment>
-                        ))
-
-                        : <option aria-readonly={true}>No account found</option>
-
+                    accounts.map(acc => (
+                        <option key={acc.id} value={acc.id}>{acc.email}</option>
+                    ))
                 }
+                <option value="new-google-account" >Connect new Google Account</option>
             </select>
         )
     }
