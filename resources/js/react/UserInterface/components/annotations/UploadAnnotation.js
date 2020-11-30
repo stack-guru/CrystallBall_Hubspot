@@ -9,11 +9,11 @@ export default class UploadAnnotation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            google_account_id:'',
-            date_format:'',
+            google_account_id: '',
+            date_format: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.changeHandler=this.changeHandler.bind(this)
+        this.changeHandler = this.changeHandler.bind(this)
     }
 
     handleSubmit(e) {
@@ -43,10 +43,10 @@ export default class UploadAnnotation extends React.Component {
     }
 
     componentDidMount() {
-        document.title='Upload Csv';
+        document.title = 'Upload Csv';
     }
-    changeHandler(e){
-        this.setState({[e.target.name]:e.target.value})
+    changeHandler(e) {
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     render() {
@@ -67,11 +67,11 @@ export default class UploadAnnotation extends React.Component {
                             </div>
                         </div>
 
-                                <div className="text-primary mb-3 mt-3 ml-3 "><b>Notice: </b>Please upload CSV with date formatted as "yyyy-mm-dd"</div>
+                        <div className="text-primary mb-3 mt-3 ml-3 "><b>Notice: </b>Please upload CSV with date formatted as "yyyy-mm-dd"</div>
 
                         <form onSubmit={this.handleSubmit} encType="multipart/form-data">
 
-                        <div className="row mr-0 ml-0">
+                            <div className="row mr-0 ml-0">
                                 <div className="col-lg-12 col-sm-12">
                                     <div className="form-group">
                                         <label htmlFor="csv" className="form-control-placeholder">CSV</label>
@@ -84,15 +84,15 @@ export default class UploadAnnotation extends React.Component {
                                         </div>
                                         <div className="form-group col-4">
                                             <label htmlFor="date-format" className="form-control-placeholder" >Select Date format</label>
-                                            <select name="date_format" id="date_format" className="form-control " value={this.state.date_formate} onChange={this.changeHandler}>
+                                            <select name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler}>
                                                 <option value="">select your date format</option>
-                                                <option value="M-d-yyyy">M/d/yyyy</option>
+                                                <option value="M-d-yyyy">{ moment().format('YYYY-MM-DD') }</option>
                                                 <option value="M-d-yyyy">M/d/yy</option>
                                                 <option value="MM-dd-yy">MM/dd/yy</option>
                                                 <option value="MM-dd-yyyy">MM/dd/yyyy</option>
                                                 <option value="yy-MM-dd">yy/MM/dd</option>
-                                                <option value="y-M-d">yyyy/MM/dd</option>
                                                 <option value="dd-MMM-yy">dd/MMM/yy</option>
+                                                <option value="Y-m-d">{ moment().format('YYYY-MM-DD') }</option>
                                             </select>
                                         </div>
                                     </div>

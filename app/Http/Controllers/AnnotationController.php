@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
 use Auth;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class AnnotationController extends Controller
 {
@@ -43,7 +43,7 @@ class AnnotationController extends Controller
         $annotation->is_enabled = true;
         $annotation->save();
 
-        return ['annotation'=>$annotation];
+        return ['annotation' => $annotation];
     }
 
     public function show($id)
@@ -94,27 +94,21 @@ class AnnotationController extends Controller
         return ["success" => true];
     }
 
-
-
-
-
-
-
     public function uiIndex(Request $request)
     {
-        $annotationQuery=Annotation::with('googleAccount')->where('user_id', Auth::id());
+        $annotationQuery = Annotation::with('googleAccount')->where('user_id', Auth::id());
 
-        if($request->query('sortBy')=="added"){
+        if ($request->query('sortBy') == "added") {
             $annotationQuery->orderBy('created_at', 'desc');
-        }elseif($request->query('sortBy')=="date"){
+        } elseif ($request->query('sortBy') == "date") {
             $annotationQuery->orderBy('show_at', 'desc');
-        }elseif($request->query('google_account_id')){
-         $annotationQuery->where('google_account_id',$request->query('google_account_id'))->orderBy('created_at', 'desc');
-        }else{
-            $annotationQuery->orderBy('updated_at','desc');
+        } elseif ($request->query('google_account_id')) {
+            $annotationQuery->where('google_account_id', $request->query('google_account_id'))->orderBy('created_at', 'desc');
+        } else {
+            $annotationQuery->orderBy('updated_at', 'desc');
         }
 
-        $annotations =  $annotationQuery->get();
+        $annotations = $annotationQuery->get();
         return ['annotations' => $annotations];
     }
     public function uiShow($id)
@@ -141,7 +135,7 @@ class AnnotationController extends Controller
         foreach ($headers as $header) {
             if (!in_array($header, [
                 'category', 'event_name',
-                'url', 'description',  'show_at',
+                'url', 'description', 'show_at',
             ])) {
                 return response()->json(['message' => 'Invalid CSV file headers'], 422);
             }
@@ -160,15 +154,18 @@ class AnnotationController extends Controller
 
             if ($headers !== $values && count($values) == count($headers)) {
                 for ($i = 0; $i < count($headers); $i++) {
-                    $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+                    if ($headers[$i] == 'show_at') {
+                        $date = Carbon::createFromFormat($request->date_format, $values[$i]);
+                        $row['show_at'] = $date->format('Y-m-d');
+                    } else if ($headers[$i] == 'url') {
+                        $row['url'] = $values[$i];
+                    } else {
+                        $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+                    }
                 }
 
-
-                   $date=Carbon::createFromFormat('Y-m-d','23-11-2020');
-
-              dd($date);
                 $row['user_id'] = $user_id;
-                $row['google_account_id']=$request->google_account_id;
+                $row['google_account_id'] = $request->google_account_id;
                 array_push($rows, $row);
 
             }
@@ -183,6 +180,6 @@ class AnnotationController extends Controller
             Annotation::insert($rows);
         }
 
-        return redirect()->back()->with('success', "Annotations added.");
+        return ['success' => true];
     }
 }
