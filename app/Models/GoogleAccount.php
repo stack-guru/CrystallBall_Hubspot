@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class GoogleAccount extends Model
 {
@@ -31,5 +32,9 @@ class GoogleAccount extends Model
     public function annotations()
     {
         return $this->hasMany('App\Models\Annotation');
+    }
+
+    public function scopeOfCurrentUser($query){
+        return $query->where('user_id', Auth::id());
     }
 }

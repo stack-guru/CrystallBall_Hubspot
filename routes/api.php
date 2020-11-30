@@ -31,7 +31,8 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
 
             Route::group(['prefix' => 'chrome-extension', 'as' => 'chrome-extension'], function () {
                 Route::get('annotations', 'AnnotationController@extensionIndex');
-                Route::get('membership', 'UserController@showMembership');
+                Route::get('google-accounts', 'GoogleAccountController@extensionIndex');
+                Route::get('memberships', 'UserController@extensionShowMembership');
             });
 
         });

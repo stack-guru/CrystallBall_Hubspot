@@ -8,7 +8,7 @@ use Auth;
 
 class UserController extends Controller
 {
-    public function showMembership()
+    public function extensionShowMembership()
     {
         $user = User::find(Auth::id());
         return [
