@@ -10,6 +10,7 @@ export default class UploadAnnotation extends React.Component {
         super(props);
         this.state = {
             google_account_id:'',
+            date_format:'',
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.changeHandler=this.changeHandler.bind(this)
@@ -23,6 +24,7 @@ export default class UploadAnnotation extends React.Component {
             const formData = new FormData();
             formData.append('csv', document.getElementById('csv').files[0]);
             formData.append('google_account_id', this.state.google_account_id);
+            formData.append('date_format', this.state.date_format);
             HttpClient({
                 url: `/annotation/upload`, baseURL: "/", method: 'post', headers: { 'Content-Type': 'multipart/form-data' },
                 data: formData
@@ -75,11 +77,26 @@ export default class UploadAnnotation extends React.Component {
                                         <label htmlFor="csv" className="form-control-placeholder">CSV</label>
                                         <input type="file" className="form-control upload-csv-input" id="csv" name="csv" />
                                     </div>
-                                    <div className="form-group mt-2 col-4 pl-0">
-                                        <label htmlFor="account" className="form-control-placeholder">Select Account</label>
-                                        <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.google_account_id} onChangeCallback={this.changeHandler}></GoogleAccountSelect>
-
+                                    <div className="row ml-0 mr-0 mt-2">
+                                        <div className="form-group  col-4 pl-0">
+                                            <label htmlFor="account" className="form-control-placeholder">Select Account</label>
+                                            <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.google_account_id} onChangeCallback={this.changeHandler}></GoogleAccountSelect>
+                                        </div>
+                                        <div className="form-group col-4">
+                                            <label htmlFor="date-format" className="form-control-placeholder" >Select Date format</label>
+                                            <select name="date_format" id="date_format" className="form-control " value={this.state.date_formate} onChange={this.changeHandler}>
+                                                <option value="">select your date format</option>
+                                                <option value="M-d-yyyy">M/d/yyyy</option>
+                                                <option value="M-d-yyyy">M/d/yy</option>
+                                                <option value="MM-dd-yy">MM/dd/yy</option>
+                                                <option value="MM-dd-yyyy">MM/dd/yyyy</option>
+                                                <option value="yy-MM-dd">yy/MM/dd</option>
+                                                <option value="y-M-d">yyyy/MM/dd</option>
+                                                <option value="dd-MMM-yy">dd/MMM/yy</option>
+                                            </select>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0  mt-3">

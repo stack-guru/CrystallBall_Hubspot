@@ -2087,7 +2087,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n.disabled-link {\n    opacity: 0.3;\n    pointer-events: none;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-bg-primary {\n    background: #456287;\n}\n.gaa-text-primary {\n    color: #456287;\n}\n\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n.sidebar-menu li:last-child{\n    position: absolute;\n    top:90%;\n    bottom:5%;\n}\n.anno-container{\n    padding:2%!important;\n}\n.description{\n   position: relative;\n    display: block;\nborder:none;\n}\n.desc-td{\n    overflow-y: auto;\nmax-height: 180px;\n  width: 16vw;\n    scroll-margin: 0px;\n\n}\n.desc-td p {\n    margin: 0px;\n}\n.header-profile-info h6{\n    font-size: 12px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small {\n    font-size: 10px;\n    display: block;\n    margin-top: 3px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small:last-child{\n    border-bottom: none;\n}\n\n/*\n.sidebar-menu li a:hover {\n    opacity: .6!important;\n} */\n\n/*pricing css start*/\n/*section.pricing {*/\n/*    background: #007bff;*/\n/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/\n/*}*/\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}\n\n.gaa-text-danger {\n    color: #bf0c18 !important;\n}\n\n.pos-ab-l-50-t-0 {\n    position: absolute;\n    left: 50%;\n    top: 0px;\n}\n\n.gaa-btn-danger {\n    color: #fff;\n    background-color: #bf0c18;\n    border-color: #bf0c18;\n}\n\n.logo-margin {\n    margin-left: 19%;\n    margin-top: 15%;\n}\n\n.logo-text {\n    font-size: 1rem;\n}\n.img-col-wrap {\n    height: 115px;\n    position: relative;\n}\n.secure-img {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: space-between;\n    align-items: center;\n    white-space: unset;\n    height: 100%;\n}\n.secure-img img {\n    width: 68px;\n    height: 34px;\n    margin: 5px;\n}\n\n.form-group {\n    transition: all 0.3s;\n    margin-bottom: 0px !important;\n}\n.floating-labels {\n    position: relative;\n    padding-top: 29px;\n}\n.floating-labels > label {\n    transform: translate(1em, -2em);\n    transform-origin: 0 0;\n    transition: all 0.3s;\n    z-index: -1;\n}\n.floating-labels > input::placeholder {\n    color: transparent;\n}\n\n/* :blank*/\n.floating-labels > input:focus + label,\n.floating-labels > input:not(:placeholder-shown) + label {\n    transform: translateY(-4.3em);\n}\n\n.seperator > [class*=\"col-\"]:nth-child(n + 2)::after {\n    content: \"\";\n    background-color: rgba(0, 0, 0, 0.0625);\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0px;\n    width: 1px;\n    height: 95%;\n}\n.payBtn {\n    width: 100%;\n}\n.card {\n    min-height: 545px;\n    max-height: 550px;\n    position: relative;\n}\n.card .card-body {\n    align-items: center;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n}\n.user-setting-head {\n    padding: 1.2%;\n}\n.user-setting-box {\n    padding: 1.5%;\n}\n.box-shadow {\n    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);\n}\n.lh-100 {\n    line-height: 1;\n}\n\n.social-profile-picture {\n    width: 35px;\n    height: 35px;\n    border-radius: 100%;\n}\n", ""]);
+exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n.disabled-link {\n    opacity: 0.3;\n    pointer-events: none;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-bg-primary {\n    background: #456287;\n}\n.gaa-text-primary {\n    color: #456287;\n}\n\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n.sidebar-menu li:last-child{\n    position: absolute;\n    top:90%;\n    bottom:5%;\n}\n.anno-container{\n    padding:2%!important;\n}\n.description{\n   position: relative;\n    display: block;\nborder:none;\n}\n.desc-td{\n    overflow-y: auto;\nmax-height: 180px;\n  width: 16vw;\n    scroll-margin: 0px;\n\n}\n.desc-td p {\n    margin: 0px;\n}\n.header-profile-info h6{\n    font-size: 12px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small {\n    font-size: 10px;\n    display: block;\n    margin-top: 3px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small:last-child{\n    border-bottom: none;\n}\n\n/*\n.sidebar-menu li a:hover {\n    opacity: .6!important;\n} */\n\n/*pricing css start*/\n/*section.pricing {*/\n/*    background: #007bff;*/\n/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/\n/*}*/\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}\n\n.gaa-text-danger {\n    color: #bf0c18 !important;\n}\n\n.pos-ab-l-50-t-0 {\n    position: absolute;\n    left: 50%;\n    top: 0px;\n}\n\n.gaa-btn-danger {\n    color: #fff;\n    background-color: #bf0c18;\n    border-color: #bf0c18;\n}\n\n.logo-margin {\n    margin-left: 19%;\n    margin-top: 15%;\n}\n\n.logo-text {\n    font-size: 1rem;\n}\n.img-col-wrap {\n    /*height: 115px;*/\n    position: relative;\n}\n.secure-img {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: space-between;\n    align-items: center;\n    white-space: unset;\n    height: 100%;\n}\n.secure-img img {\n    width: 68px;\n    height: 34px;\n    margin: 5px;\n}\n\n.form-group {\n    transition: all 0.3s;\n    margin-bottom: 0px !important;\n}\n.floating-labels {\n    position: relative;\n    padding-top: 29px;\n}\n.floating-labels > label {\n    transform: translate(1em, -2em);\n    transform-origin: 0 0;\n    transition: all 0.3s;\n    z-index: -1;\n}\n.floating-labels > input::placeholder {\n    color: transparent;\n}\n\n/* :blank*/\n.floating-labels > input:focus + label,\n.floating-labels > input:not(:placeholder-shown) + label {\n    transform: translateY(-4.3em);\n}\n\n.seperator > [class*=\"col-\"]:nth-child(n + 2)::after {\n    content: \"\";\n    background-color: rgba(0, 0, 0, 0.0625);\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0px;\n    width: 1px;\n    height: 95%;\n}\n.payBtn {\n    width: 100%;\n}\n.card {\n    min-height: 545px;\n    max-height: 550px;\n    position: relative;\n}\n.card .card-body {\n    align-items: center;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n}\n.user-setting-head {\n    padding: 1.2%;\n}\n.user-setting-box {\n    padding: 1.5%;\n}\n.box-shadow {\n    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);\n}\n.lh-100 {\n    line-height: 1;\n}\n\n.social-profile-picture {\n    width: 35px;\n    height: 35px;\n    border-radius: 100%;\n}\n", ""]);
 
 // exports
 
@@ -51920,7 +51920,8 @@ var UploadAnnotation = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      google_account_id: ''
+      google_account_id: '',
+      date_format: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.changeHandler = _this.changeHandler.bind(_assertThisInitialized(_this));
@@ -51941,6 +51942,7 @@ var UploadAnnotation = /*#__PURE__*/function (_React$Component) {
         var formData = new FormData();
         formData.append('csv', document.getElementById('csv').files[0]);
         formData.append('google_account_id', this.state.google_account_id);
+        formData.append('date_format', this.state.date_format);
         Object(_utils_HttpClient__WEBPACK_IMPORTED_MODULE_1__["default"])({
           url: "/annotation/upload",
           baseURL: "/",
@@ -52025,7 +52027,9 @@ var UploadAnnotation = /*#__PURE__*/function (_React$Component) {
         id: "csv",
         name: "csv"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-group mt-2 col-4 pl-0"
+        className: "row ml-0 mr-0 mt-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group  col-4 pl-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "account",
         className: "form-control-placeholder"
@@ -52034,7 +52038,34 @@ var UploadAnnotation = /*#__PURE__*/function (_React$Component) {
         id: 'google_account_id',
         value: this.state.google_account_id,
         onChangeCallback: this.changeHandler
-      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group col-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "date-format",
+        className: "form-control-placeholder"
+      }, "Select Date format"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        name: "date_format",
+        id: "date_format",
+        className: "form-control ",
+        value: this.state.date_formate,
+        onChange: this.changeHandler
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "select your date format"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "M-d-yyyy"
+      }, "M/d/yyyy"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "M-d-yyyy"
+      }, "M/d/yy"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "MM-dd-yy"
+      }, "MM/dd/yy"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "MM-dd-yyyy"
+      }, "MM/dd/yyyy"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "yy-MM-dd"
+      }, "yy/MM/dd"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "y-M-d"
+      }, "yyyy/MM/dd"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "dd-MMM-yy"
+      }, "dd/MMM/yy")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row ml-0 mr-0  mt-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-4 d-flex flex-column justify-content-center"
@@ -52858,6 +52889,10 @@ var AddGoogleAccount = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container p-5"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Connect Multiple GA Accounts"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row ml-0 mr-0 my-5"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 text-right"
@@ -53499,11 +53534,11 @@ var CreatePayment = /*#__PURE__*/function (_Component) {
         className: "btn btn-default btn-md ",
         onClick: this.cancelSubscription
       }, "Cancel")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row ml-0 mr-0 mt-4 d-flex flex-row justify-content-center align-items-center bg-white"
+        className: "row ml-0 mr-0 d-flex flex-row justify-content-center align-items-center bg-white"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "img-col-wrap"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 text-right p-5 secure-img"
+        className: "col-12 text-right  secure-img"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "/images/masterCard.jpg",
         className: "img-fluid ",
@@ -55145,7 +55180,9 @@ var GoogleAccountSelect = /*#__PURE__*/function (_React$Component) {
         className: "form-control"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "select-ga-account"
-      }, "Select Google account"), accounts.map(function (acc) {
+      }, "Select Google account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "null"
+      }, "All Accounts"), accounts.map(function (acc) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: acc.id,
           value: acc.id

@@ -179,7 +179,7 @@ max-height: 180px;
     font-size: 1rem;
 }
 .img-col-wrap {
-    height: 115px;
+    /*height: 115px;*/
     position: relative;
 }
 .secure-img {

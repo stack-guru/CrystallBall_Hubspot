@@ -7,6 +7,7 @@ use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
 use Auth;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AnnotationController extends Controller
 {
@@ -126,6 +127,7 @@ class AnnotationController extends Controller
     {
         $this->validate($request, [
             'csv' => 'required|file|mimetypes:text/plain|mimes:txt',
+            'date_format' => 'required',
         ]);
 
         $filepath = $request->file('csv')->getRealPath();
@@ -155,10 +157,16 @@ class AnnotationController extends Controller
 
             $row = array();
             $values = str_getcsv($line);
+
             if ($headers !== $values && count($values) == count($headers)) {
                 for ($i = 0; $i < count($headers); $i++) {
                     $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
                 }
+
+
+                   $date=Carbon::createFromFormat('Y-m-d','23-11-2020');
+
+              dd($date);
                 $row['user_id'] = $user_id;
                 $row['google_account_id']=$request->google_account_id;
                 array_push($rows, $row);

@@ -444,9 +444,9 @@ export default class CreatePayment extends Component {
                                     </div>
                                 </div>
                             </form>
-                            <div className="row ml-0 mr-0 mt-4 d-flex flex-row justify-content-center align-items-center bg-white">
+                            <div className="row ml-0 mr-0 d-flex flex-row justify-content-center align-items-center bg-white">
                                 <div className="img-col-wrap">
-                                    <div className="col-12 text-right p-5 secure-img">
+                                    <div className="col-12 text-right  secure-img">
                                         <img src="/images/masterCard.jpg" className="img-fluid " alt="mastercard image" />
                                         <img src="/images/Visa.png" className="img-fluid " alt="visa card image" />
                                         <img src="/images/safeKey.png" className="img-fluid " alt="safekey image" />
