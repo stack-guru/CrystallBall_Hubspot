@@ -28,13 +28,13 @@ export default class UploadAnnotation extends React.Component {
             HttpClient({
                 url: `/annotation/upload`, baseURL: "/", method: 'post', headers: { 'Content-Type': 'multipart/form-data' },
                 data: formData
-            })
-                .then(response => {
+            }).then(response => {
                     toast.success("CSV file uploaded.");
-                    this.setState({ isBusy: false, errors: undefined });
+                    console.log(response.data.message);
+                    this.setState({ isBusy: false, errors:response.data.message });
                 }, (err) => {
                     console.log(err);
-                    this.setState({ isBusy: false, errors: (err.response).data });
+                    this.setState({ isBusy: false, errors: (err.response).data.message });
                 }).catch(err => {
                     console.log(err)
                     this.setState({ isBusy: false, errors: err });

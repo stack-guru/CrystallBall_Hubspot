@@ -155,8 +155,13 @@ class AnnotationController extends Controller
             if ($headers !== $values && count($values) == count($headers)) {
                 for ($i = 0; $i < count($headers); $i++) {
                     if ($headers[$i] == 'show_at') {
-                        $date = Carbon::createFromFormat($request->date_format, $values[$i]);
-                        $row['show_at'] = $date->format('Y-m-d');
+                        try{
+                            $date = Carbon::createFromFormat($request->date_format, $values[$i]);
+                            $row['show_at'] = $date->format('Y-m-d');
+                        }catch (\Exception $ex){
+                           return ['message'=>"Please select correct date format according to your CSV file from the list below."];
+                        }
+
                     } else if ($headers[$i] == 'url') {
                         $row['url'] = $values[$i];
                     } else {
