@@ -39,6 +39,10 @@ class AnnotationController extends Controller
         }
 
         $annotationsQuery = Annotation::where('user_id', Auth::id())->where('is_enabled', true)->orderBy('show_at', 'ASC');
+        if($request->query('google_account_id') && $request->query('google_account_id') !== '*'){
+            $annotationsQuery->where('google_account_id',$request->query('google_account_id'));
+        }
+
         $annotationsQuery->whereBetween('show_at', [$request->query('startDate'), $request->query('endDate')]);
         $annotations = $annotationsQuery->get();
 
@@ -139,7 +143,9 @@ class AnnotationController extends Controller
             }
         }
 
-        return ['annotations' => $fAnnotations];
+            return ['annotations' => $fAnnotations];
+
+
 
     }
 
