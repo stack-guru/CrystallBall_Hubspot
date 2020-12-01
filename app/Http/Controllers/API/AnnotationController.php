@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Annotation;
-use App\Http\Resources\annotation as annotationResource;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
+use App\Http\Resources\annotation as annotationResource;
+use App\Models\Annotation;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Auth;
 
 class AnnotationController extends Controller
 {
@@ -21,13 +20,15 @@ class AnnotationController extends Controller
     public function index()
     {
         $annotations = Annotation::where('user_id', Auth::id())->get();
-            $resource= new annotationResource($annotations);
-        return ['annotations' =>   $resource];
+        $resource = new annotationResource($annotations);
+        return ['annotations' => $resource];
     }
 
     public function show(Annotation $annotation)
     {
-        if($annotation->user_id != Auth::id()) abort(404);
+        if ($annotation->user_id != Auth::id()) {
+            abort(404);
+        }
 
         return ['annotation' => $annotation];
     }
@@ -39,8 +40,8 @@ class AnnotationController extends Controller
         }
 
         $annotationsQuery = Annotation::where('user_id', Auth::id())->where('is_enabled', true)->orderBy('show_at', 'ASC');
-        if($request->query('google_account_id') && $request->query('google_account_id') !== '*'){
-            $annotationsQuery->where('google_account_id',$request->query('google_account_id'));
+        if ($request->query('google_account_id') && $request->query('google_account_id') !== '*') {
+            $annotationsQuery->where('google_account_id', $request->query('google_account_id'));
         }
 
         $annotationsQuery->whereBetween('show_at', [$request->query('startDate'), $request->query('endDate')]);
@@ -87,7 +88,7 @@ class AnnotationController extends Controller
                         "type" => "private",
                     ]);
                     continue;
-                }else{
+                } else {
                     array_push($combineAnnotations, [
                         "_id" => $annotations[$i]->id,
                         "category" => $annotations[$i]->category,
@@ -103,7 +104,7 @@ class AnnotationController extends Controller
                         "type" => "private",
                     ]);
                 }
-            }else{
+            } else {
                 array_push($combineAnnotations, [
                     "_id" => $annotations[$i]->id,
                     "category" => $annotations[$i]->category,
@@ -143,9 +144,7 @@ class AnnotationController extends Controller
             }
         }
 
-            return ['annotations' => $fAnnotations];
-
-
+        return ['annotations' => $fAnnotations];
 
     }
 
@@ -174,7 +173,10 @@ class AnnotationController extends Controller
      */
     public function update(AnnotationRequest $request, Annotation $annotation)
     {
-        if($annotation->user_id != Auth::id()) abort(404);
+        if ($annotation->user_id != Auth::id()) {
+            abort(404);
+        }
+
         $annotation->fill($request->validated());
         $annotation->save();
 
@@ -189,10 +191,12 @@ class AnnotationController extends Controller
      */
     public function destroy(Annotation $annotation)
     {
-        if($annotation->user_id != Auth::id()) abort(404);
+        if ($annotation->user_id != Auth::id()) {
+            abort(404);
+        }
+
         $annotation->delete();
         return ['success' => true];
     }
-
 
 }
