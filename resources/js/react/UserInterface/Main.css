@@ -74,17 +74,32 @@ max-height: 180px;
 .header-profile-info small:last-child{
     border-bottom: none;
 }
+.sidebar:hover .dropdown > .collapse-icon{
+    display: flex;
+}
+.dropdown > .collapse-icon{
+    display: none;
+font-size: 16px;
+}
+setting-menu-item.dropdown{
+    transition: .3s ease;
+}
+.setting-menu-item.dropdown.open .setting-menu-content{
+    margin: 0px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: none;
+    height: auto;
+    padding-left: 20%;
+}
+/*tesing*/
 
-/*
-.sidebar-menu li a:hover {
-    opacity: .6!important;
-} */
-
-/*pricing css start*/
-/*section.pricing {*/
-/*    background: #007bff;*/
-/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/
-/*}*/
+/**/
+.collapseMenu.show .dropdown-menu.show{
+    position:relative!important;
+}
 
 .pricing .card {
     border: none;

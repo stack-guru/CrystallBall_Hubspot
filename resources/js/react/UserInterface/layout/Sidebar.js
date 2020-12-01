@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 require('../Main.css');
+
+import * as $ from 'jquery';
 class sidebar extends React.Component {
 
     constructor(props) {
@@ -10,7 +12,28 @@ class sidebar extends React.Component {
         }
     }
 
+    componentDidMount() {
+        $('.sidebar').hover(
+
+            function () {
+                if($('.setting-menu-item.dropdown').hasClass('open'))
+                $('.setting-menu-item.dropdown').addClass('open')
+            },
+
+            function () {
+                if($('.setting-menu-item.dropdown').hasClass('open'))
+                    $('.setting-menu-item.dropdown').removeClass('open')
+            }
+        );
+        $('.setting-menu-item').click(function(){
+            $('.setting-menu-item.dropdown').toggleClass('open');
+            $('.arrow .t').toggleClass('ti-angle-down');
+            console.log('toggle js working');
+        });
+    }
+
     render() {
+
         return (
             <div className="sidebar-inner">
                 <div className="sidebar-logo bg-white">
@@ -30,15 +53,8 @@ class sidebar extends React.Component {
                         </div>
                     </div>
                 </div>
-                <ul className="sidebar-menu scrollable pos-r "> {/*gaa-blue-gradient*/}
-                    {/* <li className="nav-item mT-30 actived">
-                        <Link to="/dashboard">
-                        <span className="sidebar-link" >
-                            <span className="icon-holder"><i className="c-blue-500 ti-home"></i> </span>
-                            <span className="title">Dashboard</span>
-                        </span>
-                        </Link>
-                    </li> */}
+                <ul className="sidebar-menu scrollable pos-r ">
+
                     <li className="nav-item gaa-menu-item">
                         <Link to="/annotation" >
                             <span className="sidebar-link" >
@@ -69,17 +85,7 @@ class sidebar extends React.Component {
                             </span>
                         </Link>
                     </li>
-                    {/* <li className="nav-item">
-                        <Link to="/price-plans" className="text-info">
-                        <span className="sidebar-link" >
-                            <span className="icon-holder">
-                                <i className="fa fa-dollar"></i>
-                            </span>
-                            <span className="title">Choose plan</span>
-                        </span>
-                        </Link>
-                    </li> */}
-                    {/*onClick={e => e.preventDefault()}*/}
+
                     <li className="nav-item gaa-menu-item">
                         <Link to="/api-key" >
                             <span className="sidebar-link" >
@@ -87,6 +93,16 @@ class sidebar extends React.Component {
                                     <i className="fa fa-key"></i>
                                 </span>
                                 <span className="title ">API Keys</span>
+                            </span>
+                        </Link>
+                    </li>
+                    <li className="nav-item gaa-menu-item">
+                        <Link to="/data-source" >
+                            <span className="sidebar-link" >
+                                <span className="icon-holder">
+                                    <i className="ti-server"></i>
+                                </span>
+                                <span className="title ">Data Sourse</span>
                             </span>
                         </Link>
                     </li>
@@ -129,46 +145,45 @@ class sidebar extends React.Component {
                     {/*    </a>*/}
                     {/*</li>*/}
 
-                    <li className="nav-item dropdown collapseMenu">
-                        <a className="dropdown-toggle"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                    <li className="nav-item gaa-menu-item setting-menu-item dropdown">
+                        <a  aria-expanded="false" data-target="#settings" aria-controls="settings" data-toggle="collapse"
+                           className="dropdown-toggle" >
+                            <div className="wrapper sidebar-link">
                             <span className="icon-holder">
                               <i className="ti-settings "></i>
                             </span>
                             <span className="title">Settings</span>
-                            <span className="arrow">
-                            <i className="ti-angle-right"></i>
-                            </span>
+                                <span className="arrow">
+                                    <i className="t ti-angle-right"></i>
+                                </span>
+                            </div>
                         </a>
-                        <ul className="dropdown-menu " aria-labelledby="dropdownMenuButton">
+                        <div  className="collapse dropdown-menu setting-menu-content " id="settings ">
+                        <ul className="list-unstyled" >
                             <li className="nav-item dropdown">
                                 <Link to="/settings/change-password" className="sidebar-link">
-                                    <span className="nav-link">Change password</span>
+                                    <span className="nav-link ">Change password</span>
                                 </Link>
                             </li>
                             <li className="nav-item dropdown">
-
                                 <Link to="/settings/google-account"  className="sidebar-link" >
                                     <span className="nav-link">Add google account</span>
                                 </Link>
                             </li>
-                            {/*<li className="nav-item dropdown">*/}
 
-                            {/*    <Link to="/settings/price-plans" className="sidebar-link">*/}
-                            {/*        <span className="nav-link">Price Plans</span>*/}
-                            {/*    </Link>*/}
-                            {/*</li>*/}
                             <li className="nav-item dropdown">
-
                                 <Link to="/settings/payment-history" className="sidebar-link">
                                     <span className="nav-link">Payment History</span>
                                 </Link>
                             </li>
+
                             <li className="nav-item dropdown">
                                 <div className="sidebar-link nav-link">
                                 <a  href="/documentation" target="_blank">API Documentation</a>
                                 </div>
                             </li>
                         </ul>
+                        </div>
                     </li>
 
 
@@ -199,9 +214,7 @@ class sidebar extends React.Component {
                         </a>
                     </li>
                 </ul>
-                <div className="row ml-0 mr-0 ">
 
-                </div>
             </div>
         )
     }

@@ -2087,7 +2087,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n.disabled-link {\n    opacity: 0.3;\n    pointer-events: none;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-bg-primary {\n    background: #456287;\n}\n.gaa-text-primary {\n    color: #456287;\n}\n\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n.sidebar-menu li:last-child{\n    position: absolute;\n    top:90%;\n    bottom:5%;\n}\n.anno-container{\n    padding:2%!important;\n}\n.description{\n   position: relative;\n    display: block;\nborder:none;\n}\n.desc-td{\n    overflow-y: auto;\nmax-height: 180px;\n  width: 16vw;\n    scroll-margin: 0px;\n\n}\n.desc-td p {\n    margin: 0px;\n}\n.header-profile-info h6{\n    font-size: 12px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small {\n    font-size: 10px;\n    display: block;\n    margin-top: 3px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small:last-child{\n    border-bottom: none;\n}\n\n/*\n.sidebar-menu li a:hover {\n    opacity: .6!important;\n} */\n\n/*pricing css start*/\n/*section.pricing {*/\n/*    background: #007bff;*/\n/*    background: linear-gradient(to right, #0062E6, #33AEFF);*/\n/*}*/\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}\n\n.gaa-text-danger {\n    color: #bf0c18 !important;\n}\n\n.pos-ab-l-50-t-0 {\n    position: absolute;\n    left: 50%;\n    top: 0px;\n}\n\n.gaa-btn-danger {\n    color: #fff;\n    background-color: #bf0c18;\n    border-color: #bf0c18;\n}\n\n.logo-margin {\n    margin-left: 19%;\n    margin-top: 15%;\n}\n\n.logo-text {\n    font-size: 1rem;\n}\n.img-col-wrap {\n    /*height: 115px;*/\n    position: relative;\n}\n.secure-img {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: space-between;\n    align-items: center;\n    white-space: unset;\n    height: 100%;\n}\n.secure-img img {\n    width: 68px;\n    height: 34px;\n    margin: 5px;\n}\n\n.form-group {\n    transition: all 0.3s;\n    margin-bottom: 0px !important;\n}\n.floating-labels {\n    position: relative;\n    padding-top: 29px;\n}\n.floating-labels > label {\n    transform: translate(1em, -2em);\n    transform-origin: 0 0;\n    transition: all 0.3s;\n    z-index: -1;\n}\n.floating-labels > input::placeholder {\n    color: transparent;\n}\n\n/* :blank*/\n.floating-labels > input:focus + label,\n.floating-labels > input:not(:placeholder-shown) + label {\n    transform: translateY(-4.3em);\n}\n\n.seperator > [class*=\"col-\"]:nth-child(n + 2)::after {\n    content: \"\";\n    background-color: rgba(0, 0, 0, 0.0625);\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0px;\n    width: 1px;\n    height: 95%;\n}\n.payBtn {\n    width: 100%;\n}\n.card {\n    min-height: 545px;\n    max-height: 550px;\n    position: relative;\n}\n.card .card-body {\n    align-items: center;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n}\n.user-setting-head {\n    padding: 1.2%;\n}\n.user-setting-box {\n    padding: 1.5%;\n}\n.box-shadow {\n    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);\n}\n.lh-100 {\n    line-height: 1;\n}\n\n.social-profile-picture {\n    width: 35px;\n    height: 35px;\n    border-radius: 100%;\n}\n", ""]);
+exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n.disabled-link {\n    opacity: 0.3;\n    pointer-events: none;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-bg-primary {\n    background: #456287;\n}\n.gaa-text-primary {\n    color: #456287;\n}\n\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n.sidebar-menu li:last-child{\n    position: absolute;\n    top:90%;\n    bottom:5%;\n}\n.anno-container{\n    padding:2%!important;\n}\n.description{\n   position: relative;\n    display: block;\nborder:none;\n}\n.desc-td{\n    overflow-y: auto;\nmax-height: 180px;\n  width: 16vw;\n    scroll-margin: 0px;\n\n}\n.desc-td p {\n    margin: 0px;\n}\n.header-profile-info h6{\n    font-size: 12px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small {\n    font-size: 10px;\n    display: block;\n    margin-top: 3px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small:last-child{\n    border-bottom: none;\n}\n.sidebar:hover .dropdown > .collapse-icon{\n    display: flex;\n}\n.dropdown > .collapse-icon{\n    display: none;\nfont-size: 16px;\n}\nsetting-menu-item.dropdown{\n    transition: .3s ease;\n}\n.setting-menu-item.dropdown.open .setting-menu-content{\n    margin: 0px;\n    position: relative;\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    border: none;\n    height: auto;\n    padding-left: 20%;\n}\n/*tesing*/\n\n/**/\n.collapseMenu.show .dropdown-menu.show{\n    position:relative!important;\n}\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}\n\n.gaa-text-danger {\n    color: #bf0c18 !important;\n}\n\n.pos-ab-l-50-t-0 {\n    position: absolute;\n    left: 50%;\n    top: 0px;\n}\n\n.gaa-btn-danger {\n    color: #fff;\n    background-color: #bf0c18;\n    border-color: #bf0c18;\n}\n\n.logo-margin {\n    margin-left: 19%;\n    margin-top: 15%;\n}\n\n.logo-text {\n    font-size: 1rem;\n}\n.img-col-wrap {\n    /*height: 115px;*/\n    position: relative;\n}\n.secure-img {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: space-between;\n    align-items: center;\n    white-space: unset;\n    height: 100%;\n}\n.secure-img img {\n    width: 68px;\n    height: 34px;\n    margin: 5px;\n}\n\n.form-group {\n    transition: all 0.3s;\n    margin-bottom: 0px !important;\n}\n.floating-labels {\n    position: relative;\n    padding-top: 29px;\n}\n.floating-labels > label {\n    transform: translate(1em, -2em);\n    transform-origin: 0 0;\n    transition: all 0.3s;\n    z-index: -1;\n}\n.floating-labels > input::placeholder {\n    color: transparent;\n}\n\n/* :blank*/\n.floating-labels > input:focus + label,\n.floating-labels > input:not(:placeholder-shown) + label {\n    transform: translateY(-4.3em);\n}\n\n.seperator > [class*=\"col-\"]:nth-child(n + 2)::after {\n    content: \"\";\n    background-color: rgba(0, 0, 0, 0.0625);\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0px;\n    width: 1px;\n    height: 95%;\n}\n.payBtn {\n    width: 100%;\n}\n.card {\n    min-height: 545px;\n    max-height: 550px;\n    position: relative;\n}\n.card .card-body {\n    align-items: center;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n}\n.user-setting-head {\n    padding: 1.2%;\n}\n.user-setting-box {\n    padding: 1.5%;\n}\n.box-shadow {\n    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);\n}\n.lh-100 {\n    line-height: 1;\n}\n\n.social-profile-picture {\n    width: 35px;\n    height: 35px;\n    border-radius: 100%;\n}\n", ""]);
 
 // exports
 
@@ -49924,6 +49924,12 @@ var Main = /*#__PURE__*/function (_React$Component) {
         refresh: true
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_settings_googleAccount_AddGoogleAccount__WEBPACK_IMPORTED_MODULE_16__["default"], {
         user: this.state.user
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+        exact: true,
+        path: "/data-source",
+        refresh: true
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_settings_googleAccount_AddGoogleAccount__WEBPACK_IMPORTED_MODULE_16__["default"], {
+        user: this.state.user
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_layout_Footer__WEBPACK_IMPORTED_MODULE_7__["default"], null)));
     }
   }]);
@@ -54197,6 +54203,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -54224,6 +54232,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 __webpack_require__(/*! ../Main.css */ "./resources/js/react/UserInterface/Main.css");
 
+
+
 var sidebar = /*#__PURE__*/function (_React$Component) {
   _inherits(sidebar, _React$Component);
 
@@ -54242,6 +54252,20 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(sidebar, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      jquery__WEBPACK_IMPORTED_MODULE_2__('.sidebar').hover(function () {
+        if (jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item.dropdown').hasClass('open')) jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item.dropdown').addClass('open');
+      }, function () {
+        if (jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item.dropdown').hasClass('open')) jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item.dropdown').removeClass('open');
+      });
+      jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item').click(function () {
+        jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item.dropdown').toggleClass('open');
+        jquery__WEBPACK_IMPORTED_MODULE_2__('.arrow .t').toggleClass('ti-angle-down');
+        console.log('toggle js working');
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -54281,7 +54305,7 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
         className: "ti-arrow-circle-left"
       })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "sidebar-menu scrollable pos-r "
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-item gaa-menu-item"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/annotation"
@@ -54330,13 +54354,27 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "title "
       }, "API Keys")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item dropdown collapseMenu"
+        className: "nav-item gaa-menu-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/data-source"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sidebar-link"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "icon-holder"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "ti-server"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "title "
+      }, "Data Sourse")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-item gaa-menu-item setting-menu-item dropdown"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "dropdown-toggle",
-        id: "dropdownMenuButton",
-        "data-toggle": "dropdown",
-        "aria-haspopup": "true",
-        "aria-expanded": "false"
+        "aria-expanded": "false",
+        "data-target": "#settings",
+        "aria-controls": "settings",
+        "data-toggle": "collapse",
+        className: "dropdown-toggle"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "wrapper sidebar-link"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "icon-holder"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -54346,17 +54384,19 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
       }, "Settings"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "arrow"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "ti-angle-right"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "dropdown-menu ",
-        "aria-labelledby": "dropdownMenuButton"
+        className: "t ti-angle-right"
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "collapse dropdown-menu setting-menu-content ",
+        id: "settings "
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "list-unstyled"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-item dropdown"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/settings/change-password",
         className: "sidebar-link"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "nav-link"
+        className: "nav-link "
       }, "Change password"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-item dropdown"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -54378,7 +54418,7 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "/documentation",
         target: "_blank"
-      }, "API Documentation"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, "API Documentation")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-item align-bottom d-flex gaa-menu-item gaa-text-danger"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "https://chrome.google.com/webstore/detail/google-analytics-annotati/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en&authuser=1",
@@ -54391,9 +54431,7 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
         className: "fa fa-cube"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "title"
-      }, "Add Chrome Extension"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row ml-0 mr-0 "
-      }));
+      }, "Add Chrome Extension"))))));
     }
   }]);
 

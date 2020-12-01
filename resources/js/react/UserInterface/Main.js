@@ -144,6 +144,9 @@ class Main extends React.Component {
                             <Route exact path="/settings/google-account" refresh={true}>
                                 <GoogleAccount user={this.state.user} />
                             </Route>
+                            <Route exact path="/data-source" refresh={true}>
+                                <GoogleAccount user={this.state.user} />
+                            </Route>
                         </Switch>
 
                     </main>
