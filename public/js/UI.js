@@ -52106,7 +52106,7 @@ var IndexAnnotations = /*#__PURE__*/function (_React$Component) {
         googleAccount: gaAccountId
       });
 
-      if (gaAccountId !== "select-ga-account") {
+      if (gaAccountId !== 'select-ga-account') {
         this.setState({
           isBusy: true
         });
@@ -55606,7 +55606,7 @@ var GoogleAccountSelect = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "select-ga-account"
       }, "Select Google account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "null"
+        value: ""
       }, "All Accounts"), accounts.map(function (acc) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: acc.id,

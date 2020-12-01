@@ -52,7 +52,7 @@ export default class GoogleAccountSelect extends React.Component {
                 className="form-control">
 
                 <option value="select-ga-account" >Select Google account</option>
-                <option value="null" >All Accounts</option>
+                <option value="" >All Accounts</option>
                 {
                     accounts.map(acc => (
                         <option key={acc.id} value={acc.id}>{acc.email}</option>

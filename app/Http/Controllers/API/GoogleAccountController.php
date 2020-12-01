@@ -13,7 +13,7 @@ class GoogleAccountController extends Controller
 
         return ['google_accounts' => array_merge(
             [
-                ['id' => '', 'name' => 'Default Account'],
+                ['id' => '*', 'name' => 'Default Account'],
             ],
             GoogleAccount::ofCurrentUser()->get()->toArray()
         )];
