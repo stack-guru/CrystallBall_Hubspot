@@ -2087,7 +2087,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n.disabled-link {\n    opacity: 0.3;\n    pointer-events: none;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-bg-primary {\n    background: #456287;\n}\n.gaa-text-primary {\n    color: #456287;\n}\n\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n.sidebar-menu li:last-child{\n    position: absolute;\n    top:90%;\n    bottom:5%;\n}\n.anno-container{\n    padding:2%!important;\n}\n.description{\n   position: relative;\n    display: block;\nborder:none;\n}\n.desc-td{\n    overflow-y: auto;\nmax-height: 180px;\n  width: 16vw;\n    scroll-margin: 0px;\n\n}\n.desc-td p {\n    margin: 0px;\n}\n.header-profile-info h6{\n    font-size: 12px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small {\n    font-size: 10px;\n    display: block;\n    margin-top: 3px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small:last-child{\n    border-bottom: none;\n}\n.sidebar:hover .dropdown > .collapse-icon{\n    display: flex;\n}\n.dropdown > .collapse-icon{\n    display: none;\nfont-size: 16px;\n}\nsetting-menu-item.dropdown{\n    transition: .3s ease;\n}\n.setting-menu-item.dropdown.open .setting-menu-content{\n    margin: 0px;\n    position: relative;\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    border: none;\n    height: auto;\n    padding-left: 20%;\n}\n/*tesing*/\n\n/**/\n.collapseMenu.show .dropdown-menu.show{\n    position:relative!important;\n}\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}\n\n.gaa-text-danger {\n    color: #bf0c18 !important;\n}\n\n.pos-ab-l-50-t-0 {\n    position: absolute;\n    left: 50%;\n    top: 0px;\n}\n\n.gaa-btn-danger {\n    color: #fff;\n    background-color: #bf0c18;\n    border-color: #bf0c18;\n}\n\n.logo-margin {\n    margin-left: 19%;\n    margin-top: 15%;\n}\n\n.logo-text {\n    font-size: 1rem;\n}\n.img-col-wrap {\n    /*height: 115px;*/\n    position: relative;\n}\n.secure-img {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: space-between;\n    align-items: center;\n    white-space: unset;\n    height: 100%;\n}\n.secure-img img {\n    width: 68px;\n    height: 34px;\n    margin: 5px;\n}\n\n.form-group {\n    transition: all 0.3s;\n    margin-bottom: 0px !important;\n}\n.floating-labels {\n    position: relative;\n    padding-top: 29px;\n}\n.floating-labels > label {\n    transform: translate(1em, -2em);\n    transform-origin: 0 0;\n    transition: all 0.3s;\n    z-index: -1;\n}\n.floating-labels > input::placeholder {\n    color: transparent;\n}\n\n/* :blank*/\n.floating-labels > input:focus + label,\n.floating-labels > input:not(:placeholder-shown) + label {\n    transform: translateY(-4.3em);\n}\n\n.seperator > [class*=\"col-\"]:nth-child(n + 2)::after {\n    content: \"\";\n    background-color: rgba(0, 0, 0, 0.0625);\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0px;\n    width: 1px;\n    height: 95%;\n}\n.payBtn {\n    width: 100%;\n}\n.card {\n    min-height: 545px;\n    max-height: 550px;\n    position: relative;\n}\n.card .card-body {\n    align-items: center;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n}\n.user-setting-head {\n    padding: 1.2%;\n}\n.user-setting-box {\n    padding: 1.5%;\n}\n.box-shadow {\n    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);\n}\n.lh-100 {\n    line-height: 1;\n}\n\n.social-profile-picture {\n    width: 35px;\n    height: 35px;\n    border-radius: 100%;\n}\n", ""]);
+exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n.disabled-link {\n    opacity: 0.3;\n    pointer-events: none;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-bg-primary {\n    background: #456287;\n}\n.gaa-text-primary {\n    color: #456287;\n}\n\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n.sidebar-menu li:last-child{\n    position: absolute;\n    top:90%;\n    bottom:5%;\n}\n.anno-container{\n    padding:2%!important;\n}\n.description{\n   position: relative;\n    display: block;\nborder:none;\n}\n.desc-td{\n    overflow-y: auto;\nmax-height: 180px;\n  width: 16vw;\n    scroll-margin: 0px;\n\n}\n.desc-td p {\n    margin: 0px;\n}\n.header-profile-info h6{\n    font-size: 12px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small {\n    font-size: 10px;\n    display: block;\n    margin-top: 3px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small:last-child{\n    border-bottom: none;\n}\n.sidebar:hover .dropdown > .collapse-icon{\n    display: flex;\n}\n.dropdown > .collapse-icon{\n    display: none;\nfont-size: 16px;\n}\nsetting-menu-item.dropdown{\n    transition: .3s ease;\n}\n.setting-menu-item.dropdown.open .setting-menu-content{\n    margin: 0px;\n    position: relative;\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    border: none;\n    height: auto;\n    padding-left: 20%;\n}\n/*switch button*/\n.switch {\n    position: relative;\n    display: inline-block;\n    width: 60px;\n    height: 31px;\n}\n\n.switch input {\n    opacity: 0;\n    width: 0;\n    height: 0;\n}\n\n.switch .slider {\n    position: absolute;\n    cursor: pointer;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: #ccc;\n    -webkit-transition: .4s;\n    transition: .4s;\n}\n\n.switch .slider:before {\n    position: absolute;\n    content: \"\";\n    height: 26px;\n    width: 26px;\n    left: 4px;\n    bottom: 3px;\n    background-color: white;\n    -webkit-transition: .4s;\n    transition: .4s;\n}\n\n.switch input:checked + .slider {\n    background-color: #2196F3;\n}\n\n.switch input:focus + .slider {\n    box-shadow: 0 0 1px #2196F3;\n}\n\n.switch input:checked + .slider:before {\n    -webkit-transform: translateX(26px);\n    -ms-transform: translateX(26px);\n    transform: translateX(26px);\n}\n\n/* Rounded sliders */\n.switch .slider.round {\n    border-radius: 34px;\n}\n\n.switch .slider.round:before {\n    border-radius: 50%;\n}\n/**/\n.collapseMenu.show .dropdown-menu.show{\n    position:relative!important;\n}\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}\n\n.gaa-text-danger {\n    color: #bf0c18 !important;\n}\n\n.pos-ab-l-50-t-0 {\n    position: absolute;\n    left: 50%;\n    top: 0px;\n}\n\n.gaa-btn-danger {\n    color: #fff;\n    background-color: #bf0c18;\n    border-color: #bf0c18;\n}\n\n.logo-margin {\n    margin-left: 19%;\n    margin-top: 15%;\n}\n\n.logo-text {\n    font-size: 1rem;\n}\n.img-col-wrap {\n    /*height: 115px;*/\n    position: relative;\n}\n.secure-img {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: space-between;\n    align-items: center;\n    white-space: unset;\n    height: 100%;\n}\n.secure-img img {\n    width: 68px;\n    height: 34px;\n    margin: 5px;\n}\n\n.form-group {\n    transition: all 0.3s;\n    margin-bottom: 0px !important;\n}\n.floating-labels {\n    position: relative;\n    padding-top: 29px;\n}\n.floating-labels > label {\n    transform: translate(1em, -2em);\n    transform-origin: 0 0;\n    transition: all 0.3s;\n    z-index: -1;\n}\n.floating-labels > input::placeholder {\n    color: transparent;\n}\n\n/* :blank*/\n.floating-labels > input:focus + label,\n.floating-labels > input:not(:placeholder-shown) + label {\n    transform: translateY(-4.3em);\n}\n\n.seperator > [class*=\"col-\"]:nth-child(n + 2)::after {\n    content: \"\";\n    background-color: rgba(0, 0, 0, 0.0625);\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0px;\n    width: 1px;\n    height: 95%;\n}\n.payBtn {\n    width: 100%;\n}\n.card {\n    min-height: 545px;\n    max-height: 550px;\n    position: relative;\n}\n.card .card-body {\n    align-items: center;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n}\n.user-setting-head {\n    padding: 1.2%;\n}\n.user-setting-box {\n    padding: 1.5%;\n}\n.box-shadow {\n    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);\n}\n.lh-100 {\n    line-height: 1;\n}\n\n.social-profile-picture {\n    width: 35px;\n    height: 35px;\n    border-radius: 100%;\n}\n", ""]);
 
 // exports
 
@@ -49701,12 +49701,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_settings_ChangePassword__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/settings/ChangePassword */ "./resources/js/react/UserInterface/components/settings/ChangePassword.js");
 /* harmony import */ var _components_settings_pricingPlans_PaymentHistory__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/settings/pricingPlans/PaymentHistory */ "./resources/js/react/UserInterface/components/settings/pricingPlans/PaymentHistory.js");
 /* harmony import */ var _components_settings_googleAccount_AddGoogleAccount__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/settings/googleAccount/AddGoogleAccount */ "./resources/js/react/UserInterface/components/settings/googleAccount/AddGoogleAccount.js");
-/* harmony import */ var react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react-toastify/dist/ReactToastify.css */ "./node_modules/react-toastify/dist/ReactToastify.css");
-/* harmony import */ var react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _Main_css__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Main.css */ "./resources/js/react/UserInterface/Main.css");
-/* harmony import */ var _Main_css__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Main_css__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _components_apiKey_IndexAPIKey__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/apiKey/IndexAPIKey */ "./resources/js/react/UserInterface/components/apiKey/IndexAPIKey.js");
-/* harmony import */ var _components_settings_pricingPlans_CreatePayment__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/settings/pricingPlans/CreatePayment */ "./resources/js/react/UserInterface/components/settings/pricingPlans/CreatePayment.js");
+/* harmony import */ var _components_DataSource_DataSourceIndex__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/DataSource/DataSourceIndex */ "./resources/js/react/UserInterface/components/DataSource/DataSourceIndex.js");
+/* harmony import */ var react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! react-toastify/dist/ReactToastify.css */ "./node_modules/react-toastify/dist/ReactToastify.css");
+/* harmony import */ var react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _Main_css__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Main.css */ "./resources/js/react/UserInterface/Main.css");
+/* harmony import */ var _Main_css__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_Main_css__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _components_apiKey_IndexAPIKey__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/apiKey/IndexAPIKey */ "./resources/js/react/UserInterface/components/apiKey/IndexAPIKey.js");
+/* harmony import */ var _components_settings_pricingPlans_CreatePayment__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/settings/pricingPlans/CreatePayment */ "./resources/js/react/UserInterface/components/settings/pricingPlans/CreatePayment.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -49728,6 +49729,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -49884,7 +49886,7 @@ var Main = /*#__PURE__*/function (_React$Component) {
         exact: true,
         path: "/api-key",
         refresh: true
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_apiKey_IndexAPIKey__WEBPACK_IMPORTED_MODULE_19__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_apiKey_IndexAPIKey__WEBPACK_IMPORTED_MODULE_20__["default"], {
         currentPricePlan: this.state.user.price_plan
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
@@ -49910,7 +49912,7 @@ var Main = /*#__PURE__*/function (_React$Component) {
         exact: true,
         path: "/settings/price-plans/payment",
         refresh: true
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_settings_pricingPlans_CreatePayment__WEBPACK_IMPORTED_MODULE_20__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_settings_pricingPlans_CreatePayment__WEBPACK_IMPORTED_MODULE_21__["default"], {
         user: this.state.user
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
@@ -49928,7 +49930,7 @@ var Main = /*#__PURE__*/function (_React$Component) {
         exact: true,
         path: "/data-source",
         refresh: true
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_settings_googleAccount_AddGoogleAccount__WEBPACK_IMPORTED_MODULE_16__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_DataSource_DataSourceIndex__WEBPACK_IMPORTED_MODULE_17__["default"], {
         user: this.state.user
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_layout_Footer__WEBPACK_IMPORTED_MODULE_7__["default"], null)));
     }
@@ -50034,6 +50036,373 @@ function UI() {
 if (document.getElementById('ui')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UI, null), document.getElementById('ui'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/react/UserInterface/components/DataSource/DataSourceIndex.js":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/react/UserInterface/components/DataSource/DataSourceIndex.js ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DataSourceIndex; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+__webpack_require__(/*! ../../Main.css */ "./resources/js/react/UserInterface/Main.css");
+
+
+
+var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
+  _inherits(DataSourceIndex, _React$Component);
+
+  var _super = _createSuper(DataSourceIndex);
+
+  function DataSourceIndex(props) {
+    var _this;
+
+    _classCallCheck(this, DataSourceIndex);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      "switch": false
+    };
+    _this.switchHandler = _this.switchHandler.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(DataSourceIndex, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      document.title = 'Data Source'; // if(this.state.switch){
+      //     $(".switch-wrapper").removeClass('invisible')
+      //     $(".switch-wrapper").addClass('visible')
+      // }else{
+      //     $(".switch-wrapper").removeClass('visible')
+      //     $(".switch-wrapper").addClass('invisible')
+      // }
+    }
+  }, {
+    key: "switchHandler",
+    value: function switchHandler(e) {
+      if (e.target.checked) {
+        this.setState({
+          "switch": true
+        });
+        jquery__WEBPACK_IMPORTED_MODULE_1__("#" + e.target.className).removeClass('invisible');
+        jquery__WEBPACK_IMPORTED_MODULE_1__("#" + e.target.className).addClass('visible');
+      } else {
+        this.setState({
+          "switch": false
+        });
+        jquery__WEBPACK_IMPORTED_MODULE_1__("#" + e.target.className).removeClass('visible');
+        jquery__WEBPACK_IMPORTED_MODULE_1__("#" + e.target.className).addClass('invisible');
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container-xl bg-white  d-flex flex-column justify-content-center component-wrapper"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "heading-section gaa-title"
+      }, "Data Source"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0 mt-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 col-md-6 col-lg-6 col-sm-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Holiday")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "switch"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox",
+        className: "holiday",
+        defaultChecked: this.state["switch"],
+        onChange: this.switchHandler
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "slider round"
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0 mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dl", {
+        className: "d-flex flex-row flex-wrap "
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dt", null, "Annotations for:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
+        className: "mx-2"
+      }, "spain"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
+        className: "mx-2"
+      }, "Argentina"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
+        className: "mx-2"
+      }, "spain"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 col-md-6 col-lg-6 col-sm-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "switch-wrapper invisible",
+        id: "holiday"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        action: "",
+        className: "disabled"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input",
+        type: "checkbox",
+        value: "",
+        id: "defaultCheck1"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: "defaultCheck1"
+      }, "Default checkbox")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input",
+        type: "checkbox",
+        value: "",
+        id: "defaultCheck1"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: "defaultCheck1"
+      }, "Default checkbox")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input",
+        type: "checkbox",
+        value: "",
+        id: "defaultCheck1"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: "defaultCheck1"
+      }, "Default checkbox")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input",
+        type: "checkbox",
+        value: "",
+        id: "defaultCheck1"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: "defaultCheck1"
+      }, "Default checkbox")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input",
+        type: "checkbox",
+        value: "",
+        id: "defaultCheck1"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: "defaultCheck1"
+      }, "Default checkbox")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input",
+        type: "checkbox",
+        value: "",
+        id: "defaultCheck1"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: "defaultCheck1"
+      }, "Default checkbox")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0 mt-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 col-md-6 col-lg-6 col-sm-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Weather Alert")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "switch"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "slider round"
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0 mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dl", {
+        className: "d-flex flex-row flex-wrap"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dt", null, "Annotations for:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
+        className: "mx-2"
+      }, "spain"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
+        className: "mx-2"
+      }, "Argentina"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
+        className: "mx-2"
+      }, "spain"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 col-md-6 col-lg-6 col-sm-12"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0 mt-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 col-md-6 col-lg-6 col-sm-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Google Algorithm Updates")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "switch"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "slider round"
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0 mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dl", {
+        className: "d-flex flex-row flex-wrap"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dt", null, "Annotations for:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
+        className: "mx-2"
+      }, "spain"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
+        className: "mx-2"
+      }, "Argentina"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
+        className: "mx-2"
+      }, "spain"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 col-md-6 col-lg-6 col-sm-12"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0 mt-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 col-md-6 col-lg-6 col-sm-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Retail Marketing")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "switch"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox",
+        className: "retail",
+        defaultChecked: this.state["switch"],
+        onChange: this.switchHandler
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "slider round"
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row ml-0 mr-0 mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dl", {
+        className: "d-flex flex-row flex-wrap"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dt", null, "Annotations for:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
+        className: "mx-2"
+      }, "spain"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
+        className: "mx-2"
+      }, "Argentina"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
+        className: "mx-2"
+      }, "spain"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 col-md-6 col-lg-6 col-sm-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "switch-wrapper invisible",
+        id: "retail"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        action: ""
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input",
+        type: "checkbox",
+        value: "",
+        id: "defaultCheck1"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: "defaultCheck1"
+      }, "Default checkbox")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input",
+        type: "checkbox",
+        value: "",
+        id: "defaultCheck1"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: "defaultCheck1"
+      }, "Default checkbox")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input",
+        type: "checkbox",
+        value: "",
+        id: "defaultCheck1"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: "defaultCheck1"
+      }, "Default checkbox")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input",
+        type: "checkbox",
+        value: "",
+        id: "defaultCheck1"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: "defaultCheck1"
+      }, "Default checkbox")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input",
+        type: "checkbox",
+        value: "",
+        id: "defaultCheck1"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: "defaultCheck1"
+      }, "Default checkbox")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-check-input",
+        type: "checkbox",
+        value: "",
+        id: "defaultCheck1"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-check-label",
+        htmlFor: "defaultCheck1"
+      }, "Default checkbox")))))));
+    }
+  }]);
+
+  return DataSourceIndex;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
 
 /***/ }),
 
@@ -54254,10 +54623,13 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
   _createClass(sidebar, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      jquery__WEBPACK_IMPORTED_MODULE_2__('.sidebar').hover(function () {
-        if (jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item.dropdown').hasClass('open')) jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item.dropdown').addClass('open');
+      jquery__WEBPACK_IMPORTED_MODULE_2__('.sidebar').hover(function () {// if($('.setting-menu-item.dropdown').hasClass('open'))
+        // $('.setting-menu-item.dropdown').addClass('open')
       }, function () {
-        if (jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item.dropdown').hasClass('open')) jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item.dropdown').removeClass('open');
+        if (jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item.dropdown').hasClass('open')) {
+          jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item.dropdown').removeClass('open');
+          jquery__WEBPACK_IMPORTED_MODULE_2__('.arrow .t').removeClass('ti-angle-down');
+        }
       });
       jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item').click(function () {
         jquery__WEBPACK_IMPORTED_MODULE_2__('.setting-menu-item.dropdown').toggleClass('open');

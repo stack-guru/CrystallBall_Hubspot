@@ -16,13 +16,15 @@ class sidebar extends React.Component {
         $('.sidebar').hover(
 
             function () {
-                if($('.setting-menu-item.dropdown').hasClass('open'))
-                $('.setting-menu-item.dropdown').addClass('open')
+                // if($('.setting-menu-item.dropdown').hasClass('open'))
+                // $('.setting-menu-item.dropdown').addClass('open')
             },
 
             function () {
-                if($('.setting-menu-item.dropdown').hasClass('open'))
+                if($('.setting-menu-item.dropdown').hasClass('open')){
                     $('.setting-menu-item.dropdown').removeClass('open')
+                    $('.arrow .t').removeClass('ti-angle-down');
+                }
             }
         );
         $('.setting-menu-item').click(function(){

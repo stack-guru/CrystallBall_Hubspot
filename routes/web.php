@@ -63,6 +63,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::view('api-key', 'ui/app');
+    Route::view('data-source', 'ui/app');
+
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
 

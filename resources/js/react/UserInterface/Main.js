@@ -17,7 +17,7 @@ import Settings from './components/settings/IndexSettings';
 import ChangePassword from './components/settings/ChangePassword';
 import PaymentHistory from './components/settings/pricingPlans/PaymentHistory';
 import GoogleAccount from './components/settings/googleAccount/AddGoogleAccount';
-
+import DataSourceIndex from "./components/DataSource/DataSourceIndex";
 import 'react-toastify/dist/ReactToastify.css';
 import './Main.css';
 import IndexAPIKey from './components/apiKey/IndexAPIKey';
@@ -145,7 +145,7 @@ class Main extends React.Component {
                                 <GoogleAccount user={this.state.user} />
                             </Route>
                             <Route exact path="/data-source" refresh={true}>
-                                <GoogleAccount user={this.state.user} />
+                                <DataSourceIndex user={this.state.user} />
                             </Route>
                         </Switch>
 
