@@ -94,6 +94,9 @@ setting-menu-item.dropdown{
     height: auto;
     padding-left: 20%;
 }
+.switch-wrapper{
+    transition: visibility 0.3s linear;
+}
 /*switch button*/
 .switch {
     position: relative;

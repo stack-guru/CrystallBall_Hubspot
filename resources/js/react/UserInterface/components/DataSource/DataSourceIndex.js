@@ -47,7 +47,7 @@ export default class DataSourceIndex extends React.Component{
                         <div className="col-12 col-md-6 col-lg-6 col-sm-12">
                             <div className="row ml-0 mr-0">
                                 <div className="col-6">
-                                    <h3>Holiday</h3>
+                                    <h3 className="gaa-text-primary">Holiday</h3>
                                 </div>
                                 <div className="col-6 text-center">
                                     <label className="switch">
@@ -127,7 +127,7 @@ export default class DataSourceIndex extends React.Component{
                     <div className="col-12 col-md-6 col-lg-6 col-sm-12">
                         <div className="row ml-0 mr-0">
                             <div className="col-6">
-                                <h3>Weather Alert</h3>
+                                <h3 className="gaa-text-primary">Weather Alert</h3>
                             </div>
                             <div className="col-6 text-center">
                                 <label className="switch">
@@ -166,7 +166,7 @@ export default class DataSourceIndex extends React.Component{
                     <div className="col-12 col-md-6 col-lg-6 col-sm-12">
                         <div className="row ml-0 mr-0">
                             <div className="col-6">
-                                <h3>Google Algorithm Updates</h3>
+                                <h3 className="gaa-text-primary">Google Algorithm Updates</h3>
                             </div>
                             <div className="col-6 text-center">
                                 <label className="switch">
@@ -204,7 +204,7 @@ export default class DataSourceIndex extends React.Component{
                     <div className="col-12 col-md-6 col-lg-6 col-sm-12">
                         <div className="row ml-0 mr-0">
                             <div className="col-6">
-                                <h3>Retail Marketing</h3>
+                                <h3 className="gaa-text-primary">Retail Marketing</h3>
                             </div>
                             <div className="col-6 text-center">
                                 <label className="switch">
