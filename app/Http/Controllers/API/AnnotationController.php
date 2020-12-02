@@ -158,6 +158,7 @@ class AnnotationController extends Controller
     {
         $annotation = new Annotation;
         $annotation->fill($request->validated());
+        $annotation->show_at = Carbon::parse($request->show_at);
         $annotation->user_id = Auth::id();
         $annotation->save();
 
@@ -178,6 +179,7 @@ class AnnotationController extends Controller
         }
 
         $annotation->fill($request->validated());
+        $annotation->show_at = Carbon::parse($request->show_at);
         $annotation->save();
 
         return ['annotation' => $annotation];
