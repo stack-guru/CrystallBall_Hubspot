@@ -98,6 +98,7 @@ setting-menu-item.dropdown{
     transition: visibility 0.3s linear;
 }
 /*switch button*/
+
 .switch {
     position: relative;
     display: inline-block;
@@ -339,4 +340,33 @@ setting-menu-item.dropdown{
     width: 35px;
     height: 35px;
     border-radius: 100%;
+}
+
+.integration-pack{
+    position:relative;
+    height: 150px;
+    margin:20px 0px 20px 0px;
+}
+
+.integration-pack  .int-img{
+    min-width:150px;
+    height: 150px;
+}
+.integration-pack .int-description{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width:65%;
+    padding:1.5%;
+    overflow:hidden;
+
+}
+.integration-pack .int-action{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
 }

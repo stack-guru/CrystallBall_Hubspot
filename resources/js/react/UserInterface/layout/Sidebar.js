@@ -104,7 +104,18 @@ class sidebar extends React.Component {
                                 <span className="icon-holder">
                                     <i className="ti-server"></i>
                                 </span>
-                                <span className="title ">Data Sourse</span>
+                                <span className="title">Data Source</span>
+                            </span>
+                        </Link>
+                    </li>
+                    <li className="nav-item gaa-menu-item">
+                        <Link to="/integrations" >
+                            <span className="sidebar-link" >
+                                <span className="icon-holder">
+
+                                    <i className="fa fa-tasks"></i>
+                                </span>
+                                <span className="title">Integrations</span>
                             </span>
                         </Link>
                     </li>
