@@ -39,7 +39,7 @@ export default class integrationsIndex extends React.Component{
                         </div>
                         <div className="d-flex flex-row integration-pack">
                             <figure>
-                                <img src="/images/adward.png" className="img-fluid int-img" alt="adward image here"/>
+                                <img src="/images/adword.png" className="img-fluid int-img" alt="adword image here"/>
                             </figure>
                             <div className="int-description">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate doloribus molestias officia, pers</p>
@@ -50,7 +50,7 @@ export default class integrationsIndex extends React.Component{
                         </div>
                         <div className="d-flex flex-row integration-pack">
                             <figure>
-                                <img src="/images/asana.png" className="img-fluid int-img" alt="adward image here"/>
+                                <img src="/images/asana.png" className="img-fluid int-img" alt="adword image here"/>
                             </figure>
                             <div className="int-description">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate doloribus molestias officia, pers</p>
@@ -61,7 +61,7 @@ export default class integrationsIndex extends React.Component{
                         </div>
                         <div className="d-flex flex-row integration-pack">
                             <figure >
-                                <img src="/images/slack.png" className="img-fluid int-img" alt="adward image here"/>
+                                <img src="/images/slack.png" className="img-fluid int-img" alt="adword image here"/>
                             </figure>
                             <div className="int-description">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate doloribus molestias officia, pers</p>

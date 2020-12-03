@@ -6,9 +6,11 @@ Route::resource('user', App\Http\Controllers\Admin\UserController::class)->excep
 
 Route::group(['prefix' => 'data-source', 'as' => 'data-source.'], function () {
 
-    Route::get('index', App\Http\Controllers\Admin\DataSourceController::class)->name('index');
+    Route::get('/', App\Http\Controllers\Admin\DataSourceController::class)->name('index');
 
     Route::resource('holiday', App\Http\Controllers\Admin\HolidayController::class);
+
+    Route::resource('google-algorithm-update', App\Http\Controllers\Admin\GoogleAlgorithmUpdateController::class)->except('show');
 
 });
 Route::resource('coupon',App\Http\Controllers\Admin\CouponController::class);

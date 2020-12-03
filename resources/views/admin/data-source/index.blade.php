@@ -7,9 +7,6 @@
                 <div class="row ml-0 mr-0">
                     <div class="col-12">
                         <h1>Data Source</h1>
-                        @if(session()->has('msg'))
-                            <div class="alert alert-success text-left">{{session()->get('msg')}}</div>
-                        @endif
                     </div>
                 </div>
                 <div class="row ml-0 mr-0 mt-5">

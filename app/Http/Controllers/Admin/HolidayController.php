@@ -44,7 +44,7 @@ class HolidayController extends Controller
         $holiday =new Holiday;
         $holiday->fill($request->validated());
         $holiday->save();
-        return redirect()->route('admin.data-source.index')->with('msg','holiday saved successfully');
+        return redirect()->route('admin.data-source.index')->with('error','holiday saved successfully');
     }
 
     /**
@@ -85,7 +85,7 @@ class HolidayController extends Controller
         $holiday =Holiday::find($id);
         $holiday->fill($request->validated());
         $holiday->save();
-        return redirect()->route('admin.data-source.index')->with('msg','holiday updated successfully');
+        return redirect()->route('admin.data-source.index')->with('error','holiday updated successfully');
     }
 
     /**
@@ -99,7 +99,7 @@ class HolidayController extends Controller
         //
         $holiday =Holiday::find($id);
          $holiday->delete();
-        return redirect()->route('admin.data-source.index')->with('msg','holiday deleted successfully');
+        return redirect()->route('admin.data-source.index')->with('error','holiday deleted successfully');
 
     }
 }
