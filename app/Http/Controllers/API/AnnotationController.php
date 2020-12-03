@@ -44,7 +44,7 @@ class AnnotationController extends Controller
             $annotationsQuery->where('google_account_id', $request->query('google_account_id'));
         }
 
-        $annotationsQuery->whereBetween('show_at', [$request->query('startDate'), $request->query('endDate')]);
+        $annotationsQuery->whereRaw("DATE(`show_at`) >= '" . $request->query('startDate') . "' AND DATE(`show_at`) <= '" . $request->query('endDate') . "'");
         $annotations = $annotationsQuery->get();
 
         if (!count($annotations)) {

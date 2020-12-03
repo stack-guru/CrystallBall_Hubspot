@@ -68,7 +68,7 @@ class HolidayController extends Controller
     {
         //
         $data['holiday']=Holiday::find($id);
-        return view('admin.data-source.holiday.update',$data);
+        return view('admin.data-source.holiday.edit',$data);
     }
 
     /**
