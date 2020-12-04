@@ -103,7 +103,7 @@ class sidebar extends React.Component {
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
 
-                                    <i className="fa fa-tasks"></i>
+                                    <i className="fa fa-cogs"></i>
                                 </span>
                                 <span className="title">Integrations</span>
                             </span>
