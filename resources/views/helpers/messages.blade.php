@@ -17,7 +17,7 @@
 <div class="row">
     <div class="col-12">
       <div class="callout callout-success">
-        <h5><i class="fas fa-check"></i> Done!</h5>
+        <h5><i class="fa fa-check"></i> Done!</h5>
       </div>
     </div>
   </div>

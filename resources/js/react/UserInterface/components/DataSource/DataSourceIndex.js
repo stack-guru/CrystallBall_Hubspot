@@ -1,13 +1,16 @@
 import React from 'react';
 require('../../Main.css');
+import Countries from "../../utils/Countries";
 import * as $ from 'jquery';
 export default class DataSourceIndex extends React.Component{
     constructor(props) {
         super(props);
             this.state={
                 switch:false,
+                trigger:false,
             }
             this.switchHandler=this.switchHandler.bind(this);
+            this.serviceStatusHandler=this.serviceStatusHandler.bind(this)
     }
 
     componentDidMount() {
@@ -21,15 +24,18 @@ export default class DataSourceIndex extends React.Component{
         // }
 
     }
+    serviceStatusHandler(){
+        console.log('service status')
+    }
     switchHandler(e){
-        if(e.target.checked){
+        if(e.target.switch){
             this.setState({switch:true});
-            $("#"+e.target.className).removeClass('invisible');
-            $("#"+e.target.className).addClass('visible');
+            $("#"+e.target.title).removeClass('off');
+            $("#"+e.target.title).addClass('on');
         }else{
             this.setState({switch:false});
-            $("#"+e.target.className).removeClass('visible')
-            $("#"+e.target.className).addClass('invisible')
+            $("#"+e.target.title).removeClass('on')
+            $("#"+e.target.title).addClass('off')
         }
 
 
@@ -44,243 +50,106 @@ export default class DataSourceIndex extends React.Component{
                     </div>
                 </div>
                     <div className="row ml-0 mr-0 mt-4">
-                        <div className="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div className="col-6 M">
+                            <div className="container ds-sections">
                             <div className="row ml-0 mr-0">
-                                <div className="col-6">
+                                <div className="col-8">
                                     <h3 className="gaa-text-primary">Holiday</h3>
-                                </div>
-                                <div className="col-6 text-center">
-                                    <label className="switch">
-                                        <input type="checkbox" className="holiday" defaultChecked={this.state.switch}  onChange={this.switchHandler}/>
-                                            <span className="slider round"></span>
-                                    </label>
-                                </div>
-
-                            </div>
-                            <div className="row ml-0 mr-0 mt-3">
-                                <div className="col-12">
                                     <dl className="d-flex flex-row flex-wrap ">
                                         <dt>Annotations for:</dt>
                                         <dd className="mx-2">spain</dd>
                                         <dd className="mx-2">Argentina</dd>
                                         <dd className="mx-2">spain</dd>
-
                                     </dl>
                                 </div>
+                                <div className="col-4 text-center">
+                                    <label className="switch">
+                                        <input type="checkbox" className="holiday" defaultChecked={this.state.switch}  onChange={this.switchHandler}/>
+                                            <span className="slider round"></span>
+                                    </label>
+                                    <span className="country-trigger"  title="holiday" onClick={()=>{this.switchHandler(this)}}>
+                                        <i className="fa fa-arrow-left text-primary"></i>
+                                    </span>
+                                </div>
 
                             </div>
-                        </div>
-                        <div className="col-12 col-md-6 col-lg-6 col-sm-12">
-                            <div className="switch-wrapper invisible" id="holiday">
-                            <form action="" className="disabled">
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                                        <label className="form-check-label" htmlFor="defaultCheck1">
-                                            Default checkbox
+                            {/*<div className="row ml-0 mr-0 mt-3">*/}
+                            {/*    <div className="col-12">*/}
+                            {/*        */}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+                            </div>
+
+                            <div className="container mt-3 ds-sections">
+                                <div className="row ml-0 mr-0">
+                                    <div className="col-8">
+                                        <h3 className="gaa-text-primary">Weather Alert</h3>
+                                    </div>
+                                    <div className="col-4 text-center">
+                                        <label className="switch">
+                                            <input type="checkbox"  />
+                                            <span className="slider round"></span>
                                         </label>
+                                    </div>
+
+                                </div>
+                                <div className="row ml-0 mr-0 mt-3">
+                                    <div className="col-12">
+                                        <dl className="d-flex flex-row flex-wrap">
+                                            <dt>Annotations for:</dt>
+                                            <dd className="mx-2">spain</dd>
+                                            <dd className="mx-2">Argentina</dd>
+                                            <dd className="mx-2">spain</dd>
+
+                                        </dl>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div className="container mt-3 ds-sections">
+                                <div className="row ml-0 mr-0">
+                                    <div className="col-8">
+                                        <h3 className="gaa-text-primary">Google Algorithm Updates</h3>
+                                    </div>
+                                    <div className="col-4 text-center">
+                                        <label className="switch">
+                                            <input type="checkbox" />
+                                            <span className="slider round"></span>
+                                        </label>
+                                    </div>
+
                                 </div>
 
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                                    <label className="form-check-label" htmlFor="defaultCheck1">
-                                        Default checkbox
-                                    </label>
-                                </div>
+                            </div>
 
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                                    <label className="form-check-label" htmlFor="defaultCheck1">
-                                        Default checkbox
-                                    </label>
-                                </div>
+                            <div className="container mt-3 ds-sections">
+                                <div className="row ml-0 mr-0">
+                                    <div className="col-8">
+                                        <h3 className="gaa-text-primary">Retail Marketing</h3>
+                                    </div>
+                                    <div className="col-4 text-center">
+                                        <label className="switch">
+                                            <input type="checkbox" className="retail" defaultChecked={this.state.switch}  onChange={this.switchHandler} />
+                                            <span className="slider round"></span>
+                                        </label>
+                                    </div>
 
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                                    <label className="form-check-label" htmlFor="defaultCheck1">
-                                        Default checkbox
-                                    </label>
                                 </div>
+                            </div>
 
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                                    <label className="form-check-label" htmlFor="defaultCheck1">
-                                        Default checkbox
-                                    </label>
-                                </div>
 
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                                    <label className="form-check-label" htmlFor="defaultCheck1">
-                                        Default checkbox
-                                    </label>
-                                </div>
 
-                            </form>
+
+
+
+                        </div>
+                        <div className="col-6 M">
+                            <div className="switch-wrapper off" id="holiday">
+                                <Countries></Countries>
                             </div>
                         </div>
                     </div>
-
-
-
-
-                <div className="row ml-0 mr-0 mt-4">
-                    <div className="col-12 col-md-6 col-lg-6 col-sm-12">
-                        <div className="row ml-0 mr-0">
-                            <div className="col-6">
-                                <h3 className="gaa-text-primary">Weather Alert</h3>
-                            </div>
-                            <div className="col-6 text-center">
-                                <label className="switch">
-                                    <input type="checkbox"  />
-                                    <span className="slider round"></span>
-                                </label>
-                            </div>
-
-                        </div>
-                        <div className="row ml-0 mr-0 mt-3">
-                            <div className="col-12">
-                                <dl className="d-flex flex-row flex-wrap">
-                                    <dt>Annotations for:</dt>
-                                    <dd className="mx-2">spain</dd>
-                                    <dd className="mx-2">Argentina</dd>
-                                    <dd className="mx-2">spain</dd>
-
-                                </dl>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-6 col-lg-6 col-sm-12">
-
-                    </div>
-                </div>
-
-
-
-
-
-
-
-
-                <div className="row ml-0 mr-0 mt-4">
-                    <div className="col-12 col-md-6 col-lg-6 col-sm-12">
-                        <div className="row ml-0 mr-0">
-                            <div className="col-6">
-                                <h3 className="gaa-text-primary">Google Algorithm Updates</h3>
-                            </div>
-                            <div className="col-6 text-center">
-                                <label className="switch">
-                                    <input type="checkbox" />
-                                    <span className="slider round"></span>
-                                </label>
-                            </div>
-
-                        </div>
-                        <div className="row ml-0 mr-0 mt-3">
-                            <div className="col-12">
-                                <dl className="d-flex flex-row flex-wrap">
-                                    <dt>Annotations for:</dt>
-                                    <dd className="mx-2">spain</dd>
-                                    <dd className="mx-2">Argentina</dd>
-                                    <dd className="mx-2">spain</dd>
-
-                                </dl>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-6 col-lg-6 col-sm-12">
-
-                    </div>
-                </div>
-
-
-
-
-
-
-
-                <div className="row ml-0 mr-0 mt-4">
-                    <div className="col-12 col-md-6 col-lg-6 col-sm-12">
-                        <div className="row ml-0 mr-0">
-                            <div className="col-6">
-                                <h3 className="gaa-text-primary">Retail Marketing</h3>
-                            </div>
-                            <div className="col-6 text-center">
-                                <label className="switch">
-                                    <input type="checkbox" className="retail" defaultChecked={this.state.switch}  onChange={this.switchHandler} />
-                                    <span className="slider round"></span>
-                                </label>
-                            </div>
-
-                        </div>
-                        <div className="row ml-0 mr-0 mt-3">
-                            <div className="col-12">
-                                <dl className="d-flex flex-row flex-wrap">
-                                    <dt>Annotations for:</dt>
-                                    <dd className="mx-2">spain</dd>
-                                    <dd className="mx-2">Argentina</dd>
-                                    <dd className="mx-2">spain</dd>
-
-                                </dl>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-6 col-lg-6 col-sm-12">
-                        <div className="switch-wrapper invisible" id="retail">
-                            <form action="" >
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                                    <label className="form-check-label" htmlFor="defaultCheck1">
-                                        Default checkbox
-                                    </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                                    <label className="form-check-label" htmlFor="defaultCheck1">
-                                        Default checkbox
-                                    </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                                    <label className="form-check-label" htmlFor="defaultCheck1">
-                                        Default checkbox
-                                    </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                                    <label className="form-check-label" htmlFor="defaultCheck1">
-                                        Default checkbox
-                                    </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                                    <label className="form-check-label" htmlFor="defaultCheck1">
-                                        Default checkbox
-                                    </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                                    <label className="form-check-label" htmlFor="defaultCheck1">
-                                        Default checkbox
-                                    </label>
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
 
 
 

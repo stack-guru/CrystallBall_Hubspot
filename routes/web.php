@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
         Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);
         Route::delete('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
-
+        Route::get('countries',[App\Http\Controllers\HolidayController::class,'holidayApi']);
         Route::group(['prefix' => 'settings'], function () {
 
             Route::post('price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');

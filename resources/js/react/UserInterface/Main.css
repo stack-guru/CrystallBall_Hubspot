@@ -370,3 +370,22 @@ setting-menu-item.dropdown{
     align-items: center;
 
 }
+.switch-wrapper.on{
+    display:block;
+}
+.switch-wrapper.off{
+    display:none;
+}
+
+.checkbox-box{
+    height: 400px;
+    overflow-y: auto;
+    width:330px;
+}
+.ds-sections{
+    height: 200px;
+}
+.country-trigger{
+    font-size: 16px;
+    display: block;
+}

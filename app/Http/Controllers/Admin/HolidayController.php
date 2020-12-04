@@ -17,6 +17,7 @@ class HolidayController extends Controller
     public function index()
     {
         //
+
         $data['holidays']=Holiday::orderBy('created_at','DESC')->get();
         return view('admin/data-source/holiday/index',$data);
     }
@@ -44,7 +45,7 @@ class HolidayController extends Controller
         $holiday =new Holiday;
         $holiday->fill($request->validated());
         $holiday->save();
-        return redirect()->route('admin.data-source.index')->with('error','holiday saved successfully');
+        return redirect()->route('admin.data-source.index')->with('success','holiday saved successfully');
     }
 
     /**
@@ -102,4 +103,14 @@ class HolidayController extends Controller
         return redirect()->route('admin.data-source.index')->with('error','holiday deleted successfully');
 
     }
+
+
+
+
+
+
+
+
+
+
 }

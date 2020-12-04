@@ -12,6 +12,7 @@
                 <div class="row ml-0 mr-0 mt-5">
                     <div class="col-12 col-lg-8">
                         <h2>Holiday</h2>
+
                         <div class="row ml-0 mr-0 mt-4">
                             <div class="col-12">
                                 <a href="{{route('admin.data-source.holiday.index')}}" class="btn btn-primary">View All</a>
