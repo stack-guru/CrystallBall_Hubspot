@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AnnotationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,32 +35,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('annotation/upload', 'ui/app');
     Route::post('annotation/upload', [App\Http\Controllers\AnnotationController::class, 'upload']);
 
-    Route::group(['prefix' => 'ui'], function () {
-        Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
-
-        Route::get('coupon', [App\Http\Controllers\CouponController::class, 'verify']);
-
-        Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
-
-        Route::post('annotation', [App\Http\Controllers\AnnotationController::class, 'store']);
-        Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
-        Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);
-        Route::delete('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
-        Route::get('countries',[App\Http\Controllers\HolidayController::class,'holidayApi']);
-        Route::group(['prefix' => 'settings'], function () {
-
-            Route::post('price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');
-            Route::get('price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
-
-            Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
-            Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
-            Route::post('/change-password',[App\Http\Controllers\Auth\ResetPasswordController::class,'updatePassword']);
-        });
-        Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
-        Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
-
-    });
-
     Route::view('api-key', 'ui/app');
     Route::view('data-source', 'ui/app');
     Route::view('integrations', 'ui/app');
@@ -81,4 +54,30 @@ Route::group(['middleware' => ['auth']], function () {
         Route::view('payment-history', 'ui/app');
     });
 
+    Route::group(['prefix' => 'ui'], function () {
+
+        Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only([ 'index', 'store', 'destroy' ]);
+
+        Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
+        Route::get('coupon', [App\Http\Controllers\CouponController::class, 'verify']);
+        Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
+
+        Route::post('annotation', [App\Http\Controllers\AnnotationController::class, 'store']);
+        Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
+        Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);
+        Route::delete('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
+        Route::get('countries', [App\Http\Controllers\HolidayController::class, 'holidayApi']);
+        Route::group(['prefix' => 'settings'], function () {
+
+            Route::post('price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');
+            Route::get('price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
+
+            Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
+            Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
+            Route::post('/change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
+        });
+        Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
+        Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
+
+    });
 });

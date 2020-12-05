@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserDataSourceRequest;
 use App\Models\UserDataSource;
+use Auth;
 use Illuminate\Http\Request;
 
 class UserDataSourceController extends Controller
@@ -14,17 +16,7 @@ class UserDataSourceController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return ['user_data_sources' => UserDataSource::ofCurrentUser()->get()];
     }
 
     /**
@@ -33,44 +25,16 @@ class UserDataSourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserDataSourceRequest $request)
     {
-        //
+        $userDataSource = new UserDataSource;
+        $userDataSource->fill($request->validated());
+        $userDataSource->user_id = Auth::id();
+        $userDataSource->save();
+
+        return ['user_data_source' => $userDataSource];
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\UserDataSource  $userDataSource
-     * @return \Illuminate\Http\Response
-     */
-    public function show(UserDataSource $userDataSource)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UserDataSource  $userDataSource
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserDataSource $userDataSource)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\UserDataSource  $userDataSource
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, UserDataSource $userDataSource)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -80,6 +44,12 @@ class UserDataSourceController extends Controller
      */
     public function destroy(UserDataSource $userDataSource)
     {
-        //
+        if ($userDataSource->user_id !== Auth::id()) {
+            abort(404);
+        }
+
+        $userDataSource->delete();
+
+        return ['success' => true];
     }
 }
