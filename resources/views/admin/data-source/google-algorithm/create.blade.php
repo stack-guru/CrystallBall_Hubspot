@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('page-title','Payment History')
+@section('page-title','Create GAU')
 @section('content')
 
 <div class="contianer">
