@@ -23,6 +23,10 @@ class User extends Authenticatable
         'password',
         'price_plan_id',
         'price_plan_expiry_date',
+
+        'is_ds_holidays_enabled',
+        'is_ds_google_algoorithm_updates_enabled',
+        'is_ds_weather_alerts_enabled',
     ];
 
     /**
@@ -43,6 +47,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
+
+        'is_ds_holidays_enabled' => 'boolean',
+        'is_ds_google_algoorithm_updates_enabled' => 'boolean',
+        'is_ds_weather_alerts_enabled' => 'boolean',
     ];
 
     public function pricePlan()

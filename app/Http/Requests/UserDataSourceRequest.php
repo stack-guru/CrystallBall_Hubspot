@@ -19,6 +19,7 @@ class UserDataSourceRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
+     * 
      * @return array
      */
     public function rules()
@@ -27,6 +28,7 @@ class UserDataSourceRequest extends FormRequest
             'ds_code' => 'required|string',
             'ds_name' => 'required|string',
             'country_name' => 'required|string',
+            'is_enabled' => 'nullable'
         ];
     }
 }

@@ -23,6 +23,8 @@ class CreateUserDataSourcesTable extends Migration
             
             $table->string('country_name', 30)->nullable();
 
+            $table->boolean('is_enabled')->required()->default(true);
+
             $table->timestamps();
         });
     }

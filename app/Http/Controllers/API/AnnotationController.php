@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Http\Resources\annotation as annotationResource;
 use App\Models\Annotation;
+use App\Models\GoogleAlgorithmUpdate;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\Holiday;
 
 class AnnotationController extends Controller
 {
@@ -39,9 +41,21 @@ class AnnotationController extends Controller
             return ['annotations' => [[[]]]];
         }
 
-        $annotationsQuery = Annotation::where('user_id', Auth::id())->where('is_enabled', true)->orderBy('show_at', 'ASC');
+        $annotationsQuery = Annotation::select('show_at', 'annotations.id', 'category', 'event_name', 'url', 'description')->where('user_id', Auth::id())->where('is_enabled', true)->orderBy('show_at', 'ASC');
         if ($request->query('google_account_id') && $request->query('google_account_id') !== '*') {
             $annotationsQuery->where('google_account_id', $request->query('google_account_id'));
+        }
+
+        if ($request->query('show_google_algorithm_updates') == 'true') {
+            $annotationsQuery->union(GoogleAlgorithmUpdate::selectRaw('update_date AS show_at, google_algorithm_updates.id, category, event_name, NULL as url, description')
+                ->whereRaw("DATE(`update_date`) >= '" . $request->query('startDate') . "' AND DATE(`update_date`) <= '" . $request->query('endDate') . "'"));
+        }
+        if ($request->query('show_holidays') == 'true') {
+            $annotationsQuery->union(Holiday::selectRaw('holiday_date AS show_at, holidays.id, category, event_name, NULL as url, description')
+                ->join('user_data_sources AS uds', 'uds.country_name', 'holidays.country_name')
+                ->where('uds.user_id', Auth::id())
+                ->where('uds.ds_code', 'holidays')
+                ->whereRaw("DATE(`holiday_date`) >= '" . $request->query('startDate') . "' AND DATE(`holiday_date`) <= '" . $request->query('endDate') . "'"));
         }
 
         $annotationsQuery->whereRaw("DATE(`show_at`) >= '" . $request->query('startDate') . "' AND DATE(`show_at`) <= '" . $request->query('endDate') . "'");

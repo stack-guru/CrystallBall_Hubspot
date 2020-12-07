@@ -14,6 +14,11 @@ class UserDataSource extends Model
         'ds_code',
         'ds_name',
         'country_name',
+        'is_enabled'
+    ];
+
+    protected $casts = [
+        'is_enabled' => 'boolean'
     ];
 
     public function scopeOfCurrentUser($query){
