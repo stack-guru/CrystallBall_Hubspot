@@ -29,16 +29,32 @@ export default  class countries extends React.Component{
 
     render() {
         let countries=this.state.countries;
+        let data_source=this.props.ds_data
         return (
             <div className="countries-form">
-                        <h3 className="gaa-text-primary">Select Countries</h3>
+                        <h3 className="gaa-text-primary">Select Countries for {this.props.sectionTitle}</h3>
                 <hr/>
                 <div className="checkbox-box">
                 {
                     countries?
                         countries.map(country=>(
                         <div className="form-check country" key={country}>
-                            <input className="form-check-input" type="checkbox" name={country} id={country}/>
+                            {
+                                data_source.map(ds=>(
+                                    ds.country_name!==country?
+                                        <span>
+                                        <input className="form-check-input" key={ds.id} defaultChecked={false} type="checkbox" name={country} id={country}
+                                               onChange={this.props.onChangeCallback}/>
+
+                                            </span>
+                                        :
+                                        <input className="form-check-input" key={ds.id} defaultChecked={true} type="checkbox" name={country} id={country}
+                                               onChange={this.props.onChangeCallback}/>
+                                    )
+                                )
+                            }
+
+
                             <label className="form-check-label" htmlFor="defaultCheck1">
                                 {country}
                             </label>

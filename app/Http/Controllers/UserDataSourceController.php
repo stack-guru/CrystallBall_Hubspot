@@ -16,7 +16,8 @@ class UserDataSourceController extends Controller
      */
     public function index()
     {
-        return ['user_data_sources' => UserDataSource::ofCurrentUser()->orderBy('ds_code')->get()];
+
+        return ['data_sources' => UserDataSource::ofCurrentUser()->orderBy('ds_code')->get()];
     }
 
     /**
