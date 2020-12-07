@@ -41,7 +41,7 @@ class AnnotationController extends Controller
             return ['annotations' => [[[]]]];
         }
 
-        $annotationsQuery = Annotation::select('show_at', 'annotations.id', 'category', 'event_name', 'url', 'description')->where('user_id', Auth::id())->where('is_enabled', true)->orderBy('show_at', 'ASC');
+        $annotationsQuery = Annotation::select('show_at', 'annotations.id', 'category', 'event_name', 'url', 'description')->where('user_id', Auth::id())->where('is_enabled', true);
         if ($request->query('google_account_id') && $request->query('google_account_id') !== '*') {
             $annotationsQuery->where('google_account_id', $request->query('google_account_id'));
         }
@@ -58,7 +58,7 @@ class AnnotationController extends Controller
                 ->whereRaw("DATE(`holiday_date`) >= '" . $request->query('startDate') . "' AND DATE(`holiday_date`) <= '" . $request->query('endDate') . "'"));
         }
 
-        $annotationsQuery->whereRaw("DATE(`show_at`) >= '" . $request->query('startDate') . "' AND DATE(`show_at`) <= '" . $request->query('endDate') . "'");
+        $annotationsQuery->whereRaw("DATE(`show_at`) BETWEEN '" . $request->query('startDate') . "' AND '" . $request->query('endDate') . "'")->orderBy('show_at', 'ASC');
         $annotations = $annotationsQuery->get();
 
         if (!count($annotations)) {
