@@ -50063,6 +50063,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_HttpClient__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/HttpClient */ "./resources/js/react/UserInterface/utils/HttpClient.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -50088,6 +50089,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 __webpack_require__(/*! ../../Main.css */ "./resources/js/react/UserInterface/Main.css");
+
 
 
 
@@ -50237,7 +50239,7 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
             userServices: resp.data.user_services
           });
 
-          console.log(resp);
+          react_toastify__WEBPACK_IMPORTED_MODULE_4__["toast"].success("Service activated successfully."); // console.log(resp);
         }, function (err) {
           console.log(err);
         }).then(function (err) {
@@ -50263,7 +50265,7 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
             userServices: resp.data.user_services
           });
 
-          console.log(resp);
+          react_toastify__WEBPACK_IMPORTED_MODULE_4__["toast"].success("Service deactivated successfully."); // console.log(resp);
         }, function (err) {
           console.log(err);
         }).then(function (err) {
@@ -50274,8 +50276,7 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var countries = this.state.dataSources; // console.log(this.state.userServices);
-
+      var countries = this.state.dataSources;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container-xl bg-white  d-flex flex-column justify-content-center component-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

@@ -3,6 +3,7 @@ require('../../Main.css');
 import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";
 import * as $ from 'jquery';
+import {toast} from "react-toastify";
 
 export default class DataSourceIndex extends React.Component{
     constructor(props) {
@@ -99,7 +100,8 @@ serviceStatusHandler(e){
        }
        HttpClient.post('/userService',formData).then(resp=>{
            this.setState({userServices:resp.data.user_services})
-           console.log(resp);
+           toast.success("Service activated successfully.");
+           // console.log(resp);
        },(err)=>{
            console.log(err)
        }).then(err=>{
@@ -115,7 +117,9 @@ serviceStatusHandler(e){
         }
         HttpClient.post('/userService',formData).then(resp=>{
             this.setState({userServices:resp.data.user_services})
-            console.log(resp);
+            toast.success("Service deactivated successfully.");
+
+            // console.log(resp);
         },(err)=>{
             console.log(err)
         }).then(err=>{
@@ -126,7 +130,7 @@ serviceStatusHandler(e){
 }
     render() {
         let countries=this.state.dataSources;
-        // console.log(this.state.userServices);
+
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper">
                 <div className="row ml-0 mr-0">
