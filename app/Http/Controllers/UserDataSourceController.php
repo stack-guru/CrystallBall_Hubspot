@@ -51,6 +51,6 @@ class UserDataSourceController extends Controller
 
         $userDataSource->delete();
 
-        return ['success' => true];
+        return ['success' => true,'data_source'=>$userDataSource];
     }
 }

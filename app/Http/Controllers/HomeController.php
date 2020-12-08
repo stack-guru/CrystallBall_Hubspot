@@ -31,7 +31,10 @@ class HomeController extends Controller
         if($request->is_ds_google_algorithm_updates_enabled||!$request->is_ds_google_algorithm_updates_enabled){
             $user->is_ds_google_algorithm_updates_enabled=$request->is_ds_google_algorithm_updates_enabled;
             $user->save();
-
+        }
+        if($request->is_ds_retail_marketing_enabled||!$request->is_ds_retail_marketing_enabled){
+            $user->is_ds_retail_marketing_enabled=$request->is_ds_retail_marketing_enabled;
+            $user->save();
         }
 
         return ['user_services'=>$user];

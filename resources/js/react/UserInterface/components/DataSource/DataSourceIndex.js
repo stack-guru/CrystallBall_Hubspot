@@ -59,14 +59,11 @@ export default class DataSourceIndex extends React.Component{
         }
         if(e.target.defaultChecked){
             this.setState({countryCheck:false})
-            let formData={
-                'ds_code':'holidays',
-                'ds_name':'Holiday',
-                'country_name':e.target.name,
-                'is_enabled':1,
-            }
-            HttpClient.delete(`/user-data-source/${e.target.id}`,formData).then(resp=>{
-                this.setState({dataSources:this.state.dataSources.concat(resp.data.user_data_source)})
+
+            HttpClient.delete(`/user-data-source/${e.target.id}`).then(resp=>{
+                let dataSources = this.state.dataSources;
+                dataSources = dataSources.filter(a => a.id != resp.data.data_source.id);
+                this.setState({ isBusy: false, dataSources: dataSources })
             },(err)=>{
                 console.log(err)
             }).catch(err=>{
@@ -96,6 +93,9 @@ serviceStatusHandler(e){
        if(e.target.name=='is_ds_google_algorithm_updates_enabled'){
            formData={'is_ds_google_algorithm_updates_enabled':1}
        }
+       if(e.target.name=='is_ds_retail_marketing_enabled'){
+           formData={'is_ds_retail_marketing_enabled':1}
+       }
        HttpClient.post('/userService',formData).then(resp=>{
            this.setState({userServices:resp.data.user_services})
            toast.success("Service activated successfully.");
@@ -111,6 +111,9 @@ serviceStatusHandler(e){
         }
         if(e.target.name=='is_ds_google_algorithm_updates_enabled'){
             formData={'is_ds_google_algorithm_updates_enabled':0}
+        }
+        if(e.target.name=='is_ds_retail_marketing_enabled'){
+            formData={'is_ds_retail_marketing_enabled':0}
         }
         HttpClient.post('/userService',formData).then(resp=>{
             this.setState({userServices:resp.data.user_services})
@@ -219,7 +222,7 @@ serviceStatusHandler(e){
                                     </div>
                                     <div className="col-4 text-center">
                                         <label className="switch">
-                                            <input type="checkbox" className="retail" defaultChecked={this.state.switch}  onChange={this.switchHandler} />
+                                            <input type="checkbox" className="retail" name="is_ds_retail_marketing_enabled" defaultChecked={this.state.userServices.is_ds_retail_marketing_enabled}  onChange={this.serviceStatusHandler} />
                                             <span className="slider round"></span>
                                         </label>
                                     </div>
