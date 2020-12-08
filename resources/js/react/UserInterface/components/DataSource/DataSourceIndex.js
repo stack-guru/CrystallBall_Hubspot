@@ -32,7 +32,7 @@ export default class DataSourceIndex extends React.Component{
             },(err)=>{
                 this.setState({isBusy:false,errors:err.response});
                 console.log(err)
-            }).then(err=>{
+            }).catch(err=>{
                 console.log(err)
                 this.setState({isBusy:false,errors:err});
             })
@@ -49,12 +49,11 @@ export default class DataSourceIndex extends React.Component{
                 'country_name':e.target.name,
                 'is_enabled':1,
             }
-            HttpClient.post('/data-sources',formData).then(resp=>{
+            HttpClient.post('/user-data-source',formData).then(resp=>{
                 this.setState({dataSources:this.state.dataSources.concat(resp.data.user_data_source)})
-                    console.log(resp);
                 },(err)=>{
                    console.log(err)
-                }).then(err=>{
+                }).catch(err=>{
                     console.log(err)
             })
         }
@@ -66,12 +65,11 @@ export default class DataSourceIndex extends React.Component{
                 'country_name':e.target.name,
                 'is_enabled':1,
             }
-            HttpClient.delete('/data-sources',formData).then(resp=>{
-
-                console.log(resp.data);
+            HttpClient.delete(`/user-data-source/${e.target.id}`,formData).then(resp=>{
+                this.setState({dataSources:this.state.dataSources.concat(resp.data.user_data_source)})
             },(err)=>{
                 console.log(err)
-            }).then(err=>{
+            }).catch(err=>{
                 console.log(err)
             })
         }
@@ -101,10 +99,9 @@ serviceStatusHandler(e){
        HttpClient.post('/userService',formData).then(resp=>{
            this.setState({userServices:resp.data.user_services})
            toast.success("Service activated successfully.");
-           // console.log(resp);
        },(err)=>{
            console.log(err)
-       }).then(err=>{
+       }).catch(err=>{
            console.log(err)
        })
    }
@@ -118,11 +115,9 @@ serviceStatusHandler(e){
         HttpClient.post('/userService',formData).then(resp=>{
             this.setState({userServices:resp.data.user_services})
             toast.success("Service deactivated successfully.");
-
-            // console.log(resp);
         },(err)=>{
             console.log(err)
-        }).then(err=>{
+        }).catch(err=>{
             console.log(err)
         })
     }

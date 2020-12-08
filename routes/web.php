@@ -67,8 +67,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);
         Route::delete('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
         Route::get('countries', [App\Http\Controllers\HolidayController::class, 'holidayApi']);
-        Route::post('data-sources', [App\Http\Controllers\UserDataSourceController::class, "store"]);
-        Route::get('data-sources', [App\Http\Controllers\UserDataSourceController::class, "index"]);
         Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);
 
         Route::group(['prefix' => 'settings'], function () {

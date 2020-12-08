@@ -10,7 +10,7 @@ class HolidayController extends Controller
     //
 
     public function holidayApi(){
-        $countries=Holiday::orderBy('created_at','DESC')->distinct()->get()->pluck('country_name');
+        $countries=Holiday::select('country_name')->orderBy('country_name','ASC')->distinct()->get()->pluck('country_name');
         return ['countries'=>$countries];
     }
 }

@@ -30,7 +30,6 @@ class sidebar extends React.Component {
         $('.setting-menu-item').click(function(){
             $('.setting-menu-item.dropdown').toggleClass('open');
             $('.arrow .t').toggleClass('ti-angle-down');
-            console.log('toggle js working');
         });
     }
 
