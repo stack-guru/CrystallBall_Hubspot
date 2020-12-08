@@ -38,30 +38,29 @@
 .sidebar-menu li a {
     color: #456287;
 }
-.sidebar-menu li:last-child{
+.sidebar-menu li:last-child {
     position: absolute;
-    top:90%;
-    bottom:5%;
+    top: 90%;
+    bottom: 5%;
 }
-.anno-container{
-    padding:2%!important;
+.anno-container {
+    padding: 2% !important;
 }
-.description{
-   position: relative;
+.description {
+    position: relative;
     display: block;
-border:none;
+    border: none;
 }
-.desc-td{
+.desc-td {
     overflow-y: auto;
-max-height: 180px;
-  width: 16vw;
+    max-height: 180px;
+    width: 16vw;
     scroll-margin: 0px;
-
 }
 .desc-td p {
     margin: 0px;
 }
-.header-profile-info h6{
+.header-profile-info h6 {
     font-size: 12px;
     border-bottom: 1px solid rgb(234 233 233);
 }
@@ -71,20 +70,20 @@ max-height: 180px;
     margin-top: 3px;
     border-bottom: 1px solid rgb(234 233 233);
 }
-.header-profile-info small:last-child{
+.header-profile-info small:last-child {
     border-bottom: none;
 }
-.sidebar:hover .dropdown > .collapse-icon{
+.sidebar:hover .dropdown > .collapse-icon {
     display: flex;
 }
-.dropdown > .collapse-icon{
+.dropdown > .collapse-icon {
     display: none;
-font-size: 16px;
+    font-size: 16px;
 }
-setting-menu-item.dropdown{
-    transition: .3s ease;
+setting-menu-item.dropdown {
+    transition: 0.3s ease;
 }
-.setting-menu-item.dropdown.open .setting-menu-content{
+.setting-menu-item.dropdown.open .setting-menu-content {
     margin: 0px;
     position: relative;
     display: flex;
@@ -94,7 +93,7 @@ setting-menu-item.dropdown{
     height: auto;
     padding-left: 20%;
 }
-.switch-wrapper{
+.switch-wrapper {
     transition: visibility 0.3s linear;
 }
 /*switch button*/
@@ -120,8 +119,8 @@ setting-menu-item.dropdown{
     right: 0;
     bottom: 0;
     background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
 }
 
 .switch .slider:before {
@@ -132,16 +131,16 @@ setting-menu-item.dropdown{
     left: 4px;
     bottom: 3px;
     background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
 }
 
 .switch input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #2196f3;
 }
 
 .switch input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #2196f3;
 }
 
 .switch input:checked + .slider:before {
@@ -159,8 +158,8 @@ setting-menu-item.dropdown{
     border-radius: 50%;
 }
 /**/
-.collapseMenu.show .dropdown-menu.show{
-    position:relative!important;
+.collapseMenu.show .dropdown-menu.show {
+    position: relative !important;
 }
 
 .pricing .card {
@@ -342,61 +341,63 @@ setting-menu-item.dropdown{
     border-radius: 100%;
 }
 
-.integration-pack{
-    position:relative;
+.integration-pack {
+    position: relative;
     height: 150px;
-    margin:20px 0px 20px 0px;
+    margin: 20px 0px 20px 0px;
 }
-
-.integration-pack  .int-img{
-    min-width:150px;
-    height: 150px;
+.integration-pack figure {
+    margin-top: 25px;
 }
-.integration-pack .int-description{
-    display:flex;
+.integration-pack .int-img {
+    min-width: 75px;
+    height: 75px;
+}
+.integration-pack .int-description {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
-    width:65%;
-    padding:1.5%;
-    overflow:hidden;
-
+    width: 65%;
+    padding: 1.5%;
+    overflow: hidden;
 }
-.integration-pack .int-action{
-    display:flex;
+.integration-pack .int-action {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.switch-wrapper.on {
+    display: block;
+}
+.switch-wrapper.off {
+    display: none;
+}
 
-}
-.switch-wrapper.on{
-    display:block;
-}
-.switch-wrapper.off{
-    display:none;
-}
-
-.checkbox-box{
+.checkbox-box {
     height: 400px;
     overflow-y: auto;
-    width:330px;
+    width: 330px;
 }
-.ds-sections{
+.ds-sections {
     height: 200px;
 }
-.country-trigger{
+.country-trigger {
     font-size: 16px;
     display: block;
 }
-.trigger{
-width:50px;
+.trigger {
+    width: 50px;
     height: 25px;
-    display:block;
+    display: block;
 }
-.trigger .slider:before{
+.trigger .slider:before {
     height: 20px;
     width: 18px;
 }
 
-
+.data-source-container {
+    width: 75%;
+}
