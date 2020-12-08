@@ -13,6 +13,9 @@ Route::group(['prefix' => 'data-source', 'as' => 'data-source.'], function () {
 
     Route::resource('google-algorithm-update', App\Http\Controllers\Admin\GoogleAlgorithmUpdateController::class)->except('show');
     Route::post('google-algorithm-update/upload', [App\Http\Controllers\Admin\GoogleAlgorithmUpdateController::class, 'upload'])->name('google-algorithm-update.upload');
+        Route::resource('retail-marketing',App\Http\Controllers\Admin\RetailMarketingController::class);
+    Route::post('retail-marketing/upload',[App\Http\Controllers\Admin\RetailMarketingController::class,'upload'])->name('retail-marketing.upload');
+
 });
 
 Route::resource('coupon',App\Http\Controllers\Admin\CouponController::class);

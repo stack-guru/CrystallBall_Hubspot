@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\HolidayRequest;
-use App\Models\Holiday;
-use Illuminate\Http\Request;
+use App\Http\Requests\RetailMarketingRequest;
+use App\Models\RetailMarketing;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
-class HolidayController extends Controller
+class RetailMarketingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +18,8 @@ class HolidayController extends Controller
     public function index()
     {
         //
-
-        $data['holidays']=Holiday::orderBy('created_at','DESC')->get();
-        return view('admin/data-source/holiday/index',$data);
+        $data['rms']=RetailMarketing::orderBy('created_at','DESC')->get();
+        return view('admin.data-source.retail-marketing.index',$data);
     }
 
     /**
@@ -31,7 +30,7 @@ class HolidayController extends Controller
     public function create()
     {
         //
-        return view('admin/data-source/holiday/create');
+        return view('admin.data-source.retail-marketing.create');
     }
 
     /**
@@ -40,13 +39,13 @@ class HolidayController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(HolidayRequest $request)
+    public function store(RetailMarketingRequest $request)
     {
-        //
-        $holiday =new Holiday;
-        $holiday->fill($request->validated());
-        $holiday->save();
-        return redirect()->route('admin.data-source.index')->with('success','holiday saved successfully');
+
+        $rm =new RetailMarketing;
+        $rm->fill($request->validated());
+        $rm->save();
+        return redirect()->route('admin.data-source.index')->with('success','Retail Marketing saved successfully');
     }
 
     /**
@@ -69,8 +68,8 @@ class HolidayController extends Controller
     public function edit($id)
     {
         //
-        $data['holiday']=Holiday::find($id);
-        return view('admin.data-source.holiday.edit',$data);
+        $data['RetailMarketing']=RetailMarketing::find($id);
+        return view('admin.data-source.retail-marketing.edit',$data);
     }
 
     /**
@@ -80,14 +79,13 @@ class HolidayController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(HolidayRequest $request, $id)
+    public function update(RetailMarketingRequest $request, $id)
     {
         //
-        //
-        $holiday =Holiday::find($id);
-        $holiday->fill($request->validated());
-        $holiday->save();
-        return redirect()->route('admin.data-source.index')->with('success','holiday updated successfully');
+        $rm =RetailMarketing::find($id);
+        $rm->fill($request->validated());
+        $rm->save();
+        return redirect()->route('admin.data-source.index')->with('success','Retail Marketing updated successfully');
     }
 
     /**
@@ -99,10 +97,9 @@ class HolidayController extends Controller
     public function destroy($id)
     {
         //
-        $holiday =Holiday::find($id);
-         $holiday->delete();
-        return redirect()->route('admin.data-source.index')->with('error','holiday deleted successfully');
-
+        $rm =RetailMarketing::find($id);
+        $rm->delete();
+        return redirect()->route('admin.data-source.index')->with('success','holiday deleted successfully');
     }
 
 
@@ -123,13 +120,13 @@ class HolidayController extends Controller
         foreach ($headers as $header) {
             if (!in_array($header, [
                 'category', 'event_name',
-                'country_name', 'description', 'holiday_date',
+                'url', 'description', 'show_at',
             ])) {
                 return redirect()->back()->with('error', 'Invalid CSV file headers.');
             }
         }
 
-        $dateColIndex = array_search('holiday_date', $headers);
+        $dateColIndex = array_search('show_at', $headers);
 
         $rows = $row = array();
         foreach ($filecontent as $ln => $line) {
@@ -148,8 +145,8 @@ class HolidayController extends Controller
                     // return ['message'=>"Please upload file with '2020-12-31' date format given is $values[$i] on line $ln column $i."];
                 }
                 for ($i = 0; $i < count($headers); $i++) {
-                    if ($headers[$i] == 'holiday_date') {
-                        $row['holiday_date'] = $values[$i];
+                    if ($headers[$i] == 'show_at') {
+                        $row['show_at'] = $values[$i];
                     } else if ($headers[$i] == 'url') {
                         $row['url'] = $values[$i];
                     } else {
@@ -162,16 +159,21 @@ class HolidayController extends Controller
             }
 
             if (count($rows) > 99) {
-                Holiday::insert($rows);
+                RetailMarketing::insert($rows);
                 $rows = array();
             }
         }
 
         if (count($rows)) {
-            Holiday::insert($rows);
+            RetailMarketing::insert($rows);
         }
 
         return redirect()->back()->with('success', true);
     }
+
+
+
+
+
 
 }
