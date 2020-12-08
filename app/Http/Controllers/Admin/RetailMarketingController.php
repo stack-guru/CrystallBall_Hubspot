@@ -115,7 +115,7 @@ class RetailMarketingController extends Controller
         $headers = str_getcsv($filecontent[0]);
 
         if (count($headers) !== 5) {
-            return response()->json(['message' => 'Invalid number of columns'], 422);
+            return redirect()->back()->with('error', 'Invalid number of columns.');
         }
         foreach ($headers as $header) {
             if (!in_array($header, [
