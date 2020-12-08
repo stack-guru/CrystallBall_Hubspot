@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('page-title','Payment History')
+@section('page-title','Create Holidays')
 @section('content')
 
     <div class="contianer">
@@ -9,18 +9,18 @@
 
                 <div class="row ml-0 mr-0 mt-5">
                     <div class="col">
-                    <form action="{{ route('admin.data-source.holiday.upload') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <h4 ><b>Upload Csv</b></h4>
-                            <input type="file" name="csv" id="holiday" class="form-control">
-                        </div>
-                        <div class="row ml-0 mr-0">
-                            <div class="col-12 text-right">
-                                <button type="submit" class="btn btn-primary">Upload</button>
+                        <form action="{{ route('admin.data-source.holiday.upload') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <h4 ><b>Upload Csv</b></h4>
+                                <input type="file" name="csv" id="holiday" class="form-control">
                             </div>
-                        </div>
-                    </form>
+                            <div class="row ml-0 mr-0">
+                                <div class="col-12 text-right">
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="text-center">

@@ -6,7 +6,18 @@
     <div class="row ml-0 mr-0 justify-content-center">
         <div class="col-md-10 p-5">
             <h1 class="my-4 ">Create G A U</h1>
-
+            <form action="{{ route('admin.data-source.google-algorithm-update.upload') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <h4 ><b>Upload Csv</b></h4>
+                    <input type="file" name="csv" id="googleAU" class="form-control">
+                </div>
+                <div class="row ml-0 mr-0">
+                    <div class="col-12 text-right">
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </div>
+                </div>
+            </form>
             <form action="{{route('admin.data-source.google-algorithm-update.store')}}" method="post">
                 @csrf
                 <div class="form-group">
