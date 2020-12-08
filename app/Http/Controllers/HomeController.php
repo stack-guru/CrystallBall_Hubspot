@@ -24,15 +24,15 @@ class HomeController extends Controller
     public function userServices(Request $request){
 
         $user = Auth::user();
-        if($request->is_ds_holidays_enabled||!$request->is_ds_holidays_enabled){
+        if($request->has('is_ds_holidays_enabled')){
             $user->is_ds_holidays_enabled=$request->is_ds_holidays_enabled;
             $user->save();
         }
-        if($request->is_ds_google_algorithm_updates_enabled||!$request->is_ds_google_algorithm_updates_enabled){
+        if($request->has('is_ds_google_algorithm_updates_enabled')){
             $user->is_ds_google_algorithm_updates_enabled=$request->is_ds_google_algorithm_updates_enabled;
             $user->save();
         }
-        if($request->is_ds_retail_marketing_enabled||!$request->is_ds_retail_marketing_enabled){
+        if($request->has('is_ds_retail_marketing_enabled')){
             $user->is_ds_retail_marketing_enabled=$request->is_ds_retail_marketing_enabled;
             $user->save();
         }
