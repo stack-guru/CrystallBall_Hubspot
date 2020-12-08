@@ -69,6 +69,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('countries', [App\Http\Controllers\HolidayController::class, 'holidayApi']);
         Route::post('data-sources', [App\Http\Controllers\UserDataSourceController::class, "store"]);
         Route::get('data-sources', [App\Http\Controllers\UserDataSourceController::class, "index"]);
+        Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);
 
         Route::group(['prefix' => 'settings'], function () {
 

@@ -50107,13 +50107,16 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       sectionName: null,
       showCountry: false,
-      countries: [],
+      dataSources: [],
       countryCheck: false,
+      serviceCheck: false,
+      userServices: _this.props.user,
       isBusy: false,
       errors: ''
     };
     _this.holidaySwitchHandler = _this.holidaySwitchHandler.bind(_assertThisInitialized(_this));
     _this.addCountry = _this.addCountry.bind(_assertThisInitialized(_this));
+    _this.serviceStatusHandler = _this.serviceStatusHandler.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -50128,10 +50131,8 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
         _utils_HttpClient__WEBPACK_IMPORTED_MODULE_2__["default"].get('/user-data-source').then(function (resp) {
           _this2.setState({
             isBusy: false,
-            countries: resp.data.data_sources
+            dataSources: resp.data.data_sources
           });
-
-          console.log(_this2.state.countries);
         }, function (err) {
           _this2.setState({
             isBusy: false,
@@ -50154,8 +50155,6 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
     value: function addCountry(e) {
       var _this3 = this;
 
-      var countries = [];
-
       if (!e.target.defaultChecked) {
         this.setState({
           countryCheck: true
@@ -50168,7 +50167,7 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
         };
         _utils_HttpClient__WEBPACK_IMPORTED_MODULE_2__["default"].post('/data-sources', formData).then(function (resp) {
           _this3.setState({
-            countries: _this3.state.countries.concat(resp.data.user_data_source)
+            dataSources: _this3.state.dataSources.concat(resp.data.user_data_source)
           });
 
           console.log(resp);
@@ -50179,9 +50178,24 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
         });
       }
 
-      if (e.target.defaultChecked) {}
-
-      console.log(countries);
+      if (e.target.defaultChecked) {
+        this.setState({
+          countryCheck: false
+        });
+        var _formData = {
+          'ds_code': 'holidays',
+          'ds_name': 'Holiday',
+          'country_name': e.target.name,
+          'is_enabled': 1
+        };
+        _utils_HttpClient__WEBPACK_IMPORTED_MODULE_2__["default"]["delete"]('/data-sources', _formData).then(function (resp) {
+          console.log(resp.data);
+        }, function (err) {
+          console.log(err);
+        }).then(function (err) {
+          console.log(err);
+        });
+      }
     }
   }, {
     key: "holidaySwitchHandler",
@@ -50199,9 +50213,69 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "serviceStatusHandler",
+    value: function serviceStatusHandler(e) {
+      var _this4 = this;
+
+      var formData;
+
+      if (!e.target.defaultChecked) {
+        if (e.target.name == 'is_ds_holidays_enabled') {
+          formData = {
+            'is_ds_holidays_enabled': 1
+          };
+        }
+
+        if (e.target.name == 'is_ds_google_algorithm_updates_enabled') {
+          formData = {
+            'is_ds_google_algorithm_updates_enabled': 1
+          };
+        }
+
+        _utils_HttpClient__WEBPACK_IMPORTED_MODULE_2__["default"].post('/userService', formData).then(function (resp) {
+          _this4.setState({
+            userServices: resp.data.user_services
+          });
+
+          console.log(resp);
+        }, function (err) {
+          console.log(err);
+        }).then(function (err) {
+          console.log(err);
+        });
+      }
+
+      if (e.target.defaultChecked) {
+        if (e.target.name == 'is_ds_holidays_enabled') {
+          formData = {
+            'is_ds_holidays_enabled': 0
+          };
+        }
+
+        if (e.target.name == 'is_ds_google_algorithm_updates_enabled') {
+          formData = {
+            'is_ds_google_algorithm_updates_enabled': 0
+          };
+        }
+
+        _utils_HttpClient__WEBPACK_IMPORTED_MODULE_2__["default"].post('/userService', formData).then(function (resp) {
+          _this4.setState({
+            userServices: resp.data.user_services
+          });
+
+          console.log(resp);
+        }, function (err) {
+          console.log(err);
+        }).then(function (err) {
+          console.log(err);
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var countries = this.state.countries;
+      var countries = this.state.dataSources; // console.log(this.state.userServices);
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container-xl bg-white  d-flex flex-column justify-content-center component-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -50238,7 +50312,9 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "checkbox",
         className: "holiday",
-        name: "status"
+        defaultChecked: this.state.userServices.is_ds_holidays_enabled,
+        onChange: this.serviceStatusHandler,
+        name: "is_ds_holidays_enabled"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "slider round"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -50263,7 +50339,10 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         className: "switch"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "checkbox"
+        type: "checkbox",
+        defaultChecked: this.state.userServices.is_ds_google_algorithm_updates_enabled,
+        onChange: this.serviceStatusHandler,
+        name: "is_ds_google_algorithm_updates_enabled"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "slider round"
       }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -50292,7 +50371,7 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_utils_Countries__WEBPACK_IMPORTED_MODULE_1__["default"], {
         sectionTitle: this.state.sectionName,
         onChangeCallback: this.addCountry,
-        ds_data: this.state.countries
+        ds_data: this.state.dataSources
       })) : null)));
     }
   }]);
@@ -54963,24 +55042,20 @@ var countries = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "form-check country",
           key: country
-        }, data_source.map(function (ds) {
-          return ds.country_name !== country ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-            className: "form-check-input",
-            key: ds.id,
-            defaultChecked: false,
-            type: "checkbox",
-            name: country,
-            id: country,
-            onChange: _this3.props.onChangeCallback
-          })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-            className: "form-check-input",
-            key: ds.id,
-            defaultChecked: true,
-            type: "checkbox",
-            name: country,
-            id: country,
-            onChange: _this3.props.onChangeCallback
-          });
+        }, data_source.indexOf(country) == -1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "form-check-input",
+          defaultChecked: true,
+          type: "checkbox",
+          name: country,
+          id: country,
+          onChange: _this3.props.onChangeCallback
+        }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "form-check-input",
+          defaultChecked: false,
+          type: "checkbox",
+          name: country,
+          id: country,
+          onChange: _this3.props.onChangeCallback
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
           className: "form-check-label",
           htmlFor: "defaultCheck1"

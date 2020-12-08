@@ -25,7 +25,7 @@ class User extends Authenticatable
         'price_plan_expiry_date',
 
         'is_ds_holidays_enabled',
-        'is_ds_google_algoorithm_updates_enabled',
+        'is_ds_google_algorithm_updates_enabled',
         'is_ds_weather_alerts_enabled',
     ];
 
@@ -49,7 +49,7 @@ class User extends Authenticatable
         'last_login_at' => 'datetime',
 
         'is_ds_holidays_enabled' => 'boolean',
-        'is_ds_google_algoorithm_updates_enabled' => 'boolean',
+        'is_ds_google_algorithm_updates_enabled' => 'boolean',
         'is_ds_weather_alerts_enabled' => 'boolean',
     ];
 
