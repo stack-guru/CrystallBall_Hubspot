@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\HolidayRequest;
 use App\Models\Holiday;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class HolidayController extends Controller
 {
@@ -105,12 +106,72 @@ class HolidayController extends Controller
     }
 
 
+    public function upload(Request $request)
+    {
+        $this->validate($request, [
+            'csv' => 'required|file|mimetypes:text/plain|mimes:txt',
+        ]);
 
+        $filepath = $request->file('csv')->getRealPath();
 
+        $filecontent = file($filepath);
+        $headers = str_getcsv($filecontent[0]);
 
+        if (count($headers) !== 5) {
+            return response()->json(['message' => 'Invalid number of columns'], 422);
+        }
+        foreach ($headers as $header) {
+            if (!in_array($header, [
+                'category', 'event_name',
+                'country_name', 'description', 'holiday_date',
+            ])) {
+                return redirect()->back()->with('error', 'Invalid CSV file headers.');
+            }
+        }
 
+        $dateColIndex = array_search('holiday_date', $headers);
 
+        $rows = $row = array();
+        foreach ($filecontent as $ln => $line) {
+            if (strlen($line) < (6 + 7)) {
+                continue;
+            }
 
+            $row = array();
+            $values = str_getcsv($line);
 
+            if ($headers !== $values && count($values) == count($headers)) {
+                try{
+                    $date = Carbon::createFromFormat('Y-m-d', $values[$dateColIndex]);
+                }catch (\Exception $ex){
+                    continue;
+                    // return ['message'=>"Please upload file with '2020-12-31' date format given is $values[$i] on line $ln column $i."];
+                }
+                for ($i = 0; $i < count($headers); $i++) {
+                    if ($headers[$i] == 'holiday_date') {
+                        $row['holiday_date'] = $values[$i];
+                    } else if ($headers[$i] == 'url') {
+                        $row['url'] = $values[$i];
+                    } else {
+                        $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+                    }
+                }
+
+                array_push($rows, $row);
+
+            }
+
+            if (count($rows) > 99) {
+                Holiday::insert($rows);
+                $rows = array();
+            }
+        }
+
+        if (count($rows)) {
+            Holiday::insert($rows);
+        }
+
+        return redirect()->back()->with('success', true);
+    }
 
 }
