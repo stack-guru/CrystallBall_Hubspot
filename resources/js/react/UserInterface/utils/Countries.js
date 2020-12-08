@@ -40,18 +40,14 @@ export default  class countries extends React.Component{
                         countries.map(country=>(
                         <div className="form-check country" key={country}>
                             {
-                                data_source.map(ds=>(
-                                    ds.country_name!==country?
-                                        <span>
-                                        <input className="form-check-input" key={ds.id} defaultChecked={false} type="checkbox" name={country} id={country}
+
+                                   data_source.indexOf(country)==-1?
+                                        <input className="form-check-input"  defaultChecked={true} type="checkbox" name={country} id={country}
+                                               onChange={this.props.onChangeCallback}/>
+                                        :
+                                        <input className="form-check-input"  defaultChecked={false} type="checkbox" name={country} id={country}
                                                onChange={this.props.onChangeCallback}/>
 
-                                            </span>
-                                        :
-                                        <input className="form-check-input" key={ds.id} defaultChecked={true} type="checkbox" name={country} id={country}
-                                               onChange={this.props.onChangeCallback}/>
-                                    )
-                                )
                             }
 
 
