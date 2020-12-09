@@ -8,6 +8,7 @@ use App\Http\Resources\annotation as annotationResource;
 use App\Models\Annotation;
 use App\Models\GoogleAlgorithmUpdate;
 use Auth;
+use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Holiday;
@@ -41,32 +42,31 @@ class AnnotationController extends Controller
             return ['annotations' => [[[]]]];
         }
 
-        $annotationsQuery = Annotation::select('show_at', 'annotations.id', 'category', 'event_name', 'url', 'description')->where('user_id', Auth::id())->where('is_enabled', true);
-        if ($request->query('google_account_id') && $request->query('google_account_id') !== '*') {
-            $annotationsQuery->where('google_account_id', $request->query('google_account_id'));
-        }
+        $userId = Auth::id();
+        $startDate = Carbon::parse($request->query('startDate'));
+        $endDate = Carbon::parse($request->query('endDate'));
 
+        $annotationsQuery = "SELECT TempTable.* FROM (";
+        $annotationsQuery .= "select `show_at`, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` = 1 and `is_enabled` = 1";
+
+        if ($request->query('google_account_id') && $request->query('google_account_id') !== '*') {
+            $annotationsQuery .= " and google_account_id = " . $request->query('google_account_id');
+        }
         if ($request->query('show_google_algorithm_updates') == 'true') {
-            $annotationsQuery->union(GoogleAlgorithmUpdate::selectRaw('update_date AS show_at, google_algorithm_updates.id, category, event_name, NULL as url, description')
-                ->whereRaw("DATE(`update_date`) >= '" . $request->query('startDate') . "' AND DATE(`update_date`) <= '" . $request->query('endDate') . "'"));
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select update_date AS show_at, google_algorithm_updates.id, category, event_name, NULL as url, description from `google_algorithm_updates`";
         }
         if ($request->query('show_holidays') == 'true') {
-            $annotationsQuery->union(Holiday::selectRaw('holiday_date AS show_at, holidays.id, category, event_name, NULL as url, description')
-                ->join('user_data_sources AS uds', 'uds.country_name', 'holidays.country_name')
-                ->where('uds.user_id', Auth::id())
-                ->where('uds.ds_code', 'holidays')
-                ->whereRaw("DATE(`holiday_date`) >= '" . $request->query('startDate') . "' AND DATE(`holiday_date`) <= '" . $request->query('endDate') . "'"));
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select holiday_date AS show_at, holidays.id, category, event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = 1 and `uds`.`ds_code` = 'holidays'";
         }
+        $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
 
-        $annotationsQuery->whereRaw("DATE(`show_at`) BETWEEN '" . $request->query('startDate') . "' AND '" . $request->query('endDate') . "'")->orderBy('show_at', 'ASC');
-        $annotations = $annotationsQuery->get();
+        $annotations = DB::select($annotationsQuery);
 
         if (!count($annotations)) {
             return ['annotations' => [[[]]]];
         }
-
-        $startDate = Carbon::parse($request->query('startDate'));
-        $endDate = Carbon::parse($request->query('endDate'));
 
         $fAnnotations = [];
 
