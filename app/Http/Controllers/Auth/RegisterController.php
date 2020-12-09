@@ -66,12 +66,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'price_plan_id' => PricePlan::where('price', 0.00)->where('is_enabled', true)->first()->id,
-            'price_plan_expiry_date' => new \DateTime("+1 month"),
+            'price_plan_id' => PricePlan::where('price', '<>', 0.00)->where('is_enabled', true)->first()->id,
+            'price_plan_expiry_date' => new \DateTime("+14 days"),
         ]);
+
+        // $user->annotations()->create([
+
+        // ]);
+
+        return $user;
     }
 }
