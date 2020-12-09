@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request as AuthRequest;
 
@@ -50,5 +51,10 @@ class LoginController extends Controller
     {
         $user->last_login_at = new \DateTime;
         $user->save();
+        $today=Carbon::now();
+        $todayDate=$today->toDateString();
+        if($user->price_plan_expiry_date==$todayDate){
+            return redirect()->route('settings.price-plans');
+        }
     }
 }

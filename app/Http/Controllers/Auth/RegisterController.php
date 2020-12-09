@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -72,11 +73,23 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'price_plan_id' => PricePlan::where('price', '<>', 0.00)->where('is_enabled', true)->first()->id,
             'price_plan_expiry_date' => new \DateTime("+14 days"),
+            'is_billing_enabled' => false,
         ]);
 
-        // $user->annotations()->create([
-
-        // ]);
+         $user->annotations()->create([
+             'category'=>'Sales category',
+             'event_name'=>'Selling event',
+             'url'=>'https://gaannotations.com',
+             'description'=>'This is demo annotation',
+             'show_at'=>new \DateTime('-02 days'),
+         ]);
+        $user->annotations()->create([
+            'category'=>'Sales category',
+            'event_name'=>'Selling event',
+            'url'=>'https://gaannotations.com',
+            'description'=>'This is demo annotation',
+            'show_at'=>new \DateTime('-02 days'),
+        ]);
 
         return $user;
     }
