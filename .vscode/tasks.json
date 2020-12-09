@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Merge and Deploy To Development",
+            "label": "Pull, Merge and Deploy To Development",
             "type": "shell",
-            "command": "git checkout development && git merge 2.0 && git checkout 2.0 && git push origin development && ssh root@176.58.124.175 \"cd /var/www/html/dev_gaannotations/dev_gaannotations && php artisan down && git pull origin development && composer install && php artisan migrate --force && php artisan up\""
+            "command": "git checkout 2.0 && git pull origin 2.0 && git checkout development && git merge 2.0 && git checkout 2.0 && git push origin development && ssh root@176.58.124.175 \"cd /var/www/html/dev_gaannotations/dev_gaannotations && php artisan down && git pull origin development && composer install && php artisan migrate --force && php artisan up\""
         }
     ]
 }
