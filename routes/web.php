@@ -49,10 +49,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store']);
 
         Route::view('change-password', 'ui/app');
-        Route::view('price-plans', 'ui/app');
+        Route::view('price-plans', 'ui/app')->name('settings.price-plans');
         Route::get('price-plans/payment', [App\Http\Controllers\PaymentController::class, 'show'])->name('settings.price-plan.payment');
         Route::view('payment-history', 'ui/app');
     });
+
+
 
     Route::group(['prefix' => 'ui'], function () {
 
