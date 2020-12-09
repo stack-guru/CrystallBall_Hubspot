@@ -42,9 +42,11 @@ class sidebar extends React.Component {
                         <div className="peer peer-greed"><a className="sidebar-link td-n" href="/">
                             <div className="peers ai-c fxw-nw">
                                 <div className="peer">
-                                    <div className="logo logo-margin"><img src="/images/company_logo.png" width="40px" height="40px" alt="" /></div>
+                                    <div className="logo d-flex justify-content-center align-items-center" style={{minHeight: 65}}>
+                                        <img src="/images/company_logo.png" width="40px" height="40px" alt="" />
+                                    </div>
                                 </div>
-                                <div className="peer peer-greed "><h5 className="lh-1 logo-text ">GAannotations</h5>
+                                <div className="peer peer-greed "><h5 className="lh-1 logo-text m-0">GAannotations</h5>
                                 </div>
                             </div>
                         </a></div>

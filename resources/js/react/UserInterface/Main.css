@@ -386,7 +386,7 @@ setting-menu-item.dropdown {
     width: 330px;
 }
 .ds-sections {
-    height: 200px;
+    height: 150px;
 }
 .country-trigger {
     font-size: 16px;
@@ -400,10 +400,6 @@ setting-menu-item.dropdown {
 .trigger .slider:before {
     height: 20px;
     width: 18px;
-}
-
-.data-source-container {
-    width: 75%;
 }
 
 .ds-update-text {
@@ -424,6 +420,11 @@ setting-menu-item.dropdown {
     position: absolute;
     right: 10px;
     top: 10px;
+}
+
+.integration-video-link {
+    cursor: pointer;
+    color: #0f9aee;
 }
 
 @media only screen and (max-width: 700px) {

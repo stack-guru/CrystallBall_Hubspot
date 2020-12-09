@@ -2087,7 +2087,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n.disabled-link {\n    opacity: 0.3;\n    pointer-events: none;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-bg-primary {\n    background: #456287;\n}\n.gaa-text-primary {\n    color: #456287;\n}\n\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n.sidebar-menu li:last-child {\n    position: absolute;\n    top: 90%;\n    bottom: 5%;\n}\n.anno-container {\n    padding: 2% !important;\n}\n.description {\n    position: relative;\n    display: block;\n    border: none;\n}\n.desc-td {\n    overflow-y: auto;\n    max-height: 180px;\n    width: 16vw;\n    scroll-margin: 0px;\n}\n.desc-td p {\n    margin: 0px;\n}\n.header-profile-info h6 {\n    font-size: 12px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small {\n    font-size: 10px;\n    display: block;\n    margin-top: 3px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small:last-child {\n    border-bottom: none;\n}\n.sidebar:hover .dropdown > .collapse-icon {\n    display: flex;\n}\n.dropdown > .collapse-icon {\n    display: none;\n    font-size: 16px;\n}\nsetting-menu-item.dropdown {\n    transition: 0.3s ease;\n}\n.setting-menu-item.dropdown.open .setting-menu-content {\n    margin: 0px;\n    position: relative;\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    border: none;\n    height: auto;\n    padding-left: 20%;\n}\n.switch-wrapper {\n    transition: visibility 0.3s linear;\n}\n/*switch button*/\n\n.switch {\n    position: relative;\n    display: inline-block;\n    width: 60px;\n    height: 31px;\n}\n\n.switch input {\n    opacity: 0;\n    width: 0;\n    height: 0;\n}\n\n.switch .slider {\n    position: absolute;\n    cursor: pointer;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: #ccc;\n    -webkit-transition: 0.4s;\n    transition: 0.4s;\n}\n\n.switch .slider:before {\n    position: absolute;\n    content: \"\";\n    height: 26px;\n    width: 26px;\n    left: 4px;\n    bottom: 3px;\n    background-color: white;\n    -webkit-transition: 0.4s;\n    transition: 0.4s;\n}\n\n.switch input:checked + .slider {\n    background-color: #4caf50;\n}\n\n.switch input:focus + .slider {\n    box-shadow: 0 0 1px #4caf50;\n}\n\n.switch input:checked + .slider:before {\n    -webkit-transform: translateX(26px);\n    -ms-transform: translateX(26px);\n    transform: translateX(26px);\n}\n\n/* Rounded sliders */\n.switch .slider.round {\n    border-radius: 34px;\n}\n\n.switch .slider.round:before {\n    border-radius: 50%;\n}\n/**/\n.collapseMenu.show .dropdown-menu.show {\n    position: relative !important;\n}\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}\n\n.gaa-text-danger {\n    color: #bf0c18 !important;\n}\n\n.pos-ab-l-50-t-0 {\n    position: absolute;\n    left: 50%;\n    top: 0px;\n}\n\n.gaa-btn-danger {\n    color: #fff;\n    background-color: #bf0c18;\n    border-color: #bf0c18;\n}\n\n.logo-margin {\n    margin-left: 19%;\n    margin-top: 15%;\n}\n\n.logo-text {\n    font-size: 1rem;\n}\n.img-col-wrap {\n    /*height: 115px;*/\n    position: relative;\n}\n.secure-img {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: space-between;\n    align-items: center;\n    white-space: unset;\n    height: 100%;\n}\n.secure-img img {\n    width: 68px;\n    height: 34px;\n    margin: 5px;\n}\n\n.form-group {\n    transition: all 0.3s;\n    margin-bottom: 0px !important;\n}\n.floating-labels {\n    position: relative;\n    padding-top: 29px;\n}\n.floating-labels > label {\n    transform: translate(1em, -2em);\n    transform-origin: 0 0;\n    transition: all 0.3s;\n    z-index: -1;\n}\n.floating-labels > input::placeholder {\n    color: transparent;\n}\n\n/* :blank*/\n.floating-labels > input:focus + label,\n.floating-labels > input:not(:placeholder-shown) + label {\n    transform: translateY(-4.3em);\n}\n\n.seperator > [class*=\"col-\"]:nth-child(n + 2)::after {\n    content: \"\";\n    background-color: rgba(0, 0, 0, 0.0625);\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0px;\n    width: 1px;\n    height: 95%;\n}\n.payBtn {\n    width: 100%;\n}\n.card {\n    min-height: 545px;\n    max-height: 550px;\n    position: relative;\n}\n.card .card-body {\n    align-items: center;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n}\n.user-setting-head {\n    padding: 1.2%;\n}\n.user-setting-box {\n    padding: 1.5%;\n}\n.box-shadow {\n    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);\n}\n.lh-100 {\n    line-height: 1;\n}\n\n.social-profile-picture {\n    width: 35px;\n    height: 35px;\n    border-radius: 100%;\n}\n\n.integration-pack {\n    position: relative;\n    height: 150px;\n    margin: 20px 0px 20px 0px;\n}\n.integration-pack figure {\n    margin: auto 0;\n}\n.integration-pack .int-img {\n    min-width: 75px;\n    height: 75px;\n}\n.integration-pack .int-description {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: flex-start;\n    height: 100%;\n    width: 65%;\n    padding: 1.5%;\n    overflow: hidden;\n}\n.int-description p {\n    margin: 0\n}\n.integration-pack .int-action {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    min-width: 150px;\n}\n.switch-wrapper.on {\n    display: block;\n}\n.switch-wrapper.off {\n    display: none;\n}\n\n.checkbox-box {\n    height: 650px;\n    overflow-y: auto;\n    width: 330px;\n}\n.ds-sections {\n    height: 200px;\n}\n.country-trigger {\n    font-size: 16px;\n    display: block;\n}\n.trigger {\n    width: 50px;\n    height: 25px;\n    display: block;\n}\n.trigger .slider:before {\n    height: 20px;\n    width: 18px;\n}\n\n.data-source-container {\n    width: 75%;\n}\n\n.ds-update-text {\n    color: #2196f3;\n    font-weight: bold;\n    cursor: pointer;\n}\n\n.search-input-box {\n    max-width: 250px;\n}\n\n.search-input {\n    border-radius: 20px !important;\n}\n\n.input-group-append {\n    position: absolute;\n    right: 10px;\n    top: 10px;\n}\n\n@media only screen and (max-width: 700px) {\n    .integration-pack {\n        display: inline-block !important;\n    }\n}\n\n@media only screen and (max-width: 500px) {\n    .integration-pack-content {\n        display: inline-block !important;\n        text-align: center;\n    }\n\n    .int-description a {\n        margin: 0 auto;\n    }\n}\n", ""]);
+exports.push([module.i, ".main-content {\n    padding-left: 3% !important;\n    padding-right: 3% !important;\n    /*height: 480px;*/\n    /*overflow-y: scroll;*/\n    /*overflow-x: hidden;*/\n}\n.component-wrapper {\n    width: 100%;\n    height: 100%;\n    padding: 5%;\n}\n.upload-csv-input {\n    height: 2.6rem;\n}\n.disabled-link {\n    opacity: 0.3;\n    pointer-events: none;\n}\n\n/*#0a2950*/\n/*#456287*/\n\n.gaa-blue-gradient {\n    background: linear-gradient(to bottom, #0a2950, #456287);\n}\n.gaa-bg-primary {\n    background: #456287;\n}\n.gaa-text-primary {\n    color: #456287;\n}\n\n.gaa-title {\n    color: #456287;\n}\n\n.sidebar-menu li a {\n    color: #456287;\n}\n.sidebar-menu li:last-child {\n    position: absolute;\n    top: 90%;\n    bottom: 5%;\n}\n.anno-container {\n    padding: 2% !important;\n}\n.description {\n    position: relative;\n    display: block;\n    border: none;\n}\n.desc-td {\n    overflow-y: auto;\n    max-height: 180px;\n    width: 16vw;\n    scroll-margin: 0px;\n}\n.desc-td p {\n    margin: 0px;\n}\n.header-profile-info h6 {\n    font-size: 12px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small {\n    font-size: 10px;\n    display: block;\n    margin-top: 3px;\n    border-bottom: 1px solid rgb(234 233 233);\n}\n.header-profile-info small:last-child {\n    border-bottom: none;\n}\n.sidebar:hover .dropdown > .collapse-icon {\n    display: flex;\n}\n.dropdown > .collapse-icon {\n    display: none;\n    font-size: 16px;\n}\nsetting-menu-item.dropdown {\n    transition: 0.3s ease;\n}\n.setting-menu-item.dropdown.open .setting-menu-content {\n    margin: 0px;\n    position: relative;\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    border: none;\n    height: auto;\n    padding-left: 20%;\n}\n.switch-wrapper {\n    transition: visibility 0.3s linear;\n}\n/*switch button*/\n\n.switch {\n    position: relative;\n    display: inline-block;\n    width: 60px;\n    height: 31px;\n}\n\n.switch input {\n    opacity: 0;\n    width: 0;\n    height: 0;\n}\n\n.switch .slider {\n    position: absolute;\n    cursor: pointer;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: #ccc;\n    -webkit-transition: 0.4s;\n    transition: 0.4s;\n}\n\n.switch .slider:before {\n    position: absolute;\n    content: \"\";\n    height: 26px;\n    width: 26px;\n    left: 4px;\n    bottom: 3px;\n    background-color: white;\n    -webkit-transition: 0.4s;\n    transition: 0.4s;\n}\n\n.switch input:checked + .slider {\n    background-color: #4caf50;\n}\n\n.switch input:focus + .slider {\n    box-shadow: 0 0 1px #4caf50;\n}\n\n.switch input:checked + .slider:before {\n    -webkit-transform: translateX(26px);\n    -ms-transform: translateX(26px);\n    transform: translateX(26px);\n}\n\n/* Rounded sliders */\n.switch .slider.round {\n    border-radius: 34px;\n}\n\n.switch .slider.round:before {\n    border-radius: 50%;\n}\n/**/\n.collapseMenu.show .dropdown-menu.show {\n    position: relative !important;\n}\n\n.pricing .card {\n    border: none;\n    border-radius: 1rem;\n    transition: all 0.2s;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);\n    background: #456287;\n    color: white;\n}\n\n.pricing hr {\n    margin: 1.5rem 0;\n}\n\n.pricing .card-title {\n    margin: 0.5rem 0;\n    font-size: 0.9rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n}\n\n.pricing .card-price {\n    font-size: 3rem;\n    margin: 0;\n}\n\n.pricing .card-price .period {\n    font-size: 0.8rem;\n}\n\n.pricing ul li {\n    margin-bottom: 1rem;\n}\n\n.pricing .text-muted {\n    opacity: 0.7;\n}\n\n.pricing .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: 0.1rem;\n    font-weight: bold;\n    padding: 1rem;\n    opacity: 0.7;\n    transition: all 0.2s;\n}\n\n/* Hover Effects on Card */\n\n@media (min-width: 992px) {\n    .pricing .card:hover {\n        margin-top: -0.25rem;\n        margin-bottom: 0.25rem;\n        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);\n    }\n    .pricing .card:hover .btn {\n        opacity: 1;\n    }\n}\n\n.gaa-menu-item {\n    color: #456287;\n}\n\n.link-active {\n    color: #2196f3 !important;\n}\n\n.gaa-text-danger {\n    color: #bf0c18 !important;\n}\n\n.pos-ab-l-50-t-0 {\n    position: absolute;\n    left: 50%;\n    top: 0px;\n}\n\n.gaa-btn-danger {\n    color: #fff;\n    background-color: #bf0c18;\n    border-color: #bf0c18;\n}\n\n.logo-margin {\n    margin-left: 19%;\n    margin-top: 15%;\n}\n\n.logo-text {\n    font-size: 1rem;\n}\n.img-col-wrap {\n    /*height: 115px;*/\n    position: relative;\n}\n.secure-img {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: space-between;\n    align-items: center;\n    white-space: unset;\n    height: 100%;\n}\n.secure-img img {\n    width: 68px;\n    height: 34px;\n    margin: 5px;\n}\n\n.form-group {\n    transition: all 0.3s;\n    margin-bottom: 0px !important;\n}\n.floating-labels {\n    position: relative;\n    padding-top: 29px;\n}\n.floating-labels > label {\n    transform: translate(1em, -2em);\n    transform-origin: 0 0;\n    transition: all 0.3s;\n    z-index: -1;\n}\n.floating-labels > input::placeholder {\n    color: transparent;\n}\n\n/* :blank*/\n.floating-labels > input:focus + label,\n.floating-labels > input:not(:placeholder-shown) + label {\n    transform: translateY(-4.3em);\n}\n\n.seperator > [class*=\"col-\"]:nth-child(n + 2)::after {\n    content: \"\";\n    background-color: rgba(0, 0, 0, 0.0625);\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0px;\n    width: 1px;\n    height: 95%;\n}\n.payBtn {\n    width: 100%;\n}\n.card {\n    min-height: 545px;\n    max-height: 550px;\n    position: relative;\n}\n.card .card-body {\n    align-items: center;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n}\n.user-setting-head {\n    padding: 1.2%;\n}\n.user-setting-box {\n    padding: 1.5%;\n}\n.box-shadow {\n    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);\n}\n.lh-100 {\n    line-height: 1;\n}\n\n.social-profile-picture {\n    width: 35px;\n    height: 35px;\n    border-radius: 100%;\n}\n\n.integration-pack {\n    position: relative;\n    height: 150px;\n    margin: 20px 0px 20px 0px;\n}\n.integration-pack figure {\n    margin: auto 0;\n}\n.integration-pack .int-img {\n    min-width: 75px;\n    height: 75px;\n}\n.integration-pack .int-description {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: flex-start;\n    height: 100%;\n    width: 65%;\n    padding: 1.5%;\n    overflow: hidden;\n}\n.int-description p {\n    margin: 0\n}\n.integration-pack .int-action {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    min-width: 150px;\n}\n.switch-wrapper.on {\n    display: block;\n}\n.switch-wrapper.off {\n    display: none;\n}\n\n.checkbox-box {\n    height: 650px;\n    overflow-y: auto;\n    width: 330px;\n}\n.ds-sections {\n    height: 150px;\n}\n.country-trigger {\n    font-size: 16px;\n    display: block;\n}\n.trigger {\n    width: 50px;\n    height: 25px;\n    display: block;\n}\n.trigger .slider:before {\n    height: 20px;\n    width: 18px;\n}\n\n.ds-update-text {\n    color: #2196f3;\n    font-weight: bold;\n    cursor: pointer;\n}\n\n.search-input-box {\n    max-width: 250px;\n}\n\n.search-input {\n    border-radius: 20px !important;\n}\n\n.input-group-append {\n    position: absolute;\n    right: 10px;\n    top: 10px;\n}\n\n.integration-video-link {\n    cursor: pointer;\n    color: #0f9aee;\n}\n\n@media only screen and (max-width: 700px) {\n    .integration-pack {\n        display: inline-block !important;\n    }\n}\n\n@media only screen and (max-width: 500px) {\n    .integration-pack-content {\n        display: inline-block !important;\n        text-align: center;\n    }\n\n    .int-description a {\n        margin: 0 auto;\n    }\n}\n", ""]);
 
 // exports
 
@@ -50363,7 +50363,7 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
         className: "row ml-0 mr-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "heading-section gaa-title"
       }, "Data Source"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row ml-0 mr-0 mt-4"
@@ -50378,11 +50378,11 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row ml-0 mr-0 w-100"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-8"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "col-9"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         className: "gaa-text-primary"
-      }, "Holiday")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-4 d-flex flex-column justify-content-center align-items-center"
+      }, "Holidays")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-3 d-flex flex-column justify-content-center align-items-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         className: "trigger switch"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -50396,7 +50396,7 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row ml-0 mr-0 mt-3 w-100"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-8"
+        className: "col-9"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dl", {
         className: "d-flex flex-row flex-wrap"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dt", null, "Annotations for:"), countries ? countries.map(function (country) {
@@ -50407,7 +50407,7 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
         className: "mx-2"
       }, "no country added"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-4"
+        className: "col-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "ds-update-text m-0 text-center",
         onClick: this.onHolidayUpdateClick
@@ -50420,11 +50420,11 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row ml-0 mr-0 w-100"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-8"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "col-9"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         className: "gaa-text-primary"
-      }, "Weather Alert")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-4 d-flex flex-column justify-content-center align-items-center"
+      }, "Weather Alerts")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-3 d-flex flex-column justify-content-center align-items-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         className: "trigger switch"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -50438,7 +50438,7 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row ml-0 mr-0 mt-3 w-100"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-8"
+        className: "col-9"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dl", {
         className: "d-flex flex-row flex-wrap"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dt", null, "Annotations for:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
@@ -50448,7 +50448,7 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
       }, "Argentina"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("dd", {
         className: "mx-2"
       }, "spain"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-4"
+        className: "col-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "ds-update-text m-0 text-center",
         onClick: this.onWeatherUpdateClick
@@ -50459,11 +50459,11 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "w-100 row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-8"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "col-9"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         className: "gaa-text-primary"
       }, "Google Algorithm Updates")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-4 text-center d-flex justify-content-center"
+        className: "col-3 text-center d-flex justify-content-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         className: "trigger switch"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -50480,11 +50480,11 @@ var DataSourceIndex = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "w-100 row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-8"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "col-9"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         className: "gaa-text-primary"
       }, "Retail Marketing")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-4 text-center d-flex justify-content-center"
+        className: "col-3 text-center d-flex justify-content-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         className: "trigger switch"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -52887,7 +52887,7 @@ var integrationsIndex = /*#__PURE__*/function (_React$Component) {
         className: "row ml-0 mr-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "gaa-text-primary"
       }, "Integrations"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row ml-0 mr-0 mt-5"
@@ -52903,13 +52903,34 @@ var integrationsIndex = /*#__PURE__*/function (_React$Component) {
         alt: "mailchamp image here"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "int-description w-100 ml-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Add an annotation to GA automatically when a MailChimp campaign is sent."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        target: "_blank",
-        href: "https://www.youtube.com/channel/UCYJIFsw2yAqJybQn3HKYSxw",
-        className: "mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Add an annotation to GA automatically when a MailChimp campaign is sent."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 integration-video-link",
+        "data-toggle": "modal",
+        "data-target": "#mail-chimp-modal"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-play pr-2"
-      }), "See how this works"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), "See how this works"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal fade",
+        id: "mail-chimp-modal",
+        tabIndex: "-1",
+        role: "dialog",
+        "aria-labelledby": "exampleModalLongTitle",
+        "aria-hidden": "true"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-dialog modal-dialog-centered modal-lg",
+        role: "document"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-content"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("iframe", {
+        className: "w-100",
+        height: "315",
+        src: "https://www.youtube.com/embed/IRUUQ6jVvks",
+        frameBorder: "0",
+        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+        allowFullScreen: true
+      }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "int-action"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         target: "_blank",
@@ -52925,13 +52946,34 @@ var integrationsIndex = /*#__PURE__*/function (_React$Component) {
         alt: "mailchamp image here"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "int-description w-100 ml-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Add an annotation to GA automatically when a New Google Ads campaign Launch."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        target: "_blank",
-        href: "https://www.youtube.com/channel/UCYJIFsw2yAqJybQn3HKYSxw",
-        className: "mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Add an annotation to GA automatically when a New Google Ads campaign Launch."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 integration-video-link",
+        "data-toggle": "modal",
+        "data-target": "#google-modal"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-play pr-2"
-      }), "See how this works"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), "See how this works"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal fade",
+        id: "google-modal",
+        tabIndex: "-1",
+        role: "dialog",
+        "aria-labelledby": "exampleModalLongTitle",
+        "aria-hidden": "true"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-dialog modal-dialog-centered modal-lg",
+        role: "document"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-content"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("iframe", {
+        className: "w-100",
+        height: "315",
+        src: "https://www.youtube.com/embed/bRjoZtmkUxU",
+        frameBorder: "0",
+        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+        allowFullScreen: true
+      }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "int-action"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         target: "_blank",
@@ -52947,13 +52989,34 @@ var integrationsIndex = /*#__PURE__*/function (_React$Component) {
         alt: "mailchamp image here"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "int-description w-100 ml-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Add an annotation to GA automatically when a New Message Posted to Private Channel in Asana."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        target: "_blank",
-        href: "https://www.youtube.com/channel/UCYJIFsw2yAqJybQn3HKYSxw",
-        className: "mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Add an annotation to GA automatically when a New Message Posted to Private Channel in Asana."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 integration-video-link",
+        "data-toggle": "modal",
+        "data-target": "#asana-modal"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-play pr-2"
-      }), "See how this works"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), "See how this works"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal fade",
+        id: "asana-modal",
+        tabIndex: "-1",
+        role: "dialog",
+        "aria-labelledby": "exampleModalLongTitle",
+        "aria-hidden": "true"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-dialog modal-dialog-centered modal-lg",
+        role: "document"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-content"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("iframe", {
+        className: "w-100",
+        height: "315",
+        src: "https://www.youtube.com/embed/oR6u4qoPZgk",
+        frameBorder: "0",
+        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+        allowFullScreen: true
+      }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "int-action"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         target: "_blank",
@@ -52969,13 +53032,34 @@ var integrationsIndex = /*#__PURE__*/function (_React$Component) {
         alt: "mailchamp image here"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "int-description w-100 ml-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Add an annotation to GA automatically when a New Message Posted to Private Channel in Slack"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        target: "_blank",
-        href: "https://www.youtube.com/channel/UCYJIFsw2yAqJybQn3HKYSxw",
-        className: "mt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Add an annotation to GA automatically when a New Message Posted to Private Channel in Slack"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mt-3 integration-video-link",
+        "data-toggle": "modal",
+        "data-target": "#slack-modal"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-play pr-2"
-      }), "See how this works"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), "See how this works"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal fade",
+        id: "slack-modal",
+        tabIndex: "-1",
+        role: "dialog",
+        "aria-labelledby": "exampleModalLongTitle",
+        "aria-hidden": "true"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-dialog modal-dialog-centered modal-lg",
+        role: "document"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-content"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("iframe", {
+        className: "w-100",
+        height: "315",
+        src: "https://www.youtube.com/embed/RY3Q00lyeg4",
+        frameBorder: "0",
+        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+        allowFullScreen: true
+      }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "int-action"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         target: "_blank",
@@ -54931,7 +55015,10 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "peer"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "logo logo-margin"
+        className: "logo d-flex justify-content-center align-items-center",
+        style: {
+          minHeight: 65
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "/images/company_logo.png",
         width: "40px",
@@ -54940,7 +55027,7 @@ var sidebar = /*#__PURE__*/function (_React$Component) {
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "peer peer-greed "
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "lh-1 logo-text "
+        className: "lh-1 logo-text m-0"
       }, "GAannotations"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "peer"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -55202,9 +55289,9 @@ var countries = /*#__PURE__*/function (_React$Component) {
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "countries-form"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         className: "gaa-text-primary"
-      }, this.props.sectionTitle === 'weather' && 'Select Countries for Weather Alert', this.props.sectionTitle !== 'weather' && "Select Countries for ".concat(this.props.sectionTitle)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.sectionTitle === 'weather' && 'Select Countries for Weather Alerts', this.props.sectionTitle === 'holiday' && "Select Countries for Holidays", this.props.sectionTitle === 'retail' && "Select Countries for Retail"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group search-input-box mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",

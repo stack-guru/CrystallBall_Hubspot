@@ -192,7 +192,7 @@ export default class DataSourceIndex extends React.Component {
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper">
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
-                        <h1 className="heading-section gaa-title">Data Source</h1>
+                        <h2 className="heading-section gaa-title">Data Source</h2>
                     </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-4">
@@ -201,10 +201,10 @@ export default class DataSourceIndex extends React.Component {
                             <div className="w-75 h-100 border-bottom d-flex align-items-center">
                                 <div className="w-100 row">
                                     <div className="row ml-0 mr-0 w-100">
-                                        <div className="col-8">
-                                            <h3 className="gaa-text-primary">Holiday</h3>
+                                        <div className="col-9">
+                                            <h4 className="gaa-text-primary">Holidays</h4>
                                         </div>
-                                        <div className="col-4 d-flex flex-column justify-content-center align-items-center">
+                                        <div className="col-3 d-flex flex-column justify-content-center align-items-center">
                                             <label className="trigger switch">
                                                 <input
                                                     type="checkbox"
@@ -218,7 +218,7 @@ export default class DataSourceIndex extends React.Component {
                                         </div>
                                     </div>
                                     <div className="row ml-0 mr-0 mt-3 w-100">
-                                        <div className="col-8">
+                                        <div className="col-9">
                                             <dl className="d-flex flex-row flex-wrap">
                                                 <dt>Annotations for:</dt>
                                                 {countries
@@ -229,7 +229,7 @@ export default class DataSourceIndex extends React.Component {
                                                 }
                                             </dl>
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-3">
                                             <p
                                                 className="ds-update-text m-0 text-center"
                                                 onClick={this.onHolidayUpdateClick}
@@ -246,10 +246,10 @@ export default class DataSourceIndex extends React.Component {
                             <div className="w-75 h-100 border-bottom d-flex align-items-center">
                                 <div className="w-100 row">
                                     <div className="row ml-0 mr-0 w-100">
-                                        <div className="col-8">
-                                            <h3 className="gaa-text-primary">Weather Alert</h3>
+                                        <div className="col-9">
+                                            <h4 className="gaa-text-primary">Weather Alerts</h4>
                                         </div>
-                                        <div className="col-4 d-flex flex-column justify-content-center align-items-center">
+                                        <div className="col-3 d-flex flex-column justify-content-center align-items-center">
                                             <label className="trigger switch">
                                                 <input
                                                     type="checkbox"
@@ -263,7 +263,7 @@ export default class DataSourceIndex extends React.Component {
                                         </div>
                                     </div>
                                     <div className="row ml-0 mr-0 mt-3 w-100">
-                                        <div className="col-8">
+                                        <div className="col-9">
                                             <dl className="d-flex flex-row flex-wrap">
                                                 <dt>Annotations for:</dt>
                                                 <dd className="mx-2">spain</dd>
@@ -271,7 +271,7 @@ export default class DataSourceIndex extends React.Component {
                                                 <dd className="mx-2">spain</dd>
                                             </dl>
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-3">
                                             <p
                                                 className="ds-update-text m-0 text-center"
                                                 onClick={this.onWeatherUpdateClick}
@@ -287,10 +287,10 @@ export default class DataSourceIndex extends React.Component {
                         <div className="container mt-3 ds-sections">
                             <div className="ml-0 mr-0 w-75 h-100 border-bottom d-flex align-items-center">
                                 <div className="w-100 row">
-                                    <div className="col-8">
-                                        <h3 className="gaa-text-primary">Google Algorithm Updates</h3>
+                                    <div className="col-9">
+                                        <h4 className="gaa-text-primary">Google Algorithm Updates</h4>
                                     </div>
-                                    <div className="col-4 text-center d-flex justify-content-center">
+                                    <div className="col-3 text-center d-flex justify-content-center">
                                         <label className="trigger switch">
                                             <input
                                                 type="checkbox"
@@ -308,10 +308,10 @@ export default class DataSourceIndex extends React.Component {
                         <div className="container mt-3 ds-sections">
                             <div className="ml-0 mr-0 w-75 h-100 border-bottom d-flex align-items-center">
                                 <div className="w-100 row">
-                                    <div className="col-8">
-                                        <h3 className="gaa-text-primary">Retail Marketing</h3>
+                                    <div className="col-9">
+                                        <h4 className="gaa-text-primary">Retail Marketing</h4>
                                     </div>
-                                    <div className="col-4 text-center d-flex justify-content-center">
+                                    <div className="col-3 text-center d-flex justify-content-center">
                                     <label className="trigger switch">
                                         <input
                                             type="checkbox"

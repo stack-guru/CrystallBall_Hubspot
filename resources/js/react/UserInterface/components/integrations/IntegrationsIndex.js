@@ -17,7 +17,7 @@ export default class integrationsIndex extends React.Component {
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper data-source-container">
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
-                        <h1 className="gaa-text-primary">Integrations</h1>
+                        <h2 className="gaa-text-primary">Integrations</h2>
                     </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-5">
@@ -33,14 +33,41 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>Add an annotation to GA automatically when a MailChimp campaign is sent.</p>
-                                    <a
-                                        target="_blank"
-                                        href="https://www.youtube.com/channel/UCYJIFsw2yAqJybQn3HKYSxw"
-                                        className="mt-3"
+                                    <div
+                                        className="mt-3 integration-video-link"
+                                        data-toggle="modal"
+                                        data-target="#mail-chimp-modal"
                                     >
                                         <i className="fa fa-play pr-2" />
                                         See how this works
-                                    </a>
+                                    </div>
+                                    <div
+                                        className="modal fade"
+                                        id="mail-chimp-modal"
+                                        tabIndex="-1"
+                                        role="dialog"
+                                        aria-labelledby="exampleModalLongTitle"
+                                        aria-hidden="true"
+                                    >
+                                        <div
+                                            className="modal-dialog modal-dialog-centered modal-lg"
+                                            role="document"
+                                        >
+                                            <div className="modal-content"
+                                            >
+                                                <div className="modal-body">
+                                                    <iframe
+                                                        className="w-100"
+                                                        height="315"
+                                                        src="https://www.youtube.com/embed/IRUUQ6jVvks"
+                                                        frameBorder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowFullScreen
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="int-action">
@@ -64,14 +91,41 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>Add an annotation to GA automatically when a New Google Ads campaign Launch.</p>
-                                    <a
-                                        target="_blank"
-                                        href="https://www.youtube.com/channel/UCYJIFsw2yAqJybQn3HKYSxw"
-                                        className="mt-3"
+                                    <div
+                                        className="mt-3 integration-video-link"
+                                        data-toggle="modal"
+                                        data-target="#google-modal"
                                     >
                                         <i className="fa fa-play pr-2" />
                                         See how this works
-                                    </a>
+                                    </div>
+                                    <div
+                                        className="modal fade"
+                                        id="google-modal"
+                                        tabIndex="-1"
+                                        role="dialog"
+                                        aria-labelledby="exampleModalLongTitle"
+                                        aria-hidden="true"
+                                    >
+                                        <div
+                                            className="modal-dialog modal-dialog-centered modal-lg"
+                                            role="document"
+                                        >
+                                            <div className="modal-content"
+                                            >
+                                                <div className="modal-body">
+                                                    <iframe
+                                                        className="w-100"
+                                                        height="315"
+                                                        src="https://www.youtube.com/embed/bRjoZtmkUxU"
+                                                        frameBorder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowFullScreen
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="int-action">
@@ -98,14 +152,41 @@ export default class integrationsIndex extends React.Component {
                                         Add an annotation to GA automatically when a New Message Posted to Private Channel in
                                         Asana.
                                     </p>
-                                    <a
-                                        target="_blank"
-                                        href="https://www.youtube.com/channel/UCYJIFsw2yAqJybQn3HKYSxw"
-                                        className="mt-3"
+                                    <div
+                                        className="mt-3 integration-video-link"
+                                        data-toggle="modal"
+                                        data-target="#asana-modal"
                                     >
                                         <i className="fa fa-play pr-2" />
                                         See how this works
-                                    </a>
+                                    </div>
+                                    <div
+                                        className="modal fade"
+                                        id="asana-modal"
+                                        tabIndex="-1"
+                                        role="dialog"
+                                        aria-labelledby="exampleModalLongTitle"
+                                        aria-hidden="true"
+                                    >
+                                        <div
+                                            className="modal-dialog modal-dialog-centered modal-lg"
+                                            role="document"
+                                        >
+                                            <div className="modal-content"
+                                            >
+                                                <div className="modal-body">
+                                                    <iframe
+                                                        className="w-100"
+                                                        height="315"
+                                                        src="https://www.youtube.com/embed/oR6u4qoPZgk"
+                                                        frameBorder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowFullScreen
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="int-action">
@@ -132,14 +213,41 @@ export default class integrationsIndex extends React.Component {
                                         Add an annotation to GA automatically when a New Message Posted to Private Channel in
                                         Slack
                                     </p>
-                                    <a
-                                        target="_blank"
-                                        href="https://www.youtube.com/channel/UCYJIFsw2yAqJybQn3HKYSxw"
-                                        className="mt-3"
+                                    <div
+                                        className="mt-3 integration-video-link"
+                                        data-toggle="modal"
+                                        data-target="#slack-modal"
                                     >
                                         <i className="fa fa-play pr-2" />
                                         See how this works
-                                    </a>
+                                    </div>
+                                    <div
+                                        className="modal fade"
+                                        id="slack-modal"
+                                        tabIndex="-1"
+                                        role="dialog"
+                                        aria-labelledby="exampleModalLongTitle"
+                                        aria-hidden="true"
+                                    >
+                                        <div
+                                            className="modal-dialog modal-dialog-centered modal-lg"
+                                            role="document"
+                                        >
+                                            <div className="modal-content"
+                                            >
+                                                <div className="modal-body">
+                                                    <iframe
+                                                        className="w-100"
+                                                        height="315"
+                                                        src="https://www.youtube.com/embed/RY3Q00lyeg4"
+                                                        frameBorder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowFullScreen
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="int-action">

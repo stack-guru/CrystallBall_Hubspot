@@ -33,14 +33,17 @@ export default class countries extends React.Component {
         let userCountries = this.props.ds_data.map(ds => ds.country_name);
         return (
             <div className="countries-form">
-                <h3 className="gaa-text-primary">
+                <h4 className="gaa-text-primary">
                     { this.props.sectionTitle === 'weather' && (
-                        'Select Countries for Weather Alert'
+                        'Select Countries for Weather Alerts'
                     )}
-                    { this.props.sectionTitle !== 'weather' && (
-                        `Select Countries for ${this.props.sectionTitle}`
+                    { this.props.sectionTitle === 'holiday' && (
+                        `Select Countries for Holidays`
                     )}
-                </h3>
+                    { this.props.sectionTitle === 'retail' && (
+                        `Select Countries for Retail`
+                    )}
+                </h4>
                 {/*<h3 className="gaa-text-primary">Select Countries</h3>*/}
                 <div className="input-group search-input-box mb-3">
                     <input
