@@ -4,7 +4,7 @@ require('../../Main.css');
 import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";
 import * as $ from 'jquery';
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -34,21 +34,21 @@ export default class DataSourceIndex extends React.Component {
         document.title = 'Data Source';
         if (!this.state.isBusy) {
             HttpClient.get('/user-data-source').then(resp => {
-                this.setState({isBusy: false, dataSources: resp.data.data_sources});
+                this.setState({ isBusy: false, dataSources: resp.data.data_sources });
 
             }, (err) => {
-                this.setState({isBusy: false, errors: err.response});
+                this.setState({ isBusy: false, errors: err.response });
                 console.log(err)
             }).catch(err => {
                 console.log(err)
-                this.setState({isBusy: false, errors: err});
+                this.setState({ isBusy: false, errors: err });
             })
         }
     }
 
     addCountry(e) {
         if (!e.target.defaultChecked) {
-            this.setState({countryCheck: true})
+            this.setState({ countryCheck: true })
             let formData = {
                 'ds_code': 'holidays',
                 'ds_name': 'Holiday',
@@ -56,7 +56,7 @@ export default class DataSourceIndex extends React.Component {
                 'is_enabled': 1,
             }
             HttpClient.post('/user-data-source', formData).then(resp => {
-                this.setState({dataSources: this.state.dataSources.concat(resp.data.user_data_source)})
+                this.setState({ dataSources: this.state.dataSources.concat(resp.data.user_data_source) })
             }, (err) => {
                 console.log(err)
             }).catch(err => {
@@ -64,12 +64,12 @@ export default class DataSourceIndex extends React.Component {
             })
         }
         if (e.target.defaultChecked) {
-            this.setState({countryCheck: false})
+            this.setState({ countryCheck: false })
 
             HttpClient.delete(`/user-data-source/${e.target.id}`).then(resp => {
                 let dataSources = this.state.dataSources;
                 dataSources = dataSources.filter(a => a.id != resp.data.data_source.id);
-                this.setState({isBusy: false, dataSources: dataSources})
+                this.setState({ isBusy: false, dataSources: dataSources })
             }, (err) => {
                 console.log(err)
             }).catch(err => {
@@ -95,7 +95,7 @@ export default class DataSourceIndex extends React.Component {
                 sectionName: e.target.className
             });
         } else {
-            this.setState({showCountry: false, sectionName: null});
+            this.setState({ showCountry: false, sectionName: null });
         }
     }
 
@@ -117,7 +117,7 @@ export default class DataSourceIndex extends React.Component {
                 sectionName: e.target.className,
             });
         } else {
-            this.setState({showWeather: false, sectionName: null});
+            this.setState({ showWeather: false, sectionName: null });
         }
     }
 
@@ -139,7 +139,7 @@ export default class DataSourceIndex extends React.Component {
                 sectionName: e.target.className
             });
         } else {
-            this.setState({showRetail: false, sectionName: null});
+            this.setState({ showRetail: false, sectionName: null });
         }
     }
 
@@ -147,16 +147,16 @@ export default class DataSourceIndex extends React.Component {
         let formData;
         if (!e.target.defaultChecked) {
             if (e.target.name == 'is_ds_holidays_enabled') {
-                formData = {'is_ds_holidays_enabled': 1}
+                formData = { 'is_ds_holidays_enabled': 1 }
             }
             if (e.target.name == 'is_ds_google_algorithm_updates_enabled') {
-                formData = {'is_ds_google_algorithm_updates_enabled': 1}
+                formData = { 'is_ds_google_algorithm_updates_enabled': 1 }
             }
             if (e.target.name == 'is_ds_retail_marketing_enabled') {
-                formData = {'is_ds_retail_marketing_enabled': 1}
+                formData = { 'is_ds_retail_marketing_enabled': 1 }
             }
             HttpClient.post('/userService', formData).then(resp => {
-                this.setState({userServices: resp.data.user_services})
+                this.setState({ userServices: resp.data.user_services })
                 toast.success("Service activated successfully.");
             }, (err) => {
                 console.log(err)
@@ -166,16 +166,16 @@ export default class DataSourceIndex extends React.Component {
         }
         if (e.target.defaultChecked) {
             if (e.target.name == 'is_ds_holidays_enabled') {
-                formData = {'is_ds_holidays_enabled': 0}
+                formData = { 'is_ds_holidays_enabled': 0 }
             }
             if (e.target.name == 'is_ds_google_algorithm_updates_enabled') {
-                formData = {'is_ds_google_algorithm_updates_enabled': 0}
+                formData = { 'is_ds_google_algorithm_updates_enabled': 0 }
             }
             if (e.target.name == 'is_ds_retail_marketing_enabled') {
-                formData = {'is_ds_retail_marketing_enabled': 0}
+                formData = { 'is_ds_retail_marketing_enabled': 0 }
             }
             HttpClient.post('/userService', formData).then(resp => {
-                this.setState({userServices: resp.data.user_services})
+                this.setState({ userServices: resp.data.user_services })
                 toast.success("Service deactivated successfully.");
             }, (err) => {
                 console.log(err)
@@ -213,7 +213,7 @@ export default class DataSourceIndex extends React.Component {
                                                     checked={this.state.showCountry}
                                                     onChange={this.holidaySwitchHandler}
                                                 />
-                                                <span className="slider round"/>
+                                                <span className="slider round" />
                                             </label>
                                         </div>
                                     </div>
@@ -242,7 +242,7 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                         </div>
 
-                        <div className="container mt-3 ds-sections">
+                        {/* <div className="container mt-3 ds-sections">
                             <div className="w-75 h-100 border-bottom d-flex align-items-center">
                                 <div className="w-100 row">
                                     <div className="row ml-0 mr-0 w-100">
@@ -258,7 +258,7 @@ export default class DataSourceIndex extends React.Component {
                                                     checked={this.state.showWeather}
                                                     onChange={this.weatherSwitchHandler}
                                                 />
-                                                <span className="slider round"/>
+                                                <span className="slider round" />
                                             </label>
                                         </div>
                                     </div>
@@ -282,7 +282,7 @@ export default class DataSourceIndex extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className="container mt-3 ds-sections">
                             <div className="ml-0 mr-0 w-75 h-100 border-bottom d-flex align-items-center">
@@ -298,7 +298,7 @@ export default class DataSourceIndex extends React.Component {
                                                 onChange={this.serviceStatusHandler}
                                                 name="is_ds_google_algorithm_updates_enabled"
                                             />
-                                            <span className="slider round"/>
+                                            <span className="slider round" />
                                         </label>
                                     </div>
                                 </div>
@@ -312,17 +312,17 @@ export default class DataSourceIndex extends React.Component {
                                         <h4 className="gaa-text-primary">Retail Marketing</h4>
                                     </div>
                                     <div className="col-3 text-center d-flex justify-content-center">
-                                    <label className="trigger switch">
-                                        <input
-                                            type="checkbox"
-                                            className="retail"
-                                            defaultChecked={this.state.showRetail}
-                                            checked={this.state.showRetail}
-                                            onChange={this.retailSwitchHandler}
-                                        />
-                                        <span className="slider round"/>
-                                    </label>
-                                </div>
+                                        <label className="trigger switch">
+                                            <input
+                                                type="checkbox"
+                                                className="retail"
+                                                defaultChecked={this.state.showRetail}
+                                                checked={this.state.showRetail}
+                                                onChange={this.retailSwitchHandler}
+                                            />
+                                            <span className="slider round" />
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
