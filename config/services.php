@@ -52,4 +52,8 @@ return [
             'api_key' => env('GOOGLE_CALENDAR_API_KEY'),
         ],
     ],
+
+    'weather'=>[
+        'App_id'=>env('OPEN_WEATHER_APPID'),
+    ]
 ];
