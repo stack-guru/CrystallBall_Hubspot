@@ -35,6 +35,7 @@ class BlueSnapService
         $tokenURL = $response->header('location');
 
         return substr($tokenURL, strlen($url) + 1);
+
     }
 
     /**
