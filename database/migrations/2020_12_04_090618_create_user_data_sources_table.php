@@ -21,7 +21,7 @@ class CreateUserDataSourcesTable extends Migration
             $table->string('ds_code', 50)->required();
             $table->string('ds_name', 50)->required();
             
-            $table->string('country_name', 30)->nullable();
+            $table->string('country_name', 50)->nullable();
 
             $table->boolean('is_enabled')->required()->default(true);
 
