@@ -38,7 +38,7 @@ export default class DataSourceIndex extends React.Component {
         }
     }
 
-    
+
     addCountry(e) {
         if (!e.target.defaultChecked) {
             this.setState({ countryCheck: true })
@@ -139,9 +139,10 @@ export default class DataSourceIndex extends React.Component {
                                             </label>
                                         </div>
                                     </div>
-                                    <div className="row ml-0 mr-0 mt-3 w-100">
-                                        <div className="col-9">
-                                            <dl className="d-flex flex-row flex-wrap">
+                                    <div className="row ml-0 mr-0 w-100">
+                                        <div className="col-8">
+                                            <div className="list-wrapper">
+                                            <dl className="d-flex flex-row flex-wrap userCountryList">
                                                 <dt>Annotations for:</dt>
                                                 {countries
                                                     ? countries.map(country => (
@@ -149,9 +150,11 @@ export default class DataSourceIndex extends React.Component {
                                                     ))
                                                     : <dd className="mx-2">no country added</dd>
                                                 }
+
                                             </dl>
+                                            </div>
                                         </div>
-                                        <div className="col-3">
+                                        <div className="col-4">
                                             <p
                                                 className="ds-update-text m-0 text-center"
                                                 onClick={() => { this.setState({ sectionName: this.state.sectionName == "holidays" ? null : "holidays", showCountries: !this.state.showCountries })}}
