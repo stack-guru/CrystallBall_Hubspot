@@ -140,7 +140,7 @@ export default class DataSourceIndex extends React.Component {
                                         </div>
                                     </div>
                                     <div className="row ml-0 mr-0 w-100">
-                                        <div className="col-8">
+                                        <div className="col-9">
                                             <div className="list-wrapper">
                                             <dl className="d-flex flex-row flex-wrap userCountryList">
                                                 <dt>Annotations for:</dt>
@@ -154,7 +154,7 @@ export default class DataSourceIndex extends React.Component {
                                             </dl>
                                             </div>
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-3">
                                             <p
                                                 className="ds-update-text m-0 text-center"
                                                 onClick={() => { this.setState({ sectionName: this.state.sectionName == "holidays" ? null : "holidays", showCountries: !this.state.showCountries })}}
