@@ -9,23 +9,48 @@ export default class countries extends React.Component {
         this.state = {
             countries: [],
             isBusy: false,
-            errors: ''
+            errors: '',
+            searchText: ''
         }
+        this.selectAllShowing = this.selectAllShowing.bind(this);
+        this.clearAll = this.clearAll.bind(this);
     }
 
     componentDidMount() {
         if (!this.state.isBusy) {
-            this.setState({isBusy: true})
+            this.setState({ isBusy: true })
             HttpClient.get('countries').then(resp => {
-                this.setState({isBusy: false, countries: resp.data.countries})
+                this.setState({ isBusy: false, countries: resp.data.countries })
             }, (err) => {
                 console.log(err);
-                this.setState({isBusy: false, errors: err.response})
+                this.setState({ isBusy: false, errors: err.response })
             }).catch(err => {
                 console.log(err);
-                this.setState({isBusy: false, errors: err})
+                this.setState({ isBusy: false, errors: err })
             })
         }
+    }
+
+    selectAllShowing(e) {
+        let userCountries = this.props.ds_data.map(ds => ds.country_name);
+        this.state.countries.map(country => {
+            if (country !== null) if (country.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0) {
+                if (userCountries.indexOf(country) == -1) {
+                    (this.props.onChangeCallback)({ target: { name: country, defaultChecked: 0, id: userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null } })
+                }
+            }
+        })
+    }
+
+    clearAll(e) {
+        let userCountries = this.props.ds_data.map(ds => ds.country_name);
+        this.state.countries.map(country => {
+            if (country !== null) {
+                if (userCountries.indexOf(country) !== -1) {
+                    (this.props.onChangeCallback)({ target: { name: country, defaultChecked: 1, id: userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null } })
+                }
+            }
+        })
     }
 
     render() {
@@ -34,13 +59,13 @@ export default class countries extends React.Component {
         return (
             <div className="countries-form">
                 <h4 className="gaa-text-primary">
-                    { this.props.sectionTitle === 'weather' && (
+                    {this.props.sectionTitle === 'weather' && (
                         'Select Countries for Weather Alerts'
                     )}
-                    { this.props.sectionTitle === 'holiday' && (
+                    {this.props.sectionTitle === 'holiday' && (
                         `Select Countries for Holidays`
                     )}
-                    { this.props.sectionTitle === 'retail' && (
+                    {this.props.sectionTitle === 'retail' && (
                         `Select Countries for Retail`
                     )}
                 </h4>
@@ -49,9 +74,12 @@ export default class countries extends React.Component {
                     <input
                         type="text"
                         className="form-control search-input"
-                        placeholder="search"
+                        placeholder="Search"
                         aria-label="Recipient's username"
                         aria-describedby="basic-addon2"
+                        value={this.state.searchText}
+                        name="searchText"
+                        onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
                     />
                     <div className="input-group-append">
                         <i className="ti-search"></i>
@@ -63,7 +91,7 @@ export default class countries extends React.Component {
                             className="form-check-input"
                             type="checkbox"
                             id="check-all"
-                            onChange={this.props.showAllChange}
+                            onChange={this.selectAllShowing}
                         />
                         <label
                             className="form-check-label font-weight-bold"
@@ -73,14 +101,15 @@ export default class countries extends React.Component {
                         </label>
                     </div>
                     <div>
-                        <p className="font-weight-bold cursor m-0" onClick={this.props.clearAllChange}>Clear All</p>
+                        <p className="font-weight-bold cursor m-0" onClick={this.clearAll}>Clear All</p>
                     </div>
                 </div>
                 <div className="checkbox-box mt-3">
                     {
                         countries
-                            ? countries.map(country => (
-                                <div className="form-check country" key={country}>
+                            ? countries.map(country => {
+
+                                if (country !== null) if (country.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0) return <div className="form-check country" key={country}>
                                     <input
                                         className="form-check-input"
                                         defaultChecked={userCountries.indexOf(country) !== -1}
@@ -96,7 +125,7 @@ export default class countries extends React.Component {
                                         {country}
                                     </label>
                                 </div>
-                            ))
+                            })
                             : <span>No country found</span>
                     }
                 </div>
