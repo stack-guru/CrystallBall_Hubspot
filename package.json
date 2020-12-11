@@ -27,6 +27,7 @@
         "react-dom": "^16.14.0",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
-        "react-toastify": "^6.0.9"
+        "react-toastify": "^6.0.9",
+        "reactour": "^1.18.0"
     }
 }

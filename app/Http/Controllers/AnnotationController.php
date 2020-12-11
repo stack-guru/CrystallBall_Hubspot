@@ -73,6 +73,7 @@ class AnnotationController extends Controller
         }
 
         $annotation->update($request->validated());
+        $annotation->load('googleAccount');
 
         return ['annotation' => $annotation];
     }
