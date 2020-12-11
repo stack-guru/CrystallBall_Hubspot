@@ -54,8 +54,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::view('payment-history', 'ui/app');
     });
 
-
-
     Route::group(['prefix' => 'ui'], function () {
 
         Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only([ 'index', 'store', 'destroy' ]);

@@ -159,23 +159,13 @@ class header extends React.Component {
                         {/*    </ul>*/}
                         {/*</li>*/}
 
-
-                    <li>
-
-                                    {
-                                        this.props.user.price_plan.price==0?
-                                            <Link to="/settings/price-plans"    className="peers fxw-nw td-n bdB c-grey-800 cH-blue bgcH-grey-100">
-                                                <div className="peers jc-sb fxw-nw ">
-                                                    <div className="peer">
-                                                         <span className="fw-500 mB-0 gaa-text-primary">Upgrade Now</span>
-                                                    </div>
-                                                </div>
-
-                                            </Link>:''
-                                    }
-
-                    </li>
-
+                        {this.props.user.price_plan.price == 0 ?
+                            <li className="notifications">
+                                <div className="no-after">
+                                    <Link to="/settings/price-plans" className="btn btn-primary">Upgrade Now</Link>
+                                </div>
+                            </li>
+                            : null}
 
                         <li className="dropdown">
                             <a href={null} className="dropdown-toggle no-after peers fxw-nw ai-c lh-1 c-grey-800 cH-blue bgcH-grey-100"
@@ -190,9 +180,9 @@ class header extends React.Component {
                             <ul className="dropdown-menu fsz-sm">
                                 <li >
                                     <div className="p-5  header-profile-info">
-                                    <h6 className="mb-0 gaa-text-primary border-bottom-1"><b>{this.props.user.name}</b></h6>
-                                    <small className="gaa-text-primary"><b>Email: {this.props.user.email}</b></small>
-                                    <small className="gaa-text-primary"><b>Price Plan: {this.props.user.price_plan.name}</b></small>
+                                        <h6 className="mb-0 gaa-text-primary border-bottom-1"><b>{this.props.user.name}</b></h6>
+                                        <small className="gaa-text-primary"><b>Email: {this.props.user.email}</b></small>
+                                        <small className="gaa-text-primary"><b>Price Plan: {this.props.user.price_plan.name}</b></small>
                                     </div>
                                 </li>
                                 {/* <li>

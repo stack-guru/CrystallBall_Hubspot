@@ -458,3 +458,15 @@ setting-menu-item.dropdown {
         margin: 0 auto;
     }
 }
+
+
+.header .header-container .nav-left > li > div, .header .header-container .nav-right > li > div {
+    color: #72777a;
+    display: block;
+    line-height: 65px;
+    min-height: 65px;
+    padding: 0 15px;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
