@@ -1,13 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 
 import HttpClient from "./utils/HttpClient";
+
 import './Sidebarjs.js';
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
-import Index from "./components/Index";
 import Footer from "./layout/Footer"
 
+import Index from "./components/Index";
 import AnnotationsCreate from './components/annotations/CreateAnnotation';
 import AnnotationsUpdate from './components/annotations/EditAnnotation';
 import IndexAnnotations from './components/annotations/IndexAnnotation';
@@ -18,11 +20,11 @@ import ChangePassword from './components/settings/ChangePassword';
 import PaymentHistory from './components/settings/pricingPlans/PaymentHistory';
 import GoogleAccount from './components/settings/googleAccount/AddGoogleAccount';
 import DataSourceIndex from "./components/DataSource/DataSourceIndex";
-import 'react-toastify/dist/ReactToastify.css';
-import './Main.css';
 import IndexAPIKey from './components/apiKey/IndexAPIKey';
 import CreatePayment from './components/settings/pricingPlans/CreatePayment';
 import IntegrationsIndex from "./components/integrations/IntegrationsIndex";
+
+import './Main.css';
 
 class Main extends React.Component {
 
