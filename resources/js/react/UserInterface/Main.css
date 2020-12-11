@@ -21,6 +21,7 @@
 /*#0a2950*/
 /*#456287*/
 
+
 .gaa-blue-gradient {
     background: linear-gradient(to bottom, #0a2950, #456287);
 }
@@ -39,9 +40,9 @@
     color: #456287;
 }
 .sidebar-menu li:last-child {
-    position: absolute;
-    top: 90%;
-    bottom: 5%;
+    position: relative;
+    top: 35vh;
+
 }
 .anno-container {
     padding: 2% !important;

@@ -59,15 +59,7 @@ export default class countries extends React.Component {
         return (
             <div className="countries-form">
                 <h4 className="gaa-text-primary">
-                    {this.props.sectionTitle === 'weather' && (
-                        'Select Countries for Weather Alerts'
-                    )}
-                    {this.props.sectionTitle === 'holiday' && (
-                        `Select Countries for Holidays`
-                    )}
-                    {this.props.sectionTitle === 'retail' && (
-                        `Select Countries for Retail`
-                    )}
+                    Select Countries for {this.props.sectionTitle}
                 </h4>
                 {/*<h3 className="gaa-text-primary">Select Countries</h3>*/}
                 <div className="input-group search-input-box mb-3">
