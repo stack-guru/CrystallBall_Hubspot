@@ -16,8 +16,6 @@ export default class DataSourceIndex extends React.Component {
             isBusy: false,
             errors: '',
         }
-        this.holidaySwitchHandler = this.holidaySwitchHandler.bind(this);
-        this.onHolidayUpdateClick = this.onHolidayUpdateClick.bind(this);
         this.addCountry = this.addCountry.bind(this);
         this.serviceStatusHandler = this.serviceStatusHandler.bind(this);
     }
@@ -71,36 +69,22 @@ export default class DataSourceIndex extends React.Component {
         }
     }
 
-
-    holidaySwitchHandler(e) {
-        if (!this.state.showCountry || this.state.sectionName == null) {
-            this.setState({
-                showCountry: true,
-                showWeather: false,
-                showRetail: false,
-                sectionName: e.target.className
-            });
-        } else {
-            this.setState({ showCountry: false, sectionName: null });
-        }
-    }
-
-    onHolidayUpdateClick() {
-        this.setState({
-            showCountry: true,
-            showWeather: false,
-            showRetail: false,
-            sectionName: "holiday"
-        });
-    }
-
-
     serviceStatusHandler(e) {
         e.persist();
+        if (e.target.name == 'is_ds_holidays_enabled' && !e.target.defaultChecked) {
+            this.setState({ sectionName: 'holiday', showCountries: true })
+        } else if (e.target.name == 'is_ds_holidays_enabled' && e.target.defaultChecked) {
+            this.setState({ sectionName: null, showCountries: false })
+        }
         HttpClient.post('/userService', { [e.target.name]: e.target.defaultChecked ? 0 : 1 }).then(resp => {
-            this.setState({ userServices: resp.data.user_services })
-            if (resp.data.user_services[e.target.name] == 1) toast.success("Service activated successfully.");
-            if (resp.data.user_services[e.target.name] == 0) toast.info("Service deactivated successfully.");
+            if (resp.data.user_services[e.target.name] == 1) {
+                toast.success("Service activated successfully.");
+                this.setState({ userServices: resp.data.user_services })
+            }
+            if (resp.data.user_services[e.target.name] == 0) {
+                this.setState({ userServices: resp.data.user_services })
+                toast.info("Service deactivated successfully.");
+            }
         }, (err) => {
             console.log(err)
         }).catch(err => {
@@ -142,32 +126,32 @@ export default class DataSourceIndex extends React.Component {
                                     <div className="row ml-0 mr-0 w-100">
                                         <div className="col-9">
                                             <div className="list-wrapper">
-                                            <dl className="d-flex flex-row flex-wrap userCountryList">
-                                                <dt>Annotations for:</dt>
-                                                {countries
-                                                    ? countries.map(country => (
-                                                        <dd className="mx-2" key={country.id}>{country.country_name}</dd>
-                                                    ))
-                                                    : <dd className="mx-2">no country added</dd>
-                                                }
+                                                <dl className="d-flex flex-row flex-wrap userCountryList">
+                                                    <dt>Annotations for:</dt>
+                                                    {countries
+                                                        ? countries.map(country => (
+                                                            <dd className="mx-2" key={country.id}>{country.country_name}</dd>
+                                                        ))
+                                                        : <dd className="mx-2">no country added</dd>
+                                                    }
 
-                                            </dl>
+                                                </dl>
                                             </div>
                                         </div>
                                         <div className="col-3">
                                             <p
                                                 className="ds-update-text m-0 text-center"
-                                                onClick={() => { this.setState({ sectionName: this.state.sectionName == "holidays" ? null : "holidays", showCountries: !this.state.showCountries })}}
+                                                onClick={() => { this.setState({ sectionName: this.state.sectionName == "holidays" ? null : "holidays", showCountries: !this.state.showCountries }) }}
                                             >
                                                 {this.state.sectionName == "holidays" ? "Hide" : "Show"}
                                             </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* <div className="container mt-3 ds-sections">
+                        {/* <div className="container mt-3 ds-sections">
                             <div className="w-75 h-100 border-bottom d-flex align-items-center">
                                 <div className="w-100 row">
                                     <div className="row ml-0 mr-0 w-100">
@@ -209,63 +193,63 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                         </div> */}
 
-                    <div className="container mt-3 ds-sections">
-                        <div className="ml-0 mr-0 w-75 h-100 border-bottom d-flex align-items-center">
-                            <div className="w-100 row">
-                                <div className="col-9">
-                                    <h4 className="gaa-text-primary">Google Algorithm Updates</h4>
-                                </div>
-                                <div className="col-3 text-center d-flex justify-content-center">
-                                    <label className="trigger switch">
-                                        <input
-                                            type="checkbox"
-                                            defaultChecked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
-                                            onChange={this.serviceStatusHandler}
-                                            name="is_ds_google_algorithm_updates_enabled"
-                                        />
-                                        <span className="slider round" />
-                                    </label>
+                        <div className="container mt-3 ds-sections">
+                            <div className="ml-0 mr-0 w-75 h-100 border-bottom d-flex align-items-center">
+                                <div className="w-100 row">
+                                    <div className="col-9">
+                                        <h4 className="gaa-text-primary">Google Algorithm Updates</h4>
+                                    </div>
+                                    <div className="col-3 text-center d-flex justify-content-center">
+                                        <label className="trigger switch">
+                                            <input
+                                                type="checkbox"
+                                                defaultChecked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
+                                                onChange={this.serviceStatusHandler}
+                                                name="is_ds_google_algorithm_updates_enabled"
+                                            />
+                                            <span className="slider round" />
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="container mt-3 ds-sections">
-                        <div className="ml-0 mr-0 w-75 h-100 border-bottom d-flex align-items-center">
-                            <div className="w-100 row">
-                                <div className="col-9">
-                                    <h4 className="gaa-text-primary">Retail Marketing</h4>
-                                </div>
-                                <div className="col-3 text-center d-flex justify-content-center">
-                                    <label className="trigger switch">
-                                        <input
-                                            type="checkbox"
-                                            name="is_ds_retail_marketing_enabled"
-                                            defaultChecked={this.state.userServices.is_ds_retail_marketing_enabled}
-                                            onChange={this.serviceStatusHandler}
-                                        />
-                                        <span className="slider round" />
-                                    </label>
+                        <div className="container mt-3 ds-sections">
+                            <div className="ml-0 mr-0 w-75 h-100 border-bottom d-flex align-items-center">
+                                <div className="w-100 row">
+                                    <div className="col-9">
+                                        <h4 className="gaa-text-primary">Retail Marketing</h4>
+                                    </div>
+                                    <div className="col-3 text-center d-flex justify-content-center">
+                                        <label className="trigger switch">
+                                            <input
+                                                type="checkbox"
+                                                name="is_ds_retail_marketing_enabled"
+                                                defaultChecked={this.state.userServices.is_ds_retail_marketing_enabled}
+                                                onChange={this.serviceStatusHandler}
+                                            />
+                                            <span className="slider round" />
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div className="col-md-4 col-sm-12 M mt-3 border-left">
+                        {this.state.showCountries ?
+                            <div className="switch-wrapper">
+                                <Countries
+                                    sectionTitle={this.state.sectionName}
+                                    onChangeCallback={this.addCountry}
+                                    ds_data={this.state.dataSources}
+                                    showAllChange={this.showAllChange}
+                                    clearAllChange={this.clearAllChange}
+                                />
+                            </div>
+                            : null
+                        }
+                    </div>
                 </div>
-                <div className="col-md-4 col-sm-12 M mt-3 border-left">
-                    {this.state.showCountries ?
-                        <div className="switch-wrapper">
-                            <Countries
-                                sectionTitle={this.state.sectionName}
-                                onChangeCallback={this.addCountry}
-                                ds_data={this.state.dataSources}
-                                showAllChange={this.showAllChange}
-                                clearAllChange={this.clearAllChange}
-                            />
-                        </div>
-                        : null
-                    }
-                </div>
-            </div>
             </div >
         );
     }
