@@ -72,7 +72,7 @@ export default class DataSourceIndex extends React.Component {
     serviceStatusHandler(e) {
         e.persist();
         if (e.target.name == 'is_ds_holidays_enabled' && !e.target.defaultChecked) {
-            this.setState({ sectionName: 'holiday', showCountries: true })
+            this.setState({ sectionName: 'holidays', showCountries: true })
         } else if (e.target.name == 'is_ds_holidays_enabled' && e.target.defaultChecked) {
             this.setState({ sectionName: null, showCountries: false })
         }
