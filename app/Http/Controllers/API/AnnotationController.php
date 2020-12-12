@@ -47,7 +47,7 @@ class AnnotationController extends Controller
         $endDate = Carbon::parse($request->query('endDate'));
 
         $annotationsQuery = "SELECT TempTable.* FROM (";
-        $annotationsQuery .= "select DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` = 1 and `is_enabled` = 1";
+        $annotationsQuery .= "select DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` = " . $userId . " and `is_enabled` = 1";
 
         if ($request->query('google_account_id') && $request->query('google_account_id') !== '*') {
             $annotationsQuery .= " and google_account_id = " . $request->query('google_account_id');
@@ -58,11 +58,11 @@ class AnnotationController extends Controller
         }
         if ($request->query('show_holidays') == 'true') {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select holiday_date AS show_at, holidays.id, category, event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = 1 and `uds`.`ds_code` = 'holidays'";
+            $annotationsQuery .= "select holiday_date AS show_at, holidays.id, category, event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = " . $userId . " and `uds`.`ds_code` = 'holidays'";
         }
         if ($request->query('show_retail_marketing_dates') == 'true') {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select show_at, id, category, event_name, NULL as url, description from `retail_marketings`";
+            $annotationsQuery .= "select show_at, id, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $userId . " and `uds`.`ds_code` = 'retail_marketings'";
         }
 
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
