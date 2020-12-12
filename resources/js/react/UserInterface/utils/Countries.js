@@ -12,6 +12,7 @@ export default class countries extends React.Component {
             errors: '',
             searchText: ''
         }
+        this.handleClick = this.handleClick.bind(this)
         this.selectAllShowing = this.selectAllShowing.bind(this);
         this.clearAll = this.clearAll.bind(this);
     }
@@ -28,6 +29,14 @@ export default class countries extends React.Component {
                 console.log(err);
                 this.setState({ isBusy: false, errors: err })
             })
+        }
+    }
+
+    handleClick(e){
+        if(e.target.checked){
+            (this.props.onCheckCallback)({ code: 'holidays', name: 'Holiday', country_name: e.target.name, retail_marketing_id: null})
+        }else{
+            (this.props.onUncheckCallback)(e.target.id, 'holidays')
         }
     }
 
@@ -79,7 +88,7 @@ export default class countries extends React.Component {
                 </div>
                 <div className="d-flex justify-content-between align-items-center border-bottom">
                     <div className="form-check">
-                        <input
+                        {/* <input
                             className="form-check-input"
                             type="checkbox"
                             id="check-all"
@@ -90,10 +99,10 @@ export default class countries extends React.Component {
                             htmlFor="check-all"
                         >
                             Select All
-                        </label>
+                        </label> */}
                     </div>
                     <div>
-                        <p className="font-weight-bold cursor m-0" onClick={this.clearAll}>Clear All</p>
+                        {/* <p className="font-weight-bold cursor m-0" onClick={this.clearAll}>Clear All</p> */}
                     </div>
                 </div>
                 <div className="checkbox-box mt-3">
@@ -108,7 +117,7 @@ export default class countries extends React.Component {
                                         type="checkbox"
                                         name={country}
                                         id={userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null}
-                                        onChange={this.props.onChangeCallback}
+                                        onChange={this.handleClick}
                                     />
                                     <label
                                         className="form-check-label"

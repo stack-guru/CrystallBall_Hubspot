@@ -14,6 +14,7 @@ class UserDataSource extends Model
         'ds_code',
         'ds_name',
         'country_name',
+        'retail_marketing_id',
         'is_enabled'
     ];
 

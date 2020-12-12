@@ -69,6 +69,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('countries', [App\Http\Controllers\HolidayController::class, 'holidayApi']);
         Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);
 
+        Route::get('retail-marketing-dates', [App\Http\Controllers\RetailMarketingController::class, 'uiIndex']);
+
         Route::group(['prefix' => 'settings'], function () {
 
             Route::post('price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');

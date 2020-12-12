@@ -16,7 +16,11 @@ class UserDataSourceController extends Controller
      */
     public function index()
     {
-        return ['data_sources' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name')->ofCurrentUser()->orderBy('ds_code')->orderBy('country_name')->get()];
+        return ['user_data_sources' => [
+            'holidays' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name')->ofCurrentUser()->where('ds_code', 'holidays')->orderBy('country_name')->get(),
+            'retail_marketings' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name', 'retail_marketing_id')->ofCurrentUser()->where('ds_code', 'retail_marketings')->get(),
+        ],
+        ];
     }
 
     /**
@@ -35,7 +39,6 @@ class UserDataSourceController extends Controller
         return ['user_data_source' => $userDataSource];
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
@@ -50,6 +53,6 @@ class UserDataSourceController extends Controller
 
         $userDataSource->delete();
 
-        return ['success' => true,'data_source'=>$userDataSource];
+        return ['success' => true, 'data_source' => $userDataSource];
     }
 }

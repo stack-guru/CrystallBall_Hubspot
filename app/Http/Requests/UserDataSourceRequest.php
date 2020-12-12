@@ -27,8 +27,9 @@ class UserDataSourceRequest extends FormRequest
         return [
             'ds_code' => 'required|string',
             'ds_name' => 'required|string',
-            'country_name' => 'required|string',
-            'is_enabled' => 'nullable'
+            'country_name' => 'nullable|string',
+            'retail_marketing_id' => 'nullable|numeric',
+            'is_enabled' => 'nullable',
         ];
     }
 }
