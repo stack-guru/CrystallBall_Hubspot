@@ -62,7 +62,7 @@ class AnnotationController extends Controller
         }
         if ($request->query('show_retail_marketing_dates') == 'true') {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select show_at, id, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $userId . " and `uds`.`ds_code` = 'retail_marketings'";
+            $annotationsQuery .= "select show_at, retail_marketings.id, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $userId . " and `uds`.`ds_code` = 'retail_marketings'";
         }
 
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
