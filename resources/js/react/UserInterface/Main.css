@@ -270,6 +270,7 @@ setting-menu-item.dropdown {
     font-size: 2rem;
     margin: 0;
     color:#456287;
+    letter-spacing: 3px;
 }
 
 .pricing .card-price .period {

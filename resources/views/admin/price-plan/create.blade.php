@@ -18,6 +18,10 @@
                             <label>Price</label>
                             <input type="number" name="price" id="price" class="form-control" />
                         </div>
+                    <div class="form-group">
+                        <label>Short Description</label>
+                        <input type="text" name="short_description" id="short_description" class="form-control"  />
+                    </div>
                         <div class="form-group">
                             <label>Number of annotations</label>
                             <input type="number" name="annotations_count" id="annotationsCount" class="form-control" value="0" />

@@ -89,7 +89,7 @@ export default class indexPricingPlans extends React.Component {
                                     <div className="card mb-5 mb-lg-0">
                                         <div className="card-body">
                                             <h5 className="card-title  text-uppercase text-center">{pricePlan.name}</h5>
-                                            <p className="mb-0 card-text">For small Business</p>
+                                            <p className="mb-0 card-text">{pricePlan.short_description}</p>
                                             <h6 className="card-price text-center">${pricePlan.price}<span className="period">/month</span></h6>
                                             <hr />
                                             <ul className="fa-ul">

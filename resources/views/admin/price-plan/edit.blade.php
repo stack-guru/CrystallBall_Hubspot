@@ -18,6 +18,10 @@
                             <label>Price</label>
                             <input type="number" name="price" id="price" class="form-control" value="{{ old('price',$pricePlan->price) }}" />
                         </div>
+                    <div class="form-group">
+                        <label>Short Description</label>
+                        <input type="text" name="short_description" id="short_description" class="form-control" value="{{old('short_description',$pricePlan->short_description ) }}" />
+                    </div>
                         <div class="form-group">
                             <label>Number of annotations</label>
                             <input type="number" name="annotations_count" id="annotationsCount" class="form-control" value="{{ old('annotation_count',$pricePlan->annotations_count) }}" />
