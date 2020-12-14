@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\GoogleAlgorithmUpdate;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GoogleAlgorithmUpdateRequest;
+use App\Models\GoogleAlgorithmUpdate;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class GoogleAlgorithmUpdateController extends Controller
 {
@@ -95,7 +96,7 @@ class GoogleAlgorithmUpdateController extends Controller
         }
         foreach ($headers as $header) {
             if (!in_array($header, [
-                'category', 'event_name', 'description', 'update_date',
+                'category', 'event_name', 'description', 'update_date', 'url',
             ])) {
                 return redirect()->back()->with('error', 'Invalid CSV file headers.');
             }
@@ -113,9 +114,9 @@ class GoogleAlgorithmUpdateController extends Controller
             $values = str_getcsv($line);
 
             if ($headers !== $values && count($values) == count($headers)) {
-                try{
+                try {
                     $date = Carbon::createFromFormat('Y-m-d', $values[$dateColIndex]);
-                }catch (\Exception $ex){
+                } catch (\Exception$ex) {
                     continue;
                     // return ['message'=>"Please upload file with '2020-12-31' date format given is $values[$i] on line $ln column $i."];
                 }
@@ -134,13 +135,13 @@ class GoogleAlgorithmUpdateController extends Controller
             }
 
             if (count($rows) > 99) {
-                Holiday::insert($rows);
+                GoogleAlgorithmUpdate::insert($rows);
                 $rows = array();
             }
         }
 
         if (count($rows)) {
-            Holiday::insert($rows);
+            GoogleAlgorithmUpdate::insert($rows);
         }
 
         return redirect()->back()->with('success', true);

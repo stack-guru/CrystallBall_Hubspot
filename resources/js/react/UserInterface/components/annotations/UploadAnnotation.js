@@ -42,7 +42,7 @@ export default class UploadAnnotation extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Upload Csv';
+        document.title = 'Upload CSV';
     }
     changeHandler(e) {
         this.setState({ [e.target.name]: e.target.value })
