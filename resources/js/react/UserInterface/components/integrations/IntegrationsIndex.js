@@ -1,4 +1,5 @@
 import React from 'react';
+import VideoModalBox from '../../utils/VideoModalBox';
 
 require("../../Main.css");
 
@@ -41,33 +42,7 @@ export default class integrationsIndex extends React.Component {
                                         <i className="fa fa-play pr-2" />
                                         See how this works
                                     </div>
-                                    <div
-                                        className="modal fade"
-                                        id="mail-chimp-modal"
-                                        tabIndex="-1"
-                                        role="dialog"
-                                        aria-labelledby="exampleModalLongTitle"
-                                        aria-hidden="true"
-                                    >
-                                        <div
-                                            className="modal-dialog modal-dialog-centered modal-lg"
-                                            role="document"
-                                        >
-                                            <div className="modal-content"
-                                            >
-                                                <div className="modal-body">
-                                                    <iframe
-                                                        className="w-100"
-                                                        height="315"
-                                                        src="https://www.youtube.com/embed/IRUUQ6jVvks"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowFullScreen
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <VideoModalBox id="mail-chimp-modal" src="https://www.youtube.com/embed/IRUUQ6jVvks" />
                                 </div>
                             </div>
                             <div className="int-action">
@@ -99,33 +74,7 @@ export default class integrationsIndex extends React.Component {
                                         <i className="fa fa-play pr-2" />
                                         See how this works
                                     </div>
-                                    <div
-                                        className="modal fade"
-                                        id="google-modal"
-                                        tabIndex="-1"
-                                        role="dialog"
-                                        aria-labelledby="exampleModalLongTitle"
-                                        aria-hidden="true"
-                                    >
-                                        <div
-                                            className="modal-dialog modal-dialog-centered modal-lg"
-                                            role="document"
-                                        >
-                                            <div className="modal-content"
-                                            >
-                                                <div className="modal-body">
-                                                    <iframe
-                                                        className="w-100"
-                                                        height="315"
-                                                        src="https://www.youtube.com/embed/bRjoZtmkUxU"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowFullScreen
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <VideoModalBox id="google-modal" src="https://www.youtube.com/embed/bRjoZtmkUxU" />
                                 </div>
                             </div>
                             <div className="int-action">
@@ -160,33 +109,7 @@ export default class integrationsIndex extends React.Component {
                                         <i className="fa fa-play pr-2" />
                                         See how this works
                                     </div>
-                                    <div
-                                        className="modal fade"
-                                        id="asana-modal"
-                                        tabIndex="-1"
-                                        role="dialog"
-                                        aria-labelledby="exampleModalLongTitle"
-                                        aria-hidden="true"
-                                    >
-                                        <div
-                                            className="modal-dialog modal-dialog-centered modal-lg"
-                                            role="document"
-                                        >
-                                            <div className="modal-content"
-                                            >
-                                                <div className="modal-body">
-                                                    <iframe
-                                                        className="w-100"
-                                                        height="315"
-                                                        src="https://www.youtube.com/embed/oR6u4qoPZgk"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowFullScreen
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <VideoModalBox id="asana-modal" src="https://www.youtube.com/embed/oR6u4qoPZgk" />
                                 </div>
                             </div>
                             <div className="int-action">
@@ -221,33 +144,7 @@ export default class integrationsIndex extends React.Component {
                                         <i className="fa fa-play pr-2" />
                                         See how this works
                                     </div>
-                                    <div
-                                        className="modal fade"
-                                        id="slack-modal"
-                                        tabIndex="-1"
-                                        role="dialog"
-                                        aria-labelledby="exampleModalLongTitle"
-                                        aria-hidden="true"
-                                    >
-                                        <div
-                                            className="modal-dialog modal-dialog-centered modal-lg"
-                                            role="document"
-                                        >
-                                            <div className="modal-content"
-                                            >
-                                                <div className="modal-body">
-                                                    <iframe
-                                                        className="w-100"
-                                                        height="315"
-                                                        src="https://www.youtube.com/embed/RY3Q00lyeg4"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowFullScreen
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <VideoModalBox id="slack-modal" src="https://www.youtube.com/embed/RY3Q00lyeg4" />
                                 </div>
                             </div>
                             <div className="int-action">
