@@ -71,7 +71,7 @@ export default class AddGoogleAccount extends React.Component {
                 <div className="container p-5">
                     <div className="row ml-0 mr-0">
                         <div className="col-12">
-                            <h1>Connect Multiple GA Accounts</h1>
+                            <h1 className="gaa-text-primary">Connect Multiple GA Accounts</h1>
                         </div>
                     </div>
                     <div className="row ml-0 mr-0 my-5">
