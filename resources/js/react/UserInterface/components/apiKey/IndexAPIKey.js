@@ -17,7 +17,9 @@ class IndexAPIKey extends React.Component {
         this.generateAPIKey = this.generateAPIKey.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
+        this.copyAccessToken = this.copyAccessToken.bind(this)
     }
+
     componentDidMount() {
         document.title = 'API Keys';
 
@@ -32,6 +34,13 @@ class IndexAPIKey extends React.Component {
                 console.log(err)
                 this.setState({ isBusy: false, errors: err });
             });
+    }
+
+    copyAccessToken(){
+        let copyText = document.getElementById("input-access-token");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
     }
 
     generateAPIKey() {
@@ -105,13 +114,14 @@ class IndexAPIKey extends React.Component {
                             </div>
                             <div className="col-md-4">
                                 <label>Access Token:</label>
-                                <textarea className="form-control" value={this.state.accessToken} readOnly />
+                                <textarea className="form-control" value={this.state.accessToken} readOnly id="input-access-token" />
                                 <label className="text-danger">Token will only appear here, once.</label>
                             </div>
-                            <div className="col-1">
+                            <div className="col-md-4">
                                 <br />
                                 <br />
                                 <button className="btn btn-success" onClick={() => { this.generateAPIKey() }}>Generate</button>
+                                <button className="ml-3 btn btn-info" onClick={() => { this.copyAccessToken() }}>Copy</button>
                             </div>
                         </div>
 
