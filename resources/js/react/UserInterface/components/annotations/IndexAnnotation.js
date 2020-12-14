@@ -178,26 +178,31 @@ class IndexAnnotations extends React.Component {
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        {anno.google_account_id ? anno.google_account.email : 'All accounts'}
+                                                        {anno.google_account_id ? anno.google_account_email : 'All accounts'}
                                                     </td>
                                                     <td>
-                                                        <button className={"btn btn-sm" + (anno.is_enabled ? " btn-success" : " btn-danger") + (this.state.isBusy ? " disabled" : "")} onClick={() => this.toggleStatus(anno.id)}>
-                                                            {anno.is_enabled ? "On" : "Off"}
-                                                        </button>
+                                                        {anno.id ?
+                                                            <button className={"btn btn-sm" + (anno.is_enabled ? " btn-success" : " btn-danger") + (this.state.isBusy ? " disabled" : "")} onClick={() => this.toggleStatus(anno.id)}>
+                                                                {anno.is_enabled ? "On" : "Off"}
+                                                            </button>
+                                                            : null}
                                                     </td>
                                                     <td>{anno.show_at}</td>
                                                     <td>
-                                                        <button type="button" onClick={() => {
-                                                            this.deleteAnnotation(anno.id)
-                                                        }} className="btn btn-sm gaa-btn-danger text-white mr-2">
-                                                            <i className=" mr-2 fa fa-trash"></i>
+                                                        {anno.id ?
+                                                            <React.Fragment>
+                                                                <button type="button" onClick={() => {
+                                                                    this.deleteAnnotation(anno.id)
+                                                                }} className="btn btn-sm gaa-btn-danger text-white mr-2">
+                                                                    <i className=" mr-2 fa fa-trash"></i>
                                                                 Delete
                                                             </button>
-
-                                                        <Link to={`/annotation/${anno.id}/edit`} className="btn btn-sm gaa-bg-primary text-white" >
-                                                            <i className=" mr-2 fa fa-edit"></i>
+                                                                <Link to={`/annotation/${anno.id}/edit`} className="btn btn-sm gaa-bg-primary text-white" >
+                                                                    <i className=" mr-2 fa fa-edit"></i>
                                                                 Edit
                                                         </Link>
+                                                            </React.Fragment>
+                                                            : null}
                                                     </td>
                                                 </tr>
                                             ))

@@ -8,6 +8,7 @@ use App\Models\Annotation;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use DB;
 
 class AnnotationController extends Controller
 {
@@ -97,19 +98,41 @@ class AnnotationController extends Controller
 
     public function uiIndex(Request $request)
     {
-        $annotationQuery = Annotation::with('googleAccount')->where('user_id', Auth::id());
+        $user = Auth::user();
+
+        $annotationsQuery = "SELECT `TempTable`.*, `google_accounts`.`id` AS google_account_id, `google_accounts`.`email` AS google_account_email FROM (";
+        $annotationsQuery .= "select google_account_id, `show_at`, created_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` = " . $user->id . " and `is_enabled` = 1";
+
+        if ($request->query('google_account_id') && $request->query('google_account_id') !== '*') {
+            $annotationsQuery .= " and google_account_id = " . $request->query('google_account_id');
+        }
+        if ($user->is_ds_holidays_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select null, holiday_date AS show_at, holiday_date AS created_at, null, category, event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays'";
+        }
+        if ($user->is_ds_google_algorithm_updates_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select null, update_date AS show_at, update_date AS created_at, null, category, event_name, NULL as url, description from `google_algorithm_updates`";
+        }
+        if ($user->is_ds_retail_marketing_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select null, show_at, show_at as created_at, null, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings'";
+        }
+        $annotationsQuery .= ") AS TempTable";
+
+        $annotationsQuery .= " LEFT JOIN google_accounts ON TempTable.google_account_id = google_accounts.id";
 
         if ($request->query('sortBy') == "added") {
-            $annotationQuery->orderBy('created_at', 'desc');
+            $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
         } elseif ($request->query('sortBy') == "date") {
-            $annotationQuery->orderBy('show_at', 'desc');
+            $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
         } elseif ($request->query('google_account_id')) {
-            $annotationQuery->where('google_account_id', $request->query('google_account_id'))->orderBy('created_at', 'desc');
+            $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
         } else {
-            $annotationQuery->orderBy('updated_at', 'desc');
+            $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
         }
+        $annotations = DB::select($annotationsQuery);
 
-        $annotations = $annotationQuery->get();
         return ['annotations' => $annotations];
     }
     public function uiShow($id)
