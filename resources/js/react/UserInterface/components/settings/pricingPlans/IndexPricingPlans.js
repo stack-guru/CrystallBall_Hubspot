@@ -88,56 +88,57 @@ export default class indexPricingPlans extends React.Component {
 
                                     <div className="card mb-5 mb-lg-0">
                                         <div className="card-body">
-                                            <h5 className="card-title text-white  text-uppercase text-center">{pricePlan.name}</h5>
+                                            <h5 className="card-title  text-uppercase text-center">{pricePlan.name}</h5>
+                                            <p className="mb-0 card-text">For small Business</p>
                                             <h6 className="card-price text-center">${pricePlan.price}<span className="period">/month</span></h6>
                                             <hr />
                                             <ul className="fa-ul">
 
-                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>Chrome extension</li>
+                                                <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Chrome extension</li>
 
-                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>{pricePlan.ga_account_count ? pricePlan.ga_account_count : 'Unlimted'} GA account</li>
+                                                <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>{pricePlan.ga_account_count ? pricePlan.ga_account_count : 'Unlimted'} GA account</li>
 
-                                                <li><span className="fa-li"><i className="fa fa-check"></i></span>{pricePlan.user_per_ga_account_count ? pricePlan.user_per_ga_account_count : 'Unlimited'} user per GA account</li>
+                                                <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>{pricePlan.user_per_ga_account_count ? pricePlan.user_per_ga_account_count : 'Unlimited'} user per GA account</li>
 
                                                 {
                                                     pricePlan.has_manual_add ?
-                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>Manual Annotations</li>
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Manual Annotations</li>
                                                         : ''
                                                 }
 
                                                 {
                                                     pricePlan.has_csv_upload ?
-                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>CSV Upload</li>
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>CSV Upload</li>
                                                         : ''
                                                 }
 
                                                 {
                                                     pricePlan.has_api ?
-                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>Annotations API</li>
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations API</li>
                                                         : ''
                                                 }
                                                 {
                                                     pricePlan.has_integrations ?
-                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>Integrations</li>
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Integrations</li>
                                                         : ''
                                                 }
                                                 {
                                                     pricePlan.has_data_sources ?
-                                                        <li><span className="fa-li"><i className="fa fa-check"></i></span>Data sources</li>
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Data sources</li>
                                                         : ''
                                                 }
                                             </ul>
 
                                             {this.props.user.price_plan.id == pricePlan.id ?
-                                                <span value="subscribed" className="btn btn-block btn-success text-uppercase mt-auto">Subscribed</span>
+                                                <span value="subscribed" className="btn mx-auto btn-success text-uppercase mt-auto">Subscribed</span>
                                                 :
                                                 pricePlan.price == 0 ?
-                                                    <button className="btn btn-block btn-primary text-uppercase mt-auto " onClick={() => { this.freeSubscribe(pricePlan.id) }} >Subscribe</button>
+                                                    <button className="btn mx-auto btn-primary text-uppercase mt-auto " onClick={() => { this.freeSubscribe(pricePlan.id) }} >Subscribe</button>
                                                     :
                                                     pricePlan.price < 0 ?
-                                                        <button className="btn btn-block btn-primary text-uppercase mt-auto " type="button" >Coming Soon</button>
+                                                        <button className="btnmx-auto btn-primary text-uppercase mt-auto " type="button" >Coming Soon</button>
                                                         :
-                                                        <a href={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn btn-block btn-primary text-uppercase mt-auto">Subscribe</a>
+                                                        <a href={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn mx-auto btn-primary text-uppercase mt-auto">Subscribe</a>
                                             }
                                         </div>
                                     </div>
