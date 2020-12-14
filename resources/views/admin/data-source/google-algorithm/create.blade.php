@@ -1,15 +1,15 @@
 @extends('layouts.admin')
-@section('page-title','Create GAU')
+@section('page-title','Add Google Update')
 @section('content')
 
 <div class="contianer">
     <div class="row ml-0 mr-0 justify-content-center">
         <div class="col-md-10 p-5">
-            <h1 class="my-4 ">Create G A U</h1>
+            <h1 class="my-4 ">Add Google Update</h1>
             <form action="{{ route('admin.data-source.google-algorithm-update.upload') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <h4 ><b>Upload Csv</b></h4>
+                    <h4 ><b>Upload CSV</b></h4>
                     <input type="file" name="csv" id="googleAU" class="form-control">
                 </div>
                 <div class="row ml-0 mr-0">

@@ -16,6 +16,7 @@ class IndexAPIKey extends React.Component {
         }
         this.generateAPIKey = this.generateAPIKey.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleDelete = this.handleDelete.bind(this)
     }
     componentDidMount() {
         document.title = 'API Keys';
@@ -62,6 +63,26 @@ class IndexAPIKey extends React.Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    handleDelete(e){
+        let tokenId = e.target.getAttribute('data-token-id');
+        if (!this.state.isBusy && tokenId) {
+            this.setState({ isBusy: true });
+            HttpClient({ url: `/oauth/personal-access-tokens/${tokenId}`, baseURL: "/", method: 'delete' })
+                .then(response => {
+                    toast.error("Token removed.");
+                    let tokens = this.state.apiKeys;
+                    tokens = tokens.filter(t => t.id !== tokenId);
+                    this.setState({ isBusy: false, apiKeys: tokens })
+                }, (err) => {
+                    console.log(err);
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    console.log(err);
+                    this.setState({ isBusy: false, errors: err });
+                });
+        }
+    }
+
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
@@ -99,19 +120,26 @@ class IndexAPIKey extends React.Component {
                                 <table className="table table-hover table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Token</th>
+                                            <th>Token Name</th>
                                             <th>Created At</th>
                                             <th>Expires At</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {this.state.apiKeys.map(apiKey => {
-                                            return <tr key={apiKey.id}><td>{apiKey.id}</td>
+                                            return <tr key={apiKey.id}>
+                                                <td>
+                                                    {apiKey.name}
+                                                </td>
                                                 <td>
                                                     {moment(apiKey.created_at).format("YYYY-MM-DD")}
                                                 </td>
                                                 <td>
                                                     {moment(apiKey.expires_at).format("YYYY-MM-DD")}
+                                                </td>
+                                                <td>
+                                                    <button className="btn gaa-btn-danger btn-sm" type="button" onClick={this.handleDelete} data-token-id={apiKey.id}><i className="fa fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         })}

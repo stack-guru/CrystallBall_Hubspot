@@ -203,7 +203,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="ml-0 mr-0 w-75 h-100 border-bottom d-flex align-items-center">
                                 <div className="w-100 row">
                                     <div className="col-9">
-                                        <h4 className="gaa-text-primary">Google Algorithm Updates</h4>
+                                        <h4 className="gaa-text-primary">Google Updates</h4>
                                     </div>
                                     <div className="col-3 text-center d-flex justify-content-center">
                                         <label className="trigger switch">

@@ -12,7 +12,7 @@
                         <form action="{{ route('admin.data-source.holiday.upload') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <h4 ><b>Upload Csv</b></h4>
+                                <h4 ><b>Upload CSV</b></h4>
                                 <input type="file" name="csv" id="holiday" class="form-control">
                             </div>
                             <div class="row ml-0 mr-0">

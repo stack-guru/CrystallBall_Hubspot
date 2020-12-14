@@ -89,6 +89,7 @@ export default class AddGoogleAccount extends React.Component {
                                         <th>Avatar</th>
                                         <th>Name</th>
                                         <th>Email</th>
+                                        <th>ID for API</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -99,6 +100,7 @@ export default class AddGoogleAccount extends React.Component {
                                                 <td><img src={googleAccount.avatar} className="social-profile-picture" /></td>
                                                 <td>{googleAccount.name}</td>
                                                 <td>{googleAccount.email}</td>
+                                                <td>{googleAccount.id}</td>
                                                 <td>
                                                     <button onClick={() => this.handleDelete(googleAccount.id)} className="btn gaa-btn-danger"><i className="fa fa-unlink mr-2"></i>Disconnect</button>
                                                 </td>

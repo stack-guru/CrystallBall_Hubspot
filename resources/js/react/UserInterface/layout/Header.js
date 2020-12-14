@@ -27,13 +27,13 @@ class header extends React.Component {
                             <a id="sidebar-toggle" className="sidebar-toggle " href="#" onClick={this.toggleSidebar}><i
                                 className="ti-menu"></i></a>
                         </li>
-                        <li className="search-box"><a className="search-toggle no-pdd-right" href={null}><i
+                        {/* <li className="search-box"><a className="search-toggle no-pdd-right" href={null}><i
                             className="search-icon ti-search pdd-right-10"></i> <i
                                 className="search-icon-close ti-close pdd-right-10"></i></a></li>
                         <li className="search-input">
                             <input className="form-control" type="text"
                                 placeholder="Search..." />
-                        </li>
+                        </li> */}
                     </ul>
                     <ul className="nav-right  ">
                         {/*<li className="notifications dropdown">*/}
