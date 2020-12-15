@@ -66,7 +66,7 @@ export default class UploadAnnotation extends React.Component {
                             </div>
                         </div>
 
-                        <div className="text-primary mb-3 mt-3 ml-3 "><b>Notice: </b>Please upload CSV with date formatted as "yyyy-mm-dd"</div>
+                        {/* <div className="text-primary mb-3 mt-3 ml-3 "><b>Notice: </b>Please upload CSV with date formatted as "yyyy-mm-dd"</div> */}
 
                         <form onSubmit={this.handleSubmit} encType="multipart/form-data">
 
