@@ -187,7 +187,7 @@ class IndexAnnotations extends React.Component {
                                                             </button>
                                                             : null}
                                                     </td>
-                                                    <td>{anno.show_at}</td>
+                                                    <td>{moment(anno.show_at).format('YYYY-MM-DD')}</td>
                                                     <td>
                                                         {anno.id ?
                                                             <React.Fragment>
