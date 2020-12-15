@@ -223,7 +223,7 @@
                     <tr>
                         <td>google_account_id</td>
                         <td>int</td>
-                        <td>[required] Annotation's google account id with which it will be attached. You can get Ids of your google accounts from <a href="{{ route('google-account.index') }}">here</a>.</td>
+                        <td>[optional] Annotation's google account id with which it will be attached. You can get Ids of your google accounts from <a href="{{ route('google-account.index') }}" target="_blank">here</a>.</td>
                     </tr>
 
                     </tbody>
@@ -334,7 +334,7 @@
                     <tr>
                         <td>google_account_id</td>
                         <td>int</td>
-                        <td>[required] Annotation's google account id with which it will be attached </td>
+                        <td>[optional] Annotation's google account id with which it will be attached. You can get Ids of your google accounts from <a href="{{ route('google-account.index') }}" target="_blank">here</a>.</td>
                     </tr>
                     </tbody>
                 </table>
