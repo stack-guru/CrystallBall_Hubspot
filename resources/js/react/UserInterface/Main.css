@@ -21,7 +21,6 @@
 /*#0a2950*/
 /*#456287*/
 
-
 .gaa-blue-gradient {
     background: linear-gradient(to bottom, #0a2950, #456287);
 }
@@ -35,8 +34,8 @@
 .gaa-title {
     color: #456287;
 }
-.sidebar-menu{
-    height: auto!important;
+.sidebar-menu {
+    height: auto !important;
 }
 
 .sidebar-menu li a {
@@ -44,11 +43,10 @@
 }
 .sidebar-footer {
     position: relative;
-   margin-bottom: 0%;
+    margin-bottom: 0%;
     display: block;
-
 }
-.sidebar-footer>a {
+.sidebar-footer > a {
     display: block;
     font-size: 15px;
     font-weight: 500;
@@ -56,7 +54,7 @@
     position: relative;
     white-space: nowrap;
 }
-.sidebar-footer>a .icon-holder {
+.sidebar-footer > a .icon-holder {
     border-radius: 6px;
     display: inline-block;
     font-size: 17px;
@@ -66,39 +64,39 @@
     margin-right: 14px;
     position: relative;
     text-align: center;
-    -webkit-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    transition: all .3s ease;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
     width: 35px;
 }
-@media screen and (max-width: 1439px) and (min-width: 992px)
-{
-    .sidebar-inner{
+@media screen and (max-width: 1439px) and (min-width: 992px) {
+    .sidebar-inner {
         overflow-y: auto;
         overflow-x: hidden;
     }
 
-.sidebar:hover .sidebar-inner .sidebar-footer>a .title {
-    display: inline-block;
-}
+    .sidebar:hover .sidebar-inner .sidebar-footer > a .title {
+        display: inline-block;
+    }
     .sidebar:hover .sidebar-inner .sidebar-footer {
         position: absolute;
         display: block;
-        bottom:0%
+        bottom: 0%;
     }
 }
 
-@media screen and (max-width: 1439px) and (min-width: 992px){
-.sidebar .sidebar-inner .sidebar-footer>a .title {
-    display: none;
-}
-.is-collapsed .sidebar .sidebar-inner .sidebar-footer>a .title {
+@media screen and (max-width: 1439px) and (min-width: 992px) {
+    .sidebar .sidebar-inner .sidebar-footer > a .title {
+        display: none;
+    }
+    .is-collapsed .sidebar .sidebar-inner .sidebar-footer > a .title {
         display: inline-block;
     }
-    .is-collapsed .sidebar .sidebar-inner .sidebar-footer{
+    
+    .sidebar .sidebar-inner .sidebar-footer {
         display: block;
         position: absolute;
-        bottom:0%;
+        bottom: 0%;
     }
 
     .setting-menu-item.dropdown.open .setting-menu-content {
@@ -255,9 +253,9 @@ setting-menu-item.dropdown {
     font-size: 1rem;
     letter-spacing: 0.1rem;
     font-weight: bold;
-    color:#456287;
+    color: #456287;
 }
-.pricing .fa-ul .fa-li .fa-asterisk{
+.pricing .fa-ul .fa-li .fa-asterisk {
     font-weight: lighter;
     color: #8080807a;
     font-size: 11px;
@@ -269,16 +267,16 @@ setting-menu-item.dropdown {
 .pricing .card-price {
     font-size: 2rem;
     margin: 0;
-    color:#456287;
+    color: #456287;
     letter-spacing: 3px;
 }
 
 .pricing .card-price .period {
     font-size: 0.8rem;
 }
-.pricing .card .card-body{
-    align-items: start!important;
-    justify-content: start!important;
+.pricing .card .card-body {
+    align-items: start !important;
+    justify-content: start !important;
 }
 
 .pricing ul li {
@@ -455,7 +453,7 @@ setting-menu-item.dropdown {
     overflow: hidden;
 }
 .int-description p {
-    margin: 0
+    margin: 0;
 }
 .integration-pack .int-action {
     display: flex;
@@ -518,19 +516,19 @@ setting-menu-item.dropdown {
     color: #0f9aee;
 }
 
-.userCountryList{
+.userCountryList {
     margin-bottom: 0px;
     height: 100px;
     overflow-y: auto;
 }
-.list-wrapper{
+.list-wrapper {
     width: 100%;
     position: relative;
     display: block;
 }
 
-.userCountryList dd{
-    margin-bottom: 0px!important;
+.userCountryList dd {
+    margin-bottom: 0px !important;
 }
 
 @media only screen and (max-width: 700px) {
@@ -550,16 +548,16 @@ setting-menu-item.dropdown {
     }
 }
 
-
-.header .header-container .nav-left > li > div, .header .header-container .nav-right > li > div {
+.header .header-container .nav-left > li > div,
+.header .header-container .nav-right > li > div {
     color: #72777a;
     display: block;
     line-height: 65px;
     min-height: 65px;
     padding: 0 15px;
-    -webkit-transition: all .2s ease-in-out;
-    -o-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .h-450px {
