@@ -196,7 +196,7 @@ export default class EditAnnotation extends React.Component {
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder text-dark font-weight-bold lead">Shaw at</label>
+                                        <label htmlFor="show_at" className="form-control-placeholder text-dark font-weight-bold lead">Show at</label>
                                         <input type="date" onChange={this.changeHandler} value={this.state.annotation.show_at} className="form-control" id="show_at" name="show_at" />
 
                                         {

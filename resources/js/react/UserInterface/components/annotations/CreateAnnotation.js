@@ -143,7 +143,7 @@ export default class CreateAnnotation extends React.Component {
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
-                                        <label htmlFor="event_name" className="form-control-placeholder">event_name</label>
+                                        <label htmlFor="event_name" className="form-control-placeholder">Event Name</label>
                                         <input type="text" className="form-control" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" />
 
                                         {
@@ -170,7 +170,7 @@ export default class CreateAnnotation extends React.Component {
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group  has-danger ">
-                                        <label htmlFor="description" className="form-control-placeholder">description</label>
+                                        <label htmlFor="description" className="form-control-placeholder">Description</label>
                                         <textarea type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control" id="description" name="description"></textarea>
                                         {
                                             validation.description ?
@@ -181,7 +181,7 @@ export default class CreateAnnotation extends React.Component {
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
-                                        <label htmlFor="url" className="form-control-placeholder">url</label>
+                                        <label htmlFor="url" className="form-control-placeholder">Link</label>
                                         <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control" id="url" name="url" />
 
                                         {
@@ -195,7 +195,7 @@ export default class CreateAnnotation extends React.Component {
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder">show_at</label>
+                                        <label htmlFor="show_at" className="form-control-placeholder">Show at</label>
                                         <input type="date" onChange={this.changeHandler} value={this.state.annotation.show_at} className="form-control" id="show_at" name="show_at" />
 
                                         {
