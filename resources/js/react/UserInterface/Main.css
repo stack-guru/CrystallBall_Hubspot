@@ -570,3 +570,18 @@ setting-menu-item.dropdown {
 .h-450px {
     height: 450px;
 }
+
+/* Hightent team responsive code*/
+@media only screen and (max-width: 500px) and (min-width: 0px) {
+    .table >td{
+        font-size: 12px;
+    }
+
+    .anno-action-btn{
+        display:inline-block;
+    }
+  .anno-action-btn .action-text{
+      display:none;
+  }
+
+}

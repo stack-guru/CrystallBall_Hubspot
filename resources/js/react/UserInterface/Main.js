@@ -26,6 +26,7 @@ import IntegrationsIndex from "./components/integrations/IntegrationsIndex";
 
 import './Main.css';
 
+
 class Main extends React.Component {
 
     constructor(props) {

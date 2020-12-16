@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
+import './Scripts';
 import Main from './Main';
 import { ToastContainer } from 'react-toastify';
 

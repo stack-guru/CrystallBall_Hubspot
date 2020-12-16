@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 require('../Main.css');
+require('../Scripts.js');
 
 import * as $ from 'jquery';
 class sidebar extends React.Component {
@@ -14,7 +15,6 @@ class sidebar extends React.Component {
 
     componentDidMount() {
         $('.sidebar').hover(
-
             function () {
                 // if($('.setting-menu-item.dropdown').hasClass('open'))
                 // $('.setting-menu-item.dropdown').addClass('open')
@@ -30,6 +30,10 @@ class sidebar extends React.Component {
         $('.setting-menu-item').click(function(){
             $('.setting-menu-item.dropdown').toggleClass('open');
             $('.arrow .t').toggleClass('ti-angle-down');
+        });
+
+        $(".td-n").click(function (e) {
+            $("body").toggleClass("is-collapsed");
         });
     }
 
@@ -51,8 +55,10 @@ class sidebar extends React.Component {
                             </div>
                         </a></div>
                         <div className="peer">
-                            <div className="mobile-toggle sidebar-toggle"><a href={null} className="td-n"><i
-                                className="ti-arrow-circle-left"></i></a></div>
+                            <div className="mobile-toggle sidebar-toggle">
+                                <a href={null} className="td-n" type="button"><i
+                                className="ti-arrow-circle-left"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
