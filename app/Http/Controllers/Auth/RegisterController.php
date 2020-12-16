@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use App\Models\PricePlan;
 use App\Models\User;
-use Carbon\Carbon;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Models\PricePlan;
 
 class RegisterController extends Controller
 {
@@ -22,7 +21,7 @@ class RegisterController extends Controller
     | validation and creation. By default this controller uses a trait to
     | provide this functionality without requiring any additional code.
     |
-    */
+     */
 
     use RegistersUsers;
 
@@ -55,7 +54,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'read_confirmation' => ['required']
+            'read_confirmation' => ['required'],
         ]);
     }
 
@@ -76,19 +75,21 @@ class RegisterController extends Controller
             'is_billing_enabled' => false,
         ]);
 
-         $user->annotations()->create([
-             'category'=>'Sales category',
-             'event_name'=>'Selling event',
-             'url'=>'https://gaannotations.com',
-             'description'=>'This is demo annotation',
-             'show_at'=>new \DateTime('-02 days'),
-         ]);
+        // event_name:
+        // Sample Annotation
+        // category:
+        // GAannotations
+        // description:
+        // This is an example to show you how looks the annotations
+        // Date:
+        // [Two_days_before_user_registration_date]
+
         $user->annotations()->create([
-            'category'=>'Sales category',
-            'event_name'=>'Selling event',
-            'url'=>'https://gaannotations.com',
-            'description'=>'This is demo annotation',
-            'show_at'=>new \DateTime('-02 days'),
+            'category' => 'GAannotations',
+            'event_name' => 'Sample Annotation',
+            'url' => 'https://gaannotations.com',
+            'description' => 'This is an example to show you how looks the annotations',
+            'show_at' => new \DateTime('-02 days'),
         ]);
 
         return $user;

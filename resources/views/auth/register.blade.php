@@ -50,11 +50,12 @@
       required="" name="password_confirmation" value="">
     <label for="inputPasswordConfirmation">Password Confirmation</label>
   </div>
-  <div className="form-label-group">
-    <input type="checkbox" className="form-check-input @error('read_confirmation') is-invalid @enderror"
-      name="read_confirmation" id="read_confirmation" />
-    <label className="form-check-label" htmlFor="read_confirmation">
-      By clicking register you agree to our <a href="https://gaannotations.com/privacy-policy">Privacy Policy</a>
+
+  <div class="form-label-group">
+    <input type="checkbox" class="form-control @error('read_confirmation') is-invalid @enderror"
+      name="read_confirmation" id="read_confirmation" style="width: auto;" />
+    <label class="form-check-label" htmlFor="read_confirmation">
+      Do you agree to our <a href="https://gaannotations.com/privacy-policy">Privacy Policy</a>?
     </label>
     @error('read_confirmation')
     <span class="invalid-feedback" role="alert">
