@@ -170,7 +170,7 @@ class IndexAnnotations extends React.Component {
                                         <option value="ga-account">By Ga-annotation-account</option>
                                     </select>
                                     {
-<<<<<<< Updated upstream
+
                                         this.state.sortBy == "ga-account" ?
                                             <GoogleAccountSelect name={'googleAccount'} disabled={this.state.sortBy !== "ga-account"} id={'googleAccount'} value={this.state.googleAccount} onChangeCallback={(e) => { this.sortByAccount(e.target.value) }} />
                                             : this.state.sortBy == "by-category" ?
@@ -184,24 +184,7 @@ class IndexAnnotations extends React.Component {
                                                 </select>
 
                                                 : ''
-=======
-                                        this.state.sortBy=="ga-account"?
-                                        <GoogleAccountSelect name={'googleAccount'} disabled={this.state.sortBy !== "ga-account"} id={'googleAccount'} value={this.state.googleAccount} onChangeCallback={(e) => { this.sortByAccount(e.target.value) }} />
-                                            :this.state.sortBy=="by-category"?
-                                            <select name="category" id="category" value={this.state.category} className="form-control" onChange={(e) => { this.sortByCategory(e.target.value) }}>
-                                                <option value="select-category">Select Category</option>
-                                                {
-                                                    categories.map((cats,index)=>(
-                                                        <React.Fragment key={index}>
-                                                        <option value={cats.category}>{cats.category}</option>
 
-                                                        </React.Fragment>
-                                                ))
-                                                }
-                                            </select>
-
-                                            :''
->>>>>>> Stashed changes
                                     }
 
                                 </div>
@@ -232,19 +215,12 @@ class IndexAnnotations extends React.Component {
 
 
                                         {
-<<<<<<< Updated upstream
+
                                             annotations.map(anno => (
                                                 <tr key={anno.id} className={
                                                     anno.category == "Holidays" || anno.category == "holidays" ? "text-primary" :
                                                         anno.category == "google updates" || anno.category == "Google Updates" ? "text-success" :
                                                             anno.category == "sales event" || anno.category == "Sales Event" ? "text-alert" : "gaa-text-primary"
-=======
-                                            annotations.map((anno,index) => (
-                                                <tr key={index} className={
-                                                    anno.category=="Holidays"||anno.category=="holidays"?"text-primary":
-                                                        anno.category=="google updates"|| anno.category=="Google Updates" ?"text-success":
-                                                            anno.category=="sales event"||anno.category=="Sales Event"?"text-warning":"gaa-text-primary"
->>>>>>> Stashed changes
 
                                                 }>
                                                     <td>{anno.category}</td>
@@ -268,18 +244,11 @@ class IndexAnnotations extends React.Component {
                                                     </td>
                                                     <td>{moment(anno.show_at).format('YYYY-MM-DD')}</td>
                                                     <td className="d-flex">
-                                                        {anno.id ?
+                                                        {anno.id?
                                                             <React.Fragment>
                                                                 <button type="button" onClick={() => {
                                                                     this.deleteAnnotation(anno.id)
-<<<<<<< Updated upstream
-                                                                }} className="btn btn-sm gaa-btn-danger text-white mr-2">
-                                                                    <i className=" mr-2 fa fa-trash"></i>
-                                                                </button>
-                                                                <Link to={`/annotation/${anno.id}/edit`} className="btn btn-sm gaa-bg-primary text-white" >
-                                                                    <i className=" mr-2 fa fa-edit"></i>
-                                                                </Link>
-=======
+
                                                                 }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white mr-1 mr-md-2">
                                                                     <i className="mr-0 mr-md-1 fa fa-trash"></i>
                                                                 <span className="action-text">Delete</span>
@@ -288,7 +257,7 @@ class IndexAnnotations extends React.Component {
                                                                     <i className="mr-0 mr-md-1 fa fa-edit"></i>
                                                                     <span className="action-text"> Edit</span>
                                                         </Link>
->>>>>>> Stashed changes
+
                                                             </React.Fragment>
                                                             : null}
                                                     </td>

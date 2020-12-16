@@ -77,11 +77,11 @@ export default class UploadAnnotation extends React.Component {
                                         <input type="file" className="form-control upload-csv-input" id="csv" name="csv" />
                                     </div>
                                     <div className="row ml-0 mr-0 mt-2">
-                                        <div className="form-group  col-4 pl-0">
+                                        <div className="form-group  col-12 col-sm-12 col-md-6 col-lg-6 p-0 ua-r-pr ">
                                             <label htmlFor="account" className="form-control-placeholder">Select Account</label>
                                             <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.google_account_id} onChangeCallback={this.changeHandler}></GoogleAccountSelect>
                                         </div>
-                                        <div className="form-group col-4">
+                                        <div className="form-group col-12 col-sm-12 col-md-6 col-lg-6 p-0 ua-r-pl ">
                                             <label htmlFor="date-format" className="form-control-placeholder" >Select Date format</label>
                                             <select name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler}>
                                                 <option value="">select your date format</option>
@@ -107,10 +107,10 @@ export default class UploadAnnotation extends React.Component {
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0  mt-3">
-                                <div className="col-4 d-flex flex-column justify-content-center">
+                                <div className="col-12 col-sm-12 col-md-4 col-lg-4 d-flex flex-column justify-content-center">
                                     <a href="/csv/upload_sample.csv" target="_blank" download>Download sample CSV file</a>
                                 </div>
-                                <div className="col-8 text-right">
+                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 text-right">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round">
                                         <i className="fa fa-upload mr-3"></i>
                                         Upload

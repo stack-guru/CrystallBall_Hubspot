@@ -583,5 +583,24 @@ setting-menu-item.dropdown {
   .anno-action-btn .action-text{
       display:none;
   }
+  .integration-pack{
+      height: 230px;
+      display:flex!important;
+      flex-direction: column!important;
+      justify-content: center!important;
+      align-items: center!important;
+  }
+
+
+}
+
+@media only screen and (max-width: 1439px) and (min-width: 769px) {
+
+    .ua-r-pr{
+        padding-right: 5%!important;
+    }
+    .ua-r-pl{
+        padding-left: 5%!important;
+    }
 
 }

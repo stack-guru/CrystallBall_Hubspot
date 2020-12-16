@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 require('../Main.css');
-require('../Scripts.js');
+
 
 import * as $ from 'jquery';
 class sidebar extends React.Component {

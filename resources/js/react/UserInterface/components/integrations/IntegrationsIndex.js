@@ -58,11 +58,7 @@ export default class integrationsIndex extends React.Component {
                         <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
-                                    <img
-                                        src="/images/adword.png"
-                                        className="img-fluid int-img"
-                                        alt="mailchamp image here"
-                                    />
+                                    <img src="/images/adward.jpg" className="img-fluid int-img" alt="mail champ image here"/>
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>Add an annotation to GA automatically when a New Google Ads campaign Launch.</p>
