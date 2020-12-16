@@ -16,10 +16,11 @@ class UserDataSourceController extends Controller
      */
     public function index()
     {
-        return ['user_data_sources' => [
-            'holidays' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name')->ofCurrentUser()->where('ds_code', 'holidays')->orderBy('country_name')->get(),
-            'retail_marketings' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name', 'retail_marketing_id')->ofCurrentUser()->where('ds_code', 'retail_marketings')->get(),
-        ],
+        return [
+            'user_data_sources' => [
+                'holidays' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name', 'retail_marketing_id')->ofCurrentUser()->where('ds_code', 'holidays')->orderBy('country_name')->get(),
+                'retail_marketings' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name', 'retail_marketing_id')->ofCurrentUser()->where('ds_code', 'retail_marketings')->get(),
+            ],
         ];
     }
 

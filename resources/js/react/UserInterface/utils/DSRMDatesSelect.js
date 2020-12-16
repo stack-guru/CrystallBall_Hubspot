@@ -14,8 +14,8 @@ export default class DSRMDatesSelect extends React.Component {
         }
 
         this.handleClick = this.handleClick.bind(this)
-        // this.selectAllShowing = this.selectAllShowing.bind(this);
-        // this.clearAll = this.clearAll.bind(this);
+        this.selectAllShowing = this.selectAllShowing.bind(this);
+        this.clearAll = this.clearAll.bind(this);
     }
 
     componentDidMount() {
@@ -33,36 +33,34 @@ export default class DSRMDatesSelect extends React.Component {
         }
     }
 
-    handleClick(e){
+    handleClick(e) {
         console.log(e.target.retail_marketing_id)
-        if(e.target.checked){
-            (this.props.onCheckCallback)({ code: 'retail_marketings', name: 'RetailMarketing', country_name: null, retail_marketing_id: e.target.getAttribute('retail_marketing_id')})
-        }else{
+        if (e.target.checked) {
+            (this.props.onCheckCallback)({ code: 'retail_marketings', name: 'RetailMarketing', country_name: null, retail_marketing_id: e.target.getAttribute('retail_marketing_id') })
+        } else {
             (this.props.onUncheckCallback)(e.target.id, 'retail_marketings')
         }
     }
 
-    // selectAllShowing(e) {
-    //     let userretail_marketing_dates = this.props.ds_data.map(ds => ds.country_name);
-    //     this.state.retail_marketing_dates.map(country => {
-    //         if (country !== null) if (country.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0) {
-    //             if (userretail_marketing_dates.indexOf(country) == -1) {
-    //                 (this.props.onChangeCallback)({ target: { name: country, defaultChecked: 0, id: userretail_marketing_dates.indexOf(country) !== -1 ? this.props.ds_data[userretail_marketing_dates.indexOf(country)].id : null } })
-    //             }
-    //         }
-    //     })
-    // }
+    selectAllShowing(e) {
+        let userRMDateIds = this.props.ds_data.map(ds => ds.retail_marketing_id);
+        this.state.retail_marketing_dates.map(rmDate => {
+            if (rmDate.event_name.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0) {
+                if (userRMDateIds.indexOf(rmDate.id) == -1) {
+                    (this.props.onCheckCallback)({ code: 'retail_marketings', name: 'RetailMarketing', country_name: null, retail_marketing_id: rmDate.id })
+                }
+            }
+        })
+    }
 
-    // clearAll(e) {
-    //     let userretail_marketing_dates = this.props.ds_data.map(ds => ds.country_name);
-    //     this.state.retail_marketing_dates.map(country => {
-    //         if (country !== null) {
-    //             if (userretail_marketing_dates.indexOf(country) !== -1) {
-    //                 (this.props.onChangeCallback)({ target: { name: country, defaultChecked: 1, id: userretail_marketing_dates.indexOf(country) !== -1 ? this.props.ds_data[userretail_marketing_dates.indexOf(country)].id : null } })
-    //             }
-    //         }
-    //     })
-    // }
+    clearAll(e) {
+        let userRMDateIds = this.props.ds_data.map(ds => ds.retail_marketing_id);
+        this.state.retail_marketing_dates.map(rmDate => {
+            if (userRMDateIds.indexOf(rmDate.id) !== -1) {
+                (this.props.onUncheckCallback)(this.props.ds_data[userRMDateIds.indexOf(rmDate.id)].id, 'retail_marketings')
+            }
+        })
+    }
 
     render() {
         let retail_marketing_dates = this.state.retail_marketing_dates;
@@ -74,7 +72,6 @@ export default class DSRMDatesSelect extends React.Component {
                 <h4 className="gaa-text-primary">
                     Select Dates for Retail Marketing
                 </h4>
-                {/*<h3 className="gaa-text-primary">Select retail_marketing_dates</h3>*/}
                 <div className="input-group search-input-box mb-3">
                     <input
                         type="text"
@@ -92,7 +89,7 @@ export default class DSRMDatesSelect extends React.Component {
                 </div>
                 <div className="d-flex justify-content-between align-items-center border-bottom">
                     <div className="form-check">
-                        {/* <input
+                        <input
                             className="form-check-input"
                             type="checkbox"
                             id="check-all"
@@ -103,10 +100,10 @@ export default class DSRMDatesSelect extends React.Component {
                             htmlFor="check-all"
                         >
                             Select All
-                        </label> */}
+                        </label>
                     </div>
                     <div>
-                        {/* <p className="font-weight-bold cursor m-0" onClick={this.clearAll}>Clear All</p> */}
+                        <p className="font-weight-bold cursor m-0" onClick={this.clearAll}>Clear All</p>
                     </div>
                 </div>
                 <div className="checkbox-box mt-3">
@@ -115,7 +112,7 @@ export default class DSRMDatesSelect extends React.Component {
                             if (rmd !== null) if (rmd.event_name.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0) return <div className="form-check rmd" key={rmd.id}>
                                 <input
                                     className="form-check-input"
-                                    defaultChecked={userRMDIds.indexOf(rmd.id) !== -1}
+                                    checked={userRMDIds.indexOf(rmd.id) !== -1}
                                     type="checkbox"
                                     id={userRMDIds.indexOf(rmd.id) !== -1 ? userDSIds[userRMDIds.indexOf(rmd.id)] : null}
                                     onChange={this.handleClick}

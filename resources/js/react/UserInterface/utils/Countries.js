@@ -32,10 +32,16 @@ export default class countries extends React.Component {
         }
     }
 
-    handleClick(e){
-        if(e.target.checked){
-            (this.props.onCheckCallback)({ code: 'holidays', name: 'Holiday', country_name: e.target.name, retail_marketing_id: null})
-        }else{
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) {
+            this.setState({ re_render: new Date() })
+        }
+    }
+
+    handleClick(e) {
+        if (e.target.checked) {
+            (this.props.onCheckCallback)({ code: 'holidays', name: 'Holiday', country_name: e.target.name, retail_marketing_id: null })
+        } else {
             (this.props.onUncheckCallback)(e.target.id, 'holidays')
         }
     }
@@ -45,7 +51,7 @@ export default class countries extends React.Component {
         this.state.countries.map(country => {
             if (country !== null) if (country.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0) {
                 if (userCountries.indexOf(country) == -1) {
-                    (this.props.onChangeCallback)({ target: { name: country, defaultChecked: 0, id: userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null } })
+                    (this.props.onCheckCallback)({ code: 'holidays', name: 'Holiday', country_name: country, retail_marketing_id: null })
                 }
             }
         })
@@ -56,7 +62,7 @@ export default class countries extends React.Component {
         this.state.countries.map(country => {
             if (country !== null) {
                 if (userCountries.indexOf(country) !== -1) {
-                    (this.props.onChangeCallback)({ target: { name: country, defaultChecked: 1, id: userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null } })
+                    (this.props.onUncheckCallback)(this.props.ds_data[userCountries.indexOf(country)].id, 'holidays')
                 }
             }
         })
@@ -70,7 +76,6 @@ export default class countries extends React.Component {
                 <h4 className="gaa-text-primary">
                     Select Countries for {this.props.sectionTitle}
                 </h4>
-                {/*<h3 className="gaa-text-primary">Select Countries</h3>*/}
                 <div className="input-group search-input-box mb-3">
                     <input
                         type="text"
@@ -88,7 +93,7 @@ export default class countries extends React.Component {
                 </div>
                 <div className="d-flex justify-content-between align-items-center border-bottom">
                     <div className="form-check">
-                        {/* <input
+                        <input
                             className="form-check-input"
                             type="checkbox"
                             id="check-all"
@@ -99,21 +104,20 @@ export default class countries extends React.Component {
                             htmlFor="check-all"
                         >
                             Select All
-                        </label> */}
+                        </label>
                     </div>
                     <div>
-                        {/* <p className="font-weight-bold cursor m-0" onClick={this.clearAll}>Clear All</p> */}
+                        <p className="font-weight-bold cursor m-0" onClick={this.clearAll}>Clear All</p>
                     </div>
                 </div>
                 <div className="checkbox-box mt-3">
                     {
                         countries
                             ? countries.map(country => {
-
                                 if (country !== null) if (country.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0) return <div className="form-check country" key={country}>
                                     <input
                                         className="form-check-input"
-                                        defaultChecked={userCountries.indexOf(country) !== -1}
+                                        checked={userCountries.indexOf(country) !== -1}
                                         type="checkbox"
                                         name={country}
                                         id={userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null}
