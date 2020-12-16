@@ -12,7 +12,7 @@
   </div>
 
   <div class="form-label-group">
-    <input type="name" id="inputName" class="form-control @error('name') is-invalid @enderror" placeholder="Full Name"
+    <input type="text" id="inputName" class="form-control @error('name') is-invalid @enderror" placeholder="Full Name"
       required="" autofocus="" name="name" value="{{ old('name') }}">
     <label for="inputName">Full Name</label>
     @error('name')
@@ -34,10 +34,10 @@
   </div>
 
   <div class="form-label-group">
-    <input type="password" id="inputPassword" class="form-control @error('email') is-invalid @enderror"
-      placeholder="Password" required="" name="password" value="{{ old('password') }}">
+    <input type="password" id="inputPassword" class="form-control @error('password') is-invalid @enderror"
+      placeholder="Password" required="" name="password" value="">
     <label for="inputPassword">Password</label>
-    @error('email')
+    @error('password')
     <span class="invalid-feedback" role="alert">
       <strong>{{ $message }}</strong>
     </span>
@@ -46,14 +46,9 @@
 
   <div class="form-label-group">
     <input type="password" id="inputPasswordConfirmation"
-      class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="Password Confirmation"
-      required="" name="password_confirmation" value="{{ old('password_confirmation') }}">
+      class="form-control" placeholder="Password Confirmation"
+      required="" name="password_confirmation" value="">
     <label for="inputPasswordConfirmation">Password Confirmation</label>
-    @error('password_confirmation')
-    <span class="invalid-feedback" role="alert">
-      <strong>{{ $message }}</strong>
-    </span>
-    @enderror
   </div>
   <div className="form-label-group">
     <input type="checkbox" className="form-check-input @error('read_confirmation') is-invalid @enderror"
