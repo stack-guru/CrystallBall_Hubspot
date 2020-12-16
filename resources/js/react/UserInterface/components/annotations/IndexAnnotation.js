@@ -13,9 +13,9 @@ class IndexAnnotations extends React.Component {
             annotations: [],
             sortBy: '',
             accounts: [],
-            annotationCategories:[],
+            annotationCategories: [],
             googleAccount: '',
-            category:'',
+            category: '',
 
             error: '',
             isBusy: false
@@ -24,7 +24,7 @@ class IndexAnnotations extends React.Component {
         this.toggleStatus = this.toggleStatus.bind(this)
         this.sort = this.sort.bind(this)
         this.sortByAccount = this.sortByAccount.bind(this)
-        this.sortByCategory=this.sortByCategory.bind(this)
+        this.sortByCategory = this.sortByCategory.bind(this)
     }
     componentDidMount() {
         document.title = 'Annotation';
@@ -32,25 +32,25 @@ class IndexAnnotations extends React.Component {
         this.setState({ isBusy: true });
         HttpClient.get(`/annotation`)
             .then(response => {
-                this.setState({  annotations: response.data.annotations });
+                this.setState({ annotations: response.data.annotations });
             }, (err) => {
                 console.log(err);
-                this.setState({  errors: (err.response).data });
+                this.setState({ errors: (err.response).data });
             }).catch(err => {
                 console.log(err)
-                this.setState({  errors: err });
+                this.setState({ errors: err });
             });
-/////
+        /////
         HttpClient.get(`/annotation-categories`)
             .then(response => {
-                this.setState({ isBusy: false, annotationCategories: response.data.categories});
+                this.setState({ isBusy: false, annotationCategories: response.data.categories });
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-            console.log(err)
-            this.setState({ isBusy: false, errors: err });
-        });
+                console.log(err)
+                this.setState({ isBusy: false, errors: err });
+            });
 
     }
 
@@ -125,7 +125,7 @@ class IndexAnnotations extends React.Component {
         }
 
     }
-    sortByCategory(catName){
+    sortByCategory(catName) {
         this.setState({ category: catName });
         if (catName !== 'select-category') {
             this.setState({ isBusy: true });
@@ -136,19 +136,19 @@ class IndexAnnotations extends React.Component {
                     console.log(err);
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                console.log(err)
-                this.setState({ isBusy: false, errors: err });
-            });
+                    console.log(err)
+                    this.setState({ isBusy: false, errors: err });
+                });
         }
 
-}
+    }
 
 
 
     render() {
 
         const annotations = this.state.annotations;
-        const categories=this.state.annotationCategories;
+        const categories = this.state.annotationCategories;
         return (
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section   " id="inputs">
@@ -170,19 +170,19 @@ class IndexAnnotations extends React.Component {
                                         <option value="ga-account">By Ga-annotation-account</option>
                                     </select>
                                     {
-                                        this.state.sortBy=="ga-account"?
-                                        <GoogleAccountSelect name={'googleAccount'} disabled={this.state.sortBy !== "ga-account"} id={'googleAccount'} value={this.state.googleAccount} onChangeCallback={(e) => { this.sortByAccount(e.target.value) }} />
-                                            :this.state.sortBy=="by-category"?
-                                            <select name="category" id="category" value={this.state.category} className="form-control" onChange={(e) => { this.sortByCategory(e.target.value) }}>
-                                                <option value="select-category">Select Category</option>
-                                                {
-                                                    categories.map(cats=>(
-                                                    <option value={cats.category} key={cats.category}>{cats.category}</option>
-                                                ))
-                                                }
-                                            </select>
+                                        this.state.sortBy == "ga-account" ?
+                                            <GoogleAccountSelect name={'googleAccount'} disabled={this.state.sortBy !== "ga-account"} id={'googleAccount'} value={this.state.googleAccount} onChangeCallback={(e) => { this.sortByAccount(e.target.value) }} />
+                                            : this.state.sortBy == "by-category" ?
+                                                <select name="category" id="category" value={this.state.category} className="form-control" onChange={(e) => { this.sortByCategory(e.target.value) }}>
+                                                    <option value="select-category">Select Category</option>
+                                                    {
+                                                        categories.map(cats => (
+                                                            <option value={cats.category} key={cats.category}>{cats.category}</option>
+                                                        ))
+                                                    }
+                                                </select>
 
-                                            :''
+                                                : ''
                                     }
 
                                 </div>
@@ -215,9 +215,9 @@ class IndexAnnotations extends React.Component {
                                         {
                                             annotations.map(anno => (
                                                 <tr key={anno.id} className={
-                                                    anno.category=="Holidays"||anno.category=="holidays"?"text-primary":
-                                                        anno.category=="google updates"|| anno.category=="Google Updates" ?"text-success":
-                                                            anno.category=="sales event"||anno.category=="Sales Event"?"text-alert":"gaa-text-primary"
+                                                    anno.category == "Holidays" || anno.category == "holidays" ? "text-primary" :
+                                                        anno.category == "google updates" || anno.category == "Google Updates" ? "text-success" :
+                                                            anno.category == "sales event" || anno.category == "Sales Event" ? "text-alert" : "gaa-text-primary"
 
                                                 }>
                                                     <td>{anno.category}</td>
@@ -247,12 +247,10 @@ class IndexAnnotations extends React.Component {
                                                                     this.deleteAnnotation(anno.id)
                                                                 }} className="btn btn-sm gaa-btn-danger text-white mr-2">
                                                                     <i className=" mr-2 fa fa-trash"></i>
-                                                                Delete
-                                                            </button>
+                                                                </button>
                                                                 <Link to={`/annotation/${anno.id}/edit`} className="btn btn-sm gaa-bg-primary text-white" >
                                                                     <i className=" mr-2 fa fa-edit"></i>
-                                                                Edit
-                                                        </Link>
+                                                                </Link>
                                                             </React.Fragment>
                                                             : null}
                                                     </td>
