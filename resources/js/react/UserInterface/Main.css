@@ -1,6 +1,6 @@
 .main-content {
-    padding-left: 2% !important;
-    padding-right: 2% !important;
+    padding-left: 0% !important;
+    padding-right: 0% !important;
     /*height: 480px;*/
     /*overflow-y: scroll;*/
     /*overflow-x: hidden;*/
@@ -20,6 +20,10 @@
 
 /*#0a2950*/
 /*#456287*/
+.text-yellow{
+    color:yellow!important;
+}
+
 
 .gaa-blue-gradient {
     background: linear-gradient(to bottom, #0a2950, #456287);
@@ -92,7 +96,10 @@
     .is-collapsed .sidebar .sidebar-inner .sidebar-footer > a .title {
         display: inline-block;
     }
-    
+
+    .is-collapsed .desc-td{
+        width:12vw;
+    }
     .sidebar .sidebar-inner .sidebar-footer {
         display: block;
         position: absolute;
@@ -114,7 +121,7 @@
     /*}*/
 }
 .anno-container {
-    padding: 2% !important;
+    padding: 2% 0% 2% 0%  !important;
 }
 .description {
     position: relative;
@@ -124,7 +131,7 @@
 .desc-td {
     overflow-y: auto;
     max-height: 180px;
-    width: 16vw;
+    width: 17.1vw;
     scroll-margin: 0px;
 }
 .desc-td p {

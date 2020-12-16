@@ -13,7 +13,10 @@ class IndexAnnotations extends React.Component {
             annotations: [],
             sortBy: '',
             accounts: [],
+            annotationCategories:[],
             googleAccount: '',
+            category:'',
+
             error: '',
             isBusy: false
         }
@@ -21,6 +24,7 @@ class IndexAnnotations extends React.Component {
         this.toggleStatus = this.toggleStatus.bind(this)
         this.sort = this.sort.bind(this)
         this.sortByAccount = this.sortByAccount.bind(this)
+        this.sortByCategory=this.sortByCategory.bind(this)
     }
     componentDidMount() {
         document.title = 'Annotation';
@@ -28,15 +32,25 @@ class IndexAnnotations extends React.Component {
         this.setState({ isBusy: true });
         HttpClient.get(`/annotation`)
             .then(response => {
-                this.setState({ isBusy: false, annotations: response.data.annotations });
+                this.setState({  annotations: response.data.annotations });
+            }, (err) => {
+                console.log(err);
+                this.setState({  errors: (err.response).data });
+            }).catch(err => {
+                console.log(err)
+                this.setState({  errors: err });
+            });
+/////
+        HttpClient.get(`/annotation-categories`)
+            .then(response => {
+                this.setState({ isBusy: false, annotationCategories: response.data.categories});
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
-                this.setState({ isBusy: false, errors: err });
-            });
-
+            console.log(err)
+            this.setState({ isBusy: false, errors: err });
+        });
 
     }
 
@@ -111,23 +125,40 @@ class IndexAnnotations extends React.Component {
         }
 
     }
+    sortByCategory(catName){
+        this.setState({ category: catName });
+        if (catName !== 'select-category') {
+            this.setState({ isBusy: true });
+            HttpClient.get(`/annotation?by_category=${catName}`)
+                .then(response => {
+                    this.setState({ isBusy: false, annotations: response.data.annotations });
+                }, (err) => {
+                    console.log(err);
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                console.log(err)
+                this.setState({ isBusy: false, errors: err });
+            });
+        }
 
+}
 
 
 
     render() {
-        const annotations = this.state.annotations;
 
+        const annotations = this.state.annotations;
+        const categories=this.state.annotationCategories;
         return (
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section   " id="inputs">
-                    <div className="container p-5">
-                        <div className="row mb-5">
+                    <div className="container-xl p-0">
+                        <div className="row ml-0 mr-0 mb-5">
                             <div className="col-md-12">
                                 <h2 className="heading-section gaa-title">Annotations</h2>
                             </div>
                         </div>
-                        <div className="row mb-4">
+                        <div className="row mb-4 ml-0 mr-0">
                             <div className="col-6 text-left ">
                                 <div className="d-flex flex-row ">
 
@@ -135,10 +166,24 @@ class IndexAnnotations extends React.Component {
                                         <option value="Null">Sort By</option>
                                         <option value="added">Added</option>
                                         <option value="date">By Date</option>
+                                        <option value="by-category">By Category</option>
                                         <option value="ga-account">By Ga-annotation-account</option>
                                     </select>
+                                    {
+                                        this.state.sortBy=="ga-account"?
+                                        <GoogleAccountSelect name={'googleAccount'} disabled={this.state.sortBy !== "ga-account"} id={'googleAccount'} value={this.state.googleAccount} onChangeCallback={(e) => { this.sortByAccount(e.target.value) }} />
+                                            :this.state.sortBy=="by-category"?
+                                            <select name="category" id="category" value={this.state.category} className="form-control" onChange={(e) => { this.sortByCategory(e.target.value) }}>
+                                                <option value="select-category">Select Category</option>
+                                                {
+                                                    categories.map(cats=>(
+                                                    <option value={cats.category} key={cats.category}>{cats.category}</option>
+                                                ))
+                                                }
+                                            </select>
 
-                                    <GoogleAccountSelect name={'googleAccount'} disabled={this.state.sortBy !== "ga-account"} id={'googleAccount'} value={this.state.googleAccount} onChangeCallback={(e) => { this.sortByAccount(e.target.value) }} />
+                                            :''
+                                    }
 
                                 </div>
                             </div>
@@ -148,12 +193,13 @@ class IndexAnnotations extends React.Component {
 
                             </div>
                         </div>
-                        <div className="row">
+                        <div className="row ml-0 mr-0">
                             <div className="col-12">
 
-                                <table className="table table-hover table-bordered table-striped annotation-table">
+                                <table className="table table-hover table-bordered table-striped table-responsive table-responsive-md annotation-table">
                                     <thead>
                                         <tr>
+                                            <th>Category</th>
                                             <th>Event Name</th>
                                             <th>Description</th>
                                             <th>Google Account</th>
@@ -168,7 +214,13 @@ class IndexAnnotations extends React.Component {
 
                                         {
                                             annotations.map(anno => (
-                                                <tr key={anno.id}>
+                                                <tr key={anno.id} className={
+                                                    anno.category=="Holidays"||anno.category=="holidays"?"text-primary":
+                                                        anno.category=="google updates"|| anno.category=="Google Updates" ?"text-success":
+                                                            anno.category=="sales event"||anno.category=="Sales Event"?"text-yellow":"gaa-text-primary"
+
+                                                }>
+                                                    <td>{anno.category}</td>
                                                     <td>{anno.event_name}</td>
                                                     <td>
                                                         <div className="desc-wrap">

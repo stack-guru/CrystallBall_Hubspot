@@ -211,4 +211,11 @@ class AnnotationController extends Controller
 
         return ['success' => true];
     }
+
+    public function getCategories(){
+
+        $categories=Annotation::select('category')->distinct()->ofCurrentUser()->orderBy('category')->get();
+        return ['categories'=>$categories];
+}
+
 }

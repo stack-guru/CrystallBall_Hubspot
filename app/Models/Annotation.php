@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Annotation extends Model
 {
@@ -20,5 +21,9 @@ class Annotation extends Model
     public function googleAccount()
     {
         return $this->belongsTo('App\Models\GoogleAccount');
+    }
+
+    public function scopeOfCurrentUser($query){
+        return $query->where('user_id', Auth::id());
     }
 }
