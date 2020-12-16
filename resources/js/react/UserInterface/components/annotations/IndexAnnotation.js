@@ -217,7 +217,7 @@ class IndexAnnotations extends React.Component {
                                                 <tr key={anno.id} className={
                                                     anno.category=="Holidays"||anno.category=="holidays"?"text-primary":
                                                         anno.category=="google updates"|| anno.category=="Google Updates" ?"text-success":
-                                                            anno.category=="sales event"||anno.category=="Sales Event"?"text-yellow":"gaa-text-primary"
+                                                            anno.category=="sales event"||anno.category=="Sales Event"?"text-alert":"gaa-text-primary"
 
                                                 }>
                                                     <td>{anno.category}</td>
