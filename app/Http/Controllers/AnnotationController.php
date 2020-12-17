@@ -101,22 +101,22 @@ class AnnotationController extends Controller
         $user = Auth::user();
 
         $annotationsQuery = "SELECT `TempTable`.*, `google_accounts`.`id` AS google_account_id, `google_accounts`.`email` AS google_account_email FROM (";
-        $annotationsQuery .= "select google_account_id, `show_at`, created_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` = " . $user->id . " and `is_enabled` = 1";
+        $annotationsQuery .= "select is_enabled, google_account_id, `show_at`, created_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` = " . $user->id;
 
         if ($request->query('google_account_id') && $request->query('google_account_id') !== '*') {
             $annotationsQuery .= " and google_account_id = " . $request->query('google_account_id');
         }
         if ($user->is_ds_holidays_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select null, holiday_date AS show_at, holiday_date AS created_at, null, category, event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays'";
+            $annotationsQuery .= "select 1, null, holiday_date AS show_at, holiday_date AS created_at, null, category, event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays'";
         }
         if ($user->is_ds_google_algorithm_updates_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select null, update_date AS show_at, update_date AS created_at, null, category, event_name, NULL as url, description from `google_algorithm_updates`";
+            $annotationsQuery .= "select 1, null, update_date AS show_at, update_date AS created_at, null, category, event_name, NULL as url, description from `google_algorithm_updates`";
         }
         if ($user->is_ds_retail_marketing_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select null, show_at, show_at as created_at, null, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings'";
+            $annotationsQuery .= "select 1, null, show_at, show_at as created_at, null, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings'";
         }
         $annotationsQuery .= ") AS TempTable";
 

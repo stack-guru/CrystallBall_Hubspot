@@ -95,6 +95,7 @@ class RegisterController extends Controller
             'url' => 'https://gaannotations.com',
             'description' => 'This is an example to show you how looks the annotations',
             'show_at' => new \DateTime('-02 days'),
+            'is_enabled' => true,
         ]);
 
         return $user;
