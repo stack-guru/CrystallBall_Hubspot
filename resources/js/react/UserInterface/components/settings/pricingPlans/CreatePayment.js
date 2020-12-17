@@ -342,11 +342,11 @@ export default class CreatePayment extends Component {
                                                     <div data-bluesnap="ccn" className="pb-c-inputs form-control"></div>
                                                 </div>
                                                 <div className="col-3">
-                                                    <label>Expiry Date</label>
+                                                    <label>Expiry</label>
                                                     <div data-bluesnap="exp" className="pb-c-inputs form-control"></div>
                                                 </div>
                                                 <div className="col-3">
-                                                    <label>Security Code</label>
+                                                    <label>CVV</label>
                                                     <div data-bluesnap="cvv" className="pb-c-inputs form-control"></div>
                                                 </div>
 
