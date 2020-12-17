@@ -336,15 +336,18 @@ export default class CreatePayment extends Component {
 
                                             </div>
 
-                                            <div className="row">
+                                            <div className="row h-30px" >
                                                 <div className="col-6">
-                                                    <div data-bluesnap="ccn" className="pb-c-inputs"></div>
+                                                    <label>Credit Card Number</label>
+                                                    <div data-bluesnap="ccn" className="pb-c-inputs form-control"></div>
                                                 </div>
                                                 <div className="col-3">
-                                                    <div data-bluesnap="exp" className="pb-c-inputs"></div>
+                                                    <label>Expiry Date</label>
+                                                    <div data-bluesnap="exp" className="pb-c-inputs form-control"></div>
                                                 </div>
                                                 <div className="col-3">
-                                                    <div data-bluesnap="cvv" className="pb-c-inputs"></div>
+                                                    <label>Security Code</label>
+                                                    <div data-bluesnap="cvv" className="pb-c-inputs form-control"></div>
                                                 </div>
 
                                             </div>
@@ -444,7 +447,7 @@ export default class CreatePayment extends Component {
                                     </div>
                                 </div>
                             </form>
-                            <div className="row ml-0 mr-0 d-flex flex-row justify-content-center align-items-center bg-white">
+                            <div className="row mt-5 ml-0 mr-0 d-flex flex-row justify-content-center align-items-center bg-white">
                                 <div className="img-col-wrap">
                                     <div className="col-12 text-right  secure-img">
                                         <img src="/images/masterCard.jpg" className="img-fluid " alt="mastercard image" />

@@ -573,11 +573,11 @@ setting-menu-item.dropdown {
 }
 
 .pb-c-inputs{
-    height: 55px!important;
+    height: 35px !important;
 
 }
 .pb-c-inputs#ccn{
-    height: 55px!important;
+    height: 35px !important;
 
 }
 
@@ -627,11 +627,11 @@ footer{
     font-size: 10px!important;
 }
 .pb-c-inputs{
-    height: 70px!important;
+    height: 35px !important;
 
 }
 .pb-c-inputs#ccn{
-        height: 70px!important;
+        height: 35px !important;
 
     }
 .pp-cc-pl-r{
@@ -652,4 +652,8 @@ footer{
         padding-left: 5%!important;
     }
 
+}
+
+.h-30px {
+    height: 30px;
 }
