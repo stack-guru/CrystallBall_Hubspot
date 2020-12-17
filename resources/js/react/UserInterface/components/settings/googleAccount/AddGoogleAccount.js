@@ -75,7 +75,7 @@ export default class AddGoogleAccount extends React.Component {
                         </div>
                     </div>
                     <div className="row ml-0 mr-0 my-5">
-                        <div className="col-12 text-right">
+                        <div className="col-12 text-center text-md-right text-lg-right">
                             <a href="/settings/google-account/create" onClick={this.restrictionHandler} className="btn gaa-bg-primary text-white" >
                                 Connect New Account
                             </a>
@@ -83,7 +83,7 @@ export default class AddGoogleAccount extends React.Component {
                     </div>
                     <div className="row ml-0 mr-0">
                         <div className="col-12">
-                            <table className="table table-hover table-bordered table-striped">
+                            <table className="table table-hover  table-responsive table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Avatar</th>
@@ -102,7 +102,10 @@ export default class AddGoogleAccount extends React.Component {
                                                 <td>{googleAccount.email}</td>
                                                 <td>{googleAccount.id}</td>
                                                 <td>
-                                                    <button onClick={() => this.handleDelete(googleAccount.id)} className="btn gaa-btn-danger"><i className="fa fa-unlink mr-2"></i>Disconnect</button>
+                                                    <button onClick={() => this.handleDelete(googleAccount.id)} className="btn ad-ga-action gaa-btn-danger">
+                                                        <i className="fa fa-unlink mr-0 mr-md-2 mr-lg"></i>
+                                                       <span className="ad-ga-action-text">Disconnect</span>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         })

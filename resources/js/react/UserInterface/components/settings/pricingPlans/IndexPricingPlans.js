@@ -130,15 +130,15 @@ export default class indexPricingPlans extends React.Component {
                                             </ul>
 
                                             {this.props.user.price_plan.id == pricePlan.id ?
-                                                <span value="subscribed" className="btn mx-auto btn-success text-uppercase mt-auto">Subscribed</span>
+                                                <span value="subscribed" className="btn mx-auto pp-c-action btn-success text-uppercase mt-auto">Subscribed</span>
                                                 :
                                                 pricePlan.price == 0 ?
-                                                    <button className="btn mx-auto btn-primary text-uppercase mt-auto " onClick={() => { this.freeSubscribe(pricePlan.id) }} >Subscribe</button>
+                                                    <button className="btn mx-auto btn-primary pp-c-action text-uppercase mt-auto " onClick={() => { this.freeSubscribe(pricePlan.id) }} >Subscribe</button>
                                                     :
                                                     pricePlan.price < 0 ?
-                                                        <button className="btnmx-auto btn-primary text-uppercase mt-auto " type="button" >Coming Soon</button>
+                                                        <button className="btnmx-auto btn-primary pp-c-action text-uppercase mt-auto " type="button" >Coming Soon</button>
                                                         :
-                                                        <a href={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn mx-auto btn-primary text-uppercase mt-auto">Subscribe</a>
+                                                        <a href={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn pp-c-action mx-auto btn-primary text-uppercase mt-auto">Subscribe</a>
                                             }
                                         </div>
                                     </div>

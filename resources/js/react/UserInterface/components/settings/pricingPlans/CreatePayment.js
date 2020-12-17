@@ -280,7 +280,7 @@ export default class CreatePayment extends Component {
 
                                     {/*firs  column start*/}
 
-                                    <div className="col-6">
+                                    <div className="col-12 col-sm-12 col-md-6 col-lg-6">
                                         <h4 className="gaa-text-primary">Billing Information</h4>
 
                                         <div className="form-group floating-labels">
@@ -320,13 +320,13 @@ export default class CreatePayment extends Component {
                                             <h4 className="gaa-text-primary">Credit Card</h4>
 
                                             <div className="row ml-0 mr-0">
-                                                <div className="col-6 p-3">
+                                                <div className="col-6 p-3 pp-cc-pl-r">
                                                     <div className="form-group floating-labels">
                                                         <input type="text" className="form-control" placeholder="First Name" name="first_name" id="first_name" onChange={this.changeHandler} value={this.state.paymentDetails.first_name} />
                                                         <label htmlFor="first_name">First Name</label>
                                                     </div>
                                                 </div>
-                                                <div className="col-6 p-3">
+                                                <div className="col-6 p-3 pp-cc-pr-r">
                                                     <div className="form-group floating-labels">
                                                         <input type="text" className="form-control" placeholder="Last Name" name="last_name" id="last_name" onChange={this.changeHandler} value={this.state.paymentDetails.last_name} />
                                                         <label htmlFor="last_name">Last Name</label>
@@ -338,13 +338,13 @@ export default class CreatePayment extends Component {
 
                                             <div className="row">
                                                 <div className="col-6">
-                                                    <div data-bluesnap="ccn"></div>
+                                                    <div data-bluesnap="ccn" className="pb-c-inputs"></div>
                                                 </div>
                                                 <div className="col-3">
-                                                    <div data-bluesnap="exp"></div>
+                                                    <div data-bluesnap="exp" className="pb-c-inputs"></div>
                                                 </div>
                                                 <div className="col-3">
-                                                    <div data-bluesnap="cvv"></div>
+                                                    <div data-bluesnap="cvv" className="pb-c-inputs"></div>
                                                 </div>
 
                                             </div>
@@ -357,8 +357,8 @@ export default class CreatePayment extends Component {
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div className="col-6">
+                                    {/* second column starts main layout col*/}
+                                    <div className="col-12 col-sm-12 col-md-6 col-lg-6">
                                         <div className="">
                                             <div className="bgc-white  ">
                                                 <h4 className="gaa-text-primary">Details</h4>

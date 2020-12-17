@@ -110,14 +110,14 @@ export default class DataSourceIndex extends React.Component {
                 </div>
                 <div className="row ml-0 mr-0 mt-4">
                     <div className="col-md-8 col-sm-12 M">
-                        <div className="container ds-sections">
-                            <div className="w-75 h-100 border-bottom d-flex align-items-center">
-                                <div className="w-100 row">
-                                    <div className="row ml-0 mr-0 w-100">
+
+                        <div className="container ds-sections border-bottom">
+
+                                    <div className="row ml-0 mr-0 w-100 ">
                                         <div className="col-9">
                                             <h4 className="gaa-text-primary">Holidays</h4>
                                         </div>
-                                        <div className="col-3 d-flex flex-column justify-content-center align-items-center">
+                                        <div className="col-3 d-flex flex-column justify-content-start align-items-center">
                                             <label className="trigger switch">
                                                 <input
                                                     type="checkbox"
@@ -145,16 +145,13 @@ export default class DataSourceIndex extends React.Component {
                                             </div>
                                         </div>
                                         <div className="col-3">
-                                            <p
-                                                className="ds-update-text m-0 text-center"
-                                                onClick={() => { this.setState({ sectionName: this.state.sectionName == "holidays" ? null : "holidays" }) }}
-                                            >
+                                            <p className="ds-update-text m-0 text-center"
+                                                onClick={() => { this.setState({ sectionName: this.state.sectionName == "holidays" ? null : "holidays" }) }}>
                                                 {this.state.sectionName == "holidays" ? "Hide" : "Choose Countries"}
                                             </p>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+
                         </div>
 
                         {/* <div className="container mt-3 ds-sections">
@@ -199,16 +196,15 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                         </div> */}
 
-                        <div className="container mt-3 ds-sections">
-                            <div className="ml-0 mr-0 w-75 h-100 border-bottom d-flex align-items-center">
-                                <div className="w-100 row">
+                        <div className="container mt-3 ds-sections border-bottom">
+                            <div className="ml-0 mr-0 row h-100 w-100">
+
                                     <div className="col-9">
                                         <h4 className="gaa-text-primary">Google Updates</h4>
                                     </div>
-                                    <div className="col-3 text-center d-flex justify-content-center">
+                                    <div className="col-3  d-flex flex-column justify-content-start align-items-center">
                                         <label className="trigger switch">
-                                            <input
-                                                type="checkbox"
+                                            <input type="checkbox"
                                                 defaultChecked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
                                                 onChange={this.serviceStatusHandler}
                                                 name="is_ds_google_algorithm_updates_enabled"
@@ -216,18 +212,16 @@ export default class DataSourceIndex extends React.Component {
                                             <span className="slider round" />
                                         </label>
                                     </div>
-                                </div>
+
                             </div>
                         </div>
 
-                        <div className="container mt-3 ds-sections">
-                            <div className="ml-0 mr-0 w-75 h-100 border-bottom d-flex align-items-center">
-                                <div className="w-100 row">
+                        <div className="container mt-3 ds-sections border-bottom">
                                     <div className="row ml-0 mr-0 w-100">
                                         <div className="col-9">
                                             <h4 className="gaa-text-primary">Retail Marketing Dates</h4>
                                         </div>
-                                        <div className="col-3 d-flex flex-column justify-content-center align-items-center">
+                                        <div className="col-3 d-flex flex-column justify-content-start align-items-center">
                                             <label className="trigger switch">
                                                 <input
                                                     type="checkbox"
@@ -252,9 +246,11 @@ export default class DataSourceIndex extends React.Component {
                                             </p>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+
                         </div>
+
+
+
                     </div>
                     <div className="col-md-4 col-sm-12 M mt-3 border-left">
                         {this.state.sectionName == 'holidays' ?

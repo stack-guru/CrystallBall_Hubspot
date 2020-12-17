@@ -362,6 +362,7 @@ setting-menu-item.dropdown {
     align-items: center;
     white-space: unset;
     height: 100%;
+    padding-bottom: 2%;
 }
 .secure-img img {
     width: 68px;
@@ -514,8 +515,8 @@ setting-menu-item.dropdown {
 
 .input-group-append {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 0%;
+    top: 0%;
 }
 
 .integration-video-link {
@@ -571,6 +572,15 @@ setting-menu-item.dropdown {
     height: 450px;
 }
 
+.pb-c-inputs{
+    height: 55px!important;
+
+}
+.pb-c-inputs#ccn{
+    height: 55px!important;
+
+}
+
 /* Hightent team responsive code*/
 @media only screen and (max-width: 500px) and (min-width: 0px) {
     .table >td{
@@ -590,7 +600,46 @@ setting-menu-item.dropdown {
       justify-content: center!important;
       align-items: center!important;
   }
+  .integration-pack .int-description{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    height: auto!important;
+      margin-bottom: 3%;
+  }
+  .integration-video-link{
+      display:block;
+      position:relative;
+  }
+  .ad-ga-action .ad-ga-action-text{
+      display:none;
+  }
+  .gaa-text-primary{
+      font-size: 1.8rem;
+  }
+  .pp-c-action{
+      font-size: 12px!important;
+      width:100%!important;
 
+  }
+footer{
+    font-size: 10px!important;
+}
+.pb-c-inputs{
+    height: 70px!important;
+
+}
+.pb-c-inputs#ccn{
+        height: 70px!important;
+
+    }
+.pp-cc-pl-r{
+    padding-left:0%!important;
+}
+    .pp-cc-pr-r{
+        padding-right:0%!important;
+    }
 
 }
 
