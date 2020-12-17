@@ -9,6 +9,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Rules\HasLettersNumbers;
+use App\Rules\HasSymbol;
 
 class RegisterController extends Controller
 {
@@ -53,10 +55,11 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['confirmed', 'required', 'string', 'min:8', new HasSymbol, new HasLettersNumbers],
             'read_confirmation' => ['required'],
         ], [
-            'read_confirmation.required' => 'Your confirmation is required.'
+            'read_confirmation.required' => 'Your confirmation is required.',
+            'password.min' => 'Must be atleast 8 characters.'
         ]);
     }
 

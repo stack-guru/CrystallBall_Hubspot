@@ -34,15 +34,11 @@ class ResetPasswordController extends Controller
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
-            'old_password' => 'required',
+            'old_password' => 'required|password',
             'new_password' => 'required|confirmed|string|min:8',
         ]);
 
         $user = Auth::user();
-
-        if (!Hash::check($request->old_password, $user->password)) {
-            return response()->json(['success' => 'false', 'message' => 'Invalid current password.'], 422);
-        }
 
         $user->password = Hash::make($request->new_password);
         $user->save();

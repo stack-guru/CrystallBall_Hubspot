@@ -38,9 +38,11 @@
       placeholder="Password" required="" name="password" value="">
     <label for="inputPassword">Password</label>
     @error('password')
-    <span class="invalid-feedback" role="alert">
-      <strong>{{ $message }}</strong>
-    </span>
+      @foreach ($errors->get('password') as $message)
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+      @endforeach
     @enderror
   </div>
 
