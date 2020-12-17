@@ -52,16 +52,16 @@
   </div>
 
   <div class="form-label-group">
-    <input type="checkbox" class="form-control @error('read_confirmation') is-invalid @enderror"
-      name="read_confirmation" id="read_confirmation" style="width: auto;" />
-    <label class="form-check-label" htmlFor="read_confirmation">
-      Do you agree to our <a href="https://gaannotations.com/privacy-policy">Privacy Policy</a>?
-    </label>
-    @error('read_confirmation')
-    <span class="invalid-feedback" role="alert">
-      <strong>{{ $message }}</strong>
-    </span>
-    @enderror
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input @error('read_confirmation') is-invalid @enderror"
+        name="read_confirmation" id="read_confirmation" />
+      <label class="form-check-label" for="read_confirmation">Do you agree to our <a href="https://gaannotations.com/privacy-policy" target="_blank">Privacy Policy</a>?</label>
+      @error('read_confirmation')
+      <span class="invalid-feedback" role="alert">
+        <strong>{{ $message }}</strong>
+      </span>
+      @enderror
+    </div>
   </div>
 
   <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
