@@ -408,7 +408,7 @@ setting-menu-item.dropdown {
 }
 .card {
     min-height: 545px;
-    max-height: 550px;
+    /*max-height: 550px;*/
     position: relative;
 }
 .card .card-body {
