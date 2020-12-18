@@ -75,7 +75,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'price_plan_id' => PricePlan::where('price', '<>', 0.00)->where('is_enabled', true)->first()->id,
+            'price_plan_id' => PricePlan::where('name', '=', 'Trial')->first()->id,
             'price_plan_expiry_date' => new \DateTime("+14 days"),
             'is_billing_enabled' => false,
         ]);

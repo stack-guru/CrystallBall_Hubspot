@@ -50,7 +50,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
      */
     public function handle()
     {
-        $freePlan = PricePlan::where('price', 0)->first();
+        $freePlan = PricePlan::where('price', 0)->where('name', '<>', 'Trial')->first();
         if ($freePlan) {
             $this->freePlanId = $freePlan->id;
         }
