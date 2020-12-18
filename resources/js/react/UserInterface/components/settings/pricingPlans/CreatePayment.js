@@ -101,6 +101,7 @@ export default class CreatePayment extends Component {
             city: this.state.paymentDetails.city,
             country: this.state.paymentDetails.country,
             zip_code: this.state.paymentDetails.zip_code,
+            coupon_id: this.state.coupon ? this.state.coupon.id : null,
         })
             .then(response => {
                 this.setState({ isBusy: false, errors: undefined });

@@ -65,7 +65,7 @@ class PaymentController extends Controller
             $blueSnapService = new BlueSnapService;
 
             $price = $pricePlan->price;
-            if ($request->has('coupon_id')) {
+            if ($request->has('coupon_id') && $request->has('coupon_id') != "null") {
                 $coupon = Coupon::find($request->coupon_id);
                 if (!$coupon) {
                     return response()->json(['success' => false, 'message' => 'Invalid coupon.'], 422);
