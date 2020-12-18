@@ -17,6 +17,9 @@ Route::redirect('/', '/login', 301);
 
 Auth::routes();
 
+Route::get('socialite/google', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogle'])->name('socialite.google');
+Route::get('socialite/google/redirect', [App\Http\Controllers\Auth\RegisterController::class,'registerLoginGoogleRedirect'])->name('socialite.google.redirect');
+
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login']);

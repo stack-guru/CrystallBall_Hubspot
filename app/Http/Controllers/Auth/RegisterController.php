@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\PricePlan;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Rules\HasLettersNumbers;
+use App\Rules\HasSymbol;
+use Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Rules\HasLettersNumbers;
-use App\Rules\HasSymbol;
+use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends Controller
 {
@@ -59,7 +61,7 @@ class RegisterController extends Controller
             'read_confirmation' => ['required'],
         ], [
             'read_confirmation.required' => 'Your confirmation is required.',
-            'password.min' => 'Must be atleast 8 characters.'
+            'password.min' => 'Must be atleast 8 characters.',
         ]);
     }
 
@@ -99,5 +101,57 @@ class RegisterController extends Controller
         ]);
 
         return $user;
+    }
+
+    public function registerLoginGoogle()
+    {
+
+        return Socialite::driver('google')
+            ->scopes([
+                'https://www.googleapis.com/auth/userinfo.profile',
+                'https://www.googleapis.com/auth/userinfo.email',
+            ])
+            ->redirectUrl(route('socialite.google.redirect'))
+            ->redirect();
+    }
+
+    public function registerLoginGoogleRedirect()
+    {
+        $newUser = Socialite::driver('google')->redirectUrl(route('socialite.google.redirect'))->stateless()->user();
+
+        $newUserEmail = $newUser->getEmail();
+        $user = User::where('email', $newUserEmail)->first();
+
+        if (!$user) {
+
+            if (!$newUserEmail) {
+                return redirect()->back()->with('error', 'Users without email addresses are not allowed to login!');
+            } else {
+                $user = User::where('email', $newUserEmail)->first();
+
+                $user = new User;
+                $user->email = $newUserEmail;
+                $user->password = '.';
+                $user->name = $newUser->getName();
+                $user->price_plan_id = PricePlan::where('name', '=', 'Trial')->first()->id;
+                $user->price_plan_expiry_date = new \DateTime("+14 days");
+                $user->is_billing_enabled = false;
+                $user->save();
+
+                $user->annotations()->create([
+                    'category' => 'GAannotations',
+                    'event_name' => 'Sample Annotation',
+                    'url' => 'https://gaannotations.com',
+                    'description' => 'This is an example to show you how looks the annotations',
+                    'show_at' => new \DateTime('-02 days'),
+                    'is_enabled' => true,
+                ]);
+
+            }
+        }
+
+        Auth::login($user);
+        return redirect()->route('annotation.index');
+
     }
 }
