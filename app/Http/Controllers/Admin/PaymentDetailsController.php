@@ -9,11 +9,9 @@ use Illuminate\Http\Request;
 
 class PaymentDetailsController extends Controller
 {
-    //
     public function paymentHistory(){
-        $data['payments']=PaymentDetail::with(['user'])->orderBy('created_at', 'DESC')->get();
-//        dd($data);
-        return view('admin/payment-history/index',$data);
+        $pricePlanSubscriptions = PricePlanSubscription::with(['paymentDetail', 'user', 'pricePlan'])->orderBy('created_at', 'DESC')->get();
+        return view('admin/payment-history/index')->with('pricePlanSubscriptions', $pricePlanSubscriptions);
     }
 
 }

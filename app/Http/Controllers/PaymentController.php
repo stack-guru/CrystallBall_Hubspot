@@ -113,6 +113,7 @@ class PaymentController extends Controller
             $pricePlanSubscription->expires_at = new \DateTime("+1 month");
             $pricePlanSubscription->user_id = $user->id;
             $pricePlanSubscription->payment_detail_id = $paymentDetail->id;
+            $pricePlanSubscription->charged_price = $price;
             $pricePlanSubscription->save();
 
             $user->price_plan_id = $pricePlan->id;

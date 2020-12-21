@@ -18,4 +18,19 @@ class PricePlanSubscription extends Model
         return $this->belongsTo(PaymentDetail::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function pricePlan()
+    {
+        return $this->belongsTo('App\Models\PricePlan');
+    }
+
+    public function coupon()
+    {
+        return $this->belongsTo('App\Models\Coupon');
+    }
+
 }

@@ -97,7 +97,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     Mail::to($this->admin)->send(new AdminFailedPaymentTransactionMail($lastPaymentDetail, $this->admin));
                     Mail::to($user)->send(new UserFailedPaymentTransactionMail($lastPaymentDetail));
                 } else {
-                    $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id);
+                    $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $lastPaymentDetail->charged_price);
                     $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $lastPaymentDetail->id, $lastPaymentDetail->card_number, null, $lastPaymentDetail->charged_price, true);
                     $this->subscribeUserToPlan($user, $user->price_plan_id);
                 }
@@ -124,7 +124,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         print "$updateCount Users have been resubscribed to their free plans.\n";
     }
 
-    private function addPricePlanSubscription($transactionId, $userId, $paymentDetailId, $pricePlanId)
+    private function addPricePlanSubscription($transactionId, $userId, $paymentDetailId, $pricePlanId, $chargedPrice)
     {
         $pricePlanSubscription = new PricePlanSubscription;
         $pricePlanSubscription->transaction_id = $transactionId;
@@ -132,6 +132,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $pricePlanSubscription->user_id = $userId;
         $pricePlanSubscription->payment_detail_id = $paymentDetailId;
         $pricePlanSubscription->price_plan_id = $pricePlanId;
+        $pricePlanSubscription->charged_price = $chargedPrice;
         $pricePlanSubscription->save();
         return $pricePlanSubscription->id;
     }
