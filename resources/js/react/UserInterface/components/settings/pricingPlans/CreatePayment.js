@@ -495,6 +495,7 @@ export default class CreatePayment extends Component {
                 this.submitHandler(e);
 
             } else {
+                this.setState({ isBusy: false })
                 var errorArray = callback.error;
                 for (i in errorArray) {
                     console.log("Received error: tagId= " +
