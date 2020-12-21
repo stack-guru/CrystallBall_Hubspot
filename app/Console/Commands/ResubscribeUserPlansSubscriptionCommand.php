@@ -90,15 +90,15 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     'expirationYear' => $lastPaymentDetail->expirationYear,
                     'securityCode' => $lastPaymentDetail->securityCode,
                 ];
-                $responseArr = $blueSnapService->createTransaction($lastPaymentDetail->charged_price, $card, $lastPaymentDetail->bluesnap_vaulted_shopper_id);
+                $responseArr = $blueSnapService->createTransaction($user->pricePlan->price, $card, $lastPaymentDetail->bluesnap_vaulted_shopper_id);
                 if ($responseArr['success'] == false) {
-                    $this->addTransactionToLog($user->id, $user->price_plan_id, null, $lastPaymentDetail->id, $lastPaymentDetail->card_number, $responseArr['message'], $lastPaymentDetail->charged_price, false);
+                    $this->addTransactionToLog($user->id, $user->price_plan_id, null, $lastPaymentDetail->id, $lastPaymentDetail->card_number, $responseArr['message'], $user->pricePlan->price, false);
                     $this->subscribeUserToPlan($user, $this->freePlanId);
                     Mail::to($this->admin)->send(new AdminFailedPaymentTransactionMail($lastPaymentDetail, $this->admin));
                     Mail::to($user)->send(new UserFailedPaymentTransactionMail($lastPaymentDetail));
                 } else {
-                    $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $lastPaymentDetail->charged_price);
-                    $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $lastPaymentDetail->id, $lastPaymentDetail->card_number, null, $lastPaymentDetail->charged_price, true);
+                    $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $user->pricePlan->price);
+                    $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $lastPaymentDetail->id, $lastPaymentDetail->card_number, null, $user->pricePlan->price, true);
                     $this->subscribeUserToPlan($user, $user->price_plan_id);
                 }
             } else {
