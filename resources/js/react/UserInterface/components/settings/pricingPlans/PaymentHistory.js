@@ -42,6 +42,7 @@ export default class PaymentHistory extends React.Component {
                         <tr>
                             <th>S#</th>
                             <th>Transaction Id</th>
+                            <th>Price Plan</th>
                             <th>Amount</th>
                             <th>Paid At</th>
                             <th>Card end with</th>
@@ -53,6 +54,7 @@ export default class PaymentHistory extends React.Component {
                                 <tr key={pricePlanSubscription.id}>
                                     <td>{index + 1}</td>
                                     <td>{pricePlanSubscription.transaction_id}</td>
+                                    <td>{pricePlanSubscription.price_plan ? pricePlanSubscription.price_plan.name : null}</td>
                                     <td>${pricePlanSubscription.payment_detail ? pricePlanSubscription.payment_detail.charged_price : '0'}</td>
                                     <td>
                                         {moment(pricePlanSubscription.created_at).format("YYYY-MM-DD")}&nbsp;&nbsp;&nbsp;{moment(pricePlanSubscription.created_at).format("hh:mm")}

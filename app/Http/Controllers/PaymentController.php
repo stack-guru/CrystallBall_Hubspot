@@ -17,19 +17,20 @@ class PaymentController extends Controller
 
     public function indexPaymentHistory()
     {
-        $pricePlanSubscriptions = PricePlanSubscription::with('paymentDetail')->orderBy('created_at', 'DESC')->where('user_id', Auth::id())->get();
+        $pricePlanSubscriptions = PricePlanSubscription::with(['paymentDetail', 'pricePlan'])->orderBy('created_at', 'DESC')->where('user_id', Auth::id())->get();
 
         return ['price_plan_subscriptions' => $pricePlanSubscriptions];
 
     }
 
-    public function show(Request $request){
+    public function show(Request $request)
+    {
 
-        if(! $request->query('_token')){
+        if (!$request->query('_token')) {
             $blueSnapService = new BlueSnapService;
             $token = $blueSnapService->getToken();
 
-            return redirect()->route('settings.price-plan.payment', [ 'price_plan_id' => $request->query('price_plan_id'), '_token' => $token ]);
+            return redirect()->route('settings.price-plan.payment', ['price_plan_id' => $request->query('price_plan_id'), '_token' => $token]);
         }
 
         return view('ui/app');
@@ -58,7 +59,7 @@ class PaymentController extends Controller
                 'city' => 'required',
                 'zip_code' => 'nullable',
                 'country' => 'required',
-                'pfToken' => 'required'
+                'pfToken' => 'required',
             ]);
 
             $pricePlanSubscription = new PricePlanSubscription;
