@@ -77,11 +77,13 @@ class PaymentController extends Controller
                 }
 
                 $pricePlanSubscription->coupon_id = $coupon->id;
-                $price -= ($coupon->discount_percent / 100) * $price;
+                $price = $price - (($coupon->discount_percent / 100) * $price);
             }
             if (array_search($request->country, ["PK", "IL"]) !== false) {
-                $price += (17 / 100) * $price;
+                $price = $price + ((17 / 100) * $price);
             }
+
+            $price = round($price, 2);
 
             $obj = $blueSnapService->createTransaction($price, null, null, $request->pfToken);
             if ($obj['success'] == false) {
