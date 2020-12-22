@@ -648,3 +648,7 @@ setting-menu-item.dropdown {
 .h-30px {
     height: 30px;
 }
+
+.trial-countdown {
+    color: #2196f3;
+}
