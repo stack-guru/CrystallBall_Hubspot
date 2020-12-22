@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Coupon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class CouponController extends Controller
 {
@@ -15,7 +16,7 @@ class CouponController extends Controller
 
         $coupon = Coupon::where('code', $request->query('coupon_code'))->first();
         if (!$coupon) {
-            abort(404);
+            return Response::make(['message' => 'Invalid coupon code.'], 404);
         }
 
         return ['coupon' => $coupon];
