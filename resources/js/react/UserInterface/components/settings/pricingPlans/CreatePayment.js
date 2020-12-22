@@ -420,13 +420,9 @@ export default class CreatePayment extends Component {
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-12 text-right p-5">
                                                 <div className="input-group mb-3">
-                                                    <div className="input-group-prepend">
-                                                        <span className="input-group-text">Coupon</span>
-                                                    </div>
+                                                    <span className="input-group-text">Coupon</span>
                                                     <input name="couponCode" type="text" className="form-control" value={this.state.couponCode} onChange={e => { this.setState({ [e.target.name]: e.target.value }); }} />
-                                                    <div className="input-group-append">
-                                                        <button className="btn btn-outline-secondary" type="button" onClick={this.applyCoupon}>Apply</button>
-                                                    </div>
+                                                    <button className="btn btn-outline-secondary" type="button" onClick={this.applyCoupon}>Apply</button>
                                                 </div>
                                             </div>
                                         </div>
