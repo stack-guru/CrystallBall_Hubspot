@@ -123,7 +123,7 @@ export default class CreatePayment extends Component {
                 //     eventValue: this.state.pricePlan.price
                 // });
 
-                swal("Plan purchased", "New plan purchased.", "success").then(value => {
+                swal(`${this.state.pricePlan.name} Plan purchased!`, "You can now enjoy extended functionalities.", "success").then(value => {
                     window.location = "/annotation"
                 });
             }, (err) => {
