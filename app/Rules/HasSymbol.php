@@ -29,7 +29,7 @@ class HasSymbol implements Rule
 
         // - must include at least one symbol
 
-        return (preg_match('@[#|\@|$|%]@', $value));
+        return (preg_match('@[!|#|\@|$|%]@', $value));
     }
 
     /**
@@ -39,6 +39,6 @@ class HasSymbol implements Rule
      */
     public function message()
     {
-        return 'Must contain one special symbol (@,#,$,%).';
+        return 'Must contain one special symbol (!, @, #, $, %).';
     }
 }
