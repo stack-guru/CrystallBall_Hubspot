@@ -270,7 +270,7 @@ class IndexAnnotations extends React.Component {
                                                                 : null}
                                                         </td>
                                                         <td>{moment(anno.show_at).format('YYYY-MM-DD')}</td>
-                                                        <td className="d-flex">
+                                                        <td>
                                                             {anno.id ?
                                                                 <React.Fragment>
                                                                     <button type="button" onClick={() => {
