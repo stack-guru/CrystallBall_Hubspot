@@ -159,6 +159,14 @@ class header extends React.Component {
                         {/*    </ul>*/}
                         {/*</li>*/}
 
+                        {this.props.user.price_plan.name == "Trial" ?
+                            <li className="notifications">
+                                <div className="no-after">
+                                    <a>Trial: {moment(this.props.user.price_plan_expiry_date).diff(moment(), "days")} days left</a>
+                                </div>
+                            </li>
+                            : null}
+
                         {this.props.user.price_plan.price == 0 ?
                             <li className="notifications">
                                 <div className="no-after">
