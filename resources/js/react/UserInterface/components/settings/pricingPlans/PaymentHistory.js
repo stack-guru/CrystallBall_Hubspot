@@ -42,7 +42,7 @@ export default class PaymentHistory extends React.Component {
                         <tr>
                             <th>S#</th>
                             <th>Transaction Id</th>
-                            <th>Price Plan</th>
+                            <th>Plan</th>
                             <th>Amount</th>
                             <th>Paid At</th>
                             <th>Card end with</th>
