@@ -193,7 +193,7 @@ class IndexAnnotations extends React.Component {
                                     <option value="added">Added</option>
                                     <option value="date">By Date</option>
                                     <option value="by-category">By Category</option>
-                                    <option value="ga-account">By Ga-annotation-account</option>
+                                    <option value="ga-account">By GA account</option>
                                 </select>
 
                             </div>
