@@ -121,6 +121,7 @@ class PaymentController extends Controller
 
             $user->price_plan_id = $pricePlan->id;
             $user->price_plan_expiry_date = new \DateTime("+1 month");
+            $user->is_billing_enabled = true;
         } else {
             $user->is_billing_enabled = false;
         }

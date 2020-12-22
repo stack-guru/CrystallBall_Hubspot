@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Mail\AdminFailedPaymentTransactionMail;
 use App\Mail\UserFailedPaymentTransactionMail;
+use App\Models\Admin;
 use App\Models\AutoPaymentLog;
 use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
@@ -11,7 +12,6 @@ use App\Models\User;
 use App\Services\BlueSnapService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use App\Models\Admin;
 
 class ResubscribeUserPlansSubscriptionCommand extends Command
 {
@@ -73,10 +73,10 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
     private function resubscribePaidPlanUsers()
     {
         $users = User::select('users.*')->where('price_plan_expiry_date', '<', new \DateTime)
+            ->where('price_plans.price', '<>', 0)
+            ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
             ->with('pricePlan')
             ->with('lastPaymentDetail')
-            ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
-            ->where('price_plans.price', '<>', 0)
             ->get();
 
         $blueSnapService = new BlueSnapService;
@@ -90,15 +90,21 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     'expirationYear' => $lastPaymentDetail->expirationYear,
                     'securityCode' => $lastPaymentDetail->securityCode,
                 ];
-                $responseArr = $blueSnapService->createTransaction($user->pricePlan->price, $card, $lastPaymentDetail->bluesnap_vaulted_shopper_id);
+                $pricePlanPrice = $user->pricePlan->price;
+                if (array_search($lastPaymentDetail->country, ["PK", "IL"]) !== false) {
+                    $pricePlanPrice = $pricePlanPrice + ((17 / 100) * $pricePlanPrice);
+                }
+
+                $pricePlanPrice = round($pricePlanPrice, 2);
+                $responseArr = $blueSnapService->createTransaction($pricePlanPrice, $card, $lastPaymentDetail->bluesnap_vaulted_shopper_id);
                 if ($responseArr['success'] == false) {
-                    $this->addTransactionToLog($user->id, $user->price_plan_id, null, $lastPaymentDetail->id, $lastPaymentDetail->card_number, $responseArr['message'], $user->pricePlan->price, false);
+                    $this->addTransactionToLog($user->id, $user->price_plan_id, null, $lastPaymentDetail->id, $lastPaymentDetail->card_number, $responseArr['message'], $pricePlanPrice, false);
                     $this->subscribeUserToPlan($user, $this->freePlanId);
                     Mail::to($this->admin)->send(new AdminFailedPaymentTransactionMail($lastPaymentDetail, $this->admin));
                     Mail::to($user)->send(new UserFailedPaymentTransactionMail($lastPaymentDetail));
                 } else {
-                    $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $user->pricePlan->price);
-                    $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $lastPaymentDetail->id, $lastPaymentDetail->card_number, null, $user->pricePlan->price, true);
+                    $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice);
+                    $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $lastPaymentDetail->id, $lastPaymentDetail->card_number, null, $pricePlanPrice, true);
                     $this->subscribeUserToPlan($user, $user->price_plan_id);
                 }
             } else {
