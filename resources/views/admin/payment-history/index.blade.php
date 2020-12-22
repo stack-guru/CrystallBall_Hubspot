@@ -29,11 +29,11 @@
                                 <td>{{$pricePlanSubscription->id}}</td>
                                 <td>{{$pricePlanSubscription->user->name}}</td>
                                 <td>{{$pricePlanSubscription->user->email}}</td>
-                                <td>{{$pricePlanSubscription->paymentDetail->bluesnap_vaulted_shopper_id}}</td>
+                                <td>{{@$pricePlanSubscription->paymentDetail->bluesnap_vaulted_shopper_id}}</td>
                                 <td>@if($pricePlanSubscription->coupon){{$pricePlanSubscription->coupon->code}} / {{$pricePlanSubscription->coupon->discount_percent}}%@endif</td>
                                 <td>${{$pricePlanSubscription->charged_price}}</td>
                                 <td>{{$pricePlanSubscription->created_at->todateString()}}</td>
-                                <td>{{$pricePlanSubscription->paymentDetail->card_number}}</td>
+                                <td>{{@$pricePlanSubscription->paymentDetail->card_number}}</td>
 
                                 <td>{{$pricePlanSubscription->created_at->addMonths(1)->todateString()}}</td>
                                 <td>${{@$pricePlanSubscription->pricePlan->price}}</td>
