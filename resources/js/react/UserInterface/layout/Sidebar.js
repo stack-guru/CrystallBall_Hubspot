@@ -197,13 +197,16 @@ class sidebar extends React.Component {
                                     <span className="nav-link">Add google account</span>
                                 </Link>
                             </li>
-
+                            <li className="nav-item dropdown">
+                                <Link to="/settings/price-plans" className="sidebar-link">
+                                    <span className="nav-link">Plans</span>
+                                </Link>
+                            </li>
                             <li className="nav-item dropdown">
                                 <Link to="/settings/payment-history" className="sidebar-link">
                                     <span className="nav-link">Payment History</span>
                                 </Link>
                             </li>
-
                             <li className="nav-item dropdown">
                                 <div className="sidebar-link nav-link">
                                 <a  href="/documentation" target="_blank">API Documentation</a>
