@@ -246,6 +246,7 @@ setting-menu-item.dropdown {
     background: #ffffff;
     /*color: white;*/
     text-align: left;
+    height: 100%;
 }
 
 .pricing hr {
