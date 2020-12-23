@@ -75,4 +75,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Annotation');
     }
+
+    public function googleAccounts()
+    {
+        return $this->hasMany('App\Models\GoogleAccount');
+    }
 }

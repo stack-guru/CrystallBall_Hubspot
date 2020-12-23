@@ -26,7 +26,9 @@ class GoogleAccountController extends Controller
             ->scopes([
                 'https://www.googleapis.com/auth/userinfo.profile',
                 'https://www.googleapis.com/auth/userinfo.email',
+                'https://www.googleapis.com/auth/analytics.readonly',
             ])
+            ->with([ 'access_type' => 'offline'])
             ->redirect();
     }
 

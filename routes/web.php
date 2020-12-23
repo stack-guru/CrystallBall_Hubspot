@@ -82,6 +82,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
             Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
             Route::post('/change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
+
+            Route::get('google-analytics-account', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'index']);
+
         });
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
