@@ -2,6 +2,7 @@ import React from 'react';
 import HttpClient from './../../../utils/HttpClient';
 import { toast } from 'react-toastify'
 import { Redirect } from "react-router-dom";
+import ErrorAlert from '../../../utils/ErrorAlert'
 
 export default class AddGoogleAccount extends React.Component {
 
@@ -112,6 +113,11 @@ export default class AddGoogleAccount extends React.Component {
                     <div className="row ml-0 mr-0">
                         <div className="col-12">
                             <h1 className="gaa-text-primary">Connect Multiple GA Accounts</h1>
+                        </div>
+                    </div>
+                    <div className="row ml-0 mr-0">
+                        <div className="col-12">
+                            <ErrorAlert errors={this.state.errors}  />
                         </div>
                     </div>
                     <div className="row ml-0 mr-0 my-5">
