@@ -342,6 +342,12 @@ setting-menu-item.dropdown {
     border-color: #bf0c18;
 }
 
+.gaa-btn-primary {
+    color: #fff;
+    background-color: #456287;
+    border-color: #456287;
+}
+
 .logo-margin {
     margin-left: 19%;
     margin-top: 15%;

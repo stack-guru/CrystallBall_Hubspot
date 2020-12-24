@@ -84,6 +84,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
 
             Route::get('google-analytics-account', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'index']);
+            Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);
+
 
         });
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);

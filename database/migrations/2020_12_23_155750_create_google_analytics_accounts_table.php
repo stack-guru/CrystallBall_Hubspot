@@ -26,7 +26,8 @@ class CreateGoogleAnalyticsAccountsTable extends Migration
             $table->string('property_type')->nullable()->default(null);
             $table->mediumText('property_href')->nullable()->default(null);
 
-            $table->foreignId("user_id")->constrained()->required();
+            $table->foreignId('google_account_id')->required()->constrained();
+            $table->foreignId("user_id")->required()->constrained();
 
             $table->timestamps();
         });

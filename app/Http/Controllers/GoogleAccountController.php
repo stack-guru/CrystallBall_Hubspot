@@ -63,9 +63,4 @@ class GoogleAccountController extends Controller
         return ['success' => $googleAccount->delete()];
     }
 
-    public function getProfileFromToken($token)
-    {
-        $user = Socialite::driver('google')->userFromToken($token);
-        return $user;
-    }
 }

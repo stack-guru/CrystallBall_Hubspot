@@ -12,6 +12,7 @@ export default class AddGoogleAccount extends React.Component {
             redirectTo: null,
         }
         this.handleDelete = this.handleDelete.bind(this);
+        this.fetchGAAccounts = this.fetchGAAccounts.bind(this);
         this.restrictionHandler = this.restrictionHandler.bind(this);
     }
 
@@ -43,6 +44,20 @@ export default class AddGoogleAccount extends React.Component {
             let googleAccounts = this.state.googleAccounts;
             googleAccounts = googleAccounts.filter(ga => ga.id != id);
             this.setState({ isBusy: false, googleAccounts: googleAccounts })
+        }, (err) => {
+            console.log(err);
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            console.log(err);
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
+    fetchGAAccounts(id) {
+        this.setState({ isBusy: true });
+        HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
+            toast.success("Accounts fetched.");
+            this.setState({ isBusy: false })
         }, (err) => {
             console.log(err);
             this.setState({ isBusy: false, errors: (err.response).data });
@@ -106,6 +121,10 @@ export default class AddGoogleAccount extends React.Component {
                                                         <button onClick={() => this.handleDelete(googleAccount.id)} className="btn ad-ga-action gaa-btn-danger">
                                                             <i className="fa fa-unlink mr-0 mr-md-2 mr-lg"></i>
                                                             <span className="ad-ga-action-text">Disconnect</span>
+                                                        </button>
+                                                        <button onClick={() => this.fetchGAAccounts(googleAccount.id)} className="btn ad-ga-action gaa-btn-primary">
+                                                            <i className="fa fa-search mr-0 mr-md-2 mr-lg"></i>
+                                                            <span className="ad-ga-action-text">Search Accounts</span>
                                                         </button>
                                                     </td>
                                                 </tr>

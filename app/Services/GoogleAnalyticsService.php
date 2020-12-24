@@ -45,6 +45,7 @@ class GoogleAnalyticsService
 
     public function refreshToken(GoogleAccount $googleAccount)
     {
+        if(! $googleAccount->refresh_token) return false;
         $url = "https://www.googleapis.com/oauth2/v4/token";
 
         $response = Http::post($url, [
