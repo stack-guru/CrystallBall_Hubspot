@@ -69,6 +69,7 @@ export default class AddGoogleAccount extends React.Component {
         HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
             toast.success("Accounts fetched.");
             this.setState({ isBusy: false })
+            this.getGAAccounts();
         }, (err) => {
             console.log(err);
             this.setState({ isBusy: false, errors: (err.response).data });
