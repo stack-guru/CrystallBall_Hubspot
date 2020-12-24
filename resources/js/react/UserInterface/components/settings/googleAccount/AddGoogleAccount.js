@@ -2,6 +2,7 @@ import React from 'react';
 import HttpClient from './../../../utils/HttpClient';
 import { toast } from 'react-toastify'
 import { Redirect } from "react-router-dom";
+
 export default class AddGoogleAccount extends React.Component {
 
     constructor(props) {
@@ -9,16 +10,32 @@ export default class AddGoogleAccount extends React.Component {
         this.state = {
             isBusy: false,
             googleAccounts: [],
+            googleAnalyticsAccounts: [],
             redirectTo: null,
         }
+
         this.handleDelete = this.handleDelete.bind(this);
         this.fetchGAAccounts = this.fetchGAAccounts.bind(this);
+        this.getGAAccounts = this.getGAAccounts.bind(this);
+        this.getGoogleAccounts = this.getGoogleAccounts.bind(this);
         this.restrictionHandler = this.restrictionHandler.bind(this);
     }
 
-
     componentDidMount() {
         document.title = 'Google Accounts';
+
+        this.getGoogleAccounts();
+        this.getGAAccounts();
+
+        let searchParams = new URLSearchParams(document.location.search);
+        if (searchParams.has('message') && searchParams.has('success')) {
+            let success = searchParams.get('success');
+            let message = searchParams.get('message');
+            swal("Error", message, success == "false" ? "error" : "success");
+        }
+    }
+
+    getGoogleAccounts(){
         this.setState({ isBusy: true })
         HttpClient.get('/settings/google-account').then(resp => {
             this.setState({ googleAccounts: resp.data.google_accounts, isBusy: false });
@@ -29,12 +46,6 @@ export default class AddGoogleAccount extends React.Component {
             console.log(err)
             this.setState({ isBusy: false, errors: err });
         });
-        let searchParams = new URLSearchParams(document.location.search);
-        if (searchParams.has('message') && searchParams.has('success')) {
-            let success = searchParams.get('success');
-            let message = searchParams.get('message');
-            swal("Error", message, success == "false" ? "error" : "success");
-        }
     }
 
     handleDelete(id) {
@@ -58,6 +69,19 @@ export default class AddGoogleAccount extends React.Component {
         HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
             toast.success("Accounts fetched.");
             this.setState({ isBusy: false })
+        }, (err) => {
+            console.log(err);
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            console.log(err);
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
+    getGAAccounts() {
+        this.setState({ isBusy: true });
+        HttpClient.get(`/settings/google-analytics-account`).then(response => {
+            this.setState({ isBusy: false, googleAnalyticsAccounts:  response.data.google_analytics_accounts})
         }, (err) => {
             console.log(err);
             this.setState({ isBusy: false, errors: (err.response).data });
@@ -122,7 +146,7 @@ export default class AddGoogleAccount extends React.Component {
                                                             <i className="fa fa-unlink mr-0 mr-md-2 mr-lg"></i>
                                                             <span className="ad-ga-action-text">Disconnect</span>
                                                         </button>
-                                                        <button onClick={() => this.fetchGAAccounts(googleAccount.id)} className="btn ad-ga-action gaa-btn-primary">
+                                                        <button onClick={() => this.fetchGAAccounts(googleAccount.id)} className="btn ad-ga-action gaa-btn-primary ml-1">
                                                             <i className="fa fa-search mr-0 mr-md-2 mr-lg"></i>
                                                             <span className="ad-ga-action-text">Search Accounts</span>
                                                         </button>
@@ -131,6 +155,32 @@ export default class AddGoogleAccount extends React.Component {
                                             })
                                         }
 
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row ml-0 mr-0 mt-5">
+                        <div className="col-12">
+                            <div className="table-responsive">
+                                <table className="table table-hover table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Link</th>
+                                            <th>Property</th>
+                                            <th>Google Account</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.googleAnalyticsAccounts.map(gAA => {
+                                            return <tr key={gAA.id}>
+                                            <td>{gAA.name}</td>
+                                            <td>{gAA.self_link}</td>
+                                            <td>{gAA.property_href}</td>
+                                            <td>{gAA.google_account.name}</td>
+                                        </tr>
+                                        })}
                                     </tbody>
                                 </table>
                             </div>

@@ -11,7 +11,7 @@ class GoogleAnalyticsAccountController extends Controller
 {
     public function index()
     {
-        return ['google_analytics_accounts' => GoogleAnalyticsAccount::ofCurrentUser()->orderBy('name')->get()];
+        return ['google_analytics_accounts' => GoogleAnalyticsAccount::ofCurrentUser()->with('googleAccount')->orderBy('name')->get()];
     }
 
     public function fetch(GoogleAccount $googleAccount)
