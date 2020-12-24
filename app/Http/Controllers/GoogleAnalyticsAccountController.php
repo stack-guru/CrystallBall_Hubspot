@@ -23,7 +23,7 @@ class GoogleAnalyticsAccountController extends Controller
         $gAS = new GoogleAnalyticsService;
         $googleAnalyticsAccounts = $gAS->getConnectedAccounts($googleAccount);
         if ($googleAnalyticsAccounts == false) {
-            abort(response()->json("Unable to fetch google analytics accounts.", 422));
+            abort(response()->json(['message' => "Unable to fetch google analytics accounts."], 422));
         }
 
         $savedGoogleAnalyticAccountIds = GoogleAnalyticsAccount::select('ga_id')->ofCurrentUser()->orderBy('ga_id')->get()->pluck('ga_id')->toArray();
