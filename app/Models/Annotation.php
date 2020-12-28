@@ -10,7 +10,7 @@ class Annotation extends Model
     protected $fillable = [
         'user_id', 'category', 'event_type', 'event_name',
         'url', 'description', 'title', 'show_at', 'type',
-        'is_enabled', 'google_account_id',
+        'is_enabled',
     ];
 
     public function user()
@@ -18,9 +18,9 @@ class Annotation extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function googleAccount()
+    public function annotationGaAccounts()
     {
-        return $this->belongsTo('App\Models\GoogleAccount');
+        return $this->hasMany('App\Models\AnnotationGaAccount');
     }
 
     public function scopeOfCurrentUser($query){

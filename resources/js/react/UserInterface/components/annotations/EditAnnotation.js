@@ -210,7 +210,7 @@ export default class EditAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="show_at" className="form-control-placeholder">Google Accounts</label>
-                                        <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.annotation.google_account_id} onChangeCallback={this.changeHandler}></GoogleAccountSelect>
+                                        <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.annotation.google_account_id} onChangeCallback={this.changeHandler} multiple></GoogleAccountSelect>
 
                                         {
                                             validation.google_account_id ?

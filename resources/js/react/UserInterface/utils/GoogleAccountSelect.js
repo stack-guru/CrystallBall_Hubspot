@@ -33,7 +33,7 @@ export default class GoogleAccountSelect extends React.Component {
 
     onChangeHandler(e) {
         if (e.target.value == 'new-google-account') {
-            this.setState({ redirectTo: '/settings/price-plans' });
+            this.setState({ redirectTo: '/settings/google-account' });
         } else {
             this.props.onChangeCallback(e);
         }

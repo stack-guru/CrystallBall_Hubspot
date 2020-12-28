@@ -1,8 +1,11 @@
 import React from 'react';
+import { toast } from "react-toastify";
+
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
-import { toast } from "react-toastify";
-import GoogleAccountSelect from "../../utils/GoogleAccountSelect";
+
+import GoogleAnalyticsAccountSelect from "../../utils/GoogleAnalyticsAccountSelect";
+
 export default class CreateAnnotation extends React.Component {
 
     constructor(props) {
@@ -14,7 +17,7 @@ export default class CreateAnnotation extends React.Component {
                 url: '',
                 description: '',
                 show_at: '',
-                google_account_id: '',
+                google_analytics_accounts: [""]
             },
             validation: {},
             resp: '',
@@ -35,6 +38,7 @@ export default class CreateAnnotation extends React.Component {
                 url: '',
                 description: '',
                 show_at: '',
+                google_analytics_accounts: [""]
             },
             validation: {},
             resp: '',
@@ -54,7 +58,13 @@ export default class CreateAnnotation extends React.Component {
 
         if (this.validate() && !this.state.isBusy) {
             this.setState({ isBusy: true });
-            HttpClient.post('/annotation', this.state.annotation)
+            let fd = new FormData;
+            for (var key in this.state.annotation) {
+                if (key !== 'google_analytics_accounts') fd.append(key, this.state.annotation[key]);
+            }
+            this.state.annotation.google_analytics_accounts.map(gAA => { fd.append('google_analytics_account_id[]', gAA) })
+
+            HttpClient.post('/annotation', fd)
                 .then(response => {
                     toast.success("Annotation added.");
                     this.setDefaultState();
@@ -208,12 +218,7 @@ export default class CreateAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="show_at" className="form-control-placeholder">Google Accounts</label>
-                                        <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.annotation.google_account_id} onChangeCallback={this.changeHandler}></GoogleAccountSelect>
-
-                                        {
-                                            validation.google_account_id ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.google_account_id}</span> : ''
-                                        }
+                                        <GoogleAnalyticsAccountSelect name="google_analytics_accounts" id="google_analytics_account_id" value={this.state.annotation.google_analytics_accounts} onChangeCallback={this.changeHandler} placeholder="Select GA Accounts" multiple></GoogleAnalyticsAccountSelect>
 
                                     </div>
                                 </div>

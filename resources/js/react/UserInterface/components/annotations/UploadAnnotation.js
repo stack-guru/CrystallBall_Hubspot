@@ -79,7 +79,7 @@ export default class UploadAnnotation extends React.Component {
                                     <div className="row ml-0 mr-0 mt-2">
                                         <div className="form-group  col-12 col-sm-12 col-md-6 col-lg-6 p-0 ua-r-pr ">
                                             <label htmlFor="account" className="form-control-placeholder">Select Account</label>
-                                            <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.google_account_id} onChangeCallback={this.changeHandler}></GoogleAccountSelect>
+                                            <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.google_account_id} onChangeCallback={this.changeHandler} multiple></GoogleAccountSelect>
                                         </div>
                                         <div className="form-group col-12 col-sm-12 col-md-6 col-lg-6 p-0 ua-r-pl ">
                                             <label htmlFor="date-format" className="form-control-placeholder" >Select Date format</label>
