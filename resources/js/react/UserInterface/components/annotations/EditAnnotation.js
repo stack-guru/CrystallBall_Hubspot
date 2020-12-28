@@ -1,8 +1,10 @@
 import React from 'react';
+import { toast } from "react-toastify";
+
 import ErrorAlert from "../../utils/ErrorAlert";
 import HttpClient from "../../utils/HttpClient";
-import { toast } from "react-toastify";
-import GoogleAccountSelect from "../../utils/GoogleAccountSelect";
+import GoogleAnalyticsAccountSelect from "../../utils/GoogleAnalyticsAccountSelect";
+
 export default class EditAnnotation extends React.Component {
 
     constructor(props) {
@@ -14,7 +16,7 @@ export default class EditAnnotation extends React.Component {
                 url: '',
                 description: '',
                 show_at: '',
-
+                google_analytics_account_id: [""]
             },
             validation: {},
             resp: '',
@@ -34,7 +36,9 @@ export default class EditAnnotation extends React.Component {
             this.setState({ isBusy: true });
             HttpClient.get(`/annotation/${this.props.routeParams.match.params.id}`)
                 .then(response => {
-                    this.setState({ isBusy: false, annotation: response.data.annotation });
+                    let gAAIds = response.data.annotation.annotation_ga_accounts.map(aGAAA => aGAAA.google_analytics_account_id);
+                    if(gAAIds[0] == null) gAAIds = [""];
+                    this.setState({ isBusy: false, annotation: {...response.data.annotation, google_analytics_account_id: gAAIds} });
                 }, (err) => {
                     console.log(err);
                     this.setState({ isBusy: false, errors: (err.response).data });
@@ -46,7 +50,7 @@ export default class EditAnnotation extends React.Component {
     }
 
     setDefaultState() {
-        this.setState({ isBusy: false, isDirty: false, errors: undefined });
+        this.setState({ isBusy: false, isDirty: false, errors: undefined, google_analytics_account_id: [""] });
     }
 
     changeHandler(e) {
@@ -58,7 +62,14 @@ export default class EditAnnotation extends React.Component {
 
         if (this.validate() && !this.state.isBusy) {
             this.setState({ isBusy: true });
-            HttpClient.put(`/annotation/${this.state.annotation.id}`, this.state.annotation)
+
+            let fd = new FormData;
+            for (var key in this.state.annotation) {
+                if (key !== 'google_analytics_account_id') fd.append(key, this.state.annotation[key]);
+            }
+            this.state.annotation.google_analytics_account_id.map(gAA => { fd.append('google_analytics_account_id[]', gAA) })
+
+            HttpClient.put(`/annotation/${this.state.annotation.id}`, fd)
                 .then(response => {
                     toast.success("Annotation updated.");
                     this.setDefaultState();
@@ -210,7 +221,7 @@ export default class EditAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="show_at" className="form-control-placeholder">Google Accounts</label>
-                                        <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.annotation.google_account_id} onChangeCallback={this.changeHandler} multiple></GoogleAccountSelect>
+                                        <GoogleAnalyticsAccountSelect name="google_analytics_account_id" id="google_analytics_account_id" value={this.state.annotation.google_analytics_account_id} onChangeCallback={this.changeHandler} placeholder="Select GA Accounts" multiple></GoogleAnalyticsAccountSelect>
 
                                         {
                                             validation.google_account_id ?

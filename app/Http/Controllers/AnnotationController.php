@@ -83,7 +83,6 @@ class AnnotationController extends Controller
      */
     public function update(AnnotationRequest $request, $id)
     {
-
         $user_id = Auth::id();
         $annotation = Annotation::where(['user_id' => $user_id, 'id' => $id])->first();
         if (!$annotation) {
@@ -185,7 +184,7 @@ class AnnotationController extends Controller
     }
     public function uiShow($id)
     {
-        $annotation = Annotation::findOrFail($id);
+        $annotation = Annotation::with('annotationGaAccounts')->findOrFail($id);
         return ['annotation' => $annotation];
     }
 
