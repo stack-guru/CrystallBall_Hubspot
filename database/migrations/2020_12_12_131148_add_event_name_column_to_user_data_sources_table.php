@@ -26,6 +26,7 @@ class AddEventNameColumnToUserDataSourcesTable extends Migration
     public function down()
     {
         Schema::table('user_data_sources', function (Blueprint $table) {
+            $table->dropForeign('user_data_sources_retail_marketing_id_foreign');
             $table->dropColumn('retail_marketing_id');
         });
     }
