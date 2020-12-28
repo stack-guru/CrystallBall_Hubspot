@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
+use App\Models\AnnotationGaAccount;
 use Auth;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use DB;
+use Illuminate\Http\Request;
 
 class AnnotationController extends Controller
 {
@@ -36,13 +37,29 @@ class AnnotationController extends Controller
 
     public function store(AnnotationRequest $request)
     {
-        $user_data = Auth::id();
+        $userId = Auth::id();
 
         $annotation = new Annotation;
         $annotation->fill($request->validated());
-        $annotation->user_id = $user_data;
+        $annotation->user_id = $userId;
         $annotation->is_enabled = true;
         $annotation->save();
+
+        if (!in_array("", $request->google_analytics_account_id)) {
+            foreach ($request->google_analytics_account_id as $gAAId) {
+                $aGAA = new AnnotationGaAccount;
+                $aGAA->annotation_id = $annotation->id;
+                $aGAA->google_analytics_account_id = $gAAId;
+                $aGAA->user_id = $userId;
+                $aGAA->save();
+            }
+        } else {
+            $aGAA = new AnnotationGaAccount;
+            $aGAA->annotation_id = $annotation->id;
+            $aGAA->google_analytics_account_id = null;
+            $aGAA->user_id = $userId;
+            $aGAA->save();
+        }
 
         return ['annotation' => $annotation];
     }
@@ -73,7 +90,37 @@ class AnnotationController extends Controller
             abort(404);
         }
 
-        $annotation->update($request->validated());
+        $annotation->fill($request->validated());
+        $annotation->save();
+
+        $aGAAs = $annotation->annotationGaAccounts;
+        $oldGAAIds = $aGAAs->pluck('google_analytics_account_id');
+        $newGAAIds = $request->google_analytics_account_id;
+
+        foreach ($aGAAs as $aGAA) {
+            if (!in_array($aGAA->google_analytics_account_id, $newGAAIds)) {
+                $aGAA->delete();
+            }
+        }
+
+        if (!in_array("", $request->google_analytics_account_id)) {
+            foreach ($newGAAIds as $gAAId) {
+                if (!in_array($gAAId, $oldGAAIds)) {
+                    $aGAA = new AnnotationGaAccount;
+                    $aGAA->annotation_id = $annotation->id;
+                    $aGAA->google_analytics_account_id = $gAAId;
+                    $aGAA->user_id = $userId;
+                    $aGAA->save();
+                }
+            }
+        } else {
+            $aGAA = new AnnotationGaAccount;
+            $aGAA->annotation_id = $annotation->id;
+            $aGAA->google_analytics_account_id = null;
+            $aGAA->user_id = $userId;
+            $aGAA->save();
+        }
+
         $annotation->load('annotationGaAccounts');
 
         return ['annotation' => $annotation];
@@ -87,8 +134,8 @@ class AnnotationController extends Controller
      */
     public function destroy(Annotation $annotation)
     {
-        $user_data = Auth::id();
-        if ($user_data !== $annotation->user_id) {
+        $userId = Auth::id();
+        if ($userId !== $annotation->user_id) {
             abort(404);
         }
 
@@ -100,27 +147,28 @@ class AnnotationController extends Controller
     {
         $user = Auth::user();
 
-        $annotationsQuery = "SELECT `TempTable`.*, `google_accounts`.`id` AS google_account_id, `google_accounts`.`email` AS google_account_email FROM (";
-        $annotationsQuery .= "select is_enabled, google_account_id, `show_at`, created_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` = " . $user->id;
+        $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_accounts`.`id` AS annotation_ga_account_id, `google_analytics_accounts`.`name` AS google_analytics_account_name FROM (";
+        $annotationsQuery .= "select is_enabled, `show_at`, created_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` = " . $user->id;
 
-        if ($request->query('google_account_id') && $request->query('google_account_id') !== '*') {
-            $annotationsQuery .= " and google_account_id = " . $request->query('google_account_id');
+        if ($request->query('annotation_ga_account_id') && $request->query('annotation_ga_account_id') !== '*') {
+            $annotationsQuery .= " and annotation_ga_accounts.id = " . $request->query('annotation_ga_account_id');
         }
         if ($user->is_ds_holidays_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, null, holiday_date AS show_at, holiday_date AS created_at, null, CONCAT(category, \" Holiday\"), event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays'";
+            $annotationsQuery .= "select 1, holiday_date AS show_at, holiday_date AS created_at, null, CONCAT(category, \" Holiday\"), event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays'";
         }
         if ($user->is_ds_google_algorithm_updates_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, null, update_date AS show_at, update_date AS created_at, null, category, event_name, NULL as url, description from `google_algorithm_updates`";
+            $annotationsQuery .= "select 1, update_date AS show_at, update_date AS created_at, null, category, event_name, NULL as url, description from `google_algorithm_updates`";
         }
         if ($user->is_ds_retail_marketing_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, null, show_at, show_at as created_at, null, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings'";
+            $annotationsQuery .= "select 1, show_at, show_at as created_at, null, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings'";
         }
         $annotationsQuery .= ") AS TempTable";
 
-        $annotationsQuery .= " LEFT JOIN google_accounts ON TempTable.google_account_id = google_accounts.id";
+        $annotationsQuery .= " LEFT JOIN annotation_ga_accounts ON TempTable.id = annotation_ga_accounts.annotation_id";
+        $annotationsQuery .= " LEFT JOIN google_analytics_accounts ON annotation_ga_accounts.google_analytics_account_id = google_analytics_accounts.id";
 
         if ($request->query('sortBy') == "added") {
             $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
@@ -179,11 +227,11 @@ class AnnotationController extends Controller
             if ($headers !== $values && count($values) == count($headers)) {
                 for ($i = 0; $i < count($headers); $i++) {
                     if ($headers[$i] == 'show_at') {
-                        try{
+                        try {
                             $date = Carbon::createFromFormat($request->date_format, $values[$i]);
                             $row['show_at'] = $date->format('Y-m-d');
-                        }catch (\Exception $ex){
-                           return ['message'=>"Please select correct date format according to your CSV file from the list below."];
+                        } catch (\Exception$ex) {
+                            return ['message' => "Please select correct date format according to your CSV file from the list below."];
                         }
 
                     } else if ($headers[$i] == 'url') {
@@ -212,10 +260,11 @@ class AnnotationController extends Controller
         return ['success' => true];
     }
 
-    public function getCategories(){
+    public function getCategories()
+    {
 
-        $categories=Annotation::select('category')->distinct()->ofCurrentUser()->orderBy('category')->get();
-        return ['categories'=>$categories];
-}
+        $categories = Annotation::select('category')->distinct()->ofCurrentUser()->orderBy('category')->get();
+        return ['categories' => $categories];
+    }
 
 }
