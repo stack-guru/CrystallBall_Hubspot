@@ -5,7 +5,6 @@ import { Redirect } from 'react-router';
 import ErrorAlert from '../../../utils/ErrorAlert';
 import CCDetector from '../../../utils/CreditCardDetector';
 import CountryCodeSelect from "../../../utils/CountryCodeSelect";
-require("../../../Main.css");
 
 export default class CreatePayment extends Component {
     constructor(props) {
@@ -437,7 +436,7 @@ export default class CreatePayment extends Component {
                                                     }
 
                                                 </button>
-                                                <button type="button" className={"btn btn-default btn-md "} onClick={this.cancelSubscription}>Cancel</button>
+                                                {/* <button type="button" className={"btn btn-default btn-md "} onClick={this.cancelSubscription}>Cancel</button> */}
                                             </div>
                                         </div>
 
