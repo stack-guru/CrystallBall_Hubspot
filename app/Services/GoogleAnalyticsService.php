@@ -16,6 +16,13 @@ class GoogleAnalyticsService
         $this->clientSecret = config('services.google.client_secret');
     }
 
+    /**
+     * Get Google Accounts from Google Analytics connected Account. Refresh access token if necessary
+     *
+     * @param  \App\Models\GoogleAccount  $googleAccount
+     * @param  bool  $repeatCall
+     * @return mixed
+     */
     public function getConnectedAccounts(GoogleAccount $googleAccount, $repeatCall = false)
     {
         $url = "https://www.googleapis.com/analytics/v3/management/accounts";
@@ -25,10 +32,12 @@ class GoogleAnalyticsService
         ]);
 
         if ($response->status() == 401 && ! $repeatCall) {
+            // This code block only checks if google accounts can be fetched after refreshing access token
             if($this->refreshToken($googleAccount) == false){
                 return false;
             }else{
                 $gCA = $this->getConnectedAccounts($googleAccount, true);
+                // On success it returns google analytics accounts else false
                 if($gCA !== false){
                     return $gCA;
                 }else{
@@ -38,8 +47,10 @@ class GoogleAnalyticsService
         }else if($response->status() == 401 && $repeatCall){
             return false;
         }
-
+        
         $respJson = $response->json();
+        if(! array_key_exists('items', $respJson)) return false;
+
         return $respJson['items'];
     }
 
