@@ -260,7 +260,7 @@ class IndexAnnotations extends React.Component {
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            {anno.google_account_id ? anno.google_account_email : 'Default Account'}
+                                                            {anno.google_analytics_account_name ? anno.google_analytics_account_name : 'All Accounts'}
                                                         </td>
                                                         <td>
                                                             {anno.id ?

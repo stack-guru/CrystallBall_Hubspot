@@ -81,11 +81,10 @@ class AnnotationController extends Controller
      * @param  \App\Annotation  $annotation
      * @return \Illuminate\Http\Response
      */
-    public function update(AnnotationRequest $request, $id)
+    public function update(AnnotationRequest $request, Annotation $annotation)
     {
-        $user_id = Auth::id();
-        $annotation = Annotation::where(['user_id' => $user_id, 'id' => $id])->first();
-        if (!$annotation) {
+        $userId = Auth::id();
+        if ($annotation->user_id !== $userId) {
             abort(404);
         }
 
@@ -93,7 +92,7 @@ class AnnotationController extends Controller
         $annotation->save();
 
         $aGAAs = $annotation->annotationGaAccounts;
-        $oldGAAIds = $aGAAs->pluck('google_analytics_account_id');
+        $oldGAAIds = $aGAAs->pluck('google_analytics_account_id')->toArray();
         $newGAAIds = $request->google_analytics_account_id;
 
         foreach ($aGAAs as $aGAA) {
@@ -182,9 +181,13 @@ class AnnotationController extends Controller
 
         return ['annotations' => $annotations];
     }
-    public function uiShow($id)
+    public function uiShow(Annotation $annotation)
     {
-        $annotation = Annotation::with('annotationGaAccounts')->findOrFail($id);
+        if ($annotation->user_id !== Auth::id()) {
+            abort(404);
+        }
+
+        $annotation->load('annotationGaAccounts');
         return ['annotation' => $annotation];
     }
 

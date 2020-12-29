@@ -65,10 +65,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('coupon', [App\Http\Controllers\CouponController::class, 'verify']);
         Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
 
-        Route::post('annotation', [App\Http\Controllers\AnnotationController::class, 'store']);
-        Route::get('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
-        Route::put('annotation/{id}', [App\Http\Controllers\AnnotationController::class, 'update']);
-        Route::delete('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'destroy']);
+        Route::get('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
+        Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->only(['store', 'update', 'destroy']);
+
         Route::get('countries', [App\Http\Controllers\HolidayController::class, 'holidayApi']);
         Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);
         Route::get('annotation-categories',[App\Http\Controllers\AnnotationController::class, 'getCategories']);

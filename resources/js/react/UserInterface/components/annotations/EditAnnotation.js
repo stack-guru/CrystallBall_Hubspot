@@ -37,8 +37,8 @@ export default class EditAnnotation extends React.Component {
             HttpClient.get(`/annotation/${this.props.routeParams.match.params.id}`)
                 .then(response => {
                     let gAAIds = response.data.annotation.annotation_ga_accounts.map(aGAAA => aGAAA.google_analytics_account_id);
-                    if(gAAIds[0] == null) gAAIds = [""];
-                    this.setState({ isBusy: false, annotation: {...response.data.annotation, google_analytics_account_id: gAAIds} });
+                    if (gAAIds[0] == null) gAAIds = [""];
+                    this.setState({ isBusy: false, annotation: { ...response.data.annotation, google_analytics_account_id: gAAIds } });
                 }, (err) => {
                     console.log(err);
                     this.setState({ isBusy: false, errors: (err.response).data });
@@ -69,7 +69,8 @@ export default class EditAnnotation extends React.Component {
             }
             this.state.annotation.google_analytics_account_id.map(gAA => { fd.append('google_analytics_account_id[]', gAA) })
 
-            HttpClient.put(`/annotation/${this.state.annotation.id}`, fd)
+            fd.append('_method', 'PUT');
+            HttpClient.post(`/annotation/${this.state.annotation.id}`, fd)
                 .then(response => {
                     toast.success("Annotation updated.");
                     this.setDefaultState();
@@ -208,7 +209,7 @@ export default class EditAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="show_at" className="form-control-placeholder text-dark font-weight-bold lead">Show at</label>
-                                        <input type="date" onChange={this.changeHandler} value={this.state.annotation.show_at} className="form-control" id="show_at" name="show_at" />
+                                        <input type="date" onChange={this.changeHandler} value={moment(this.state.annotation.show_at).format('YYYY-MM-DD')} className="form-control" id="show_at" name="show_at" />
 
                                         {
                                             validation.show_at ?
