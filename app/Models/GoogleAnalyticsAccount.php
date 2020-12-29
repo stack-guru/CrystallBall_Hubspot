@@ -2,19 +2,24 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Auth;
 
 class GoogleAnalyticsAccount extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        
+    protected $hidden = [
+        'self_link', 'permissions', 'property_href',
     ];
 
-    public function scopeOfCurrentUser($query){
+    protected $casts = [
+
+    ];
+
+    public function scopeOfCurrentUser($query)
+    {
         return $query->where('user_id', Auth::id());
     }
 

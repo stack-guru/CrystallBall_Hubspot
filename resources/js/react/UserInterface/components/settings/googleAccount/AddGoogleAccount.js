@@ -134,9 +134,8 @@ export default class AddGoogleAccount extends React.Component {
                                     <thead>
                                         <tr>
                                             <th>Avatar</th>
-                                            <th>Name</th>
+                                            <th>Google Account</th>
                                             <th>Email</th>
-                                            <th>ID for API</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -147,7 +146,6 @@ export default class AddGoogleAccount extends React.Component {
                                                     <td><img src={googleAccount.avatar} className="social-profile-picture" /></td>
                                                     <td>{googleAccount.name}</td>
                                                     <td>{googleAccount.email}</td>
-                                                    <td>{googleAccount.id}</td>
                                                     <td>
                                                         <button onClick={() => this.handleDelete(googleAccount.id)} className="btn ad-ga-action gaa-btn-danger">
                                                             <i className="fa fa-unlink mr-0 mr-md-2 mr-lg"></i>
@@ -173,19 +171,23 @@ export default class AddGoogleAccount extends React.Component {
                                 <table className="table table-hover table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Link</th>
-                                            <th>Property</th>
+                                            <th>Google Analytics Name</th>
+                                            <th>Google Analytics ID</th>
+                                            <th>Property Type</th>
+                                            <th>Added On</th>
                                             <th>Google Account</th>
+                                            <th>ID for API</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {this.state.googleAnalyticsAccounts.map(gAA => {
                                             return <tr key={gAA.id}>
                                             <td>{gAA.name}</td>
-                                            <td>{gAA.self_link}</td>
-                                            <td>{gAA.property_href}</td>
+                                            <td>{gAA.ga_id}</td>
+                                            <td>{gAA.property_type}</td>
+                                            <td>{moment(gAA.created_at).format('YYYY-MM-DD HH:mm:ss')}</td>
                                             <td>{gAA.google_account.name}</td>
+                                            <td>{gAA.id}</td>
                                         </tr>
                                         })}
                                     </tbody>
