@@ -35,6 +35,8 @@ class sidebar extends React.Component {
         $(".td-n").click(function (e) {
             $("body").toggleClass("is-collapsed");
         });
+
+        this.setState({showTour: this.props.user.last_login_at == null});
     }
 
     render() {
