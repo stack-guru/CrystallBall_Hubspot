@@ -6,8 +6,10 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Users</div>
-
                 <div class="card-body">
+                    <div class="container mt-2 mb-4 pl-5">
+                        <span class="badge badge-warning">Total Users: {{count($users)}}</span>
+                    </div>
                     <table class="table table-hoved table-bordered">
                         <thead>
                             <tr><th>Email</th><th>Name</th><th>Price Plan</th>
