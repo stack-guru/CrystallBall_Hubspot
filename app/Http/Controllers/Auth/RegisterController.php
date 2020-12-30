@@ -94,7 +94,7 @@ class RegisterController extends Controller
         $user->annotations()->create([
             'category' => 'GAannotations',
             'event_name' => 'Sample Annotation',
-            'url' => 'https://gaannotations.com',
+            'url' => route('annotation.index'),
             'description' => 'This is an example to show you how looks the annotations',
             'show_at' => new \DateTime('-02 days'),
             'is_enabled' => true,
