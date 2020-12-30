@@ -1,8 +1,6 @@
 import React from 'react';
 import HttpClient from '../utils/HttpClient';
 
-require('../Main.css');
-
 export default class DSRMDatesSelect extends React.Component {
     constructor(props) {
         super(props);

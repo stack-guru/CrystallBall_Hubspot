@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
 import GoogleAccountSelect from "../../utils/GoogleAccountSelect";
-require('../../Main.css');
 
 class IndexAnnotations extends React.Component {
 
@@ -183,7 +182,6 @@ class IndexAnnotations extends React.Component {
                             <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
                                 <Link to="/annotation/create" className="btn btn-sm gaa-bg-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add Manual</Link>
                                 <Link to="/annotation/upload" className="btn btn-sm gaa-bg-primary text-white"><i className=" mr-2 fa fa-upload"></i>CSV Upload</Link>
-
                             </div>
                         </div>
                         <div className="row mb-4 ml-0 mr-0">
@@ -224,7 +222,7 @@ class IndexAnnotations extends React.Component {
                         <div className="row ml-0 mr-0">
                             <div className="col-12">
                                 <div className="table-responsive">
-                                    <table className="table table-hover table-bordered table-striped">
+                                    <table className="table table-hover table-bordered table-striped" id="annotation-index-table">
                                         <thead>
                                             <tr>
                                                 <th>Category</th>
@@ -244,7 +242,7 @@ class IndexAnnotations extends React.Component {
 
                                                 annotations.map(anno => {
                                                     if (!this.checkSearchText(anno)) return null;
-                                                    return <tr key={anno.id} className={
+                                                    return <tr key={anno.category + anno.event_name +  anno.id} className={
                                                         anno.category == "Holidays" || anno.category == "holidays" ? "text-primary" :
                                                             anno.category == "google updates" || anno.category == "Google Updates" ? "text-success" :
                                                                 anno.category == "sales event" || anno.category == "Sales Event" ? "text-alert" : "text-primary"

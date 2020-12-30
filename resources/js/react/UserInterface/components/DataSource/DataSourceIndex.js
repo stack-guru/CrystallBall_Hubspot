@@ -1,6 +1,6 @@
 import React from 'react';
 
-require('../../Main.css');
+
 import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";
 import { toast } from "react-toastify";
@@ -102,55 +102,55 @@ export default class DataSourceIndex extends React.Component {
         let holidayCountries = this.state.userDataSources.holidays;
 
         return (
-            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper">
+            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
                         <h2 className="heading-section gaa-title">Data Source</h2>
                     </div>
                 </div>
-                <div className="row ml-0 mr-0 mt-4">
+                <div className="row ml-0 mr-0 mt-4" id="data-source-page-container">
                     <div className="col-md-8 col-sm-12 M">
 
                         <div className="container ds-sections border-bottom">
 
-                                    <div className="row ml-0 mr-0 w-100 ">
-                                        <div className="col-9">
-                                            <h4 className="gaa-text-primary">Holidays</h4>
-                                        </div>
-                                        <div className="col-3 d-flex flex-column justify-content-start align-items-center">
-                                            <label className="trigger switch">
-                                                <input
-                                                    type="checkbox"
-                                                    name="is_ds_holidays_enabled"
-                                                    onChange={this.serviceStatusHandler}
-                                                    defaultChecked={this.state.userServices.is_ds_holidays_enabled}
-                                                />
-                                                <span className="slider round" />
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="row ml-0 mr-0 w-100">
-                                        <div className="col-9">
-                                            <div className="list-wrapper">
-                                                <dl className="d-flex flex-row flex-wrap userCountryList">
-                                                    <dt>Annotations for:</dt>
-                                                    {holidayCountries
-                                                        ? holidayCountries.map(country => (
-                                                            <dd className="mx-2" key={country.id}>{country.country_name}</dd>
-                                                        ))
-                                                        : <dd className="mx-2">no country added</dd>
-                                                    }
+                            <div className="row ml-0 mr-0 w-100 ">
+                                <div className="col-9">
+                                    <h4 className="gaa-text-primary">Holidays</h4>
+                                </div>
+                                <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                    <label className="trigger switch">
+                                        <input
+                                            type="checkbox"
+                                            name="is_ds_holidays_enabled"
+                                            onChange={this.serviceStatusHandler}
+                                            defaultChecked={this.state.userServices.is_ds_holidays_enabled}
+                                        />
+                                        <span className="slider round" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="row ml-0 mr-0 w-100">
+                                <div className="col-9">
+                                    <div className="list-wrapper">
+                                        <dl className="d-flex flex-row flex-wrap userCountryList">
+                                            <dt>Annotations for:</dt>
+                                            {holidayCountries
+                                                ? holidayCountries.map(country => (
+                                                    <dd className="mx-2" key={country.id}>{country.country_name}</dd>
+                                                ))
+                                                : <dd className="mx-2">no country added</dd>
+                                            }
 
-                                                </dl>
-                                            </div>
-                                        </div>
-                                        <div className="col-3">
-                                            <p className="ds-update-text m-0 text-center"
-                                                onClick={() => { this.setState({ sectionName: this.state.sectionName == "holidays" ? null : "holidays" }) }}>
-                                                {this.state.sectionName == "holidays" ? "Hide" : "Choose Countries"}
-                                            </p>
-                                        </div>
+                                        </dl>
                                     </div>
+                                </div>
+                                <div className="col-3">
+                                    <p className="ds-update-text m-0 text-center"
+                                        onClick={() => { this.setState({ sectionName: this.state.sectionName == "holidays" ? null : "holidays" }) }}>
+                                        {this.state.sectionName == "holidays" ? "Hide" : "Choose Countries"}
+                                    </p>
+                                </div>
+                            </div>
 
                         </div>
 
@@ -199,53 +199,53 @@ export default class DataSourceIndex extends React.Component {
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="ml-0 mr-0 row h-100 w-100">
 
-                                    <div className="col-9">
-                                        <h4 className="gaa-text-primary">Google Updates</h4>
-                                    </div>
-                                    <div className="col-3  d-flex flex-column justify-content-start align-items-center">
-                                        <label className="trigger switch">
-                                            <input type="checkbox"
-                                                defaultChecked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
-                                                onChange={this.serviceStatusHandler}
-                                                name="is_ds_google_algorithm_updates_enabled"
-                                            />
-                                            <span className="slider round" />
-                                        </label>
-                                    </div>
+                                <div className="col-9">
+                                    <h4 className="gaa-text-primary">Google Updates</h4>
+                                </div>
+                                <div className="col-3  d-flex flex-column justify-content-start align-items-center">
+                                    <label className="trigger switch">
+                                        <input type="checkbox"
+                                            defaultChecked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
+                                            onChange={this.serviceStatusHandler}
+                                            name="is_ds_google_algorithm_updates_enabled"
+                                        />
+                                        <span className="slider round" />
+                                    </label>
+                                </div>
 
                             </div>
                         </div>
 
                         <div className="container mt-3 ds-sections border-bottom">
-                                    <div className="row ml-0 mr-0 w-100">
-                                        <div className="col-9">
-                                            <h4 className="gaa-text-primary">Retail Marketing Dates</h4>
-                                        </div>
-                                        <div className="col-3 d-flex flex-column justify-content-start align-items-center">
-                                            <label className="trigger switch">
-                                                <input
-                                                    type="checkbox"
-                                                    name="is_ds_retail_marketing_enabled"
-                                                    onChange={this.serviceStatusHandler}
-                                                    defaultChecked={this.state.userServices.is_ds_retail_marketing_enabled}
-                                                />
-                                                <span className="slider round" />
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="row ml-0 mr-0 w-100">
-                                        <div className="col-9">
+                            <div className="row ml-0 mr-0 w-100">
+                                <div className="col-9">
+                                    <h4 className="gaa-text-primary">Retail Marketing Dates</h4>
+                                </div>
+                                <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                    <label className="trigger switch">
+                                        <input
+                                            type="checkbox"
+                                            name="is_ds_retail_marketing_enabled"
+                                            onChange={this.serviceStatusHandler}
+                                            defaultChecked={this.state.userServices.is_ds_retail_marketing_enabled}
+                                        />
+                                        <span className="slider round" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="row ml-0 mr-0 w-100">
+                                <div className="col-9">
 
-                                        </div>
-                                        <div className="col-3">
-                                            <p
-                                                className="ds-update-text m-0 text-center"
-                                                onClick={() => { this.setState({ sectionName: this.state.sectionName == "retail_marketings" ? null : "retail_marketings" }) }}
-                                            >
-                                                {this.state.sectionName == "retail_marketings" ? "Hide" : "Choose Dates"}
-                                            </p>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div className="col-3">
+                                    <p
+                                        className="ds-update-text m-0 text-center"
+                                        onClick={() => { this.setState({ sectionName: this.state.sectionName == "retail_marketings" ? null : "retail_marketings" }) }}
+                                    >
+                                        {this.state.sectionName == "retail_marketings" ? "Hide" : "Choose Dates"}
+                                    </p>
+                                </div>
+                            </div>
 
                         </div>
 

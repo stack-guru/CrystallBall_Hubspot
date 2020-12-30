@@ -1,8 +1,6 @@
 import React from 'react';
 import HttpClient from '../utils/HttpClient';
 
-require('../Main.css');
-
 export default class countries extends React.Component {
     constructor(props) {
         super(props);

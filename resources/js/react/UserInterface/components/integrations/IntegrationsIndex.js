@@ -21,7 +21,7 @@ export default class integrationsIndex extends React.Component {
                         <h2 className="gaa-text-primary">Integrations</h2>
                     </div>
                 </div>
-                <div className="row ml-0 mr-0 mt-5">
+                <div className="row ml-0 mr-0 mt-5" id="integration-page-container">
                     <div className="col-12">
                         <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
