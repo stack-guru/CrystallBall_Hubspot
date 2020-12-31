@@ -97,9 +97,10 @@ export default class DataSourceIndex extends React.Component {
     }
 
     render() {
-        if (this.state.userDataSources == null) return null;
-
-        let holidayCountries = this.state.userDataSources.holidays;
+        let holidayCountries = null;
+        if (this.state.userDataSources != null) {
+            holidayCountries = this.state.userDataSources.holidays;
+        }
 
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
@@ -132,16 +133,18 @@ export default class DataSourceIndex extends React.Component {
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
                                     <div className="list-wrapper">
-                                        <dl className="d-flex flex-row flex-wrap userCountryList">
-                                            <dt>Annotations for:</dt>
-                                            {holidayCountries
-                                                ? holidayCountries.map(country => (
-                                                    <dd className="mx-2" key={country.id}>{country.country_name}</dd>
-                                                ))
-                                                : <dd className="mx-2">no country added</dd>
-                                            }
+                                        {holidayCountries !== null ?
+                                            <dl className="d-flex flex-row flex-wrap userCountryList">
 
-                                        </dl>
+                                                <dt>Annotations for:</dt>
+                                                {holidayCountries
+                                                    ? holidayCountries.map(country => (
+                                                        <dd className="mx-2" key={country.id}>{country.country_name}</dd>
+                                                    ))
+                                                    : <dd className="mx-2">no country added</dd>
+                                                }
+
+                                            </dl> : null}
                                     </div>
                                 </div>
                                 <div className="col-3">
@@ -253,7 +256,7 @@ export default class DataSourceIndex extends React.Component {
 
                     </div>
                     <div className="col-md-4 col-sm-12 M mt-3 border-left">
-                        {this.state.sectionName == 'holidays' ?
+                        {this.state.sectionName == 'holidays' && this.state.userDataSources !== null ?
                             <div className="switch-wrapper">
                                 <Countries
                                     sectionTitle={this.state.sectionName}
@@ -264,7 +267,7 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                             : null
                         }
-                        {this.state.sectionName == 'retail_marketings' ?
+                        {this.state.sectionName == 'retail_marketings' && this.state.userDataSources !== null ?
                             <div className="switch-wrapper">
                                 <DSRMDatesSelect
                                     sectionTitle={this.state.sectionName}

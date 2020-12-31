@@ -24,7 +24,7 @@ const steps = [
         redirectRoute: '/annotation/upload'
     },
     {
-        selector: '#integration-page-container',
+        selector: '#integration-page-top-options',
         content: "Automate annotations of Ads Campaign, Newsletters, directly from Slack and more",
         redirectRoute: '/integrations'
     },
@@ -47,7 +47,10 @@ const steps = [
         content: <div>We added a Sample Annotation to show you how it looks like, once you go to <a href="https://analytics.google.com/analytics/web/#/">Google Analytics</a>
             <img src="/images/walkthrough_step7.gif" width="100%" height="auto" />
         </div>,
-        redirectRoute: null
+        redirectRoute: null,
+        style: {
+            width: '50%', height: 'auto', maxWidth: '677px', top: '25px'
+        }
     }
 
 ];
