@@ -32,7 +32,6 @@ export default class DSRMDatesSelect extends React.Component {
     }
 
     handleClick(e) {
-        console.log(e.target.retail_marketing_id)
         if (e.target.checked) {
             (this.props.onCheckCallback)({ code: 'retail_marketings', name: 'RetailMarketing', country_name: null, retail_marketing_id: e.target.getAttribute('retail_marketing_id') })
         } else {

@@ -76,7 +76,6 @@ export default class InterfaceTour extends Component {
     }
 
     render() {
-        console.log("Render hit!")
         return (
             <>
                 {this.handleRedirecter()}
@@ -85,6 +84,8 @@ export default class InterfaceTour extends Component {
                     steps={steps}
                     isOpen={this.props.isOpen}
                     onRequestClose={this.props.toggleShowTour}
+                    closeWithMask={false}
+                    lastStepNextButton={<button className="btn btn-primary" onClick={this.props.toggleShowTour}>Finish</button>}
                 />
             </>
         )

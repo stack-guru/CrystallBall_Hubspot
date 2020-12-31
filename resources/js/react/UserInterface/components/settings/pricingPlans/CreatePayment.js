@@ -468,7 +468,6 @@ export default class CreatePayment extends Component {
         e.preventDefault();
 
         if (this.state.isBusy) {
-            console.log('Form is busy')
             return;
         }
         this.setState({ isBusy: true })
