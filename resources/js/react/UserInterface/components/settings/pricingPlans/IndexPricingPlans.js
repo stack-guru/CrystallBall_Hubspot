@@ -103,43 +103,49 @@ export default class indexPricingPlans extends React.Component {
                                             <ul className="fa-ul">
 
                                                 <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Chrome extension</li>
-
                                                 {
-                                                    pricePlan.ga_account_count ? nullpricePlan.ga_account_count :
-                                                        <>
-                                                            <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Unlimited GA account</li>
-                                                            <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations account filtering</li>
-                                                        </>
+                                                    pricePlan.user_per_ga_account_count == 0 ?
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Unlimited user per GA account</li>
+                                                        : null
                                                 }
-
-                                                <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>{pricePlan.user_per_ga_account_count ? pricePlan.user_per_ga_account_count : 'Unlimited'} user per GA account</li>
-
+                                                {
+                                                    pricePlan.ga_account_count == 0 ? <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Unlimited GA accountS</li>
+                                                        :
+                                                        pricePlan.ga_account_count == 1 ? <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>single user</li>
+                                                            :
+                                                            <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>{pricePlan.ga_account_count} GA accounts</li>
+                                                }
+                                                {
+                                                    pricePlan.ga_account_count == 1 ?
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations account filtering</li>
+                                                        : null
+                                                }
                                                 {
                                                     pricePlan.has_manual_add ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Manual Annotations</li>
-                                                        : ''
+                                                        : null
                                                 }
 
                                                 {
                                                     pricePlan.has_csv_upload ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>CSV Upload</li>
-                                                        : ''
+                                                        : null
                                                 }
 
                                                 {
                                                     pricePlan.has_api ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations API</li>
-                                                        : ''
+                                                        : null
                                                 }
                                                 {
                                                     pricePlan.has_integrations ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Integrations</li>
-                                                        : ''
+                                                        : null
                                                 }
                                                 {
                                                     pricePlan.has_data_sources ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Data sources</li>
-                                                        : ''
+                                                        : null
                                                 }
                                             </ul>
 
