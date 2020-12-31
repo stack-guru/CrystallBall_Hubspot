@@ -13,7 +13,7 @@ class ModifyAnnotationGaAccountsTableForeignKeys extends Migration
     {
         DB::statement("
             ALTER TABLE `annotation_ga_accounts`
-                DROP CONSTRAINT `annotation_ga_accounts_annotation_id_foreign`
+                DROP FOREIGN KEY `annotation_ga_accounts_annotation_id_foreign`
                 ;
             ");
         DB::statement("
@@ -34,7 +34,7 @@ class ModifyAnnotationGaAccountsTableForeignKeys extends Migration
     {
         DB::statement("
             ALTER TABLE `annotation_ga_accounts`
-                DROP CONSTRAINT `annotation_ga_accounts_annotation_id_foreign`
+                DROP FOREIGN KEY `annotation_ga_accounts_annotation_id_foreign`
                 ;
             ");
         DB::statement("
