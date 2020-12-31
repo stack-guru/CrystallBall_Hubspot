@@ -116,7 +116,7 @@ export default class indexPricingPlans extends React.Component {
                                                             <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>{pricePlan.ga_account_count} GA accounts</li>
                                                 }
                                                 {
-                                                    pricePlan.ga_account_count == 1 ?
+                                                    pricePlan.ga_account_count == 0 ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations account filtering</li>
                                                         : null
                                                 }
