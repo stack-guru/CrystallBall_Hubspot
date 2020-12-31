@@ -1,8 +1,6 @@
 import React from 'react';
 import VideoModalBox from '../../utils/VideoModalBox';
 
-require("../../Main.css");
-
 export default class integrationsIndex extends React.Component {
 
     constructor(props) {

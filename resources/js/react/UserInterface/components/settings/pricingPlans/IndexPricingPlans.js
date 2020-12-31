@@ -1,8 +1,7 @@
 import React from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
 import HttpClient from "../../../utils/HttpClient";
-import { Link, Redirect } from 'react-router-dom';
-require("../../../Main.css");
 
 export default class indexPricingPlans extends React.Component {
 
@@ -89,7 +88,16 @@ export default class indexPricingPlans extends React.Component {
                                     <div className="card mb-5 mb-lg-0">
                                         <div className="card-body">
                                             <h5 className="card-title  text-uppercase text-center">{pricePlan.name}</h5>
-                                            <p className="mb-0 card-text">{pricePlan.short_description}</p>
+
+                                            {/* This line break logic is completely rubbish but it works.
+                                                If you have some better approach for it, don't hesitate
+                                                to comment this one and try yours. */}
+                                            {
+                                                pricePlan.short_description.length > 35 ? <p className="mb-0 card-text">{pricePlan.short_description}</p> :
+
+                                                    pricePlan.short_description.length == 0 ? <p className="mb-0 card-text">&nbsp;<br />&nbsp;</p> :
+                                                        <p className="mb-0 card-text">{pricePlan.short_description}<br />&nbsp;</p>
+                                            }
                                             <h6 className="card-price text-center">${pricePlan.price}<span className="period">/month</span></h6>
                                             <hr />
                                             <ul className="fa-ul">
