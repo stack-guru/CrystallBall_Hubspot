@@ -5,11 +5,16 @@ import { Redirect } from "react-router-dom";
 const steps = [
     {
         // selector: '.btn',
+        position: 'top',
         content: 'Welcome! Take this quick tour',
-        redirectRoute: null
+        redirectRoute: null,
+        style: {
+            // width: '50%', height: '50%',
+            padding: '60px'
+        }
     },
     {
-        selector: '#annotation-index-table',
+        selector: '#annotation-index-container',
         content: 'Here you can see and manage all your annotations',
         redirectRoute: '/annotation'
     },
@@ -25,19 +30,20 @@ const steps = [
     },
     {
         selector: '#data-source-page-container',
+        position: 'left',
         content: 'Automate annotations for Holidays, Weather Alerts, Google Updates, Retail Marketing Dates',
-        redirectRoute: '/data-source',
-        position: 'left'
+        redirectRoute: '/data-source'
     },
     {
         selector: '#chrome-extension-download-button',
-        position: 'right',
+        position: [window.screen.width - (window.screen.width * 25 / 100), 10],
         content: <div>Make sure you download the Extension, you clicked on PIN EXTENSION and that you are logged in.<br />
             <img src="/images/pin_extension.gif" width="100%" height="auto" />
         </div>,
         redirectRoute: null
     },
     {
+        position: 'top',
         content: <div>We added a Sample Annotation to show you how it looks like, once you go to <a href="https://analytics.google.com/analytics/web/#/">Google Analytics</a>
             <img src="/images/walkthrough_step7.gif" width="100%" height="auto" />
         </div>,
@@ -67,7 +73,7 @@ export default class InterfaceTour extends Component {
         }
     }
 
-    handleRedirecter(){
+    handleRedirecter() {
         if (this.state.redirectTo !== null) {
             let rL = this.state.redirectTo
             this.setState({ redirectTo: null })

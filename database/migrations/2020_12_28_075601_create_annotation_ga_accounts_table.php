@@ -17,8 +17,8 @@ class CreateAnnotationGAAccountsTable extends Migration
             $table->id();
             $table->foreignId('annotation_id')->nullable()->constrained();
 
-            $table->foreignId('google_analytics_account_id')->nullable()->constrained();
-            $table->foreignId("user_id")->required()->constrained();
+            $table->foreignId('google_analytics_account_id')->nullable()->onDelete('CASCADE')->constrained();
+            $table->foreignId("user_id")->required()->onDelete('CASCADE')->constrained();
 
             $table->timestamps();
         });

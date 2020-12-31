@@ -172,7 +172,7 @@ class IndexAnnotations extends React.Component {
         return (
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section   " id="inputs">
-                    <div className="container-xl p-0">
+                    <div className="container-xl p-0" id="annotation-index-container">
                         <div className="row ml-0 mr-0 mb-5">
                             <div className="col-md-12">
                                 <h2 className="heading-section gaa-title">Annotations</h2>
@@ -222,7 +222,7 @@ class IndexAnnotations extends React.Component {
                         <div className="row ml-0 mr-0">
                             <div className="col-12">
                                 <div className="table-responsive">
-                                    <table className="table table-hover table-bordered table-striped" id="annotation-index-table">
+                                    <table className="table table-hover table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Category</th>

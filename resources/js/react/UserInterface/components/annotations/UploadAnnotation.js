@@ -1,15 +1,16 @@
 import React from 'react';
+import { toast } from "react-toastify";
+
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
-import { toast } from "react-toastify";
-import GoogleAccountSelect from "../../utils/GoogleAccountSelect";
+import GoogleAnalyticsAccountSelect from '../../utils/GoogleAnalyticsAccountSelect';
 
 export default class UploadAnnotation extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            google_account_id: '',
+            google_analytics_account_id: [],
             date_format: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -79,7 +80,7 @@ export default class UploadAnnotation extends React.Component {
                                     <div className="row ml-0 mr-0 mt-2">
                                         <div className="form-group  col-12 col-sm-12 col-md-6 col-lg-6 p-0 ua-r-pr ">
                                             <label htmlFor="account" className="form-control-placeholder">Select Account</label>
-                                            <GoogleAccountSelect name={'google_account_id'} id={'google_account_id'} value={this.state.google_account_id} onChangeCallback={this.changeHandler} multiple></GoogleAccountSelect>
+                                            <GoogleAnalyticsAccountSelect name="google_analytics_account_id" id="google_analytics_account_id" value={this.state.google_analytics_account_id} onChangeCallback={this.changeHandler} placeholder="Select GA Accounts" multiple></GoogleAnalyticsAccountSelect>
                                         </div>
                                         <div className="form-group col-12 col-sm-12 col-md-6 col-lg-6 p-0 ua-r-pl ">
                                             <label htmlFor="date-format" className="form-control-placeholder" >Select Date format</label>

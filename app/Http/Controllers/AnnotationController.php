@@ -101,23 +101,24 @@ class AnnotationController extends Controller
             }
         }
 
-        if (!in_array("", $request->google_analytics_account_id)) {
-            foreach ($newGAAIds as $gAAId) {
-                if (!in_array($gAAId, $oldGAAIds)) {
-                    $aGAA = new AnnotationGaAccount;
-                    $aGAA->annotation_id = $annotation->id;
-                    $aGAA->google_analytics_account_id = $gAAId;
-                    $aGAA->user_id = $userId;
-                    $aGAA->save();
+        if ($request->has('google_analytics_account_id')) {
+            if (!in_array("", $request->google_analytics_account_id)) {
+                foreach ($newGAAIds as $gAAId) {
+                    if (!in_array($gAAId, $oldGAAIds)) {
+                        $aGAA = new AnnotationGaAccount;
+                        $aGAA->annotation_id = $annotation->id;
+                        $aGAA->google_analytics_account_id = $gAAId;
+                        $aGAA->user_id = $userId;
+                        $aGAA->save();
+                    }
                 }
-            }
-        } else {
-            $aGAA = new AnnotationGaAccount;
-            $aGAA->annotation_id = $annotation->id;
-            $aGAA->google_analytics_account_id = null;
-            $aGAA->user_id = $userId;
-            $aGAA->save();
-        }
+            } else {
+                $aGAA = new AnnotationGaAccount;
+                $aGAA->annotation_id = $annotation->id;
+                $aGAA->google_analytics_account_id = null;
+                $aGAA->user_id = $userId;
+                $aGAA->save();
+            }}
 
         $annotation->load('annotationGaAccounts');
 
@@ -196,6 +197,7 @@ class AnnotationController extends Controller
         $this->validate($request, [
             'csv' => 'required|file|mimetypes:text/plain|mimes:txt',
             'date_format' => 'required',
+            'google_analytics_account_id.*' => 'nullable|exists:google_analytics_accounts,id',
         ]);
 
         $filepath = $request->file('csv')->getRealPath();
