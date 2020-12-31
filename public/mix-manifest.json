@@ -1,3 +1,7 @@
 {
-    "/js/UI.js": "/js/UI.js"
+    "/js/UI.js": "/js/UI.js",
+    "/css/auth.css": "/css/auth.css",
+    "/css/documentation.css": "/css/documentation.css",
+    "/css/admin.css": "/css/admin.css",
+    "/js/admin.js": "/js/admin.js"
 }

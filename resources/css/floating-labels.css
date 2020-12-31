@@ -90,59 +90,46 @@ body {
 
 /* ---------------------------------------------------------------- */
 
-.soft-signup-content-component.is-unified
-    .soft-signup-content-wrapper
-    .minified-oauth-signup-wrapper
-    .minified-oauth-providers
-    .minified-provider {
+.minified-provider {
     flex: 1;
     height: 36px;
     border-radius: 4px;
     padding: 4px 20px;
     transition: background 0.2s ease, transform 50ms;
 }
-.soft-signup-content-component
-    .soft-signup-content-wrapper
-    .minified-oauth-signup-wrapper
-    .minified-oauth-providers
-    .minified-provider:not(:last-child) {
-    margin-right: 8px;
-}
-.soft-signup-content-component
-    .soft-signup-content-wrapper
-    .minified-oauth-signup-wrapper
-    .minified-oauth-providers
-    .minified-provider {
-    height: 32px;
-    width: 32px;
-    border-radius: 50%;
+
+.minified-provider {
+
     border: 1px solid #c5c7d0;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: border 200ms ease;
-}
-.soft-signup-react-body {
-    font-family: Roboto, helvetica;
+    color: #836879;
 }
 
-.soft-signup-content-component.is-unified
-    .soft-signup-content-wrapper
-    .minified-oauth-signup-wrapper
-    .minified-oauth-providers
-    .minified-provider
-    .minified-provider-name {
+.minified-provider .minified-provider-name {
     margin-left: 8px;
     font-weight: 300;
 }
-.soft-signup-content-component
-    .soft-signup-content-wrapper
-    .minified-oauth-signup-wrapper
-    .minified-oauth-providers
-    .minified-provider {
+
+.minified-provider {
     cursor: pointer;
 }
-.soft-signup-react-body {
-    font-family: Roboto, helvetica;
+
+.minified-provider .oauth-logo {
+    width: 20px;
+}
+.minified-provider .oauth-logo {
+    width: 16px;
+}
+
+.minified-provider .minified-provider-name {
+    margin-left: 8px;
+    font-weight: 300;
+}
+
+.minified-provider {
+    cursor: pointer;
 }
