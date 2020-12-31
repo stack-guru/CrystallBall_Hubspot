@@ -103,11 +103,7 @@ export default class indexPricingPlans extends React.Component {
                                             <ul className="fa-ul">
 
                                                 <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Chrome extension</li>
-                                                {
-                                                    pricePlan.user_per_ga_account_count == 0 ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Unlimited user per GA account</li>
-                                                        : null
-                                                }
+                                                
                                                 {
                                                     pricePlan.ga_account_count == 0 ? <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Unlimited GA accountS</li>
                                                         :
@@ -118,6 +114,11 @@ export default class indexPricingPlans extends React.Component {
                                                 {
                                                     pricePlan.ga_account_count == 0 ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations account filtering</li>
+                                                        : null
+                                                }
+                                                {
+                                                    pricePlan.user_per_ga_account_count == 0 ?
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Unlimited users</li>
                                                         : null
                                                 }
                                                 {
