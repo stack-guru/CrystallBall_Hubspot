@@ -39,7 +39,7 @@ const steps = [
     },
     {
         content: <div>We added a Sample Annotation to show you how it looks like, once you go to <a href="https://analytics.google.com/analytics/web/#/">Google Analytics</a>
-            <img src="/images/walkthrough_step7.jpeg" width="100%" height="auto" />
+            <img src="/images/walkthrough_step7.gif" width="100%" height="auto" />
         </div>,
         redirectRoute: null
     }

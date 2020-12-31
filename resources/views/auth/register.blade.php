@@ -68,5 +68,6 @@
 
   <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
   <a class="btn btn-lg btn-primary btn-block" href="{{ route('login') }}">Login</a>
+  <div class="minified-provider"><img class="oauth-logo" src="/images/google-icon.svg"><span class="minified-provider-name">Google</span></div>
 </form>
 @endsection
