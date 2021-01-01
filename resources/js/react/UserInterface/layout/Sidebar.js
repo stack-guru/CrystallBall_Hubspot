@@ -171,6 +171,11 @@ class sidebar extends React.Component {
                                         <a href="#" onClick={(e) => { e.preventDefault(); this.setState({ showTour: true }) }}>Take a Tour</a>
                                     </div>
                                 </li>
+                                {/* <li className="nav-item dropdown">
+                                    <div className="sidebar-link nav-link">
+                                        <Link to="/settings/support" >Support</Link>
+                                    </div>
+                                </li> */}
                             </ul>
                         </div>
                     </li>

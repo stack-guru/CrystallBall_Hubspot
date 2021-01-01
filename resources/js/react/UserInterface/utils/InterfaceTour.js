@@ -14,29 +14,32 @@ const steps = [
         }
     },
     {
+        position: 'bottom',
         selector: '#annotation-index-container',
         content: 'Here you can see and manage all your annotations',
         redirectRoute: '/annotation'
     },
     {
+        position: 'bottom',
         selector: '#csv-upload-form-container',
         content: 'If you have a list of annotation, upload an excel from here',
         redirectRoute: '/annotation/upload'
     },
     {
+        position: 'bottom',
         selector: '#integration-page-top-options',
         content: "Automate annotations of Ads Campaign, Newsletters, directly from Slack and more",
         redirectRoute: '/integrations'
     },
     {
+        position: 'right',
         selector: '#data-source-page-container',
-        position: 'left',
         content: 'Automate annotations for Holidays, Weather Alerts, Google Updates, Retail Marketing Dates',
         redirectRoute: '/data-source'
     },
     {
-        selector: '#chrome-extension-download-button',
         position: [window.screen.width - (window.screen.width * 25 / 100), 10],
+        selector: '#chrome-extension-download-button',
         content: <div>Make sure you download the Extension, you clicked on PIN EXTENSION and that you are logged in.<br />
             <img src="/images/pin_extension.gif" width="100%" height="auto" />
         </div>,
@@ -44,7 +47,7 @@ const steps = [
     },
     {
         position: 'top',
-        content: <div>We added a Sample Annotation to show you how it looks like, once you go to <a href="https://analytics.google.com/analytics/web/#/">Google Analytics</a>
+        content: <div>We added a Sample Annotation to show you how it looks like, once you go to <a href="https://analytics.google.com/analytics/web/#/" target="_blank">Google Analytics</a>
             <img src="/images/walkthrough_step7.gif" width="100%" height="auto" />
         </div>,
         redirectRoute: null,

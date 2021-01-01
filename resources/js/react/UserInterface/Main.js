@@ -9,6 +9,8 @@ import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer"
 
+import './Main.css';
+
 import Index from "./components/Index";
 import AnnotationsCreate from './components/annotations/CreateAnnotation';
 import AnnotationsUpdate from './components/annotations/EditAnnotation';
@@ -23,8 +25,8 @@ import DataSourceIndex from "./components/DataSource/DataSourceIndex";
 import IndexAPIKey from './components/apiKey/IndexAPIKey';
 import CreatePayment from './components/settings/pricingPlans/CreatePayment';
 import IntegrationsIndex from "./components/integrations/IntegrationsIndex";
+import SupportIndex from './components/support/supportIndex';
 
-import './Main.css';
 
 
 class Main extends React.Component {
@@ -153,6 +155,9 @@ class Main extends React.Component {
                             </Route>
                             <Route exact path="/integrations" refresh={true}>
                                 <IntegrationsIndex user={this.state.user} />
+                            </Route>
+                            <Route exact path="/settings/support" refresh={true}>
+                                <SupportIndex user={this.state.user} />
                             </Route>
                         </Switch>
 

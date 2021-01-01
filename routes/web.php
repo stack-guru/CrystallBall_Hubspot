@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'settings'], function () {
         Route::view('/', 'ui/app');
+        Route::view('support', 'ui/app');
+
 
         Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->except(['store', 'show', 'update', 'edit', 'destroy']);
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store']);

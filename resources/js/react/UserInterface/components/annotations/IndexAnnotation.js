@@ -171,139 +171,141 @@ class IndexAnnotations extends React.Component {
         const categories = this.state.annotationCategories;
         return (
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
-                <section className="ftco-section   " id="inputs">
-                    <div className="container-xl p-0" id="annotation-index-container">
+                <section className="ftco-section" id="inputs">
+                    <div className="container-xl p-0">
                         <div className="row ml-0 mr-0 mb-5">
                             <div className="col-md-12">
                                 <h2 className="heading-section gaa-title">Annotations</h2>
                             </div>
                         </div>
-                        <div className="row mb-4 ml-3 mr-3">
-                            <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
-                                <Link to="/annotation/create" className="btn btn-sm gaa-bg-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add Manual</Link>
-                                <Link to="/annotation/upload" className="btn btn-sm gaa-bg-primary text-white"><i className=" mr-2 fa fa-upload"></i>CSV Upload</Link>
-                            </div>
-                        </div>
-                        <div className="row mb-4 ml-0 mr-0">
-                            <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-left text-lg-left">
-                                <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
-                                    <option value="Null">Sort By</option>
-                                    <option value="added">Added</option>
-                                    <option value="date">By Date</option>
-                                    <option value="by-category">By Category</option>
-                                    <option value="ga-account">By GA account</option>
-                                </select>
-
-                            </div>
-                            <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-left text-lg-left">
-                                {
-                                    this.state.sortBy == "ga-account" ?
-                                        <GoogleAccountSelect name={'googleAccount'} id={'googleAccount'} value={this.state.googleAccount} onChangeCallback={(e) => { this.sortByAccount(e.target.value) }} />
-                                        : null
-                                }
-                                {
-                                    this.state.sortBy == "by-category" ?
-                                        <select name="category" id="category" value={this.state.category} className="form-control" onChange={(e) => { this.sortByCategory(e.target.value) }}>
-                                            <option value="select-category">Select Category</option>
-                                            {
-                                                categories.map(cats => (
-                                                    <option value={cats.category} key={cats.category}>{cats.category}</option>
-                                                ))
-                                            }
-                                        </select>
-                                        : null
-                                }
-                            </div>
-                            <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right"></div>
-                            <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right">
-                                <input name="searchText" value={this.state.searchText} className="form-control" placeholder="Search..." onChange={this.handleChange} />
-                            </div>
-                        </div>
-                        <div className="row ml-0 mr-0">
-                            <div className="col-12">
-                                <div className="table-responsive">
-                                    <table className="table table-hover table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Category</th>
-                                                <th>Event Name</th>
-                                                <th>Description</th>
-                                                <th>Google Account</th>
-                                                <th>Status</th>
-                                                <th>Show At</th>
-                                                <th>Actions</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-
-                                            {
-
-                                                annotations.map(anno => {
-                                                    if (!this.checkSearchText(anno)) return null;
-                                                    return <tr key={anno.category + anno.event_name +  anno.id} className={
-                                                        anno.category == "Holidays" || anno.category == "holidays" ? "text-primary" :
-                                                            anno.category == "google updates" || anno.category == "Google Updates" ? "text-success" :
-                                                                anno.category == "sales event" || anno.category == "Sales Event" ? "text-alert" : "text-primary"
-
-                                                    }>
-                                                        <td>{anno.category}</td>
-                                                        <td>{anno.event_name}</td>
-                                                        <td>
-                                                            <div className="desc-wrap">
-                                                                <div className="desc-td">
-                                                                    <p>{anno.description}</p>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            {anno.google_analytics_account_name ? anno.google_analytics_account_name : 'All Accounts'}
-                                                        </td>
-                                                        <td>
-                                                            {anno.id ?
-                                                                <button className={"btn btn-sm" + (anno.is_enabled ? " btn-success" : " btn-danger") + (this.state.isBusy ? " disabled" : "")} onClick={() => this.toggleStatus(anno.id)}>
-                                                                    {anno.is_enabled ? "On" : "Off"}
-                                                                </button>
-                                                                : null}
-                                                        </td>
-                                                        <td>{moment(anno.show_at).format('YYYY-MM-DD')}</td>
-                                                        <td>
-                                                            {anno.id ?
-                                                                <React.Fragment>
-                                                                    <button type="button" onClick={() => {
-                                                                        this.deleteAnnotation(anno.id)
-
-                                                                    }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white mr-1 mr-md-2">
-                                                                        <i className="mr-0 mr-md-1 fa fa-trash"></i>
-                                                                        <span className="action-text">Delete</span>
-                                                                    </button>
-                                                                    <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-bg-primary text-white" >
-                                                                        <i className="mr-0 mr-md-1 fa fa-edit"></i>
-                                                                        <span className="action-text"> Edit</span>
-                                                                    </Link>
-
-                                                                </React.Fragment>
-                                                                : null}
-                                                        </td>
-                                                    </tr>
-                                                })
-                                            }
-
-
-                                        </tbody>
-
-
-
-                                    </table>
+                        <div id="annotation-index-container">
+                            <div className="row mb-4 ml-3 mr-3">
+                                <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
+                                    <Link to="/annotation/create" className="btn btn-sm gaa-bg-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add Manual</Link>
+                                    <Link to="/annotation/upload" className="btn btn-sm gaa-bg-primary text-white"><i className=" mr-2 fa fa-upload"></i>CSV Upload</Link>
                                 </div>
                             </div>
+                            <div className="row mb-4 ml-0 mr-0">
+                                <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-left text-lg-left">
+                                    <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
+                                        <option value="Null">Sort By</option>
+                                        <option value="added">Added</option>
+                                        <option value="date">By Date</option>
+                                        <option value="by-category">By Category</option>
+                                        <option value="ga-account">By GA account</option>
+                                    </select>
 
+                                </div>
+                                <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-left text-lg-left">
+                                    {
+                                        this.state.sortBy == "ga-account" ?
+                                            <GoogleAccountSelect name={'googleAccount'} id={'googleAccount'} value={this.state.googleAccount} onChangeCallback={(e) => { this.sortByAccount(e.target.value) }} />
+                                            : null
+                                    }
+                                    {
+                                        this.state.sortBy == "by-category" ?
+                                            <select name="category" id="category" value={this.state.category} className="form-control" onChange={(e) => { this.sortByCategory(e.target.value) }}>
+                                                <option value="select-category">Select Category</option>
+                                                {
+                                                    categories.map(cats => (
+                                                        <option value={cats.category} key={cats.category}>{cats.category}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                            : null
+                                    }
+                                </div>
+                                <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right"></div>
+                                <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right">
+                                    <input name="searchText" value={this.state.searchText} className="form-control" placeholder="Search..." onChange={this.handleChange} />
+                                </div>
+                            </div>
+                            <div className="row ml-0 mr-0">
+                                <div className="col-12">
+                                    <div className="table-responsive">
+                                        <table className="table table-hover table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <th>Event Name</th>
+                                                    <th>Description</th>
+                                                    <th>Google Account</th>
+                                                    <th>Status</th>
+                                                    <th>Show At</th>
+                                                    <th>Actions</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+
+                                                {
+
+                                                    annotations.map(anno => {
+                                                        if (!this.checkSearchText(anno)) return null;
+                                                        return <tr key={anno.category + anno.event_name + anno.id} className={
+                                                            anno.category == "Holidays" || anno.category == "holidays" ? "text-primary" :
+                                                                anno.category == "google updates" || anno.category == "Google Updates" ? "text-success" :
+                                                                    anno.category == "sales event" || anno.category == "Sales Event" ? "text-alert" : "text-primary"
+
+                                                        }>
+                                                            <td>{anno.category}</td>
+                                                            <td>{anno.event_name}</td>
+                                                            <td>
+                                                                <div className="desc-wrap">
+                                                                    <div className="desc-td">
+                                                                        <p>{anno.description}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                {anno.google_analytics_account_name ? anno.google_analytics_account_name : 'All Accounts'}
+                                                            </td>
+                                                            <td>
+                                                                {anno.id ?
+                                                                    <button className={"btn btn-sm" + (anno.is_enabled ? " btn-success" : " btn-danger") + (this.state.isBusy ? " disabled" : "")} onClick={() => this.toggleStatus(anno.id)}>
+                                                                        {anno.is_enabled ? "On" : "Off"}
+                                                                    </button>
+                                                                    : null}
+                                                            </td>
+                                                            <td>{moment(anno.show_at).format('YYYY-MM-DD')}</td>
+                                                            <td>
+                                                                {anno.id ?
+                                                                    <React.Fragment>
+                                                                        <button type="button" onClick={() => {
+                                                                            this.deleteAnnotation(anno.id)
+
+                                                                        }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white mr-1 mr-md-2">
+                                                                            <i className="mr-0 mr-md-1 fa fa-trash"></i>
+                                                                            <span className="action-text">Delete</span>
+                                                                        </button>
+                                                                        <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-bg-primary text-white" >
+                                                                            <i className="mr-0 mr-md-1 fa fa-edit"></i>
+                                                                            <span className="action-text"> Edit</span>
+                                                                        </Link>
+
+                                                                    </React.Fragment>
+                                                                    : null}
+                                                            </td>
+                                                        </tr>
+                                                    })
+                                                }
+
+
+                                            </tbody>
+
+
+
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
 
                 </section>
-            </div>
+            </div >
         );
     }
 

@@ -1,9 +1,8 @@
 import React from 'react';
-
+import { toast } from "react-toastify";
 
 import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";
-import { toast } from "react-toastify";
 import DSRMDatesSelect from '../../utils/DSRMDatesSelect';
 
 export default class DataSourceIndex extends React.Component {
@@ -103,14 +102,14 @@ export default class DataSourceIndex extends React.Component {
         }
 
         return (
-            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
+            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper">
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
                         <h2 className="heading-section gaa-title">Data Source</h2>
                     </div>
                 </div>
-                <div className="row ml-0 mr-0 mt-4" id="data-source-page-container">
-                    <div className="col-md-8 col-sm-12 M">
+                <div className="row ml-0 mr-0 mt-4">
+                    <div className="col-md-8 col-sm-12" id="data-source-page-container">
 
                         <div className="container ds-sections border-bottom">
 
@@ -255,7 +254,7 @@ export default class DataSourceIndex extends React.Component {
 
 
                     </div>
-                    <div className="col-md-4 col-sm-12 M mt-3 border-left">
+                    <div className="col-md-4 col-sm-12 mt-3 border-left">
                         {this.state.sectionName == 'holidays' && this.state.userDataSources !== null ?
                             <div className="switch-wrapper">
                                 <Countries
