@@ -36,7 +36,7 @@ class sidebar extends React.Component {
             $("body").toggleClass("is-collapsed");
         });
 
-        this.setState({showTour: this.props.user.last_login_at == null});
+        this.setState({ showTour: this.props.user.last_login_at == null });
     }
 
     render() {
@@ -64,9 +64,7 @@ class sidebar extends React.Component {
                         </div>
                     </div>
                 </div>
-                {/*<nav className="navbar-wrap">*/}
                 <ul className="sidebar-menu scrollable pos-r ">
-
                     <li className="nav-item gaa-menu-item">
                         <Link to="/annotation" >
                             <span className="sidebar-link" >
@@ -97,7 +95,6 @@ class sidebar extends React.Component {
                             </span>
                         </Link>
                     </li>
-
                     <li className="nav-item gaa-menu-item">
                         <Link to="/api-key" >
                             <span className="sidebar-link" >
@@ -112,7 +109,6 @@ class sidebar extends React.Component {
                         <Link to="/integrations" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
-
                                     <i className="fa fa-cogs"></i>
                                 </span>
                                 <span className="title">Integrations</span>
@@ -123,57 +119,12 @@ class sidebar extends React.Component {
                         <Link to="/data-source" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
-
-
-                                    {/*<i className="fa fa-cogs"></i>*/}
-
                                     <i className="ti-server"></i>
-
                                 </span>
                                 <span className="title">Data Source</span>
                             </span>
                         </Link>
                     </li>
-
-                    {/* <li className="nav-item">
-                        <a href="https://datastudio.google.com">
-                        <span className="sidebar-link" >
-                            <span className="icon-holder">
-                                <i className="c-brown-500 ti-stats-up"></i>
-                            </span>
-                            <span className="title">Google Studio</span>
-                        </span>
-                        </a>
-                    </li> */}
-                    {/* <li className="nav-item">
-                        <Link to="/settings">
-                        <span className="sidebar-link" >
-                            <span className="icon-holder">
-                                <i className="fa fa-cogs text-white"></i>
-                            </span>
-                            <span className="title">Settings</span>
-                        </span>
-                        </Link>
-                    </li> */}
-                    {/*<li className="nav-item gaa-menu-item gaa-text-danger">*/}
-                    {/*    <a href="https://chrome.google.com/webstore/detail/google-analytics-annotati/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en&authuser=1" target="_blank">*/}
-                    {/*        <span className="sidebar-link gaa-text-danger" >*/}
-                    {/*            <span className="icon-holder gaa-text-danger">*/}
-                    {/*                <i className="fa fa-cube"></i>*/}
-                    {/*            </span>*/}
-                    {/*            <span className="title">Add Chrome Extension</span>*/}
-                    {/*        </span>*/}
-                    {/*    </a>*/}
-                    {/*</li>*/}
-                    {/*<li className="nav-item">*/}
-                    {/*    <a className="sidebar-link" href="">*/}
-                    {/*        <span className="icon-holder">*/}
-                    {/*            <i className="c-blue-500 ti-share"></i>*/}
-                    {/*        </span>*/}
-                    {/*        <span className="title">Compose</span>*/}
-                    {/*    </a>*/}
-                    {/*</li>*/}
-
                     <li className="nav-item gaa-menu-item setting-menu-item dropdown">
                         <a aria-expanded="false" data-target="#settings" aria-controls="settings" data-toggle="collapse"
                             className="dropdown-toggle" >
@@ -190,13 +141,8 @@ class sidebar extends React.Component {
                         <div className="collapse dropdown-menu setting-menu-content " id="settings ">
                             <ul className="list-unstyled" >
                                 <li className="nav-item dropdown">
-                                    <Link to="/settings/change-password" className="sidebar-link">
-                                        <span className="nav-link ">Change password</span>
-                                    </Link>
-                                </li>
-                                <li className="nav-item dropdown">
                                     <Link to="/settings/google-account" className="sidebar-link" >
-                                        <span className="nav-link">Add google account</span>
+                                        <span className="nav-link">Add Analytics Accounts</span>
                                     </Link>
                                 </li>
                                 <li className="nav-item dropdown">
@@ -215,33 +161,19 @@ class sidebar extends React.Component {
                                     </div>
                                 </li>
                                 <li className="nav-item dropdown">
+                                    <Link to="/settings/change-password" className="sidebar-link">
+                                        <span className="nav-link ">Profile</span>
+                                    </Link>
+                                </li>
+                                <li className="nav-item dropdown">
                                     <InterfaceTour isOpen={this.state.showTour} toggleShowTour={() => { this.setState({ showTour: !this.state.showTour }) }} />
                                     <div className="sidebar-link nav-link">
-                                        <a href="#" onClick={(e) => { e.preventDefault(); this.setState({ showTour: true }) }} target="_blank">Take a Tour</a>
+                                        <a href="#" onClick={(e) => { e.preventDefault(); this.setState({ showTour: true }) }}>Take a Tour</a>
                                     </div>
                                 </li>
                             </ul>
                         </div>
                     </li>
-
-
-                    {/*<li className="nav-item dropdown"><a className="dropdown-toggle" href={null}><span*/}
-                    {/*    className="icon-holder"><i className="c-teal-500 ti-view-list-alt"></i> </span><span*/}
-                    {/*    className="title">Multiple Levels</span>*/}
-                    {/*    <span className="arrow"><i className="ti-angle-right"></i></span></a>*/}
-                    {/*    <ul className="dropdown-menu">*/}
-                    {/*        <li className="nav-item dropdown"><a href={null}><span>Menu Item</span></a>*/}
-                    {/*        </li>*/}
-                    {/*        <li className="nav-item dropdown"><a href={null}><span>Menu Item</span> <span*/}
-                    {/*            className="arrow"><i className="ti-angle-right"></i></span></a>*/}
-                    {/*            <ul className="dropdown-menu">*/}
-                    {/*                <li><a href={null}>Menu Item</a></li>*/}
-                    {/*                <li><a href={null}>Menu Item</a></li>*/}
-                    {/*            </ul>*/}
-                    {/*        </li>*/}
-                    {/*    </ul>*/}
-                    {/*</li>*/}
-
                 </ul>
                 <div className="nav-item sidebar-footer  gaa-menu-item gaa-text-danger ">
                     <a href="https://chrome.google.com/webstore/detail/google-analytics-annotati/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en&authuser=1" target="_blank" id="chrome-extension-download-button">
@@ -253,7 +185,6 @@ class sidebar extends React.Component {
                         </span>
                     </a>
                 </div>
-                {/*</nav>*/}
             </div>
         )
     }
