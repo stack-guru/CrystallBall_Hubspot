@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Rules\HasLettersNumbers;
+use App\Rules\HasSymbol;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,8 +36,7 @@ class ResetPasswordController extends Controller
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
-            'old_password' => 'required|password',
-            'new_password' => 'required|confirmed|string|min:8',
+            'new_password' => ['confirmed', 'required', 'string', 'min:8', new HasSymbol, new HasLettersNumbers],
         ]);
 
         $user = Auth::user();
