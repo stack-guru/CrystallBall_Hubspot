@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function () {
 
+    Route::get('socialite/google/redirect', ['API\LoginController@login','registerLoginGoogleRedirect'])->name('socialite.google.redirect');
+    
     Route::post('login', 'API\LoginController@login')->name('login')->middleware('cors');
     Route::post('logout', 'API\LoginController@logout')->name('logout')->middleware('cors');
 
@@ -32,6 +34,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
             Route::group(['prefix' => 'chrome-extension', 'as' => 'chrome-extension'], function () {
                 Route::get('annotations', 'AnnotationController@extensionIndex');
                 Route::get('google-accounts', 'GoogleAccountController@extensionIndex');
+                Route::get('google-analytics-accounts', 'GoogleAnalyticsAccountController@extensionIndex');
                 Route::get('memberships', 'UserController@extensionShowMembership');
             });
 
