@@ -43,6 +43,7 @@ class AnnotationController extends Controller
         }
 
         $userId = Auth::id();
+        $user = Auth::user();
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));
 
@@ -53,15 +54,15 @@ class AnnotationController extends Controller
             $annotationsQuery .= " INNER JOIN `annotation_ga_accounts` ON `annotation_ga_accounts`.`annotation_id` = `annotations`.`id`";
             $annotationsQuery .= " WHERE `annotation_ga_accounts`.`google_analytics_accounts_id` = " . $request->query('google_analytics_account_id');
         }
-        if ($request->query('show_google_algorithm_updates') == 'true') {
+        if ($user->is_ds_google_algorithm_updates_enabled && $request->query('show_google_algorithm_updates') == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select update_date AS show_at, google_algorithm_updates.id, category, event_name, NULL as url, description from `google_algorithm_updates`";
         }
-        if ($request->query('show_holidays') == 'true') {
+        if ($user->is_ds_holidays_enabled && $request->query('show_holidays') == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select holiday_date AS show_at, holidays.id, category, event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = " . $userId . " and `uds`.`ds_code` = 'holidays'";
         }
-        if ($request->query('show_retail_marketing_dates') == 'true') {
+        if ($user->is_ds_retail_marketing_enabled && $request->query('show_retail_marketing_dates') == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select show_at, retail_marketings.id, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $userId . " and `uds`.`ds_code` = 'retail_marketings'";
         }
