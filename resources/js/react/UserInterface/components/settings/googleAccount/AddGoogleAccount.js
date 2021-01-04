@@ -1,7 +1,8 @@
 import React from 'react';
-import HttpClient from './../../../utils/HttpClient';
 import { toast } from 'react-toastify'
 import { Redirect } from "react-router-dom";
+
+import HttpClient from './../../../utils/HttpClient';
 import ErrorAlert from '../../../utils/ErrorAlert'
 
 export default class AddGoogleAccount extends React.Component {
@@ -20,6 +21,8 @@ export default class AddGoogleAccount extends React.Component {
         this.getGAAccounts = this.getGAAccounts.bind(this);
         this.getGoogleAccounts = this.getGoogleAccounts.bind(this);
         this.restrictionHandler = this.restrictionHandler.bind(this);
+
+        this.handleGAADelete = this.handleGAADelete.bind(this);
     }
 
     componentDidMount() {
@@ -104,6 +107,22 @@ export default class AddGoogleAccount extends React.Component {
         }
     }
 
+    handleGAADelete(gAAId) {
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true })
+            HttpClient.delete(`/settings/google-analytics-account/${gAAId}`).then(response => {
+                this.setState({ isBusy: false, googleAnalyticsAccounts: this.state.googleAnalyticsAccounts.filter(g => g.id !== gAAId) })
+                toast.success("Account removed.");
+            }, (err) => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: err });
+            });
+        }
+    }
+
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
@@ -177,6 +196,7 @@ export default class AddGoogleAccount extends React.Component {
                                             <th>Added On</th>
                                             <th>Google Account</th>
                                             <th>ID for API</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -188,6 +208,7 @@ export default class AddGoogleAccount extends React.Component {
                                                 <td>{moment(gAA.created_at).format('YYYY-MM-DD HH:mm:ss')}</td>
                                                 <td>{gAA.google_account.name}</td>
                                                 <td>{gAA.id}</td>
+                                                <td><button className="btn btn-danger" onClick={() => this.handleGAADelete(gAA.id)}><i className="fa fa-trash-o"></i></button></td>
                                             </tr>
                                         })}
                                     </tbody>

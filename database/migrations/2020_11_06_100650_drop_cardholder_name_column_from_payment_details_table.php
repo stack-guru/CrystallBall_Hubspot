@@ -26,7 +26,7 @@ class DropCardholderNameColumnFromPaymentDetailsTable extends Migration
     public function down()
     {
         Schema::table('payment_details', function (Blueprint $table) {
-            $table->dropColumn('cardholder_name');
+            $table->string('cardholder_name');
         });
     }
 }

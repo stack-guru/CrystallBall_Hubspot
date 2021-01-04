@@ -47,4 +47,14 @@ class GoogleAnalyticsAccountController extends Controller
 
         return ['success' => true];
     }
+
+    public function destroy(GoogleAnalyticsAccount $googleAnalyticsAccount)
+    {
+        if (Auth::id() !== $googleAnalyticsAccount->user_id) {
+            abort(404);
+        }
+
+        $googleAnalyticsAccount->delete();
+        return ['success' => true];
+    }
 }
