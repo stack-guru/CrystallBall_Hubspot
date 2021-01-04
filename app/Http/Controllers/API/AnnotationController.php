@@ -22,6 +22,9 @@ class AnnotationController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        if(! $user->pricePlan->has_api) abort(402);
+
         $annotations = Annotation::where('user_id', Auth::id())->get();
         $resource = new annotationResource($annotations);
         return ['annotations' => $resource];
@@ -29,6 +32,9 @@ class AnnotationController extends Controller
 
     public function show(Annotation $annotation)
     {
+        $user = Auth::user();
+        if(! $user->pricePlan->has_api) abort(402);
+
         if ($annotation->user_id != Auth::id()) {
             abort(404);
         }
@@ -176,6 +182,9 @@ class AnnotationController extends Controller
      */
     public function store(AnnotationRequest $request)
     {
+        $user = Auth::user();
+        if(! $user->pricePlan->has_api) abort(402);
+
         $annotation = new Annotation;
         $annotation->fill($request->validated());
         $annotation->show_at = Carbon::parse($request->show_at);
@@ -194,6 +203,9 @@ class AnnotationController extends Controller
      */
     public function update(AnnotationRequest $request, Annotation $annotation)
     {
+        $user = Auth::user();
+        if(! $user->pricePlan->has_api) abort(402);
+
         if ($annotation->user_id != Auth::id()) {
             abort(404);
         }
@@ -213,6 +225,9 @@ class AnnotationController extends Controller
      */
     public function destroy(Annotation $annotation)
     {
+        $user = Auth::user();
+        if(! $user->pricePlan->has_api) abort(402);
+        
         if ($annotation->user_id != Auth::id()) {
             abort(404);
         }

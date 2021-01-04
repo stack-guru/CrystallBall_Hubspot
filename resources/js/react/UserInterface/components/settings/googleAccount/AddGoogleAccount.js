@@ -36,7 +36,7 @@ export default class AddGoogleAccount extends React.Component {
         }
     }
 
-    getGoogleAccounts(){
+    getGoogleAccounts() {
         this.setState({ isBusy: true })
         HttpClient.get('/settings/google-account').then(resp => {
             this.setState({ googleAccounts: resp.data.google_accounts, isBusy: false });
@@ -83,7 +83,7 @@ export default class AddGoogleAccount extends React.Component {
     getGAAccounts() {
         this.setState({ isBusy: true });
         HttpClient.get(`/settings/google-analytics-account`).then(response => {
-            this.setState({ isBusy: false, googleAnalyticsAccounts:  response.data.google_analytics_accounts})
+            this.setState({ isBusy: false, googleAnalyticsAccounts: response.data.google_analytics_accounts })
         }, (err) => {
             console.log(err);
             this.setState({ isBusy: false, errors: (err.response).data });
@@ -95,10 +95,10 @@ export default class AddGoogleAccount extends React.Component {
 
     restrictionHandler(e) {
         e.preventDefault();
-        if (this.props.user.price_plan.price !== 0) {
+        if (this.props.user.price_plan.ga_account_count > this.state.googleAccounts.length || this.props.user.price_plan.ga_account_count == 0) {
             window.location = "/settings/google-account/create";
         } else {
-            swal("Upgrade to Basic Plan!", "Google account feature is not available in this package.", "warning").then(value => {
+            swal("Upgrade your Plan!", "Google account feature is not available in this package.", "warning").then(value => {
                 this.setState({ redirectTo: '/settings/price-plans' });
             })
         }
@@ -117,7 +117,7 @@ export default class AddGoogleAccount extends React.Component {
                     </div>
                     <div className="row ml-0 mr-0">
                         <div className="col-12">
-                            <ErrorAlert errors={this.state.errors}  />
+                            <ErrorAlert errors={this.state.errors} />
                         </div>
                     </div>
                     <div className="row ml-0 mr-0 my-5">
@@ -182,13 +182,13 @@ export default class AddGoogleAccount extends React.Component {
                                     <tbody>
                                         {this.state.googleAnalyticsAccounts.map(gAA => {
                                             return <tr key={gAA.id}>
-                                            <td>{gAA.name}</td>
-                                            <td>{gAA.ga_id}</td>
-                                            <td>{gAA.property_type}</td>
-                                            <td>{moment(gAA.created_at).format('YYYY-MM-DD HH:mm:ss')}</td>
-                                            <td>{gAA.google_account.name}</td>
-                                            <td>{gAA.id}</td>
-                                        </tr>
+                                                <td>{gAA.name}</td>
+                                                <td>{gAA.ga_id}</td>
+                                                <td>{gAA.property_type}</td>
+                                                <td>{moment(gAA.created_at).format('YYYY-MM-DD HH:mm:ss')}</td>
+                                                <td>{gAA.google_account.name}</td>
+                                                <td>{gAA.id}</td>
+                                            </tr>
                                         })}
                                     </tbody>
                                 </table>

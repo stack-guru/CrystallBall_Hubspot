@@ -24,6 +24,7 @@ class LoginController extends Controller
         }
         $user = User::where('email', $request->email)->first();
         if ($user) {
+            if(! $user->pricePlan->has_api) abort(402);
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('API Login at ' . Carbon::now()->format("F j, Y, g:i a"))->accessToken;
                 $response = ['token' => $token];

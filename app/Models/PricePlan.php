@@ -23,4 +23,13 @@ class PricePlan extends Model
     {
         return $this->hasMany('App\Models\User');
     }
+
+    protected $casts = [
+        'has_manual_add' => 'boolean',
+        'has_csv_upload' => 'boolean',
+        'has_api' => 'boolean',
+        'has_integrations' => 'boolean',
+        'has_data_sources' => 'boolean',
+
+    ];
 }

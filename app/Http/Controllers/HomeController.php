@@ -21,9 +21,12 @@ class HomeController extends Controller
 
         return ['user' => $user];
     }
+    
     public function userServices(Request $request){
 
         $user = Auth::user();
+        if(! $user->pricePlan->has_data_sources) abort(402);
+
         if($request->has('is_ds_holidays_enabled')){
             $user->is_ds_holidays_enabled=$request->is_ds_holidays_enabled;
             $user->save();

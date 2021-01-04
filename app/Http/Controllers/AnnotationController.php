@@ -37,7 +37,10 @@ class AnnotationController extends Controller
 
     public function store(AnnotationRequest $request)
     {
-        $userId = Auth::id();
+        $user = Auth::user();
+        if(! $user->pricePlan->has_manual_add) abort(402);
+
+        $userId = $user->id;
 
         $annotation = new Annotation;
         $annotation->fill($request->validated());
@@ -194,6 +197,9 @@ class AnnotationController extends Controller
 
     public function upload(Request $request)
     {
+        $user = Auth::user();
+        if(! $user->pricePlan->has_csv_upload) abort(402);
+
         $this->validate($request, [
             'csv' => 'required|file|mimetypes:text/plain|mimes:txt',
             'date_format' => 'required',
