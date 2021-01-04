@@ -13,7 +13,7 @@ class GoogleAnalyticsAccountController extends Controller
 
         return ['google_analytics_accounts' => array_merge(
             [
-                ['id' => '*', 'name' => 'Default GA Account'],
+                ['id' => '*', 'name' => 'No Filter'],
             ],
             GoogleAnalyticsAccount::ofCurrentUser()->get()->toArray()
         )];
