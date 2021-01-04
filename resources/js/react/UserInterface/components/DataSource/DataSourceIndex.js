@@ -118,6 +118,7 @@ export default class DataSourceIndex extends React.Component {
                                     <h4 className="gaa-text-primary">Holidays</h4>
                                 </div>
                                 <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                    {this.state.userServices.is_ds_holidays_enabled ? "Active" : "Deactive"}
                                     <label className="trigger switch">
                                         <input
                                             type="checkbox"
@@ -205,6 +206,7 @@ export default class DataSourceIndex extends React.Component {
                                     <h4 className="gaa-text-primary">Google Updates</h4>
                                 </div>
                                 <div className="col-3  d-flex flex-column justify-content-start align-items-center">
+                                    {this.state.userServices.is_ds_google_algorithm_updates_enabled ? "Active" : "Deactive"}
                                     <label className="trigger switch">
                                         <input type="checkbox"
                                             defaultChecked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
@@ -224,6 +226,7 @@ export default class DataSourceIndex extends React.Component {
                                     <h4 className="gaa-text-primary">Retail Marketing Dates</h4>
                                 </div>
                                 <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                    {this.state.userServices.is_ds_retail_marketing_enabled ? "Active" : "Deactive"}
                                     <label className="trigger switch">
                                         <input
                                             type="checkbox"
