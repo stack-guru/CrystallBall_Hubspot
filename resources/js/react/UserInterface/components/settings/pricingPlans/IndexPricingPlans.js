@@ -105,7 +105,7 @@ export default class indexPricingPlans extends React.Component {
                                                 <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Chrome extension</li>
                                                 
                                                 {
-                                                    pricePlan.ga_account_count == 0 ? <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Unlimited GA accountS</li>
+                                                    pricePlan.ga_account_count == 0 ? <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Unlimited GA accounts</li>
                                                         :
                                                         pricePlan.ga_account_count == 1 ? <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>single user</li>
                                                             :
