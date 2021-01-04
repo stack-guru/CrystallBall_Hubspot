@@ -22,25 +22,25 @@ const steps = [
     {
         position: 'bottom',
         selector: '#csv-upload-form-container',
-        content: 'If you have a list of annotation, upload an excel from here',
+        content: 'If you already have a list of annotations, you can bulk upload them here',
         redirectRoute: '/annotation/upload'
     },
     {
         position: 'bottom',
         selector: '#integration-page-top-options',
-        content: "Automate annotations of Ads Campaign, Newsletters, directly from Slack and more",
+        content: "Automate annotations from your Ad Platforms, Newsletters, Slack and more",
         redirectRoute: '/integrations'
     },
     {
         position: 'right',
         selector: '#data-source-page-container',
-        content: 'Automate annotations for Holidays, Weather Alerts, Google Updates, Retail Marketing Dates',
+        content: 'Automate annotations for Holidays, Weather Alerts, Google Updates & Retail Marketing Dates',
         redirectRoute: '/data-source'
     },
     {
         position: [window.screen.width - (window.screen.width * 25 / 100), 10],
         selector: '#chrome-extension-download-button',
-        content: <div>Make sure you download the Extension, you clicked on PIN EXTENSION and that you are logged in.<br />
+        content: <div>Make sure to add the extension, pin it and to log in.<br />
             <img src="/images/pin_extension.gif" width="100%" height="auto" />
         </div>,
         redirectRoute: null
