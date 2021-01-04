@@ -101,7 +101,7 @@ export default class AddGoogleAccount extends React.Component {
         if (this.props.user.price_plan.ga_account_count > this.state.googleAccounts.length || this.props.user.price_plan.ga_account_count == 0) {
             window.location = "/settings/google-account/create";
         } else {
-            swal("Upgrade your Plan!", "Google account feature is not available in this package.", "warning").then(value => {
+            swal("Upgrade to Pro Plan!", "Google account feature is not available in this package.", "warning").then(value => {
                 this.setState({ redirectTo: '/settings/price-plans' });
             })
         }
