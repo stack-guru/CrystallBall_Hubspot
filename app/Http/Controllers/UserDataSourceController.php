@@ -16,8 +16,6 @@ class UserDataSourceController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        if(! $user->pricePlan->has_data_sources) abort(402);
 
         return [
             'user_data_sources' => [
@@ -35,8 +33,6 @@ class UserDataSourceController extends Controller
      */
     public function store(UserDataSourceRequest $request)
     {
-        $user = Auth::user();
-        if(! $user->pricePlan->has_data_sources) abort(402);
 
         $userDataSource = new UserDataSource;
         $userDataSource->fill($request->validated());
@@ -54,8 +50,6 @@ class UserDataSourceController extends Controller
      */
     public function destroy(UserDataSource $userDataSource)
     {
-        $user = Auth::user();
-        if(! $user->pricePlan->has_data_sources) abort(402);
         
         if ($userDataSource->user_id !== Auth::id()) {
             abort(404);

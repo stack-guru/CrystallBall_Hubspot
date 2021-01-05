@@ -26,7 +26,7 @@ export default class DataSourceIndex extends React.Component {
             HttpClient.get('/user-data-source').then(resp => {
                 this.setState({ isBusy: false, userDataSources: resp.data.user_data_sources });
             }, (err) => {
-                this.setState({ isBusy: false, errors: err.response });
+                this.setState({ isBusy: false, errors: (err.response).data });
                 console.log(err)
             }).catch(err => {
                 console.log(err)
@@ -57,10 +57,17 @@ export default class DataSourceIndex extends React.Component {
                 toast.info("Service deactivated successfully.");
             }
         }, (err) => {
-            console.log(err)
+            console.log(err);
+            this.setState({ isBusy: false, errors: (err.response).data });
+            if((err.response).status == 402) {
+                swal("Upgrade to Pro Plan!", "Data Sources are not available in this package.", "warning").then(value => {
+                    this.setState({ redirectTo: '/settings/price-plans' });
+                })
+            }
         }).catch(err => {
             console.log(err)
-        })
+            this.setState({ isBusy: false, errors: err });
+        });
     }
 
     userDataSourceAddHandler(dataSource) {
