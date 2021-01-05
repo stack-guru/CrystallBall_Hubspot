@@ -37,17 +37,17 @@ export default class DataSourceIndex extends React.Component {
 
     serviceStatusHandler(e) {
         e.persist();
-        if (e.target.name == 'is_ds_holidays_enabled' && !e.target.defaultChecked) {
+        if (e.target.name == 'is_ds_holidays_enabled' && e.target.checked) {
             this.setState({ sectionName: 'holidays' })
-        } else if (e.target.name == 'is_ds_holidays_enabled' && e.target.defaultChecked) {
+        } else if (e.target.name == 'is_ds_holidays_enabled' && !e.target.checked) {
             this.setState({ sectionName: null })
         }
-        if (e.target.name == 'is_ds_retail_marketing_enabled' && !e.target.defaultChecked) {
+        if (e.target.name == 'is_ds_retail_marketing_enabled' && e.target.checked) {
             this.setState({ sectionName: 'retail_marketings' })
-        } else if (e.target.name == 'is_ds_retail_marketing_enabled' && e.target.defaultChecked) {
+        } else if (e.target.name == 'is_ds_retail_marketing_enabled' && !e.target.checked) {
             this.setState({ sectionName: null })
         }
-        HttpClient.post('/userService', { [e.target.name]: e.target.defaultChecked ? 0 : 1 }).then(resp => {
+        HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
             if (resp.data.user_services[e.target.name] == 1) {
                 toast.success("Service activated successfully.");
                 this.setState({ userServices: resp.data.user_services })
@@ -124,7 +124,7 @@ export default class DataSourceIndex extends React.Component {
                                             type="checkbox"
                                             name="is_ds_holidays_enabled"
                                             onChange={this.serviceStatusHandler}
-                                            defaultChecked={this.state.userServices.is_ds_holidays_enabled}
+                                            checked={this.state.userServices.is_ds_holidays_enabled}
                                         />
                                         <span className="slider round" />
                                     </label>
@@ -209,7 +209,7 @@ export default class DataSourceIndex extends React.Component {
                                     {this.state.userServices.is_ds_google_algorithm_updates_enabled ? "Active" : "Deactive"}
                                     <label className="trigger switch">
                                         <input type="checkbox"
-                                            defaultChecked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
+                                            checked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
                                             onChange={this.serviceStatusHandler}
                                             name="is_ds_google_algorithm_updates_enabled"
                                         />
@@ -232,7 +232,7 @@ export default class DataSourceIndex extends React.Component {
                                             type="checkbox"
                                             name="is_ds_retail_marketing_enabled"
                                             onChange={this.serviceStatusHandler}
-                                            defaultChecked={this.state.userServices.is_ds_retail_marketing_enabled}
+                                            checked={this.state.userServices.is_ds_retail_marketing_enabled}
                                         />
                                         <span className="slider round" />
                                     </label>
