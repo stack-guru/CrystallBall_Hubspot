@@ -54,12 +54,15 @@ class AnnotationController extends Controller
         $endDate = Carbon::parse($request->query('endDate'));
 
         $annotationsQuery = "SELECT TempTable.* FROM (";
-        $annotationsQuery .= "SELECT DISTINCT DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` FROM `annotations` WHERE `user_id` = " . $userId . " AND `is_enabled` = 1";
+        $annotationsQuery .= "SELECT DISTINCT DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` FROM `annotations`";
 
         if ($request->query('google_analytics_account_id') && $request->query('google_analytics_account_id') !== '*') {
             $annotationsQuery .= " INNER JOIN `annotation_ga_accounts` ON `annotation_ga_accounts`.`annotation_id` = `annotations`.`id`";
-            $annotationsQuery .= " WHERE `annotation_ga_accounts`.`google_analytics_accounts_id` = " . $request->query('google_analytics_account_id');
+            $annotationsQuery .= " WHERE `annotation_ga_accounts`.`google_analytics_accounts_id` = " . $request->query('google_analytics_account_id') . " AND `annotations`.`user_id` = " . $userId . " AND `annotations`.`is_enabled` = 1";
+        }else{
+            $annotationsQuery .= " WHERE `annotations`.`user_id` = " . $userId . " AND `annotations`.`is_enabled` = 1";
         }
+
         if ($user->is_ds_google_algorithm_updates_enabled && $request->query('show_google_algorithm_updates') == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select update_date AS show_at, google_algorithm_updates.id, category, event_name, NULL as url, description from `google_algorithm_updates`";
