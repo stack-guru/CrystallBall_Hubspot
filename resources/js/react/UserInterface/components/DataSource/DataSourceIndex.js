@@ -14,6 +14,7 @@ export default class DataSourceIndex extends React.Component {
             userServices: this.props.user,
             isBusy: false,
             errors: '',
+            redirectTo: null,
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
@@ -103,6 +104,8 @@ export default class DataSourceIndex extends React.Component {
     }
 
     render() {
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+
         let holidayCountries = null;
         if (this.state.userDataSources != null) {
             holidayCountries = this.state.userDataSources.holidays;
