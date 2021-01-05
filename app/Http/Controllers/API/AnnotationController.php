@@ -58,7 +58,7 @@ class AnnotationController extends Controller
 
         if ($request->query('google_analytics_account_id') && $request->query('google_analytics_account_id') !== '*') {
             $annotationsQuery .= " INNER JOIN `annotation_ga_accounts` ON `annotation_ga_accounts`.`annotation_id` = `annotations`.`id`";
-            $annotationsQuery .= " WHERE `annotation_ga_accounts`.`google_analytics_accounts_id` = " . $request->query('google_analytics_account_id') . " AND `annotations`.`user_id` = " . $userId . " AND `annotations`.`is_enabled` = 1";
+            $annotationsQuery .= " WHERE `annotation_ga_accounts`.`google_analytics_account_id` = " . $request->query('google_analytics_account_id') . " AND `annotations`.`user_id` = " . $userId . " AND `annotations`.`is_enabled` = 1";
         }else{
             $annotationsQuery .= " WHERE `annotations`.`user_id` = " . $userId . " AND `annotations`.`is_enabled` = 1";
         }
