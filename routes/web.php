@@ -18,7 +18,7 @@ Route::redirect('/', '/login', 301);
 Auth::routes();
 
 Route::get('socialite/google', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogle'])->name('socialite.google');
-Route::get('socialite/google/redirect', [App\Http\Controllers\Auth\RegisterController::class,'registerLoginGoogleRedirect'])->name('socialite.google.redirect');
+Route::get('socialite/google/redirect', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogleRedirect'])->name('socialite.google.redirect');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('login');
@@ -49,7 +49,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::view('/', 'ui/app');
         Route::view('support', 'ui/app');
 
-
         Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->except(['store', 'show', 'update', 'edit', 'destroy']);
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store']);
 
@@ -61,7 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'ui'], function () {
 
-        Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only([ 'index', 'store', 'destroy' ]);
+        Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'destroy']);
 
         Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
         Route::get('coupon', [App\Http\Controllers\CouponController::class, 'verify']);
@@ -72,7 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('countries', [App\Http\Controllers\HolidayController::class, 'holidayApi']);
         Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);
-        Route::get('annotation-categories',[App\Http\Controllers\AnnotationController::class, 'getCategories']);
+        Route::get('annotation-categories', [App\Http\Controllers\AnnotationController::class, 'getCategories']);
         Route::get('retail-marketing-dates', [App\Http\Controllers\RetailMarketingController::class, 'uiIndex']);
 
         Route::group(['prefix' => 'settings'], function () {
@@ -87,7 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('google-analytics-account', App\Http\Controllers\GoogleAnalyticsAccountController::class)->only(['index', 'destroy']);
             Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);
 
-
+            Route::post('support', [App\Http\Controllers\HomeController::class, 'storeSupport']);
         });
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);

@@ -1,14 +1,61 @@
 import React, { Component } from 'react'
+import { toast } from 'react-toastify'
 
 import ErrorAlert from "../../utils/ErrorAlert";
+import HttpClient from "../../utils/HttpClient";
 
 export default class SupportIndex extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-
+            support: {
+                details: ''
+            },
+            errors: undefined
         }
+
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.setDefaultState = this.setDefaultState.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    setDefaultState() {
+        this.setState({
+            support: {
+                details: ''
+            },
+            isBusy: false,
+            errors: undefined
+        });
+    }
+
+    componentDidMount() {
+        document.title = "Get Support";
+    }
+
+    handleChange(e) {
+        this.setState({ support: { ...this.state.support, [e.target.name]: e.target.value } })
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        let fD = new FormData(e.target);
+        // HttpClient({
+        //     url: `/support`, baseURL: "/ui/", method: 'post', headers: { 'Content-Type': 'multipart/form-data' },
+        //     data: fD
+        // })
+        HttpClient.post("/settings/support", fD, { headers: { 'Content-Type': 'multipart/form-data' } })
+            .then(response => {
+                toast.info("Support request sent to server.");
+                this.setDefaultState();
+            }, (err) => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                console.log(err)
+                this.setState({ isBusy: false, errors: err });
+            });
     }
 
     render() {
@@ -18,64 +65,37 @@ export default class SupportIndex extends Component {
                     <div className="container p-5">
                         <div className="row mb-5">
                             <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">API Keys</h2>
-                                <sub className="float-right"><a href="/documentation" target="_blank">Check documentation</a></sub>
+                                <h2 className="heading-section gaa-title">Get Support</h2>
                             </div>
                             <div className="col-md-12">
                                 <ErrorAlert errors={this.state.errors} />
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-md-4">
-                                <label>Token Name:</label>
-                                <input type="text" className="form-control" name="token_name" onChange={this.handleChange} value={this.state.token_name} />
-                            </div>
-                            <div className="col-md-4">
-                                <label>Access Token:</label>
-                                <textarea className="form-control" value={this.state.accessToken} readOnly id="input-access-token" />
-                                <label className="text-danger">Token will only appear here, once.</label>
-                            </div>
-                            <div className="col-md-4">
-                                <br />
-                                <br />
-                                <button className="btn btn-success" onClick={() => { this.generateAPIKey() }}>Generate</button>
-                                <button className="ml-3 btn btn-info" onClick={() => { this.copyAccessToken() }}>Copy</button>
-                            </div>
-                        </div>
 
-                        <div className="row  ml-0 mr-0 mt-5">
-                            <div className="col-12">
-                                <table className="table table-hover table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Token Name</th>
-                                            <th>Created At</th>
-                                            <th>Expires At</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.state.apiKeys.map(apiKey => {
-                                            return <tr key={apiKey.id}>
-                                                <td>
-                                                    {apiKey.name}
-                                                </td>
-                                                <td>
-                                                    {moment(apiKey.created_at).format("YYYY-MM-DD")}
-                                                </td>
-                                                <td>
-                                                    {moment(apiKey.expires_at).format("YYYY-MM-DD")}
-                                                </td>
-                                                <td>
-                                                    <button className="btn gaa-btn-danger btn-sm" type="button" onClick={this.handleDelete} data-token-id={apiKey.id}><i className="fa fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                        })}
-                                    </tbody>
-                                </table>
+                        <form onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
+
+                            <div className="row mr-0 ml-0">
+                                <div className="col-lg-12 col-sm-12">
+                                    <label htmlFor="details" className="form-control-placeholder">Details</label>
+                                    <textarea name="details" className="form-control" onChange={this.handleChange} value={this.state.support.details}></textarea>
+                                </div>
+                                <div className="col-lg-6 col-sm-6">
+                                    <div className="form-group">
+                                        <label htmlFor="attachment" className="form-control-placeholder">Add Attachment</label>
+                                        <input type="file" className="form-control" id="attachment" name="attachment" />
+                                    </div>
+                                </div>
                             </div>
-                            <div className="col-12"></div>
-                        </div>
+                            <div className="row ml-0 mr-0  mt-3">
+                                <div className="col-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                    <button type="submit" className="btn btn-primary btn-fab btn-round">
+                                        <i className="fa fa-life-ring mr-3"></i>
+                                        Contact
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
                     </div>
                 </section>
             </div>

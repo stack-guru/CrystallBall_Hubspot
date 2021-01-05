@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+use App\Mail\SupportRequestMail;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -21,27 +23,47 @@ class HomeController extends Controller
 
         return ['user' => $user];
     }
-    
-    public function userServices(Request $request){
+
+    public function userServices(Request $request)
+    {
 
         $user = Auth::user();
-        if(! $user->pricePlan->has_data_sources) abort(402);
-
-        if($request->has('is_ds_holidays_enabled')){
-            $user->is_ds_holidays_enabled=$request->is_ds_holidays_enabled;
-            $user->save();
-        }
-        if($request->has('is_ds_google_algorithm_updates_enabled')){
-            $user->is_ds_google_algorithm_updates_enabled=$request->is_ds_google_algorithm_updates_enabled;
-            $user->save();
-        }
-        if($request->has('is_ds_retail_marketing_enabled')){
-            $user->is_ds_retail_marketing_enabled=$request->is_ds_retail_marketing_enabled;
-            $user->save();
+        if (!$user->pricePlan->has_data_sources) {
+            abort(402);
         }
 
-        return ['user_services'=>$user];
+        if ($request->has('is_ds_holidays_enabled')) {
+            $user->is_ds_holidays_enabled = $request->is_ds_holidays_enabled;
+            $user->save();
+        }
+        if ($request->has('is_ds_google_algorithm_updates_enabled')) {
+            $user->is_ds_google_algorithm_updates_enabled = $request->is_ds_google_algorithm_updates_enabled;
+            $user->save();
+        }
+        if ($request->has('is_ds_retail_marketing_enabled')) {
+            $user->is_ds_retail_marketing_enabled = $request->is_ds_retail_marketing_enabled;
+            $user->save();
+        }
 
+        return ['user_services' => $user];
+
+    }
+
+    public function storeSupport(Request $request)
+    {
+        $this->validate($request, [
+            'details' => 'required|string',
+            'attachment' => 'nullable|file',
+        ]);
+
+        if ($request->hasFile('attachment')) {
+            $sRM = new SupportRequestMail(Auth::user(), $request->details, $request->file('attachment')->path(), $request->file('attachment')->getClientOriginalExtension());
+        } else {
+            $sRM = new SupportRequestMail(Auth::user(), $request->details);
+        }
+        Mail::to(config('sl.support.email'))->send($sRM);
+
+        return ['sucess' => true];
     }
 
 }
