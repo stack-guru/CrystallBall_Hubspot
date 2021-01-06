@@ -36,7 +36,7 @@ export default class UploadAnnotation extends React.Component {
                 this.setState({ isBusy: false, errors: response.data.message });
             }, (err) => {
                 console.log(err);
-                this.setState({ isBusy: false, errors: (err.response).data.message });
+                this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
                 console.log(err)
                 this.setState({ isBusy: false, errors: err });
@@ -86,7 +86,7 @@ export default class UploadAnnotation extends React.Component {
                                         </div>
                                         <div className="form-group col-12 col-sm-12 col-md-6 col-lg-6 p-0 ua-r-pl ">
                                             <label htmlFor="date-format" className="form-control-placeholder" >Select Date format</label>
-                                            <select name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler}>
+                                            <select name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
                                                 <option value="">select your date format</option>
                                                 <option value="n-j-Y">{moment().format('M-D-YYYY')}</option>
                                                 <option value="n-j-y">{moment().format('M-D-YY')}</option>
