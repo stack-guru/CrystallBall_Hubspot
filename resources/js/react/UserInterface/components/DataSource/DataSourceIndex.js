@@ -58,6 +58,7 @@ export default class DataSourceIndex extends React.Component {
                 this.setState({ userServices: resp.data.user_services })
                 toast.info("Service deactivated successfully.");
             }
+            (this.props.reloadUser)();
         }, (err) => {
             console.log(err);
             this.setState({ isBusy: false, errors: (err.response).data });

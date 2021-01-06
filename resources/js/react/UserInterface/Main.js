@@ -37,6 +37,7 @@ class Main extends React.Component {
         this.state = {
             user: undefined
         }
+        this.loadUser = this.loadUser.bind(this)
     }
 
 
@@ -44,6 +45,10 @@ class Main extends React.Component {
 
         let loader = document.getElementById("loader");
         loader.classList.remove("fadeOut")
+        this.loadUser();
+    }
+
+    loadUser() {
         HttpClient.get('/user')
             .then(response => {
                 this.setState({ user: response.data.user });
@@ -151,7 +156,7 @@ class Main extends React.Component {
                                 <GoogleAccount user={this.state.user} />
                             </Route>
                             <Route exact path="/data-source" refresh={true}>
-                                <DataSourceIndex user={this.state.user} />
+                                <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} />
                             </Route>
                             <Route exact path="/integrations" refresh={true}>
                                 <IntegrationsIndex user={this.state.user} />
