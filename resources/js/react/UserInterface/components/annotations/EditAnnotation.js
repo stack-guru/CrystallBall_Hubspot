@@ -109,16 +109,6 @@ export default class EditAnnotation extends React.Component {
             errors["event_name"] = "Please enter your event_name.";
         }
 
-
-        if (!url) {
-            isValid = false;
-            errors["url"] = "Please enter url here.";
-        }
-        if (!description) {
-            isValid = false;
-            errors["description"] = "Please enter your description.";
-        }
-
         if (!show_at) {
             isValid = false;
             errors["show_at"] = "Please add show_at date.";
