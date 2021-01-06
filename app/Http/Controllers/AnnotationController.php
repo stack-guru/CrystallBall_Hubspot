@@ -262,25 +262,27 @@ class AnnotationController extends Controller
 
             if (count($rows) > 99) {
                 Annotation::insert($rows);
-                $lastInsertId = DB::getPdo()->lastInsertId();
+                $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
                 $totalNewRows = count($rows);
-                $firstInsertId = $lastInsertId - ($totalNewRows - 1);
+                $lastInsertId = $firstInsertId + ($totalNewRows - 1);
                 if (!in_array("", $request->google_analytics_account_id)) {
                     foreach ($request->google_analytics_account_id as $googleAnalyticsAccountId) {
-                        DB::statement("
+                        $sql = "
                         INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
                             SELECT id, $googleAnalyticsAccountId, user_id FROM annotations
                                 WHERE id BETWEEN $firstInsertId AND $lastInsertId
                         ;
-                        ");
+                        ";
+                        DB::statement($sql);
                     }
                 } else {
-                    DB::statement("
-                    INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
-                        SELECT id, null, user_id FROM annotations
-                            WHERE id BETWEEN $firstInsertId AND $lastInsertId
-                    ;
-                    ");
+                    $sql = "
+                        INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
+                            SELECT id, NULL, user_id FROM annotations
+                                WHERE id BETWEEN $firstInsertId AND $lastInsertId
+                        ;
+                        ";
+                    DB::statement($sql);
                 }
 
                 $rows = array();
@@ -289,27 +291,27 @@ class AnnotationController extends Controller
 
         if (count($rows)) {
             Annotation::insert($rows);
-
-            $lastInsertId = DB::getPdo()->lastInsertId();
+            $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
             $totalNewRows = count($rows);
-            $firstInsertId = $lastInsertId - ($totalNewRows - 1);
-
+            $lastInsertId = $firstInsertId + ($totalNewRows - 1);
             if (!in_array("", $request->google_analytics_account_id)) {
                 foreach ($request->google_analytics_account_id as $googleAnalyticsAccountId) {
-                    DB::statement("
-                        INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
-                            SELECT id, $googleAnalyticsAccountId, user_id FROM annotations
-                                WHERE id BETWEEN $firstInsertId AND $lastInsertId
-                        ;
-                        ");
+                    $sql = "
+                    INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
+                        SELECT id, $googleAnalyticsAccountId, user_id FROM annotations
+                            WHERE id BETWEEN $firstInsertId AND $lastInsertId
+                    ;
+                    ";
+                    DB::statement($sql);
                 }
             } else {
-                DB::statement("
+                $sql = "
                     INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
                         SELECT id, NULL, user_id FROM annotations
                             WHERE id BETWEEN $firstInsertId AND $lastInsertId
                     ;
-                    ");
+                    ";
+                DB::statement($sql);
             }
         }
 
