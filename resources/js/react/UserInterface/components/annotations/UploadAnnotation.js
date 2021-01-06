@@ -10,7 +10,7 @@ export default class UploadAnnotation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            google_analytics_account_id: [],
+            google_analytics_account_id: [""],
             date_format: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this)
