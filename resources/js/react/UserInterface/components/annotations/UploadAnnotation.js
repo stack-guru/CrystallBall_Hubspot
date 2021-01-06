@@ -24,7 +24,9 @@ export default class UploadAnnotation extends React.Component {
             this.setState({ isBusy: true });
             const formData = new FormData();
             formData.append('csv', document.getElementById('csv').files[0]);
-            formData.append('google_account_id', this.state.google_account_id);
+            
+            this.state.google_analytics_account_id.map(gAA => { formData.append('google_analytics_account_id[]', gAA) })
+            
             formData.append('date_format', this.state.date_format);
             HttpClient({
                 url: `/annotation/upload`, baseURL: "/", method: 'post', headers: { 'Content-Type': 'multipart/form-data' },

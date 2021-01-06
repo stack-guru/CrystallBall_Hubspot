@@ -38,7 +38,9 @@ class AnnotationController extends Controller
     public function store(AnnotationRequest $request)
     {
         $user = Auth::user();
-        if(! $user->pricePlan->has_manual_add) abort(402);
+        if (!$user->pricePlan->has_manual_add) {
+            abort(402);
+        }
 
         $userId = $user->id;
 
@@ -198,7 +200,9 @@ class AnnotationController extends Controller
     public function upload(Request $request)
     {
         $user = Auth::user();
-        if(! $user->pricePlan->has_csv_upload) abort(402);
+        if (!$user->pricePlan->has_csv_upload) {
+            abort(402);
+        }
 
         $this->validate($request, [
             'csv' => 'required|file|mimetypes:text/plain|mimes:txt',
@@ -240,7 +244,7 @@ class AnnotationController extends Controller
                         try {
                             $date = Carbon::createFromFormat($request->date_format, $values[$i]);
                             $row['show_at'] = $date->format('Y-m-d');
-                        } catch (\Exception $e) {
+                        } catch (\Exception$e) {
                             return ['message' => "Please select correct date format according to your CSV file from the list below."];
                         }
 
@@ -252,19 +256,61 @@ class AnnotationController extends Controller
                 }
 
                 $row['user_id'] = $user_id;
-                $row['google_account_id'] = $request->google_account_id;
                 array_push($rows, $row);
 
             }
 
             if (count($rows) > 99) {
                 Annotation::insert($rows);
+                $lastInsertId = DB::getPdo()->lastInsertId();
+                $totalNewRows = count($rows);
+                $firstInsertId = $lastInsertId - ($totalNewRows - 1);
+                if (!in_array("", $request->google_analytics_account_id)) {
+                    foreach ($request->google_analytics_account_id as $googleAnalyticsAccountId) {
+                        DB::statement("
+                        INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
+                            SELECT id, $googleAnalyticsAccountId, user_id FROM annotations
+                                WHERE id BETWEEN $firstInsertId AND $lastInsertId
+                        ;
+                        ");
+                    }
+                } else {
+                    DB::statement("
+                    INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
+                        SELECT id, null, user_id FROM annotations
+                            WHERE id BETWEEN $firstInsertId AND $lastInsertId
+                    ;
+                    ");
+                }
+
                 $rows = array();
             }
         }
 
         if (count($rows)) {
             Annotation::insert($rows);
+
+            $lastInsertId = DB::getPdo()->lastInsertId();
+            $totalNewRows = count($rows);
+            $firstInsertId = $lastInsertId - ($totalNewRows - 1);
+
+            if (!in_array("", $request->google_analytics_account_id)) {
+                foreach ($request->google_analytics_account_id as $googleAnalyticsAccountId) {
+                    DB::statement("
+                        INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
+                            SELECT id, $googleAnalyticsAccountId, user_id FROM annotations
+                                WHERE id BETWEEN $firstInsertId AND $lastInsertId
+                        ;
+                        ");
+                }
+            } else {
+                DB::statement("
+                    INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
+                        SELECT id, NULL, user_id FROM annotations
+                            WHERE id BETWEEN $firstInsertId AND $lastInsertId
+                    ;
+                    ");
+            }
         }
 
         return ['success' => true];
