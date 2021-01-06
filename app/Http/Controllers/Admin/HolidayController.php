@@ -143,7 +143,7 @@ class HolidayController extends Controller
             if ($headers !== $values && count($values) == count($headers)) {
                 try{
                     $date = Carbon::createFromFormat('Y-m-d', $values[$dateColIndex]);
-                }catch (\Exception $ex){
+                }catch (\Exception $e){
                     continue;
                     // return ['message'=>"Please upload file with '2020-12-31' date format given is $values[$i] on line $ln column $i."];
                 }

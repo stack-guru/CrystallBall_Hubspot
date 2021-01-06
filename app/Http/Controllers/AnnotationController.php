@@ -240,7 +240,7 @@ class AnnotationController extends Controller
                         try {
                             $date = Carbon::createFromFormat($request->date_format, $values[$i]);
                             $row['show_at'] = $date->format('Y-m-d');
-                        } catch (\Exception$ex) {
+                        } catch (\Exception $e) {
                             return ['message' => "Please select correct date format according to your CSV file from the list below."];
                         }
 
