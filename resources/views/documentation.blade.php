@@ -83,7 +83,6 @@
         "email_verified_at": null,
         "created_at": null,
         "updated_at": "2020-10-29T09:51:08.000000Z",
-        "google_account_id":"1",
         "price_plan_id": 2,
         "price_plan_expiry_date": "2020-11-29",
         "annotations_count": 0
@@ -122,7 +121,6 @@
                 },
                 "url": "https://gaannotations.com/",
                 "description": "Black Friday Deals 2020",
-                "google_account_id":"1",
                 "highlighted": false,
                 "publishDate": "2020-11-27UTC00:00:000",
             }
@@ -171,7 +169,6 @@
           "description": "Black Friday Deals 2020",
           "show_at": "2020-11-27",
           "user_id": 1,
-          "google_account_id":"1",
           "updated_at": "2020-10-29T10:11:19.000000Z",
           "created_at": "2020-10-29T10:11:19.000000Z",
           "id": 71
@@ -266,7 +263,6 @@
           "event_name": "Black Friday",
           "url": "https://gaannotations.com/",
           "description": "Black Friday Deals 2020",
-          "google_account_id": "1",
           "show_at": "2020-11-27",
           "created_at": "2020-10-29T10:11:19.000000Z",
           "updated_at": "2020-10-29T10:17:25.000000Z",
