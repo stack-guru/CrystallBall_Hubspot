@@ -149,7 +149,7 @@
         --header 'Content-Type: application/x-www-form-urlencoded' \
         --data category=Sales Event \
         --data event_name=Black Friday \
-        --data google_account_id=3,
+        --data google_account_id=3 \
         --data url=https://gaannotations.com/ \
         --data 'description=Black Friday Deals 2020' \
         --data show_at=2020-11-27 \
@@ -244,7 +244,7 @@
         --header 'Content-Type: application/x-www-form-urlencoded' \
         --data category=Sales Event \
         --data event_name=Black Friday \
-        --data google_account_id=3,
+        --data google_account_id=3 \
         --data url=https://gaannotations.com/ \
         --data 'description=Black Friday Deals 2020' \
         --data show_at=2020-11-27 \
