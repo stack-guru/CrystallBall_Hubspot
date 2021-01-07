@@ -253,7 +253,7 @@ class AnnotationController extends Controller
         }
 
         if ($request->has('google_analytics_account_id')) {
-            if (!in_array("", $request->google_analytics_account_id)) {
+            if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
                 foreach ($newGAAIds as $gAAId) {
                     if (!in_array($gAAId, $oldGAAIds)) {
                         $aGAA = new AnnotationGaAccount;
