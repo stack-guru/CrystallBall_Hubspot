@@ -201,7 +201,7 @@ class AnnotationController extends Controller
         $annotation->added_by = 'api';
         $annotation->save();
 
-        if (!in_array("", $request->google_analytics_account_id)) {
+        if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
             foreach ($request->google_analytics_account_id as $gAAId) {
                 $aGAA = new AnnotationGaAccount;
                 $aGAA->annotation_id = $annotation->id;
