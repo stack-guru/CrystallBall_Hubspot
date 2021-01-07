@@ -6,12 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Http\Resources\annotation as annotationResource;
 use App\Models\Annotation;
-use App\Models\GoogleAlgorithmUpdate;
+use App\Models\AnnotationGaAccount;
 use Auth;
-use DB;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
-use App\Models\Holiday;
 
 class AnnotationController extends Controller
 {
@@ -23,7 +22,9 @@ class AnnotationController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if(! $user->pricePlan->has_api) abort(402);
+        if (!$user->pricePlan->has_api) {
+            abort(402);
+        }
 
         $annotations = Annotation::where('user_id', Auth::id())->get();
         $resource = new annotationResource($annotations);
@@ -33,7 +34,9 @@ class AnnotationController extends Controller
     public function show(Annotation $annotation)
     {
         $user = Auth::user();
-        if(! $user->pricePlan->has_api) abort(402);
+        if (!$user->pricePlan->has_api) {
+            abort(402);
+        }
 
         if ($annotation->user_id != Auth::id()) {
             abort(404);
@@ -59,7 +62,7 @@ class AnnotationController extends Controller
         if ($request->query('google_analytics_account_id') && $request->query('google_analytics_account_id') !== '*') {
             $annotationsQuery .= " INNER JOIN `annotation_ga_accounts` ON `annotation_ga_accounts`.`annotation_id` = `annotations`.`id`";
             $annotationsQuery .= " WHERE `annotation_ga_accounts`.`google_analytics_account_id` = " . $request->query('google_analytics_account_id') . " AND `annotations`.`user_id` = " . $userId . " AND `annotations`.`is_enabled` = 1";
-        }else{
+        } else {
             $annotationsQuery .= " WHERE `annotations`.`user_id` = " . $userId . " AND `annotations`.`is_enabled` = 1";
         }
 
@@ -187,7 +190,9 @@ class AnnotationController extends Controller
     {
         $user = Auth::user();
         $userId = $user->id;
-        if(! $user->pricePlan->has_api) abort(402);
+        if (!$user->pricePlan->has_api) {
+            abort(402);
+        }
 
         $annotation = new Annotation;
         $annotation->fill($request->validated());
@@ -225,7 +230,9 @@ class AnnotationController extends Controller
     public function update(AnnotationRequest $request, Annotation $annotation)
     {
         $user = Auth::user();
-        if(! $user->pricePlan->has_api) abort(402);
+        if (!$user->pricePlan->has_api) {
+            abort(402);
+        }
 
         if ($annotation->user_id != Auth::id()) {
             abort(404);
@@ -279,8 +286,10 @@ class AnnotationController extends Controller
     public function destroy(Annotation $annotation)
     {
         $user = Auth::user();
-        if(! $user->pricePlan->has_api) abort(402);
-        
+        if (!$user->pricePlan->has_api) {
+            abort(402);
+        }
+
         if ($annotation->user_id != Auth::id()) {
             abort(404);
         }
