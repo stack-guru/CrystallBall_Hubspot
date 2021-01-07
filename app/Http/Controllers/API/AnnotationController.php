@@ -192,6 +192,7 @@ class AnnotationController extends Controller
         $annotation->fill($request->validated());
         $annotation->show_at = Carbon::parse($request->show_at);
         $annotation->user_id = Auth::id();
+        $annotation->added_by = 'api';
         $annotation->save();
 
         return ['annotation' => $annotation];

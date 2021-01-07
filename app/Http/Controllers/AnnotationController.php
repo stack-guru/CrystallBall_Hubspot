@@ -48,6 +48,7 @@ class AnnotationController extends Controller
         $annotation->fill($request->validated());
         $annotation->user_id = $userId;
         $annotation->is_enabled = true;
+        $annotation->added_by = 'manual';
         $annotation->save();
 
         if (!in_array("", $request->google_analytics_account_id)) {
@@ -256,6 +257,7 @@ class AnnotationController extends Controller
                 }
 
                 $row['user_id'] = $user_id;
+                $row['added_by'] = 'csv-upload';
                 array_push($rows, $row);
 
             }
