@@ -124,7 +124,8 @@ class AnnotationController extends Controller
                 $aGAA->google_analytics_account_id = null;
                 $aGAA->user_id = $userId;
                 $aGAA->save();
-            }}
+            }
+        }
 
         $annotation->load('annotationGaAccounts');
 

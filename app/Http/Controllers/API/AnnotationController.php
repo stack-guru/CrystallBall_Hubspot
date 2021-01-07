@@ -186,6 +186,7 @@ class AnnotationController extends Controller
     public function store(AnnotationRequest $request)
     {
         $user = Auth::user();
+        $userId = $user->id;
         if(! $user->pricePlan->has_api) abort(402);
 
         $annotation = new Annotation;
@@ -194,6 +195,22 @@ class AnnotationController extends Controller
         $annotation->user_id = Auth::id();
         $annotation->added_by = 'api';
         $annotation->save();
+
+        if (!in_array("", $request->google_analytics_account_id)) {
+            foreach ($request->google_analytics_account_id as $gAAId) {
+                $aGAA = new AnnotationGaAccount;
+                $aGAA->annotation_id = $annotation->id;
+                $aGAA->google_analytics_account_id = $gAAId;
+                $aGAA->user_id = $userId;
+                $aGAA->save();
+            }
+        } else {
+            $aGAA = new AnnotationGaAccount;
+            $aGAA->annotation_id = $annotation->id;
+            $aGAA->google_analytics_account_id = null;
+            $aGAA->user_id = $userId;
+            $aGAA->save();
+        }
 
         return ['annotation' => $annotation];
     }
@@ -217,6 +234,38 @@ class AnnotationController extends Controller
         $annotation->fill($request->validated());
         $annotation->show_at = Carbon::parse($request->show_at);
         $annotation->save();
+
+        $aGAAs = $annotation->annotationGaAccounts;
+        $oldGAAIds = $aGAAs->pluck('google_analytics_account_id')->toArray();
+        $newGAAIds = $request->google_analytics_account_id;
+
+        foreach ($aGAAs as $aGAA) {
+            if (!in_array($aGAA->google_analytics_account_id, $newGAAIds)) {
+                $aGAA->delete();
+            }
+        }
+
+        if ($request->has('google_analytics_account_id')) {
+            if (!in_array("", $request->google_analytics_account_id)) {
+                foreach ($newGAAIds as $gAAId) {
+                    if (!in_array($gAAId, $oldGAAIds)) {
+                        $aGAA = new AnnotationGaAccount;
+                        $aGAA->annotation_id = $annotation->id;
+                        $aGAA->google_analytics_account_id = $gAAId;
+                        $aGAA->user_id = $userId;
+                        $aGAA->save();
+                    }
+                }
+            } else {
+                $aGAA = new AnnotationGaAccount;
+                $aGAA->annotation_id = $annotation->id;
+                $aGAA->google_analytics_account_id = null;
+                $aGAA->user_id = $userId;
+                $aGAA->save();
+            }
+        }
+
+        $annotation->load('annotationGaAccounts');
 
         return ['annotation' => $annotation];
     }
