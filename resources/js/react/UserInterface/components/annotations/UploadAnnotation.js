@@ -88,6 +88,8 @@ export default class UploadAnnotation extends React.Component {
                                             <label htmlFor="date-format" className="form-control-placeholder" >Select Date format</label>
                                             <select name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
                                                 <option value="">select your date format</option>
+                                                <option value="j/n/Y">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
+                                                
                                                 <option value="n-j-Y">{moment("2021-01-15").format('M-D-YYYY')}</option>
                                                 <option value="n-j-y">{moment("2021-01-15").format('M-D-YY')}</option>
                                                 <option value="m-d-y">{moment("2021-01-15").format('MM-DD-YY')}</option>
@@ -96,7 +98,6 @@ export default class UploadAnnotation extends React.Component {
                                                 <option value="Y-m-d">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
                                                 <option value="d-M-y">{moment("2021-01-15").format('DD-MMM-YY')}</option>
 
-                                                <option value="j/n/Y">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
                                                 <option value="n/j/Y">{moment("2021-01-15").format('M/D/YYYY')}</option>
                                                 <option value="n/j/y">{moment("2021-01-15").format('M/D/YY')}</option>
                                                 <option value="m/d/y">{moment("2021-01-15").format('MM/DD/YY')}</option>
