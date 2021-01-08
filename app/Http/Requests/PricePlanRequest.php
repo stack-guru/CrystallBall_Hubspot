@@ -33,6 +33,7 @@ class PricePlanRequest extends FormRequest
             'has_csv_upload' => "nullable",
             'has_api' => "nullable",
             'is_enabled' => "nullable",
+            'is_available' => "nullable",
             'ga_account_count' => 'nullable|numeric',
             'user_per_ga_account_count' => 'nullable|numeric',
         ];

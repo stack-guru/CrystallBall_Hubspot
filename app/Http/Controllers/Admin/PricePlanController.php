@@ -43,6 +43,7 @@ class PricePlanController extends Controller
         $pricePlan->has_csv_upload = $request->has_csv_upload == 'on';
         $pricePlan->has_api = $request->has_api == 'on';
         $pricePlan->is_enabled = $request->is_enabled == 'on';
+        $pricePlan->is_available = $request->is_available == 'on';
         $pricePlan->has_integrations = $request->has_integrations == 'on';
         $pricePlan->has_data_sources = $request->has_data_sources == 'on';
         $pricePlan->save();
@@ -86,6 +87,7 @@ class PricePlanController extends Controller
         $pricePlan->has_csv_upload = $request->has_csv_upload == 'on';
         $pricePlan->has_api = $request->has_api == 'on';
         $pricePlan->is_enabled = $request->is_enabled == 'on';
+        $pricePlan->is_available = $request->is_available == 'on';
         $pricePlan->has_integrations = $request->has_integrations == 'on';
         $pricePlan->has_data_sources = $request->has_data_sources == 'on';
         $pricePlan->save();

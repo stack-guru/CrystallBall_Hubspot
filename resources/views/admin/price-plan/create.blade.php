@@ -57,6 +57,10 @@
                         <input type="checkbox" name="has_data_sources" id="hasDataSources" class="form-control" />
                     </div>
 
+                    <div class="form-group">
+                        <label>Available?</label>
+                        <input type="checkbox" name="is_available" id="isAvailable" class="form-control" />
+                    </div>
 
                     <div class="form-group">
                         <label>Enabled?</label>

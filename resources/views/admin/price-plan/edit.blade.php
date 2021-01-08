@@ -57,6 +57,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Available?</label>
+                        <input type="checkbox" name="is_available" id="isAvailable" class="form-control" @if($pricePlan->is_available) checked @endif />
+                    </div>
+
+                    <div class="form-group">
                         <label>Enabled?</label>
                         <input type="checkbox" name="is_enabled" id="isEnabled" class="form-control" @if($pricePlan->is_enabled) checked @endif />
                     </div>

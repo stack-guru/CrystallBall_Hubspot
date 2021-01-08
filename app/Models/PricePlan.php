@@ -31,5 +31,6 @@ class PricePlan extends Model
         'has_integrations' => 'boolean',
         'has_data_sources' => 'boolean',
 
+        'is_available' => 'boolean',
     ];
 }

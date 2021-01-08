@@ -158,8 +158,8 @@ export default class indexPricingPlans extends React.Component {
                                                         pricePlan.price == 0 ?
                                                             <button className="btn mx-auto btn-primary pp-c-action text-uppercase mt-auto " onClick={() => { this.freeSubscribe(pricePlan.id) }} >Subscribe</button>
                                                             :
-                                                            pricePlan.price < 0 ?
-                                                                <button className="btnmx-auto btn-primary pp-c-action text-uppercase mt-auto " type="button" >Coming Soon</button>
+                                                            pricePlan.is_available == false ?
+                                                                <a href="#" className="btn pp-c-action mx-auto btn-primary text-uppercase mt-auto disabled">Coming Soon</a>
                                                                 :
                                                                 <a href={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn pp-c-action mx-auto btn-primary text-uppercase mt-auto">Subscribe</a>
                                             }
