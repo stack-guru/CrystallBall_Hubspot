@@ -15,7 +15,10 @@ class GoogleAnalyticsAccountController extends Controller
             [
                 ['id' => '*', 'name' => 'No Filter'],
             ],
-            GoogleAnalyticsAccount::ofCurrentUser()->get()->toArray()
+            GoogleAnalyticsAccount::select('google_analytics_accounts.id', 'name')->ofCurrentUser()
+                ->distinct()
+                ->join('annotation_ga_accounts', 'google_analytics_accounts.id', 'annotation_ga_accounts.google_analytics_account_id')
+                ->get()->toArray()
         )];
     }
 }
