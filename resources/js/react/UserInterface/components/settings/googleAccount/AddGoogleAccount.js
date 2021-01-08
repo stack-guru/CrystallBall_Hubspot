@@ -37,6 +37,12 @@ export default class AddGoogleAccount extends React.Component {
             let message = searchParams.get('message');
             swal("Error", message, success == "false" ? "error" : "success");
         }
+
+        if (searchParams.has('do-refresh') && searchParams.has('google_account_id')) {
+            if (searchParams.get('do-refresh') == "1") {
+                this.fetchGAAccounts(searchParams.get('google_account_id'));
+            }
+        }
     }
 
     getGoogleAccounts() {

@@ -28,16 +28,16 @@ class GoogleAccountController extends Controller
                 'https://www.googleapis.com/auth/userinfo.email',
                 'https://www.googleapis.com/auth/analytics.readonly',
             ])
-            ->with([ 'access_type' => 'offline'])
+            ->with(['access_type' => 'offline'])
             ->redirect();
     }
 
     public function store()
     {
         $user = Socialite::driver('google')->stateless()->user();
-        $googleAccountId=$user->getId();
-        if(GoogleAccount::where('account_id',$googleAccountId)->where('user_id',\Auth::id())->first()){
-            return redirect()->route('google-account.index',['success'=>'false','message'=>'Account already linked']);
+        $googleAccountId = $user->getId();
+        if (GoogleAccount::where('account_id', $googleAccountId)->where('user_id', \Auth::id())->first()) {
+            return redirect()->route('google-account.index', ['success' => 'false', 'message' => 'Account already linked']);
         }
 
         $googleAccount = new GoogleAccount;
@@ -54,7 +54,7 @@ class GoogleAccountController extends Controller
 
         $googleAccount->save();
 
-        return redirect()->route('google-account.index');
+        return redirect()->route('google-account.index', ['google_account_id' => $googleAccount->id, 'do-refresh' => true]);
 
     }
 
