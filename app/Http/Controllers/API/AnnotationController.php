@@ -71,7 +71,7 @@ class AnnotationController extends Controller
         if($request->query('show_manual_annotations'))array_push($addedByArray, 'manual');
         if($request->query('show_csv_annotations'))array_push($addedByArray, 'csv-upload');
         if($request->query('show_api_annotations'))array_push($addedByArray, 'api');
-        if(count($addedByArray)) $annotationsQuery .= " AND added_by IN ('" . implode("', '", $addedByArray) . "')";
+        $annotationsQuery .= " AND added_by IN ('" . implode("', '", $addedByArray) . "')";
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_google_algorithm_updates_enabled && $request->query('show_google_algorithm_updates') == 'true') {
             $annotationsQuery .= " union ";
