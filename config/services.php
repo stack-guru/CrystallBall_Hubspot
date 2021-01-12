@@ -53,7 +53,14 @@ return [
         ],
     ],
 
-    'weather'=>[
-        'App_id'=>env('OPEN_WEATHER_APPID'),
-    ]
+    'weather' => [
+        'App_id' => env('OPEN_WEATHER_APPID'),
+    ],
+
+    'sendgrid' => [
+        'api' => [
+            'key' => env('SL_SENDGRID_API_KEY'),
+            'id' => env('SL_SENDGRID_API_ID'),
+        ],
+    ],
 ];
