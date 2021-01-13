@@ -26,8 +26,14 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
+        $schedule->command('gaa:process-non-installed-extension-users')->everyMinute();
+
+        $schedule->command('gaa:process-no-annotation-users')->daily();
         $schedule->command('gaa:resubscribe-user-plans')->daily();
+        
+        
         $schedule->command('gaa:send-card-expiry-mail')->monthly();
+
         
 
     }

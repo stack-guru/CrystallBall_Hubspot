@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
+use App\Services\SendGridService;
 
 class RegisterController extends Controller
 {
@@ -82,6 +83,9 @@ class RegisterController extends Controller
             'is_billing_enabled' => false,
         ]);
 
+        $sGS = new SendGridService;
+        $sGS->addUserToList($user, "1 GAa New registrations");
+
         // event_name:
         // Sample Annotation
         // category:
@@ -146,6 +150,9 @@ class RegisterController extends Controller
                     'show_at' => new \DateTime('-02 days'),
                     'is_enabled' => true,
                 ]);
+
+                $sGS = new SendGridService;
+                $sGS->addUserToList($user, "1 GAa New registrations");
 
             }
         }

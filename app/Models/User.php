@@ -37,6 +37,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+
+        "last_logged_into_extension_at",
+        "last_activated_any_data_source_at",
+        "last_generated_api_token_at",
     ];
 
     /**
@@ -52,6 +56,10 @@ class User extends Authenticatable
         'is_ds_google_algorithm_updates_enabled' => 'boolean',
         'is_ds_retail_marketing_enabled' => 'boolean',
         'is_ds_weather_alerts_enabled' => 'boolean',
+
+        "last_logged_into_extension_at" => 'datetime',
+        "last_activated_any_data_source_at" => 'datetime',
+        "last_generated_api_token_at" => 'datetime',
     ];
 
     public function pricePlan()

@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function () {
-
-    Route::get('socialite/google/redirect', ['API\LoginController@login','registerLoginGoogleRedirect'])->name('socialite.google.redirect');
     
     Route::post('login', 'API\LoginController@login')->name('login')->middleware('cors');
     Route::post('logout', 'API\LoginController@logout')->name('logout')->middleware('cors');

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 
 class SendGridService
 {
@@ -49,6 +50,37 @@ class SendGridService
                 "contacts" => [
                     ['email' => $user->email, 'first_name' => $user->name, 'custom_fields' => ['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]],
                 ],
+            ]), 'application/json')
+            ->put("https://api.sendgrid.com/v3/marketing/contacts");
+
+        if ($response->status() != 202) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function addUsersToList($users, $listName)
+    {
+        $list = $this->listFinder($listName);
+        if ($list === false) {
+            // print "Invalid list name";
+            return false;
+        }
+
+        $response = Http::withToken($this->key)
+            ->withHeaders([
+                "Content-Type: application/json",
+            ])
+            ->withBody(json_encode([
+                "list_ids" => [$list['id']],
+                "contacts" => array_map(function ($user) {
+                    return [
+                        'email' => $user['email'],
+                        'first_name' => $user['name'],
+                        'custom_fields' => ['e9_D' => Carbon::parse($user['created_at'])->subDays(2)->format('Y-m-d')],
+                    ];
+                }, $users),
             ]), 'application/json')
             ->put("https://api.sendgrid.com/v3/marketing/contacts");
 

@@ -26,7 +26,13 @@ class LoginController extends Controller
         if ($user) {
             if(! $user->pricePlan->has_api) abort(402);
             if (Hash::check($request->password, $user->password)) {
+
+                // If you are changing token name prefix, don't forget to change it in app/Listeners/APITokenCreated.php as well
                 $token = $user->createToken('API Login at ' . Carbon::now()->format("F j, Y, g:i a"))->accessToken;
+
+                $user->last_logged_into_extension_at = Carbon::now();
+                $user->save();
+                
                 $response = ['token' => $token];
                 return response($response, 200);
             } else {
@@ -47,18 +53,4 @@ class LoginController extends Controller
         return response($response, 200);
     }
 
-    public function registerLoginGoogleRedirect()
-    {
-        $newUser = Socialite::driver('google')->redirectUrl(route('socialite.google.redirect'))->stateless()->user();
-
-        $newUserEmail = $newUser->getEmail();
-        $user = User::where('email', $newUserEmail)->first();
-
-        if (!$user) {
-            return abort(401);
-        }
-
-        Auth::login($user);
-        return ['user' => Auth::user()];
-    }
 }

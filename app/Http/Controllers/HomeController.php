@@ -7,6 +7,7 @@ use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -34,14 +35,17 @@ class HomeController extends Controller
 
         if ($request->has('is_ds_holidays_enabled')) {
             $user->is_ds_holidays_enabled = $request->is_ds_holidays_enabled;
+            if($request->is_ds_holidays_enabled) $user->last_activated_any_data_source_at = Carbon::now();
             $user->save();
         }
         if ($request->has('is_ds_google_algorithm_updates_enabled')) {
             $user->is_ds_google_algorithm_updates_enabled = $request->is_ds_google_algorithm_updates_enabled;
+            if($request->is_ds_google_algorithm_updates_enabled) $user->last_activated_any_data_source_at = Carbon::now();
             $user->save();
         }
         if ($request->has('is_ds_retail_marketing_enabled')) {
             $user->is_ds_retail_marketing_enabled = $request->is_ds_retail_marketing_enabled;
+            if($request->is_ds_retail_marketing_enabled) $user->last_activated_any_data_source_at = Carbon::now();
             $user->save();
         }
 
