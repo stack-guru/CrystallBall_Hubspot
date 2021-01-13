@@ -28,8 +28,7 @@ class SendGridService
             return false;
         }
 
-        $user->sendgrid_recipient_id = $response->json()['persisted_recipients'][0];
-        $user->save();
+        // $response->json()['persisted_recipients'][0];
         return true;
     }
 
@@ -37,21 +36,26 @@ class SendGridService
     {
         $list = $this->listFinder($listName);
         if ($list === false) {
+            // print "Invalid list name";
             return false;
         }
-
-        if ($user->sendgrid_recipient_id == null) {$this->addRecipient($user);}
 
         $response = Http::withToken($this->key)
-            ->post("https://api.sendgrid.com/v3/contactdb/lists/" . $list['id'] . "/recipients/" . $user->sendgrid_recipient_id);
+            ->withHeaders([
+                "Content-Type: application/json",
+            ])
+            ->withBody(json_encode([
+                "list_ids" => [$list['id']],
+                "contacts" => [
+                    ['email' => $user->email, 'first_name' => $user->name, 'created_at' => $user->created_at->subDays(2)->format('Y-m-d')],
+                ],
+            ]), 'application/json')
+            ->put("https://api.sendgrid.com/v3/marketing/contacts");
 
-        if ($response->status() != 201) {
-            print $response->body();
+        if ($response->status() != 202) {
             return false;
         }
 
-        $user->sendgrid_recipient_id = $response->json()['persisted_recipients'][0];
-        $user->save();
         return true;
     }
 
@@ -64,6 +68,7 @@ class SendGridService
             return false;
         }
     }
+
     const LISTS = [
         [
             "name" => "5 GAa active API",
