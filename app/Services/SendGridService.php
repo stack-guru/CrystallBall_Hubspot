@@ -21,7 +21,7 @@ class SendGridService
             ->withHeaders([
                 "Content-Type: application/json",
             ])
-            ->withBody(json_encode([['email' => $user->email, 'first_name' => $user->name, 'two_days_before_registration_date' => $user->created_at->subDays(2)->format('Y-m-d')]]), 'application/json')
+            ->withBody(json_encode([['email' => $user->email, 'first_name' => $user->name, 'e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]]), 'application/json')
             ->post("https://api.sendgrid.com/v3/contactdb/recipients");
 
         if ($response->status() != 201) {
@@ -47,7 +47,7 @@ class SendGridService
             ->withBody(json_encode([
                 "list_ids" => [$list['id']],
                 "contacts" => [
-                    ['email' => $user->email, 'first_name' => $user->name, 'two_days_before_registration_date' => $user->created_at->subDays(2)->format('Y-m-d')],
+                    ['email' => $user->email, 'first_name' => $user->name, 'custom_fields' => ['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]],
                 ],
             ]), 'application/json')
             ->put("https://api.sendgrid.com/v3/marketing/contacts");
