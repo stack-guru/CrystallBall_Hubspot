@@ -7,6 +7,7 @@ use App\Models\PaymentDetail;
 use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
 use App\Services\BlueSnapService;
+use App\Services\SendGridService;
 use Auth;
 use Carbon\Carbon;
 use http\Env\Response;
@@ -64,6 +65,7 @@ class PaymentController extends Controller
 
             $pricePlanSubscription = new PricePlanSubscription;
             $blueSnapService = new BlueSnapService;
+            $sGS = new SendGridService;
 
             $price = $pricePlan->price;
             if ($request->has('coupon_id') && $request->coupon_id !== null && $request->coupon_id != "null") {
@@ -119,6 +121,13 @@ class PaymentController extends Controller
             $pricePlanSubscription->charged_price = $price;
             $pricePlanSubscription->save();
 
+            if ($user->pricePlan->name == "Pro" && $pricePlan->name == "Basic") {
+                $sGS->addUserToList($user, "11 GAa Downgraded to Basic");
+            }
+            if (($user->pricePlan->name == "Pro" && $pricePlan->name == "Free") || ($user->pricePlan->name == "Basic" && $pricePlan->name == "Free")) {
+                $sGS->addUserToList($user, "12 GAa Downgraded to FREE");
+            }
+
             $user->price_plan_id = $pricePlan->id;
             $user->price_plan_expiry_date = new \DateTime("+1 month");
             $user->is_billing_enabled = true;
@@ -126,6 +135,16 @@ class PaymentController extends Controller
             $user->is_billing_enabled = false;
         }
         $user->save();
+
+        switch ($pricePlan->name) {
+            case "Basic":
+                $sGS->addUserToList($user, "9 GAa Upgraded to Basic");
+                break;
+            case "Pro":
+                $sGS->addUserToList($user, "10 GAa Upgraded to PRO");
+
+                break;
+        }
 
         return ['success' => true, 'transaction_id' => $transactionId];
     }

@@ -60,6 +60,7 @@ class User extends Authenticatable
         "last_logged_into_extension_at" => 'datetime',
         "last_activated_any_data_source_at" => 'datetime',
         "last_generated_api_token_at" => 'datetime',
+        "last_api_called_at" => "datetime"
     ];
 
     public function pricePlan()

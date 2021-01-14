@@ -11,6 +11,7 @@ use Auth;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
+use App\Services\SendGridService;
 
 class AnnotationController extends Controller
 {
@@ -28,6 +29,14 @@ class AnnotationController extends Controller
 
         $annotations = Annotation::where('user_id', Auth::id())->get();
         $resource = new annotationResource($annotations);
+
+        if($user->last_api_called_at == null){
+            $sGS = new SendGridService;
+            $sGS->addUserToList($user, "14 GAa API users");
+        }
+        $user->last_api_called_at = new \DateTime;
+        $user->save();
+        
         return ['annotations' => $resource];
     }
 
@@ -42,6 +51,13 @@ class AnnotationController extends Controller
             abort(404);
         }
 
+        if($user->last_api_called_at == null){
+            $sGS = new SendGridService;
+            $sGS->addUserToList($user, "14 GAa API users");
+        }
+        $user->last_api_called_at = new \DateTime;
+        $user->save();
+        
         return ['annotation' => $annotation];
     }
 
@@ -227,6 +243,13 @@ class AnnotationController extends Controller
             $aGAA->save();
         }
 
+        if($user->last_api_called_at == null){
+            $sGS = new SendGridService;
+            $sGS->addUserToList($user, "14 GAa API users");
+        }
+        $user->last_api_called_at = new \DateTime;
+        $user->save();
+
         return ['annotation' => $annotation];
     }
 
@@ -284,6 +307,13 @@ class AnnotationController extends Controller
 
         $annotation->load('annotationGaAccounts');
 
+        if($user->last_api_called_at == null){
+            $sGS = new SendGridService;
+            $sGS->addUserToList($user, "14 GAa API users");
+        }
+        $user->last_api_called_at = new \DateTime;
+        $user->save();
+
         return ['annotation' => $annotation];
     }
 
@@ -305,6 +335,14 @@ class AnnotationController extends Controller
         }
 
         $annotation->delete();
+
+        if($user->last_api_called_at == null){
+            $sGS = new SendGridService;
+            $sGS->addUserToList($user, "14 GAa API users");
+        }
+        $user->last_api_called_at = new \DateTime;
+        $user->save();
+        
         return ['success' => true];
     }
 
