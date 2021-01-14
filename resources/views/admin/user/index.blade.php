@@ -22,7 +22,7 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->pricePlan->name }}</td>
                                     <td>{{ @$user->created_at }}</td>
-                                    <td>{{ @$user->lastAnnotation->updated_at}}</td>
+                                    <td>@if(@$user->created_at != @$user->lastAnnotation->updated_at) {{ @$user->lastAnnotation->updated_at}} @endif</td>
                                     <td>
                                         <div class="row ml-0 mr-0 d-flex flex-row ">
                                         <a class="btn btn-primary m-2" href="{{ route('admin.user.edit', $user->id) }}">Edit</a>
