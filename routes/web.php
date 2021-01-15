@@ -86,6 +86,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('google-analytics-account', App\Http\Controllers\GoogleAnalyticsAccountController::class)->only(['index', 'destroy']);
             Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);
 
+            Route::apiResource('user', App\Http\Controllers\UserController::class)->except(['show']);
+
             Route::post('support', [App\Http\Controllers\HomeController::class, 'storeSupport']);
         });
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);

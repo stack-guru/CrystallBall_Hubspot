@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
-use App\Models\Annotation;
 use App\Models\PricePlan;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -20,11 +17,9 @@ class UserController extends Controller
     public function index()
     {
 
+        $data['users'] = User::with(['pricePlan', 'lastAnnotation'])->get();
 
-        $data['users']= User::with(['pricePlan','lastAnnotation'])->get();
-
-
-        return view('admin/user/index' ,$data);
+        return view('admin/user/index', $data);
     }
 
     /**
@@ -59,9 +54,17 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $user->fill($request->validated());
+        $this->validate($request, [
+            'name' => ['nullable', 'string', 'max:255'],
+            'email' => ['nullable', 'string', 'email', 'max:255'],
+            'password' => ['nullable', 'string', 'min:8'],
+            'user_level' => ['in:admin,user'],
+            'price_plan_id' => 'nullable|exists:price_plans,id',
+            'price_plan_expiry_date' => 'nullable|date',
+        ]);
+        $user->fill($request->all());
         $user->save();
         return redirect()->route('admin.user.index')->with('success', true);
     }

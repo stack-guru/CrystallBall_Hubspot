@@ -24,12 +24,24 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => ['nullable', 'string', 'max:255'],
-            'email' => ['nullable', 'string', 'email', 'max:255'],
-            'password' => ['nullable', 'string', 'min:8'],
-            'price_plan_id' => 'nullable|exists:price_plans,id',
-            'price_plan_expiry_date' => 'nullable|date',
-        ];
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'name' => ['required', 'string', 'max:255'],
+                    'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                    'password' => ['required', 'string', 'min:8'],
+                    'user_level' => ['required', 'in:admin,user']
+                ];
+                break;
+
+            case 'PUT':
+                return [
+                    'name' => ['nullable', 'string', 'max:255'],
+                    'email' => ['nullable', 'string', 'email', 'max:255'],
+                    'password' => ['nullable', 'string', 'min:8'],
+                    'user_level' => [ 'nullable', 'in:admin,user']
+                ];
+                break;
+        }
     }
 }

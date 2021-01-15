@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -27,6 +28,9 @@ class User extends Authenticatable
         'is_ds_holidays_enabled',
         'is_ds_google_algorithm_updates_enabled',
         'is_ds_weather_alerts_enabled',
+
+        'user_id',
+        'user_level',
     ];
 
     /**
@@ -88,5 +92,9 @@ class User extends Authenticatable
     public function googleAccounts()
     {
         return $this->hasMany('App\Models\GoogleAccount');
+    }
+
+    public function scopeOfCurrentUser($query){
+        return $query->where('user_id', Auth::id());
     }
 }
