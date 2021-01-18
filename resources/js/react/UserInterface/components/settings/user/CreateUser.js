@@ -10,7 +10,7 @@ export default class CreateUser extends Component {
 
         this.state = {
             user: {
-                name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: '' 
+                name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: ''
             },
             errors: undefined
         }
@@ -19,10 +19,10 @@ export default class CreateUser extends Component {
         this.setDefaultState = this.setDefaultState.bind(this)
     }
 
-    setDefaultState(){
+    setDefaultState() {
         this.setState({
             user: {
-                name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: '' 
+                name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: ''
             },
             errors: undefined
         });
@@ -98,7 +98,8 @@ export default class CreateUser extends Component {
                                         <input type="password" className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" />
                                     </div>
                                 </div>
-
+                            </div>
+                            <div className="row mt-4">
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
                                         <label htmlFor="user_level" className="form-control-placeholder">User Level</label>
@@ -120,7 +121,7 @@ export default class CreateUser extends Component {
                             <div className="row ml-0 mr-0 mt-3 mt-sm-3 mt-md-1 mt-lg-1">
                                 <div className="col-12 text-right pr-0">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">
-                                        <i className="fa fa-plus mr-1"></i>Add
+                                        <i className="fa fa-floppy-o mr-1"></i> Save
                                         </button>
                                 </div>
                             </div>

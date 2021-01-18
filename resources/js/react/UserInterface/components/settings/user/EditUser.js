@@ -7,7 +7,7 @@ import ErrorAlert from '../../../utils/ErrorAlert'
 export default class EditUser extends Component {
     constructor(props) {
         super(props)
-    
+
         this.state = {
             user: {}
         }
@@ -16,19 +16,19 @@ export default class EditUser extends Component {
 
     }
 
-    componentDidMount(){
-        if(this.props.routeParams.match.params.id){
+    componentDidMount() {
+        if (this.props.routeParams.match.params.id) {
             let userId = this.props.routeParams.match.params.id;
             HttpClient.get(`/settings/user/${userId}`)
-            .then(response => {
-                this.setState({ user: response.data.user });
-            }, (err) => {
-                console.log(err);
-                this.setState({ errors: (err.response).data });
-            }).catch(err => {
-                console.log(err)
-                this.setState({ errors: err });
-            });
+                .then(response => {
+                    this.setState({ user: response.data.user });
+                }, (err) => {
+                    console.log(err);
+                    this.setState({ errors: (err.response).data });
+                }).catch(err => {
+                    console.log(err)
+                    this.setState({ errors: err });
+                });
         }
     }
 
@@ -52,7 +52,7 @@ export default class EditUser extends Component {
             });
     }
 
-    render(){
+    render() {
         return (
             <div className="container-xl bg-white  component-wrapper" >
                 <section className="ftco-section" id="buttons">
@@ -60,9 +60,6 @@ export default class EditUser extends Component {
                         <div className="row mb-5">
                             <div className="col-md-12">
                                 <h2 className="heading-section gaa-title">Edit User</h2>
-                            </div>
-                            <div className="col-md-12">
-                                <h5>Change your user details</h5>
                             </div>
                         </div>
 
@@ -102,7 +99,8 @@ export default class EditUser extends Component {
                                         <input type="password" className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" />
                                     </div>
                                 </div>
-
+                            </div>
+                            <div className="row mt-4">
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
                                         <label htmlFor="user_level" className="form-control-placeholder">User Level</label>
@@ -124,7 +122,7 @@ export default class EditUser extends Component {
                             <div className="row ml-0 mr-0 mt-3 mt-sm-3 mt-md-1 mt-lg-1">
                                 <div className="col-12 text-right pr-0">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">
-                                        <i className="fa fa-plus mr-1"></i>Add
+                                        <i className="fa fa-floppy-o mr-1"></i>Save
                                         </button>
                                 </div>
                             </div>
@@ -135,5 +133,5 @@ export default class EditUser extends Component {
             </div>
         );
     }
-    
+
 }
