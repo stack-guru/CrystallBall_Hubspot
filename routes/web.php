@@ -56,6 +56,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::view('price-plans', 'ui/app')->name('settings.price-plans');
         Route::get('price-plans/payment', [App\Http\Controllers\PaymentController::class, 'show'])->name('settings.price-plan.payment');
         Route::view('payment-history', 'ui/app');
+
+        Route::view('user', 'ui/app');
+        Route::view('user/create', 'ui/app');
+        Route::view('user/{id}/edit', 'ui/app');
     });
 
     Route::group(['prefix' => 'ui'], function () {
@@ -86,7 +90,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('google-analytics-account', App\Http\Controllers\GoogleAnalyticsAccountController::class)->only(['index', 'destroy']);
             Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);
 
-            Route::apiResource('user', App\Http\Controllers\UserController::class)->except(['show']);
+            Route::apiResource('user', App\Http\Controllers\UserController::class)->except(['index']);
+            Route::get('user', [App\Http\Controllers\UserController::class, 'uiIndex']);
 
             Route::post('support', [App\Http\Controllers\HomeController::class, 'storeSupport']);
         });

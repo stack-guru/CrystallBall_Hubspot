@@ -26,8 +26,9 @@ import IndexAPIKey from './components/apiKey/IndexAPIKey';
 import CreatePayment from './components/settings/pricingPlans/CreatePayment';
 import IntegrationsIndex from "./components/integrations/IntegrationsIndex";
 import SupportIndex from './components/support/supportIndex';
-
-
+import IndexUsers from './components/settings/user/IndexUsers';
+import CreateUser from './components/settings/user/CreateUser';
+import EditUser from './components/settings/user/EditUser';
 
 class Main extends React.Component {
 
@@ -137,6 +138,12 @@ class Main extends React.Component {
                             <Route exact path="/annotation/upload" refresh={true}>
                                 <AnnotationsUpload />
                             </Route>
+                            <Route exact path="/data-source" refresh={true}>
+                                <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} />
+                            </Route>
+                            <Route exact path="/integrations" refresh={true}>
+                                <IntegrationsIndex user={this.state.user} />
+                            </Route>
                             <Route exact path="/settings" refresh={true}>
                                 <Settings user={this.state.user} />
                             </Route>
@@ -155,15 +162,18 @@ class Main extends React.Component {
                             <Route exact path="/settings/google-account" refresh={true}>
                                 <GoogleAccount user={this.state.user} />
                             </Route>
-                            <Route exact path="/data-source" refresh={true}>
-                                <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} />
-                            </Route>
-                            <Route exact path="/integrations" refresh={true}>
-                                <IntegrationsIndex user={this.state.user} />
-                            </Route>
                             <Route exact path="/settings/support" refresh={true}>
                                 <SupportIndex user={this.state.user} />
                             </Route>
+                            <Route exact path="/settings/user" refresh={true}>
+                                <IndexUsers user={this.state.user} />
+                            </Route>
+                            <Route exact path="/settings/user/create" refresh={true}>
+                                <CreateUser user={this.state.user} />
+                            </Route>
+                            <Route exact path="/settings/user/:id?/edit" refresh={true}
+                                render={(routeParams) => <EditUser routeParams={routeParams} />}
+                            />
                         </Switch>
 
                     </main>

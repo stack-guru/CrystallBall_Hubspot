@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\HasLettersNumbers;
+use App\Rules\HasSymbol;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -14,7 +16,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::guard('admin')->id();
+        return true;
     }
 
     /**
@@ -29,8 +31,9 @@ class UserRequest extends FormRequest
                 return [
                     'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                    'password' => ['required', 'string', 'min:8'],
-                    'user_level' => ['required', 'in:admin,user']
+                    'password' => ['required', 'string', 'min:8', 'confirmed', new HasSymbol, new HasLettersNumbers],
+                    'user_level' => ['required', 'in:admin,user'],
+                    'department' => 'nullable|string|max:100',
                 ];
                 break;
 
@@ -38,8 +41,9 @@ class UserRequest extends FormRequest
                 return [
                     'name' => ['nullable', 'string', 'max:255'],
                     'email' => ['nullable', 'string', 'email', 'max:255'],
-                    'password' => ['nullable', 'string', 'min:8'],
-                    'user_level' => [ 'nullable', 'in:admin,user']
+                    'password' => ['nullable', 'string', 'min:8', 'confirmed', new HasSymbol, new HasLettersNumbers],
+                    'user_level' => ['nullable', 'in:admin,user'],
+                    'department' => 'nullable|string|max:100',
                 ];
                 break;
         }

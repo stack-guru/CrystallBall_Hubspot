@@ -31,6 +31,7 @@ class User extends Authenticatable
 
         'user_id',
         'user_level',
+        'department',
     ];
 
     /**
