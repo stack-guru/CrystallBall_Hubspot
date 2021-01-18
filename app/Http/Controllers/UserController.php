@@ -7,6 +7,7 @@ use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Services\SendGridService;
 
 class UserController extends Controller
 {
@@ -56,6 +57,10 @@ class UserController extends Controller
         $user->price_plan_id = $parentUser->price_plan_id;
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
         $user->save();
+
+
+        $sGS = new SendGridService;
+        $sGS->addUserToList($user, "1 GAa New registrations");
 
         return ['user' => $user];
 

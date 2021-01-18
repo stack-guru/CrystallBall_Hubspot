@@ -141,13 +141,13 @@ class sidebar extends React.Component {
                         <div className="collapse dropdown-menu setting-menu-content " id="settings ">
                             <ul className="list-unstyled" >
                                 <li className="nav-item dropdown">
-                                    <Link to="/settings/user" className="sidebar-link" >
-                                        <span className="nav-link">Users</span>
+                                    <Link to="/settings/google-account" className="sidebar-link" >
+                                        <span className="nav-link">Add Analytics Accounts</span>
                                     </Link>
                                 </li>
                                 <li className="nav-item dropdown">
-                                    <Link to="/settings/google-account" className="sidebar-link" >
-                                        <span className="nav-link">Add Analytics Accounts</span>
+                                    <Link to="/settings/user" className="sidebar-link" >
+                                        <span className="nav-link">Manage Users</span>
                                     </Link>
                                 </li>
                                 <li className="nav-item dropdown">

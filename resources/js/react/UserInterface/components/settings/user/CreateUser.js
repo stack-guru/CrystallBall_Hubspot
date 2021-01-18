@@ -57,9 +57,6 @@ export default class CreateUser extends Component {
                             <div className="col-md-12">
                                 <h2 className="heading-section gaa-title">Add User</h2>
                             </div>
-                            <div className="col-md-12">
-                                <h5>Enter your user details</h5>
-                            </div>
                         </div>
 
                         <div className="row">
@@ -120,9 +117,7 @@ export default class CreateUser extends Component {
                             </div>
                             <div className="row ml-0 mr-0 mt-3 mt-sm-3 mt-md-1 mt-lg-1">
                                 <div className="col-12 text-right pr-0">
-                                    <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">
-                                        <i className="fa fa-floppy-o mr-1"></i> Save
-                                        </button>
+                                    <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">Save & Send Invitation</button>
                                 </div>
                             </div>
                         </form>
