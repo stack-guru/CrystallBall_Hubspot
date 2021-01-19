@@ -159,10 +159,32 @@ class AnnotationController extends Controller
     public function uiIndex(Request $request)
     {
         $user = Auth::user();
-        if($user->user_level == 'viewer' || $user->user_level == 'team') $user= $user->user;
+        $userIdsArray = [];
+
+        switch($user->user_level){
+            case 'admin':
+                // Current user is admin, grab all child users, pluck ids 
+                $userIdsArray = $user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->id);
+                break;
+            case 'team':
+                // Current user is team, find admin, grab all child users, pluck ids 
+                $userIdsArray = $user->user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->user->id);
+                // Set Current User to Admin so that data source configuration which applies are that of admin
+                $user = $user->user;
+                break;
+            case 'viewer';
+                // Current user is viewer, find admin, grab all child users, pluck ids 
+                $userIdsArray = $user->user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->user->id);
+                // Set Current User to Admin so that data source configuration which applies are that of admin
+                $user = $user->user;
+                break;
+        }
 
         $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_accounts`.`id` AS annotation_ga_account_id, `google_analytics_accounts`.`name` AS google_analytics_account_name FROM (";
-        $annotationsQuery .= "select is_enabled, `show_at`, created_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` = " . $user->id;
+        $annotationsQuery .= "select is_enabled, `show_at`, created_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` IN ('" . implode( "', '",$userIdsArray) . "')";
 
         if ($request->query('annotation_ga_account_id') && $request->query('annotation_ga_account_id') !== '*') {
             $annotationsQuery .= " and annotation_ga_accounts.id = " . $request->query('annotation_ga_account_id');
