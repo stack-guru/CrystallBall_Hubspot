@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { toast } from 'react-toastify'
+import { Redirect } from 'react-router-dom'
 
 import ErrorAlert from '../../../utils/ErrorAlert'
 import HttpClient from '../../../utils/HttpClient'
@@ -12,7 +13,8 @@ export default class CreateUser extends Component {
             user: {
                 name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: ''
             },
-            errors: undefined
+            errors: undefined,
+            redirectTo: null
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
@@ -24,7 +26,8 @@ export default class CreateUser extends Component {
             user: {
                 name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: ''
             },
-            errors: undefined
+            errors: undefined,
+            redirectTo: null
         });
     }
 
@@ -37,8 +40,8 @@ export default class CreateUser extends Component {
 
         HttpClient.post(`/settings/user`, this.state.user)
             .then(response => {
-                this.setDefaultState();
                 toast.success("New user added.");
+                this.setState({ redirectTo: "/settings/user" })
             }, (err) => {
                 console.log(err);
                 this.setState({ errors: (err.response).data });
@@ -49,6 +52,7 @@ export default class CreateUser extends Component {
     }
 
     render() {
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
             <div className="container-xl bg-white  component-wrapper" >
                 <section className="ftco-section" id="buttons">

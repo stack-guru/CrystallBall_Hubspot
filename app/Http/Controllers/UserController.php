@@ -8,6 +8,8 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Services\SendGridService;
+use App\Mail\UserInviteMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -58,9 +60,7 @@ class UserController extends Controller
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
         $user->save();
 
-
-        $sGS = new SendGridService;
-        $sGS->addUserToList($user, "1 GAa New registrations");
+        Mail::to($user)->send(new UserInviteMail($user, $request->password));
 
         return ['user' => $user];
 

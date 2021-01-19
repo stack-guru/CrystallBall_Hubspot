@@ -98,4 +98,9 @@ class User extends Authenticatable
     public function scopeOfCurrentUser($query){
         return $query->where('user_id', Auth::id());
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }
