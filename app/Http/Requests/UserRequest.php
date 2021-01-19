@@ -32,7 +32,7 @@ class UserRequest extends FormRequest
                     'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                     'password' => ['required', 'string', 'min:8', 'confirmed', new HasSymbol, new HasLettersNumbers],
-                    'user_level' => ['required', 'in:admin,user'],
+                    'user_level' => ['required', 'in:admin,team,viewer'],
                     'department' => 'nullable|string|max:100',
                 ];
                 break;
@@ -42,7 +42,7 @@ class UserRequest extends FormRequest
                     'name' => ['nullable', 'string', 'max:255'],
                     'email' => ['nullable', 'string', 'email', 'max:255'],
                     'password' => ['nullable', 'string', 'min:8', 'confirmed', new HasSymbol, new HasLettersNumbers],
-                    'user_level' => ['nullable', 'in:admin,user'],
+                    'user_level' => ['nullable', 'in:admin,team,viewer'],
                     'department' => 'nullable|string|max:100',
                 ];
                 break;

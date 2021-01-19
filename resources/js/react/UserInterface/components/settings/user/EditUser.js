@@ -106,7 +106,8 @@ export default class EditUser extends Component {
                                         <label htmlFor="user_level" className="form-control-placeholder">User Level</label>
                                         <select name="user_level" className="form-control" onChange={this.changeHandler}>
                                             <option value="admin">Admin</option>
-                                            <option value="user">User</option>
+                                            <option value="team">Team Member</option>
+                                            <option value="viewer">Viewer</option>
                                         </select>
                                     </div>
                                 </div>

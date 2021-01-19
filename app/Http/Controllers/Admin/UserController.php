@@ -60,7 +60,7 @@ class UserController extends Controller
             'name' => ['nullable', 'string', 'max:255'],
             'email' => ['nullable', 'string', 'email', 'max:255'],
             'password' => ['nullable', 'string', 'min:8'],
-            'user_level' => ['in:admin,user'],
+            'user_level' => ['in:admin,team,viewer'],
             'price_plan_id' => 'nullable|exists:price_plans,id',
             'price_plan_expiry_date' => 'nullable|date',
         ]);
