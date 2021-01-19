@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Services\BlueSnapService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
+use DB;
 
 class ResubscribeUserPlansSubscriptionCommand extends Command
 {
@@ -162,5 +163,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $user->price_plan_id = $planId;
         $user->price_plan_expiry_date = $this->nextExpiryDate;
         $user->save();
+
+        DB::table('users')->where('user_id', $user->id)->update(['price_plan_id' => $planId, 'price_plan_expiry_date' => $this->nextExpiryDate]);
     }
 }
