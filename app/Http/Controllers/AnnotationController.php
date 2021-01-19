@@ -38,10 +38,12 @@ class AnnotationController extends Controller
     public function store(AnnotationRequest $request)
     {
         $user = Auth::user();
+        if($user->user_level == 'user') {
+            abort(403);
+        }
         if (!$user->pricePlan->has_manual_add) {
             abort(402);
         }
-
         $userId = $user->id;
 
         $annotation = new Annotation;
@@ -89,7 +91,12 @@ class AnnotationController extends Controller
      */
     public function update(AnnotationRequest $request, Annotation $annotation)
     {
-        $userId = Auth::id();
+        $user = Auth::user();
+        $userId = $user->id;
+        
+        if ($annotation->user_id == $user->user_id) {
+            abort(403);
+        }
         if ($annotation->user_id !== $userId) {
             abort(404);
         }
@@ -152,6 +159,7 @@ class AnnotationController extends Controller
     public function uiIndex(Request $request)
     {
         $user = Auth::user();
+        if($user->user_level == 'user') $user= $user->user;
 
         $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_accounts`.`id` AS annotation_ga_account_id, `google_analytics_accounts`.`name` AS google_analytics_account_name FROM (";
         $annotationsQuery .= "select is_enabled, `show_at`, created_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` = " . $user->id;

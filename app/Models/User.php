@@ -68,6 +68,13 @@ class User extends Authenticatable
         "last_api_called_at" => "datetime"
     ];
 
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['user'];
+
     public function pricePlan()
     {
         return $this->belongsTo('App\Models\PricePlan');
@@ -95,12 +102,12 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\GoogleAccount');
     }
 
-    public function scopeOfCurrentUser($query){
-        return $query->where('user_id', Auth::id());
-    }
-
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+    
+    public function scopeOfCurrentUser($query){
+        return $query->where('user_id', Auth::id());
     }
 }
