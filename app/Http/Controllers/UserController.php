@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Services\SendGridService;
 use App\Mail\UserInviteMail;
 use Illuminate\Support\Facades\Mail;
+use App\Models\UserGaAccount;
 
 class UserController extends Controller
 {
@@ -62,6 +63,20 @@ class UserController extends Controller
 
         Mail::to($user)->send(new UserInviteMail($user, $request->password));
 
+        if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
+            foreach ($request->google_analytics_account_id as $gAAId) {
+                $uGAA = new UserGaAccount;
+                $uGAA->user_id = $user->id;
+                $uGAA->google_analytics_account_id = $gAAId;
+                $uGAA->save();
+            }
+        } else {
+            $uGAA = new UserGaAccount;
+            $uGAA->user_id = $user->id;
+            $uGAA->google_analytics_account_id = null;
+            $uGAA->save();
+        }
+
         return ['user' => $user];
 
     }
@@ -93,6 +108,34 @@ class UserController extends Controller
         $user->price_plan_id = $parentUser->price_plan_id;
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
         $user->save();
+
+        $uGAAs = $user->annotationGauserGaAccounts;
+        $oldGAAIds = $uGAAs->pluck('google_analytics_account_id')->toArray();
+        $newGAAIds = $request->google_analytics_account_id;
+
+        foreach ($uGAAs as $uGAA) {
+            if (!in_array($uGAA->google_analytics_account_id, $newGAAIds)) {
+                $uGAA->delete();
+            }
+        }
+
+        if ($request->has('google_analytics_account_id')) {
+            if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
+                foreach ($newGAAIds as $gAAId) {
+                    if (!in_array($gAAId, $oldGAAIds)) {
+                        $uGAA = new UserGaAccount;
+                        $uGAA->user_id = $user->id;
+                        $uGAA->google_analytics_account_id = $gAAId;
+                        $uGAA->save();
+                    }
+                }
+            } else {
+                $uGAA = new UserGaAccount;
+                $uGAA->user_id = $user->id;
+                $uGAA->google_analytics_account_id = null;
+                $uGAA->save();
+            }
+        }
 
         return ['user' => $user];
 

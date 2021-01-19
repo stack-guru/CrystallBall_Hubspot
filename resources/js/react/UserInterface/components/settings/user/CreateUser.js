@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom'
 
 import ErrorAlert from '../../../utils/ErrorAlert'
 import HttpClient from '../../../utils/HttpClient'
+import GoogleAnalyticsAccountSelect from "../../../utils/GoogleAnalyticsAccountSelect";
 
 export default class CreateUser extends Component {
     constructor(props) {
@@ -11,7 +12,8 @@ export default class CreateUser extends Component {
 
         this.state = {
             user: {
-                name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: ''
+                name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: '',
+                google_analytics_account_id: [""]
             },
             errors: undefined,
             redirectTo: null
@@ -19,6 +21,10 @@ export default class CreateUser extends Component {
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
         this.setDefaultState = this.setDefaultState.bind(this)
+    }
+
+    componentDidMount(){
+        document.title = 'User Accounts';
     }
 
     setDefaultState() {
@@ -119,6 +125,13 @@ export default class CreateUser extends Component {
                                     </div>
                                 </div>
 
+                                <div className="col-lg-3 col-sm-4">
+                                    <div className="form-group ">
+                                        <label htmlFor="show_at" className="form-control-placeholder">Google Accounts</label>
+                                        <GoogleAnalyticsAccountSelect name="google_analytics_account_id" id="google_analytics_account_id" value={this.state.user.google_analytics_account_id} onChangeCallback={this.changeHandler} placeholder="Select GA Accounts" multiple></GoogleAnalyticsAccountSelect>
+
+                                    </div>
+                                </div>
                             </div>
                             <div className="row ml-0 mr-0 mt-3 mt-sm-3 mt-md-1 mt-lg-1">
                                 <div className="col-12 text-right pr-0">

@@ -34,6 +34,7 @@ class UserRequest extends FormRequest
                     'password' => ['required', 'string', 'min:8', 'confirmed', new HasSymbol, new HasLettersNumbers],
                     'user_level' => ['required', 'in:admin,team,viewer'],
                     'department' => 'nullable|string|max:100',
+                    'google_analytics_account_id.*' => 'nullable|exists:google_analytics_accounts,id',
                 ];
                 break;
 
@@ -44,6 +45,7 @@ class UserRequest extends FormRequest
                     'password' => ['nullable', 'string', 'min:8', 'confirmed', new HasSymbol, new HasLettersNumbers],
                     'user_level' => ['nullable', 'in:admin,team,viewer'],
                     'department' => 'nullable|string|max:100',
+                    'google_analytics_account_id.*' => 'nullable|exists:google_analytics_accounts,id',
                 ];
                 break;
         }

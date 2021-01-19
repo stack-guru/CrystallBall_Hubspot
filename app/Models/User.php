@@ -112,6 +112,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\User');
     }
 
+    public function userGaAccounts()
+    {
+        return $this->hasMany('App\Models\UserGaAccount');
+    }
+    
     public function scopeOfCurrentUser($query){
         return $query->where('user_id', Auth::id());
     }
