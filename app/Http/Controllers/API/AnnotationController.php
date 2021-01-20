@@ -67,8 +67,31 @@ class AnnotationController extends Controller
             return ['annotations' => [[[]]]];
         }
 
-        $userId = Auth::id();
         $user = Auth::user();
+        $userIdsArray = [];
+
+        switch($user->user_level){
+            case 'admin':
+                // Current user is admin, grab all child users, pluck ids 
+                $userIdsArray = $user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->id);
+                break;
+            case 'team':
+                // Current user is team, find admin, grab all child users, pluck ids 
+                $userIdsArray = $user->user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->user->id);
+                // Set Current User to Admin so that data source configuration which applies are that of admin
+                $user = $user->user;
+                break;
+            case 'viewer';
+                // Current user is viewer, find admin, grab all child users, pluck ids 
+                $userIdsArray = $user->user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->user->id);
+                // Set Current User to Admin so that data source configuration which applies are that of admin
+                $user = $user->user;
+                break;
+        }
+
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));
 
@@ -79,7 +102,7 @@ class AnnotationController extends Controller
         if ($request->query('google_analytics_account_id') && $request->query('google_analytics_account_id') !== '*') {
             $annotationsQuery .= " INNER JOIN `annotation_ga_accounts` ON `annotation_ga_accounts`.`annotation_id` = `annotations`.`id`";
         }
-        $annotationsQuery .= " WHERE (`annotations`.`user_id` = " . $userId . " AND `annotations`.`is_enabled` = 1) ";
+        $annotationsQuery .= " WHERE (`annotations`.`user_id` IN ('" . implode( "', '",$userIdsArray) . "') AND `annotations`.`is_enabled` = 1) ";
         if ($request->query('google_analytics_account_id') && $request->query('google_analytics_account_id') !== '*') {
             $annotationsQuery .= " AND (`annotation_ga_accounts`.`google_analytics_account_id` IS NULL OR `annotation_ga_accounts`.`google_analytics_account_id` = " . $request->query('google_analytics_account_id') . ")";
         }
@@ -96,12 +119,12 @@ class AnnotationController extends Controller
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_holidays_enabled && $request->query('show_holidays') == 'true') {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select holiday_date AS show_at, holidays.id, category, event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = " . $userId . " and `uds`.`ds_code` = 'holidays'";
+            $annotationsQuery .= "select holiday_date AS show_at, holidays.id, category, event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays'";
         }
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_retail_marketing_enabled && $request->query('show_retail_marketing_dates') == 'true') {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select show_at, retail_marketings.id, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $userId . " and `uds`.`ds_code` = 'retail_marketings'";
+            $annotationsQuery .= "select show_at, retail_marketings.id, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings'";
         }
         ////////////////////////////////////////////////////////////////////
 
