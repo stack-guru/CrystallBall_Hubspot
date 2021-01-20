@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PricePlanRequest;
 use App\Models\PricePlan;
 use Illuminate\Http\Request;
+use Auth;
 
 class PricePlanController extends Controller
 {
@@ -20,6 +21,7 @@ class PricePlanController extends Controller
 
     public function uiIndex()
     {
+        if(Auth::user()->user_level !== 'admin') abort(403);
         $pricePlans = PricePlan::where('is_enabled', true)->get();
 
         return ['price_plans' => $pricePlans];
@@ -54,6 +56,7 @@ class PricePlanController extends Controller
      */
     public function show(PricePlan $pricePlan)
     {
+        if(Auth::user()->user_level !== 'admin') abort(403);
         return ['price_plan' => $pricePlan];
     }
 

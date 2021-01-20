@@ -18,6 +18,8 @@ class PaymentController extends Controller
 
     public function indexPaymentHistory()
     {
+        if(Auth::user()->user_level !== 'admin') abort(403);
+
         $pricePlanSubscriptions = PricePlanSubscription::with(['paymentDetail', 'pricePlan'])->orderBy('created_at', 'DESC')->where('user_id', Auth::id())->get();
 
         return ['price_plan_subscriptions' => $pricePlanSubscriptions];
@@ -39,13 +41,14 @@ class PaymentController extends Controller
 
     public function subscribePlan(Request $request)
     {
+        $user = Auth::user();
+        if($user->user_level !== 'admin') abort(403);
 
         $this->validate($request, [
             'price_plan_id' => 'required',
         ]);
 
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
-        $user = Auth::user();
 
         $transactionId = 0;
         if ($pricePlan->price != 0) {

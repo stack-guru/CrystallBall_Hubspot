@@ -27,7 +27,9 @@ export default class EditUser extends Component {
             let userId = this.props.routeParams.match.params.id;
             HttpClient.get(`/settings/user/${userId}`)
                 .then(response => {
-                    this.setState({ user: response.data.user });
+                    let uGAAIds = response.data.user.user_ga_accounts.map(uGAAA => uGAAA.google_analytics_account_id);
+                    if (uGAAIds[0] == null) uGAAIds = [""];
+                    this.setState({ user: { ...response.data.user, google_analytics_account_id: uGAAIds } });
                 }, (err) => {
                     console.log(err);
                     this.setState({ errors: (err.response).data });
@@ -110,7 +112,7 @@ export default class EditUser extends Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
                                         <label htmlFor="user_level" className="form-control-placeholder">User Level</label>
-                                        <select name="user_level" className="form-control" onChange={this.changeHandler}>
+                                        <select name="user_level" className="form-control" onChange={this.changeHandler} value={this.state.user.user_level}>
                                             <option value="admin">Admin</option>
                                             <option value="team">Team Member</option>
                                             <option value="viewer">Viewer</option>

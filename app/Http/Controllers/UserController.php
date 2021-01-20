@@ -21,6 +21,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', User::class);
+
         return view('ui/app');
     }
 
@@ -31,12 +33,18 @@ class UserController extends Controller
      */
     public function uiIndex()
     {
+        $this->authorize('viewAny', User::class);
+
         $users = User::ofCurrentUser()->get();
         return ['users' => $users];
     }
 
     public function show(User $user){
+
+        $this->authorize('view', $user);
+
         if($user->user_id !== Auth::id()) abort(404);
+        $user->load('userGaAccounts');
         return ['user' => $user];
     }
 
@@ -48,10 +56,9 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+        $this->authorize('create', User::class);
+
         $parentUser = Auth::user();
-        if ($parentUser->user_level != 'admin') {
-            abort(403);
-        }
 
         $user = new User;
         $user->fill($request->validated());
@@ -90,26 +97,21 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        if ($user->user_id !== Auth::id()) {
-            abort(404);
-        }
 
-        $parentUser = Auth::user();
-        if ($parentUser->user_level != 'admin') {
-            abort(403);
-        }
-
+        $this->authorize('update', $user);
+        
         $user->fill($request->validated());
         if ($request->has('password')) {
             $user->password = Hash::make($request->password);
         }
 
+        $parentUser = Auth::user();
         $user->user_id = $parentUser->id;
-        $user->price_plan_id = $parentUser->price_plan_id;
-        $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
+        $user->price_plan_id = $user->price_plan_id;
+        $user->price_plan_expiry_date = $user->price_plan_expiry_date;
         $user->save();
 
-        $uGAAs = $user->annotationGauserGaAccounts;
+        $uGAAs = $user->userGaAccounts;
         $oldGAAIds = $uGAAs->pluck('google_analytics_account_id')->toArray();
         $newGAAIds = $request->google_analytics_account_id;
 
@@ -149,13 +151,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if ($user->user_id !== Auth::id()) {
-            abort(404);
-        }
-
-        if (Auth::user()->user_level !== 'admin') {
-            abort(403);
-        }
+        $this->authorize('delete', $user);
 
         $user->delete();
 

@@ -20,6 +20,8 @@ class AnnotationController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Annotation::class);
+
         return view('ui/app');
     }
 
@@ -32,18 +34,16 @@ class AnnotationController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Annotation::class);
+
         return view('ui/app');
     }
 
     public function store(AnnotationRequest $request)
     {
+        $this->authorize('create', Annotation::class);
+
         $user = Auth::user();
-        if($user->user_level == 'viewer') {
-            abort(403);
-        }
-        if (!$user->pricePlan->has_manual_add) {
-            abort(402);
-        }
         $userId = $user->id;
 
         $annotation = new Annotation;
@@ -91,15 +91,24 @@ class AnnotationController extends Controller
      */
     public function update(AnnotationRequest $request, Annotation $annotation)
     {
+        $this->authorize('update', $annotation);
+
         $user = Auth::user();
-        $userId = $user->id;
-        
-        if ($annotation->user_id == $user->user_id) {
-            abort(403);
+        $userIdsArray = [];
+        switch($user->user_level){
+            case 'admin':
+                // Current user is admin, grab all child users, pluck ids 
+                $userIdsArray = $user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->id);
+                break;
+            case 'team':
+                // Current user is team, find admin, grab all child users, pluck ids 
+                $userIdsArray = $user->user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->user->id);
+                break;
         }
-        if ($annotation->user_id !== $userId) {
-            abort(404);
-        }
+
+        if(! in_array($annotation->user_id, $userIdsArray)) abort(404);
 
         $annotation->fill($request->validated());
         $annotation->save();
@@ -121,7 +130,7 @@ class AnnotationController extends Controller
                         $aGAA = new AnnotationGaAccount;
                         $aGAA->annotation_id = $annotation->id;
                         $aGAA->google_analytics_account_id = $gAAId;
-                        $aGAA->user_id = $userId;
+                        $aGAA->user_id = $user->id;
                         $aGAA->save();
                     }
                 }
@@ -129,7 +138,7 @@ class AnnotationController extends Controller
                 $aGAA = new AnnotationGaAccount;
                 $aGAA->annotation_id = $annotation->id;
                 $aGAA->google_analytics_account_id = null;
-                $aGAA->user_id = $userId;
+                $aGAA->user_id = $user->id;
                 $aGAA->save();
             }
         }
@@ -147,17 +156,33 @@ class AnnotationController extends Controller
      */
     public function destroy(Annotation $annotation)
     {
-        $userId = Auth::id();
-        if ($userId !== $annotation->user_id) {
-            abort(404);
+        $this->authorize('delete', $annotation);
+
+        $user = Auth::user();
+        $userIdsArray = [];
+        switch($user->user_level){
+            case 'admin':
+                // Current user is admin, grab all child users, pluck ids 
+                $userIdsArray = $user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->id);
+                break;
+            case 'team':
+                // Current user is team, find admin, grab all child users, pluck ids 
+                $userIdsArray = $user->user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->user->id);
+                break;
         }
 
+        if(! in_array($annotation->user_id, $userIdsArray)) abort(404);
         $annotation->delete();
+        
         return ["success" => true];
     }
 
     public function uiIndex(Request $request)
     {
+        $this->authorize('viewAny', Annotation::class);
+
         $user = Auth::user();
         $userIdsArray = [];
 
@@ -221,9 +246,24 @@ class AnnotationController extends Controller
     }
     public function uiShow(Annotation $annotation)
     {
-        if ($annotation->user_id !== Auth::id()) {
-            abort(404);
+        $this->authorize('view', $annotation);
+
+        $user = Auth::user();
+        $userIdsArray = [];
+        switch($user->user_level){
+            case 'admin':
+                // Current user is admin, grab all child users, pluck ids 
+                $userIdsArray = $user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->id);
+                break;
+            case 'team':
+                // Current user is team, find admin, grab all child users, pluck ids 
+                $userIdsArray = $user->user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->user->id);
+                break;
         }
+
+        if(! in_array($annotation->user_id, $userIdsArray)) abort(404);
 
         $annotation->load('annotationGaAccounts');
         return ['annotation' => $annotation];
@@ -231,6 +271,8 @@ class AnnotationController extends Controller
 
     public function upload(Request $request)
     {
+        $this->authorize('create', Annotation::class);
+
         $user = Auth::user();
         if (!$user->pricePlan->has_csv_upload) {
             abort(402);

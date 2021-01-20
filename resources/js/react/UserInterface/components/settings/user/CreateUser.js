@@ -110,7 +110,7 @@ export default class CreateUser extends Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
                                         <label htmlFor="user_level" className="form-control-placeholder">User Level</label>
-                                        <select name="user_level" className="form-control" onChange={this.changeHandler}>
+                                        <select name="user_level" className="form-control" onChange={this.changeHandler} value={this.state.user.user_level}>
                                             <option value="admin">Admin</option>
                                             <option value="team">Team Member</option>
                                             <option value="viewer">Viewer</option>
