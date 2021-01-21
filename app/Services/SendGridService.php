@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class SendGridService
 {
@@ -24,6 +25,9 @@ class SendGridService
             ])
             ->withBody(json_encode([['email' => $user->email, 'first_name' => $user->name, 'e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]]), 'application/json')
             ->post("https://api.sendgrid.com/v3/contactdb/recipients");
+
+        Log::channel('sendgrid')->info('Adding recipient to SendGrid Contact DB.', ['email' => $user->email, 'first_name' => $user->name, 'e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]);
+        Log::channel('sendgrid')->debug($response->body());
 
         if ($response->status() != 201) {
             return false;
@@ -53,6 +57,9 @@ class SendGridService
             ]), 'application/json')
             ->put("https://api.sendgrid.com/v3/marketing/contacts");
 
+        Log::channel('sendgrid')->info('Adding user to a list:' . $listName, ['email' => $user->email, 'first_name' => $user->name, 'custom_fields' => ['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')], $list['id']]);
+        Log::channel('sendgrid')->debug($response->body());
+
         if ($response->status() != 202) {
             return false;
         }
@@ -68,19 +75,21 @@ class SendGridService
             return false;
         }
 
+        $contactsDbArray = array_map(function ($user) {
+            return [
+                'email' => $user['email'],
+                'first_name' => $user['name'],
+                'custom_fields' => ['e9_D' => Carbon::parse($user['created_at'])->subDays(2)->format('Y-m-d')],
+            ];
+        }, $users);
+
         $response = Http::withToken($this->key)
             ->withHeaders([
                 "Content-Type: application/json",
             ])
             ->withBody(json_encode([
                 "list_ids" => [$list['id']],
-                "contacts" => array_map(function ($user) {
-                    return [
-                        'email' => $user['email'],
-                        'first_name' => $user['name'],
-                        'custom_fields' => ['e9_D' => Carbon::parse($user['created_at'])->subDays(2)->format('Y-m-d')],
-                    ];
-                }, $users),
+                "contacts" => $contactsDbArray,
             ]), 'application/json')
             ->put("https://api.sendgrid.com/v3/marketing/contacts");
 
@@ -88,11 +97,9 @@ class SendGridService
             return false;
         }
 
-        print "====================================================================\n";
-        print "=======================SERVER RESPONSE==============================\n";
-        print "====================================================================\n";
-        print $response->body() . "\n";
-        print "====================================================================\n";
+        Log::channel('sendgrid')->info('Adding bulk users to list:' . $listName, $contactsDbArray);
+        Log::channel('sendgrid')->debug($response->body());
+
         return true;
     }
 
