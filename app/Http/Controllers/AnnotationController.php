@@ -107,7 +107,6 @@ class AnnotationController extends Controller
                 array_push($userIdsArray, $user->user->id);
                 break;
         }
-
         if(! in_array($annotation->user_id, $userIdsArray)) abort(404);
 
         $annotation->fill($request->validated());

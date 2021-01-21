@@ -10,7 +10,6 @@ class AutoPaymentLog extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'payment_detail_id',
         'price_plan_subscription_id',
         'price_plan_id',

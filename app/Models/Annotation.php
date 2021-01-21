@@ -8,7 +8,7 @@ use Auth;
 class Annotation extends Model
 {
     protected $fillable = [
-        'user_id', 'category', 'event_type', 'event_name',
+        'category', 'event_type', 'event_name',
         'url', 'description', 'title', 'show_at', 'type',
         'is_enabled', 'added_by'
     ];
