@@ -158,7 +158,7 @@ export default class AddGoogleAccount extends React.Component {
                                 <table className="table table-hover table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Avatar</th>
+                                            <th>Profile Image</th>
                                             <th>Google Account</th>
                                             <th>Email</th>
                                             <th>Actions</th>
