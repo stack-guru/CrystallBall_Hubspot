@@ -126,6 +126,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             ->where('price_plans.price', 0)
             ->update([
                 'users.price_plan_expiry_date' => $this->nextExpiryDate,
+                'users.price_plan_id' => $this->freePlanId,
             ]);
 
         print "$updateCount Users have been resubscribed to their free plans.\n";
