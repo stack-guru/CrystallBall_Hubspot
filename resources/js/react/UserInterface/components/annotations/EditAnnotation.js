@@ -1,5 +1,6 @@
 import React from 'react';
 import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
 import ErrorAlert from "../../utils/ErrorAlert";
 import HttpClient from "../../utils/HttpClient";
@@ -22,7 +23,8 @@ export default class EditAnnotation extends React.Component {
             resp: '',
             error: '',
             isBusy: false,
-            isDirty: false
+            isDirty: false,
+            redirectTo: null,
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
@@ -73,7 +75,7 @@ export default class EditAnnotation extends React.Component {
             HttpClient.post(`/annotation/${this.state.annotation.id}`, fd)
                 .then(response => {
                     toast.success("Annotation updated.");
-                    this.setDefaultState();
+                    this.setState({ redirectTo: "/annotation" });
                 }, (err) => {
                     console.log(err);
                     this.setState({ isBusy: false, errors: (err.response).data });
@@ -125,6 +127,9 @@ export default class EditAnnotation extends React.Component {
 
 
     render() {
+
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+
         const validation = this.state.validation;
         return (
             <div className="container-xl bg-white component-wrapper" >

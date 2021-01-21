@@ -34,14 +34,12 @@ export default class GoogleAnalyticsAccountSelect extends React.Component {
     }
 
     onChangeHandler(sOption) {
-        if (!this.props.multiple && sOption.value == 'new-google-account') {
+        if (sOption == null) {
+            this.props.onChangeCallback({ target: { name: this.props.name, value: [""] } });
+        }else if (!this.props.multiple && sOption.value == 'new-google-account') {
             this.setState({ redirectTo: '/settings/google-account' });
         } else {
-            if (sOption.length == 0) {
-                this.props.onChangeCallback({ target: { name: this.props.name, value: [""] } });
-            } else {
-                this.props.onChangeCallback({ target: { name: this.props.name, value: this.props.multiple ? sOption.filter(sO => sO.value !== "").map(sO => sO.value) : sOption.value } });
-            }
+            this.props.onChangeCallback({ target: { name: this.props.name, value: this.props.multiple ? sOption.filter(sO => sO.value !== "").map(sO => sO.value) : sOption.value } });
         }
     }
 

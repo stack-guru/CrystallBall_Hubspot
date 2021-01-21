@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Mail\UserInviteMail;
 use App\Models\User;
+use App\Models\UserGaAccount;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Services\SendGridService;
-use App\Mail\UserInviteMail;
 use Illuminate\Support\Facades\Mail;
-use App\Models\UserGaAccount;
 
 class UserController extends Controller
 {
@@ -39,11 +38,15 @@ class UserController extends Controller
         return ['users' => $users];
     }
 
-    public function show(User $user){
+    public function show(User $user)
+    {
 
         $this->authorize('view', $user);
 
-        if($user->user_id !== Auth::id()) abort(404);
+        if ($user->user_id !== Auth::id()) {
+            abort(404);
+        }
+
         $user->load('userGaAccounts');
         return ['user' => $user];
     }
@@ -99,7 +102,7 @@ class UserController extends Controller
     {
 
         $this->authorize('update', $user);
-        
+
         $user->fill($request->validated());
         if ($request->has('password')) {
             $user->password = Hash::make($request->password);
@@ -132,10 +135,12 @@ class UserController extends Controller
                     }
                 }
             } else {
-                $uGAA = new UserGaAccount;
-                $uGAA->user_id = $user->id;
-                $uGAA->google_analytics_account_id = null;
-                $uGAA->save();
+                if (!in_array("", $oldGAAIds)) {
+                    $uGAA = new UserGaAccount;
+                    $uGAA->user_id = $user->id;
+                    $uGAA->google_analytics_account_id = null;
+                    $uGAA->save();
+                }
             }
         }
 
