@@ -7,6 +7,7 @@ use App\Mail\UserInviteMail;
 use App\Models\User;
 use App\Models\UserGaAccount;
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -161,5 +162,10 @@ class UserController extends Controller
         $user->delete();
 
         return ['success' => true];
+    }
+
+    public function getTeamName()
+    {
+        return ['team_names' => DB::table('users')->where('user_id', Auth::id())->whereNotNull('team_name')->select('team_name')->distinct()->get()];
     }
 }

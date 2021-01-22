@@ -31,6 +31,8 @@ class User extends Authenticatable
 
         'user_level',
         'department',
+
+        'team_name',
     ];
 
     /**
@@ -91,6 +93,7 @@ class User extends Authenticatable
     public function lastAnnotation(){
         return $this->hasOne('App\Models\Annotation')->orderBy('created_at', 'DESC');
     }
+    
     public function annotations()
     {
         return $this->hasMany('App\Models\Annotation');

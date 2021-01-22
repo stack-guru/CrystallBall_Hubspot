@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 import ErrorAlert from '../../../utils/ErrorAlert'
 import HttpClient from '../../../utils/HttpClient'
 import GoogleAnalyticsAccountSelect from "../../../utils/GoogleAnalyticsAccountSelect";
+import UserTeamNameSelect from "../../../utils/UserTeamNameSelect";
 
 export default class CreateUser extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ export default class CreateUser extends Component {
         this.state = {
             user: {
                 name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: '',
-                google_analytics_account_id: [""]
+                google_analytics_account_id: [""], team_name: ""
             },
             errors: undefined,
             redirectTo: null
@@ -23,14 +24,15 @@ export default class CreateUser extends Component {
         this.setDefaultState = this.setDefaultState.bind(this)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         document.title = 'User Accounts';
     }
 
     setDefaultState() {
         this.setState({
             user: {
-                name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: ''
+                name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: '',
+                team_name: ""
             },
             errors: undefined,
             redirectTo: null
@@ -129,11 +131,17 @@ export default class CreateUser extends Component {
                                     <div className="form-group ">
                                         <label htmlFor="show_at" className="form-control-placeholder">Google Accounts</label>
                                         <GoogleAnalyticsAccountSelect name="google_analytics_account_id" id="google_analytics_account_id" value={this.state.user.google_analytics_account_id} onChangeCallback={this.changeHandler} placeholder="Select GA Accounts" multiple></GoogleAnalyticsAccountSelect>
+                                    </div>
+                                </div>
 
+                                <div className="col-lg-3 col-sm-4">
+                                    <div className="form-group ">
+                                        <label htmlFor="show_at" className="form-control-placeholder">Team Name</label>
+                                        <UserTeamNameSelect name="team_name" id="team_name" value={this.state.user.team_name} onChangeCallback={this.changeHandler} placeholder="Select Team or Create"></UserTeamNameSelect>
                                     </div>
                                 </div>
                             </div>
-                            <div className="row ml-0 mr-0 mt-3 mt-sm-3 mt-md-1 mt-lg-1">
+                            <div className="row ml-0 mr-0 mt-3">
                                 <div className="col-12 text-right pr-0">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">Save & Send Invitation</button>
                                 </div>

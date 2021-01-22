@@ -35,6 +35,7 @@ class UserRequest extends FormRequest
                     'user_level' => ['required', 'in:admin,team,viewer'],
                     'department' => 'nullable|string|max:100',
                     'google_analytics_account_id.*' => 'nullable|exists:google_analytics_accounts,id',
+                    'team_name' => 'nullable|string|max:100',
                 ];
                 break;
 
@@ -46,6 +47,7 @@ class UserRequest extends FormRequest
                     'user_level' => ['nullable', 'in:admin,team,viewer'],
                     'department' => 'nullable|string|max:100',
                     'google_analytics_account_id.*' => 'nullable|exists:google_analytics_accounts,id',
+                    'team_name' => 'nullable|string|max:100',
                 ];
                 break;
         }

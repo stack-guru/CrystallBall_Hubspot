@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import HttpClient from '../../../utils/HttpClient'
 import ErrorAlert from '../../../utils/ErrorAlert'
 import GoogleAnalyticsAccountSelect from "../../../utils/GoogleAnalyticsAccountSelect";
+import UserTeamNameSelect from "../../../utils/UserTeamNameSelect";
 
 export default class EditUser extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ export default class EditUser extends Component {
         this.state = {
             user: {
                 name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: '',
-                google_analytics_account_id: [""]
+                google_analytics_account_id: [""], team_name: ""
             }
         }
         this.changeHandler = this.changeHandler.bind(this)
@@ -133,8 +134,14 @@ export default class EditUser extends Component {
 
                                     </div>
                                 </div>
+                                <div className="col-lg-3 col-sm-4">
+                                    <div className="form-group ">
+                                        <label htmlFor="show_at" className="form-control-placeholder">Team Name</label>
+                                        <UserTeamNameSelect name="team_name" id="team_name" value={this.state.user.team_name} onChangeCallback={this.changeHandler} placeholder="Select Team or Create"></UserTeamNameSelect>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="row ml-0 mr-0 mt-3 mt-sm-3 mt-md-1 mt-lg-1">
+                            <div className="row ml-0 mr-0 mt-3">
                                 <div className="col-12 text-right pr-0">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">Save</button>
                                 </div>

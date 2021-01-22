@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
         Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->only(['store', 'update', 'destroy']);
 
+        Route::get('team-name', [App\Http\Controllers\UserController::class, 'getTeamName']);
         Route::get('countries', [App\Http\Controllers\HolidayController::class, 'holidayApi']);
         Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);
         Route::get('annotation-categories', [App\Http\Controllers\AnnotationController::class, 'getCategories']);
