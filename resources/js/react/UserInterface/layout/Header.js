@@ -191,6 +191,7 @@ class header extends React.Component {
                                         <h6 className="mb-0 gaa-text-primary border-bottom-1"><b>{this.props.user.name}</b></h6>
                                         <small className="gaa-text-primary"><b>Email: {this.props.user.email}</b></small>
                                         <small className="gaa-text-primary"><b>Price Plan: {this.props.user.price_plan.name}</b></small>
+                                        <small className="gaa-text-primary"><b>Team: {this.props.user.team_name}</b></small>
                                     </div>
                                 </li>
                                 {/* <li>
