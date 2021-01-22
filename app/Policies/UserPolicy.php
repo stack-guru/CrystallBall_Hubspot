@@ -27,7 +27,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->user_level == 'admin';
+        return $user->user_level == 'admin' || $user->user_level == 'team';
     }
 
     /**

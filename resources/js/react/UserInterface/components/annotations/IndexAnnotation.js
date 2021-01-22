@@ -154,10 +154,12 @@ class IndexAnnotations extends React.Component {
 
     checkSearchText(annotation) {
         if (this.state.searchText.length) {
-            if (annotation.category.toLowerCase().indexOf(this.state.searchText) > -1
+            if (
+                annotation.category.toLowerCase().indexOf(this.state.searchText) > -1
                 || annotation.event_name.toLowerCase().indexOf(this.state.searchText) > -1
                 || annotation.description.toLowerCase().indexOf(this.state.searchText) > -1
-                || annotation.show_at.toLowerCase().indexOf(this.state.searchText) > -1) {
+                || annotation.show_at.toLowerCase().indexOf(this.state.searchText) > -1
+            ) {
                 return true;
             }
             return false;
@@ -167,7 +169,6 @@ class IndexAnnotations extends React.Component {
 
     render() {
 
-        const annotations = this.state.annotations;
         const categories = this.state.annotationCategories;
         return (
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
@@ -232,6 +233,7 @@ class IndexAnnotations extends React.Component {
                                                     <th>Google Account</th>
                                                     <th>Status</th>
                                                     <th>Show At</th>
+                                                    <th>Added By</th>
                                                     <th>Actions</th>
 
                                                 </tr>
@@ -241,9 +243,8 @@ class IndexAnnotations extends React.Component {
 
                                                 {
 
-                                                    annotations.map(anno => {
-                                                        if (!this.checkSearchText(anno)) return null;
-                                                        return <tr key={anno.category + anno.event_name + anno.id} className={
+                                                    this.state.annotations.filter(this.checkSearchText).map(anno => {
+                                                        return <tr className={
                                                             anno.category == "Holidays" || anno.category == "holidays" ? "text-primary" :
                                                                 anno.category == "google updates" || anno.category == "Google Updates" ? "text-success" :
                                                                     anno.category == "sales event" || anno.category == "Sales Event" ? "text-alert" : "text-primary"
@@ -269,19 +270,18 @@ class IndexAnnotations extends React.Component {
                                                                     : null}
                                                             </td>
                                                             <td>{moment(anno.show_at).format('YYYY-MM-DD')}</td>
+                                                            <td></td>
                                                             <td>
                                                                 {anno.id ?
                                                                     <React.Fragment>
                                                                         <button type="button" onClick={() => {
                                                                             this.deleteAnnotation(anno.id)
 
-                                                                        }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white mr-1 mr-md-2">
-                                                                            <i className="mr-0 mr-md-1 fa fa-trash"></i>
-                                                                            <span className="action-text">Delete</span>
+                                                                        }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white mr-1">
+                                                                            <i className="fa fa-trash"></i>
                                                                         </button>
                                                                         <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-bg-primary text-white" >
-                                                                            <i className="mr-0 mr-md-1 fa fa-edit"></i>
-                                                                            <span className="action-text"> Edit</span>
+                                                                            <i className="fa fa-edit"></i>
                                                                         </Link>
 
                                                                     </React.Fragment>
