@@ -34,8 +34,8 @@ class UserController extends Controller
     public function uiIndex()
     {
         $this->authorize('viewAny', User::class);
-
-        $users = User::ofCurrentUser()->get();
+        $user = Auth::user();
+        $users = $user->user_id ? $user->user->users : $user->users;
         return ['users' => $users];
     }
 
