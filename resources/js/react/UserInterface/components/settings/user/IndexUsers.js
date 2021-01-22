@@ -87,6 +87,7 @@ export default class IndexUsers extends Component {
                                                     <th>Email</th>
                                                     <th>Name</th>
                                                     <th>Department</th>
+                                                    <th>Team</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
@@ -97,6 +98,7 @@ export default class IndexUsers extends Component {
                                                             <td>{user.email}</td>
                                                             <td>{user.name}</td>
                                                             <td>{user.department}</td>
+                                                            <td>{user.team_name}</td>
                                                             <td>
                                                                 <Link className="btn gaa-btn-primary btn-sm" to={`/settings/user/${user.id}/edit`}><i className="fa fa-edit"></i></Link>
                                                                 <button className="btn gaa-btn-danger btn-sm ml-2" onClick={() => this.handleDelete(user.id)}><i className="fa fa-trash"></i></button>
