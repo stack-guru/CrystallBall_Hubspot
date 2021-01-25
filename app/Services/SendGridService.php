@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class SendGridService
 {
@@ -79,7 +79,7 @@ class SendGridService
             return [
                 'email' => $user['email'],
                 'first_name' => $user['name'],
-                'custom_fields' => ['e9_D' => Carbon::parse($user['created_at'])->subDays(2)->format('Y-m-d')],
+                // 'custom_fields' => ['e9_D' => Carbon::parse($user['created_at'])->subDays(2)->format('Y-m-d')],
             ];
         }, $users);
 
