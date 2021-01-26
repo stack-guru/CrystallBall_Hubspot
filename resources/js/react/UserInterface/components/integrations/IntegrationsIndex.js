@@ -94,7 +94,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                        New Campaign Starts Sending in ActiveCampaign.
+                                    Add an annotation to GA automatically when a New Campaign Starts Sending in ActiveCampaign.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
@@ -130,7 +130,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                        New Product in Shopify
+                                    Add an annotation to GA automatically when a New Product in Shopify.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
@@ -236,7 +236,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    New Update in Board in monday.com.
+                                    Add an annotation to GA automatically when a New Update in Board in monday.com.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
@@ -272,7 +272,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    New Issue Type in Jira.
+                                    Add an annotation to GA automatically when a New Issue Type in Jira.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
@@ -308,7 +308,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    New Card in Trello.
+                                    Add an annotation to GA automatically when a New Card in Trello.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
@@ -344,7 +344,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    New Release in GitHub.
+                                    Add an annotation to GA automatically when a New Release in GitHub.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
@@ -380,7 +380,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    New Event in Bitbucket.
+                                    Add an annotation to GA automatically when a New Event in Bitbucket.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
