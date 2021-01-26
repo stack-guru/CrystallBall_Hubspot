@@ -192,18 +192,18 @@ class AnnotationController extends Controller
         $user = Auth::user();
         $userIdsArray = [];
 
-        if(! $user->user_id){
+        if (!$user->user_id) {
             // Current user is not child, grab all child users, pluck ids
             $userIdsArray = $user->users->pluck('id')->toArray();
             array_push($userIdsArray, $user->id);
-        }else {
+        } else {
             // Current user is child, find admin, grab all child users, pluck ids
             $userIdsArray = $user->user->users->pluck('id')->toArray();
             array_push($userIdsArray, $user->user->id);
             // Set Current User to Admin so that data source configuration which applies are that of admin
             $user = $user->user;
         }
-    
+
         $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_accounts`.`id` AS annotation_ga_account_id, `google_analytics_accounts`.`name` AS google_analytics_account_name FROM (";
         $annotationsQuery .= "select is_enabled, `show_at`, created_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` IN ('" . implode("', '", $userIdsArray) . "')";
 
@@ -287,15 +287,16 @@ class AnnotationController extends Controller
         $filecontent = file($filepath);
         $headers = str_getcsv($filecontent[0]);
 
-        if (count($headers) !== 5) {
-            return response()->json(['message' => 'Invalid number of columns'], 422);
-        }
-        foreach ($headers as $header) {
-            if (!in_array($header, [
-                'category', 'event_name',
-                'url', 'description', 'show_at',
-            ])) {
-                return response()->json(['message' => 'Invalid CSV file headers'], 422);
+        // Checking if given file contains only required number of columns
+        // if (count($headers) !== 5) {
+        //     return response()->json(['message' => 'Invalid number of columns'], 422);
+        // }
+
+        // Checking if given file contains all required headers
+        $kHs = ['category', 'event_name', 'url', 'description', 'show_at'];
+        foreach ($kHs as $kH) {
+            if (!in_array($kH, $headers)) {
+                return response()->json(['message' => 'Incomplete CSV file headers'], 422);
             }
         }
 
@@ -312,18 +313,20 @@ class AnnotationController extends Controller
 
             if ($headers !== $values && count($values) == count($headers)) {
                 for ($i = 0; $i < count($headers); $i++) {
-                    if ($headers[$i] == 'show_at') {
-                        try {
-                            $date = Carbon::createFromFormat($request->date_format, $values[$i]);
-                            $row['show_at'] = $date->format('Y-m-d');
-                        } catch (\Exception$e) {
-                            return ['message' => "Please select correct date format according to your CSV file from the list below."];
-                        }
+                    if (in_array($headers[$i], $kHs)) {
+                        if ($headers[$i] == 'show_at') {
+                            try {
+                                $date = Carbon::createFromFormat($request->date_format, $values[$i]);
+                                $row['show_at'] = $date->format('Y-m-d');
+                            } catch (\Exception$e) {
+                                return ['message' => "Please select correct date format according to your CSV file from the list below."];
+                            }
 
-                    } else if ($headers[$i] == 'url') {
-                        $row['url'] = $values[$i];
-                    } else {
-                        $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+                        } else if ($headers[$i] == 'url') {
+                            $row['url'] = $values[$i];
+                        } else {
+                            $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+                        }
                     }
                 }
 
