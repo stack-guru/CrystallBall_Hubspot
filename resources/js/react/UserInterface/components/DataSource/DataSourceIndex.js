@@ -266,8 +266,72 @@ export default class DataSourceIndex extends React.Component {
 
                         </div>
 
+                        <div className="container mt-3 ds-sections border-bottom">
+                            <div className="row ml-0 mr-0 w-100">
+                                <div className="col-9">
+                                    <h4 className="gaa-text-primary">Weather Alerts</h4>
+                                </div>
+                                <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                    {this.state.userServices.is_ds_weather_alerts_api_enabled ? "Active" : "Deactive"}
+                                    <label className="trigger switch">
+                                        <input
+                                            type="checkbox"
+                                            name="is_ds_weather_alerts_api_enabled"
+                                            onChange={() => { swal("Coming soon!", '', 'info'); }}
+                                            checked={this.state.userServices.is_ds_weather_alerts_api_enabled}
+                                        />
+                                        <span className="slider round" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="row ml-0 mr-0 w-100">
+                                <div className="col-9">
 
+                                </div>
+                                <div className="col-3">
+                                    <p
+                                        className="ds-update-text m-0 text-center"
+                                        onClick={() => { this.setState({ sectionName: this.state.sectionName == "weather_alerts_api" ? null : "weather_alerts_api" }) }}
+                                    >
+                                        {/* {this.state.sectionName == "weather_alerts_api" ? "Hide" : "Choose Countries"} */}
+                                    </p>
+                                </div>
+                            </div>
 
+                        </div>
+
+                        <div className="container mt-3 ds-sections border-bottom">
+                            <div className="row ml-0 mr-0 w-100">
+                                <div className="col-9">
+                                    <h4 className="gaa-text-primary">Google Ads History</h4>
+                                </div>
+                                <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                    {this.state.userServices.is_ds_google_ads_history_enabled ? "Active" : "Deactive"}
+                                    <label className="trigger switch">
+                                        <input
+                                            type="checkbox"
+                                            name="is_ds_google_ads_history_enabled"
+                                            onChange={() => { swal("Coming soon!", '', 'info'); }}
+                                            checked={this.state.userServices.is_ds_google_ads_history_enabled}
+                                        />
+                                        <span className="slider round" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="row ml-0 mr-0 w-100">
+                                <div className="col-9">
+
+                                </div>
+                                <div className="col-3">
+                                    <p
+                                        className="ds-update-text m-0 text-center"
+                                        onClick={() => { this.setState({ sectionName: this.state.sectionName == "google_ads_history" ? null : "google_ads_history" }) }}
+                                    >
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                     <div className="col-md-4 col-sm-12 mt-3 border-left">
                         {this.state.sectionName == 'holidays' && this.state.userDataSources !== null ?
