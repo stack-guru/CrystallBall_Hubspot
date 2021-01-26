@@ -19,11 +19,12 @@ class SendGridService
     public function addRecipient(User $user)
     {
 
+        // Here explode function is used to separate first_name of user from full name. It is not the recommended way to do it but it will keep things simple.
         $response = Http::withToken($this->key)
             ->withHeaders([
                 "Content-Type: application/json",
             ])
-            ->withBody(json_encode([['email' => $user->email, 'first_name' => $user->name, 'e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]]), 'application/json')
+            ->withBody(json_encode([['email' => $user->email, 'first_name' => explode(' ', trim($user->name))[0], 'e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]]), 'application/json')
             ->post("https://api.sendgrid.com/v3/contactdb/recipients");
 
         Log::channel('sendgrid')->info('Adding recipient to SendGrid Contact DB.', ['email' => $user->email, 'first_name' => $user->name, 'e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]);
@@ -52,7 +53,7 @@ class SendGridService
             ->withBody(json_encode([
                 "list_ids" => [$list['id']],
                 "contacts" => [
-                    ['email' => $user->email, 'first_name' => $user->name, 'custom_fields' => ['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]],
+                    ['email' => $user->email, 'first_name' => explode(' ', trim($user->name))[0], 'custom_fields' => ['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]],
                 ],
             ]), 'application/json')
             ->put("https://api.sendgrid.com/v3/marketing/contacts");
@@ -78,7 +79,7 @@ class SendGridService
         $contactsDbArray = array_map(function ($user) {
             return [
                 'email' => $user['email'],
-                'first_name' => $user['name'],
+                'first_name' => explode(' ', trim($user['name']))[0],
                 // 'custom_fields' => ['e9_D' => Carbon::parse($user['created_at'])->subDays(2)->format('Y-m-d')],
             ];
         }, $users);
