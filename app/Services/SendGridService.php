@@ -27,7 +27,7 @@ class SendGridService
             ->withBody(json_encode([['email' => $user->email, 'first_name' => explode(' ', trim($user->name))[0], 'e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]]), 'application/json')
             ->post("https://api.sendgrid.com/v3/contactdb/recipients");
 
-        Log::channel('sendgrid')->info('Adding recipient to SendGrid Contact DB.', ['email' => $user->email, 'first_name' => $user->name, 'e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]);
+        Log::channel('sendgrid')->info('Adding recipient to SendGrid Contact DB.', ['email' => $user->email, 'first_name' => explode(' ', trim($user->name))[0], 'e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]);
         Log::channel('sendgrid')->debug($response->body());
 
         if ($response->status() != 201) {
@@ -58,7 +58,7 @@ class SendGridService
             ]), 'application/json')
             ->put("https://api.sendgrid.com/v3/marketing/contacts");
 
-        Log::channel('sendgrid')->info('Adding user to a list:' . $listName, ['email' => $user->email, 'first_name' => $user->name, 'custom_fields' => ['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')], $list['id']]);
+        Log::channel('sendgrid')->info('Adding user to a list:' . $listName, ['email' => $user->email, 'first_name' => explode(' ', trim($user->name))[0], 'custom_fields' => ['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')], $list['id']]);
         Log::channel('sendgrid')->debug($response->body());
 
         if ($response->status() != 202) {
