@@ -265,7 +265,7 @@ export default class integrationsIndex extends React.Component {
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
                                     <img
-                                        src="/images/jira.jpg"
+                                        src="/images/jira.png"
                                         className="img-fluid int-img"
                                         alt="mailchamp image here"
                                     />
