@@ -53,6 +53,12 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
         ],
 
+        'open_weather_map' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/open_weather_map.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
