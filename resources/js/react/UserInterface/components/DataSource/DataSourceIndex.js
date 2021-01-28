@@ -41,16 +41,19 @@ export default class DataSourceIndex extends React.Component {
     serviceStatusHandler(e) {
         e.persist();
         if (e.target.name == 'is_ds_holidays_enabled' && e.target.checked) {
+            window.scroll(0,0);
             this.setState({ sectionName: 'holidays' })
         } else if (e.target.name == 'is_ds_holidays_enabled' && !e.target.checked) {
             this.setState({ sectionName: null })
         }
         if (e.target.name == 'is_ds_retail_marketing_enabled' && e.target.checked) {
+            window.scroll(0,0);
             this.setState({ sectionName: 'retail_marketings' })
         } else if (e.target.name == 'is_ds_retail_marketing_enabled' && !e.target.checked) {
             this.setState({ sectionName: null })
         }
         if (e.target.name == 'is_ds_weather_alerts_enabled' && e.target.checked) {
+            window.scroll(0,0);
             this.setState({ sectionName: 'weather_alerts' })
         } else if (e.target.name == 'is_ds_weather_alerts_enabled' && !e.target.checked) {
             this.setState({ sectionName: null })

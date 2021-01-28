@@ -9,7 +9,8 @@ export default class DSOWMCitiesSelect extends React.Component {
             weather_alerts_countries: [],
             isBusy: false,
             errors: '',
-            searchCountry: ''
+            searchCountry: '',
+            searchText: '',
         }
 
         this.handleClick = this.handleClick.bind(this)
@@ -17,6 +18,7 @@ export default class DSOWMCitiesSelect extends React.Component {
         this.clearAll = this.clearAll.bind(this);
 
         this.selectedCountryChanged = this.selectedCountryChanged.bind(this)
+        this.checkSearchText = this.checkSearchText.bind(this)
     }
 
     componentDidMount() {
@@ -60,7 +62,7 @@ export default class DSOWMCitiesSelect extends React.Component {
         })
     }
 
-    selectedCountryChanged(e){
+    selectedCountryChanged(e) {
         this.setState({ [e.target.name]: e.target.value });
         HttpClient.get(`data-source/weather-alert/city?country_code=${e.target.value}`).then(resp => {
             this.setState({ isBusy: false, weather_alerts_cities: resp.data.cities })
@@ -71,6 +73,18 @@ export default class DSOWMCitiesSelect extends React.Component {
             console.log(err);
             this.setState({ isBusy: false, errors: err })
         })
+    }
+
+    checkSearchText(city) {
+        if (this.state.searchText.length) {
+            if (
+                city.name.toLowerCase().indexOf(this.state.searchText) > -1
+            ) {
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
 
     render() {
@@ -93,6 +107,19 @@ export default class DSOWMCitiesSelect extends React.Component {
                         {this.state.weather_alerts_countries.map(wAC => { return <option value={wAC.country_code}>{wAC.country_name}</option> })}
                     </select>
                 </div>
+                <div className="input-group search-input-box mb-3">
+                    <input
+                        type="text"
+                        className="form-control search-input"
+                        placeholder="Search"
+                        value={this.state.searchText}
+                        name="searchText"
+                        onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
+                    />
+                    <div className="input-group-append">
+                        <i className="ti-search"></i>
+                    </div>
+                </div>
                 <div className="d-flex justify-content-between align-items-center border-bottom">
                     <div className="form-check">
                         <input
@@ -114,7 +141,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                 </div>
                 <div className="checkbox-box mt-3">
                     {
-                        this.state.weather_alerts_cities.map(wAC => {
+                        this.state.weather_alerts_cities.filter(this.checkSearchText).map(wAC => {
                             return <div className="form-check wac" key={wAC.id}>
                                 <input
                                     className="form-check-input"

@@ -79,8 +79,6 @@ export default class countries extends React.Component {
                         type="text"
                         className="form-control search-input"
                         placeholder="Search"
-                        aria-label="Recipient's username"
-                        aria-describedby="basic-addon2"
                         value={this.state.searchText}
                         name="searchText"
                         onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
