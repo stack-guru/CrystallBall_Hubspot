@@ -266,7 +266,7 @@ export default class DataSourceIndex extends React.Component {
                                         className="ds-update-text m-0 text-center"
                                         onClick={() => { this.setState({ sectionName: this.state.sectionName == "weather_alerts_api" ? null : "weather_alerts_api" }) }}
                                     >
-                                        {this.state.sectionName == "weather_alerts_api" ? "Hide" : "Choose Cities"}
+                                        {this.state.sectionName == "weather_alerts" ? "Hide" : "Choose Cities"}
                                     </p>
                                 </div>
                             </div>
