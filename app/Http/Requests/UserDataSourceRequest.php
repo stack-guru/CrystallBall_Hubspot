@@ -28,7 +28,8 @@ class UserDataSourceRequest extends FormRequest
             'ds_code' => 'required|string',
             'ds_name' => 'required|string',
             'country_name' => 'nullable|string',
-            'retail_marketing_id' => 'nullable|numeric',
+            'retail_marketing_id' => 'nullable|numeric|exists:retail_marketings,id',
+            'open_weather_map_city_id' => 'nullable|numeric|exists:open_weather_map_cities,id',
             'is_enabled' => 'nullable',
         ];
     }

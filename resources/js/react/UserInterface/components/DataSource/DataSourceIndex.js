@@ -5,13 +5,14 @@ import { Redirect } from "react-router-dom";
 import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";
 import DSRMDatesSelect from '../../utils/DSRMDatesSelect';
+import DSOWMCitiesSelect from '../../utils/DSOWMCitiesSelect';
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             sectionName: null,
-            userDataSources: null,
+            userDataSources: {},
             userServices: this.props.user,
             isBusy: false,
             errors: '',
@@ -49,6 +50,11 @@ export default class DataSourceIndex extends React.Component {
         } else if (e.target.name == 'is_ds_retail_marketing_enabled' && !e.target.checked) {
             this.setState({ sectionName: null })
         }
+        if (e.target.name == 'is_ds_weather_alerts_enabled' && e.target.checked) {
+            this.setState({ sectionName: 'weather_alerts' })
+        } else if (e.target.name == 'is_ds_weather_alerts_enabled' && !e.target.checked) {
+            this.setState({ sectionName: null })
+        }
         HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
             if (resp.data.user_services[e.target.name] == 1) {
                 toast.success("Service activated successfully.");
@@ -62,7 +68,7 @@ export default class DataSourceIndex extends React.Component {
         }, (err) => {
             console.log(err);
             this.setState({ isBusy: false, errors: (err.response).data });
-            if((err.response).status == 402) {
+            if ((err.response).status == 402) {
                 swal("Upgrade to Pro Plan!", "Data Sources are not available in this package.", "warning").then(value => {
                     this.setState({ redirectTo: '/settings/price-plans' });
                 })
@@ -79,6 +85,7 @@ export default class DataSourceIndex extends React.Component {
             'ds_name': dataSource.name,
             'country_name': dataSource.country_name,
             'retail_marketing_id': dataSource.retail_marketing_id,
+            'open_weather_map_city_id': dataSource.open_weather_map_city_id,
             'is_enabled': 1,
         }
         HttpClient.post('/user-data-source', formData).then(resp => {
@@ -107,11 +114,6 @@ export default class DataSourceIndex extends React.Component {
 
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
-
-        let holidayCountries = null;
-        if (this.state.userDataSources != null) {
-            holidayCountries = this.state.userDataSources.holidays;
-        }
 
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper">
@@ -145,12 +147,12 @@ export default class DataSourceIndex extends React.Component {
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
                                     <div className="list-wrapper">
-                                        {holidayCountries !== null ?
+                                        {this.state.userDataSources.holidays ?
                                             <dl className="d-flex flex-row flex-wrap userCountryList">
 
                                                 <dt>Annotations for:</dt>
-                                                {holidayCountries
-                                                    ? holidayCountries.map(country => (
+                                                {this.state.userDataSources.holidays
+                                                    ? this.state.userDataSources.holidays.map(country => (
                                                         <dd className="mx-2" key={country.id}>{country.country_name}</dd>
                                                     ))
                                                     : <dd className="mx-2">no country added</dd>
@@ -168,48 +170,6 @@ export default class DataSourceIndex extends React.Component {
                             </div>
 
                         </div>
-
-                        {/* <div className="container mt-3 ds-sections">
-                            <div className="w-75 h-100 border-bottom d-flex align-items-center">
-                                <div className="w-100 row">
-                                    <div className="row ml-0 mr-0 w-100">
-                                        <div className="col-9">
-                                            <h4 className="gaa-text-primary">Weather Alerts</h4>
-                                        </div>
-                                        <div className="col-3 d-flex flex-column justify-content-center align-items-center">
-                                            <label className="trigger switch">
-                                                <input
-                                                    type="checkbox"
-                                                    className="weather"
-                                                    defaultChecked={this.state.showWeather}
-                                                    checked={this.state.showWeather}
-                                                    onChange={this.weatherSwitchHandler}
-                                                />
-                                                <span className="slider round" />
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="row ml-0 mr-0 mt-3 w-100">
-                                        <div className="col-9">
-                                            <dl className="d-flex flex-row flex-wrap">
-                                                <dt>Annotations for:</dt>
-                                                <dd className="mx-2">spain</dd>
-                                                <dd className="mx-2">Argentina</dd>
-                                                <dd className="mx-2">spain</dd>
-                                            </dl>
-                                        </div>
-                                        <div className="col-3">
-                                            <p
-                                                className="ds-update-text m-0 text-center"
-                                                onClick={this.onWeatherUpdateClick}
-                                            >
-                                                Update
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
 
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="ml-0 mr-0 row h-100 w-100">
@@ -272,13 +232,13 @@ export default class DataSourceIndex extends React.Component {
                                     <h4 className="gaa-text-primary">Weather Alerts</h4>
                                 </div>
                                 <div className="col-3 d-flex flex-column justify-content-start align-items-center">
-                                    {this.state.userServices.is_ds_weather_alerts_api_enabled ? "Active" : "Deactive"}
+                                    {this.state.userServices.is_ds_weather_alerts_enabled ? "Active" : "Deactive"}
                                     <label className="trigger switch">
                                         <input
                                             type="checkbox"
-                                            name="is_ds_weather_alerts_api_enabled"
-                                            onChange={() => { swal("Coming soon!", '', 'info'); }}
-                                            checked={this.state.userServices.is_ds_weather_alerts_api_enabled}
+                                            name="is_ds_weather_alerts_enabled"
+                                            onChange={this.serviceStatusHandler}
+                                            checked={this.state.userServices.is_ds_weather_alerts_enabled}
                                         />
                                         <span className="slider round" />
                                     </label>
@@ -286,14 +246,27 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
+                                    {/* <div className="list-wrapper">
+                                        {this.state.userDataSources.open_weather_map_cities ?
+                                            <dl className="d-flex flex-row flex-wrap userCountryList">
 
+                                                <dt>Alerts for:</dt>
+                                                {this.state.userDataSources.open_weather_map_cities
+                                                    ? this.state.userDataSources.open_weather_map_cities.map(owmc => (
+                                                        <dd className="mx-2" key={owmc.id}>{owmc.open_weather_map_city.name}, {owmc.open_weather_map_city.country_name}</dd>
+                                                    ))
+                                                    : <dd className="mx-2">no city added</dd>
+                                                }
+
+                                            </dl> : null}
+                                    </div> */}
                                 </div>
                                 <div className="col-3">
                                     <p
                                         className="ds-update-text m-0 text-center"
                                         onClick={() => { this.setState({ sectionName: this.state.sectionName == "weather_alerts_api" ? null : "weather_alerts_api" }) }}
                                     >
-                                        {/* {this.state.sectionName == "weather_alerts_api" ? "Hide" : "Choose Countries"} */}
+                                        {this.state.sectionName == "weather_alerts_api" ? "Hide" : "Choose Cities"}
                                     </p>
                                 </div>
                             </div>
@@ -334,7 +307,7 @@ export default class DataSourceIndex extends React.Component {
                         </div>
                     </div>
                     <div className="col-md-4 col-sm-12 mt-3 border-left">
-                        {this.state.sectionName == 'holidays' && this.state.userDataSources !== null ?
+                        {this.state.sectionName == 'holidays' && this.state.userDataSources ?
                             <div className="switch-wrapper">
                                 <Countries
                                     sectionTitle={this.state.sectionName}
@@ -345,13 +318,24 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                             : null
                         }
-                        {this.state.sectionName == 'retail_marketings' && this.state.userDataSources !== null ?
+                        {this.state.sectionName == 'retail_marketings' && this.state.userDataSources ?
                             <div className="switch-wrapper">
                                 <DSRMDatesSelect
                                     sectionTitle={this.state.sectionName}
                                     onCheckCallback={this.userDataSourceAddHandler}
                                     onUncheckCallback={this.userDataSourceDeleteHandler}
                                     ds_data={this.state.userDataSources.retail_marketings}
+                                />
+                            </div>
+                            : null
+                        }
+                        {this.state.sectionName == 'weather_alerts' && this.state.userDataSources ?
+                            <div className="switch-wrapper">
+                                <DSOWMCitiesSelect
+                                    sectionTitle={this.state.sectionName}
+                                    onCheckCallback={this.userDataSourceAddHandler}
+                                    onUncheckCallback={this.userDataSourceDeleteHandler}
+                                    ds_data={this.state.userDataSources.open_weather_map_cities}
                                 />
                             </div>
                             : null

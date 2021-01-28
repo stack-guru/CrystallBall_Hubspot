@@ -28,6 +28,7 @@ class User extends Authenticatable
         'is_ds_holidays_enabled',
         'is_ds_google_algorithm_updates_enabled',
         'is_ds_weather_alerts_enabled',
+        'is_ds_retail_marketing_enabled',
 
         'user_level',
         'department',

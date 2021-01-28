@@ -15,6 +15,7 @@ class UserDataSource extends Model
         'ds_name',
         'country_name',
         'retail_marketing_id',
+        'open_weather_map_city_id',
         'is_enabled'
     ];
 
@@ -25,4 +26,10 @@ class UserDataSource extends Model
     public function scopeOfCurrentUser($query){
         return $query->where('user_id', Auth::id());
     }
+
+    public function openWeatherMapCity()
+    {
+        return $this->belongsTo('App\Models\OpenWeatherMapCity');
+    }
+
 }

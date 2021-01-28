@@ -78,6 +78,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);
         Route::get('annotation-categories', [App\Http\Controllers\AnnotationController::class, 'getCategories']);
         Route::get('retail-marketing-dates', [App\Http\Controllers\RetailMarketingController::class, 'uiIndex']);
+        Route::get('data-source/weather-alert/country', [App\Http\Controllers\WeatherAlertController::class, 'uiCountriesIndex']);
+        Route::get('data-source/weather-alert/city', [App\Http\Controllers\WeatherAlertController::class, 'uiCitiesIndex']);
 
         Route::group(['prefix' => 'settings'], function () {
 
