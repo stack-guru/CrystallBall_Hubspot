@@ -127,6 +127,11 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             ->update([
                 'users.price_plan_expiry_date' => $this->nextExpiryDate,
                 'users.price_plan_id' => $this->freePlanId,
+                
+                'users.is_ds_holidays_enabled' => false,
+                'users.is_ds_google_algorithm_updates_enabled' => false,
+                'users.is_ds_retail_marketing_enabled' => false,
+                'users.is_ds_weather_alerts_enabled' => false,
             ]);
 
         print "$updateCount Users have been resubscribed to their free plans.\n";
