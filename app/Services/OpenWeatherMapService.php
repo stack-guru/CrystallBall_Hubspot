@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Log;
 class OpenWeatherMapService
 {
 
-    protected $appId, $openWeatherDomain, $city;
+    protected $appId, $openWeatherDomain, $city, $callURISuffix;
     public $excludeParts;
 
     public function __construct($excludeParts = ['current', 'minutely', 'hourly', 'daily'])
     {
         $this->appId = config('services.open_weather_map.app.id');
         $this->openWeatherDomain = "https://api.openweathermap.org";
+        $this->callURISuffix = '';
 
         // current,minutely,hourly,daily, alerts
         $this->excludeParts = $excludeParts;
@@ -23,7 +24,7 @@ class OpenWeatherMapService
     public function weatherApi($city)
     {
 
-        $response = Http::get($this->openWeatherDomain . "/data/2.5/weather?q=" . $city . "&appid=" . $this->appId);
+        $response = Http::get($this->openWeatherDomain . "/data/2.5/weather?q=" . $city . "&appid=" . $this->appId . $this->callURISuffix);
 
         if ($response->failed()) {
             $error = $response->data;
@@ -37,9 +38,9 @@ class OpenWeatherMapService
         return ['success' => true, 'data' => $data];
     }
 
-    public function oneCallApi($longitude, $latitude)
+    public function oneCallApi($latitude, $longitude)
     {
-        $response = Http::get($this->openWeatherDomain . "/data/2.5/onecall?lat=" . $latitude . "&lon=" . $longitude . "&exclude=" . implode(",", $this->excludeParts) . "&appid=" . $this->appId);
+        $response = Http::get($this->openWeatherDomain . "/data/2.5/onecall?lat=" . $latitude . "&lon=" . $longitude . "&exclude=" . implode(",", $this->excludeParts) . "&appid=" . $this->appId . $this->callURISuffix);
 
         if ($response->failed()) {
             $error = $response->data;
