@@ -47,11 +47,14 @@ class FetchWeatherAlerts extends Command
 
         $enabledCities = OpenWeatherMapCity::select('open_weather_map_cities.id', 'open_weather_map_cities.longitude', 'open_weather_map_cities.latitude')
             ->join('user_data_sources', 'user_data_sources.open_weather_map_city_id', 'open_weather_map_cities.id')
+            ->join('users', 'user_data_sources.user_id', 'users.id')
             ->where('user_data_sources.ds_code', 'open_weather_map_cities')
+            ->where('users.is_ds_weather_alerts_enabled', true)
             ->orderBy('open_weather_map_cities.id')
             ->distinct()
             ->get();
 
+        print "Processing " . count($enabledCities) . " cities.\n";
         $oWMService = new OpenWeatherMapService;
         foreach ($enabledCities as $city) {
             sleep(1);
