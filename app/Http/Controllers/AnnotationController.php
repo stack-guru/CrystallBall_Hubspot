@@ -222,6 +222,10 @@ class AnnotationController extends Controller
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select 1, show_at, show_at as created_at, null, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings'";
         }
+        if ($user->is_ds_weather_alerts_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select 1, alert_date, alert_date as created_at, null, sender_name, event, NULL as url, description from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities'";
+        }
         $annotationsQuery .= ") AS TempTable";
 
         $annotationsQuery .= " LEFT JOIN annotation_ga_accounts ON TempTable.id = annotation_ga_accounts.annotation_id";
