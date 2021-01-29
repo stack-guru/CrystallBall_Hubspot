@@ -41,7 +41,7 @@ class FetchWeatherAlerts extends Command
      */
     public function handle()
     {
-        ini_set('max_execution_time', 1800);
+        ini_set('max_execution_time', 7200);
         $totalCitiesWithAlertsCount = 0;
         $totalAlertsCount = 0;
 
