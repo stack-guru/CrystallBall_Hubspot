@@ -27,7 +27,7 @@ class OpenWeatherMapService
         $response = Http::get($this->openWeatherDomain . "/data/2.5/weather?q=" . $city . "&appid=" . $this->appId . $this->callURISuffix);
 
         if ($response->failed()) {
-            $error = $response->data;
+            $error = $response->body();
 
             return ['success' => false, 'message' => $error];
         }
@@ -43,7 +43,7 @@ class OpenWeatherMapService
         $response = Http::get($this->openWeatherDomain . "/data/2.5/onecall?lat=" . $latitude . "&lon=" . $longitude . "&exclude=" . implode(",", $this->excludeParts) . "&appid=" . $this->appId . $this->callURISuffix);
 
         if ($response->failed()) {
-            $error = $response->response;
+            $error = $response->body();
 
             return ['success' => false, 'message' => $error];
         }
