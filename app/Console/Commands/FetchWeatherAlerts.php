@@ -81,6 +81,8 @@ class FetchWeatherAlerts extends Command
                         }
                     }
                 }
+            }else{
+                print "\n" . $OCAResp['message'] . ".\n";
             }
         }
 
