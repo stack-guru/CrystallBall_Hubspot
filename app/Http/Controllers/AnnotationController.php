@@ -205,26 +205,26 @@ class AnnotationController extends Controller
         }
 
         $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_accounts`.`id` AS annotation_ga_account_id, `google_analytics_accounts`.`name` AS google_analytics_account_name FROM (";
-        $annotationsQuery .= "select is_enabled, `show_at`, created_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` from `annotations` where `user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        $annotationsQuery .= "select annotations.is_enabled, annotations.`show_at`, annotations.created_at, `annotations`.`id`, annotations.`category`, annotations.`event_name`, annotations.`url`, annotations.`description`, `users`.`name` AS user_name from `annotations` INNER JOIN `users` ON `users`.`id` = `annotations`.`user_id` where `annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
 
         if ($request->query('annotation_ga_account_id') && $request->query('annotation_ga_account_id') !== '*') {
             $annotationsQuery .= " and annotation_ga_accounts.id = " . $request->query('annotation_ga_account_id');
         }
         if ($user->is_ds_holidays_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, holiday_date AS show_at, holiday_date AS created_at, null, CONCAT(category, \" Holiday\"), event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays'";
+            $annotationsQuery .= "select 1, holiday_date AS show_at, holiday_date AS created_at, null, CONCAT(category, \" Holiday\"), event_name, NULL as url, description, 'System' AS user_name from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays'";
         }
         if ($user->is_ds_google_algorithm_updates_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, update_date AS show_at, update_date AS created_at, null, category, event_name, NULL as url, description from `google_algorithm_updates`";
+            $annotationsQuery .= "select 1, update_date AS show_at, update_date AS created_at, null, category, event_name, NULL as url, description, 'System' AS user_name from `google_algorithm_updates`";
         }
         if ($user->is_ds_retail_marketing_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, show_at, show_at as created_at, null, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings'";
+            $annotationsQuery .= "select 1, show_at, show_at as created_at, null, category, event_name, NULL as url, description, 'System' AS user_name from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings'";
         }
         if ($user->is_ds_weather_alerts_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, alert_date, alert_date as created_at, null, sender_name, event, NULL as url, description from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities'";
+            $annotationsQuery .= "select 1, alert_date, alert_date as created_at, null, sender_name, event, NULL as url, description, 'System' AS user_name from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities'";
         }
         $annotationsQuery .= ") AS TempTable";
 
