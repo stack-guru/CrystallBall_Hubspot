@@ -36,37 +36,38 @@ export default class PaymentHistory extends React.Component {
         return (
             <div className="bg-white component-wrapper">
                 <h3>Payment History</h3>
+                <div className="table-responsive">
 
-                <table className="table table-hover table-bordered mt-4">
-                    <thead>
-                        <tr>
-                            <th>S#</th>
-                            <th>Transaction Id</th>
-                            <th>Plan</th>
-                            <th>Amount</th>
-                            <th>Paid At</th>
-                            <th>Card end with</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            pricePlanSubscriptions.map((pricePlanSubscription, index) => (
-                                <tr key={pricePlanSubscription.id}>
-                                    <td>{index + 1}</td>
-                                    <td>{pricePlanSubscription.transaction_id}</td>
-                                    <td>{pricePlanSubscription.price_plan ? pricePlanSubscription.price_plan.name : null}</td>
-                                    <td>${pricePlanSubscription.payment_detail ? pricePlanSubscription.payment_detail.charged_price : '0'}</td>
-                                    <td>
-                                        {moment(pricePlanSubscription.created_at).format("YYYY-MM-DD")}&nbsp;&nbsp;&nbsp;{moment(pricePlanSubscription.created_at).format("hh:mm")}
-                                    </td>
-                                    <td>****-****-****-{pricePlanSubscription.payment_detail ? pricePlanSubscription.payment_detail.card_number : '****'}</td>
-                                </tr>
-                            ))
-                        }
+                    <table className="table table-hover table-bordered mt-4">
+                        <thead>
+                            <tr>
+                                <th>S#</th>
+                                <th>Transaction Id</th>
+                                <th>Plan</th>
+                                <th>Amount</th>
+                                <th>Paid At</th>
+                                <th>Card end with</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                pricePlanSubscriptions.map((pricePlanSubscription, index) => (
+                                    <tr key={pricePlanSubscription.id}>
+                                        <td>{index + 1}</td>
+                                        <td>{pricePlanSubscription.transaction_id}</td>
+                                        <td>{pricePlanSubscription.price_plan ? pricePlanSubscription.price_plan.name : null}</td>
+                                        <td>${pricePlanSubscription.payment_detail ? pricePlanSubscription.payment_detail.charged_price : '0'}</td>
+                                        <td>
+                                            {moment(pricePlanSubscription.created_at).format("YYYY-MM-DD")}&nbsp;&nbsp;&nbsp;{moment(pricePlanSubscription.created_at).format("hh:mm")}
+                                        </td>
+                                        <td>****-****-****-{pricePlanSubscription.payment_detail ? pricePlanSubscription.payment_detail.card_number : '****'}</td>
+                                    </tr>
+                                ))
+                            }
 
-                    </tbody>
-                </table>
-
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }
