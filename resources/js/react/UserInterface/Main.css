@@ -521,8 +521,8 @@ setting-menu-item.dropdown {
 
 .input-group-append {
     position: absolute;
-    right: 0%;
-    top: 0%;
+    right: 4%;
+    top: 30%;
 }
 
 .integration-video-link {
