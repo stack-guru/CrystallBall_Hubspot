@@ -264,7 +264,7 @@ class AnnotationController extends Controller
         }
 
         if (!in_array($annotation->user_id, $userIdsArray)) {
-            abort(404);
+            abort(403);
         }
 
         $annotation->load('annotationGaAccounts');
