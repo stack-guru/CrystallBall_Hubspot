@@ -92,7 +92,7 @@ class User extends Authenticatable
     }
 
     public function lastAnnotation(){
-        return $this->hasOne('App\Models\Annotation')->orderBy('created_at', 'DESC');
+        return $this->hasOne('App\Models\Annotation')->where('event_name', '<>', 'Sample Annotation')->orderBy('created_at', 'DESC');
     }
     
     public function annotations()
