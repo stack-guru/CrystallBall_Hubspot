@@ -92,6 +92,9 @@ class User extends Authenticatable
     }
 
     public function lastAnnotation(){
+        // Have to exclude Sample Annotation from last added annotation SQL.
+        // Better approach was to add any boolean value to check if the annotation is a sample annotation
+        // But it's done this way
         return $this->hasOne('App\Models\Annotation')->where('event_name', '<>', 'Sample Annotation')->orderBy('created_at', 'DESC');
     }
     
