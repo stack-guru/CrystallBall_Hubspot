@@ -10,6 +10,7 @@ import Header from "./layout/Header";
 import Footer from "./layout/Footer"
 
 import './Main.css';
+import './Responsiveness.css';
 
 import Index from "./components/Index";
 import AnnotationsCreate from './components/annotations/CreateAnnotation';

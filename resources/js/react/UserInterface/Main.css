@@ -73,49 +73,6 @@
     width: 35px;
 }
 
-/* and (max-width: 1439px) */
-@media screen and (min-width: 992px) {
-    .sidebar-inner {
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-
-    .sidebar:hover .sidebar-inner .sidebar-footer > a .title {
-        display: inline-block;
-    }
-    .sidebar:hover .sidebar-inner .sidebar-footer {
-        position: absolute;
-        display: block;
-        bottom: 0%;
-    }
-    .sidebar .sidebar-inner .sidebar-footer > a .title {
-        display: none;
-    }
-    .is-collapsed .sidebar .sidebar-inner .sidebar-footer > a .title {
-        display: none;
-    }
-
-    .is-collapsed .desc-td {
-        width: 12vw;
-    }
-    .sidebar .sidebar-inner .sidebar-footer {
-        display: block;
-        position: absolute;
-        bottom: 0%;
-    }
-
-    .setting-menu-item.dropdown.open .setting-menu-content {
-        margin: 0px;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        border: none;
-        height: auto;
-        padding-left: 20%;
-    }
-}
-
 .anno-container {
     padding: 2% 0% 2% 0% !important;
 }
@@ -300,19 +257,6 @@ setting-menu-item.dropdown {
     opacity: 0.7;
     transition: all 0.2s;
     width: 15vw;
-}
-
-/* Hover Effects on Card */
-
-@media (min-width: 992px) {
-    .pricing .card:hover {
-        margin-top: -0.25rem;
-        margin-bottom: 0.25rem;
-        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
-    }
-    .pricing .card:hover .btn {
-        opacity: 1;
-    }
 }
 
 .gaa-menu-item {
@@ -542,23 +486,6 @@ setting-menu-item.dropdown {
     margin-bottom: 0px !important;
 }
 
-@media only screen and (max-width: 700px) {
-    .integration-pack {
-        display: inline-block !important;
-    }
-}
-
-@media only screen and (max-width: 500px) {
-    .integration-pack-content {
-        display: inline-block !important;
-        text-align: center;
-    }
-
-    .int-description a {
-        margin: 0 auto;
-    }
-}
-
 .header .header-container .nav-left > li > div,
 .header .header-container .nav-right > li > div {
     color: #72777a;
@@ -580,73 +507,6 @@ setting-menu-item.dropdown {
 }
 .pb-c-inputs#ccn {
     height: 35px !important;
-}
-
-/* Hightent team responsive code*/
-@media only screen and (max-width: 500px) and (min-width: 0px) {
-    .table > td {
-        font-size: 12px;
-    }
-
-    .anno-action-btn {
-        display: inline-block;
-    }
-    .anno-action-btn .action-text {
-        display: none;
-    }
-    .integration-pack {
-        height: 230px;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important;
-        align-items: center !important;
-    }
-    .integration-pack .int-description {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: auto !important;
-        margin-bottom: 3%;
-    }
-    .integration-video-link {
-        display: block;
-        position: relative;
-    }
-    .ad-ga-action .ad-ga-action-text {
-        display: none;
-    }
-    .gaa-text-primary {
-        font-size: 1.8rem;
-    }
-    .pp-c-action {
-        font-size: 12px !important;
-        width: 100% !important;
-    }
-    footer {
-        font-size: 10px !important;
-    }
-    .pb-c-inputs {
-        height: 35px !important;
-    }
-    .pb-c-inputs#ccn {
-        height: 35px !important;
-    }
-    .pp-cc-pl-r {
-        padding-left: 0% !important;
-    }
-    .pp-cc-pr-r {
-        padding-right: 0% !important;
-    }
-}
-/* and (max-width: 1439px) */
-@media only screen and (min-width: 769px) {
-    .ua-r-pr {
-        padding-right: 5% !important;
-    }
-    .ua-r-pl {
-        padding-left: 5% !important;
-    }
 }
 
 .h-30px {
