@@ -568,7 +568,7 @@ setting-menu-item.dropdown {
     display: block;
     line-height: 65px;
     min-height: 65px;
-    padding: 0 15px;
+    padding: 0 5px;
     -webkit-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
