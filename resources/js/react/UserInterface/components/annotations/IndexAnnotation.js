@@ -187,7 +187,7 @@ class IndexAnnotations extends React.Component {
                                 </div>
                             </div>
                             <div className="row mb-4 ml-0 mr-0">
-                                <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-left text-lg-left">
+                                <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-left text-lg-left mb-3">
                                     <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
                                         <option value="Null">Sort By</option>
                                         <option value="added">Added</option>
