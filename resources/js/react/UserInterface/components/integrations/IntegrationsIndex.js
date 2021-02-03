@@ -43,7 +43,7 @@ export default class integrationsIndex extends React.Component {
                                 <div className="int-action">
                                     <a
                                         target="_blank"
-                                        href="https://www.gaannotations.com/post/add-an-annotation-to-ga-automatically-when-a-launch-a-new-google-ads-campaign"
+                                        href="https://www.gaannotations.com/campaign-creation-trigger"
                                         className="btn btn-primary"
                                     >
                                         See instructions
@@ -75,7 +75,7 @@ export default class integrationsIndex extends React.Component {
                                 <div className="int-action">
                                     <a
                                         target="_blank"
-                                        href="https://www.gaannotations.com/post/add-an-annotation-to-ga-automatically-when-a-mailchimp-campaign-is-sent"
+                                        href="https://www.gaannotations.com/mailchimp-creation-trigger"
                                         className="btn btn-primary"
                                     >
                                         See instructions
@@ -182,7 +182,7 @@ export default class integrationsIndex extends React.Component {
                             <div className="int-action">
                                 <a
                                     target="_blank"
-                                    href="https://www.gaannotations.com/post/add-an-annotation-to-ga-automatically-when-a-new-message-posted-to-a-private-channel-in-slack"
+                                    href="https://www.gaannotations.com/slack-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
@@ -217,7 +217,7 @@ export default class integrationsIndex extends React.Component {
                             <div className="int-action">
                                 <a
                                     target="_blank"
-                                    href="https://www.gaannotations.com/post/add-an-annotation-to-ga-automatically-when-a-new-message-posted-to-a-private-channel-in-asana"
+                                    href="https://www.gaannotations.com/asana-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
@@ -341,7 +341,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    Add an annotation to GA automatically when a New Release in GitHub.
+                                    Add an annotation to GA automatically when a New Commit on Github.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
@@ -376,7 +376,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    Add an annotation to GA automatically when a New Event in Bitbucket.
+                                    Add an annotation to GA automatically when a New Commit on Bitbucket.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
