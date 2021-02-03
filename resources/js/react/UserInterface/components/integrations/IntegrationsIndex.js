@@ -83,7 +83,7 @@ export default class integrationsIndex extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="d-flex flex-row integration-pack justify-content-between">
+                        {/* <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
                                     <img
@@ -105,7 +105,7 @@ export default class integrationsIndex extends React.Component {
                                         <i className="fa fa-play pr-2" />
                                         See how this works
                                     </div>
-                                    {/* <VideoModalBox id="asana-modal" src="https://www.youtube.com/embed/oR6u4qoPZgk" /> */}
+                                     <VideoModalBox id="asana-modal" src="https://www.youtube.com/embed/oR6u4qoPZgk" /> 
                                 </div>
                             </div>
                             <div className="int-action">
@@ -118,7 +118,7 @@ export default class integrationsIndex extends React.Component {
                                     See instructions
                                 </a>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
@@ -146,9 +146,8 @@ export default class integrationsIndex extends React.Component {
                             </div>
                             <div className="int-action">
                                 <a
-                                    onClick={(e) => { e.preventDefault(); swal("Coming soon!", '', 'info'); }}
                                     target="_blank"
-                                    href="#"
+                                    href="https://www.gaannotations.com/shopify-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
@@ -225,7 +224,7 @@ export default class integrationsIndex extends React.Component {
                                 </a>
                             </div>
                         </div>
-                        <div className="d-flex flex-row integration-pack justify-content-between">
+                        {/* <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
                                     <img
@@ -260,7 +259,7 @@ export default class integrationsIndex extends React.Component {
                                     See instructions
                                 </a>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
@@ -288,9 +287,8 @@ export default class integrationsIndex extends React.Component {
                             </div>
                             <div className="int-action">
                                 <a
-                                    onClick={(e) => { e.preventDefault(); swal("Coming soon!", '', 'info'); }}
                                     target="_blank"
-                                    href="https://www.gaannotations.com/post/add-an-annotation-to-ga-automatically-when-a-new-message-posted-to-a-private-channel-in-asana"
+                                    href="https://www.gaannotations.com/jira-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
@@ -324,9 +322,8 @@ export default class integrationsIndex extends React.Component {
                             </div>
                             <div className="int-action">
                                 <a
-                                    onClick={(e) => { e.preventDefault(); swal("Coming soon!", '', 'info'); }}
                                     target="_blank"
-                                    href="https://www.gaannotations.com/post/add-an-annotation-to-ga-automatically-when-a-new-message-posted-to-a-private-channel-in-asana"
+                                    href="https://www.gaannotations.com/trello-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
@@ -360,9 +357,8 @@ export default class integrationsIndex extends React.Component {
                             </div>
                             <div className="int-action">
                                 <a
-                                    onClick={(e) => { e.preventDefault(); swal("Coming soon!", '', 'info'); }}
                                     target="_blank"
-                                    href="https://www.gaannotations.com/post/add-an-annotation-to-ga-automatically-when-a-new-message-posted-to-a-private-channel-in-asana"
+                                    href="https://www.gaannotations.com/github-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
@@ -396,9 +392,8 @@ export default class integrationsIndex extends React.Component {
                             </div>
                             <div className="int-action">
                                 <a
-                                    onClick={(e) => { e.preventDefault(); swal("Coming soon!", '', 'info'); }}
                                     target="_blank"
-                                    href="https://www.gaannotations.com/post/add-an-annotation-to-ga-automatically-when-a-new-message-posted-to-a-private-channel-in-asana"
+                                    href="https://www.gaannotations.com/bitbucket-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
