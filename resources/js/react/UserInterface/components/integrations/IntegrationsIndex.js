@@ -130,7 +130,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    Add an annotation to GA automatically when a New Product in Shopify.
+                                    Add an annotation to GA automatically when a New Product added to your Shopify store.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
