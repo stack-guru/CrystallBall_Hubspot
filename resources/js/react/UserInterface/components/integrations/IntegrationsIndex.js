@@ -134,14 +134,13 @@ export default class integrationsIndex extends React.Component {
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
-                                        // data-toggle="modal"
-                                        // data-target="#activecampaign-modal"
-                                        onClick={() => { swal("Coming soon!", '', 'info'); }}
+                                        data-toggle="modal"
+                                        data-target="#shopify-modal"
                                     >
                                         <i className="fa fa-play pr-2" />
                                         See how this works
                                     </div>
-                                    {/* <VideoModalBox id="asana-modal" src="https://www.youtube.com/embed/oR6u4qoPZgk" /> */}
+                                    <VideoModalBox id="shopify-modal" src="https://www.youtube.com/embed/hLdaKS5ynaQ" />
                                 </div>
                             </div>
                             <div className="int-action">
@@ -275,14 +274,13 @@ export default class integrationsIndex extends React.Component {
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
-                                        // data-toggle="modal"
-                                        // data-target="#monday-modal"
-                                        onClick={() => { swal("Coming soon!", '', 'info'); }}
+                                        data-toggle="modal"
+                                        data-target="#jira-modal"
                                     >
                                         <i className="fa fa-play pr-2" />
                                         See how this works
                                     </div>
-                                    <VideoModalBox id="asana-modal" src="https://www.youtube.com/embed/oR6u4qoPZgk" />
+                                    <VideoModalBox id="jira-modal" src="https://www.youtube.com/embed/byL5XDDovIs" />
                                 </div>
                             </div>
                             <div className="int-action">
@@ -310,14 +308,13 @@ export default class integrationsIndex extends React.Component {
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
-                                        // data-toggle="modal"
-                                        // data-target="#monday-modal"
-                                        onClick={() => { swal("Coming soon!", '', 'info'); }}
+                                        data-toggle="modal"
+                                        data-target="#trello-modal"
                                     >
                                         <i className="fa fa-play pr-2" />
                                         See how this works
                                     </div>
-                                    <VideoModalBox id="asana-modal" src="https://www.youtube.com/embed/oR6u4qoPZgk" />
+                                    <VideoModalBox id="trello-modal" src="https://www.youtube.com/embed/Nieash_4B1w" />
                                 </div>
                             </div>
                             <div className="int-action">
