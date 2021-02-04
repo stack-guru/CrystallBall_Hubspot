@@ -104,7 +104,9 @@ export default class DSOWMCitiesSelect extends React.Component {
                         name="searchCountry"
                         onChange={this.selectedCountryChanged}
                     >
-                        {this.state.weather_alerts_countries.map(wAC => { return <option value={wAC.country_code}>{wAC.country_name}</option> })}
+                        {
+                            [{ country_name: 'Please select country', value: '' }].concat(this.state.weather_alerts_countries).map(wAC => { return <option value={wAC.country_code}>{wAC.country_name}</option> })
+                        }
                     </select>
                 </div>
                 <div className="input-group search-input-box mb-3">
