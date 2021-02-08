@@ -15,11 +15,6 @@ class ModifyUserIdInPaymentDetailsTable extends Migration
     {
         DB::statement("
             ALTER TABLE `payment_details`
-                DROP FOREIGN KEY `payment_details_user_id_foreign`
-                ;
-            ");
-        DB::statement("
-            ALTER TABLE `payment_details`
                 ADD CONSTRAINT `payment_details_user_id_foreign`
                 FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
                 ON DELETE CASCADE
@@ -37,12 +32,6 @@ class ModifyUserIdInPaymentDetailsTable extends Migration
         DB::statement("
             ALTER TABLE `payment_details`
                 DROP FOREIGN KEY `payment_details_user_id_foreign`
-                ;
-            ");
-        DB::statement("
-            ALTER TABLE `payment_details`
-                ADD CONSTRAINT `payment_details_user_id_foreign`
-                FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
                 ;
             ");
     }

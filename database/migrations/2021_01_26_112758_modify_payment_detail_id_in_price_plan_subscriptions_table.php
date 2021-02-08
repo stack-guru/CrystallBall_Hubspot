@@ -15,11 +15,6 @@ class ModifyPaymentDetailIdInPricePlanSubscriptionsTable extends Migration
     {
         DB::statement("
             ALTER TABLE `price_plan_subscriptions`
-                DROP FOREIGN KEY `price_plan_subscriptions_payment_detail_id_foreign`
-                ;
-            ");
-        DB::statement("
-            ALTER TABLE `price_plan_subscriptions`
                 ADD CONSTRAINT `price_plan_subscriptions_payment_detail_id_foreign`
                 FOREIGN KEY (`payment_detail_id`) REFERENCES `payment_details` (`id`)
                 ON DELETE CASCADE
@@ -37,12 +32,6 @@ class ModifyPaymentDetailIdInPricePlanSubscriptionsTable extends Migration
         DB::statement("
             ALTER TABLE `price_plan_subscriptions`
                 DROP FOREIGN KEY `price_plan_subscriptions_payment_detail_id_foreign`
-                ;
-            ");
-        DB::statement("
-            ALTER TABLE `price_plan_subscriptions`
-                ADD CONSTRAINT `price_plan_subscriptions_payment_detail_id_foreign`
-                FOREIGN KEY (`payment_detail_id`) REFERENCES `payment_details` (`id`)
                 ;
             ");
     }
