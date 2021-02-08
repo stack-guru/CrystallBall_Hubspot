@@ -229,7 +229,7 @@ export default class DataSourceIndex extends React.Component {
 
                         </div>
 
-                        <div className="container mt-3 ds-sections border-bottom">
+                        {/* <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
                                     <h4 className="gaa-text-primary">Weather Alerts</h4>
@@ -249,20 +249,18 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
-                                    {/* <div className="list-wrapper">
-                                        {this.state.userDataSources.open_weather_map_cities ?
-                                            <dl className="d-flex flex-row flex-wrap userCountryList">
-
-                                                <dt>Alerts for:</dt>
-                                                {this.state.userDataSources.open_weather_map_cities
-                                                    ? this.state.userDataSources.open_weather_map_cities.map(owmc => (
-                                                        <dd className="mx-2" key={owmc.id}>{owmc.open_weather_map_city.name}, {owmc.open_weather_map_city.country_name}</dd>
-                                                    ))
-                                                    : <dd className="mx-2">no city added</dd>
-                                                }
-
-                                            </dl> : null}
-                                    </div> */}
+                                //    <div className="list-wrapper">
+                                //        {this.state.userDataSources.open_weather_map_cities ?
+                                //            <dl className="d-flex flex-row flex-wrap userCountryList">
+                                //                <dt>Alerts for:</dt>
+                                //                {this.state.userDataSources.open_weather_map_cities
+                                //                    ? this.state.userDataSources.open_weather_map_cities.map(owmc => (
+                                //                        <dd className="mx-2" key={owmc.id}>{owmc.open_weather_map_city.name}, {owmc.open_weather_map_city.country_name}</dd>
+                                //                    ))
+                                //                    : <dd className="mx-2">no city added</dd>
+                                //                }
+                                //            </dl> : null}
+                                //    </div>
                                 </div>
                                 <div className="col-3">
                                     <p
@@ -274,9 +272,9 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
 
-                        </div>
+                        </div> */}
 
-                        <div className="container mt-3 ds-sections border-bottom">
+                        {/* <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
                                     <h4 className="gaa-text-primary">Google Ads History</h4>
@@ -307,7 +305,7 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
 
-                        </div>
+                        </div> */}
                     </div>
                     <div className="col-md-4 col-sm-12 mt-3 border-left">
                         {this.state.sectionName == 'holidays' && this.state.userDataSources ?

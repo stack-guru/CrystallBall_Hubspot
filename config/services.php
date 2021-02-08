@@ -65,4 +65,10 @@ return [
             'id' => env('SL_SENDGRID_API_ID'),
         ],
     ],
+
+    'visual_crossing' => [
+        'api' => [
+            'key' => env('VISUAL_CROSSING_API_KEY'),
+        ],
+    ],
 ];
