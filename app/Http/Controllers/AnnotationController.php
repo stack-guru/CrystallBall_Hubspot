@@ -118,9 +118,11 @@ class AnnotationController extends Controller
         $oldGAAIds = $aGAAs->pluck('google_analytics_account_id')->toArray();
         $newGAAIds = $request->google_analytics_account_id;
 
-        foreach ($aGAAs as $aGAA) {
-            if (!in_array($aGAA->google_analytics_account_id, $newGAAIds)) {
-                $aGAA->delete();
+        if ($request->has('google_analytics_account_id')) {
+            foreach ($aGAAs as $aGAA) {
+                if (!in_array($aGAA->google_analytics_account_id, $newGAAIds)) {
+                    $aGAA->delete();
+                }
             }
         }
 
