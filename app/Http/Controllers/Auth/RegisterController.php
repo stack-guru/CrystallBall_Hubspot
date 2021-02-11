@@ -9,11 +9,14 @@ use App\Providers\RouteServiceProvider;
 use App\Rules\HasLettersNumbers;
 use App\Rules\HasSymbol;
 use Auth;
+use Cookie;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Http\Request;
 use App\Services\SendGridService;
+use App\Models\CookieCoupon;
 
 class RegisterController extends Controller
 {
@@ -74,12 +77,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if(Cookie::get('coupon_code')){
+            $cookieCoupon = CookieCoupon::where('code', Cookie::get('coupon_code'))->first();
+            if($cookieCoupon){
+                Cookie::queue(Cookie::forget('coupon_code'));
+                $planExpiryDate = new \DateTime("+" . $cookieCoupon->plan_extension_days . " days");
+            }else{
+                $planExpiryDate = new \DateTime("+14 days");
+            }
+        }else{
+            $planExpiryDate = new \DateTime("+14 days");
+        }
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'price_plan_id' => PricePlan::where('name', '=', 'Trial')->first()->id,
-            'price_plan_expiry_date' => new \DateTime("+14 days"),
+            'price_plan_expiry_date' => $planExpiryDate,
             'is_billing_enabled' => false,
         ]);
 
@@ -160,5 +174,21 @@ class RegisterController extends Controller
         Auth::login($user);
         return redirect()->route('annotation.index');
 
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showRegistrationForm(Request $request)
+    {
+        if($request->query('coupon_code')){
+            $cookieCoupon = CookieCoupon::where('code', $request->query('coupon_code'))->first();
+            if($cookieCoupon){
+                Cookie::queue('coupon_code', $request->query('coupon_code'));
+            }
+        }
+        return view('auth.register');
     }
 }
