@@ -19,6 +19,7 @@
                             <th>Id</th>
                             <th>Name</th>
                             <th>Code</th>
+                            <th>URL</th>
                             <th>Actions</th>
                             </thead>
                             <tbody>
@@ -27,6 +28,7 @@
                                     <td>{{$cookieCoupon->id}}</td>
                                     <td>{{$cookieCoupon->name}}</td>
                                     <td>{{$cookieCoupon->code}}</td>
+                                    <td>{{ route('register', ['coupon_code' => $cookieCoupon->code]) }}</td>
                                     <td class="d-flex flex-row">
                                         <a href="{{route('admin.cookie-coupon.edit',$cookieCoupon->id)}}" class="btn btn-primary m-2">Edit</a>
                                         <form action="{{route('admin.cookie-coupon.destroy',$cookieCoupon->id)}}" method="post">
