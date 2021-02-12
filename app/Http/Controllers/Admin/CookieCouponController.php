@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\CookieCoupon;
+use App\Http\Requests\CookieCouponRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CookieCouponController extends Controller
 {
@@ -14,7 +16,8 @@ class CookieCouponController extends Controller
      */
     public function index()
     {
-        //
+        $cookieCoupons = CookieCoupon::all();
+        return view('admin/cookie-coupon/index')->with('cookieCoupons', $cookieCoupons);
     }
 
     /**
@@ -24,7 +27,7 @@ class CookieCouponController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin/cookie-coupon/create');
     }
 
     /**
@@ -33,9 +36,12 @@ class CookieCouponController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CookieCouponRequest $request)
     {
-        //
+        $cookieCoupon = new CookieCoupon;
+        $cookieCoupon->fill($request->validated());
+        $cookieCoupon->save();
+        return redirect()->route('admin.cookie-coupon.index')->with('success', true);
     }
 
     /**
@@ -57,7 +63,7 @@ class CookieCouponController extends Controller
      */
     public function edit(CookieCoupon $cookieCoupon)
     {
-        //
+        return view('admin/cookie-coupon/edit')->with('cookieCoupon', $cookieCoupon);
     }
 
     /**
@@ -67,9 +73,11 @@ class CookieCouponController extends Controller
      * @param  \App\Models\CookieCoupon  $cookieCoupon
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CookieCoupon $cookieCoupon)
+    public function update(CookieCouponRequest $request, CookieCoupon $cookieCoupon)
     {
-        //
+        $cookieCoupon->fill($request->validated());
+        $cookieCoupon->save();
+        return redirect()->route('admin.cookie-coupon.index')->with('success', true);
     }
 
     /**
@@ -80,6 +88,7 @@ class CookieCouponController extends Controller
      */
     public function destroy(CookieCoupon $cookieCoupon)
     {
-        //
+        $cookieCoupon->delete();
+        return redirect()->route('admin.cookie-coupon.index')->with('success', true);
     }
 }

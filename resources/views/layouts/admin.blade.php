@@ -42,6 +42,9 @@
                                 <a class="nav-link" href="{{ route('admin.price-plan.index') }}">Price Plans</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{route('admin.cookie-coupon.index')}}">Cookie Coupons</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{route('admin.coupon.index')}}">Coupons</a>
                             </li>
                             <li class="nav-item">
