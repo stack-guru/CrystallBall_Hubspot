@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
 
 class SendGridService
 {
@@ -22,7 +21,7 @@ class SendGridService
         // Here explode function is used to separate first_name of user from full name. It is not the recommended way to do it but it will keep things simple.
         $nameChunks = explode(' ', trim($user->name));
         $firstName = $nameChunks[0];
-        $lastName = $nameChunks[count($nameChunks)-1] != $firstName ? $nameChunks[count($nameChunks)-1] : '';
+        $lastName = $nameChunks[count($nameChunks) - 1] != $firstName ? $nameChunks[count($nameChunks) - 1] : '';
         $response = Http::withToken($this->key)
             ->withHeaders([
                 "Content-Type: application/json",
@@ -51,7 +50,7 @@ class SendGridService
 
         $nameChunks = explode(' ', trim($user->name));
         $firstName = $nameChunks[0];
-        $lastName = $nameChunks[count($nameChunks)-1] != $firstName ? $nameChunks[count($nameChunks)-1] : '';
+        $lastName = $nameChunks[count($nameChunks) - 1] != $firstName ? $nameChunks[count($nameChunks) - 1] : '';
 
         $response = Http::withToken($this->key)
             ->withHeaders([
@@ -60,12 +59,23 @@ class SendGridService
             ->withBody(json_encode([
                 "list_ids" => [$list['id']],
                 "contacts" => [
-                    ['email' => $user->email, 'first_name' => $firstName, 'last_name' => $lastName, 'custom_fields' => ['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]],
+                    [
+                        'email' => $user->email,
+                        'first_name' => $firstName,
+                        'last_name' => $lastName,
+                        // 'custom_fields' => ['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]
+                    ],
                 ],
             ]), 'application/json')
             ->put("https://api.sendgrid.com/v3/marketing/contacts");
 
-        Log::channel('sendgrid')->info('Adding user to a list:' . $listName, ['email' => $user->email, 'first_name' => $firstName, 'last_name' => $lastName, 'custom_fields' => ['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')], $list['id']]);
+        Log::channel('sendgrid')->info('Adding user to a list:' . $listName, [
+            'email' => $user->email,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            // 'custom_fields' => ['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')],
+            'list_ids' => [$list['id']],
+        ]);
         Log::channel('sendgrid')->debug($response->body());
 
         if ($response->status() != 202) {
@@ -86,7 +96,7 @@ class SendGridService
         $contactsDbArray = array_map(function ($user) {
             $nameChunks = explode(' ', trim($user['name']));
             $firstName = $nameChunks[0];
-            $lastName = $nameChunks[count($nameChunks)-1] != $firstName ? $nameChunks[count($nameChunks)-1] : '';
+            $lastName = $nameChunks[count($nameChunks) - 1] != $firstName ? $nameChunks[count($nameChunks) - 1] : '';
             return [
                 'email' => $user['email'],
                 'first_name' => $firstName,
