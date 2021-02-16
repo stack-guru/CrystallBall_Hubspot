@@ -20,7 +20,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
     Route::post('logout', 'API\LoginController@logout')->name('logout')->middleware('cors');
 
     Route::group(['prefix' => 'v1', 'namespace' => 'API', 'as' => 'v1.'], function () {
-
+        Route::post('open-weather-map/alerts', 'OWMPushNotificationController@store');
         Route::get('event-sources', 'EventSourceController@index')->name('event-sources.index');
 
         Route::get('chrome-extension/event-sources', 'EventSourceController@index');
