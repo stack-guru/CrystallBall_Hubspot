@@ -15,7 +15,7 @@ class OWMPushNotificationController extends Controller
      */
     public function index()
     {
-        $oWMPushNotifications = OWMPushNotification::select('id', 'shape', 'event_name', 'alert_type', 'urgency', 'severity', 'certainty')->paginate(100);
+        $oWMPushNotifications = OWMPushNotification::select('id', 'shape', 'event', 'alert_type', 'urgency', 'severity', 'certainty')->paginate(100);
         return view('admin/data-source/owm-push-notification/index')->with('oWMPushNotifications', $oWMPushNotifications);
     }
 
