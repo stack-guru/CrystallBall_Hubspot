@@ -49,9 +49,9 @@ class OWMPushNotificationController extends Controller
             $oWMPushNotification->alert_date = $t->addDays($i);
 
             $oWMPushNotification->sender_name = $request->sender;
-            $oWMPushNotification->event = $request->description[0]->event;
-            $oWMPushNotification->headline = $request->description[0]->headline;
-            $oWMPushNotification->description = $request->description[0]->description;
+            $oWMPushNotification->event = $request->description[0]['event'];
+            $oWMPushNotification->headline = $request->description[0]['headline'];
+            $oWMPushNotification->description = $request->description[0]['description'];
 
             //$oWMPushNotification->open_weather_map_city_id = $alert['a'];
             $oWMPushNotification->save();
