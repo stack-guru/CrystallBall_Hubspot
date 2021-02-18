@@ -15,28 +15,8 @@ class OWMPushNotificationController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $oWMPushNotifications = OWMPushNotification::all();
+        return view('admin/data-source/owm-push-notification/index')->with('oWMPushNotifications', $oWMPushNotifications);
     }
 
     /**
@@ -47,30 +27,7 @@ class OWMPushNotificationController extends Controller
      */
     public function show(OWMPushNotification $oWMPushNotification)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\OWMPushNotification  $oWMPushNotification
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(OWMPushNotification $oWMPushNotification)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\OWMPushNotification  $oWMPushNotification
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, OWMPushNotification $oWMPushNotification)
-    {
-        //
+        return view('admin/data-source/owm-push-notification/show')->with('oWMPushNotification', $oWMPushNotification);
     }
 
     /**
@@ -81,6 +38,7 @@ class OWMPushNotificationController extends Controller
      */
     public function destroy(OWMPushNotification $oWMPushNotification)
     {
-        //
+        $oWMPushNotification->delete();
+        return redirect()->back()->with('success', true);
     }
 }

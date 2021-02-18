@@ -66,10 +66,9 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </div>w
     </div>
 
 </div>
-</div>
-</div>
+
 @endsection
