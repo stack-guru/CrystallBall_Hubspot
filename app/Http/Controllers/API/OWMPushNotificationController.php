@@ -35,9 +35,9 @@ class OWMPushNotificationController extends Controller
 
             $oWMPushNotification = new OWMPushNotification;
 
-            $oWMPushNotification->owm_alert_id = $alert->id;
-            $oWMPushNotification->shape = $alert->geometry->type;
-            $oWMPushNotification->location_coordinates = json_encode($alert->geometry->coordinates);
+            $oWMPushNotification->owm_alert_id = $alert['id'];
+            $oWMPushNotification->shape = $alert['geometry']['type'];
+            $oWMPushNotification->location_coordinates = json_encode($alert['geometry']['coordinates']);
 
             $oWMPushNotification->alert_type = $request->msg_type;
             $oWMPushNotification->categories = json_encode($request->categories);
@@ -53,7 +53,7 @@ class OWMPushNotificationController extends Controller
             $oWMPushNotification->headline = $request->description[0]->headline;
             $oWMPushNotification->description = $request->description[0]->description;
 
-            //$oWMPushNotification->open_weather_map_city_id = $alert->a;
+            //$oWMPushNotification->open_weather_map_city_id = $alert['a'];
             $oWMPushNotification->save();
         }
     }
