@@ -27,7 +27,7 @@ class CreateOWMPushNotificationsTable extends Migration
             $table->date('alert_date')->nullable();
             $table->string('sender_name', 100)->nullable()->default(null);
             $table->string('event', 100)->nullable()->default(null);
-            $table->string('headline', 100)->nullable()->default(null);
+            $table->string('headline', 200)->nullable()->default(null);
             $table->mediumText('description')->nullable()->default(null);
 
             $table->foreignId('open_weather_map_city_id')->onDelete('CASCASE')->nullable()->default(null)->constrained();
