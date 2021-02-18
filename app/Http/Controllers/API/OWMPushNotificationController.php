@@ -23,38 +23,37 @@ class OWMPushNotificationController extends Controller
         $host = $request->getHttpHost();
         // if($host !== "openweathermap.org") abort(404);
         // if(! $request->has('alert')) abort(422);
-        $pushAlerts = $request->alert;
-        foreach($pushAlerts as $respAlert){
-            $alert = json_decode($respAlert, false);
 
-            $aStartDate = Carbon::parse(date("Y-m-d", $request->start));
-            $aEndDate = Carbon::parse(date("Y-m-d", $request->end));
-            $totalDays = ($aEndDate->diffInDays($aStartDate)) + 2;
-            for ($i = 0; $i < $totalDays; $i++) {
+        // $alert = json_decode($request->alert, false);
+        $alert = $request->alert;
 
-                $oWMPushNotification = new OWMPushNotification;
+        $aStartDate = Carbon::parse(date("Y-m-d", $request->start));
+        $aEndDate = Carbon::parse(date("Y-m-d", $request->end));
+        $totalDays = ($aEndDate->diffInDays($aStartDate)) + 2;
+        for ($i = 0; $i < $totalDays; $i++) {
 
-                $oWMPushNotification->owm_alert_id = $alert->id;
-                $oWMPushNotification->shape = $alert->geometry->type;
-                $oWMPushNotification->location_coordinates = json_encode($alert->geometry->coordinates);
+            $oWMPushNotification = new OWMPushNotification;
 
-                $oWMPushNotification->alert_type = $request->msg_type;
-                $oWMPushNotification->categories = json_encode($request->categories);
-                $oWMPushNotification->urgency = $request->urgency;
-                $oWMPushNotification->severity = $request->severity;
-                $oWMPushNotification->certainty = $request->certainty;
-                
-                $t = Carbon::parse($aStartDate);
-                $oWMPushNotification->alert_date = $t->addDays($i);
+            $oWMPushNotification->owm_alert_id = $alert->id;
+            $oWMPushNotification->shape = $alert->geometry->type;
+            $oWMPushNotification->location_coordinates = json_encode($alert->geometry->coordinates);
 
-                $oWMPushNotification->sender_name = $request->sender;
-                $oWMPushNotification->event = $request->description[0]->event;
-                $oWMPushNotification->headline = $request->description[0]->headline;
-                $oWMPushNotification->description = $request->description[0]->description;
+            $oWMPushNotification->alert_type = $request->msg_type;
+            $oWMPushNotification->categories = json_encode($request->categories);
+            $oWMPushNotification->urgency = $request->urgency;
+            $oWMPushNotification->severity = $request->severity;
+            $oWMPushNotification->certainty = $request->certainty;
 
-                //$oWMPushNotification->open_weather_map_city_id = $alert->a;
-                $oWMPushNotification->save();
-            }
+            $t = Carbon::parse($aStartDate);
+            $oWMPushNotification->alert_date = $t->addDays($i);
+
+            $oWMPushNotification->sender_name = $request->sender;
+            $oWMPushNotification->event = $request->description[0]->event;
+            $oWMPushNotification->headline = $request->description[0]->headline;
+            $oWMPushNotification->description = $request->description[0]->description;
+
+            //$oWMPushNotification->open_weather_map_city_id = $alert->a;
+            $oWMPushNotification->save();
         }
     }
 
