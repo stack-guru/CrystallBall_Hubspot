@@ -23,7 +23,7 @@ class CreateOWMPushNotificationsTable extends Migration
             $table->string('categories', 100)->nullable();
             $table->string('urgency', 20)->nullable();
             $table->string('severity', 20)->nullable();
-            $table->string('certainity', 20)->nullable();
+            $table->string('certainty', 20)->nullable();
             $table->date('alert_date')->nullable();
             $table->string('sender_name', 100)->nullable()->default(null);
             $table->string('event', 100)->nullable()->default(null);
