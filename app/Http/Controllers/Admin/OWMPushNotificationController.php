@@ -15,7 +15,7 @@ class OWMPushNotificationController extends Controller
      */
     public function index()
     {
-        $oWMPushNotifications = OWMPushNotification::all();
+        $oWMPushNotifications = OWMPushNotification::paginate(10);
         return view('admin/data-source/owm-push-notification/index')->with('oWMPushNotifications', $oWMPushNotifications);
     }
 

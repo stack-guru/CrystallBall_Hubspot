@@ -50,6 +50,7 @@
                          @endforelse
                          </tbody>
                      </table>
+                     {{ $oWMPushNotifications->links() }}
                     </div>
                 </div>
 
