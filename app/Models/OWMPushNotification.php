@@ -9,6 +9,8 @@ class OWMPushNotification extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
 
         'owm_alert_id',
