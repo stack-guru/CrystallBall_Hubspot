@@ -27,7 +27,7 @@ class OWMPushNotificationController extends Controller
      */
     public function show(OWMPushNotification $oWMPushNotification)
     {
-        return view('admin/data-source/owm-push-notification/show')->with('oWMPushNotification', $oWMPushNotification->toArray());
+        return view('admin/data-source/owm-push-notification/show')->with('oWMPushNotification', $oWMPushNotification);
     }
 
     /**
