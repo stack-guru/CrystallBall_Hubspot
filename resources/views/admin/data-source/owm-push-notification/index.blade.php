@@ -34,8 +34,8 @@
                              <td>{{$oWMPushNotification->certainty}}</td>
                              <td>
                                  <div class="d-flex flex-row text-center">
-                                     <a href="{{route('admin.data-source.owm-push-notification.show',$oWMPushNotification->id)}}" class="btn btn-primary mx-2 btn-sm ">Show</a>
-                                     <form action="{{route('admin.data-source.owm-push-notification.destroy',$oWMPushNotification->id)}}" method="post">
+                                     <a href="{{route('admin.data-source.o-w-m-push-notification.show',$oWMPushNotification->id)}}" class="btn btn-primary mx-2 btn-sm ">Show</a>
+                                     <form action="{{route('admin.data-source.o-w-m-push-notification.destroy',$oWMPushNotification->id)}}" method="post">
                                          @csrf
                                          @method('DELETE')
                                          <button class="btn btn-primary btn-sm mx-2">Delete</button>
