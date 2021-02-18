@@ -23,7 +23,8 @@ class OWMPushNotificationController extends Controller
         $host = $request->getHttpHost();
         // if($host !== "openweathermap.org") abort(404);
         // if(! $request->has('alert')) abort(422);
-        foreach($request->alerts as $respAlert){
+        $pushAlerts = $request->alerts;
+        foreach($pushAlerts as $respAlert){
             $alert = json_decode($respAlert, false);
 
             $aStartDate = Carbon::parse(date("Y-m-d", $request->start));
