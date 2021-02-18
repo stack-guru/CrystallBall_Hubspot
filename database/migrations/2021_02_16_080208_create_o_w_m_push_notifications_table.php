@@ -16,7 +16,7 @@ class CreateOWMPushNotificationsTable extends Migration
         Schema::create('o_w_m_push_notifications', function (Blueprint $table) {
             $table->id();
 
-            $table->string('owm_alert_id', 100)->nullable();
+            $table->string('owm_alert_id', 200)->nullable();
             $table->string('shape', 20)->nullable();
             $table->mediumText('location_coordinates')->nullable()->default(null);
             $table->string('alert_type', 20)->nullable();
