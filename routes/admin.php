@@ -14,7 +14,7 @@ Route::group(['prefix' => 'data-source', 'as' => 'data-source.'], function () {
     Route::post('google-algorithm-update/upload', [App\Http\Controllers\Admin\GoogleAlgorithmUpdateController::class, 'upload'])->name('google-algorithm-update.upload');
     Route::resource('retail-marketing', App\Http\Controllers\Admin\RetailMarketingController::class);
     Route::post('retail-marketing/upload', [App\Http\Controllers\Admin\RetailMarketingController::class, 'upload'])->name('retail-marketing.upload');
-    Route::resource('owm-push-notification', App\Http\Controllers\Admin\OWMPushNotificationController::class)->only(['index', 'show', 'destroy']);
+    Route::resource('o-w-m-push-notification', App\Http\Controllers\Admin\OWMPushNotificationController::class)->only(['index', 'show', 'destroy']);
 
 });
 

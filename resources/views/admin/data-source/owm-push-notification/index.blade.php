@@ -27,7 +27,7 @@
 
                              <td>{{$oWMPushNotification->id}}</td>
                              <td>{{$oWMPushNotification->shape}}</td>
-                             <td>{{$oWMPushNotification->event_name}}</td>
+                             <td>{{$oWMPushNotification->event}}</td>
                              <td>{{$oWMPushNotification->alert_type}}</td>
                              <td>{{$oWMPushNotification->urgency}}</td>
                              <td>{{$oWMPushNotification->severity}}</td>
