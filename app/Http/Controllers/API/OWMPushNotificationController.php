@@ -18,6 +18,9 @@ class OWMPushNotificationController extends Controller
      */
     public function store(Request $request)
     {
+        // These push notifications have once paralyzed the whole server including Laravel and MySQL
+        // I had to drop the table inorder to put things back to normal
+        // Hence disabling it.
         return 0;
         Log::channel('open_weather_map')->debug($request->all());
 
