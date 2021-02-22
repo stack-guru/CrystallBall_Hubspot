@@ -18,7 +18,7 @@ class OWMPushNotificationController extends Controller
      */
     public function store(Request $request)
     {
-
+        return 0;
         Log::channel('open_weather_map')->debug($request->all());
 
         $host = $request->getHttpHost();
