@@ -226,7 +226,7 @@ class AnnotationController extends Controller
         }
         if ($user->is_ds_weather_alerts_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, alert_date, alert_date as created_at, null, sender_name, event, NULL as url, description, 'System' AS user_name from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities'";
+            $annotationsQuery .= "select 1, alert_date, alert_date as created_at, null, sender_name, event, NULL as url, description, 'System' AS user_name from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities'";
         }
         $annotationsQuery .= ") AS TempTable";
 
