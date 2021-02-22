@@ -22,6 +22,8 @@ class UserDataSourceController extends Controller
                 'holidays' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name')->ofCurrentUser()->where('ds_code', 'holidays')->orderBy('country_name')->get(),
                 'retail_marketings' => UserDataSource::select('id', 'ds_code', 'ds_name', 'retail_marketing_id')->ofCurrentUser()->where('ds_code', 'retail_marketings')->get(),
                 'open_weather_map_cities' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_city_id')->ofCurrentUser()->with('openWeatherMapCity')->where('ds_code', 'open_weather_map_cities')->get(),
+                'open_weather_map_events' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_event')->ofCurrentUser()->where('ds_code', 'open_weather_map_events')->get(),
+
             ],
         ];
     }

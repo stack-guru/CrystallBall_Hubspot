@@ -55,10 +55,9 @@ export default class DSOWMCitiesSelect extends React.Component {
 
     clearAll(e) {
         let userOWMCityIds = this.props.ds_data.map(ds => ds.open_weather_map_city_id);
-        this.state.weather_alerts_cities.map(owmCity => {
-            if (userOWMCityIds.indexOf(owmCity.id) == -1) {
-                (this.props.onUncheckCallback)({ code: 'open_weather_map_cities', name: 'OpenWeatherMapCity', country_name: null, open_weather_map_city_id: owmCity.id })
-            }
+        let userDSEvents = this.props.ds_data.map(ds => ds.id);
+        userOWMCityIds.map((owmEvent,index) => {
+            (this.props.onUncheckCallback)(userDSEvents[index], 'open_weather_map_cities')
         })
     }
 

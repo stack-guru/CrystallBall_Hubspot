@@ -16,7 +16,8 @@ class UserDataSource extends Model
         'country_name',
         'retail_marketing_id',
         'open_weather_map_city_id',
-        'is_enabled'
+        'open_weather_map_event',
+        'is_enabled',
     ];
 
     protected $casts = [

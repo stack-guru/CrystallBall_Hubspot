@@ -52,10 +52,9 @@ export default class DSRMDatesSelect extends React.Component {
 
     clearAll(e) {
         let userRMDateIds = this.props.ds_data.map(ds => ds.retail_marketing_id);
-        this.state.retail_marketing_dates.map(rmDate => {
-            if (userRMDateIds.indexOf(rmDate.id) !== -1) {
-                (this.props.onUncheckCallback)(this.props.ds_data[userRMDateIds.indexOf(rmDate.id)].id, 'retail_marketings')
-            }
+        let userDSEvents = this.props.ds_data.map(ds => ds.id);
+        userRMDateIds.map((rmDate,index) => {
+            (this.props.onUncheckCallback)(userDSEvents[index], 'retail_marketings')
         })
     }
 

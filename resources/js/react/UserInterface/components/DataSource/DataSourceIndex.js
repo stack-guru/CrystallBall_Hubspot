@@ -6,6 +6,7 @@ import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";
 import DSRMDatesSelect from '../../utils/DSRMDatesSelect';
 import DSOWMCitiesSelect from '../../utils/DSOWMCitiesSelect';
+import DSOWMEventsSelect from '../../utils/DSOWMEventsSelect';
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -41,19 +42,19 @@ export default class DataSourceIndex extends React.Component {
     serviceStatusHandler(e) {
         e.persist();
         if (e.target.name == 'is_ds_holidays_enabled' && e.target.checked) {
-            window.scroll(0,0);
+            window.scroll(0, 0);
             this.setState({ sectionName: 'holidays' })
         } else if (e.target.name == 'is_ds_holidays_enabled' && !e.target.checked) {
             this.setState({ sectionName: null })
         }
         if (e.target.name == 'is_ds_retail_marketing_enabled' && e.target.checked) {
-            window.scroll(0,0);
+            window.scroll(0, 0);
             this.setState({ sectionName: 'retail_marketings' })
         } else if (e.target.name == 'is_ds_retail_marketing_enabled' && !e.target.checked) {
             this.setState({ sectionName: null })
         }
         if (e.target.name == 'is_ds_weather_alerts_enabled' && e.target.checked) {
-            window.scroll(0,0);
+            window.scroll(0, 0);
             this.setState({ sectionName: 'weather_alerts' })
         } else if (e.target.name == 'is_ds_weather_alerts_enabled' && !e.target.checked) {
             this.setState({ sectionName: null })
@@ -89,6 +90,7 @@ export default class DataSourceIndex extends React.Component {
             'country_name': dataSource.country_name,
             'retail_marketing_id': dataSource.retail_marketing_id,
             'open_weather_map_city_id': dataSource.open_weather_map_city_id,
+            'open_weather_map_event': dataSource.open_weather_map_event,
             'is_enabled': 1,
         }
         HttpClient.post('/user-data-source', formData).then(resp => {
@@ -229,7 +231,7 @@ export default class DataSourceIndex extends React.Component {
 
                         </div>
 
-                        {/* <div className="container mt-3 ds-sections border-bottom">
+                        <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
                                     <h4 className="gaa-text-primary">Weather Alerts</h4>
@@ -249,18 +251,20 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
-                                //    <div className="list-wrapper">
-                                //        {this.state.userDataSources.open_weather_map_cities ?
-                                //            <dl className="d-flex flex-row flex-wrap userCountryList">
-                                //                <dt>Alerts for:</dt>
-                                //                {this.state.userDataSources.open_weather_map_cities
-                                //                    ? this.state.userDataSources.open_weather_map_cities.map(owmc => (
-                                //                        <dd className="mx-2" key={owmc.id}>{owmc.open_weather_map_city.name}, {owmc.open_weather_map_city.country_name}</dd>
-                                //                    ))
-                                //                    : <dd className="mx-2">no city added</dd>
-                                //                }
-                                //            </dl> : null}
-                                //    </div>
+
+                                    <div className="list-wrapper">
+                                        {this.state.userDataSources.open_weather_map_cities ?
+                                            <dl className="d-flex flex-row flex-wrap userCountryList">
+                                                <dt>Alerts for:</dt>
+                                                {/* {this.state.userDataSources.open_weather_map_cities
+                                                    ? this.state.userDataSources.open_weather_map_cities.map(owmc => (
+                                                        <dd className="mx-2" key={owmc.id}>{owmc.open_weather_map_city.name}, {owmc.open_weather_map_city.country_name}</dd>
+                                                    ))
+                                                    : <dd className="mx-2">no city added</dd>
+                                                } */}
+                                            </dl> : null}
+                                    </div>
+
                                 </div>
                                 <div className="col-3">
                                     <p
@@ -269,10 +273,16 @@ export default class DataSourceIndex extends React.Component {
                                     >
                                         {this.state.sectionName == "weather_alerts" ? "Hide" : "Choose Cities"}
                                     </p>
+                                    <p
+                                        className="ds-update-text m-0 text-center"
+                                        onClick={() => { this.setState({ sectionName: this.state.sectionName == "open_weather_map_events" ? null : "open_weather_map_events" }) }}
+                                    >
+                                        {this.state.sectionName == "open_weather_map_events" ? "Hide" : "Choose Events"}
+                                    </p>
                                 </div>
                             </div>
 
-                        </div> */}
+                        </div>
 
                         {/* <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
@@ -308,38 +318,53 @@ export default class DataSourceIndex extends React.Component {
                         </div> */}
                     </div>
                     <div className="col-md-4 col-sm-12 mt-3 border-left">
-                        {this.state.sectionName == 'holidays' && this.state.userDataSources ?
-                            <div className="switch-wrapper">
-                                <Countries
-                                    sectionTitle={this.state.sectionName}
-                                    onCheckCallback={this.userDataSourceAddHandler}
-                                    onUncheckCallback={this.userDataSourceDeleteHandler}
-                                    ds_data={this.state.userDataSources.holidays}
-                                />
-                            </div>
-                            : null
+                        {
+                            this.state.sectionName == 'holidays' && this.state.userDataSources ?
+                                <div className="switch-wrapper">
+                                    <Countries
+                                        sectionTitle={this.state.sectionName}
+                                        onCheckCallback={this.userDataSourceAddHandler}
+                                        onUncheckCallback={this.userDataSourceDeleteHandler}
+                                        ds_data={this.state.userDataSources.holidays}
+                                    />
+                                </div>
+                                : null
                         }
-                        {this.state.sectionName == 'retail_marketings' && this.state.userDataSources ?
-                            <div className="switch-wrapper">
-                                <DSRMDatesSelect
-                                    sectionTitle={this.state.sectionName}
-                                    onCheckCallback={this.userDataSourceAddHandler}
-                                    onUncheckCallback={this.userDataSourceDeleteHandler}
-                                    ds_data={this.state.userDataSources.retail_marketings}
-                                />
-                            </div>
-                            : null
+                        {
+                            this.state.sectionName == 'retail_marketings' && this.state.userDataSources ?
+                                <div className="switch-wrapper">
+                                    <DSRMDatesSelect
+                                        sectionTitle={this.state.sectionName}
+                                        onCheckCallback={this.userDataSourceAddHandler}
+                                        onUncheckCallback={this.userDataSourceDeleteHandler}
+                                        ds_data={this.state.userDataSources.retail_marketings}
+                                    />
+                                </div>
+                                : null
                         }
-                        {this.state.sectionName == 'weather_alerts' && this.state.userDataSources ?
-                            <div className="switch-wrapper">
-                                <DSOWMCitiesSelect
-                                    sectionTitle={this.state.sectionName}
-                                    onCheckCallback={this.userDataSourceAddHandler}
-                                    onUncheckCallback={this.userDataSourceDeleteHandler}
-                                    ds_data={this.state.userDataSources.open_weather_map_cities}
-                                />
-                            </div>
-                            : null
+                        {
+                            this.state.sectionName == 'weather_alerts' && this.state.userDataSources ?
+                                <div className="switch-wrapper">
+                                    <DSOWMCitiesSelect
+                                        sectionTitle={this.state.sectionName}
+                                        onCheckCallback={this.userDataSourceAddHandler}
+                                        onUncheckCallback={this.userDataSourceDeleteHandler}
+                                        ds_data={this.state.userDataSources.open_weather_map_cities}
+                                    />
+                                </div>
+                                : null
+                        }
+                        {
+                            this.state.sectionName == 'open_weather_map_events' && this.state.userDataSources ?
+                                <div className="switch-wrapper">
+                                    <DSOWMEventsSelect
+                                        sectionTitle={this.state.sectionName}
+                                        onCheckCallback={this.userDataSourceAddHandler}
+                                        onUncheckCallback={this.userDataSourceDeleteHandler}
+                                        ds_data={this.state.userDataSources.open_weather_map_events}
+                                    />
+                                </div>
+                                : null
                         }
                     </div>
                 </div>
