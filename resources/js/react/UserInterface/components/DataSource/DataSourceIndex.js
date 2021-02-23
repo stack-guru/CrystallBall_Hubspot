@@ -258,7 +258,9 @@ export default class DataSourceIndex extends React.Component {
                                                 <dt>Alerts for:</dt>
                                                 {this.state.userDataSources.open_weather_map_cities
                                                     ? this.state.userDataSources.open_weather_map_cities.map(owmc => (
-                                                        <dd className="mx-2" key={owmc.id}>{owmc.open_weather_map_city.name}, {owmc.open_weather_map_city.country_name}</dd>
+                                                        owmc.open_weather_map_city ?
+                                                            <dd className="mx-2" key={owmc.id}>{owmc.open_weather_map_city.name}, {owmc.open_weather_map_city.country_name}</dd>
+                                                            : null
                                                     ))
                                                     : <dd className="mx-2">no city added</dd>
                                                 }
