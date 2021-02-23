@@ -59,7 +59,7 @@ export default class DSOWMEventsSelect extends React.Component {
         return (
             <div className="weather_alert_cities-form">
                 <h4 className="gaa-text-primary">
-                    Select Weather Alerts
+                    Select Weather Events
                 </h4>
                 <div className="d-flex justify-content-between align-items-center border-bottom">
                     <div className="form-check">

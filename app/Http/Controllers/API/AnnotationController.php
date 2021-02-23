@@ -127,6 +127,11 @@ class AnnotationController extends Controller
             $annotationsQuery .= "select show_at, retail_marketings.id, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings'";
         }
         ////////////////////////////////////////////////////////////////////
+        if ($user->is_ds_weather_alerts_enabled && $request->query('show_weather_alerts') == 'true') {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select alert_date, open_weather_map_alerts.id, event, sender_name, null, description from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities'";
+        }
+        ////////////////////////////////////////////////////////////////////
 
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
         $annotations = DB::select($annotationsQuery);
