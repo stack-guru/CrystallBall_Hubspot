@@ -41,6 +41,7 @@ class UserDataSourceController extends Controller
         $userDataSource->fill($request->validated());
         $userDataSource->user_id = Auth::id();
         $userDataSource->save();
+        $userDataSource->load('openWeatherMapCity');
 
         return ['user_data_source' => $userDataSource];
     }
