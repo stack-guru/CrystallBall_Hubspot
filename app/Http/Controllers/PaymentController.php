@@ -51,6 +51,7 @@ class PaymentController extends Controller
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
 
         $transactionId = 0;
+        $sGS = new SendGridService;
         if ($pricePlan->price != 0) {
 
             $this->validate($request, [
@@ -68,7 +69,6 @@ class PaymentController extends Controller
 
             $pricePlanSubscription = new PricePlanSubscription;
             $blueSnapService = new BlueSnapService;
-            $sGS = new SendGridService;
 
             $price = $pricePlan->price;
             if ($request->has('coupon_id') && $request->coupon_id !== null && $request->coupon_id != "null") {
