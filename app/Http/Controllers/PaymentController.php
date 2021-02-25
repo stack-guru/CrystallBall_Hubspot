@@ -127,14 +127,13 @@ class PaymentController extends Controller
             if ($user->pricePlan->name == "Pro" && $pricePlan->name == "Basic") {
                 $sGS->addUserToList($user, "11 GAa Downgraded to Basic");
             }
-            if (($user->pricePlan->name == "Pro" && $pricePlan->name == "Free") || ($user->pricePlan->name == "Basic" && $pricePlan->name == "Free")) {
-                $sGS->addUserToList($user, "12 GAa Downgraded to FREE");
-            }
-
             $user->price_plan_id = $pricePlan->id;
             $user->price_plan_expiry_date = new \DateTime("+1 month");
             $user->is_billing_enabled = true;
         } else {
+            if (($user->pricePlan->name == "Pro" && $pricePlan->name == "Free") || ($user->pricePlan->name == "Basic" && $pricePlan->name == "Free")) {
+                $sGS->addUserToList($user, "12 GAa Downgraded to FREE");
+            }
             $user->is_billing_enabled = false;
         }
         $user->save();

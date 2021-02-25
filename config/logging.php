@@ -48,14 +48,14 @@ return [
         ],
 
         'sendgrid' => [
-            'driver' => 'daily',
+            'driver' => 'single',
             'path' => storage_path('logs/sendgrid.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 3,
         ],
 
         'open_weather_map' => [
-            'driver' => 'daily',
+            'driver' => 'single',
             'path' => storage_path('logs/open_weather_map.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 3,
