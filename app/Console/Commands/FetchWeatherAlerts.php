@@ -45,7 +45,7 @@ class FetchWeatherAlerts extends Command
         $totalCitiesWithAlertsCount = 0;
         $totalAlertsCount = 0;
 
-        $enabledCities = OpenWeatherMapCity::select('open_weather_map_cities.id', 'open_weather_map_cities.owmc_id', 'open_weather_map_cities.longitude', 'open_weather_map_cities.latitude')
+        $enabledCities = OpenWeatherMapCity::select('open_weather_map_cities.id', 'open_weather_map_cities.name', 'open_weather_map_cities.owmc_id')
             ->join('user_data_sources', 'user_data_sources.open_weather_map_city_id', 'open_weather_map_cities.id')
             ->join('users', 'user_data_sources.user_id', 'users.id')
             ->where('user_data_sources.ds_code', 'open_weather_map_cities')
@@ -58,14 +58,16 @@ class FetchWeatherAlerts extends Command
         $oWMService = new OpenWeatherMapService;
         foreach ($enabledCities as $city) {
             sleep(1);
+            print "Fetching weather of " . $city->name . ".\n";
             $OCAResp = $oWMService->currentWeatherById($city->owmc_id);
             if ($OCAResp['success']) {
-                if (array_key_exists('weather', $OCAResp['data'])) {
-                    $totalCitiesWithAlertsCount++;
-                    $weathers = $OCAResp['data']['weather'];
-                    foreach ($weathers as $weather) {
+                $totalCitiesWithAlertsCount++;
+                $weathers = $OCAResp['data']['weather'];
+                foreach ($weathers as $weather) {
+                    $doExist = OpenWeatherMapAlert::where('open_weather_map_city_id', $city->id)->where('event', $weather['main'])->where('alert_date', Carbon::now()->toDateString())->count() > 0;
+                    if (!$doExist) {
                         $totalAlertsCount++;
-                        
+
                         $oWMAlert = new OpenWeatherMapAlert;
                         $oWMAlert->event = $weather['main'];
                         $oWMAlert->description = $weather['description'];
@@ -75,7 +77,7 @@ class FetchWeatherAlerts extends Command
 
                     }
                 }
-            }else{
+            } else {
                 print "\n" . $OCAResp['message'] . ".\n";
             }
         }
