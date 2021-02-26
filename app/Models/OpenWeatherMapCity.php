@@ -27,8 +27,8 @@ class OpenWeatherMapCity extends Model
      */
     protected static function booted()
     {
-        static::addGlobalScope('ofUS', function (Builder $builder) {
-            $builder->where('country_code', 'US');
-        });
+        // static::addGlobalScope('ofUS', function (Builder $builder) {
+        //     $builder->where('country_code', 'US');
+        // });
     }
 }
