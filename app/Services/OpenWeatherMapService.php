@@ -21,7 +21,7 @@ class OpenWeatherMapService
         $this->excludeParts = $excludeParts;
     }
 
-    public function weatherApi($city)
+    public function currentWeather($city)
     {
 
         $response = Http::get($this->openWeatherDomain . "/data/2.5/weather?q=" . $city . "&appid=" . $this->appId . $this->callURISuffix);
@@ -32,6 +32,23 @@ class OpenWeatherMapService
             return ['success' => false, 'message' => $error];
         }
         Log::channel('open_weather_map')->info('Calling Weather API.', ['city' => $city]);
+        Log::channel('open_weather_map')->debug($response->body());
+
+        $data = $response->json();
+        return ['success' => true, 'data' => $data];
+    }
+
+    public function currentWeatherById($id)
+    {
+
+        $response = Http::get($this->openWeatherDomain . "/data/2.5/weather?id=" . $id . "&appid=" . $this->appId . $this->callURISuffix);
+
+        if ($response->failed()) {
+            $error = $response->body();
+
+            return ['success' => false, 'message' => $error];
+        }
+        Log::channel('open_weather_map')->info('Calling Weather API.', ['id' => $id]);
         Log::channel('open_weather_map')->debug($response->body());
 
         $data = $response->json();

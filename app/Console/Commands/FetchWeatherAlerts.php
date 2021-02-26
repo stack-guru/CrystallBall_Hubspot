@@ -45,7 +45,7 @@ class FetchWeatherAlerts extends Command
         $totalCitiesWithAlertsCount = 0;
         $totalAlertsCount = 0;
 
-        $enabledCities = OpenWeatherMapCity::select('open_weather_map_cities.id', 'open_weather_map_cities.longitude', 'open_weather_map_cities.latitude')
+        $enabledCities = OpenWeatherMapCity::select('open_weather_map_cities.id', 'open_weather_map_cities.owmc_id', 'open_weather_map_cities.longitude', 'open_weather_map_cities.latitude')
             ->join('user_data_sources', 'user_data_sources.open_weather_map_city_id', 'open_weather_map_cities.id')
             ->join('users', 'user_data_sources.user_id', 'users.id')
             ->where('user_data_sources.ds_code', 'open_weather_map_cities')
@@ -58,30 +58,21 @@ class FetchWeatherAlerts extends Command
         $oWMService = new OpenWeatherMapService;
         foreach ($enabledCities as $city) {
             sleep(1);
-            $OCAResp = $oWMService->oneCallApi($city->latitude, $city->longitude);
+            $OCAResp = $oWMService->currentWeatherById($city->owmc_id);
             if ($OCAResp['success']) {
-                if (array_key_exists('alerts', $OCAResp['data'])) {
+                if (array_key_exists('weather', $OCAResp['data'])) {
                     $totalCitiesWithAlertsCount++;
-                    $alerts = $OCAResp['data']['alerts'];
-                    foreach ($alerts as $alert) {
+                    $weathers = $OCAResp['data']['weather'];
+                    foreach ($weathers as $weather) {
                         $totalAlertsCount++;
-                        $aStartDate = Carbon::parse(date("Y-m-d", $alert['start']));
-                        $aEndDate = Carbon::parse(date("Y-m-d", $alert['end']));
-                        $totalDays = ($aEndDate->diffInDays($aStartDate)) + 2;
-                        $doExist = OpenWeatherMapAlert::where('open_weather_map_city_id', $city->id)->where('event', $alert['event'])->where('alert_date', $aStartDate)->count() > 0;
-                        if (!$doExist) {
-                            for ($i = 0; $i < $totalDays; $i++) {
-                                $oWMAlert = new OpenWeatherMapAlert;
-                                $oWMAlert->sender_name = $alert['sender_name'];
-                                $oWMAlert->event = $alert['event'];
-                                $oWMAlert->description = $alert['description'];
-                                // Creating a copy of $aStartDate and adding loop count variable in days
-                                $t = Carbon::parse($aStartDate);
-                                $oWMAlert->alert_date = $t->addDays($i);
-                                $oWMAlert->open_weather_map_city_id = $city->id;
-                                $oWMAlert->save();
-                            }
-                        }
+                        
+                        $oWMAlert = new OpenWeatherMapAlert;
+                        $oWMAlert->event = $weather['main'];
+                        $oWMAlert->description = $weather['description'];
+                        $oWMAlert->alert_date = Carbon::now();
+                        $oWMAlert->open_weather_map_city_id = $city->id;
+                        $oWMAlert->save();
+
                     }
                 }
             }else{

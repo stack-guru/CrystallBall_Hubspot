@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('gaa:process-non-installed-extension-users')->everyMinute();
         
+        $schedule->command('gaa:fetch-weather-alerts')->hourly();
         
         $schedule->command('gaa:process-no-annotation-users')->daily();
         $schedule->command('gaa:process-non-api-using-users')->daily();
@@ -36,7 +37,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:process-trial-expired-users')->daily();
         $schedule->command('gaa:process-thirty-days-old-free-users')->daily();
         $schedule->command('gaa:resubscribe-user-plans')->daily();
-        $schedule->command('gaa:fetch-weather-alerts')->daily();
+
         
         $schedule->command('gaa:send-card-expiry-mail')->monthly();
 
