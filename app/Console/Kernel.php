@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('gaa:process-non-installed-extension-users')->everyMinute();
         
-        $schedule->command('gaa:fetch-weather-alerts')->hourly();
+        $schedule->command('gaa:fetch-weather-alerts')->withoutOverlapping()->hourly();
         
         $schedule->command('gaa:process-no-annotation-users')->daily();
         $schedule->command('gaa:process-non-api-using-users')->daily();
