@@ -13,6 +13,7 @@ export default class DSRMDatesSelect extends React.Component {
 
         this.handleClick = this.handleClick.bind(this)
         this.selectAllShowing = this.selectAllShowing.bind(this);
+        this.checkSearchText = this.checkSearchText.bind(this);
         this.clearAll = this.clearAll.bind(this);
     }
 
@@ -56,6 +57,18 @@ export default class DSRMDatesSelect extends React.Component {
         userRMDateIds.map((rmDate,index) => {
             (this.props.onUncheckCallback)(userDSEvents[index], 'retail_marketings')
         })
+    }
+
+    checkSearchText(rmd){
+        if (this.state.searchText.length) {
+            if (
+                rmd.event_name.toLowerCase().indexOf(this.state.searchText.toLowerCase()) > -1
+            ) {
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
 
     render() {
@@ -102,8 +115,8 @@ export default class DSRMDatesSelect extends React.Component {
                 </div>
                 <div className="checkbox-box mt-3">
                     {
-                        retail_marketing_dates.map(rmd => {
-                            if (rmd !== null) if (rmd.event_name.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0) return <div className="form-check rmd" key={rmd.id}>
+                        retail_marketing_dates.filter(this.checkSearchText).map(rmd => {
+                            return <div className="form-check rmd" key={rmd.id}>
                                 <input
                                     className="form-check-input"
                                     checked={userRMDIds.indexOf(rmd.id) !== -1}

@@ -77,7 +77,7 @@ export default class DSOWMCitiesSelect extends React.Component {
     checkSearchText(city) {
         if (this.state.searchText.length) {
             if (
-                city.name.toLowerCase().indexOf(this.state.searchText) > -1
+                city.name.toLowerCase().indexOf(this.state.searchText.toLowerCase()) > -1
             ) {
                 return true;
             }
