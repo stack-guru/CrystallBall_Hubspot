@@ -5,6 +5,21 @@ export default class DSOWMEventsSelect extends React.Component {
         super(props);
         this.state = {
             weather_alert_events: [
+                'Coastal event',
+                'Duststorm (sandstorm)',
+                'Fog',
+                'Freezing rain',
+                'Frost',
+                'Icing',
+                'Moderate snow-ice warning',
+                'Moderate Wind warning',
+                'Widespread icy surfaces',
+                'Winter Storm Warning',
+                'Heavy storm',
+                'Tornado',
+                'Earthquake',
+                'Snow storm',
+                'Huracán',
                 'Clear',
                 'Clouds',
                 'Drizzle',
@@ -47,7 +62,7 @@ export default class DSOWMEventsSelect extends React.Component {
     clearAll(e) {
         let userOWMEvents = this.props.ds_data.map(ds => ds.open_weather_map_event);
         let userDSEvents = this.props.ds_data.map(ds => ds.id);
-        userOWMEvents.map((owmEvent,index) => {
+        userOWMEvents.map((owmEvent, index) => {
             (this.props.onUncheckCallback)(userDSEvents[index], 'open_weather_map_events')
         })
     }
