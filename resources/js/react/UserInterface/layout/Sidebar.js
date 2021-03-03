@@ -147,7 +147,7 @@ class sidebar extends React.Component {
                                     </Link>
                                 </li> */}
                                 <li className="nav-item dropdown">
-                                    <a className="sidebar-link" onClick={(e)=> {e.preventDefault(); swal("Sealed premises!", "We are making some improvements here. Please try again, soon.", "error"); }}>
+                                    <a className="sidebar-link" onClick={(e)=> {e.preventDefault(); swal("Website Maintenance!", "We are making some improvements here. Please try again soon.", "info"); }}>
                                         <span className="nav-link">Add Analytics Accounts</span>
                                     </a>
                                 </li>
