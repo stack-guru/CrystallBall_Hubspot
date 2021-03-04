@@ -140,16 +140,10 @@ class sidebar extends React.Component {
                         </a>
                         <div className="collapse dropdown-menu setting-menu-content " id="settings ">
                             <ul className="list-unstyled" >
-                                {/* Actual link option */}
-                                {/* <li className="nav-item dropdown">
+                                <li className="nav-item dropdown">
                                     <Link to="/settings/google-account" className="sidebar-link" >
                                         <span className="nav-link">Add Analytics Accounts</span>
                                     </Link>
-                                </li> */}
-                                <li className="nav-item dropdown">
-                                    <a className="sidebar-link" onClick={(e)=> {e.preventDefault(); swal("Website Maintenance!", "We are making some improvements here. Please try again soon.", "info"); }}>
-                                        <span className="nav-link">Add Analytics Accounts</span>
-                                    </a>
                                 </li>
                                 <li className="nav-item dropdown">
                                     <Link to="/settings/user" className="sidebar-link" >
