@@ -27,7 +27,7 @@ class GoogleAccountController extends Controller
                 'https://www.googleapis.com/auth/userinfo.profile',
                 'https://www.googleapis.com/auth/userinfo.email',
                 'https://www.googleapis.com/auth/analytics.readonly',
-                'https://www.googleapis.com/auth/adwords',
+                // 'https://www.googleapis.com/auth/adwords',
             ])
             ->with(['access_type' => 'offline'])
             ->redirect();
