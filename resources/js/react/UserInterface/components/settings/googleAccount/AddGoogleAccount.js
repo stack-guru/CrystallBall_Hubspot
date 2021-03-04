@@ -148,8 +148,7 @@ export default class AddGoogleAccount extends React.Component {
                     <div className="row ml-0 mr-0 my-5">
                         <div className="col-12 text-center text-md-right text-lg-right">
                             <a href="/settings/google-account/create"
-                                // onClick={this.restrictionHandler}
-                                onClick={(e) => { e.preventDefault(); swal("Website Maintenance!", "We are making some improvements here. Please try again soon.", "info"); }}
+                                onClick={this.restrictionHandler}
                                 className="btn gaa-bg-primary text-white" >
                                 Connect New Account
                             </a>
