@@ -13,7 +13,10 @@
                     <table class="table table-hoved table-bordered">
                         <thead>
                             <tr><th>Email</th><th>Name</th><th>Price Plan</th>
-                                <th>Registration Date</th><th>User's last added annotation</th><th>Actions</th></tr>
+                                <th>Registration Date</th><th>User's last added annotation</th>
+                                <th>Total Logins</th>
+                                <th>Actions</th>
+                            </tr>
                         </thead>
                         <tbody>
                             @foreach($users as $user)
@@ -23,6 +26,7 @@
                                     <td>{{ $user->pricePlan->name }}</td>
                                     <td>{{ @$user->created_at }}</td>
                                     <td>{{ @$user->lastAnnotation->updated_at}}</td>
+                                    <td>{{ $user->login_logs_count }}</td>
                                     <td>
                                         <div class="row ml-0 mr-0 d-flex flex-row ">
                                         <a class="btn btn-primary m-2" href="{{ route('admin.user.edit', $user->id) }}">Edit</a>

@@ -118,6 +118,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\User');
     }
 
+    public function loginLogs()
+    {
+        return $this->hasMany('App\Models\LoginLog');
+    }
+
     public function userGaAccounts()
     {
         return $this->hasMany('App\Models\UserGaAccount');

@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
 
-        $data['users'] = User::with(['pricePlan', 'lastAnnotation'])->get();
+        $data['users'] = User::with(['pricePlan', 'lastAnnotation'])->withCount('loginLogs')->get();
 
         return view('admin/user/index', $data);
     }
