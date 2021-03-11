@@ -61,6 +61,17 @@
                     @enderror
                 </div>
 
+                <div class="form-group">
+                    <label for="">Is Confirmed?</label>
+                    <input type="checkbox" name="is_confirmed" id="isConfirmed" @if($googleAlgorithmUpdate->is_confirmed) checked @endif
+                        class="form-control">
+                    @error('is_confirmed')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+
                 <div class="row ml-0 mr-0">
                     <div class="col-12 text-right">
                         <button class="btn btn-primary">Save</button>

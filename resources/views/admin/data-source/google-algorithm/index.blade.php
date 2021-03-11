@@ -23,6 +23,7 @@
                              <th>Event Name</th>
                              <th>Description</th>
                              <th>Update Date</th>
+                             <th>Is Confirmed?</th>
                              <th>Actions</th>
 
                          </tr>
@@ -36,6 +37,7 @@
                              <td>{{$googleAlgorithmUpdate->event_name}}</td>
                              <td>{{$googleAlgorithmUpdate->description}}</td>
                              <td>{{$googleAlgorithmUpdate->update_date}}</td>
+                             <td>@if($googleAlgorithmUpdate->is_confirmed) Yes @else No @endif</td>
                              <td>
                                  <div class="d-flex flex-row text-center">
                                      <a href="{{route('admin.data-source.google-algorithm-update.edit',$googleAlgorithmUpdate->id)}}" class="btn btn-primary mx-2 btn-sm ">Edit</a>

@@ -29,6 +29,7 @@ class GoogleAlgorithmUpdateRequest extends FormRequest
             'description' => 'required|string',
             'update_date' => 'required|date',
             'url' => 'nullable|string',
+            'is_confirmed' => 'nullable|in:on'
         ];
     }
 }
