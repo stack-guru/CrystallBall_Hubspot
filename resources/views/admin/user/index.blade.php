@@ -15,6 +15,7 @@
                             <tr><th>Email</th><th>Name</th><th>Price Plan</th>
                                 <th>Registration Date</th><th>User's last added annotation</th>
                                 <th>Data Sources</th>
+                                <th>API</th>
                                 <th>Total Logins</th>
                                 <th>Actions</th>
                             </tr>
@@ -25,13 +26,17 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->pricePlan->name }}</td>
-                                    <td>{{ @$user->created_at }}</td>
-                                    <td>{{ @$user->lastAnnotation->updated_at}}</td>
+                                    <td>{{ @$user->created_at->format('Y-m-d') }}</td>
+                                    <td>{{ @$user->lastAnnotation->updated_at }}</td>
                                     <td>
                                         @if($user->is_ds_holidays_enabled) Holiday<br /> @endif
                                         @if($user->is_ds_google_algorithm_updates_enabled) Google Algorithm Updates<br /> @endif
                                         @if($user->is_ds_retail_marketing_enabled) Retail Marketing enabled<br /> @endif
                                         @if($user->is_ds_weather_alerts_enabled) Weather Alerts enabled<br /> @endif
+                                    </td>
+                                    <td>
+                                        @if($user->last_generated_api_token_at) Token on:{{$user->last_generated_api_token_at->format('Y-m-d')}}<br /> @endif
+                                        @if($user->last_api_called_at) Call on:{{$user->last_api_called_at->format('Y-m-d')}}<br /> @endif
                                     </td>
                                     <td>{{ $user->login_logs_count }}</td>
                                     <td>
