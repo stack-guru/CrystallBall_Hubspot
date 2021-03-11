@@ -26,8 +26,8 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->pricePlan->name }}</td>
-                                    <td>{{ @$user->created_at->format('Y-m-d') }}</td>
-                                    <td>{{ @$user->lastAnnotation->updated_at }}</td>
+                                    <td>@if($user->created_at){{ $user->created_at->format('Y-m-d') }}@endif</td>
+                                    <td>@if($user->lastAnnotation){{ $user->lastAnnotation->updated_at->format('Y-m-d') }}@endif</td>
                                     <td>
                                         @if($user->is_ds_holidays_enabled) Holiday<br /> @endif
                                         @if($user->is_ds_google_algorithm_updates_enabled) Google Algorithm Updates<br /> @endif
