@@ -41,7 +41,6 @@ class GoogleAlgorithmUpdateController extends Controller
     {
         $googleAlgorithmUpdate = new GoogleAlgorithmUpdate;
         $googleAlgorithmUpdate->fill($request->validated());
-        $googleAlgorithmUpdate->is_confirmed = $request->has('is_confirmed');
         $googleAlgorithmUpdate->save();
         return redirect()->route('admin.data-source.google-algorithm-update.index')->with('success', true);
     }
@@ -67,7 +66,6 @@ class GoogleAlgorithmUpdateController extends Controller
     public function update(GoogleAlgorithmUpdateRequest $request, GoogleAlgorithmUpdate $googleAlgorithmUpdate)
     {
         $googleAlgorithmUpdate->fill($request->validated());
-        $googleAlgorithmUpdate->is_confirmed = $request->has('is_confirmed');
         $googleAlgorithmUpdate->save();
         return redirect()->route('admin.data-source.google-algorithm-update.index')->with('success', true);
     }

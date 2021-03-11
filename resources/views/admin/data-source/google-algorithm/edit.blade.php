@@ -62,10 +62,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="">Is Confirmed?</label>
-                    <input type="checkbox" name="is_confirmed" id="isConfirmed" @if($googleAlgorithmUpdate->is_confirmed) checked @endif
-                        class="form-control">
-                    @error('is_confirmed')
+                    <label for="">Status</label>
+                    <select name="status" class="form-control" id="status">
+                        <option value="confirmed" @if($googleAlgorithmUpdate->status == 'confirmed') selected @endif>Confirmed</option>
+                        <option value="unconfirmed" @if($googleAlgorithmUpdate->status == 'unconfirmed') selected @endif>Unconfirmed</option>
+                    </select>
+                    @error('status')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

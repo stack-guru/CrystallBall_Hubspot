@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsConfirmedColumnToGoogleAlgorithmUpdatesTable extends Migration
+class AddStatusColumnToGoogleAlgorithmUpdatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddIsConfirmedColumnToGoogleAlgorithmUpdatesTable extends Migration
     public function up()
     {
         Schema::table('google_algorithm_updates', function (Blueprint $table) {
-            $table->boolean('is_confirmed')->nullable()->default(false);
+            $table->string('status', 15)->nullable()->default(false);
         });
     }
 
@@ -26,7 +26,7 @@ class AddIsConfirmedColumnToGoogleAlgorithmUpdatesTable extends Migration
     public function down()
     {
         Schema::table('google_algorithm_updates', function (Blueprint $table) {
-            $table->dropColumn('is_confirmed');
+            $table->dropColumn('status');
         });
     }
 }
