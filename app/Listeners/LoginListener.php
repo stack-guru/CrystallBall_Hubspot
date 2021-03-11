@@ -27,9 +27,13 @@ class LoginListener
      */
     public function handle($event)
     {
-        $loginLog = new LoginLog;
-        $loginLog->user_id = Auth::id();
-        $loginLog->ip_address = request()->ip();
-        $loginLog->save();
+        // This if will prevent logging of logins done by admin
+        if(Auth::id())
+        {
+            $loginLog = new LoginLog;
+            $loginLog->user_id = Auth::id();
+            $loginLog->ip_address = request()->ip();
+            $loginLog->save();
+        }
     }
 }
