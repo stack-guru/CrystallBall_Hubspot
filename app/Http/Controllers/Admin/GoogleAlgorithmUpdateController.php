@@ -17,7 +17,7 @@ class GoogleAlgorithmUpdateController extends Controller
      */
     public function index()
     {
-        $googleAlgorithmUpdates = GoogleAlgorithmUpdate::orderBy('updated_at', 'DESC')->get();
+        $googleAlgorithmUpdates = GoogleAlgorithmUpdate::orderBy('update_date', 'ASC')->get();
         return view('admin/data-source/google-algorithm/index')->with('googleAlgorithmUpdates', $googleAlgorithmUpdates);
     }
 

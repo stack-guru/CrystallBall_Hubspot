@@ -14,6 +14,7 @@ class GoogleAlgorithmUpdate extends Model
         'event_name',
         'description',
         'update_date',
+        'url',
     ];
 
     protected $casts = [

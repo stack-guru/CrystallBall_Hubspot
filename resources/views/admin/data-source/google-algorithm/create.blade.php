@@ -60,6 +60,18 @@
                     </span>
                     @enderror
                 </div>
+                
+                <div class="form-group">
+                    <label for="">URL</label>
+                    <input type="text" name="url" id="url"
+                        class="form-control">
+                    @error('url')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+
                 <div class="row ml-0 mr-0">
                     <div class="col-12 text-right">
                         <button class="btn btn-primary">Add</button>
