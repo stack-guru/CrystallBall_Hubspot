@@ -20,7 +20,7 @@ export default class DSRMDatesSelect extends React.Component {
     componentDidMount() {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true })
-            HttpClient.get('retail-marketing-dates').then(resp => {
+            HttpClient.get('data-source/retail-marketing-dates').then(resp => {
                 this.setState({ isBusy: false, retail_marketing_dates: resp.data.retail_marketing_dates })
             }, (err) => {
                 console.log(err);

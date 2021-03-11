@@ -7,6 +7,7 @@ import HttpClient from "../../utils/HttpClient";
 import DSRMDatesSelect from '../../utils/DSRMDatesSelect';
 import DSOWMCitiesSelect from '../../utils/DSOWMCitiesSelect';
 import DSOWMEventsSelect from '../../utils/DSOWMEventsSelect';
+import DSGAUDatesSelect from '../../utils/DSGAUDatesSelect';
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -193,7 +194,19 @@ export default class DataSourceIndex extends React.Component {
                                         <span className="slider round" />
                                     </label>
                                 </div>
+                                <div className="row ml-0 mr-0 w-100">
+                                    <div className="col-9">
 
+                                    </div>
+                                    <div className="col-3">
+                                        <p
+                                            className="ds-update-text m-0 text-center"
+                                            onClick={() => { this.setState({ sectionName: this.state.sectionName == "google_algorithm_updates" ? null : "google_algorithm_updates" }) }}
+                                        >
+                                            {this.state.sectionName == "google_algorithm_updates" ? "Hide" : "Choose Dates"}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -364,6 +377,17 @@ export default class DataSourceIndex extends React.Component {
                                         onCheckCallback={this.userDataSourceAddHandler}
                                         onUncheckCallback={this.userDataSourceDeleteHandler}
                                         ds_data={this.state.userDataSources.open_weather_map_events}
+                                    />
+                                </div>
+                                : null
+                        }
+                        {
+                            this.state.sectionName == 'google_algorithm_updates' && this.state.userDataSources ?
+                                <div className="switch-wrapper">
+                                    <DSGAUDatesSelect
+                                        sectionTitle={this.state.sectionName}
+                                        onCheckCallback={this.userDataSourceAddHandler}
+                                        onUncheckCallback={this.userDataSourceDeleteHandler}
                                     />
                                 </div>
                                 : null

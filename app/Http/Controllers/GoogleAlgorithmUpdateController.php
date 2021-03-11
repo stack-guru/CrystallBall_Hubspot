@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class GoogleAlgorithmUpdateController extends Controller
 {
-    public function index(Request $request)
+    public function uiIndex(Request $request)
     {
         if ($request->has('status')) {
             if ($request->query('status') == 'confirmed') {
