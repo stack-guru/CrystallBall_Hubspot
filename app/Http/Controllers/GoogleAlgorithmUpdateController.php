@@ -10,11 +10,7 @@ class GoogleAlgorithmUpdateController extends Controller
     public function uiIndex(Request $request)
     {
         if ($request->has('status')) {
-            if ($request->query('status') == 'confirmed') {
-                $googleAlgorithmUpdates = GoogleAlgorithmUpdate::where('confirmed', true)->get();
-            } else {
-                $googleAlgorithmUpdates = GoogleAlgorithmUpdate::where('confirmed', false)->get();
-            }
+            $googleAlgorithmUpdates = GoogleAlgorithmUpdate::where('status', $request->query('status'))->get();
         } else {
             $googleAlgorithmUpdates = GoogleAlgorithmUpdate::all();
         }

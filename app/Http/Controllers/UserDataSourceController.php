@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserDataSourceRequest;
 use App\Models\UserDataSource;
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 
 class UserDataSourceController extends Controller
@@ -23,7 +24,7 @@ class UserDataSourceController extends Controller
                 'retail_marketings' => UserDataSource::select('id', 'ds_code', 'ds_name', 'retail_marketing_id')->ofCurrentUser()->where('ds_code', 'retail_marketings')->get(),
                 'open_weather_map_cities' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_city_id')->ofCurrentUser()->with('openWeatherMapCity')->where('ds_code', 'open_weather_map_cities')->get(),
                 'open_weather_map_events' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_event')->ofCurrentUser()->where('ds_code', 'open_weather_map_events')->get(),
-
+                'google_algorithm_update_dates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'status')->ofCurrentUser()->where('ds_code', 'google_algorithm_update_dates')->get(),
             ],
         ];
     }
@@ -36,6 +37,9 @@ class UserDataSourceController extends Controller
      */
     public function store(UserDataSourceRequest $request)
     {
+        if($request->ds_code == 'google_algorithm_update_dates'){
+            DB::statement("DELETE FROM user_data_sources WHERE ds_code = ? AND user_id = ?", ['google_algorithm_update_dates', Auth::id()]);
+        }
 
         $userDataSource = new UserDataSource;
         $userDataSource->fill($request->validated());

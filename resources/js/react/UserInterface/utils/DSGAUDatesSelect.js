@@ -10,21 +10,35 @@ export default class DSGAUDatesSelect extends React.Component {
             errors: '',
         }
 
+        this.selectedStatusChanged = this.selectedStatusChanged.bind(this);
+        this.fetchUpdatesList = this.fetchUpdatesList.bind(this);
     }
 
     componentDidMount() {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true })
-            HttpClient.get('data-source/google-algorithm-updates/date').then(resp => {
-                this.setState({ isBusy: false, google_algorithm_updates: resp.data.google_algorithm_updates })
-            }, (err) => {
-                console.log(err);
-                this.setState({ isBusy: false, errors: err.response })
-            }).catch(err => {
-                console.log(err);
-                this.setState({ isBusy: false, errors: err })
-            })
+            this.fetchUpdatesList("");
         }
+    }
+
+    fetchUpdatesList(status) {
+        let getUrl = 'data-source/google-algorithm-updates/date';
+        if (status) if (status !== "") getUrl += '?status=' + status
+        HttpClient.get(getUrl).then(resp => {
+            this.setState({ isBusy: false, google_algorithm_updates: resp.data.google_algorithm_updates })
+        }, (err) => {
+            console.log(err);
+            this.setState({ isBusy: false, errors: err.response })
+        }).catch(err => {
+            console.log(err);
+            this.setState({ isBusy: false, errors: err })
+        })
+    }
+
+    selectedStatusChanged(e) {
+        this.setState({ [e.target.name]: e.target.value });
+        (this.props.onCheckCallback)({ code: 'google_algorithm_update_dates', name: 'GoogleAlgorithmUpdateDate', country_name: null, status: e.target.value })
+        this.fetchUpdatesList(e.target.value);
     }
 
     render() {
@@ -32,20 +46,20 @@ export default class DSGAUDatesSelect extends React.Component {
         return (
             <div className="weather_alert_cities-form">
                 <h4 className="gaa-text-primary">
-                    Updates
+                    Algorithm Updates
                 </h4>
                 <div className="input-group mb-3">
-                    {/* <select
+                    <select
                         className="form-control"
                         placeholder="Search"
-                        value={this.state.searchCountry}
-                        name="searchCountry"
-                        onChange={this.selectedCountryChanged}
+                        value={this.props.ds_data.status}
+                        name="searchStatus"
+                        onChange={this.selectedStatusChanged}
                     >
-                        {
-                            [{ country_name: 'Please select country', value: '' }].concat(this.state.weather_alerts_countries).map(wAC => { return <option value={wAC.country_code}>{wAC.country_name}</option> })
-                        }
-                    </select> */}
+                        <option value="">Both</option>
+                        <option value="unconfirmed">Unconfirmed</option>
+                        <option value="confirmed">Confirmed</option>
+                    </select>
                 </div>
                 <div className="checkbox-box mt-3">
                     {
@@ -55,8 +69,10 @@ export default class DSGAUDatesSelect extends React.Component {
                                     className="form-check-label"
                                     htmlFor="defaultCheck1"
                                 >
-                                    {gAU.event_name} - {gAU.update_date}
+                                    {moment(gAU.update_date).format('YYYY-MM-DD')} - {gAU.event_name}
+                                    {/* {gAU.update_date} - {gAU.event_name} */}
                                 </label>
+                                <hr />
                             </div>
                         })
                     }

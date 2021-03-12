@@ -31,6 +31,7 @@ class UserDataSourceRequest extends FormRequest
             'retail_marketing_id' => 'nullable|numeric|exists:retail_marketings,id',
             'open_weather_map_city_id' => 'nullable|numeric|exists:open_weather_map_cities,id',
             'open_weather_map_event' => 'nullable|string',
+            'status' => 'nullable|string',
             'is_enabled' => 'nullable',
         ];
     }

@@ -17,6 +17,7 @@ class UserDataSource extends Model
         'retail_marketing_id',
         'open_weather_map_city_id',
         'open_weather_map_event',
+        'status',
         'is_enabled',
     ];
 

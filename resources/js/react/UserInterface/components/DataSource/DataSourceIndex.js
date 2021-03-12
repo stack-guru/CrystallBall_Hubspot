@@ -92,6 +92,7 @@ export default class DataSourceIndex extends React.Component {
             'retail_marketing_id': dataSource.retail_marketing_id,
             'open_weather_map_city_id': dataSource.open_weather_map_city_id,
             'open_weather_map_event': dataSource.open_weather_map_event,
+            'status': dataSource.status,
             'is_enabled': 1,
         }
         HttpClient.post('/user-data-source', formData).then(resp => {
@@ -388,6 +389,7 @@ export default class DataSourceIndex extends React.Component {
                                         sectionTitle={this.state.sectionName}
                                         onCheckCallback={this.userDataSourceAddHandler}
                                         onUncheckCallback={this.userDataSourceDeleteHandler}
+                                        ds_data={this.state.userDataSources.google_algorithm_update_dates[0]}
                                     />
                                 </div>
                                 : null
