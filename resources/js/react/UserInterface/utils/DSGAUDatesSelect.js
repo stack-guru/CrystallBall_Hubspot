@@ -52,7 +52,7 @@ export default class DSGAUDatesSelect extends React.Component {
                     <select
                         className="form-control"
                         placeholder="Search"
-                        value={this.props.ds_data.status}
+                        value={this.props.ds_data.length ? this.props.ds_data[0].status : ''}
                         name="searchStatus"
                         onChange={this.selectedStatusChanged}
                     >

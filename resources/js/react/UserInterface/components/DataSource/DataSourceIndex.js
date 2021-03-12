@@ -389,7 +389,7 @@ export default class DataSourceIndex extends React.Component {
                                         sectionTitle={this.state.sectionName}
                                         onCheckCallback={this.userDataSourceAddHandler}
                                         onUncheckCallback={this.userDataSourceDeleteHandler}
-                                        ds_data={this.state.userDataSources.google_algorithm_update_dates[0]}
+                                        ds_data={this.state.userDataSources.google_algorithm_update_dates}
                                     />
                                 </div>
                                 : null
