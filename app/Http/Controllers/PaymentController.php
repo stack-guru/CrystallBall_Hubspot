@@ -12,6 +12,9 @@ use Auth;
 use Carbon\Carbon;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Admin;
+use App\Mail\AdminPlanUpgradedMail;
 
 class PaymentController extends Controller
 {
@@ -141,10 +144,13 @@ class PaymentController extends Controller
         switch ($pricePlan->name) {
             case "Basic":
                 $sGS->addUserToList($user, "9 GAa Upgraded to Basic");
+                $admin = Admin::first();
+                Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
                 break;
             case "Pro":
                 $sGS->addUserToList($user, "10 GAa Upgraded to PRO");
-
+                $admin = Admin::first();
+                Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
                 break;
         }
 
