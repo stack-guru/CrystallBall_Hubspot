@@ -204,7 +204,7 @@ export default class DataSourceIndex extends React.Component {
                                             className="ds-update-text m-0 text-center"
                                             onClick={() => { this.setState({ sectionName: this.state.sectionName == "google_algorithm_updates" ? null : "google_algorithm_updates" }) }}
                                         >
-                                            {this.state.sectionName == "google_algorithm_updates" ? "Hide" : "Choose Dates"}
+                                            {this.state.sectionName == "google_algorithm_updates" ? "Hide" : "Confirmed/Unconfirmed"}
                                         </p>
                                     </div>
                                 </div>

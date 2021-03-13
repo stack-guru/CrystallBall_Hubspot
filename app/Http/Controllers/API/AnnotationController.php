@@ -7,11 +7,12 @@ use App\Http\Requests\AnnotationRequest;
 use App\Http\Resources\annotation as annotationResource;
 use App\Models\Annotation;
 use App\Models\AnnotationGaAccount;
+use App\Models\UserDataSource;
+use App\Services\SendGridService;
 use Auth;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
-use App\Services\SendGridService;
 
 class AnnotationController extends Controller
 {
@@ -30,13 +31,13 @@ class AnnotationController extends Controller
         $annotations = Annotation::where('user_id', Auth::id())->get();
         $resource = new annotationResource($annotations);
 
-        if($user->last_api_called_at == null){
+        if ($user->last_api_called_at == null) {
             $sGS = new SendGridService;
             $sGS->addUserToList($user, "14 GAa API users");
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
-        
+
         return ['annotations' => $resource];
     }
 
@@ -51,13 +52,13 @@ class AnnotationController extends Controller
             abort(404);
         }
 
-        if($user->last_api_called_at == null){
+        if ($user->last_api_called_at == null) {
             $sGS = new SendGridService;
             $sGS->addUserToList($user, "14 GAa API users");
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
-        
+
         return ['annotation' => $annotation];
     }
 
@@ -70,21 +71,21 @@ class AnnotationController extends Controller
         $user = Auth::user();
         $userIdsArray = [];
 
-        switch($user->user_level){
+        switch ($user->user_level) {
             case 'admin':
-                // Current user is admin, grab all child users, pluck ids 
+                // Current user is admin, grab all child users, pluck ids
                 $userIdsArray = $user->users->pluck('id')->toArray();
                 array_push($userIdsArray, $user->id);
                 break;
             case 'team':
-                // Current user is team, find admin, grab all child users, pluck ids 
+                // Current user is team, find admin, grab all child users, pluck ids
                 $userIdsArray = $user->user->users->pluck('id')->toArray();
                 array_push($userIdsArray, $user->user->id);
                 // Set Current User to Admin so that data source configuration which applies are that of admin
                 $user = $user->user;
                 break;
             case 'viewer';
-                // Current user is viewer, find admin, grab all child users, pluck ids 
+                // Current user is viewer, find admin, grab all child users, pluck ids
                 $userIdsArray = $user->user->users->pluck('id')->toArray();
                 array_push($userIdsArray, $user->user->id);
                 // Set Current User to Admin so that data source configuration which applies are that of admin
@@ -102,19 +103,34 @@ class AnnotationController extends Controller
         if ($request->query('google_analytics_account_id') && $request->query('google_analytics_account_id') !== '*') {
             $annotationsQuery .= " INNER JOIN `annotation_ga_accounts` ON `annotation_ga_accounts`.`annotation_id` = `annotations`.`id`";
         }
-        $annotationsQuery .= " WHERE (`annotations`.`user_id` IN ('" . implode( "', '",$userIdsArray) . "') AND `annotations`.`is_enabled` = 1) ";
+        $annotationsQuery .= " WHERE (`annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') AND `annotations`.`is_enabled` = 1) ";
         if ($request->query('google_analytics_account_id') && $request->query('google_analytics_account_id') !== '*') {
             $annotationsQuery .= " AND (`annotation_ga_accounts`.`google_analytics_account_id` IS NULL OR `annotation_ga_accounts`.`google_analytics_account_id` = " . $request->query('google_analytics_account_id') . ")";
         }
         $addedByArray = [];
-        if($request->query('show_manual_annotations'))array_push($addedByArray, 'manual');
-        if($request->query('show_csv_annotations'))array_push($addedByArray, 'csv-upload');
-        if($request->query('show_api_annotations'))array_push($addedByArray, 'api');
+        if ($request->query('show_manual_annotations')) {
+            array_push($addedByArray, 'manual');
+        }
+
+        if ($request->query('show_csv_annotations')) {
+            array_push($addedByArray, 'csv-upload');
+        }
+
+        if ($request->query('show_api_annotations')) {
+            array_push($addedByArray, 'api');
+        }
+
         $annotationsQuery .= " AND added_by IN ('" . implode("', '", $addedByArray) . "')";
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_google_algorithm_updates_enabled && $request->query('show_google_algorithm_updates') == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select update_date AS show_at, google_algorithm_updates.id, category, event_name, NULL as url, description from `google_algorithm_updates`";
+            $gAUConf = UserDataSource::where('user_id', $user->id)->where('ds_code', 'google_algorithm_update_dates')->first();
+            if ($gAUConf) {
+                if ($gAUConf->status != '' && $gAUConf->status != null) {
+                    $annotationsQuery .= ' where status = "' . $gAUConf->status . '"';
+                }
+            }
         }
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_holidays_enabled && $request->query('show_holidays') == 'true') {
@@ -271,7 +287,7 @@ class AnnotationController extends Controller
             $aGAA->save();
         }
 
-        if($user->last_api_called_at == null){
+        if ($user->last_api_called_at == null) {
             $sGS = new SendGridService;
             $sGS->addUserToList($user, "14 GAa API users");
         }
@@ -335,7 +351,7 @@ class AnnotationController extends Controller
 
         $annotation->load('annotationGaAccounts');
 
-        if($user->last_api_called_at == null){
+        if ($user->last_api_called_at == null) {
             $sGS = new SendGridService;
             $sGS->addUserToList($user, "14 GAa API users");
         }
@@ -364,13 +380,13 @@ class AnnotationController extends Controller
 
         $annotation->delete();
 
-        if($user->last_api_called_at == null){
+        if ($user->last_api_called_at == null) {
             $sGS = new SendGridService;
             $sGS->addUserToList($user, "14 GAa API users");
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
-        
+
         return ['success' => true];
     }
 

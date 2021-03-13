@@ -10,6 +10,7 @@ use Auth;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
+use App\Models\UserDataSource;
 
 class AnnotationController extends Controller
 {
@@ -219,6 +220,12 @@ class AnnotationController extends Controller
         if ($user->is_ds_google_algorithm_updates_enabled) {
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select 1, update_date AS show_at, update_date AS created_at, null, category, event_name, NULL as url, description, 'System' AS user_name from `google_algorithm_updates`";
+            $gAUConf = UserDataSource::where('user_id', $user->id)->where('ds_code', 'google_algorithm_update_dates')->first();
+            if($gAUConf){
+                if($gAUConf->status != '' && $gAUConf->status != null){
+                    $annotationsQuery .= ' where status = "' . $gAUConf->status . '"';
+                }
+            }
         }
         if ($user->is_ds_retail_marketing_enabled) {
             $annotationsQuery .= " union ";
