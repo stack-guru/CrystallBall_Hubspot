@@ -12,6 +12,7 @@ export default class SupportIndex extends Component {
             support: {
                 details: ''
             },
+            isBusy: false,
             errors: undefined
         }
 
@@ -45,6 +46,7 @@ export default class SupportIndex extends Component {
         //     url: `/support`, baseURL: "/ui/", method: 'post', headers: { 'Content-Type': 'multipart/form-data' },
         //     data: fD
         // })
+        this.setState({ isBusy: true })
         HttpClient.post("/settings/support", fD, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then(response => {
                 toast.info("Support request sent to server.");
@@ -89,7 +91,11 @@ export default class SupportIndex extends Component {
                             <div className="row ml-0 mr-0  mt-3">
                                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 text-right">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round">
-                                        <i className="fa fa-life-ring mr-3"></i>
+                                        {!this.state.isBusy ?
+                                            <i className="fa fa-life-ring mr-3"></i>
+                                            :
+                                            <i className="fa fa-spinner fa-pulse mr-3"></i>
+                                        }
                                         Contact
                                     </button>
                                 </div>
