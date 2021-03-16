@@ -65,7 +65,7 @@ export default class SupportIndex extends Component {
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section " id="inputs" >
                     <div className="container p-5">
-                        <div className="row mb-5">
+                        <div className="row mb-5 mr-0 ml-0">
                             <div className="col-md-12">
                                 <h3 className="heading-section gaa-title">Get Support</h3>
                             </div>
@@ -77,13 +77,13 @@ export default class SupportIndex extends Component {
                         <form onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
 
                             <div className="row mr-0 ml-0">
-                                <div className="col-lg-12 col-sm-12">
+                                <div className="col-lg-5 col-sm-5">
                                     <label htmlFor="details" className="form-control-placeholder">Message</label>
-                                    <textarea name="details" className="form-control" onChange={this.handleChange} value={this.state.support.details}></textarea>
+                                    <textarea name="details" className="form-control" rows="6" onChange={this.handleChange} value={this.state.support.details}></textarea>
                                 </div>
                             </div>
                             <div className="row mr-0 ml-0 mt-3">
-                                <div className="col-lg-12 col-sm-12">
+                                <div className="col-lg-5 col-sm-5">
                                     <div className="form-group">
                                         <label htmlFor="attachment" className="form-control-placeholder">Add Attachment</label>
                                         <input type="file" className="form-control" id="attachment" name="attachment" />
