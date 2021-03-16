@@ -49,7 +49,7 @@ export default class SupportIndex extends Component {
         this.setState({ isBusy: true })
         HttpClient.post("/settings/support", fD, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then(response => {
-                toast.info("Support request sent to server.");
+                toast.info("Your request has been submitted.");
                 this.setDefaultState();
             }, (err) => {
                 console.log(err);
@@ -96,7 +96,7 @@ export default class SupportIndex extends Component {
                                             :
                                             <i className="fa fa-spinner fa-pulse mr-3"></i>
                                         }
-                                        Contact
+                                        Send
                                     </button>
                                 </div>
                             </div>
