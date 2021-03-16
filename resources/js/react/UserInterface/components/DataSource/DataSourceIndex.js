@@ -98,7 +98,7 @@ export default class DataSourceIndex extends React.Component {
         HttpClient.post('/user-data-source', formData).then(resp => {
             let uds = resp.data.user_data_source;
             let ar = this.state.userDataSources[uds.ds_code];
-            ar.push(uds)
+            if (uds.ds_code == 'google_algorithm_update_dates') { ar = [uds]; } else { ar.push(uds) }
             this.setState({ userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar } })
         }, (err) => {
             console.log(err)
@@ -196,10 +196,10 @@ export default class DataSourceIndex extends React.Component {
                                     </label>
                                 </div>
                                 <div className="row ml-0 mr-0 w-100">
-                                    <div className="col-9">
+                                    <div className="col-8">
 
                                     </div>
-                                    <div className="col-3">
+                                    <div className="col-4">
                                         <p
                                             className="ds-update-text m-0 text-center"
                                             onClick={() => { this.setState({ sectionName: this.state.sectionName == "google_algorithm_updates" ? null : "google_algorithm_updates" }) }}

@@ -67,7 +67,7 @@ export default class SupportIndex extends Component {
                     <div className="container p-5">
                         <div className="row mb-5">
                             <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">Get Support</h2>
+                                <h3 className="heading-section gaa-title">Get Support</h3>
                             </div>
                             <div className="col-md-12">
                                 <ErrorAlert errors={this.state.errors} />
@@ -78,10 +78,12 @@ export default class SupportIndex extends Component {
 
                             <div className="row mr-0 ml-0">
                                 <div className="col-lg-12 col-sm-12">
-                                    <label htmlFor="details" className="form-control-placeholder">Details</label>
+                                    <label htmlFor="details" className="form-control-placeholder">Message</label>
                                     <textarea name="details" className="form-control" onChange={this.handleChange} value={this.state.support.details}></textarea>
                                 </div>
-                                <div className="col-lg-6 col-sm-6">
+                            </div>
+                            <div className="row mr-0 ml-0 mt-3">
+                                <div className="col-lg-12 col-sm-12">
                                     <div className="form-group">
                                         <label htmlFor="attachment" className="form-control-placeholder">Add Attachment</label>
                                         <input type="file" className="form-control" id="attachment" name="attachment" />
@@ -89,12 +91,12 @@ export default class SupportIndex extends Component {
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0  mt-3">
-                                <div className="col-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                <div className="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round">
                                         {!this.state.isBusy ?
-                                            <i className="fa fa-life-ring mr-3"></i>
+                                            <i className="fa fa-upload mr-1"></i>
                                             :
-                                            <i className="fa fa-spinner fa-pulse mr-3"></i>
+                                            <i className="fa fa-spinner fa-pulse mr-1"></i>
                                         }
                                         Send
                                     </button>
