@@ -19,6 +19,7 @@ class GoogleAccount extends Model
         'name',
         'email',
         'avatar',
+        'adwords_client_customer_id',
     ];
 
     protected $hidden = [

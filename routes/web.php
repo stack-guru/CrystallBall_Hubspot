@@ -49,7 +49,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::view('/', 'ui/app');
         Route::view('support', 'ui/app');
 
-        Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->except(['store', 'show', 'update', 'edit', 'destroy']);
+        Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store']);
 
         Route::view('change-password', 'ui/app');
@@ -88,6 +88,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
 
             Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
+            Route::put('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'update']);
             Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
             Route::post('/change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
 

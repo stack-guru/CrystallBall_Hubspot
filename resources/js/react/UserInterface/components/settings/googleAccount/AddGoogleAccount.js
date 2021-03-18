@@ -4,9 +4,10 @@ import { Redirect } from "react-router-dom";
 
 import HttpClient from './../../../utils/HttpClient';
 import ErrorAlert from '../../../utils/ErrorAlert'
+import AdwordsClientCustomerIdSaverModal from '../../../helpers/AdwordsClientCustomerIdSaverModalComponent';
 
 export default class AddGoogleAccount extends React.Component {
-
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -32,6 +33,8 @@ export default class AddGoogleAccount extends React.Component {
         this.getGAAccounts();
 
         let searchParams = new URLSearchParams(document.location.search);
+        this._searchParams = searchParams;
+
         if (searchParams.has('message') && searchParams.has('success')) {
             let success = searchParams.get('success');
             let message = searchParams.get('message');
@@ -134,6 +137,10 @@ export default class AddGoogleAccount extends React.Component {
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
 
+                <AdwordsClientCustomerIdSaverModal
+                    show={this._searchParams && this._searchParams.has('do-refresh') && this._searchParams.has('google_account_id')}
+                    dismissCallback={this.removeSearchParams}
+                />
                 <div className="container p-5">
                     <div className="row ml-0 mr-0">
                         <div className="col-12">

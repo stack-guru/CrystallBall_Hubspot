@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\GoogleAccount;
 use Auth;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Requests\GoogleAccountRequest;
 
 class GoogleAccountController extends Controller
 {
@@ -22,13 +23,18 @@ class GoogleAccountController extends Controller
 
     public function create()
     {
+        $scopes = [
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email',
+            'https://www.googleapis.com/auth/analytics.readonly',
+        ];
+
+        if (config('app.env') == 'development' || config('app.env') == 'local') {
+            array_push($scopes, 'https://www.googleapis.com/auth/adwords');
+        }
+        
         return Socialite::driver('google')
-            ->scopes([
-                'https://www.googleapis.com/auth/userinfo.profile',
-                'https://www.googleapis.com/auth/userinfo.email',
-                'https://www.googleapis.com/auth/analytics.readonly',
-                // 'https://www.googleapis.com/auth/adwords',
-            ])
+            ->scopes($scopes)
             ->with(['access_type' => 'offline'])
             ->redirect();
     }
@@ -59,8 +65,31 @@ class GoogleAccountController extends Controller
 
     }
 
+    public function update(GoogleAccountRequest $request, GoogleAccount $googleAccount){
+        $googleAccount->fill($request->validated());
+        $googleAccount->save();
+        return $googleAccount;
+    }
+
     public function destroy(GoogleAccount $googleAccount)
     {
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://oauth2.googleapis.com/revoke?token=' . $googleAccount->token . '');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "-X");
+        curl_setopt($ch, CURLOPT_POST, 1);
+
+        $headers = array();
+        $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close($ch);
+
         return ['success' => $googleAccount->delete()];
     }
 

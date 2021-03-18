@@ -51,6 +51,10 @@ return [
         'calendar' => [
             'api_key' => env('GOOGLE_CALENDAR_API_KEY'),
         ],
+
+        'adwords' => [
+            'developer_token' => env('GOOGLE_ADWORDS_DEVELOPER_TOKEN'),
+        ],
     ],
 
     'open_weather_map' => [
