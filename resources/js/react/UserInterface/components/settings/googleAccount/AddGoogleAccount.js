@@ -7,7 +7,7 @@ import ErrorAlert from '../../../utils/ErrorAlert'
 import AdwordsClientCustomerIdSaverModal from '../../../helpers/AdwordsClientCustomerIdSaverModalComponent';
 
 export default class AddGoogleAccount extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
@@ -24,6 +24,8 @@ export default class AddGoogleAccount extends React.Component {
         this.restrictionHandler = this.restrictionHandler.bind(this);
 
         this.handleGAADelete = this.handleGAADelete.bind(this);
+
+        this.closeACCISModal = this.closeACCISModal.bind(this);
     }
 
     componentDidMount() {
@@ -33,7 +35,7 @@ export default class AddGoogleAccount extends React.Component {
         this.getGAAccounts();
 
         let searchParams = new URLSearchParams(document.location.search);
-        this._searchParams = searchParams;
+        this.setState({ showACCISModal: searchParams && searchParams.has('do-refresh') && searchParams.has('google_account_id') })
 
         if (searchParams.has('message') && searchParams.has('success')) {
             let success = searchParams.get('success');
@@ -132,14 +134,18 @@ export default class AddGoogleAccount extends React.Component {
         }
     }
 
+    closeACCISModal() {
+        this.setState({ showACCISModal: false })
+    }
+
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
 
                 <AdwordsClientCustomerIdSaverModal
-                    show={this._searchParams && this._searchParams.has('do-refresh') && this._searchParams.has('google_account_id')}
-                    dismissCallback={this.removeSearchParams}
+                    show={this.state.showACCISModal}
+                    dismissCallback={this.closeACCISModal}
                 />
                 <div className="container p-5">
                     <div className="row ml-0 mr-0">
