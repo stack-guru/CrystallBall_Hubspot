@@ -24,7 +24,8 @@ class LoginController extends Controller
         }
         $user = User::where('email', $request->email)->first();
         if ($user) {
-            if(! $user->pricePlan->has_api) abort(402);
+            // All users are allowed to get login into chrome extension
+            // if(! $user->pricePlan->has_api) abort(402);
             if (Hash::check($request->password, $user->password)) {
 
                 // If you are changing token name prefix, don't forget to change it in app/Listeners/APITokenCreated.php as well
