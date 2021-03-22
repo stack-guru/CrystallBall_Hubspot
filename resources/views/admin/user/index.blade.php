@@ -53,6 +53,12 @@
                                                 @csrf @method("DELETE")
                                             </form>
                                             <button type="button" onclick="document.getElementById('deleteUserForm{{$user->id}}').submit()" class="btn btn-danger m-2">Delete</button>
+
+                                            <form id="loginUserForm{{$user->id}}" method="POST" action="{{ route('admin.user.login', $user->id) }}">
+                                                @csrf
+                                            </form>
+                                            <button type="button" onclick="document.getElementById('loginUserForm{{$user->id}}').submit()" class="btn btn-secondary m-2">Login</button>
+                                            
                                             </div>
                                         </td>
                                     </tr>

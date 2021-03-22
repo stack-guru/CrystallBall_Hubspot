@@ -31,7 +31,7 @@ class LoginListener
         if(Auth::id())
         {
             $loginLog = new LoginLog;
-            $loginLog->user_id = Auth::id();
+            $loginLog->user_id = Auth::guard('web')->id();
             $loginLog->ip_address = request()->ip();
             $loginLog->save();
         }

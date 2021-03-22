@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PricePlan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Auth;
 
 class UserController extends Controller
 {
@@ -79,5 +80,11 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('admin.user.index')->with('success', true);
+    }
+
+    public function login(User $user){
+        Auth::logout();
+        Auth::guard('web')->loginUsingId($user->id);
+        return redirect()->route('annotation.index');
     }
 }
