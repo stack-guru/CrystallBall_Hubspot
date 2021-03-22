@@ -34,7 +34,7 @@
   c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
   t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
   y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "4ik4wdkyla");
+  })(window, document, "clarity", "script", "5xg0bcuhx9");
   </script>
   
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
