@@ -13,6 +13,7 @@ use Auth;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
+use Log;
 
 class AnnotationController extends Controller
 {
@@ -150,6 +151,7 @@ class AnnotationController extends Controller
         ////////////////////////////////////////////////////////////////////
 
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
+        Log::debug($annotationsQuery);
         $annotations = DB::select($annotationsQuery);
 
         if (!count($annotations)) {
