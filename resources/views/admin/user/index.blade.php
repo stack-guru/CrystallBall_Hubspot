@@ -12,8 +12,13 @@
                     </div>
                     <table class="table table-hoved table-bordered">
                         <thead>
-                            <tr><th>Email</th><th>Name</th><th>Price Plan</th>
-                                <th>Registration Date</th><th>User's last added annotation</th>
+                            <tr>
+                                <th>Team</th>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Price Plan</th>
+                                <th>Registration Date</th>
+                                <th>User's last added annotation</th>
                                 <th>Data Sources</th>
                                 <th>API</th>
                                 <th>Total Logins</th>
@@ -23,6 +28,7 @@
                         <tbody>
                             @foreach($users as $user)
                                 <tr>
+                                    <td>{{ $user->team_name }}{{ $user->department ? ", " . $user->department : ''}}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->pricePlan->name }}</td>
