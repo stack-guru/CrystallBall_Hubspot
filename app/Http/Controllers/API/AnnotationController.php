@@ -72,26 +72,16 @@ class AnnotationController extends Controller
         $user = Auth::user();
         $userIdsArray = [];
 
-        switch ($user->user_level) {
-            case 'admin':
-                // Current user is admin, grab all child users, pluck ids
-                $userIdsArray = $user->users->pluck('id')->toArray();
-                array_push($userIdsArray, $user->id);
-                break;
-            case 'team':
-                // Current user is team, find admin, grab all child users, pluck ids
-                $userIdsArray = $user->user->users->pluck('id')->toArray();
-                array_push($userIdsArray, $user->user->id);
-                // Set Current User to Admin so that data source configuration which applies are that of admin
-                $user = $user->user;
-                break;
-            case 'viewer';
-                // Current user is viewer, find admin, grab all child users, pluck ids
-                $userIdsArray = $user->user->users->pluck('id')->toArray();
-                array_push($userIdsArray, $user->user->id);
-                // Set Current User to Admin so that data source configuration which applies are that of admin
-                $user = $user->user;
-                break;
+        if($user->user_id){
+            // Current user is child, find parent, grab all child users, pluck ids
+            $userIdsArray = $user->user->users->pluck('id')->toArray();
+            array_push($userIdsArray, $user->user->id);
+            // Set Current User to parent so that data source configuration which applies are that of parent
+            $user = $user->user;
+        }else{
+            // Current user is parent, grab all child users, pluck ids
+            $userIdsArray = $user->users->pluck('id')->toArray();
+            array_push($userIdsArray, $user->id);
         }
 
         $startDate = Carbon::parse($request->query('startDate'));
@@ -151,7 +141,6 @@ class AnnotationController extends Controller
         ////////////////////////////////////////////////////////////////////
 
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
-        Log::debug($annotationsQuery);
         $annotations = DB::select($annotationsQuery);
 
         if (!count($annotations)) {
