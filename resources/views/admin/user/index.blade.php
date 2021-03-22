@@ -58,17 +58,6 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Team</th>
-                                    <th>Email</th>
-                                    <th>Name</th>
-                                    <th>Price Plan</th>
-                                    <th>Registration Date</th>
-                                    <th>User's last added annotation</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
