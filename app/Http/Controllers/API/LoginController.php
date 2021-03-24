@@ -54,4 +54,43 @@ class LoginController extends Controller
         return response($response, 200);
     }
 
+    public function loginWithGoogle(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'google_token' => 'required|string',
+        ]);
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()->all()], 422);
+        }
+
+        $headers = array('Content-Type: Application/json');
+        $endPoint = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=".$request->google_token;
+
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $endPoint);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($result);
+
+        $user = User::where('email', $response->email)->first();
+        if ($user) {
+            // If you are changing token name prefix, don't forget to change it in app/Listeners/APITokenCreated.php as well
+            $token = $user->createToken('API Login at ' . Carbon::now()->format("F j, Y, g:i a"))->accessToken;
+
+            $user->last_logged_into_extension_at = Carbon::now();
+            $user->save();
+            
+            $response = ['token' => $token];
+            return response($response, 200);
+        } else {
+            $response = ["message" => 'User does not exist'];
+            return response($response, 422);
+        }
+    }
+
 }

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function () {
     
     Route::post('login', 'API\LoginController@login')->name('login')->middleware('cors');
+    Route::post('login/google', 'API\LoginController@loginWithGoogle')->name('login.google')->middleware('cors');
     Route::post('logout', 'API\LoginController@logout')->name('logout')->middleware('cors');
 
     Route::group(['prefix' => 'v1', 'namespace' => 'API', 'as' => 'v1.'], function () {
