@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AdminPlanUpgradedMail;
+use App\Models\Admin;
 use App\Models\Coupon;
 use App\Models\PaymentDetail;
 use App\Models\PricePlan;
@@ -10,18 +12,19 @@ use App\Services\BlueSnapService;
 use App\Services\SendGridService;
 use Auth;
 use Carbon\Carbon;
+use DB;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Models\Admin;
-use App\Mail\AdminPlanUpgradedMail;
 
 class PaymentController extends Controller
 {
 
     public function indexPaymentHistory()
     {
-        if(Auth::user()->user_level !== 'admin') abort(403);
+        if (Auth::user()->user_level !== 'admin') {
+            abort(403);
+        }
 
         $pricePlanSubscriptions = PricePlanSubscription::with(['paymentDetail', 'pricePlan'])->orderBy('created_at', 'DESC')->where('user_id', Auth::id())->get();
 
@@ -45,7 +48,9 @@ class PaymentController extends Controller
     public function subscribePlan(Request $request)
     {
         $user = Auth::user();
-        if($user->user_level !== 'admin') abort(403);
+        if ($user->user_level !== 'admin') {
+            abort(403);
+        }
 
         $this->validate($request, [
             'price_plan_id' => 'required',
@@ -140,6 +145,7 @@ class PaymentController extends Controller
             $user->is_billing_enabled = false;
         }
         $user->save();
+        DB::table('users')->where('user_id', $user->id)->update(['price_plan_id' => $pricePlan->id, 'price_plan_expiry_date' => new \DateTime("+1 month")]);
 
         switch ($pricePlan->name) {
             case "Basic":

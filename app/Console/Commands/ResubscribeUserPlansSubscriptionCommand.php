@@ -109,7 +109,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     $this->subscribeUserToPlan($user, $user->price_plan_id);
                 }
             } else {
-                $this->subscribeUserToPlan($user, $this->freePlanId);
+                if(! $user->user_id) $this->subscribeUserToPlan($user, $this->freePlanId);
             }
         }
         // update([
