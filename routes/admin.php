@@ -21,5 +21,4 @@ Route::group(['prefix' => 'data-source', 'as' => 'data-source.'], function () {
 
 Route::resource('coupon', App\Http\Controllers\Admin\CouponController::class);
 Route::resource('cookie-coupon', App\Http\Controllers\Admin\CookieCouponController::class);
-
-Route::get('/payment-history', [App\Http\Controllers\Admin\PaymentDetailsController::class, 'paymentHistory'])->name('payment-history');
+Route::resource('price-plan-subscription', App\Http\Controllers\Admin\PricePlanSubscriptionController::class)->only(['index', 'show']);

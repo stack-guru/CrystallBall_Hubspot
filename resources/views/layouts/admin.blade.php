@@ -54,7 +54,7 @@
                                 <a class="nav-link" href="{{ route('admin.data-source.index') }}">Data Source</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.payment-history') }}">Payment History</a>
+                                <a class="nav-link" href="{{ route('admin.price-plan-subscription.index') }}">Payment History</a>
                             </li>
                         @endguest
                     </ul>

@@ -21,6 +21,7 @@
                                 <th>Card end with</th>
                                 <th>Next Billing At</th>
                                 <th>Plan Price</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,10 +38,13 @@
 
                                 <td>{{$pricePlanSubscription->created_at->addMonths(1)->todateString()}}</td>
                                 <td>${{@$pricePlanSubscription->pricePlan->price}}</td>
+                                <td>
+                                    <a href="{{ route('admin.price-plan-subscription.show', $pricePlanSubscription->id) }}" class="btn btn-sm btn-primary">Show</a>
+                                </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="9" class="alert-danger">No record Found</td>
+                                <td colspan="10" class="alert-danger">No record Found</td>
                             </tr>
                             @endforelse
                         </tbody>
