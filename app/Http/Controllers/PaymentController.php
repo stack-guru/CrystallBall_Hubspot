@@ -146,6 +146,7 @@ class PaymentController extends Controller
         }
         $user->save();
         DB::table('users')->where('user_id', $user->id)->update(['price_plan_id' => $pricePlan->id, 'price_plan_expiry_date' => new \DateTime("+1 month")]);
+        $user->refresh();
 
         switch ($pricePlan->name) {
             case "Basic":
