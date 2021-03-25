@@ -75,26 +75,34 @@ class sidebar extends React.Component {
                             </span>
                         </Link>
                     </li>
-                    <li className="nav-item gaa-menu-item">
-                        <Link to="/annotation/create">
-                            <span className="sidebar-link" >
-                                <span className="icon-holder">
-                                    <i className="fa fa-plus"></i>
-                                </span>
-                                <span className="title">Add Annotation</span>
-                            </span>
-                        </Link>
-                    </li>
-                    <li className="nav-item gaa-menu-item">
-                        <Link to="/annotation/upload">
-                            <span className="sidebar-link" >
-                                <span className="icon-holder">
-                                    <i className="fa fa-upload"></i>
-                                </span>
-                                <span className="title">CSV Upload</span>
-                            </span>
-                        </Link>
-                    </li>
+                    {
+                        this.props.user.user_level == 'admin' || this.props.user.user_level == 'team' ?
+                            <li className="nav-item gaa-menu-item">
+                                <Link to="/annotation/create">
+                                    <span className="sidebar-link" >
+                                        <span className="icon-holder">
+                                            <i className="fa fa-plus"></i>
+                                        </span>
+                                        <span className="title">Add Annotation</span>
+                                    </span>
+                                </Link>
+                            </li>
+                            : null
+                    }
+                    {
+                        this.props.user.user_level == 'admin' || this.props.user.user_level == 'team' ?
+                            <li className="nav-item gaa-menu-item">
+                                <Link to="/annotation/upload">
+                                    <span className="sidebar-link" >
+                                        <span className="icon-holder">
+                                            <i className="fa fa-upload"></i>
+                                        </span>
+                                        <span className="title">CSV Upload</span>
+                                    </span>
+                                </Link>
+                            </li>
+                            : null
+                    }
                     <li className="nav-item gaa-menu-item">
                         <Link to="/api-key" >
                             <span className="sidebar-link" >
@@ -140,31 +148,37 @@ class sidebar extends React.Component {
                         </a>
                         <div className="collapse dropdown-menu setting-menu-content " id="settings ">
                             <ul className="list-unstyled" >
-                                <li className="nav-item dropdown">
-                                    <Link to="/settings/google-account" className="sidebar-link" >
-                                        <span className="nav-link">Add Analytics Accounts</span>
-                                    </Link>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <Link to="/settings/user" className="sidebar-link" >
-                                        <span className="nav-link">Manage Users</span>
-                                    </Link>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <Link to="/settings/price-plans" className="sidebar-link">
-                                        <span className="nav-link">Plans</span>
-                                    </Link>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <Link to="/settings/payment-history" className="sidebar-link">
-                                        <span className="nav-link">Payment History</span>
-                                    </Link>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <div className="sidebar-link nav-link">
-                                        <a href="/documentation" target="_blank">API Documentation</a>
-                                    </div>
-                                </li>
+                                {
+                                    this.props.user.user_level == 'admin' || this.props.user.user_level == 'team' ?
+                                        <React.Fragment>
+                                            <li className="nav-item dropdown">
+                                                <Link to="/settings/google-account" className="sidebar-link" >
+                                                    <span className="nav-link">Add Analytics Accounts</span>
+                                                </Link>
+                                            </li>
+                                            <li className="nav-item dropdown">
+                                                <Link to="/settings/user" className="sidebar-link" >
+                                                    <span className="nav-link">Manage Users</span>
+                                                </Link>
+                                            </li>
+                                            <li className="nav-item dropdown">
+                                                <Link to="/settings/price-plans" className="sidebar-link">
+                                                    <span className="nav-link">Plans</span>
+                                                </Link>
+                                            </li>
+                                            <li className="nav-item dropdown">
+                                                <Link to="/settings/payment-history" className="sidebar-link">
+                                                    <span className="nav-link">Payment History</span>
+                                                </Link>
+                                            </li>
+                                            <li className="nav-item dropdown">
+                                                <div className="sidebar-link nav-link">
+                                                    <a href="/documentation" target="_blank">API Documentation</a>
+                                                </div>
+                                            </li>
+                                        </React.Fragment>
+                                        : null
+                                }
                                 <li className="nav-item dropdown">
                                     <Link to="/settings/change-password" className="sidebar-link">
                                         <span className="nav-link ">Profile</span>

@@ -68,11 +68,15 @@ export default class IndexUsers extends Component {
                             </div>
                         </div>
                         <div id="annotation-index-container">
-                            <div className="row mb-4 ml-3 mr-3">
-                                <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
-                                    <Link to="/settings/user/create" className="btn btn-sm gaa-bg-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add User</Link>
-                                </div>
-                            </div>
+                            {
+                                this.props.user.user_level == 'admin' ?
+                                    <div className="row mb-4 ml-3 mr-3">
+                                        <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
+                                            <Link to="/settings/user/create" className="btn btn-sm gaa-bg-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add User</Link>
+                                        </div>
+                                    </div>
+                                    : null
+                            }
                             <div className="row mb-4 ml-0 mr-0">
                                 <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right">
                                     <input name="searchText" value={this.state.searchText} className="form-control" placeholder="Search..." onChange={this.handleChange} />
@@ -100,8 +104,14 @@ export default class IndexUsers extends Component {
                                                             <td>{user.department}</td>
                                                             <td>{user.team_name}</td>
                                                             <td>
-                                                                <Link className="btn gaa-btn-primary btn-sm" to={`/settings/user/${user.id}/edit`}><i className="fa fa-edit"></i></Link>
-                                                                <button className="btn gaa-btn-danger btn-sm ml-2" onClick={() => this.handleDelete(user.id)}><i className="fa fa-trash"></i></button>
+                                                                {
+                                                                    this.props.user.user_level == 'admin' ?
+                                                                        <React.Fragment>
+                                                                            <Link className="btn gaa-btn-primary btn-sm" to={`/settings/user/${user.id}/edit`}><i className="fa fa-edit"></i></Link>
+                                                                            <button className="btn gaa-btn-danger btn-sm ml-2" onClick={() => this.handleDelete(user.id)}><i className="fa fa-trash"></i></button>
+                                                                        </React.Fragment>
+                                                                        : null
+                                                                }
                                                             </td>
                                                         </tr>
                                                     })
