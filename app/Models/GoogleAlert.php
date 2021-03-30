@@ -12,9 +12,11 @@ class GoogleAlert extends Model
     protected $fillable = [
 
         'category',
+        'image',
         'title',
         'url',
         'description',
+        'tag_name',
 
     ];
 }

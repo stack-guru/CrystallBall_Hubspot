@@ -17,9 +17,11 @@ class CreateGoogleAlertsTable extends Migration
             $table->id();
 
             $table->string('category', 100)->nullable()->default(null);
+            $table->mediumText('image')->nullable()->default(null);
             $table->mediumText('title')->nullable()->default(null);
             $table->mediumText('url')->nullable()->default(null);
             $table->mediumText('description')->nullable()->default(null);
+            $table->string('tag_name', '50')->nullable();
 
             $table->timestamps();
         });
