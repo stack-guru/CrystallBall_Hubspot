@@ -50,8 +50,9 @@ class GoogleAlertService
                             case 'result_title':
                                 $alert['title'] = $cN->nodeValue;
                                 if ($cN->childNodes->item(1)->nodeName == 'a') {
+                                    $url = $cN->childNodes->item(1)->getAttribute('href');
                                     // https://www.google.com/url?rct=j&sa=t&url=
-                                    $alert['url'] = substr($cN->childNodes->item(1)->getAttribute('href'), 42);
+                                    $alert['url'] = urldecode(substr($url, 42, strpos($url, '&ct=ga') - 42));
                                 }
                                 break;
                             default:
