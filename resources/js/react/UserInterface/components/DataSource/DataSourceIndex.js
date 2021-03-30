@@ -8,6 +8,7 @@ import DSRMDatesSelect from '../../utils/DSRMDatesSelect';
 import DSOWMCitiesSelect from '../../utils/DSOWMCitiesSelect';
 import DSOWMEventsSelect from '../../utils/DSOWMEventsSelect';
 import DSGAUDatesSelect from '../../utils/DSGAUDatesSelect';
+import DSGoogleAlertsSelect from '../../utils/DSGoogleAlertsSelect';
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -60,6 +61,12 @@ export default class DataSourceIndex extends React.Component {
         } else if (e.target.name == 'is_ds_weather_alerts_enabled' && !e.target.checked) {
             this.setState({ sectionName: null })
         }
+        if (e.target.name == 'is_ds_google_alerts_enabled' && e.target.checked) {
+            window.scroll(0, 0);
+            this.setState({ sectionName: 'google_alerts' })
+        } else if (e.target.name == 'is_ds_google_alerts_enabled' && !e.target.checked) {
+            this.setState({ sectionName: null })
+        }
         HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
             if (resp.data.user_services[e.target.name] == 1) {
                 toast.success("Service activated successfully.");
@@ -93,6 +100,7 @@ export default class DataSourceIndex extends React.Component {
             'open_weather_map_city_id': dataSource.open_weather_map_city_id,
             'open_weather_map_event': dataSource.open_weather_map_event,
             'status': dataSource.status,
+            'value': dataSource.value,
             'is_enabled': 1,
         }
         HttpClient.post('/user-data-source', formData).then(resp => {
@@ -214,6 +222,38 @@ export default class DataSourceIndex extends React.Component {
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
+                                    <h4 className="gaa-text-primary">Google Alerts</h4>
+                                </div>
+                                <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                    {this.state.userServices.is_ds_google_alerts_enabled ? "Active" : "Deactive"}
+                                    <label className="trigger switch">
+                                        <input
+                                            type="checkbox"
+                                            name="is_ds_google_alerts_enabled"
+                                            onChange={this.serviceStatusHandler}
+                                            checked={this.state.userServices.is_ds_google_alerts_enabled}
+                                        />
+                                        <span className="slider round" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="row ml-0 mr-0 w-100">
+                                <div className="col-9">
+                                </div>
+                                <div className="col-3">
+                                    <p
+                                        className="ds-update-text m-0 text-center"
+                                        onClick={() => { this.setState({ sectionName: this.state.sectionName == "google_alerts" ? null : "google_alerts" }) }}
+                                    >
+                                        {this.state.sectionName == "google_alerts" ? "Hide" : "Choose Keywords"}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="container mt-3 ds-sections border-bottom">
+                            <div className="row ml-0 mr-0 w-100">
+                                <div className="col-9">
                                     <h4 className="gaa-text-primary">Retail Marketing Dates</h4>
                                 </div>
                                 <div className="col-3 d-flex flex-column justify-content-start align-items-center">
@@ -299,7 +339,7 @@ export default class DataSourceIndex extends React.Component {
                             </div>
 
                         </div>
-
+                        
                         {/* <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
@@ -338,7 +378,6 @@ export default class DataSourceIndex extends React.Component {
                             this.state.sectionName == 'holidays' && this.state.userDataSources ?
                                 <div className="switch-wrapper">
                                     <Countries
-                                        sectionTitle={this.state.sectionName}
                                         onCheckCallback={this.userDataSourceAddHandler}
                                         onUncheckCallback={this.userDataSourceDeleteHandler}
                                         ds_data={this.state.userDataSources.holidays}
@@ -350,7 +389,6 @@ export default class DataSourceIndex extends React.Component {
                             this.state.sectionName == 'retail_marketings' && this.state.userDataSources ?
                                 <div className="switch-wrapper">
                                     <DSRMDatesSelect
-                                        sectionTitle={this.state.sectionName}
                                         onCheckCallback={this.userDataSourceAddHandler}
                                         onUncheckCallback={this.userDataSourceDeleteHandler}
                                         ds_data={this.state.userDataSources.retail_marketings}
@@ -362,7 +400,6 @@ export default class DataSourceIndex extends React.Component {
                             this.state.sectionName == 'weather_alerts' && this.state.userDataSources ?
                                 <div className="switch-wrapper">
                                     <DSOWMCitiesSelect
-                                        sectionTitle={this.state.sectionName}
                                         onCheckCallback={this.userDataSourceAddHandler}
                                         onUncheckCallback={this.userDataSourceDeleteHandler}
                                         ds_data={this.state.userDataSources.open_weather_map_cities}
@@ -374,7 +411,6 @@ export default class DataSourceIndex extends React.Component {
                             this.state.sectionName == 'open_weather_map_events' && this.state.userDataSources ?
                                 <div className="switch-wrapper">
                                     <DSOWMEventsSelect
-                                        sectionTitle={this.state.sectionName}
                                         onCheckCallback={this.userDataSourceAddHandler}
                                         onUncheckCallback={this.userDataSourceDeleteHandler}
                                         ds_data={this.state.userDataSources.open_weather_map_events}
@@ -386,10 +422,20 @@ export default class DataSourceIndex extends React.Component {
                             this.state.sectionName == 'google_algorithm_updates' && this.state.userDataSources ?
                                 <div className="switch-wrapper">
                                     <DSGAUDatesSelect
-                                        sectionTitle={this.state.sectionName}
                                         onCheckCallback={this.userDataSourceAddHandler}
                                         onUncheckCallback={this.userDataSourceDeleteHandler}
                                         ds_data={this.state.userDataSources.google_algorithm_update_dates}
+                                    />
+                                </div>
+                                : null
+                        }
+                        {
+                            this.state.sectionName == 'google_alerts' && this.state.userDataSources ?
+                                <div className="switch-wrapper">
+                                    <DSGoogleAlertsSelect
+                                        onCheckCallback={this.userDataSourceAddHandler}
+                                        onUncheckCallback={this.userDataSourceDeleteHandler}
+                                        ds_data={this.state.userDataSources.google_alert_keywords}
                                     />
                                 </div>
                                 : null

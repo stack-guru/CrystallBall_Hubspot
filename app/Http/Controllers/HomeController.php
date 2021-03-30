@@ -53,6 +53,11 @@ class HomeController extends Controller
             if($request->is_ds_weather_alerts_enabled) $user->last_activated_any_data_source_at = Carbon::now();
             $user->save();
         }
+        if ($request->has('is_ds_google_alerts_enabled')) {
+            $user->is_ds_google_alerts_enabled = $request->is_ds_google_alerts_enabled;
+            if($request->is_ds_google_alerts_enabled) $user->last_activated_any_data_source_at = Carbon::now();
+            $user->save();
+        }
 
         return ['user_services' => $user];
 

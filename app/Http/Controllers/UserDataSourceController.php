@@ -25,6 +25,7 @@ class UserDataSourceController extends Controller
                 'open_weather_map_cities' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_city_id')->ofCurrentUser()->with('openWeatherMapCity')->where('ds_code', 'open_weather_map_cities')->get(),
                 'open_weather_map_events' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_event')->ofCurrentUser()->where('ds_code', 'open_weather_map_events')->get(),
                 'google_algorithm_update_dates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'status')->ofCurrentUser()->where('ds_code', 'google_algorithm_update_dates')->get(),
+                'google_alert_keywords' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ds_code', 'google_alert_keywords')->get(),
             ],
         ];
     }

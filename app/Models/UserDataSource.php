@@ -18,6 +18,7 @@ class UserDataSource extends Model
         'open_weather_map_city_id',
         'open_weather_map_event',
         'status',
+        'value',
         'is_enabled',
     ];
 

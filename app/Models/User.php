@@ -63,6 +63,7 @@ class User extends Authenticatable
         'is_ds_google_algorithm_updates_enabled' => 'boolean',
         'is_ds_retail_marketing_enabled' => 'boolean',
         'is_ds_weather_alerts_enabled' => 'boolean',
+        'is_ds_google_alerts_enabled' => 'boolean',
 
         "last_logged_into_extension_at" => 'datetime',
         "last_activated_any_data_source_at" => 'datetime',

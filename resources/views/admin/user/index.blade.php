@@ -40,6 +40,7 @@
                                             @if($user->is_ds_google_algorithm_updates_enabled) Google Algorithm Updates<br /> @endif
                                             @if($user->is_ds_retail_marketing_enabled) Retail Marketing enabled<br /> @endif
                                             @if($user->is_ds_weather_alerts_enabled) Weather Alerts enabled<br /> @endif
+                                            @if($user->is_ds_google_alerts_enabled) Google Alerts enabled<br /> @endif
                                         </td>
                                         <td>
                                             @if($user->last_generated_api_token_at) Token on:{{$user->last_generated_api_token_at->format('Y-m-d')}}<br /> @endif
