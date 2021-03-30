@@ -11,6 +11,7 @@ Route::group(['prefix' => 'data-source', 'as' => 'data-source.'], function () {
     Route::resource('holiday', App\Http\Controllers\Admin\HolidayController::class);
     Route::post('holiday/upload', [App\Http\Controllers\Admin\HolidayController::class, 'upload'])->name('holiday.upload');
 
+    Route::resource('google-alert', App\Http\Controllers\Admin\GoogleAlertController::class)->only(['index', 'destroy']);
     Route::resource('google-algorithm-update', App\Http\Controllers\Admin\GoogleAlgorithmUpdateController::class)->except('show');
     Route::post('google-algorithm-update/upload', [App\Http\Controllers\Admin\GoogleAlgorithmUpdateController::class, 'upload'])->name('google-algorithm-update.upload');
     Route::resource('retail-marketing', App\Http\Controllers\Admin\RetailMarketingController::class);
