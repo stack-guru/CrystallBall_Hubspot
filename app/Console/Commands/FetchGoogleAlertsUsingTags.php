@@ -6,6 +6,7 @@ use App\Models\GoogleAlert;
 use App\Models\UserDataSource;
 use App\Services\GoogleAlertService;
 use Illuminate\Console\Command;
+use Carbon\Carbon;
 
 class FetchGoogleAlertsUsingTags extends Command
 {
@@ -48,12 +49,14 @@ class FetchGoogleAlertsUsingTags extends Command
             ->distinct()
             ->get()->pluck('Lvalue')->toArray();
 
+        $alertDate = new Carbon;
         foreach ($keywords as $keyword) {
             $allAlerts = $googleAlertService->getAllFeeds($keyword);
             foreach ($allAlerts as $categoryName => $categoryAlert) {
                 foreach ($categoryAlert as $alert) {
                     if(! GoogleAlert::where('url', $alert['url'])->count()){
                         $googleAlert = new GoogleAlert;
+                        $googleAlert->alert_date = $alertDate;
                         $googleAlert->tag_name = $keyword;
                         $googleAlert->category = $categoryName;
                         $googleAlert->title = $alert['title'];

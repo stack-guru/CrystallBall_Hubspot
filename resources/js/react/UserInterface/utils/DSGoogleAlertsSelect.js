@@ -20,7 +20,6 @@ export default class DSGoogleAlertsSelect extends React.Component {
     }
 
     deleteKeyword(e) {
-        console.log(e.target);
         (this.props.onUncheckCallback)(e.target.getAttribute('user_data_source_id'), 'google_alert_keywords')
     }
 

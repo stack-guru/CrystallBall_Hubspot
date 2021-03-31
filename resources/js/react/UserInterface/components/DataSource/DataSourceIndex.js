@@ -151,7 +151,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="row ml-0 mr-0 w-100 ">
                                 <div className="col-9">
                                     <h4 className="gaa-text-primary">Holidays
-                                        <i className="hint-button ti-info" id="holidays-datasource-hint" onClick={() => { this.changeShownHint('holidays') }}></i>
+                                        <img id="holidays-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('holidays') }} src="/images/info-logo.png" />
                                     </h4>
                                     <Popover placement="right" isOpen={this.state.showHintFor == 'holidays'} target="holidays-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>Popover Title</PopoverHeader>
@@ -204,7 +204,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-9">
                                     <h4 className="gaa-text-primary">
                                         Google Updates
-                                        <i className="hint-button ti-info" id="google-updates-datasource-hint" onClick={() => { this.changeShownHint('google-updates') }}></i>
+                                        <img id="google-updates-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('google-updates') }} src="/images/info-logo.png" />
                                     </h4>
                                     <Popover placement="right" isOpen={this.state.showHintFor == 'google-updates'} target="google-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>Popover Title</PopoverHeader>
@@ -243,7 +243,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-9">
                                     <h4 className="gaa-text-primary">
                                         Google Alerts
-                                        <i className="hint-button ti-info" id="google-alert-datasource-hint" onClick={() => { this.changeShownHint('google-alert') }}></i>
+                                        <img id="google-alert-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('google-alert') }} src="/images/info-logo.png" />
                                     </h4>
                                     <Popover placement="right" isOpen={this.state.showHintFor == 'google-alert'} target="google-alert-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>Popover Title</PopoverHeader>
@@ -265,6 +265,20 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
+                                    <div className="list-wrapper">
+                                        {this.state.userDataSources.holidays ?
+                                            <dl className="d-flex flex-row flex-wrap userCountryList">
+
+                                                <dt>Keywords:</dt>
+                                                {this.state.userDataSources.google_alert_keywords
+                                                    ? this.state.userDataSources.google_alert_keywords.map(keyword => (
+                                                        <dd className="mx-2" key={keyword.id}>{keyword.value}</dd>
+                                                    ))
+                                                    : <dd className="mx-2">no keyword added</dd>
+                                                }
+
+                                            </dl> : null}
+                                    </div>
                                 </div>
                                 <div className="col-3">
                                     <p
@@ -282,9 +296,9 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-9">
                                     <h4 className="gaa-text-primary">
                                         Retail Marketing Dates
-                                        <i className="hint-button ti-info" id="retail-marketing-date-datasource-hint" onClick={() => { this.changeShownHint('retail-marketing-date') }}></i>
+                                        <img id="retail-marketing-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('retail-marketing') }} src="/images/info-logo.png" />
                                     </h4>
-                                    <Popover placement="right" isOpen={this.state.showHintFor == 'retail-marketing-date'} target="retail-marketing-date-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
+                                    <Popover placement="right" isOpen={this.state.showHintFor == 'retail-marketing'} target="retail-marketing-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>Popover Title</PopoverHeader>
                                         <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
                                     </Popover>
@@ -323,7 +337,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-9">
                                     <h4 className="gaa-text-primary">
                                         Weather Alerts
-                                        <i className="hint-button ti-info" id="weather-alert-datasource-hint" onClick={() => { this.changeShownHint('weather-alert') }}></i>
+                                        <img id="weather-alert-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('weather-alert') }} src="/images/info-logo.png" />
                                     </h4>
                                     <Popover placement="right" isOpen={this.state.showHintFor == 'weather-alert'} target="weather-alert-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>Popover Title</PopoverHeader>
