@@ -30,6 +30,7 @@
         "react-select": "^3.2.0",
         "react-toastify": "^6.2.0",
         "reactour": "^1.18.0",
+        "reactstrap": "^8.9.0",
         "styled-components": "^4.4.1"
     }
 }

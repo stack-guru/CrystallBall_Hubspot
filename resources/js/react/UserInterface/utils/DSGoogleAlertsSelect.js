@@ -35,7 +35,7 @@ export default class DSGoogleAlertsSelect extends React.Component {
                     <input
                         type="text"
                         className="form-control search-input"
-                        placeholder="Enter to add"
+                        placeholder="Add keywords to get alerted"
                         value={this.state.keyword}
                         name="keyword"
                         onChange={(e) => this.setState({ [e.target.name]: e.target.value.toLowerCase() })}

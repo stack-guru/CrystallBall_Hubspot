@@ -1,6 +1,7 @@
 import React from 'react';
 import { toast } from "react-toastify";
 import { Redirect } from "react-router-dom";
+import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";
@@ -20,6 +21,7 @@ export default class DataSourceIndex extends React.Component {
             isBusy: false,
             errors: '',
             redirectTo: null,
+            showHintFor: null
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
@@ -127,6 +129,10 @@ export default class DataSourceIndex extends React.Component {
         })
     }
 
+    changeShownHint(obj) {
+        this.setState({ showHintFor: obj })
+    }
+
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
@@ -144,7 +150,13 @@ export default class DataSourceIndex extends React.Component {
 
                             <div className="row ml-0 mr-0 w-100 ">
                                 <div className="col-9">
-                                    <h4 className="gaa-text-primary">Holidays</h4>
+                                    <h4 className="gaa-text-primary">Holidays
+                                        <i className="hint-button ti-info" id="holidays-datasource-hint" onClick={() => { this.changeShownHint('holidays') }}></i>
+                                    </h4>
+                                    <Popover placement="right" isOpen={this.state.showHintFor == 'holidays'} target="holidays-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
+                                        <PopoverHeader>Popover Title</PopoverHeader>
+                                        <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                    </Popover>
                                 </div>
                                 <div className="col-3 d-flex flex-column justify-content-start align-items-center">
                                     {this.state.userServices.is_ds_holidays_enabled ? "Active" : "Deactive"}
@@ -190,7 +202,14 @@ export default class DataSourceIndex extends React.Component {
                             <div className="ml-0 mr-0 row h-100 w-100">
 
                                 <div className="col-9">
-                                    <h4 className="gaa-text-primary">Google Updates</h4>
+                                    <h4 className="gaa-text-primary">
+                                        Google Updates
+                                        <i className="hint-button ti-info" id="google-updates-datasource-hint" onClick={() => { this.changeShownHint('google-updates') }}></i>
+                                    </h4>
+                                    <Popover placement="right" isOpen={this.state.showHintFor == 'google-updates'} target="google-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
+                                        <PopoverHeader>Popover Title</PopoverHeader>
+                                        <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                    </Popover>
                                 </div>
                                 <div className="col-3  d-flex flex-column justify-content-start align-items-center">
                                     {this.state.userServices.is_ds_google_algorithm_updates_enabled ? "Active" : "Deactive"}
@@ -222,7 +241,14 @@ export default class DataSourceIndex extends React.Component {
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
-                                    <h4 className="gaa-text-primary">Google Alerts</h4>
+                                    <h4 className="gaa-text-primary">
+                                        Google Alerts
+                                        <i className="hint-button ti-info" id="google-alert-datasource-hint" onClick={() => { this.changeShownHint('google-alert') }}></i>
+                                    </h4>
+                                    <Popover placement="right" isOpen={this.state.showHintFor == 'google-alert'} target="google-alert-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
+                                        <PopoverHeader>Popover Title</PopoverHeader>
+                                        <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                    </Popover>
                                 </div>
                                 <div className="col-3 d-flex flex-column justify-content-start align-items-center">
                                     {this.state.userServices.is_ds_google_alerts_enabled ? "Active" : "Deactive"}
@@ -250,11 +276,18 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
-                                    <h4 className="gaa-text-primary">Retail Marketing Dates</h4>
+                                    <h4 className="gaa-text-primary">
+                                        Retail Marketing Dates
+                                        <i className="hint-button ti-info" id="retail-marketing-date-datasource-hint" onClick={() => { this.changeShownHint('retail-marketing-date') }}></i>
+                                    </h4>
+                                    <Popover placement="right" isOpen={this.state.showHintFor == 'retail-marketing-date'} target="retail-marketing-date-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
+                                        <PopoverHeader>Popover Title</PopoverHeader>
+                                        <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                    </Popover>
                                 </div>
                                 <div className="col-3 d-flex flex-column justify-content-start align-items-center">
                                     {this.state.userServices.is_ds_retail_marketing_enabled ? "Active" : "Deactive"}
@@ -288,7 +321,14 @@ export default class DataSourceIndex extends React.Component {
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
-                                    <h4 className="gaa-text-primary">Weather Alerts</h4>
+                                    <h4 className="gaa-text-primary">
+                                        Weather Alerts
+                                        <i className="hint-button ti-info" id="weather-alert-datasource-hint" onClick={() => { this.changeShownHint('weather-alert') }}></i>
+                                    </h4>
+                                    <Popover placement="right" isOpen={this.state.showHintFor == 'weather-alert'} target="weather-alert-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
+                                        <PopoverHeader>Popover Title</PopoverHeader>
+                                        <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                    </Popover>
                                 </div>
                                 <div className="col-3 d-flex flex-column justify-content-start align-items-center">
                                     {this.state.userServices.is_ds_weather_alerts_enabled ? "Active" : "Deactive"}
@@ -339,7 +379,7 @@ export default class DataSourceIndex extends React.Component {
                             </div>
 
                         </div>
-                        
+
                         {/* <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">

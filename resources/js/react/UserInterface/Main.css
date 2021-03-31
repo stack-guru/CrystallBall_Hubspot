@@ -516,3 +516,16 @@ setting-menu-item.dropdown {
 .trial-countdown {
     color: #2196f3;
 }
+
+.hint-button {
+    border-radius: 100%;
+    border-color: black;
+    border-style: groove;
+    font-size: 12px;
+    margin: 10px;
+}
+
+.hint-button:hover {
+    color: #2196f3;
+    border-color: #2196f3;
+}
