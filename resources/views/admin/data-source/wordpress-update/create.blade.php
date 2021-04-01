@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('page-title','Add Google Update')
+@section('page-title','Add Wordpress Update')
 @section('content')
 
 <div class="contianer">
     <div class="row ml-0 mr-0 justify-content-center">
         <div class="col-md-10 p-5">
-            <h1 class="my-4 ">Add Google Update</h1>
-            <form action="{{ route('admin.data-source.google-algorithm-update.upload') }}" method="POST" enctype="multipart/form-data">
+            <h1 class="my-4 ">Add Wordpress Update</h1>
+            <form action="{{ route('admin.data-source.wordpress-update.upload') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <h4 ><b>Upload CSV</b></h4>
@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </form>
-            <form action="{{route('admin.data-source.google-algorithm-update.store')}}" method="post">
+            <form action="{{route('admin.data-source.wordpress-update.store')}}" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="">Category</label>
@@ -66,19 +66,6 @@
                     <input type="text" name="url" id="url"
                         class="form-control">
                     @error('url')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="">Status</label>
-                    <select name="status" class="form-control" id="status">
-                        <option value="confirmed">Confirmed</option>
-                        <option value="unconfirmed">Unconfirmed</option>
-                    </select>
-                    @error('status')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

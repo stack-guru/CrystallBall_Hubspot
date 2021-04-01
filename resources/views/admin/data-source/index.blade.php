@@ -35,6 +35,18 @@
                 </div>
                 <div class="row ml-0 mr-0 mt-5">
                     <div class="col-12 col-lg-8">
+                        <h2>Wordpress Updates</h2>
+
+                        <div class="row ml-0 mr-0 mt-4">
+                            <div class="col-12">
+                                <a href="{{route('admin.data-source.wordpress-update.index')}}" class="btn btn-primary">View All</a>
+                                <a href="{{route('admin.data-source.wordpress-update.create')}}" class="btn btn-primary">Add New</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ml-0 mr-0 mt-5">
+                    <div class="col-12 col-lg-8">
                         <h2>Google Algorithm Updates</h2>
 
                         <div class="row ml-0 mr-0 mt-4">
