@@ -19,19 +19,20 @@
                      <table class="table table-hover table-responsive-md table-striped mt-5">
                          <thead>
                          <tr>
-                             <th>Image</th>
-                             <th>Category</th>
-                             <th>Title</th>
-                             <th>Description</th>
-                             <th>URL</th>
-                             <th>Actions</th>
-
+                            <th>Keyword</th>
+                            <th>Image</th>
+                            <th>Category</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>URL</th>
+                            <th>Users</th>
+                            <th>Actions</th>
                          </tr>
                          </thead>
                          <tbody>
                          @forelse($googleAlerts as $googleAlert)
                          <tr>
-
+                            <td>{{ $googleAlert->tag_name }}</td>
                              <td>
                                 @if($googleAlert->image)
                                     <a href="{{$googleAlert->image}}">
@@ -44,6 +45,11 @@
                              <td>{{$googleAlert->description}}</td>
                              <td>
                                 <a href="{{$googleAlert->url}}">Open Link</a>
+                            </td>
+                            <td>
+                                @foreach($googleAlert->userDataSources as $userDataSource)
+                                    &nbsp;<a href="{{ route('admin.user.show', $userDataSource->user_id) }}">{{ $userDataSource->user_id }}</a>
+                                @endforeach
                             </td>
                              <td>
                                  <div class="d-flex flex-row text-center">

@@ -17,7 +17,7 @@ class GoogleAlertController extends Controller
      */
     public function index()
     {
-        $googleAlerts = GoogleAlert::orderBy('updated_at', 'DESC')->get();
+        $googleAlerts = GoogleAlert::with('userDataSources')->orderBy('updated_at', 'DESC')->get();
         return view('admin/data-source/google-alert/index')->with('googleAlerts', $googleAlerts);
     }
 
