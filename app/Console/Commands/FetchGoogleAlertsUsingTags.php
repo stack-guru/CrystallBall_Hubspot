@@ -5,8 +5,8 @@ namespace App\Console\Commands;
 use App\Models\GoogleAlert;
 use App\Models\UserDataSource;
 use App\Services\GoogleAlertService;
-use Illuminate\Console\Command;
 use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class FetchGoogleAlertsUsingTags extends Command
 {
@@ -54,20 +54,22 @@ class FetchGoogleAlertsUsingTags extends Command
             $allAlerts = $googleAlertService->getAllFeeds($keyword);
             foreach ($allAlerts as $categoryName => $categoryAlert) {
                 foreach ($categoryAlert as $alert) {
-                    if(! GoogleAlert::where('url', $alert['url'])->count()){
-                        $googleAlert = new GoogleAlert;
-                        $googleAlert->alert_date = $alertDate;
-                        $googleAlert->tag_name = $keyword;
-                        $googleAlert->category = $categoryName;
-                        $googleAlert->title = $alert['title'];
-                        $googleAlert->url = $alert['url'];
-                        $googleAlert->description = $alert['description'];
-    
-                        if (array_key_exists('image', $alert)) {
-                            $googleAlert->image = $alert['image'];
+                    if (stripos($alert['title'], $keyword) || stripos($alert['description'], $keyword)) {
+                        if (!GoogleAlert::where('url', $alert['url'])->count()) {
+                            $googleAlert = new GoogleAlert;
+                            $googleAlert->alert_date = $alertDate;
+                            $googleAlert->tag_name = $keyword;
+                            $googleAlert->category = $categoryName;
+                            $googleAlert->title = $alert['title'];
+                            $googleAlert->url = $alert['url'];
+                            $googleAlert->description = $alert['description'];
+
+                            if (array_key_exists('image', $alert)) {
+                                $googleAlert->image = $alert['image'];
+                            }
+
+                            $googleAlert->save();
                         }
-    
-                        $googleAlert->save();
                     }
                 }
             }
