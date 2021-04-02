@@ -154,8 +154,8 @@ export default class DataSourceIndex extends React.Component {
                                         <img id="holidays-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('holidays') }} src="/images/info-logo.png" />
                                     </h4>
                                     <Popover placement="right" isOpen={this.state.showHintFor == 'holidays'} target="holidays-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
-                                        <PopoverHeader>Popover Title</PopoverHeader>
-                                        <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                        <PopoverHeader>Holidays</PopoverHeader>
+                                        <PopoverBody>How Christmas Day affect your sells? Add automatic annotations for the Holidays of any country</PopoverBody>
                                     </Popover>
                                 </div>
                                 <div className="col-3 d-flex flex-column justify-content-start align-items-center">
@@ -206,8 +206,8 @@ export default class DataSourceIndex extends React.Component {
                                         <img id="wordpress-updates-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('wordpress-updates') }} src="/images/info-logo.png" />
                                     </h4>
                                     <Popover placement="right" isOpen={this.state.showHintFor == 'wordpress-updates'} target="wordpress-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
-                                        <PopoverHeader>Popover Title</PopoverHeader>
-                                        <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                        <PopoverHeader>WordPress Core Updates</PopoverHeader>
+                                        <PopoverBody>Automated Annotations to inform you when a new version, Security or Maintenance Release of WordPress is available</PopoverBody>
                                     </Popover>
                                 </div>
                                 <div className="col-3  d-flex flex-column justify-content-start align-items-center">
@@ -241,8 +241,8 @@ export default class DataSourceIndex extends React.Component {
                                         <img id="google-updates-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('google-updates') }} src="/images/info-logo.png" />
                                     </h4>
                                     <Popover placement="right" isOpen={this.state.showHintFor == 'google-updates'} target="google-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
-                                        <PopoverHeader>Popover Title</PopoverHeader>
-                                        <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                        <PopoverHeader>Google Algorithm Updates</PopoverHeader>
+                                        <PopoverBody>Most of these Google updates are so slight that they go completely unnoticed. However, on occasion, the search engine rolls out major algorithmic updates that significantly impact the Search Engine Results Pages</PopoverBody>
                                     </Popover>
                                 </div>
                                 <div className="col-3  d-flex flex-column justify-content-start align-items-center">
@@ -280,8 +280,10 @@ export default class DataSourceIndex extends React.Component {
                                         <img id="google-alert-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('google-alert') }} src="/images/info-logo.png" />
                                     </h4>
                                     <Popover placement="right" isOpen={this.state.showHintFor == 'google-alert'} target="google-alert-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
-                                        <PopoverHeader>Popover Title</PopoverHeader>
-                                        <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                        <PopoverHeader>News Alerts</PopoverHeader>
+                                        <PopoverBody><strong>News Alerts</strong> is a content change detection on the web. We will add an annotation that match the user's search term, such as web pages, newspaper articles, blogs, or scientific research. 
+Add keywords like https://www.domain.com/, Company Name.
+The system will search for news once a day at midnight.</PopoverBody>
                                     </Popover>
                                 </div>
                                 <div className="col-3 d-flex flex-column justify-content-start align-items-center">
@@ -333,8 +335,8 @@ export default class DataSourceIndex extends React.Component {
                                         <img id="retail-marketing-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('retail-marketing') }} src="/images/info-logo.png" />
                                     </h4>
                                     <Popover placement="right" isOpen={this.state.showHintFor == 'retail-marketing'} target="retail-marketing-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
-                                        <PopoverHeader>Popover Title</PopoverHeader>
-                                        <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                        <PopoverHeader>Retail Marketing Dates</PopoverHeader>
+                                        <PopoverBody>If you run an ecommerce business, you know the drill: Having a promotional calendar for marketing and shopping events is key to deliver on your sales targets. Add automated annotations to see how affected your site.</PopoverBody>
                                     </Popover>
                                 </div>
                                 <div className="col-3 d-flex flex-column justify-content-start align-items-center">
@@ -374,8 +376,8 @@ export default class DataSourceIndex extends React.Component {
                                         <img id="weather-alert-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('weather-alert') }} src="/images/info-logo.png" />
                                     </h4>
                                     <Popover placement="right" isOpen={this.state.showHintFor == 'weather-alert'} target="weather-alert-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
-                                        <PopoverHeader>Popover Title</PopoverHeader>
-                                        <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                        <PopoverHeader>Weather Alerts</PopoverHeader>
+                                        <PopoverBody><strong>Weather</strong> disrupts the operating and financial performance of 70% of businesses worldwide. Add automated annotations for the location you operate </PopoverBody>
                                     </Popover>
                                 </div>
                                 <div className="col-3 d-flex flex-column justify-content-start align-items-center">
