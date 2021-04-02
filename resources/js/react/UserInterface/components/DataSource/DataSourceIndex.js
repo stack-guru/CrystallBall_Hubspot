@@ -195,7 +195,41 @@ export default class DataSourceIndex extends React.Component {
                                     </p>
                                 </div>
                             </div>
+                        </div>
+                       
+                        <div className="container mt-3 ds-sections border-bottom">
+                            <div className="ml-0 mr-0 row h-100 w-100">
 
+                                <div className="col-9">
+                                    <h4 className="gaa-text-primary">
+                                        Wordpress Updates
+                                        <img id="wordpress-updates-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('wordpress-updates') }} src="/images/info-logo.png" />
+                                    </h4>
+                                    <Popover placement="right" isOpen={this.state.showHintFor == 'wordpress-updates'} target="wordpress-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
+                                        <PopoverHeader>Popover Title</PopoverHeader>
+                                        <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                    </Popover>
+                                </div>
+                                <div className="col-3  d-flex flex-column justify-content-start align-items-center">
+                                    {this.state.userServices.is_ds_wordpress_updates_enabled ? "Active" : "Deactive"}
+                                    <label className="trigger switch">
+                                        <input type="checkbox"
+                                            checked={this.state.userServices.is_ds_wordpress_updates_enabled}
+                                            onChange={this.serviceStatusHandler}
+                                            name="is_ds_wordpress_updates_enabled"
+                                        />
+                                        <span className="slider round" />
+                                    </label>
+                                </div>
+                                <div className="row ml-0 mr-0 w-100">
+                                    <div className="col-8">
+
+                                    </div>
+                                    <div className="col-4">
+                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="container mt-3 ds-sections border-bottom">

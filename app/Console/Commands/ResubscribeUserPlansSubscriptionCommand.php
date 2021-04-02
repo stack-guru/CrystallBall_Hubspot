@@ -133,6 +133,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                 'users.is_ds_retail_marketing_enabled' => false,
                 'users.is_ds_google_alerts_enabled' => false,
                 'users.is_ds_weather_alerts_enabled' => false,
+                'users.is_ds_wordpress_updates_enabled' => false,
             ]);
 
         print "$updateCount Users have been resubscribed to their free plans.\n";

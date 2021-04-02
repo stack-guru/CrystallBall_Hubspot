@@ -239,6 +239,10 @@ class AnnotationController extends Controller
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select 1, alert_date, alert_date as created_at, null, \"Google Alert\", title, url, description, 'System' AS user_name from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords'";
         }
+        if ($user->is_ds_wordpress_updates_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select 1, update_date, update_date as created_at, null, category, event_name, url, description, 'System' AS user_name from `wordpress_updates`";
+        }
         $annotationsQuery .= ") AS TempTable";
 
         $annotationsQuery .= " LEFT JOIN annotation_ga_accounts ON TempTable.id = annotation_ga_accounts.annotation_id";

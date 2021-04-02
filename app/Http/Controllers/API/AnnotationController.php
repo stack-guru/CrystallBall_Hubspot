@@ -144,6 +144,11 @@ class AnnotationController extends Controller
             $annotationsQuery .= "select alert_date, google_alerts.id, category, title, url, description from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords'";
         }
         ////////////////////////////////////////////////////////////////////
+        if ($user->is_ds_wordpress_updates_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select update_date, wordpress_updates.id, category, event_name, url, description from `wordpress_updates`";
+        }
+        ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
         $annotations = DB::select($annotationsQuery);
 
