@@ -26,6 +26,9 @@ export default class DataSourceIndex extends React.Component {
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
         this.serviceStatusHandler = this.serviceStatusHandler.bind(this);
+
+        this.sectionToggler = this.sectionToggler.bind(this);
+
     }
 
     componentDidMount() {
@@ -46,28 +49,24 @@ export default class DataSourceIndex extends React.Component {
     serviceStatusHandler(e) {
         e.persist();
         if (e.target.name == 'is_ds_holidays_enabled' && e.target.checked) {
-            window.scroll(0, 0);
-            this.setState({ sectionName: 'holidays' })
+            this.sectionToggler('holidays')
         } else if (e.target.name == 'is_ds_holidays_enabled' && !e.target.checked) {
-            this.setState({ sectionName: null })
+            this.sectionToggler(null)
         }
         if (e.target.name == 'is_ds_retail_marketing_enabled' && e.target.checked) {
-            window.scroll(0, 0);
-            this.setState({ sectionName: 'retail_marketings' })
+            this.sectionToggler('retail_marketings')
         } else if (e.target.name == 'is_ds_retail_marketing_enabled' && !e.target.checked) {
-            this.setState({ sectionName: null })
+            this.sectionToggler(null)
         }
         if (e.target.name == 'is_ds_weather_alerts_enabled' && e.target.checked) {
-            window.scroll(0, 0);
-            this.setState({ sectionName: 'weather_alerts' })
+            this.sectionToggler('weather_alerts')
         } else if (e.target.name == 'is_ds_weather_alerts_enabled' && !e.target.checked) {
-            this.setState({ sectionName: null })
+            this.sectionToggler(null)
         }
         if (e.target.name == 'is_ds_google_alerts_enabled' && e.target.checked) {
-            window.scroll(0, 0);
-            this.setState({ sectionName: 'google_alerts' })
+            this.sectionToggler('google_alerts')
         } else if (e.target.name == 'is_ds_google_alerts_enabled' && !e.target.checked) {
-            this.setState({ sectionName: null })
+            this.sectionToggler(null)
         }
         HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
             if (resp.data.user_services[e.target.name] == 1) {
@@ -133,6 +132,17 @@ export default class DataSourceIndex extends React.Component {
         this.setState({ showHintFor: obj })
     }
 
+    sectionToggler(sectionName) {
+        if (null == sectionName) {
+            this.setState({ sectionName: null })
+        } else if (this.state.sectionName == sectionName) {
+            this.setState({ sectionName: null })
+        } else {
+            this.setState({ sectionName: sectionName })
+            window.scroll(0, 0);
+        }
+    }
+
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
@@ -190,13 +200,13 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                                 <div className="col-3">
                                     <p className="ds-update-text m-0 text-center"
-                                        onClick={() => { this.setState({ sectionName: this.state.sectionName == "holidays" ? null : "holidays" }) }}>
+                                        onClick={() => { this.sectionToggler('holidays') }}>
                                         {this.state.sectionName == "holidays" ? "Hide" : "Choose Countries"}
                                     </p>
                                 </div>
                             </div>
                         </div>
-                       
+
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="ml-0 mr-0 row h-100 w-100">
 
@@ -226,7 +236,7 @@ export default class DataSourceIndex extends React.Component {
 
                                     </div>
                                     <div className="col-4">
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -263,7 +273,7 @@ export default class DataSourceIndex extends React.Component {
                                     <div className="col-4">
                                         <p
                                             className="ds-update-text m-0 text-center"
-                                            onClick={() => { this.setState({ sectionName: this.state.sectionName == "google_algorithm_updates" ? null : "google_algorithm_updates" }) }}
+                                            onClick={() => { this.sectionToggler('google_algorithm_updates'); }}
                                         >
                                             {this.state.sectionName == "google_algorithm_updates" ? "Hide" : "Confirmed/Unconfirmed"}
                                         </p>
@@ -281,7 +291,7 @@ export default class DataSourceIndex extends React.Component {
                                     </h4>
                                     <Popover placement="right" isOpen={this.state.showHintFor == 'google-alert'} target="google-alert-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>News Alerts</PopoverHeader>
-                                        <PopoverBody><strong>News Alerts</strong> is a content change detection on the web. We will add an annotation that match the user's search term, such as web pages, newspaper articles, blogs, or scientific research. 
+                                        <PopoverBody><strong>News Alerts</strong> is a content change detection on the web. We will add an annotation that match the user's search term, such as web pages, newspaper articles, blogs, or scientific research.
 Add keywords like https://www.domain.com/, Company Name.
 The system will search for news once a day at midnight.</PopoverBody>
                                     </Popover>
@@ -319,7 +329,7 @@ The system will search for news once a day at midnight.</PopoverBody>
                                 <div className="col-3">
                                     <p
                                         className="ds-update-text m-0 text-center"
-                                        onClick={() => { this.setState({ sectionName: this.state.sectionName == "google_alerts" ? null : "google_alerts" }) }}
+                                        onClick={() => { this.sectionToggler('google_alerts'); }}
                                     >
                                         {this.state.sectionName == "google_alerts" ? "Hide" : "Choose Keywords"}
                                     </p>
@@ -359,7 +369,7 @@ The system will search for news once a day at midnight.</PopoverBody>
                                 <div className="col-3">
                                     <p
                                         className="ds-update-text m-0 text-center"
-                                        onClick={() => { this.setState({ sectionName: this.state.sectionName == "retail_marketings" ? null : "retail_marketings" }) }}
+                                        onClick={() => { this.sectionToggler('retail_marketings'); }}
                                     >
                                         {this.state.sectionName == "retail_marketings" ? "Hide" : "Choose Dates"}
                                     </p>
@@ -415,13 +425,13 @@ The system will search for news once a day at midnight.</PopoverBody>
                                 <div className="col-3">
                                     <p
                                         className="ds-update-text m-0 text-center"
-                                        onClick={() => { this.setState({ sectionName: this.state.sectionName == "weather_alerts" ? null : "weather_alerts" }) }}
+                                        onClick={() => { this.sectionToggler('weather_alerts') }}
                                     >
                                         {this.state.sectionName == "weather_alerts" ? "Hide" : "Choose Cities"}
                                     </p>
                                     <p
                                         className="ds-update-text m-0 text-center"
-                                        onClick={() => { this.setState({ sectionName: this.state.sectionName == "open_weather_map_events" ? null : "open_weather_map_events" }) }}
+                                        onClick={() => { this.sectionToggler('open_weather_map_events') }}
                                     >
                                         {this.state.sectionName == "open_weather_map_events" ? "Hide" : "Choose Events"}
                                     </p>
