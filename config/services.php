@@ -57,12 +57,12 @@ return [
         ],
 
         'analytics' => [
-            'code' => env('GOOGLE_ANALYTICS_CODE')
+            'code' => env('GOOGLE_ANALYTICS_CODE'),
         ],
 
         'tag_manager' => [
-            'code' => env('GOOGLE_TAG_MANAGER_CODE')
-        ]
+            'code' => env('GOOGLE_TAG_MANAGER_CODE'),
+        ],
     ],
 
     'open_weather_map' => [
@@ -81,6 +81,12 @@ return [
     'visual_crossing' => [
         'api' => [
             'key' => env('VISUAL_CROSSING_API_KEY'),
+        ],
+    ],
+
+    'microsoft' => [
+        'clarity' => [
+            'code' => env('MICROSOFT_CLARITY_CODE'),
         ],
     ],
 ];
