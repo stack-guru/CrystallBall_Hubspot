@@ -9,9 +9,20 @@
 
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 
-        })(window,document,'script','dataLayer','GTM-TG8CBT8');</script>
+        })(window,document,'script','dataLayer','{{ config('services.google.tag_manager.code')}}');</script>
 
     <meta charset="utf-8">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google.analytics.code')}}"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', '{{ config('services.google.analytics.code')}}');
+</script>
+
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 {{--    <title>Dashboard</title>--}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -88,7 +99,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="app">
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TG8CBT8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ config('services.google.tag_manager.code')}}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="loader">
     <div class="spinner"></div>
 </div>

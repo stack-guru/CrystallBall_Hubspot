@@ -55,6 +55,14 @@ return [
         'adwords' => [
             'developer_token' => env('GOOGLE_ADWORDS_DEVELOPER_TOKEN'),
         ],
+
+        'analytics' => [
+            'code' => env('GOOGLE_ANALYTICS_CODE')
+        ],
+
+        'tag_manager' => [
+            'code' => env('GOOGLE_TAG_MANAGER_CODE')
+        ]
     ],
 
     'open_weather_map' => [
