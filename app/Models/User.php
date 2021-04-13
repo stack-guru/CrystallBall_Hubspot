@@ -112,6 +112,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\GoogleAccount');
     }
 
+    public function googleAnalyticsAccounts()
+    {
+        return $this->hasMany('App\Models\GoogleAnalyticsAccount');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
