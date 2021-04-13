@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\GoogleAccount;
 use App\Models\GoogleAnalyticsAccount;
 use Illuminate\Support\Facades\Http;
+use Log;
 
 class GoogleAnalyticsService
 {
@@ -51,6 +52,7 @@ class GoogleAnalyticsService
 
         $respJson = $response->json();
         if (!array_key_exists('items', $respJson)) {
+            Log::info($respJson);
             return false;
         }
 
@@ -92,6 +94,7 @@ class GoogleAnalyticsService
 
         $respJson = $response->json();
         if (!array_key_exists('items', $respJson)) {
+            Log::info($respJson);
             return false;
         }
 
@@ -118,6 +121,11 @@ class GoogleAnalyticsService
         }
 
         $respJson = $response->json();
+        if (!array_key_exists('access_token', $respJson)) {
+            Log::info($respJson);
+            return false;
+        }
+
         $googleAccount->token = $respJson['access_token'];
         $googleAccount->expires_in = \Carbon\Carbon::now()->addSeconds($respJson['expires_in']);
         $googleAccount->save();
