@@ -220,7 +220,7 @@
                     <tr>
                         <td>google_analytics_account_id[]</td>
                         <td>int</td>
-                        <td>[optional] Annotation's google analytics account id with which it will be attached. You can get <b>IDs for API</b> of your google analytics accounts from <a href="{{ route('google-account.index') }}" target="_blank">here</a>. You can add multiple fields of this name in your request for multiple accounts of same annotation.</td>
+                        <td>[optional] Annotation's google analytics account id with which it will be attached. You can get <strong> IDs for API </strong> of your google analytics accounts from <a href="{{ route('google-account.index') }}" target="_blank">here</a>. You can add multiple fields of this name in your request for multiple accounts of same annotation.</td>
                     </tr>
 
                     </tbody>
