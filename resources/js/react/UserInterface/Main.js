@@ -21,7 +21,7 @@ import PricingPlans from './components/settings/pricingPlans/IndexPricingPlans';
 import Settings from './components/settings/IndexSettings';
 import ChangePassword from './components/settings/ChangePassword';
 import PaymentHistory from './components/settings/pricingPlans/PaymentHistory';
-import GoogleAccount from './components/settings/googleAccount/AddGoogleAccount';
+import GoogleAccountIndex from './components/settings/googleAccount/GoogleAccountIndex';
 import DataSourceIndex from "./components/DataSource/DataSourceIndex";
 import IndexAPIKey from './components/apiKey/IndexAPIKey';
 import CreatePayment from './components/settings/pricingPlans/CreatePayment';
@@ -161,7 +161,7 @@ class Main extends React.Component {
                                 <PaymentHistory user={this.state.user} />
                             </Route>
                             <Route exact path="/settings/google-account" refresh={true}>
-                                <GoogleAccount user={this.state.user} />
+                                <GoogleAccountIndex user={this.state.user} />
                             </Route>
                             <Route exact path="/settings/support" refresh={true}>
                                 <SupportIndex user={this.state.user} />

@@ -35,9 +35,9 @@ class CreateGoogleAnalyticsPropertiesTable extends Migration
             $table->string('child_type', 50)->nullable();
             $table->mediumText('child_link')->nullable();
             
-            $table->foreignId('google_analytics_account_id')->required()->constrained();
-            $table->foreignId('google_account_id')->required()->constrained();
-            $table->foreignId("user_id")->required()->constrained();
+            $table->foreignId('google_analytics_account_id')->required()->constrained()->onDelete('CASCADE');
+            $table->foreignId('google_account_id')->required()->constrained()->onDelete('CASCADE');
+            $table->foreignId("user_id")->required()->constrained()->onDelete('CASCADE');
 
             $table->timestamps();
         });

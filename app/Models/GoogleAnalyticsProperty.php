@@ -5,6 +5,7 @@ namespace App\Models;
 use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class GoogleAnalyticsProperty extends Model
 {
@@ -39,4 +40,23 @@ class GoogleAnalyticsProperty extends Model
         return $query->where('google_analytics_properties.user_id', Auth::id());
     }
 
+    /**
+     * Get the googleAccount that owns the GoogleAnalyticsProperty
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function googleAccount(): BelongsTo
+    {
+        return $this->belongsTo(GoogleAccount::class);
+    }
+
+    /**
+     * Get the googleAnalyticsAccount that owns the GoogleAnalyticsProperty
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function googleAnalyticsAccount(): BelongsTo
+    {
+        return $this->belongsTo(GoogleAnalyticsAccount::class);
+    }
 }
