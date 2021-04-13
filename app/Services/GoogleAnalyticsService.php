@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\GoogleAccount;
+use App\Models\GoogleAnalyticsAccount;
 use Illuminate\Support\Facades\Http;
 
 class GoogleAnalyticsService
@@ -31,32 +32,78 @@ class GoogleAnalyticsService
             'access_token' => $googleAccount->token,
         ]);
 
-        if ($response->status() == 401 && ! $repeatCall) {
+        if ($response->status() == 401 && !$repeatCall) {
             // This code block only checks if google accounts can be fetched after refreshing access token
-            if($this->refreshToken($googleAccount) == false){
+            if ($this->refreshToken($googleAccount) == false) {
                 return false;
-            }else{
+            } else {
                 $gCA = $this->getConnectedAccounts($googleAccount, true);
                 // On success it returns google analytics accounts else false
-                if($gCA !== false){
+                if ($gCA !== false) {
                     return $gCA;
-                }else{
+                } else {
                     return false;
                 }
             }
-        }else if($response->status() == 401 && $repeatCall){
+        } else if ($response->status() == 401 && $repeatCall) {
             return false;
         }
-        
+
         $respJson = $response->json();
-        if(! array_key_exists('items', $respJson)) return false;
+        if (!array_key_exists('items', $respJson)) {
+            return false;
+        }
+
+        return $respJson['items'];
+    }
+
+    /**
+     * Get Google Analytics Properties from Google Analytics Account. Refresh access token if necessary
+     *
+     * @param  \App\Models\GoogleAccount  $googleAccount
+     * @param  \App\Models\GoogleAnalyticsAccount  $googleAnalyticsAccount
+     * @param  bool  $repeatCall
+     * @return mixed
+     */
+    public function getAccountProperties(GoogleAccount $googleAccount, GoogleAnalyticsAccount $googleAnalyticsAccount, $repeatCall = false)
+    {
+        $url = "https://www.googleapis.com/analytics/v3/management/accounts/" . $googleAnalyticsAccount->ga_id . "/webproperties";
+
+        $response = Http::get($url, [
+            'access_token' => $googleAccount->token,
+        ]);
+
+        if ($response->status() == 401 && !$repeatCall) {
+            // This code block only checks if google accounts can be fetched after refreshing access token
+            if ($this->refreshToken($googleAccount) == false) {
+                return false;
+            } else {
+                $gCA = $this->getAccountProperties($googleAccount, $googleAnalyticsAccount, true);
+                // On success it returns google analytics accounts else false
+                if ($gCA !== false) {
+                    return $gCA;
+                } else {
+                    return false;
+                }
+            }
+        } else if ($response->status() == 401 && $repeatCall) {
+            return false;
+        }
+
+        $respJson = $response->json();
+        if (!array_key_exists('items', $respJson)) {
+            return false;
+        }
 
         return $respJson['items'];
     }
 
     public function refreshToken(GoogleAccount $googleAccount)
     {
-        if(! $googleAccount->refresh_token) return false;
+        if (!$googleAccount->refresh_token) {
+            return false;
+        }
+
         $url = "https://www.googleapis.com/oauth2/v4/token";
 
         $response = Http::post($url, [
