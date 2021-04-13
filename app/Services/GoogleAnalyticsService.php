@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\GoogleAccount;
 use App\Models\GoogleAnalyticsAccount;
 use Illuminate\Support\Facades\Http;
-use Log;
 
 class GoogleAnalyticsService
 {
@@ -52,7 +51,6 @@ class GoogleAnalyticsService
 
         $respJson = $response->json();
         if (!array_key_exists('items', $respJson)) {
-            Log::info($respJson);
             return false;
         }
 
@@ -94,7 +92,6 @@ class GoogleAnalyticsService
 
         $respJson = $response->json();
         if (!array_key_exists('items', $respJson)) {
-            Log::info($respJson);
             return false;
         }
 
@@ -122,7 +119,6 @@ class GoogleAnalyticsService
 
         $respJson = $response->json();
         if (!array_key_exists('access_token', $respJson)) {
-            Log::info($respJson);
             return false;
         }
 
