@@ -286,7 +286,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
                                     <h4 className="gaa-text-primary">
-                                        Google Alerts
+                                        News Alerts
                                         <img id="google-alert-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('google-alert') }} src="/images/info-logo.png" />
                                     </h4>
                                     <Popover placement="right" isOpen={this.state.showHintFor == 'google-alert'} target="google-alert-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
