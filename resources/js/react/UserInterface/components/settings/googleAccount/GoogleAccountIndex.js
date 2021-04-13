@@ -6,7 +6,7 @@ import HttpClient from './../../../utils/HttpClient';
 import ErrorAlert from '../../../utils/ErrorAlert'
 import AdwordsClientCustomerIdSaverModal from '../../../helpers/AdwordsClientCustomerIdSaverModalComponent';
 
-export default class AddGoogleAccount extends React.Component {
+export default class GoogleAccountIndex extends React.Component {
 
     constructor(props) {
         super(props);
@@ -14,6 +14,7 @@ export default class AddGoogleAccount extends React.Component {
             isBusy: false,
             googleAccounts: [],
             googleAnalyticsAccounts: [],
+            googleAnalyticsProperties: [],
             redirectTo: null,
         }
 
@@ -26,6 +27,8 @@ export default class AddGoogleAccount extends React.Component {
         this.handleGAADelete = this.handleGAADelete.bind(this);
 
         this.closeACCISModal = this.closeACCISModal.bind(this);
+
+        this.getGAProperties = this.getGAProperties.bind(this);
     }
 
     componentDidMount() {
@@ -33,6 +36,7 @@ export default class AddGoogleAccount extends React.Component {
 
         this.getGoogleAccounts();
         this.getGAAccounts();
+        this.getGAProperties();
 
         let searchParams = new URLSearchParams(document.location.search);
         this.setState({ showACCISModal: searchParams && searchParams.has('do-refresh') && searchParams.has('google_account_id') })
@@ -85,6 +89,7 @@ export default class AddGoogleAccount extends React.Component {
             toast.success("Accounts fetched.");
             this.setState({ isBusy: false })
             this.getGAAccounts();
+            this.getGAProperties();
         }, (err) => {
             console.log(err);
             this.setState({ isBusy: false, errors: (err.response).data });
@@ -134,8 +139,37 @@ export default class AddGoogleAccount extends React.Component {
         }
     }
 
+    handleGAPDelete(gAPId) {
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true })
+            HttpClient.delete(`/settings/google-analytics-property/${gAPId}`).then(response => {
+                this.setState({ isBusy: false, googleAnalyticsProperties: this.state.googleAnalyticsProperties.filter(g => g.id !== gAPId) })
+                toast.success("Property removed.");
+            }, (err) => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: err });
+            });
+        }
+    }
+
     closeACCISModal() {
         this.setState({ showACCISModal: false })
+    }
+
+    getGAProperties() {
+        this.setState({ isBusy: true });
+        HttpClient.get(`/settings/google-analytics-property`).then(response => {
+            this.setState({ isBusy: false, googleAnalyticsProperties: response.data.google_analytics_properties })
+        }, (err) => {
+            console.log(err);
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            console.log(err);
+            this.setState({ isBusy: false, errors: err });
+        });
     }
 
     render() {
@@ -230,6 +264,32 @@ export default class AddGoogleAccount extends React.Component {
                                                 <td>{gAA.google_account.name}</td>
                                                 <td>{gAA.id}</td>
                                                 <td><button className="btn btn-danger" onClick={() => this.handleGAADelete(gAA.id)}><i className="fa fa-trash-o"></i></button></td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row ml-0 mr-0 mt-5">
+                        <div className="col-12">
+                            <div className="table-responsive">
+                                <table className="table table-hover table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Property</th>
+                                            <th>Analytics</th>
+                                            <th>Google</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.googleAnalyticsProperties.map(gAP => {
+                                            return <tr key={gAP.id}>
+                                                <td>{gAP.name}</td>
+                                                <td>{gAP.google_analytics_account.name}</td>
+                                                <td>{gAP.google_account.name}</td>
+                                                <td><button className="btn btn-danger" onClick={() => this.handleGAPDelete(gAP.id)}><i className="fa fa-trash-o"></i></button></td>
                                             </tr>
                                         })}
                                     </tbody>

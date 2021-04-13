@@ -95,6 +95,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('google-analytics-account', App\Http\Controllers\GoogleAnalyticsAccountController::class)->only(['index', 'destroy']);
             Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);
 
+            Route::resource('google-analytics-property', App\Http\Controllers\GoogleAnalyticsPropertyController::class)->only(['index', 'destroy']);
+
             Route::apiResource('user', App\Http\Controllers\UserController::class)->except(['index']);
             Route::get('user', [App\Http\Controllers\UserController::class, 'uiIndex']);
 

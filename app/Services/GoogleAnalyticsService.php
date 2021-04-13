@@ -118,6 +118,10 @@ class GoogleAnalyticsService
         }
 
         $respJson = $response->json();
+        if (!array_key_exists('access_token', $respJson)) {
+            return false;
+        }
+
         $googleAccount->token = $respJson['access_token'];
         $googleAccount->expires_in = \Carbon\Carbon::now()->addSeconds($respJson['expires_in']);
         $googleAccount->save();
