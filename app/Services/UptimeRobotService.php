@@ -6,76 +6,58 @@ use Illuminate\Support\Facades\Http;
 
 class UptimeRobotService
 {
+    private $apiKey;
     /**
      * Initialize the library in your constructor using
      * your environment, api key, and password
      */
     public function __construct()
     {
-       
+       $this->apiKey = config('services.uptime_robot.api_key');
     }
 
     public function getAccountDetails()
-    // {
-    //     $request = new HttpRequest();
-    //     $request->setUrl('https://api.uptimerobot.com/v2/getAccountDetails');
-    //     $request->setMethod(HTTP_METH_POST);
-    //     $request->setHeaders(array(
-    //         'content-type' => 'application/x-www-form-urlencoded',
-    //         'cache-control' => 'no-cache'
-    //     ));
-                
-    //     $request->setContentType('application/x-www-form-urlencoded');
-    //     $request->setPostFields(array(
-    //         'api_key' => 'u1269638-15f518a7310480e74cc52037',
-    //         'format' => 'json'
-    //     ));
-                
-    //     try {
-    //         $response = $request->send();
-    //         echo $response->getBody();
-    //     } catch (HttpException $ex) {
-    //         echo $ex;
-    //     }
+    {
+        $url= "https://api.uptimerobot.com/v2/getAccountDetails";
+
+        $response = Http::post($url, [
+            'api_key' => $this->apiKey,
+        ]);
+        return $response->json();   
     }
 
     public function getMonitors()
     {
-        // $request = new HttpRequest();
-        // $request->setUrl('https://api.uptimerobot.com/v2/getMonitors');
-        // $request->setMethod(HTTP_METH_POST);
-                
-        // $request->setHeaders(array(
-        // 'cache-control' => 'no-cache',
-        // 'content-type' => 'application/x-www-form-urlencoded'
-        // ));
-                
-        // $request->setContentType('application/x-www-form-urlencoded');
-        // $request->setPostFields(array(
-        // 'api_key' => 'u1269638-15f518a7310480e74cc52037',
-        // 'format' => 'json',
-        // 'logs' => '1'
-        // ));
-                
-        // try {
-        // $response = $request->send();
-                
-        // echo $response->getBody();
-        // } 
-        // catch (HttpException $ex) {
-        // echo $ex;
-        // }
-        
+        $url= "https://api.uptimerobot.com/v2/getMonitors";
+
+        $response = Http::post($url, [
+            'api_key' => $this->apiKey,
+        ]);
+        return $response->json();   
     }
     
-    public function newMonitors()
+    public function newMonitor($name,$urll,$type)
     {
-        
+        $url= "https://api.uptimerobot.com/v2/newMonitor";
+        $response = Http::post($url, [
+            'api_key' => $this->apiKey,
+            'format' => 'json',
+            'friendly_name' => $name,
+            'url' => $urll,
+            'type' => $type, //type must be a number
+        ]);
+        return $response->json();  
     }
 
-    public function deleteMonitors()
+    public function deleteMonitor($id)
     {
-        
+        $url= "https://api.uptimerobot.com/v2/deleteMonitor";
+
+        $response = Http::post($url, [
+            'api_key' => $this->apiKey,
+            'id' => $id,
+        ]);
+        return $response->json();   
     }   
 
 }

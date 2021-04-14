@@ -107,5 +107,3 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 });
-
-// Route::get('/up/time', [App\Http\Controllers\UptimeRobotServiceController::class, 'index']);

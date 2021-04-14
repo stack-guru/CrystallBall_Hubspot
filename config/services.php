@@ -89,4 +89,7 @@ return [
             'code' => env('MICROSOFT_CLARITY_CODE'),
         ],
     ],
+    'uptime_robot' => [
+        'api_key' => env('UPTIME_ROBOT_API_KEY')
+    ],
 ];
