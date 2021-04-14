@@ -245,24 +245,24 @@ export default class GoogleAccountIndex extends React.Component {
                                 <table className="table table-hover table-bordered table-striped">
                                     <thead>
                                         <tr>
+                                            <th>ID for API</th>
                                             <th>Google Analytics Name</th>
                                             <th>Google Analytics ID</th>
                                             <th>Property Type</th>
                                             <th>Added On</th>
                                             <th>Google Account</th>
-                                            <th>ID for API</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {this.state.googleAnalyticsAccounts.map(gAA => {
                                             return <tr key={gAA.id}>
+                                                <td>{gAA.id}</td>
                                                 <td>{gAA.name}</td>
                                                 <td>{gAA.ga_id}</td>
                                                 <td>{gAA.property_type}</td>
                                                 <td>{moment(gAA.created_at).format('YYYY-MM-DD HH:mm:ss')}</td>
                                                 <td>{gAA.google_account.name}</td>
-                                                <td>{gAA.id}</td>
                                                 <td><button className="btn btn-danger" onClick={() => this.handleGAADelete(gAA.id)}><i className="fa fa-trash-o"></i></button></td>
                                             </tr>
                                         })}
@@ -277,17 +277,19 @@ export default class GoogleAccountIndex extends React.Component {
                                 <table className="table table-hover table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Property</th>
-                                            <th>Analytics</th>
-                                            <th>Google</th>
+                                            <th>ID for API</th>
+                                            <th>Google Analytics Name</th>
+                                            <th>Property Type</th>
+                                            <th>Google Account</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {this.state.googleAnalyticsProperties.map(gAP => {
                                             return <tr key={gAP.id}>
-                                                <td>{gAP.name}</td>
+                                                <td>{gAP.id}</td>
                                                 <td>{gAP.google_analytics_account.name}</td>
+                                                <td>{gAP.name}</td>
                                                 <td>{gAP.google_account.name}</td>
                                                 <td><button className="btn btn-danger" onClick={() => this.handleGAPDelete(gAP.id)}><i className="fa fa-trash-o"></i></button></td>
                                             </tr>
