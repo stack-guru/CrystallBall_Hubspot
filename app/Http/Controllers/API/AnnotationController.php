@@ -392,6 +392,40 @@ class AnnotationController extends Controller
         return ['annotation' => $annotation];
     }
 
+
+    public function extensionStore(AnnotationRequest $request)
+    {
+        $this->authorize('create', Annotation::class);
+
+        $user = Auth::user();
+        $userId = $user->id;
+
+        $annotation = new Annotation;
+        $annotation->fill($request->validated());
+        $annotation->user_id = $userId;
+        $annotation->is_enabled = true;
+        $annotation->added_by = 'manual';
+        $annotation->save();
+
+        if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
+            foreach ($request->google_analytics_account_id as $gAAId) {
+                $aGAA = new AnnotationGaAccount;
+                $aGAA->annotation_id = $annotation->id;
+                $aGAA->google_analytics_account_id = $gAAId;
+                $aGAA->user_id = $userId;
+                $aGAA->save();
+            }
+        } else {
+            $aGAA = new AnnotationGaAccount;
+            $aGAA->annotation_id = $annotation->id;
+            $aGAA->google_analytics_account_id = null;
+            $aGAA->user_id = $userId;
+            $aGAA->save();
+        }
+
+        return ['annotation' => $annotation];
+    }
+
     /**
      * Update the specified resource in storage.
      *
