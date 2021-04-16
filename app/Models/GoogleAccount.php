@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Auth;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class GoogleAccount extends Model
 {
@@ -23,7 +24,7 @@ class GoogleAccount extends Model
     ];
 
     protected $hidden = [
-        'token', 'refresh_token'
+        'token', 'refresh_token',
     ];
 
     protected $casts = [
@@ -35,7 +36,18 @@ class GoogleAccount extends Model
         return $this->hasMany('App\Models\Annotation');
     }
 
-    public function scopeOfCurrentUser($query){
+    public function scopeOfCurrentUser($query)
+    {
         return $query->where('user_id', Auth::id());
+    }
+
+    /**
+     * Get all of the googleAnalyticsAccounts for the GoogleAccount
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function googleAnalyticsAccounts(): HasMany
+    {
+        return $this->hasMany(GoogleAnalyticsAccount::class);
     }
 }
