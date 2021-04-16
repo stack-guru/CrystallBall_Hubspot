@@ -55,12 +55,16 @@
     <title>@yield('page-title')</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/admin.js') }}" defer></script>
-
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+    integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+    crossorigin="anonymous"></script>
+    {{-- <script src="{{ asset('js/admin.js') }}" defer></script> --}}
+   
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    @yield('css')
     <!-- Styles -->
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 </head>
@@ -122,7 +126,7 @@
                                     {{ Auth::user()->name }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="display: flex!important">
+                                <div class="dropdown-menu dropdown-menu-right" id="showthis" aria-labelledby="navbarDropdown" style="display: flex!important">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -141,9 +145,23 @@
         </nav>
 
         <main class="py-4">
-            @include('helpers/messages')
-            @yield('content')
+            <div class="col-sm-12">
+                @include('helpers/messages')
+                @yield('content')
+            </div>
         </main>
     </div>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+    <script>
+      const button = document.querySelector('#navbarDropdown');
+      const showPopup = document.querySelector('#showthis');
+    
+      // Pass the button, the tooltip, and some options, and Popper will do the
+      // magic positioning for you:
+      Popper.createPopper(button, showPopup, {
+        placement: 'right-start',
+      });
+    </script> 
+    @yield('js')
 </body>
 </html>

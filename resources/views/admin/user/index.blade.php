@@ -1,17 +1,24 @@
 @extends('layouts.admin')
 @section('page-title','Users')
+
+@section('css')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css"/>
+@endsection
+
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Users</div>
+                <div class="card-header">Users
+                    <span class="badge badge-warning float-right">Total Users: {{count($users)}}</span>
+                </div>
                 <div class="card-body">
-                    <div class="container mt-2 mb-4 pl-5">
+                    {{-- <div class="container mt-2 mb-4 pl-5">
                         <span class="badge badge-warning">Total Users: {{count($users)}}</span>
-                    </div>
+                    </div> --}}
                     <div class="table-responsive">
-                        <table class="table table-hoved table-bordered">
+                        <table class="table table-hoved table-bordered" id="myTable">
                             <thead>
                                 <tr>
                                     <th>Team</th>
@@ -72,4 +79,13 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> 
+<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
+</script>   
 @endsection
