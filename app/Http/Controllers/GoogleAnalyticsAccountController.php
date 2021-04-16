@@ -12,7 +12,7 @@ class GoogleAnalyticsAccountController extends Controller
 {
     public function index()
     {
-        return ['google_analytics_accounts' => GoogleAnalyticsAccount::ofCurrentUser()->with('googleAccount')->orderBy('name')->get()];
+        return ['google_analytics_accounts' => GoogleAnalyticsAccount::ofCurrentUser()->where('search_keywords', 'like','%'. $value .'%')->with('googleAccount')->orderBy('name')->get()];
     }
 
     public function fetch(GoogleAccount $googleAccount)
