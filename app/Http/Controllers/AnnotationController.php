@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use App\Models\UserDataSource;
+use App\Notifications\NewAnnotationNotification;
+
 
 class AnnotationController extends Controller
 {
@@ -69,7 +71,9 @@ class AnnotationController extends Controller
             $aGAA->user_id = $userId;
             $aGAA->save();
         }
-
+        
+        $user->notify(new NewAnnotationNotification($annotation));
+        // event(new \App\Events\NewAnnotationAdded($annotation));
         return ['annotation' => $annotation];
     }
 
