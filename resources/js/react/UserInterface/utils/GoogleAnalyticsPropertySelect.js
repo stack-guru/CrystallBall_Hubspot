@@ -46,8 +46,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             } else {
                 aProperties = sOption;
             }
-            this.setState({ aProperties: aProperties })
-            this.props.onChangeCallback({ target: { name: this.props.name, value: this.props.multiple ? sOption.filter(sO => sO.value !== "").map(sO => sO.value) : sOption.value } });
+            this.setState({ aProperties: aProperties });
+            (this.props.onChangeCallback)(aProperties);
         }
     }
 
