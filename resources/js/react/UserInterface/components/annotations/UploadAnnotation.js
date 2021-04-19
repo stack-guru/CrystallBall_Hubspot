@@ -3,14 +3,14 @@ import { toast } from "react-toastify";
 
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
-import GoogleAnalyticsAccountSelect from '../../utils/GoogleAnalyticsAccountSelect';
+import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 
 export default class UploadAnnotation extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            google_analytics_account_id: [""],
+            google_analytics_property_id: [""],
             date_format: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -25,7 +25,7 @@ export default class UploadAnnotation extends React.Component {
             const formData = new FormData();
             formData.append('csv', document.getElementById('csv').files[0]);
             
-            this.state.google_analytics_account_id.map(gAA => { formData.append('google_analytics_account_id[]', gAA) })
+            this.state.google_analytics_property_id.map(gAA => { formData.append('google_analytics_property_id[]', gAA) })
             
             formData.append('date_format', this.state.date_format);
             HttpClient({
@@ -81,8 +81,8 @@ export default class UploadAnnotation extends React.Component {
                                     </div>
                                     <div className="row ml-0 mr-0 mt-2">
                                         <div className="form-group  col-12 col-sm-12 col-md-5 col-lg-5 p-0 ua-r-pr ">
-                                            <label htmlFor="account" className="form-control-placeholder">Select Account</label>
-                                            <GoogleAnalyticsAccountSelect name="google_analytics_account_id" id="google_analytics_account_id" value={this.state.google_analytics_account_id} onChangeCallback={this.changeHandler} placeholder="Select GA Accounts" multiple></GoogleAnalyticsAccountSelect>
+                                            <label htmlFor="property" className="form-control-placeholder">Select Property</label>
+                                            <GoogleAnalyticsPropertySelect name="google_analytics_property_id" id="google_analytics_property_id" value={this.state.google_analytics_property_id} onChangeCallback={this.changeHandler} placeholder="Select GA Propertys" multiple></GoogleAnalyticsPropertySelect>
                                         </div>
                                         <div className="col-md-2 col-lg-2"></div>
                                         <div className="form-group col-12 col-sm-12 col-md-5 col-lg-5 p-0 ua-r-pl ">

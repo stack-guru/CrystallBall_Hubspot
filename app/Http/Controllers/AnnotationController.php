@@ -304,7 +304,7 @@ class AnnotationController extends Controller
         $this->validate($request, [
             'csv' => 'required|file|mimetypes:text/plain|mimes:txt',
             'date_format' => 'required',
-            'google_analytics_property_id.*' => 'nullable|exists:google_analytics_accounts,id',
+            'google_analytics_property_id.*' => 'nullable|exists:google_analytics_properties,id',
         ]);
 
         $filepath = $request->file('csv')->getRealPath();
@@ -367,10 +367,10 @@ class AnnotationController extends Controller
                 $totalNewRows = count($rows);
                 $lastInsertId = $firstInsertId + ($totalNewRows - 1);
                 if (!in_array("", $request->google_analytics_property_id)) {
-                    foreach ($request->google_analytics_property_id as $googleAnalyticsAccountId) {
+                    foreach ($request->google_analytics_property_id as $googleAnalyticsPropertyId) {
                         $sql = "
-                        INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_property_id, user_id)
-                            SELECT id, $googleAnalyticsAccountId, user_id FROM annotations
+                        INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
+                            SELECT id, $googleAnalyticsPropertyId, user_id FROM annotations
                                 WHERE id BETWEEN $firstInsertId AND $lastInsertId
                         ;
                         ";
@@ -378,7 +378,7 @@ class AnnotationController extends Controller
                     }
                 } else {
                     $sql = "
-                        INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_property_id, user_id)
+                        INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
                             SELECT id, NULL, user_id FROM annotations
                                 WHERE id BETWEEN $firstInsertId AND $lastInsertId
                         ;
@@ -396,10 +396,10 @@ class AnnotationController extends Controller
             $totalNewRows = count($rows);
             $lastInsertId = $firstInsertId + ($totalNewRows - 1);
             if (!in_array("", $request->google_analytics_property_id)) {
-                foreach ($request->google_analytics_property_id as $googleAnalyticsAccountId) {
+                foreach ($request->google_analytics_property_id as $googleAnalyticsPropertyId) {
                     $sql = "
-                    INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_property_id, user_id)
-                        SELECT id, $googleAnalyticsAccountId, user_id FROM annotations
+                    INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
+                        SELECT id, $googleAnalyticsPropertyId, user_id FROM annotations
                             WHERE id BETWEEN $firstInsertId AND $lastInsertId
                     ;
                     ";
