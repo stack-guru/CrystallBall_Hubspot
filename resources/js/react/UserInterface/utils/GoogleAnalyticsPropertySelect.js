@@ -8,47 +8,74 @@ export default class GoogleAnalyticsPropertySelect extends Component {
 
     constructor(props) {
         super(props)
-        this.searchSelectRef = React.createRef();
-        this.searchSaleInvoice = this.searchSaleInvoice.bind(this);
+        this.state = {
+            aProperties: [{ value: "", label: "All Accounts" }],
+        };
+        this.searchGoogleAnalyticsProperties = this.searchGoogleAnalyticsProperties.bind(this);
+        this.onChangeHandler = this.onChangeHandler.bind(this);
     }
 
-    componentDidMount(){
-        this.searchSelectRef.current.focus();
+    componentDidMount() {
+    }
+    componentDidUpdate(prevProps) {
+        if (this.props != prevProps) {
+            if (this.props.aProperties) {
+                this.setState({ aProperties: this.props.aProperties });
+            }
+        }
     }
 
-    searchSaleInvoice(keyword, callback) {
-        if (keyword.length > 3) {
-            HttpClient.get('/api/search/sale-invoice?keyword=' + keyword)
-                .then((response) => {
-                    let sis = response.data.data;
-                    let options = sis.map(si => { return { value: si.id, label: 'Comp. # ' + si.id + ' Inv. # ' + si.company_v_no + ' @ ' + si.sale_date }; });
-                    callback(options);
-                });
-        } else { callback([]); }
+    searchGoogleAnalyticsProperties(keyword, callback) {
+        HttpClient.get('settings/google-analytics-property?keyword=' + keyword)
+            .then((response) => {
+                let gaps = response.data.google_analytics_properties;
+                let options = gaps.map(gap => { return { value: gap.id, label: gap.name + ' ' + gap.google_analytics_account.name }; });
+                callback(options);
+            });
+    }
+
+    onChangeHandler(sOption) {
+        if (sOption == null) {
+            this.setState({ aProperties: [{ value: "", label: "All Accounts" }] });
+            this.props.onChangeCallback({ target: { name: this.props.name, value: [""] } });
+        } else {
+            // aProperties.push(sOption);
+            let aProperties = null;
+            if (this.props.multiple) {
+                aProperties = sOption.filter(sO => sO.value !== "");
+            } else {
+                aProperties = sOption;
+            }
+            this.setState({ aProperties: aProperties })
+            this.props.onChangeCallback({ target: { name: this.props.name, value: this.props.multiple ? sOption.filter(sO => sO.value !== "").map(sO => sO.value) : sOption.value } });
+        }
     }
 
     render() {
-        let sVal = {};
-        if (this.props.value !== undefined) {
-            sVal = this.props.value;
-        } else {
-            sVal = null;
-        }
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+        let aProperties = this.state.aProperties;
 
+        // let selectedOptions;
+        // if (this.props.multiple) {
+        //     selectedOptions = allOptions.filter(aO => this.props.value.indexOf(aO.value) !== -1);
+        // } else {
+        //     selectedOptions = this.props.value;
+        // }
 
         return (
             <Select
-            ref={this.searchSelectRef}
-                onChange={(si, action) => {
+                loadOptions={this.searchGoogleAnalyticsProperties}
+                noOptionsMessage={() => { return "Enter chars to search" }}
 
-                    (this.props.callback)(si);
-                }}
+                name={this.props.name}
+                disabled={this.props.disabled}
+                value={this.state.aProperties}
+                id={this.props.id}
+                isMulti={this.props.multiple}
+                onChange={this.onChangeHandler}
+                // options={allOptions}
                 isSearchable={true}
                 placeholder={this.props.placeholder}
-                loadOptions={this.searchSaleInvoice}
-                noOptionsMessage={() => { return "4+ chars to search" }}
-                value={sVal}
-                isClearable={this.props.isClearable}
             />
         )
     }

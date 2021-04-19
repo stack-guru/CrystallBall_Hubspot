@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
 
-import GoogleAnalyticsAccountSelect from "../../utils/GoogleAnalyticsAccountSelect";
+import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
 
 export default class CreateAnnotation extends React.Component {
 
@@ -17,7 +17,7 @@ export default class CreateAnnotation extends React.Component {
                 url: '',
                 description: '',
                 show_at: '',
-                google_analytics_account_id: [""]
+                google_analytics_property_id: [""]
             },
             validation: {},
             resp: '',
@@ -38,7 +38,7 @@ export default class CreateAnnotation extends React.Component {
                 url: '',
                 description: '',
                 show_at: '',
-                google_analytics_account_id: [""]
+                google_analytics_property_id: [""]
             },
             validation: {},
             resp: '',
@@ -60,9 +60,9 @@ export default class CreateAnnotation extends React.Component {
             this.setState({ isBusy: true });
             let fd = new FormData;
             for (var key in this.state.annotation) {
-                if (key !== 'google_analytics_account_id') fd.append(key, this.state.annotation[key]);
+                if (key !== 'google_analytics_property_id') fd.append(key, this.state.annotation[key]);
             }
-            this.state.annotation.google_analytics_account_id.map(gAA => { fd.append('google_analytics_account_id[]', gAA) })
+            this.state.annotation.google_analytics_property_id.map(gAA => { fd.append('google_analytics_property_id[]', gAA) })
 
             HttpClient.post('/annotation', fd)
                 .then(response => {
@@ -207,8 +207,8 @@ export default class CreateAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder">Google Accounts</label>
-                                        <GoogleAnalyticsAccountSelect name="google_analytics_account_id" id="google_analytics_account_id" value={this.state.annotation.google_analytics_account_id} onChangeCallback={this.changeHandler} placeholder="Select GA Accounts" multiple></GoogleAnalyticsAccountSelect>
+                                        <label htmlFor="show_at" className="form-control-placeholder">Google Properties</label>
+                                        <GoogleAnalyticsPropertySelect name="google_analytics_property_id" id="google_analytics_property_id" value={this.state.annotation.google_analytics_property_id} onChangeCallback={this.changeHandler} placeholder="Select GA Properties" multiple></GoogleAnalyticsPropertySelect>
 
                                     </div>
                                 </div>

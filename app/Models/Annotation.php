@@ -22,7 +22,12 @@ class Annotation extends Model
     {
         return $this->hasMany('App\Models\AnnotationGaAccount');
     }
-
+    
+    public function annotationGaProperties()
+    {
+        return $this->hasMany('App\Models\AnnotationGaProperty');
+    }
+    
     public function scopeOfCurrentUser($query){
         return $query->where('user_id', Auth::id());
     }

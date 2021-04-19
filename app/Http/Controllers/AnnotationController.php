@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
-use App\Models\AnnotationGaAccount;
+use App\Models\AnnotationGaProperty;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -56,20 +56,20 @@ class AnnotationController extends Controller
         $annotation->added_by = 'manual';
         $annotation->save();
 
-        if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
-            foreach ($request->google_analytics_account_id as $gAAId) {
-                $aGAA = new AnnotationGaAccount;
-                $aGAA->annotation_id = $annotation->id;
-                $aGAA->google_analytics_account_id = $gAAId;
-                $aGAA->user_id = $userId;
-                $aGAA->save();
+        if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
+            foreach ($request->google_analytics_property_id as $gAPId) {
+                $aGAP = new AnnotationGaProperty;
+                $aGAP->annotation_id = $annotation->id;
+                $aGAP->google_analytics_property_id = $gAPId;
+                $aGAP->user_id = $userId;
+                $aGAP->save();
             }
         } else {
-            $aGAA = new AnnotationGaAccount;
-            $aGAA->annotation_id = $annotation->id;
-            $aGAA->google_analytics_account_id = null;
-            $aGAA->user_id = $userId;
-            $aGAA->save();
+            $aGAP = new AnnotationGaProperty;
+            $aGAP->annotation_id = $annotation->id;
+            $aGAP->google_analytics_property_id = null;
+            $aGAP->user_id = $userId;
+            $aGAP->save();
         }
         
         $user->notify(new NewAnnotationNotification($annotation));
@@ -119,41 +119,41 @@ class AnnotationController extends Controller
         $annotation->fill($request->validated());
         $annotation->save();
 
-        $aGAAs = $annotation->annotationGaAccounts;
-        $oldGAAIds = $aGAAs->pluck('google_analytics_account_id')->toArray();
-        $newGAAIds = $request->google_analytics_account_id;
+        $aGAPs = $annotation->annotationGaProperties;
+        $oldGAPIds = $aGAPs->pluck('google_analytics_property_id')->toArray();
+        $newGAPIds = $request->google_analytics_property_id;
 
-        if ($request->has('google_analytics_account_id')) {
-            foreach ($aGAAs as $aGAA) {
-                if (!in_array($aGAA->google_analytics_account_id, $newGAAIds)) {
-                    $aGAA->delete();
+        if ($request->has('google_analytics_property_id')) {
+            foreach ($aGAPs as $aGAP) {
+                if (!in_array($aGAP->google_analytics_property_id, $newGAPIds)) {
+                    $aGAP->delete();
                 }
             }
         }
 
-        if ($request->has('google_analytics_account_id')) {
-            if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
-                foreach ($newGAAIds as $gAAId) {
-                    if (!in_array($gAAId, $oldGAAIds)) {
-                        $aGAA = new AnnotationGaAccount;
-                        $aGAA->annotation_id = $annotation->id;
-                        $aGAA->google_analytics_account_id = $gAAId;
-                        $aGAA->user_id = $user->id;
-                        $aGAA->save();
+        if ($request->has('google_analytics_property_id')) {
+            if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
+                foreach ($newGAPIds as $gAPId) {
+                    if (!in_array($gAPId, $oldGAPIds)) {
+                        $aGAP = new AnnotationGaProperty;
+                        $aGAP->annotation_id = $annotation->id;
+                        $aGAP->google_analytics_property_id = $gAPId;
+                        $aGAP->user_id = $user->id;
+                        $aGAP->save();
                     }
                 }
             } else {
-                if (!in_array("", $oldGAAIds)) {
-                    $aGAA = new AnnotationGaAccount;
-                    $aGAA->annotation_id = $annotation->id;
-                    $aGAA->google_analytics_account_id = null;
-                    $aGAA->user_id = $user->id;
-                    $aGAA->save();
+                if (!in_array("", $oldGAPIds)) {
+                    $aGAP = new AnnotationGaProperty;
+                    $aGAP->annotation_id = $annotation->id;
+                    $aGAP->google_analytics_property_id = null;
+                    $aGAP->user_id = $user->id;
+                    $aGAP->save();
                 }
             }
         }
 
-        $annotation->load('annotationGaAccounts');
+        $annotation->load('annotationGaProperties');
 
         return ['annotation' => $annotation];
     }
@@ -211,7 +211,7 @@ class AnnotationController extends Controller
             $user = $user->user;
         }
 
-        $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_accounts`.`id` AS annotation_ga_account_id, `google_analytics_accounts`.`name` AS google_analytics_account_name FROM (";
+        $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_properties`.`id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
         $annotationsQuery .= "select annotations.is_enabled, annotations.`show_at`, annotations.created_at, `annotations`.`id`, annotations.`category`, annotations.`event_name`, annotations.`url`, annotations.`description`, `users`.`name` AS user_name from `annotations` INNER JOIN `users` ON `users`.`id` = `annotations`.`user_id` where `annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
 
         if ($request->query('annotation_ga_account_id') && $request->query('annotation_ga_account_id') !== '*') {
@@ -249,8 +249,8 @@ class AnnotationController extends Controller
         }
         $annotationsQuery .= ") AS TempTable";
 
-        $annotationsQuery .= " LEFT JOIN annotation_ga_accounts ON TempTable.id = annotation_ga_accounts.annotation_id";
-        $annotationsQuery .= " LEFT JOIN google_analytics_accounts ON annotation_ga_accounts.google_analytics_account_id = google_analytics_accounts.id";
+        $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
+        $annotationsQuery .= " LEFT JOIN google_analytics_properties ON annotation_ga_properties.google_analytics_property_id = google_analytics_properties.id";
 
         if ($request->query('sortBy') == "added") {
             $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
@@ -288,7 +288,7 @@ class AnnotationController extends Controller
             abort(403);
         }
 
-        $annotation->load('annotationGaAccounts');
+        $annotation->load('annotationGaProperties.googleAnalyticsProperty');
         return ['annotation' => $annotation];
     }
 
@@ -304,7 +304,7 @@ class AnnotationController extends Controller
         $this->validate($request, [
             'csv' => 'required|file|mimetypes:text/plain|mimes:txt',
             'date_format' => 'required',
-            'google_analytics_account_id.*' => 'nullable|exists:google_analytics_accounts,id',
+            'google_analytics_property_id.*' => 'nullable|exists:google_analytics_accounts,id',
         ]);
 
         $filepath = $request->file('csv')->getRealPath();
@@ -366,10 +366,10 @@ class AnnotationController extends Controller
                 $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
                 $totalNewRows = count($rows);
                 $lastInsertId = $firstInsertId + ($totalNewRows - 1);
-                if (!in_array("", $request->google_analytics_account_id)) {
-                    foreach ($request->google_analytics_account_id as $googleAnalyticsAccountId) {
+                if (!in_array("", $request->google_analytics_property_id)) {
+                    foreach ($request->google_analytics_property_id as $googleAnalyticsAccountId) {
                         $sql = "
-                        INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
+                        INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_property_id, user_id)
                             SELECT id, $googleAnalyticsAccountId, user_id FROM annotations
                                 WHERE id BETWEEN $firstInsertId AND $lastInsertId
                         ;
@@ -378,7 +378,7 @@ class AnnotationController extends Controller
                     }
                 } else {
                     $sql = "
-                        INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
+                        INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_property_id, user_id)
                             SELECT id, NULL, user_id FROM annotations
                                 WHERE id BETWEEN $firstInsertId AND $lastInsertId
                         ;
@@ -395,10 +395,10 @@ class AnnotationController extends Controller
             $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
             $totalNewRows = count($rows);
             $lastInsertId = $firstInsertId + ($totalNewRows - 1);
-            if (!in_array("", $request->google_analytics_account_id)) {
-                foreach ($request->google_analytics_account_id as $googleAnalyticsAccountId) {
+            if (!in_array("", $request->google_analytics_property_id)) {
+                foreach ($request->google_analytics_property_id as $googleAnalyticsAccountId) {
                     $sql = "
-                    INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
+                    INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_property_id, user_id)
                         SELECT id, $googleAnalyticsAccountId, user_id FROM annotations
                             WHERE id BETWEEN $firstInsertId AND $lastInsertId
                     ;
@@ -407,7 +407,7 @@ class AnnotationController extends Controller
                 }
             } else {
                 $sql = "
-                    INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_account_id, user_id)
+                    INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_property_id, user_id)
                         SELECT id, NULL, user_id FROM annotations
                             WHERE id BETWEEN $firstInsertId AND $lastInsertId
                     ;

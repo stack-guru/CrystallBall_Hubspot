@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 import ErrorAlert from "../../utils/ErrorAlert";
 import HttpClient from "../../utils/HttpClient";
 import GoogleAnalyticsAccountSelect from "../../utils/GoogleAnalyticsAccountSelect";
+import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 
 export default class EditAnnotation extends React.Component {
 
@@ -17,7 +18,7 @@ export default class EditAnnotation extends React.Component {
                 url: '',
                 description: '',
                 show_at: '',
-                google_analytics_account_id: [""]
+                google_analytics_property_id: [""]
             },
             validation: {},
             resp: '',
@@ -38,9 +39,18 @@ export default class EditAnnotation extends React.Component {
             this.setState({ isBusy: true });
             HttpClient.get(`/annotation/${this.props.routeParams.match.params.id}`)
                 .then(response => {
-                    let gAAIds = response.data.annotation.annotation_ga_accounts.map(aGAAA => aGAAA.google_analytics_account_id);
-                    if (gAAIds[0] == null) gAAIds = [""];
-                    this.setState({ isBusy: false, annotation: { ...response.data.annotation, google_analytics_account_id: gAAIds } });
+                    let gAPs = [];
+                    if (!response.data.annotation.annotation_ga_properties.length) {
+                        gAPs = [{ value: "", label: "All Accounts" }];
+                    } else if (response.data.annotation.annotation_ga_properties[0].google_analytics_property_id == null) {
+                        gAPs = [{ value: "", label: "All Accounts" }];
+                    } else {
+                        gAPs = response.data.annotation.annotation_ga_properties.map(aGAP => { return { value: aGAP.google_analytics_property_id, label: aGAP.google_analytics_property.name }; });
+                    }
+
+                    let gAPIds = response.data.annotation.annotation_ga_properties.map(agAPA => agAPA.google_analytics_property_id);
+                    if (gAPIds[0] == null) gAPIds = [""];
+                    this.setState({ isBusy: false, annotation: { ...response.data.annotation, google_analytics_property_id: gAPIds }, googleAnnotationProperties: gAPs });
                 }, (err) => {
                     console.log(err);
                     this.setState({ isBusy: false, errors: (err.response).data });
@@ -52,7 +62,7 @@ export default class EditAnnotation extends React.Component {
     }
 
     setDefaultState() {
-        this.setState({ isBusy: false, isDirty: false, errors: undefined, google_analytics_account_id: [""] });
+        this.setState({ isBusy: false, isDirty: false, errors: undefined, google_analytics_property_id: [""] });
     }
 
     changeHandler(e) {
@@ -67,9 +77,9 @@ export default class EditAnnotation extends React.Component {
 
             let fd = new FormData;
             for (var key in this.state.annotation) {
-                if (key !== 'google_analytics_account_id') fd.append(key, this.state.annotation[key]);
+                if (key !== 'google_analytics_property_id') fd.append(key, this.state.annotation[key]);
             }
-            this.state.annotation.google_analytics_account_id.map(gAA => { fd.append('google_analytics_account_id[]', gAA) })
+            this.state.annotation.google_analytics_property_id.map(gAP => { fd.append('google_analytics_property_id[]', gAP) })
 
             fd.append('_method', 'PUT');
             HttpClient.post(`/annotation/${this.state.annotation.id}`, fd)
@@ -216,14 +226,8 @@ export default class EditAnnotation extends React.Component {
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder">Google Accounts</label>
-                                        <GoogleAnalyticsAccountSelect name="google_analytics_account_id" id="google_analytics_account_id" value={this.state.annotation.google_analytics_account_id} onChangeCallback={this.changeHandler} placeholder="Select GA Accounts" multiple></GoogleAnalyticsAccountSelect>
-
-                                        {
-                                            validation.google_account_id ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.google_account_id}</span> : ''
-                                        }
-
+                                        <label htmlFor="show_at" className="form-control-placeholder">Analytics Properties</label>
+                                        <GoogleAnalyticsPropertySelect aProperties={this.state.googleAnnotationProperties} name="google_analytics_property_id" id="google_analytics_property_id" value={this.state.annotation.google_analytics_property_id} onChangeCallback={this.changeHandler} placeholder="Select GA Properties" multiple></GoogleAnalyticsPropertySelect>
                                     </div>
                                 </div>
 

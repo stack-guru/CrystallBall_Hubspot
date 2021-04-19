@@ -9,9 +9,9 @@ class GoogleAnalyticsPropertyController extends Controller
 {
     public function index(Request $request)
     {
-        $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::ofCurrentUser()->with(['googleAccount', 'GoogleAnalyticsAccount'])->orderBy('name');
+        $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::ofCurrentUser()->with(['googleAccount', 'GoogleAnalyticsAccount'])->orderBy('name')->take(10);
         if($request->has('keyword')){
-            $googleAnalyticsPropertiesQuery->where('name', 'like','%'. $request->has('keyword') .'%')->take(10);
+            $googleAnalyticsPropertiesQuery->where('name', 'LIKE','%'. $request->query('keyword') .'%');
         }
 
         return ['google_analytics_properties' => $googleAnalyticsPropertiesQuery->get()];
@@ -19,6 +19,7 @@ class GoogleAnalyticsPropertyController extends Controller
 
     public function destroy(GoogleAnalyticsProperty $googleAnalyticsProperty)
     {
+        $googleAnalyticsProperty->delete();
         return ['success' => true];
     }
 }

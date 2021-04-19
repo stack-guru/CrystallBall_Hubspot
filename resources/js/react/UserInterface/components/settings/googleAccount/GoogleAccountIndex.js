@@ -245,7 +245,6 @@ export default class GoogleAccountIndex extends React.Component {
                                 <table className="table table-hover table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>ID for API</th>
                                             <th>Google Analytics Name</th>
                                             <th>Google Analytics ID</th>
                                             <th>Property Type</th>
@@ -257,7 +256,6 @@ export default class GoogleAccountIndex extends React.Component {
                                     <tbody>
                                         {this.state.googleAnalyticsAccounts.map(gAA => {
                                             return <tr key={gAA.id}>
-                                                <td>{gAA.id}</td>
                                                 <td>{gAA.name}</td>
                                                 <td>{gAA.ga_id}</td>
                                                 <td>{gAA.property_type}</td>
@@ -278,8 +276,8 @@ export default class GoogleAccountIndex extends React.Component {
                                     <thead>
                                         <tr>
                                             <th>ID for API</th>
-                                            <th>Google Analytics Name</th>
-                                            <th>Property Type</th>
+                                            <th>Analytics Accounts</th>
+                                            <th>Properties &amp; Apps</th>
                                             <th>Google Account</th>
                                             <th>Actions</th>
                                         </tr>
