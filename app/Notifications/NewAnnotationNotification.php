@@ -43,7 +43,7 @@ class NewAnnotationNotification extends Notification
         return (new MailMessage)
                     ->greeting("Hi ".$notifiable["name"])
                     ->line('Your mannual Annotation is added successfully')
-                    ->action('View Annotation', url('/annotations'))
+                    ->action('View Annotation', route('annotation.index'))
                     ->line('Thank you for using our application!');
     }
 
