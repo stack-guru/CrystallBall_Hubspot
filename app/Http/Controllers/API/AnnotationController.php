@@ -146,7 +146,7 @@ class AnnotationController extends Controller
                         $aGAP = new AnnotationGaProperty;
                         $aGAP->annotation_id = $annotation->id;
                         $aGAP->google_analytics_property_id = $gAPId;
-                        $aGAP->user_id = $userId;
+                        $aGAP->user_id = $user->id;
                         $aGAP->save();
                     }
                 }
@@ -154,7 +154,7 @@ class AnnotationController extends Controller
                 $aGAP = new AnnotationGaProperty;
                 $aGAP->annotation_id = $annotation->id;
                 $aGAP->google_analytics_property_id = null;
-                $aGAP->user_id = $userId;
+                $aGAP->user_id = $user->id;
                 $aGAP->save();
             }
         }
@@ -188,6 +188,11 @@ class AnnotationController extends Controller
             abort(404);
         }
 
+        // onDelete cascade was added during migration but still we have to do this
+        // because of laravel migrations mistake
+        foreach($annotation->annotationGaProperties as $aGAP){
+            $aGAP->delete();
+        }
         $annotation->delete();
 
         if ($user->last_api_called_at == null) {
