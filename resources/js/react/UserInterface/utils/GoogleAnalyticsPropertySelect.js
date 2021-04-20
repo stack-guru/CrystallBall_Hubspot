@@ -38,6 +38,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         if (sOption == null) {
             this.setState({ aProperties: [{ value: "", label: "All Accounts" }] });
             this.props.onChangeCallback({ target: { name: this.props.name, value: [""] } });
+            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Accounts" }]);
         } else {
             // aProperties.push(sOption);
             let aProperties = null;
@@ -47,7 +48,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 aProperties = sOption;
             }
             this.setState({ aProperties: aProperties });
-            (this.props.onChangeCallback)(aProperties);
+            (this.props.onChangeCallback)({ target: { name: this.props.name, value: this.props.multiple ? sOption.filter(sO => sO.value !== "").map(sO => sO.value) : sOption.value } });
+            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)(aProperties);
         }
     }
 

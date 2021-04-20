@@ -72,8 +72,6 @@ export default class EditAnnotation extends React.Component {
 
     gAPropertyChangeHandler(aProperties) {
         this.setState({
-            isDirty: true,
-            annotation: { ...this.state.annotation, google_analytics_property_id: aProperties.filter(sO => sO.value !== "").map(sO => sO.value) },
             googleAnnotationProperties: aProperties
         });
     }
@@ -236,7 +234,7 @@ export default class EditAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="show_at" className="form-control-placeholder">Analytics Properties</label>
-                                        <GoogleAnalyticsPropertySelect aProperties={this.state.googleAnnotationProperties} name="google_analytics_property_id" id="google_analytics_property_id" value={this.state.annotation.google_analytics_property_id} onChangeCallback={this.gAPropertyChangeHandler} placeholder="Select GA Properties" multiple></GoogleAnalyticsPropertySelect>
+                                        <GoogleAnalyticsPropertySelect aProperties={this.state.googleAnnotationProperties} name="google_analytics_property_id" id="google_analytics_property_id" value={this.state.annotation.google_analytics_property_id} onChangeCallback={this.changeHandler} onChangeCallback2={this.gAPropertyChangeHandler} placeholder="Select GA Properties" multiple></GoogleAnalyticsPropertySelect>
                                     </div>
                                 </div>
 
