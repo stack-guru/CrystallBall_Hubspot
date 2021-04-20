@@ -134,8 +134,10 @@ class AnnotationController extends Controller
         $newGAPIds = $request->google_analytics_property_id;
 
         foreach ($aGAPs as $aGAP) {
-            if (!in_array($aGAP->google_analytics_property_id, $newGAPIds)) {
-                $aGAP->delete();
+            if(!is_null($aGAP->google_analytics_property_id)){
+                if(!in_array($aGAP->google_analytics_property_id, $newGAPIds)) {
+                    $aGAP->delete();
+                }
             }
         }
 
