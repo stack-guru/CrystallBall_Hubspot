@@ -31,9 +31,9 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
             Route::resource('annotations', 'AnnotationController');
 
             Route::group(['prefix' => 'chrome-extension', 'as' => 'chrome-extension'], function () {
-                Route::get('annotations', 'AnnotationController@extensionIndex');
-                Route::get('annotations/preview', 'AnnotationController@extensionAnnotationPreview');
-                Route::post('annotations', 'AnnotationController@extensionStore');
+                Route::get('annotations', 'ChromeExtension\AnnotationController@index');
+                Route::post('annotations', 'ChromeExtension\AnnotationController@store');
+                Route::get('annotations/preview', 'ChromeExtension\AnnotationController@extensionAnnotationPreview');
                 Route::get('google-accounts', 'GoogleAccountController@extensionIndex');
                 Route::get('google-analytics-accounts', 'GoogleAnalyticsAccountController@extensionIndex');
                 Route::get('memberships', 'UserController@extensionShowMembership');
