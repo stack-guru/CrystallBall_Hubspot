@@ -129,19 +129,17 @@ class AnnotationController extends Controller
         $annotation->show_at = Carbon::parse($request->show_at);
         $annotation->save();
 
-        $aGAPs = $annotation->annotationGaProperties;
-        $oldGAPIds = $aGAPs->pluck('google_analytics_property_id')->toArray();
-        $newGAPIds = $request->google_analytics_property_id;
+        if ($request->has('google_analytics_property_id')) {
+            $aGAPs = $annotation->annotationGaProperties;
+            $oldGAPIds = $aGAPs->pluck('google_analytics_property_id')->toArray();
+            $newGAPIds = $request->google_analytics_property_id;
 
-        foreach ($aGAPs as $aGAP) {
-            if(!is_null($aGAP->google_analytics_property_id)){
-                if(!in_array($aGAP->google_analytics_property_id, $newGAPIds)) {
+            foreach ($aGAPs as $aGAP) {
+                if (!in_array($aGAP->google_analytics_property_id, $newGAPIds)) {
                     $aGAP->delete();
                 }
             }
-        }
 
-        if ($request->has('google_analytics_property_id')) {
             if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
                 foreach ($newGAPIds as $gAPId) {
                     if (!in_array($gAPId, $oldGAPIds)) {
@@ -192,7 +190,7 @@ class AnnotationController extends Controller
 
         // onDelete cascade was added during migration but still we have to do this
         // because of laravel migrations mistake
-        foreach($annotation->annotationGaProperties as $aGAP){
+        foreach ($annotation->annotationGaProperties as $aGAP) {
             $aGAP->delete();
         }
         $annotation->delete();
