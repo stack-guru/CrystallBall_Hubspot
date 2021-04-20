@@ -230,7 +230,7 @@ class IndexAnnotations extends React.Component {
                                                     <th>Category</th>
                                                     <th>Event Name</th>
                                                     <th>Description</th>
-                                                    <th>Google Account</th>
+                                                    <th>Properties</th>
                                                     <th>Status</th>
                                                     <th>Show At</th>
                                                     <th>Added By</th>
