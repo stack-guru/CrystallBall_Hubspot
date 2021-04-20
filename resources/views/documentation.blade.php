@@ -24,8 +24,7 @@
 <body>
     <div class="left-menu">
         <div class="content-logo">
-            <img alt="platform by Emily van den Heever from the Noun Project"
-                title="platform by Emily van den Heever from the Noun Project" src="{{ asset('/images/company_logo.png') }}" height="32" />
+            <img alt="" title="" src="{{ asset('/images/company_logo.png') }}" height="32" />
             <span>API Documentation</span>
         </div>
         <div class="content-menu">
@@ -147,7 +146,7 @@
         --header 'Content-Type: application/x-www-form-urlencoded' \
         --data category=Sales Event \
         --data event_name=Black Friday \
-        --data google_analytics_account_id[]=3 \
+        --data google_analytics_property_id[]=3 \
         --data url=https://gaannotations.com/ \
         --data 'description=Black Friday Deals 2020' \
         --data show_at=2020-11-27 \
@@ -218,9 +217,9 @@
                         <td>[required] Annotation's show_at date from which it will show on google analytics</td>
                     </tr>
                     <tr>
-                        <td>google_analytics_account_id[]</td>
+                        <td>google_analytics_property_id[]</td>
                         <td>int</td>
-                        <td>[optional] Annotation's google analytics account id with which it will be attached. You can get <strong> IDs for API </strong> of your google analytics accounts from <a href="{{ route('google-account.index') }}" target="_blank">here</a>. You can add multiple fields of this name in your request for multiple accounts of same annotation.</td>
+                        <td>[optional] Annotation's google analytics property id with which it will be attached. You can get <strong> IDs for API </strong> of your google analytics properties from <a href="{{ route('google-account.index') }}" target="_blank">here</a>. You can add multiple fields of this name in your request for multiple properties of same annotation.</td>
                     </tr>
 
                     </tbody>
@@ -241,7 +240,7 @@
         --header 'Content-Type: application/x-www-form-urlencoded' \
         --data category=Sales Event \
         --data event_name=Black Friday \
-        --data google_analytics_account_id[]=4 \
+        --data google_analytics_property_id[]=4 \
         --data url=https://gaannotations.com/ \
         --data 'description=Black Friday Deals 2020' \
         --data show_at=2020-11-27 \
@@ -328,9 +327,9 @@
                         <td>[required] Annotation's show_at date from which it will show on google analytics updated value</td>
                     </tr>
                     <tr>
-                        <td>google_analytics_account_id[]</td>
+                        <td>google_analytics_property_id[]</td>
                         <td>int</td>
-                        <td>[optional] Annotation's google analytics account id with which it will be attached. You can get Ids of your google analytics accounts from <a href="{{ route('google-account.index') }}" target="_blank">here</a>. You can add multiple fields of this name in your request for multiple accounts of same annotation.</td>
+                        <td>[optional] Annotation's google analytics property id with which it will be attached. You can get Ids of your google analytics properties from <a href="{{ route('google-account.index') }}" target="_blank">here</a>. You can add multiple fields of this name in your request for multiple properties of same annotation.</td>
                     </tr>
                     </tbody>
                 </table>
