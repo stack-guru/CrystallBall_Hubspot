@@ -6,13 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
 use App\Models\AnnotationGaProperty;
+use App\Models\UserDataSource;
 use Auth;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
-use App\Models\UserDataSource;
-use App\Notifications\NewAnnotationNotification;
-
 
 class AnnotationController extends Controller
 {
@@ -71,7 +69,7 @@ class AnnotationController extends Controller
             $aGAP->user_id = $userId;
             $aGAP->save();
         }
-        
+
         // $user->notify(new NewAnnotationNotification($annotation));
         // event(new \App\Events\NewAnnotationAdded($annotation));
         return ['annotation' => $annotation];
@@ -225,8 +223,8 @@ class AnnotationController extends Controller
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select 1, update_date AS show_at, update_date AS created_at, null, category, event_name, NULL as url, description, 'System' AS user_name from `google_algorithm_updates`";
             $gAUConf = UserDataSource::where('user_id', $user->id)->where('ds_code', 'google_algorithm_update_dates')->first();
-            if($gAUConf){
-                if($gAUConf->status != '' && $gAUConf->status != null){
+            if ($gAUConf) {
+                if ($gAUConf->status != '' && $gAUConf->status != null) {
                     $annotationsQuery .= ' where status = "' . $gAUConf->status . '"';
                 }
             }
@@ -367,7 +365,7 @@ class AnnotationController extends Controller
                 $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
                 $totalNewRows = count($rows);
                 $lastInsertId = $firstInsertId + ($totalNewRows - 1);
-                if (!in_array("", $request->google_analytics_property_id)) {
+                if ($request->has('google_analytics_property_id') && !in_array("", $request->google_analytics_property_id)) {
                     foreach ($request->google_analytics_property_id as $googleAnalyticsPropertyId) {
                         $sql = "
                         INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
@@ -396,7 +394,7 @@ class AnnotationController extends Controller
             $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
             $totalNewRows = count($rows);
             $lastInsertId = $firstInsertId + ($totalNewRows - 1);
-            if (!in_array("", $request->google_analytics_property_id)) {
+            if ($request->has('google_analytics_property_id') && !in_array("", $request->google_analytics_property_id)) {
                 foreach ($request->google_analytics_property_id as $googleAnalyticsPropertyId) {
                     $sql = "
                     INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
