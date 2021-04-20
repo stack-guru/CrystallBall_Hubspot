@@ -406,7 +406,7 @@ class AnnotationController extends Controller
                 }
             } else {
                 $sql = "
-                    INSERT INTO annotation_ga_accounts (annotation_id, google_analytics_property_id, user_id)
+                    INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
                         SELECT id, NULL, user_id FROM annotations
                             WHERE id BETWEEN $firstInsertId AND $lastInsertId
                     ;
