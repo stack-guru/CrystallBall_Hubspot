@@ -43,12 +43,12 @@ class AnnotationController extends Controller
 
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= "SELECT DISTINCT DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` FROM `annotations`";
-        if ($request->query('google_analytics_account_id') && $request->query('google_analytics_account_id') !== '*') {
-            $annotationsQuery .= " INNER JOIN `annotation_ga_accounts` ON `annotation_ga_accounts`.`annotation_id` = `annotations`.`id`";
+        if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
+            $annotationsQuery .= " INNER JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
         }
         $annotationsQuery .= " WHERE (`annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') AND `annotations`.`is_enabled` = 1) ";
-        if ($request->query('google_analytics_account_id') && $request->query('google_analytics_account_id') !== '*') {
-            $annotationsQuery .= " AND (`annotation_ga_accounts`.`google_analytics_account_id` IS NULL OR `annotation_ga_accounts`.`google_analytics_account_id` = " . $request->query('google_analytics_account_id') . ")";
+        if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
+            $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $request->query('google_analytics_property_id') . ")";
         }
         $addedByArray = [];
         if ($request->query('show_manual_annotations')) {
