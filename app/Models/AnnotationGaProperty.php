@@ -18,4 +18,9 @@ class AnnotationGaProperty extends Model
     {
         return $this->belongsTo('App\Models\GoogleAnalyticsProperty');
     }
+
+    public function annotation()
+    {
+        return $this->belongsTo('App\Models\Annotation');
+    }
 }

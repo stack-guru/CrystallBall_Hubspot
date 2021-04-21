@@ -36,7 +36,7 @@ class GoogleAnalyticsAccount extends Model
      */
     public function googleAnalyticsProperties(): HasMany
     {
-        return $this->hasMany(GoogleAnalyticsProperties::class);
+        return $this->hasMany(GoogleAnalyticsProperty::class);
     }
 
 }
