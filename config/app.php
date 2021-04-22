@@ -68,6 +68,9 @@ return [
     */
 
     'timezone' => 'Asia/Jerusalem',
+    // 'timezone' => 'UTC',
+    // 'timezone' => 'Asia/Kolkata',
+    // 'timezone' => 'Europe/London',
 
     /*
     |--------------------------------------------------------------------------
