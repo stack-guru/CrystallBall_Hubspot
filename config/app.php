@@ -67,11 +67,8 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Jerusalem',
-    // 'timezone' => 'UTC',
-    // 'timezone' => 'Asia/Kolkata',
-    // 'timezone' => 'Europe/London',
-
+    'timezone' => 'America/Denver',
+    
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
