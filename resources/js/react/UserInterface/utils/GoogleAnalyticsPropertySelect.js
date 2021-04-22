@@ -9,7 +9,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            aProperties: [{ value: "", label: "All Accounts" }],
+            aProperties: [{ value: "", label: "All Properties" }],
         };
         this.searchGoogleAnalyticsProperties = this.searchGoogleAnalyticsProperties.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -36,9 +36,9 @@ export default class GoogleAnalyticsPropertySelect extends Component {
 
     onChangeHandler(sOption) {
         if (sOption == null) {
-            this.setState({ aProperties: [{ value: "", label: "All Accounts" }] });
+            this.setState({ aProperties: [{ value: "", label: "All Properties" }] });
             this.props.onChangeCallback({ target: { name: this.props.name, value: [""] } });
-            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Accounts" }]);
+            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Properties" }]);
         } else {
             // aProperties.push(sOption);
             let aProperties = null;

@@ -42,9 +42,9 @@ export default class EditAnnotation extends React.Component {
                 .then(response => {
                     let gAPs = [];
                     if (!response.data.annotation.annotation_ga_properties.length) {
-                        gAPs = [{ value: "", label: "All Accounts" }];
+                        gAPs = [{ value: "", label: "All Properties" }];
                     } else if (response.data.annotation.annotation_ga_properties[0].google_analytics_property_id == null) {
-                        gAPs = [{ value: "", label: "All Accounts" }];
+                        gAPs = [{ value: "", label: "All properties" }];
                     } else {
                         gAPs = response.data.annotation.annotation_ga_properties.map(aGAP => { return { value: aGAP.google_analytics_property_id, label: aGAP.google_analytics_property.name }; });
                     }
