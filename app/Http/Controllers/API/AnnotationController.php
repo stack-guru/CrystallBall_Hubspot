@@ -76,7 +76,7 @@ class AnnotationController extends Controller
 
         $annotation = new Annotation;
         $annotation->fill($request->validated());
-        $annotation->show_at = Carbon::parse($request->show_at);
+        $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
         $annotation->user_id = Auth::id();
         $annotation->added_by = 'api';
         $annotation->save();
@@ -126,7 +126,7 @@ class AnnotationController extends Controller
         }
 
         $annotation->fill($request->validated());
-        $annotation->show_at = Carbon::parse($request->show_at);
+        $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
         $annotation->save();
 
         if ($request->has('google_analytics_property_id')) {

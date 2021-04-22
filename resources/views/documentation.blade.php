@@ -214,7 +214,7 @@
                     <tr>
                         <td>show_at</td>
                         <td>date</td>
-                        <td>[required] Annotation's show_at date from which it will show on google analytics</td>
+                        <td>[optional] Annotation's show_at date from which it will show on google analytics</td>
                     </tr>
                     <tr>
                         <td>google_analytics_property_id[]</td>
@@ -324,7 +324,7 @@
                     <tr>
                         <td>show_at</td>
                         <td>date</td>
-                        <td>[required] Annotation's show_at date from which it will show on google analytics updated value</td>
+                        <td>[optional] Annotation's show_at date from which it will show on google analytics updated value</td>
                     </tr>
                     <tr>
                         <td>google_analytics_property_id[]</td>

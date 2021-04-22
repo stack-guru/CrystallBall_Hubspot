@@ -31,7 +31,6 @@ class GoogleAnalyticsPropertyController extends Controller
     
     public function getAnnotations($id)
     {
-        // return 'hello';
         $annotations=AnnotationGaProperty::where([['user_id',Auth::id()],['google_analytics_property_id',$id]])->get();
         $allAnnotaions=[];
         foreach($annotations as $annotation)

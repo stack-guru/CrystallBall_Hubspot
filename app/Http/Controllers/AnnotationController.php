@@ -49,6 +49,7 @@ class AnnotationController extends Controller
 
         $annotation = new Annotation;
         $annotation->fill($request->validated());
+        $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
         $annotation->user_id = $userId;
         $annotation->is_enabled = true;
         $annotation->added_by = 'manual';

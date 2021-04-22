@@ -128,10 +128,10 @@ export default class EditAnnotation extends React.Component {
             errors["event_name"] = "Please enter your event_name.";
         }
 
-        if (!show_at) {
-            isValid = false;
-            errors["show_at"] = "Please add show_at date.";
-        }
+        // if (!show_at) {
+        //     isValid = false;
+        //     errors["show_at"] = "Please add show_at date.";
+        // }
 
 
         this.setState({
