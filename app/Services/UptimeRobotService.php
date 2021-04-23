@@ -13,32 +13,32 @@ class UptimeRobotService
      */
     public function __construct()
     {
-       $this->apiKey = config('services.uptime_robot.api_key');
+        $this->apiKey = config('services.uptime_robot.api_key');
     }
 
     public function getAccountDetails()
     {
-        $url= "https://api.uptimerobot.com/v2/getAccountDetails";
+        $url = "https://api.uptimerobot.com/v2/getAccountDetails";
 
         $response = Http::post($url, [
             'api_key' => $this->apiKey,
         ]);
-        return $response->json();   
+        return $response->json();
     }
 
     public function getMonitors()
     {
-        $url= "https://api.uptimerobot.com/v2/getMonitors";
+        $url = "https://api.uptimerobot.com/v2/getMonitors";
 
         $response = Http::post($url, [
             'api_key' => $this->apiKey,
         ]);
-        return $response->json();   
+        return $response->json();
     }
-    
-    public function newMonitor($name,$urll,$type)
+
+    public function newMonitor($name, $urll, $type)
     {
-        $url= "https://api.uptimerobot.com/v2/newMonitor";
+        $url = "https://api.uptimerobot.com/v2/newMonitor";
         $response = Http::post($url, [
             'api_key' => $this->apiKey,
             'format' => 'json',
@@ -46,18 +46,18 @@ class UptimeRobotService
             'url' => $urll,
             'type' => $type, //type must be a number
         ]);
-        return $response->json();  
+        return $response->json();
     }
 
     public function deleteMonitor($id)
     {
-        $url= "https://api.uptimerobot.com/v2/deleteMonitor";
+        $url = "https://api.uptimerobot.com/v2/deleteMonitor";
 
         $response = Http::post($url, [
             'api_key' => $this->apiKey,
             'id' => $id,
         ]);
-        return $response->json();   
-    }   
+        return $response->json();
+    }
 
 }
