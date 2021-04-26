@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import CCDetector from "../../utils/CreditCardDetector";
 import HttpClient from "../../utils/HttpClient";
+import Timezone from "../../utils/Timezone";
 import { toast } from "react-toastify";
 import ErrorAlert from '../../utils/ErrorAlert';
+
 export default class ChangePassword extends React.Component {
 
     constructor(props) {
@@ -16,9 +18,11 @@ export default class ChangePassword extends React.Component {
             isBusy: false,
             errors: '',
             validation: '',
+            
         }
         this.changeHandler = this.changeHandler.bind(this)
-        this.submitHandler = this.submitHandler.bind(this)
+        this.passwordChangeHandler = this.passwordChangeHandler.bind(this)
+        this.timezoneChangeHandler = this.timezoneChangeHandler.bind(this)
         this.setDefaultState = this.setDefaultState.bind(this)
     }
     componentDidMount() {
@@ -29,7 +33,7 @@ export default class ChangePassword extends React.Component {
         this.setState({ isDirty: true, passwords: { ...this.state.passwords, [e.target.name]: e.target.value } });
     }
 
-    submitHandler(e) {
+    passwordChangeHandler(e) {
         e.preventDefault();
 
         if (this.validate() && !this.state.isBusy) {
@@ -84,12 +88,35 @@ export default class ChangePassword extends React.Component {
         return isValid;
     }
 
+    timezoneChangeHandler(e) {
+        e.preventDefault();
+
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true });
+            HttpClient.put('/settings/change-password', {'timezone':this.state.timezone}).then(resp => {
+                console.log(resp);
+                toast.success("Timezone changed successfully.");
+                this.setDefaultState();
+                this.setState({ isBusy: false });
+
+            }, (err) => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                console.log(err);
+                this.setState({ isBusy: false, errors: err });
+            })
+        }
+
+    }
+
     setDefaultState() {
         this.setState({
             passwords: {
                 new_password: '',
                 new_password_confirmation: '',
             },
+            timezone:'',
             validation: {},
             isBusy: false,
             isDirty: false,
@@ -108,7 +135,7 @@ export default class ChangePassword extends React.Component {
                                 <ErrorAlert errors={this.state.errors} />
                             </div>
                         </div>
-                        <form onSubmit={this.submitHandler}>
+                        <form onSubmit={this.passwordChangeHandler}>
                             <div className="form-group my-3">
                                 <label htmlFor="">Password</label>
                                 <input type="password" className="form-control" name="new_password" value={this.state.passwords.new_password} onChange={this.changeHandler} placeholder="New Password" id="" />
@@ -128,6 +155,29 @@ export default class ChangePassword extends React.Component {
                             <div className="row ml-0 mr-0 my-3">
                                 <div className="col-12 text-right p-0">
                                     <button className="btn btn-primary">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div className="row ml-0 mr-0">
+                    <div className="col-12">
+                        <h3 className="gaa-title">Timezone</h3>
+                        <div className="row ml-0 mr-0">
+                            <div className="col-md-12">
+                                <ErrorAlert errors={this.state.errors} />
+                            </div>
+                        </div>
+                        <form onSubmit={this.timezoneChangeHandler}>
+                            <div className="form-group my-3">
+                            <Timezone className='form-control' name='timezone' onChange={(e)=>{this.setState({timezone:e.target.value})}}/>
+                               
+                            </div>
+                           
+                            <div className="row ml-0 mr-0 my-3">
+                                <div className="col-12 text-right p-0">
+                                    <button className="btn btn-primary">Change</button>
                                 </div>
                             </div>
                         </form>

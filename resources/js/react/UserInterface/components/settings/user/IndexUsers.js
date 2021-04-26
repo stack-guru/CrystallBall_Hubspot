@@ -128,7 +128,7 @@ export default class IndexUsers extends Component {
                     </div>
 
                 </section>
-            </div >
+            </div>
         );
     }
 

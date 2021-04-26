@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+
 Route::redirect('/', '/login', 301);
 
 Auth::routes();
@@ -91,6 +93,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::put('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'update']);
             Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
             Route::post('/change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
+            Route::put('/change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'setTimezone']);
 
             Route::resource('google-analytics-account', App\Http\Controllers\GoogleAnalyticsAccountController::class)->only(['index', 'destroy']);
             Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);

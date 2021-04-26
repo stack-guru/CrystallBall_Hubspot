@@ -45,5 +45,25 @@ class ResetPasswordController extends Controller
         $user->save();
         return response()->json(['success' => 'true', 'message' => 'password updated successfully'], 200);
     }
+    
+    
+    public function setTimezone(Request $request)
+    {
+        // return $request->timezone;
+        $request->validate([
+            'timezone'=>'required',
+        ]);
+        $user = Auth::user();
+        $user->timezone = $request->timezone;
+        $user->save();
+        return response()->json(['success' => 'true', 'message' => 'TimeZone updated successfully'], 200);
+    }
 
+    public function getUser(Request $request)
+    {
+        // return $request->timezone;
+    
+        $user = Auth::user();
+        return response()->json(['success' => 'true', 'data' => $user->timezone], 200);
+    }
 }
