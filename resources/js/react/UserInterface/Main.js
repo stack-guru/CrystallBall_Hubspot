@@ -149,7 +149,7 @@ class Main extends React.Component {
                                 <Settings user={this.state.user} />
                             </Route>
                             <Route exact path="/settings/change-password" refresh={true}>
-                                <ChangePassword />
+                                <ChangePassword user={this.state.user} reloadUser={this.loadUser}/>
                             </Route>
                             <Route exact path="/settings/price-plans" refresh={true}>
                                 <PricingPlans user={this.state.user} />

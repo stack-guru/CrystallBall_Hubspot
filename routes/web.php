@@ -92,8 +92,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
             Route::put('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'update']);
             Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
-            Route::post('/change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
-            Route::put('/change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'setTimezone']);
+            Route::post('change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
+            Route::put('change-timezone', [App\Http\Controllers\HomeController::class, 'updateTimezone']);
 
             Route::resource('google-analytics-account', App\Http\Controllers\GoogleAnalyticsAccountController::class)->only(['index', 'destroy']);
             Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);
