@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import CCDetector from "../../utils/CreditCardDetector";
-import HttpClient from "../../utils/HttpClient";
-import Timezone from "../../utils/Timezone";
 import { toast } from "react-toastify";
+
+import HttpClient from "../../utils/HttpClient";
+import TimezoneSelect from "../../utils/TimezoneSelect";
 import ErrorAlert from '../../utils/ErrorAlert';
 
 export default class ChangePassword extends React.Component {
@@ -18,7 +18,7 @@ export default class ChangePassword extends React.Component {
             isBusy: false,
             errors: '',
             validation: '',
-            
+
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.passwordChangeHandler = this.passwordChangeHandler.bind(this)
@@ -27,6 +27,8 @@ export default class ChangePassword extends React.Component {
     }
     componentDidMount() {
         document.title = 'Change Password'
+        if (this.props.user) this.setState({ timezone: this.props.user.timezone });
+
     }
 
     changeHandler(e) {
@@ -93,12 +95,12 @@ export default class ChangePassword extends React.Component {
 
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
-            HttpClient.put('/settings/change-password', {'timezone':this.state.timezone}).then(resp => {
+            HttpClient.put('/settings/change-timezone', { 'timezone': this.state.timezone }).then(resp => {
                 console.log(resp);
                 toast.success("Timezone changed successfully.");
                 this.setDefaultState();
                 this.setState({ isBusy: false });
-
+                (this.props.reloadUser)();
             }, (err) => {
                 console.log(err);
                 this.setState({ isBusy: false, errors: (err.response).data });
@@ -116,7 +118,6 @@ export default class ChangePassword extends React.Component {
                 new_password: '',
                 new_password_confirmation: '',
             },
-            timezone:'',
             validation: {},
             isBusy: false,
             isDirty: false,
@@ -164,17 +165,12 @@ export default class ChangePassword extends React.Component {
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
                         <h3 className="gaa-title">Timezone</h3>
-                        <div className="row ml-0 mr-0">
-                            <div className="col-md-12">
-                                <ErrorAlert errors={this.state.errors} />
-                            </div>
-                        </div>
                         <form onSubmit={this.timezoneChangeHandler}>
                             <div className="form-group my-3">
-                            <Timezone className='form-control' name='timezone' onChange={(e)=>{this.setState({timezone:e.target.value})}}/>
-                               
+                                <TimezoneSelect className='form-control' value={this.state.timezone} name='timezone' onChange={(e) => { this.setState({ timezone: e.target.value }) }} />
+
                             </div>
-                           
+
                             <div className="row ml-0 mr-0 my-3">
                                 <div className="col-12 text-right p-0">
                                     <button className="btn btn-primary">Change</button>

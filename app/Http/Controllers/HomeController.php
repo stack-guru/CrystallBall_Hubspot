@@ -85,4 +85,16 @@ class HomeController extends Controller
         return ['sucess' => true];
     }
 
+    public function updateTimezone(Request $request)
+    {
+        // return $request->timezone;
+        $request->validate([
+            'timezone'=>'required',
+        ]);
+        $user = Auth::user();
+        $user->timezone = $request->timezone;
+        $user->save();
+        return response()->json(['success' => 'true', 'message' => 'TimeZone updated successfully'], 200);
+    }
+
 }
