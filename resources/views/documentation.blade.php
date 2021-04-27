@@ -70,9 +70,13 @@
                     To get characters you need to make a <code class="highlighted">GET</code> call to the following url :<br>
                     <code class="higlighted">{{route('api.v1.user.show')}}</code>
                 </p>
+                
                 <br>
-                <pre><code class="json">
+                <pre>
+                   
 
+                    <code class="json">
+                        <h3 class=""><span class="badge badge-light">Resopne <strong>200</strong> OK</span></h3>
     Result example :
 
     {
@@ -107,7 +111,7 @@
                 </p>
                 <br>
                 <pre><code class="json">
-
+                    <h3 class=""><span class="badge badge-light">Resopne <strong>200</strong> OK</span></h3>
     Result example :
 
     {
@@ -157,6 +161,7 @@
                 </p>
                 <br>
                 <pre><code class="json">
+                    <h3 class=""><span class="badge badge-light">Resopne <strong>201</strong> Created</span></h3>
 
     Result example :
 
@@ -251,6 +256,7 @@
                 </p>
                 <br>
                 <pre><code class="json">
+                    <h3 class=""><span class="badge badge-light">Resopne <strong>200</strong> OK</span></h3>
 
     Result example :
 
@@ -355,6 +361,7 @@
                 </p>
                 <br>
                 <pre><code class="json">
+                <h3 class=""><span class="badge badge-light">Resopne <strong>204</strong></span></h3>
 
     Result example :
 
