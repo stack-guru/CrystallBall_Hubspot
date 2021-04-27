@@ -74,6 +74,14 @@ class AnnotationController extends Controller
         // $user->notify(new NewAnnotationNotification($annotation));
         // event(new \App\Events\NewAnnotationAdded($annotation));
         return ['annotation' => $annotation];
+
+        // return ['annotation' => array_merge(
+        //     [
+        //         ['status' => '201 Created']
+        //     ],
+        //     $annotation
+        // )];
+
     }
 
     public function show($id)
