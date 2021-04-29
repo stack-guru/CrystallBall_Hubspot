@@ -28,6 +28,7 @@ export default class DataSourceIndex extends React.Component {
         this.serviceStatusHandler = this.serviceStatusHandler.bind(this);
 
         this.sectionToggler = this.sectionToggler.bind(this);
+        this.handleClick = this.handleClick.bind(this);
 
     }
 
@@ -93,39 +94,49 @@ export default class DataSourceIndex extends React.Component {
     }
 
     userDataSourceAddHandler(dataSource) {
-        let formData = {
-            'ds_code': dataSource.code,
-            'ds_name': dataSource.name,
-            'country_name': dataSource.country_name,
-            'retail_marketing_id': dataSource.retail_marketing_id,
-            'open_weather_map_city_id': dataSource.open_weather_map_city_id,
-            'open_weather_map_event': dataSource.open_weather_map_event,
-            'status': dataSource.status,
-            'value': dataSource.value,
-            'is_enabled': 1,
-        }
-        HttpClient.post('/user-data-source', formData).then(resp => {
-            let uds = resp.data.user_data_source;
-            let ar = this.state.userDataSources[uds.ds_code];
-            if (uds.ds_code == 'google_algorithm_update_dates') { ar = [uds]; } else { ar.push(uds) }
-            this.setState({ userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar } })
-        }, (err) => {
-            console.log(err)
-        }).catch(err => {
-            console.log(err)
-        })
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true });
+            let formData = {
+                'ds_code': dataSource.code,
+                'ds_name': dataSource.name,
+                'country_name': dataSource.country_name,
+                'retail_marketing_id': dataSource.retail_marketing_id,
+                'open_weather_map_city_id': dataSource.open_weather_map_city_id,
+                'open_weather_map_event': dataSource.open_weather_map_event,
+                'status': dataSource.status,
+                'value': dataSource.value,
+                'is_enabled': 1,
+            }
+            HttpClient.post('/user-data-source', formData).then(resp => {
+                let uds = resp.data.user_data_source;
+                let ar = this.state.userDataSources[uds.ds_code];
+                if (uds.ds_code == 'google_algorithm_update_dates') { ar = [uds]; } else { ar.push(uds) }
+                this.setState({ userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar }, isBusy:false })
+            }, (err) => {
+                console.log(err)
+                this.setState({ isBusy: false });
+            }).catch(err => {
+                console.log(err)
+                this.setState({ isBusy: false });
+            })
+        }    
     }
 
     userDataSourceDeleteHandler(userDataSourceId, dsCode) {
-        HttpClient.delete(`/user-data-source/${userDataSourceId}`).then(resp => {
-            let ar = this.state.userDataSources[dsCode];
-            let newAr = ar.filter(a => a.id != userDataSourceId)
-            this.setState({ userDataSources: { ...this.state.userDataSources, [dsCode]: newAr } })
-        }, (err) => {
-            console.log(err)
-        }).catch(err => {
-            console.log(err)
-        })
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true });
+            HttpClient.delete(`/user-data-source/${userDataSourceId}`).then(resp => {
+                let ar = this.state.userDataSources[dsCode];
+                let newAr = ar.filter(a => a.id != userDataSourceId)
+                this.setState({ userDataSources: { ...this.state.userDataSources, [dsCode]: newAr }, isBusy:false })
+            }, (err) => {
+                console.log(err)
+                this.setState({isBusy:false})
+            }).catch(err => {
+                console.log(err)
+                this.setState({isBusy:false})
+            })
+        }    
     }
 
     changeShownHint(obj) {
@@ -140,6 +151,13 @@ export default class DataSourceIndex extends React.Component {
         } else {
             this.setState({ sectionName: sectionName })
             window.scroll(0, 0);
+        }
+    }
+    handleClick(e) {
+        if (e.target.checked) {
+           this.userDataSourceAddHandler({ code: 'wordpress_updates', name: 'WordpressUpdate', country_name: null, retail_marketing_id: null, value: 'last year'})
+        } else {
+            this.userDataSourceDeleteHandler(this.state.userDataSources['wordpress_updates'][0].id, 'wordpress_updates')
         }
     }
 
@@ -215,6 +233,14 @@ export default class DataSourceIndex extends React.Component {
                                         Wordpress Updates
                                         <img id="wordpress-updates-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('wordpress-updates') }} src="/images/info-logo.png" />
                                     </h4>
+                                    <div className="input-group-prepend">
+                                        <div className="input-group-text">
+                                            <input type="checkbox"
+                                            onClick={(e)=>{this.handleClick(e)}}
+                                            name="last_year_only"/>
+                                           <h6 style={{marginTop: "7px"}}> &nbsp;&nbsp; Show last year only</h6> 
+                                        </div>
+                                    </div>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'wordpress-updates'} target="wordpress-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>WordPress Core Updates</PopoverHeader>
                                         <PopoverBody>WordPress Core Updates: Our automated annotation feature will inform you when a new version, Security, or Maintenance Release of WordPress is available.</PopoverBody>
@@ -540,7 +566,7 @@ export default class DataSourceIndex extends React.Component {
                         }
                     </div>
                 </div>
-            </div >
+            </div>
         );
     }
 }
