@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-
 Route::redirect('/', '/login', 301);
 
 Auth::routes();
@@ -66,8 +65,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'ui'], function () {
 
-        Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'destroy']);
-
         Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
         Route::get('coupon', [App\Http\Controllers\CouponController::class, 'verify']);
         Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
@@ -79,10 +76,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('countries', [App\Http\Controllers\HolidayController::class, 'holidayApi']);
         Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);
         Route::get('annotation-categories', [App\Http\Controllers\AnnotationController::class, 'getCategories']);
-        Route::get('data-source/google-algorithm-updates/date', [App\Http\Controllers\GoogleAlgorithmUpdateController::class, 'uiIndex']);
-        Route::get('data-source/retail-marketing-dates', [App\Http\Controllers\RetailMarketingController::class, 'uiIndex']);
-        Route::get('data-source/weather-alert/country', [App\Http\Controllers\WeatherAlertController::class, 'uiCountriesIndex']);
-        Route::get('data-source/weather-alert/city', [App\Http\Controllers\WeatherAlertController::class, 'uiCitiesIndex']);
+
+        Route::group(['prefix' => 'data-source'], function () {
+            Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'destroy']);
+
+            Route::resource('web-monitor', App\Http\Controllers\WebMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
+
+            Route::get('google-algorithm-updates/date', [App\Http\Controllers\GoogleAlgorithmUpdateController::class, 'uiIndex']);
+            Route::get('retail-marketing-dates', [App\Http\Controllers\RetailMarketingController::class, 'uiIndex']);
+            Route::get('weather-alert/country', [App\Http\Controllers\WeatherAlertController::class, 'uiCountriesIndex']);
+            Route::get('weather-alert/city', [App\Http\Controllers\WeatherAlertController::class, 'uiCitiesIndex']);
+        });
 
         Route::group(['prefix' => 'settings'], function () {
 

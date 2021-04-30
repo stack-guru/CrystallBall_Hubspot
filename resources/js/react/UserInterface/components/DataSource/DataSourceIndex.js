@@ -34,7 +34,7 @@ export default class DataSourceIndex extends React.Component {
     componentDidMount() {
         document.title = 'Data Source';
         if (!this.state.isBusy) {
-            HttpClient.get('/user-data-source').then(resp => {
+            HttpClient.get('/data-source/user-data-source').then(resp => {
                 this.setState({ isBusy: false, userDataSources: resp.data.user_data_sources });
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
@@ -105,7 +105,7 @@ export default class DataSourceIndex extends React.Component {
             'value': dataSource.value,
             'is_enabled': 1,
         }
-        HttpClient.post('/user-data-source', formData).then(resp => {
+        HttpClient.post('/data-source/user-data-source', formData).then(resp => {
             let uds = resp.data.user_data_source;
             let ar = this.state.userDataSources[uds.ds_code];
             if (uds.ds_code == 'google_algorithm_update_dates') { ar = [uds]; } else { ar.push(uds) }
@@ -121,7 +121,7 @@ export default class DataSourceIndex extends React.Component {
 
     userDataSourceDeleteHandler(userDataSourceId, dsCode) {
         this.setState({ isBusy: true });
-        HttpClient.delete(`/user-data-source/${userDataSourceId}`).then(resp => {
+        HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`).then(resp => {
             let ar = this.state.userDataSources[dsCode];
             let newAr = ar.filter(a => a.id != userDataSourceId)
             this.setState({ userDataSources: { ...this.state.userDataSources, [dsCode]: newAr }, isBusy: false })
