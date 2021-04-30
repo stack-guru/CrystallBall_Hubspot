@@ -34,18 +34,22 @@
                         <label>User per ga-account count?</label>
                         <input type="number" name="user_per_ga_account_count" id="user_per_ga_account_count" value="{{old('user_per_ga_account_count',$pricePlan->user_per_ga_account_count)}}" class="form-control" />
                     </div>
-                        <div class="form-group">
-                            <label>Has manual add?</label>
-                            <input type="checkbox" name="has_manual_add" id="hasManualAdd" class="form-control" @if($pricePlan->has_manual_add) checked @endif />
-                        </div>
-                        <div class="form-group">
-                            <label>Has CSV upload?</label>
-                            <input type="checkbox" name="has_csv_upload" id="hasCSVUpload" class="form-control" @if($pricePlan->has_csv_upload) checked @endif />
-                        </div>
-                        <div class="form-group">
-                            <label>Has API?</label>
-                            <input type="checkbox" name="has_api" id="hasAPI" class="form-control" @if($pricePlan->has_api) checked @endif />
-                        </div>
+                    <div class="form-group">
+                        <label>Web monitor count?</label>
+                        <input type="number" name="web_monitor_count" id="web_monitor_count" value="{{old('web_monitor_count',$pricePlan->web_monitor_count)}}" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Has manual add?</label>
+                        <input type="checkbox" name="has_manual_add" id="hasManualAdd" class="form-control" @if($pricePlan->has_manual_add) checked @endif />
+                    </div>
+                    <div class="form-group">
+                        <label>Has CSV upload?</label>
+                        <input type="checkbox" name="has_csv_upload" id="hasCSVUpload" class="form-control" @if($pricePlan->has_csv_upload) checked @endif />
+                    </div>
+                    <div class="form-group">
+                        <label>Has API?</label>
+                        <input type="checkbox" name="has_api" id="hasAPI" class="form-control" @if($pricePlan->has_api) checked @endif />
+                    </div>
 
                     <div class="form-group">
                         <label>Has Integrations?</label>

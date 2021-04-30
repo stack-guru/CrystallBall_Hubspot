@@ -34,7 +34,10 @@
                         <label>User per ga-account count?</label>
                         <input type="number" name="user_per_ga_account_count" id="user_per_ga_account_count" class="form-control" />
                     </div>
-
+                    <div class="form-group">
+                        <label>Web monitor count?</label>
+                        <input type="number" name="web_monitor_count" id="web_monitor_count" class="form-control" />
+                    </div>
                     <div class="form-group">
                             <label>Has manual add?</label>
                             <input type="checkbox" name="has_manual_add" id="hasManualAdd" class="form-control" />

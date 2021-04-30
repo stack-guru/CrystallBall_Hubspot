@@ -36,6 +36,7 @@ class PricePlanRequest extends FormRequest
             'is_available' => "nullable",
             'ga_account_count' => 'nullable|numeric',
             'user_per_ga_account_count' => 'nullable|numeric',
+            'web_monitor_count' => 'nullable|numeric',
         ];
     }
 }
