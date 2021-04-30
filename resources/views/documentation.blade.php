@@ -76,7 +76,7 @@
                    
 
                     <code class="json">
-                        <h3 class=""><span class="badge badge-light">Resopne <strong>200</strong> OK</span></h3>
+                        <h3 class=""><span class="badge badge-light">Response <strong>200</strong> OK</span></h3>
     Result example :
 
     {
@@ -111,7 +111,7 @@
                 </p>
                 <br>
                 <pre><code class="json">
-                    <h3 class=""><span class="badge badge-light">Resopne <strong>200</strong> OK</span></h3>
+                    <h3 class=""><span class="badge badge-light">Response <strong>200</strong> OK</span></h3>
     Result example :
 
     {
@@ -161,7 +161,7 @@
                 </p>
                 <br>
                 <pre><code class="json">
-                    <h3 class=""><span class="badge badge-light">Resopne <strong>201</strong> Created</span></h3>
+                    <h3 class=""><span class="badge badge-light">Response <strong>201</strong> Created</span></h3>
 
     Result example :
 
@@ -256,7 +256,7 @@
                 </p>
                 <br>
                 <pre><code class="json">
-                    <h3 class=""><span class="badge badge-light">Resopne <strong>200</strong> OK</span></h3>
+                    <h3 class=""><span class="badge badge-light">Response <strong>200</strong> OK</span></h3>
 
     Result example :
 
@@ -361,12 +361,12 @@
                 </p>
                 <br>
                 <pre><code class="json">
-                <h3 class=""><span class="badge badge-light">Resopne <strong>204</strong></span></h3>
+                <h3 class=""><span class="badge badge-light">Response <strong>204</strong></span></h3>
 
     Result example :
 
     {
-        "success": true
+
     }
                  </code></pre>
 

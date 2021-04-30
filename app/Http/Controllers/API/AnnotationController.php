@@ -103,7 +103,7 @@ class AnnotationController extends Controller
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
-        return response()->json(['success' => 'true', 'annotation' => $annotation], 201);
+        return response()->json(['annotation' => $annotation], 201);
 
     }
 
@@ -168,7 +168,7 @@ class AnnotationController extends Controller
         $user->last_api_called_at = new \DateTime;
         $user->save();
 
-        return response()->json(['success' => 'true', 'annotation' => $annotation], 200);
+        return response()->json(['annotation' => $annotation], 200);
 
     }
 
@@ -203,7 +203,7 @@ class AnnotationController extends Controller
         $user->last_api_called_at = new \DateTime;
         $user->save();
 
-        return response()->json(['success' =>true,], 204);
+        return response()->json([], 204);
     }
 
 }
