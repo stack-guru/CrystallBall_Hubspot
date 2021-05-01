@@ -35,10 +35,10 @@ export default class UploadAnnotation extends React.Component {
                 toast.success("CSV file uploaded.");
                 this.setState({ isBusy: false, errors: response.data.message });
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ isBusy: false, errors: err });
             });
         }

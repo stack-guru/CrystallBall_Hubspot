@@ -71,50 +71,52 @@ export default class DSOWMEventsSelect extends React.Component {
         let userDSEvents = this.props.ds_data.map(ds => ds.id);
 
         return (
-            <div className="weather_alert_cities-form">
-                <h4 className="gaa-text-primary">
-                    Select Weather Events
+            <div className="switch-wrapper">
+                <div className="weather_alert_cities-form">
+                    <h4 className="gaa-text-primary">
+                        Select Weather Events
                 </h4>
-                <div className="d-flex justify-content-between align-items-center border-bottom">
-                    <div className="form-check">
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="check-all"
-                            onChange={this.selectAllShowing}
-                        />
-                        <label
-                            className="form-check-label font-weight-bold"
-                            htmlFor="check-all"
-                        >
-                            Select All
+                    <div className="d-flex justify-content-between align-items-center border-bottom">
+                        <div className="form-check">
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="check-all"
+                                onChange={this.selectAllShowing}
+                            />
+                            <label
+                                className="form-check-label font-weight-bold"
+                                htmlFor="check-all"
+                            >
+                                Select All
                         </label>
+                        </div>
+                        <div>
+                            <p className="font-weight-bold cursor m-0" onClick={this.clearAll}>Clear All</p>
+                        </div>
                     </div>
-                    <div>
-                        <p className="font-weight-bold cursor m-0" onClick={this.clearAll}>Clear All</p>
+                    <div className="checkbox-box mt-3">
+                        {
+                            this.state.weather_alert_events.map(wAE => {
+                                return <div className="form-check wAE" key={wAE}>
+                                    <input
+                                        className="form-check-input"
+                                        checked={userOWMEvents.indexOf(wAE) !== -1}
+                                        type="checkbox"
+                                        id={userOWMEvents.indexOf(wAE) !== -1 ? userDSEvents[userOWMEvents.indexOf(wAE)] : null}
+                                        onChange={this.handleClick}
+                                        open_weather_map_event={wAE}
+                                    />
+                                    <label
+                                        className="form-check-label"
+                                        htmlFor="defaultCheck1"
+                                    >
+                                        {wAE}
+                                    </label>
+                                </div>
+                            })
+                        }
                     </div>
-                </div>
-                <div className="checkbox-box mt-3">
-                    {
-                        this.state.weather_alert_events.map(wAE => {
-                            return <div className="form-check wAE" key={wAE}>
-                                <input
-                                    className="form-check-input"
-                                    checked={userOWMEvents.indexOf(wAE) !== -1}
-                                    type="checkbox"
-                                    id={userOWMEvents.indexOf(wAE) !== -1 ? userDSEvents[userOWMEvents.indexOf(wAE)] : null}
-                                    onChange={this.handleClick}
-                                    open_weather_map_event={wAE}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="defaultCheck1"
-                                >
-                                    {wAE}
-                                </label>
-                            </div>
-                        })
-                    }
                 </div>
             </div>
         );

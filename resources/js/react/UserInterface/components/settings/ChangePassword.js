@@ -46,10 +46,10 @@ export default class ChangePassword extends React.Component {
                 this.setState({ isBusy: false });
 
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: err });
             })
         }
@@ -102,10 +102,10 @@ export default class ChangePassword extends React.Component {
                 this.setState({ isBusy: false });
                 (this.props.reloadUser)();
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: err });
             })
         }

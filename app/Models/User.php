@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use Auth;
 
 class User extends Authenticatable
 {
@@ -31,6 +30,7 @@ class User extends Authenticatable
         'is_ds_retail_marketing_enabled',
         'is_ds_google_alerts_enabled',
         'is_ds_wordpress_updates_enabled',
+        'is_ds_web_monitors_enabled',
 
         'user_level',
         'department',
@@ -67,11 +67,12 @@ class User extends Authenticatable
         'is_ds_weather_alerts_enabled' => 'boolean',
         'is_ds_google_alerts_enabled' => 'boolean',
         'is_ds_wordpress_updates_enabled' => 'boolean',
+        'is_ds_web_monitors_enabled' => 'boolean',
 
         "last_logged_into_extension_at" => 'datetime',
         "last_activated_any_data_source_at" => 'datetime',
         "last_generated_api_token_at" => 'datetime',
-        "last_api_called_at" => "datetime"
+        "last_api_called_at" => "datetime",
     ];
 
     /**
@@ -91,17 +92,19 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\PaymentDetail');
     }
 
-    public function lastPaymentDetail(){
+    public function lastPaymentDetail()
+    {
         return $this->hasOne('App\Models\PaymentDetail')->orderBy('created_at', 'DESC');
     }
 
-    public function lastAnnotation(){
+    public function lastAnnotation()
+    {
         // Have to exclude Sample Annotation from last added annotation SQL.
         // Better approach was to add any boolean value to check if the annotation is a sample annotation
         // But it's done this way
         return $this->hasOne('App\Models\Annotation')->where('event_name', '<>', 'Sample Annotation')->orderBy('created_at', 'DESC');
     }
-    
+
     public function annotations()
     {
         return $this->hasMany('App\Models\Annotation');
@@ -121,7 +124,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\User');
     }
-    
+
     public function users()
     {
         return $this->hasMany('App\Models\User');
@@ -136,8 +139,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\UserGaAccount');
     }
-    
-    public function scopeOfCurrentUser($query){
+
+    public function scopeOfCurrentUser($query)
+    {
         return $query->where('user_id', Auth::id());
     }
 }

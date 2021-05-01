@@ -10,6 +10,7 @@ import DSOWMCitiesSelect from '../../utils/DSOWMCitiesSelect';
 import DSOWMEventsSelect from '../../utils/DSOWMEventsSelect';
 import DSGAUDatesSelect from '../../utils/DSGAUDatesSelect';
 import DSGoogleAlertsSelect from '../../utils/DSGoogleAlertsSelect';
+import DSWebMonitorsSelect from '../../utils/DSWebMonitorsSelect';
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -38,9 +39,9 @@ export default class DataSourceIndex extends React.Component {
                 this.setState({ isBusy: false, userDataSources: resp.data.user_data_sources });
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
-                console.log(err)
+                
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ isBusy: false, errors: err });
             })
         }
@@ -79,7 +80,7 @@ export default class DataSourceIndex extends React.Component {
             }
             (this.props.reloadUser)();
         }, (err) => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: (err.response).data });
             if ((err.response).status == 402) {
                 swal("Upgrade to Pro Plan!", "Data Sources are not available in this package.", "warning").then(value => {
@@ -87,7 +88,7 @@ export default class DataSourceIndex extends React.Component {
                 })
             }
         }).catch(err => {
-            console.log(err)
+            
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -111,10 +112,10 @@ export default class DataSourceIndex extends React.Component {
             if (uds.ds_code == 'google_algorithm_update_dates') { ar = [uds]; } else { ar.push(uds) }
             this.setState({ userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar }, isBusy: false })
         }, (err) => {
-            console.log(err)
+            
             this.setState({ isBusy: false });
         }).catch(err => {
-            console.log(err)
+            
             this.setState({ isBusy: false });
         })
     }
@@ -126,10 +127,10 @@ export default class DataSourceIndex extends React.Component {
             let newAr = ar.filter(a => a.id != userDataSourceId)
             this.setState({ userDataSources: { ...this.state.userDataSources, [dsCode]: newAr }, isBusy: false })
         }, (err) => {
-            console.log(err)
+            
             this.setState({ isBusy: false })
         }).catch(err => {
-            console.log(err)
+            
             this.setState({ isBusy: false })
         })
     }
@@ -161,6 +162,46 @@ export default class DataSourceIndex extends React.Component {
                 </div>
                 <div className="row ml-0 mr-0 mt-4">
                     <div className="col-md-8 col-sm-12" id="data-source-page-container">
+
+                        <div className="container ds-sections border-bottom">
+
+                            <div className="row ml-0 mr-0 w-100 ">
+                                <div className="col-9">
+                                    <h4 className="gaa-text-primary">
+                                        Web Monitors
+                                        <img id="web-monitors-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('web-monitors') }} src="/images/info-logo.png" />
+                                    </h4>
+                                    <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'web-monitors'} target="web-monitors-datasource-hint" toggle={() => { this.changeShownHint(null) }} onClick={() => { this.changeShownHint(null) }}>
+                                        <PopoverHeader>Web Monitors</PopoverHeader>
+                                        <PopoverBody>N/A</PopoverBody>
+                                    </UncontrolledPopover>
+                                </div>
+                                <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                    {this.state.userServices.is_ds_web_monitors_enabled ? "Active" : "Deactive"}
+                                    <label className="trigger switch">
+                                        <input
+                                            type="checkbox"
+                                            name="is_ds_web_monitors_enabled"
+                                            onChange={this.serviceStatusHandler}
+                                            checked={this.state.userServices.is_ds_web_monitors_enabled}
+                                        />
+                                        <span className="slider round" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="row ml-0 mr-0 w-100">
+                                <div className="col-9">
+                                    <div className="list-wrapper">
+                                    </div>
+                                </div>
+                                <div className="col-3">
+                                    <p className="ds-update-text m-0 text-center"
+                                        onClick={() => { this.sectionToggler('web_monitors') }}>
+                                        {this.state.sectionName == "web_monitors" ? "Hide" : "Configure Monitors"}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
                         <div className="container ds-sections border-bottom">
 
@@ -495,68 +536,64 @@ export default class DataSourceIndex extends React.Component {
                     <div className="col-md-4 col-sm-12 mt-3 border-left">
                         {
                             this.state.sectionName == 'holidays' && this.state.userDataSources ?
-                                <div className="switch-wrapper">
-                                    <Countries
-                                        onCheckCallback={this.userDataSourceAddHandler}
-                                        onUncheckCallback={this.userDataSourceDeleteHandler}
-                                        ds_data={this.state.userDataSources.holidays}
-                                    />
-                                </div>
+                                <Countries
+                                    onCheckCallback={this.userDataSourceAddHandler}
+                                    onUncheckCallback={this.userDataSourceDeleteHandler}
+                                    ds_data={this.state.userDataSources.holidays}
+                                />
                                 : null
                         }
                         {
                             this.state.sectionName == 'retail_marketings' && this.state.userDataSources ?
-                                <div className="switch-wrapper">
-                                    <DSRMDatesSelect
-                                        onCheckCallback={this.userDataSourceAddHandler}
-                                        onUncheckCallback={this.userDataSourceDeleteHandler}
-                                        ds_data={this.state.userDataSources.retail_marketings}
-                                    />
-                                </div>
+                                <DSRMDatesSelect
+                                    onCheckCallback={this.userDataSourceAddHandler}
+                                    onUncheckCallback={this.userDataSourceDeleteHandler}
+                                    ds_data={this.state.userDataSources.retail_marketings}
+                                />
                                 : null
                         }
                         {
                             this.state.sectionName == 'weather_alerts' && this.state.userDataSources ?
-                                <div className="switch-wrapper">
-                                    <DSOWMCitiesSelect
-                                        onCheckCallback={this.userDataSourceAddHandler}
-                                        onUncheckCallback={this.userDataSourceDeleteHandler}
-                                        ds_data={this.state.userDataSources.open_weather_map_cities}
-                                    />
-                                </div>
+                                <DSOWMCitiesSelect
+                                    onCheckCallback={this.userDataSourceAddHandler}
+                                    onUncheckCallback={this.userDataSourceDeleteHandler}
+                                    ds_data={this.state.userDataSources.open_weather_map_cities}
+                                />
                                 : null
                         }
                         {
                             this.state.sectionName == 'open_weather_map_events' && this.state.userDataSources ?
-                                <div className="switch-wrapper">
-                                    <DSOWMEventsSelect
-                                        onCheckCallback={this.userDataSourceAddHandler}
-                                        onUncheckCallback={this.userDataSourceDeleteHandler}
-                                        ds_data={this.state.userDataSources.open_weather_map_events}
-                                    />
-                                </div>
+                                <DSOWMEventsSelect
+                                    onCheckCallback={this.userDataSourceAddHandler}
+                                    onUncheckCallback={this.userDataSourceDeleteHandler}
+                                    ds_data={this.state.userDataSources.open_weather_map_events}
+                                />
                                 : null
                         }
                         {
                             this.state.sectionName == 'google_algorithm_updates' && this.state.userDataSources ?
-                                <div className="switch-wrapper">
-                                    <DSGAUDatesSelect
-                                        onCheckCallback={this.userDataSourceAddHandler}
-                                        onUncheckCallback={this.userDataSourceDeleteHandler}
-                                        ds_data={this.state.userDataSources.google_algorithm_update_dates}
-                                    />
-                                </div>
+                                <DSGAUDatesSelect
+                                    onCheckCallback={this.userDataSourceAddHandler}
+                                    onUncheckCallback={this.userDataSourceDeleteHandler}
+                                    ds_data={this.state.userDataSources.google_algorithm_update_dates}
+                                />
                                 : null
                         }
                         {
                             this.state.sectionName == 'google_alerts' && this.state.userDataSources ?
-                                <div className="switch-wrapper">
-                                    <DSGoogleAlertsSelect
-                                        onCheckCallback={this.userDataSourceAddHandler}
-                                        onUncheckCallback={this.userDataSourceDeleteHandler}
-                                        ds_data={this.state.userDataSources.google_alert_keywords}
-                                    />
-                                </div>
+                                <DSGoogleAlertsSelect
+                                    onCheckCallback={this.userDataSourceAddHandler}
+                                    onUncheckCallback={this.userDataSourceDeleteHandler}
+                                    ds_data={this.state.userDataSources.google_alert_keywords}
+                                />
+                                : null
+                        }
+                        {
+                            this.state.sectionName == 'web_monitors' && this.state.userDataSources ?
+                                <DSWebMonitorsSelect
+                                    onCheckCallback={this.userDataSourceAddHandler}
+                                    onUncheckCallback={this.userDataSourceDeleteHandler}
+                                />
                                 : null
                         }
                     </div>

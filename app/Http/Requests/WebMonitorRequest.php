@@ -25,10 +25,11 @@ class WebMonitorRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'url' => 'required|string|active_url',
+            'url' => 'required|string',
             'email_address' => 'nullable|email',
             'sms_phone_number' => 'nullable|string',
-            'google_analytics_property_id' => 'nullable|numeric|exists:google_analytics_properties,id',
+            'google_analytics_property_id' => 'nullable|array',
+            'google_analytics_property_id.*' => 'nullable|exists:google_analytics_properties,id',
         ];
     }
 }

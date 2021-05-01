@@ -20,10 +20,10 @@ export default class IndexUsers extends Component {
             .then(response => {
                 this.setState({ users: response.data.users });
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ errors: err });
             });
     }
@@ -49,10 +49,10 @@ export default class IndexUsers extends Component {
             .then(response => {
                 this.setState({ users: this.state.users.filter(u => u.id !== id) });
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ errors: err });
             });
     }

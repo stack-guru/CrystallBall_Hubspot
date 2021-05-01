@@ -69,10 +69,10 @@ export default class CreateAnnotation extends React.Component {
                     toast.success("Annotation added.");
                     this.setDefaultState();
                 }, (err) => {
-                    console.log(err);
+                    
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                    console.log(err)
+                    
                     this.setState({ isBusy: false, errors: err });
                 });
         }

@@ -53,10 +53,10 @@ export default class EditAnnotation extends React.Component {
                     if (gAPIds[0] == null) gAPIds = [""];
                     this.setState({ isBusy: false, annotation: { ...response.data.annotation, google_analytics_property_id: gAPIds }, googleAnnotationProperties: gAPs });
                 }, (err) => {
-                    console.log(err);
+                    
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                    console.log(err)
+                    
                     this.setState({ isBusy: false, errors: err });
                 });
         }
@@ -94,10 +94,10 @@ export default class EditAnnotation extends React.Component {
                     toast.success("Annotation updated.");
                     this.setState({ redirectTo: "/annotation" });
                 }, (err) => {
-                    console.log(err);
+                    
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                    console.log(err)
+                    
                     this.setState({ isBusy: false, errors: err });
                 });
         }

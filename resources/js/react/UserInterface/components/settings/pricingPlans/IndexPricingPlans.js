@@ -21,10 +21,10 @@ export default class indexPricingPlans extends React.Component {
             .then(response => {
                 this.setState({ pricePlans: response.data.price_plans });
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ isBusy: false, errors: err });
             });
     }
@@ -45,10 +45,10 @@ export default class indexPricingPlans extends React.Component {
                             window.location = "/annotation"
                         })
                     }, (err) => {
-                        console.log(err);
+                        
                         this.setState({ isBusy: false, errors: (err.response).data });
                     }).catch(err => {
-                        console.log(err)
+                        
                         this.setState({ isBusy: false, errors: err });
                     });
 

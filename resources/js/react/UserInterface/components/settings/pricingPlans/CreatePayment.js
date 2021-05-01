@@ -45,10 +45,10 @@ export default class CreatePayment extends Component {
             .then(response => {
                 this.setState({ pricePlan: response.data.price_plan, isBusy: false });
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ isBusy: false, errors: err });
             });
 
@@ -126,10 +126,10 @@ export default class CreatePayment extends Component {
                     window.location = "/annotation"
                 });
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ isBusy: false, errors: err });
             });
     }
@@ -219,10 +219,10 @@ export default class CreatePayment extends Component {
                 this.setState({ coupon: response.data.coupon, paymentDetails: { ...this.state.paymentDetails, coupon_id: response.data.coupon.id }, isBusy: false });
                 toast.success("Coupon applied.");
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ isBusy: false, errors: err });
             });
     }

@@ -37,9 +37,9 @@ export default function AdwordsClientCustomerIdSaverModal(props) {
                                 toast.success("Google Account ID saved.");
                                 (props.dismissCallback)()
                             }, (err) => {
-                                console.log(err);
+                                
                             }).catch(err => {
-                                console.log(err)
+                                
                             });
                     }}>Save</button>
                 </div>

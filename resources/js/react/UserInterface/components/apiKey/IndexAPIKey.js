@@ -28,10 +28,10 @@ class IndexAPIKey extends React.Component {
             .then(response => {
                 this.setState({ isBusy: false, apiKeys: response.data });
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ isBusy: false, errors: err });
             });
     }
@@ -58,10 +58,10 @@ class IndexAPIKey extends React.Component {
                         tokens.push(response.data.token);
                         this.setState({ isBusy: false, apiKeys: tokens, accessToken: response.data.accessToken })
                     }, (err) => {
-                        console.log(err);
+                        
                         this.setState({ isBusy: false, errors: (err.response).data });
                     }).catch(err => {
-                        console.log(err);
+                        
                         this.setState({ isBusy: false, errors: err });
                     });
             }
@@ -83,10 +83,10 @@ class IndexAPIKey extends React.Component {
                     tokens = tokens.filter(t => t.id !== tokenId);
                     this.setState({ isBusy: false, apiKeys: tokens })
                 }, (err) => {
-                    console.log(err);
+                    
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                    console.log(err);
+                    
                     this.setState({ isBusy: false, errors: err });
                 });
         }

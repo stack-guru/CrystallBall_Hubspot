@@ -39,10 +39,10 @@ class IndexAnnotations extends React.Component {
             .then(response => {
                 this.setState({ annotations: response.data.annotations });
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ errors: err });
             });
         /////
@@ -50,10 +50,10 @@ class IndexAnnotations extends React.Component {
             .then(response => {
                 this.setState({ isBusy: false, annotationCategories: response.data.categories });
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ isBusy: false, errors: err });
             });
 
@@ -67,10 +67,10 @@ class IndexAnnotations extends React.Component {
             annotations = annotations.filter(a => a.id != id);
             this.setState({ isBusy: false, annotations: annotations })
         }, (err) => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -87,10 +87,10 @@ class IndexAnnotations extends React.Component {
                 let annotations = this.state.annotations.map(an => { if (an.id == id) { return newAnnotation } else { return an } })
                 this.setState({ isBusy: false, 'annotations': annotations })
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: err });
             });
         }
@@ -104,10 +104,10 @@ class IndexAnnotations extends React.Component {
                 .then(response => {
                     this.setState({ isBusy: false, annotations: response.data.annotations });
                 }, (err) => {
-                    console.log(err);
+                    
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                    console.log(err)
+                    
                     this.setState({ isBusy: false, errors: err });
                 });
         }
@@ -121,10 +121,10 @@ class IndexAnnotations extends React.Component {
                 .then(response => {
                     this.setState({ isBusy: false, annotations: response.data.annotations });
                 }, (err) => {
-                    console.log(err);
+                    
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                    console.log(err)
+                    
                     this.setState({ isBusy: false, errors: err });
                 });
         }
@@ -138,10 +138,10 @@ class IndexAnnotations extends React.Component {
                 .then(response => {
                     this.setState({ isBusy: false, annotations: response.data.annotations });
                 }, (err) => {
-                    console.log(err);
+                    
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                    console.log(err)
+                    
                     this.setState({ isBusy: false, errors: err });
                 });
         }

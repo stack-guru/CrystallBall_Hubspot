@@ -16,7 +16,6 @@ class WebMonitor extends Model
         'url',
         'email_address',
         'sms_phone_number',
-        'google_analytics_property_id',
         // 'uptime_robot_id',
         // 'last_status',
         // 'last_synced_at',

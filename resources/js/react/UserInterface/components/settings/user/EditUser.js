@@ -32,10 +32,10 @@ export default class EditUser extends Component {
                     if (uGAAIds[0] == null) uGAAIds = [""];
                     this.setState({ user: { ...response.data.user, google_analytics_account_id: uGAAIds } });
                 }, (err) => {
-                    console.log(err);
+                    
                     this.setState({ errors: (err.response).data });
                 }).catch(err => {
-                    console.log(err)
+                    
                     this.setState({ errors: err });
                 });
         }
@@ -53,10 +53,10 @@ export default class EditUser extends Component {
             .then(response => {
                 toast.success("User updated.");
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ errors: err });
             });
     }

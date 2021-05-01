@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\WebMonitorRequest;
 use App\Models\WebMonitor;
 use Illuminate\Http\Request;
+use Auth;
 
 class WebMonitorController extends Controller
 {
@@ -28,6 +29,7 @@ class WebMonitorController extends Controller
     {
         $webMonitor = new WebMonitor;
         $webMonitor->fill($request->validated());
+        $webMonitor->user_id = Auth::id();
         $webMonitor->save();
 
         return ['web_monitor' => $webMonitor];

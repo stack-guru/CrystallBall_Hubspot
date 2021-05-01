@@ -26,38 +26,40 @@ export default class DSGoogleAlertsSelect extends React.Component {
     render() {
 
         return (
-            <div className="weather_alert_cities-form">
-                <h4 className="gaa-text-primary">
-                    Manage keywords
+            <div className="switch-wrapper">
+
+                <div className="weather_alert_cities-form">
+                    <h4 className="gaa-text-primary">
+                        Manage keywords
                 </h4>
-                <div className="input-group search-input-box mb-3">
-                    <input
-                        type="text"
-                        className="form-control search-input"
-                        placeholder="Add keywords to get alerted"
-                        value={this.state.keyword}
-                        name="keyword"
-                        onChange={(e) => this.setState({ [e.target.name]: e.target.value.toLowerCase() })}
-                        onKeyUp={(e) => { if (e.keyCode === 13) { e.persist(); this.addKeyword(e); } }}
-                    />
-                    <div className="input-group-append">
-                        <i className="ti-plus"></i>
+                    <div className="input-group search-input-box mb-3">
+                        <input
+                            type="text"
+                            className="form-control search-input"
+                            placeholder="Add keywords to get alerted"
+                            value={this.state.keyword}
+                            name="keyword"
+                            onChange={(e) => this.setState({ [e.target.name]: e.target.value.toLowerCase() })}
+                            onKeyUp={(e) => { if (e.keyCode === 13) { e.persist(); this.addKeyword(e); } }}
+                        />
+                        <div className="input-group-append">
+                            <i className="ti-plus"></i>
+                        </div>
                     </div>
-                </div>
-                <div className="checkbox-box mt-3">
-                    {
-                        this.props.ds_data.map(gAK => {
-                            console.log(gAK)
-                            return (
-                                <button type="button" className="btn btn-primary m-2" key={gAK.id}
-                                    user_data_source_id={gAK.id}
-                                    onClick={this.deleteKeyword}
-                                >
-                                    {gAK.value} <span className="badge badge-light" user_data_source_id={gAK.id}>&times;</span>
-                                </button>
-                            )
-                        })
-                    }
+                    <div className="checkbox-box mt-3">
+                        {
+                            this.props.ds_data.map(gAK => {
+                                return (
+                                    <button type="button" className="btn btn-primary m-2" key={gAK.id}
+                                        user_data_source_id={gAK.id}
+                                        onClick={this.deleteKeyword}
+                                    >
+                                        {gAK.value} <span className="badge badge-light" user_data_source_id={gAK.id}>&times;</span>
+                                    </button>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
             </div>
         );

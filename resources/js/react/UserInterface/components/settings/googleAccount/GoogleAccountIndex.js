@@ -59,10 +59,10 @@ export default class GoogleAccountIndex extends React.Component {
         HttpClient.get('/settings/google-account').then(resp => {
             this.setState({ googleAccounts: resp.data.google_accounts, isBusy: false });
         }, (err) => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            console.log(err)
+            
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -75,10 +75,10 @@ export default class GoogleAccountIndex extends React.Component {
             googleAccounts = googleAccounts.filter(ga => ga.id != id);
             this.setState({ isBusy: false, googleAccounts: googleAccounts })
         }, (err) => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -91,10 +91,10 @@ export default class GoogleAccountIndex extends React.Component {
             this.getGAAccounts();
             this.getGAProperties();
         }, (err) => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -104,10 +104,10 @@ export default class GoogleAccountIndex extends React.Component {
         HttpClient.get(`/settings/google-analytics-account`).then(response => {
             this.setState({ isBusy: false, googleAnalyticsAccounts: response.data.google_analytics_accounts })
         }, (err) => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -130,10 +130,10 @@ export default class GoogleAccountIndex extends React.Component {
                 this.setState({ isBusy: false, googleAnalyticsAccounts: this.state.googleAnalyticsAccounts.filter(g => g.id !== gAAId) })
                 toast.success("Account removed.");
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: err });
             });
         }
@@ -146,10 +146,10 @@ export default class GoogleAccountIndex extends React.Component {
                 this.setState({ isBusy: false, googleAnalyticsProperties: this.state.googleAnalyticsProperties.filter(g => g.id !== gAPId) })
                 toast.success("Property removed.");
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: err });
             });
         }
@@ -164,10 +164,10 @@ export default class GoogleAccountIndex extends React.Component {
         HttpClient.get(`/settings/google-analytics-property`).then(response => {
             this.setState({ isBusy: false, googleAnalyticsProperties: response.data.google_analytics_properties })
         }, (err) => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: err });
         });
     }

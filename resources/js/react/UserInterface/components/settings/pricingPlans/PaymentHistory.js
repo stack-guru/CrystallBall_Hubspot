@@ -20,10 +20,10 @@ export default class PaymentHistory extends React.Component {
             .then(response => {
                 this.setState({ pricePlanSubscriptions: response.data.price_plan_subscriptions, isBusy: false });
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ isBusy: false, errors: err });
             });
 

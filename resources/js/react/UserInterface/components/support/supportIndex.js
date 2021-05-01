@@ -52,10 +52,10 @@ export default class SupportIndex extends Component {
                 toast.info("Your request has been submitted.");
                 this.setDefaultState();
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ isBusy: false, errors: err });
             });
     }

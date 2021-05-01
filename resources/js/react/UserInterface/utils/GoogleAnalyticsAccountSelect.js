@@ -25,10 +25,10 @@ export default class GoogleAnalyticsAccountSelect extends React.Component {
             .then(response => {
                 this.setState({ isBusy: false, aAccounts: response.data.google_analytics_accounts });
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ isBusy: false, errors: err });
             });
     }

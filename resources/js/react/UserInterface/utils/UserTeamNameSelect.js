@@ -24,10 +24,10 @@ export default class GoogleAccountSelect extends React.Component {
             .then(response => {
                 this.setState({ isBusy: false, teamNames: response.data.team_names.map(tN => { return { label: tN.team_name, value: tN.team_name } }) });
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                console.log(err)
+                
                 this.setState({ isBusy: false, errors: err });
             });
     }

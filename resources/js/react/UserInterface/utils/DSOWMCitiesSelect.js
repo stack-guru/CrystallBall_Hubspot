@@ -27,10 +27,10 @@ export default class DSOWMCitiesSelect extends React.Component {
             HttpClient.get('data-source/weather-alert/country').then(resp => {
                 this.setState({ isBusy: false, weather_alerts_countries: resp.data.countries })
             }, (err) => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: err.response })
             }).catch(err => {
-                console.log(err);
+                
                 this.setState({ isBusy: false, errors: err })
             })
         }
@@ -56,7 +56,7 @@ export default class DSOWMCitiesSelect extends React.Component {
     clearAll(e) {
         let userOWMCityIds = this.props.ds_data.map(ds => ds.open_weather_map_city_id);
         let userDSEvents = this.props.ds_data.map(ds => ds.id);
-        userOWMCityIds.map((owmEvent,index) => {
+        userOWMCityIds.map((owmEvent, index) => {
             (this.props.onUncheckCallback)(userDSEvents[index], 'open_weather_map_cities')
         })
     }
@@ -66,10 +66,10 @@ export default class DSOWMCitiesSelect extends React.Component {
         HttpClient.get(`data-source/weather-alert/city?country_code=${e.target.value}`).then(resp => {
             this.setState({ isBusy: false, weather_alerts_cities: resp.data.cities })
         }, (err) => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: err.response })
         }).catch(err => {
-            console.log(err);
+            
             this.setState({ isBusy: false, errors: err })
         })
     }
@@ -91,76 +91,78 @@ export default class DSOWMCitiesSelect extends React.Component {
         let userDSIds = this.props.ds_data.map(ds => ds.id);
 
         return (
-            <div className="weather_alert_cities-form">
-                <h4 className="gaa-text-primary">
-                    Select Cities for Weather Alerts
+            <div className="switch-wrapper">
+                <div className="weather_alert_cities-form">
+                    <h4 className="gaa-text-primary">
+                        Select Cities for Weather Alerts
                 </h4>
-                <div className="input-group mb-3">
-                    <select
-                        className="form-control"
-                        placeholder="Search"
-                        value={this.state.searchCountry}
-                        name="searchCountry"
-                        onChange={this.selectedCountryChanged}
-                    >
-                        {
-                            [{ country_name: 'Please select country', value: '' }].concat(this.state.weather_alerts_countries).map(wAC => { return <option value={wAC.country_code}>{wAC.country_name}</option> })
-                        }
-                    </select>
-                </div>
-                <div className="input-group search-input-box mb-3">
-                    <input
-                        type="text"
-                        className="form-control search-input"
-                        placeholder="Search"
-                        value={this.state.searchText}
-                        name="searchText"
-                        onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-                    />
-                    <div className="input-group-append">
-                        <i className="ti-search"></i>
-                    </div>
-                </div>
-                <div className="d-flex justify-content-between align-items-center border-bottom">
-                    <div className="form-check">
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="check-all"
-                            onChange={this.selectAllShowing}
-                        />
-                        <label
-                            className="form-check-label font-weight-bold"
-                            htmlFor="check-all"
+                    <div className="input-group mb-3">
+                        <select
+                            className="form-control"
+                            placeholder="Search"
+                            value={this.state.searchCountry}
+                            name="searchCountry"
+                            onChange={this.selectedCountryChanged}
                         >
-                            Select All
+                            {
+                                [{ country_name: 'Please select country', value: '' }].concat(this.state.weather_alerts_countries).map(wAC => { return <option value={wAC.country_code}>{wAC.country_name}</option> })
+                            }
+                        </select>
+                    </div>
+                    <div className="input-group search-input-box mb-3">
+                        <input
+                            type="text"
+                            className="form-control search-input"
+                            placeholder="Search"
+                            value={this.state.searchText}
+                            name="searchText"
+                            onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
+                        />
+                        <div className="input-group-append">
+                            <i className="ti-search"></i>
+                        </div>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center border-bottom">
+                        <div className="form-check">
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="check-all"
+                                onChange={this.selectAllShowing}
+                            />
+                            <label
+                                className="form-check-label font-weight-bold"
+                                htmlFor="check-all"
+                            >
+                                Select All
                         </label>
+                        </div>
+                        <div>
+                            <p className="font-weight-bold cursor m-0" onClick={this.clearAll}>Clear All</p>
+                        </div>
                     </div>
-                    <div>
-                        <p className="font-weight-bold cursor m-0" onClick={this.clearAll}>Clear All</p>
+                    <div className="checkbox-box mt-3">
+                        {
+                            this.state.weather_alerts_cities.filter(this.checkSearchText).map(wAC => {
+                                return <div className="form-check wac" key={wAC.id}>
+                                    <input
+                                        className="form-check-input"
+                                        checked={userOWMCIds.indexOf(wAC.id) !== -1}
+                                        type="checkbox"
+                                        id={userOWMCIds.indexOf(wAC.id) !== -1 ? userDSIds[userOWMCIds.indexOf(wAC.id)] : null}
+                                        onChange={this.handleClick}
+                                        open_weather_map_city_id={wAC.id}
+                                    />
+                                    <label
+                                        className="form-check-label"
+                                        htmlFor="defaultCheck1"
+                                    >
+                                        {wAC.name}
+                                    </label>
+                                </div>
+                            })
+                        }
                     </div>
-                </div>
-                <div className="checkbox-box mt-3">
-                    {
-                        this.state.weather_alerts_cities.filter(this.checkSearchText).map(wAC => {
-                            return <div className="form-check wac" key={wAC.id}>
-                                <input
-                                    className="form-check-input"
-                                    checked={userOWMCIds.indexOf(wAC.id) !== -1}
-                                    type="checkbox"
-                                    id={userOWMCIds.indexOf(wAC.id) !== -1 ? userDSIds[userOWMCIds.indexOf(wAC.id)] : null}
-                                    onChange={this.handleClick}
-                                    open_weather_map_city_id={wAC.id}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="defaultCheck1"
-                                >
-                                    {wAC.name}
-                                </label>
-                            </div>
-                        })
-                    }
                 </div>
             </div>
         );

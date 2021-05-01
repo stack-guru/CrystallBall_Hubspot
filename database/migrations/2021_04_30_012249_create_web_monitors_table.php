@@ -24,6 +24,8 @@ class CreateWebMonitorsTable extends Migration
             $table->string('last_status', 50)->nullable()->default(null);
             $table->dateTime('last_synced_at')->nullable();
 
+            $table->foreignId("user_id")->required()->constrained()->onDelete('CASCADE');
+
             $table->timestamps();
         });
     }
