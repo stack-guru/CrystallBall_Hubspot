@@ -54,18 +54,22 @@ class UptimeRobotService
      *
      * param $type // (HTTP, keyword, ping) (1, 3, 4)
      */
-    public function newMonitor($name, $url, $type)
+    public function newMonitor($name, $link, $type = 1)
     {
         $url = "https://api.uptimerobot.com/v2/newMonitor";
         $response = Http::post($url, [
             'api_key' => $this->apiKey,
             'format' => $this->outputFormat,
             'friendly_name' => $name,
-            'url' => $url,
+            'url' => $link,
             'type' => $type, //type must be a number
         ]);
 
         if (!$response->successful()) {
+            return false;
+        }
+
+        if($response['stat'] == 'fail'){
             return false;
         }
 
@@ -85,6 +89,10 @@ class UptimeRobotService
         if (!$response->successful()) {
             return false;
         }
+        if($response['stat'] == 'fail'){
+            return false;
+        }
+
 
         return $this->outputFormat == 'json' ? $response->json() : $response->body();
     }

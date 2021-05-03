@@ -3,6 +3,7 @@ import HttpClient from '../utils/HttpClient'
 import ErrorAlert from '../utils/ErrorAlert';
 
 export default class DSWebMonitorsSelect extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -12,8 +13,19 @@ export default class DSWebMonitorsSelect extends React.Component {
             webMonitors: []
         }
 
+        this.setDefaultState = this.setDefaultState.bind(this);
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+    }
+
+    setDefaultState() {
+        this.setState({
+            isBusy: false,
+            errors: undefined,
+            webMonitor: { name: '', url: '', email_address: '', sms_phone_number: '' },
+        });
     }
 
     componentDidMount() {
@@ -40,12 +52,29 @@ export default class DSWebMonitorsSelect extends React.Component {
             HttpClient.post('data-source/web-monitor', this.state.webMonitor).then(response => {
                 let webMonitors = this.state.webMonitors;
                 webMonitors.push(response.data.web_monitor);
-                this.setState({ isBusy: false, webMonitors, errors: undefined });
+                this.setState({
+                    isBusy: false, webMonitors, errors: undefined,
+                    webMonitor: { name: '', url: '', email_address: '', sms_phone_number: '' },
+                });
             }, (err) => {
 
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
 
+                this.setState({ isBusy: false, errors: err });
+            })
+        }
+    }
+
+    handleDelete(id) {
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true });
+            HttpClient.delete(`data-source/web-monitor/${id}`).then(response => {
+                let webMonitors = this.state.webMonitors.filter(wM => wM.id !== id);
+                this.setState({ isBusy: false, webMonitors, errors: undefined });
+            }, (err) => {
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
                 this.setState({ isBusy: false, errors: err });
             })
         }
@@ -88,13 +117,13 @@ export default class DSWebMonitorsSelect extends React.Component {
                             this.state.webMonitors.map(wM => {
                                 return (
                                     <div className="form-check wac mb-2" key={wM.id}>
-                                        <button className="btn btn-sm btn-danger"><i className="fa fa-times"></i></button>
                                         <label
                                             className="form-check-label ml-1"
                                             htmlFor="defaultCheck1"
                                         >
                                             {wM.name}
                                         </label>
+                                        <button className="btn btn-sm btn-danger float-right" onClick={() => this.handleDelete(wM.id)} web_monitor_id={wM.id}><i className="fa fa-times"></i></button>
                                     </div>
                                 )
                             })

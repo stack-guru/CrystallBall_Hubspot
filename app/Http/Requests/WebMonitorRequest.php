@@ -25,7 +25,7 @@ class WebMonitorRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'url' => 'required|string',
+            'url' => 'required|string|active_url',
             'email_address' => 'nullable|email',
             'sms_phone_number' => 'nullable|string',
             'google_analytics_property_id' => 'nullable|array',

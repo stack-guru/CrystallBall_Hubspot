@@ -265,7 +265,7 @@ export default class DataSourceIndex extends React.Component {
                                     <div className="input-group-prepend">
                                         <div className="input-group-text">
                                             <input type="checkbox"
-                                                onClick={(e) => {
+                                                onChange={(e) => {
                                                     if (e.target.checked) {
                                                         this.userDataSourceAddHandler({ code: 'wordpress_updates', name: 'WordpressUpdate', country_name: null, retail_marketing_id: null, value: 'last year' })
                                                     } else {

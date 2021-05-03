@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\WebMonitorRequest;
 use App\Models\WebMonitor;
-use Illuminate\Http\Request;
+use App\Services\UptimeRobotService;
 use Auth;
+use Illuminate\Http\Request;
 
 class WebMonitorController extends Controller
 {
@@ -27,9 +28,19 @@ class WebMonitorController extends Controller
      */
     public function store(WebMonitorRequest $request)
     {
+        $uptimeRobotService = new UptimeRobotService;
+        $uRM = $uptimeRobotService->newMonitor($request->name, $request->url);
+
+        if ($uRM == false) {
+            abort(500);
+        }
+
         $webMonitor = new WebMonitor;
         $webMonitor->fill($request->validated());
         $webMonitor->user_id = Auth::id();
+        $webMonitor->save();
+
+        $webMonitor->uptime_robot_id = $uRM['monitor']['id'];
         $webMonitor->save();
 
         return ['web_monitor' => $webMonitor];
@@ -58,6 +69,14 @@ class WebMonitorController extends Controller
      */
     public function destroy(WebMonitor $webMonitor)
     {
+
+        $uptimeRobotService = new UptimeRobotService;
+        $uRM = $uptimeRobotService->deleteMonitor($webMonitor->uptime_robot_id);
+
+        if ($uRM == false) {
+            abort(500);
+        }
+
         $webMonitor->delete();
 
         return ['success' => true];
