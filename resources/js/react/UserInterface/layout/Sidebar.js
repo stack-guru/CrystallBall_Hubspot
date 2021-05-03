@@ -104,12 +104,12 @@ class sidebar extends React.Component {
                             : null
                     }
                     <li className="nav-item gaa-menu-item">
-                        <Link to="/api-key" >
+                        <Link to="/data-source" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
-                                    <i className="fa fa-key"></i>
+                                    <i className="ti-server"></i>
                                 </span>
-                                <span className="title ">API Keys</span>
+                                <span className="title">Automation</span>
                             </span>
                         </Link>
                     </li>
@@ -124,15 +124,17 @@ class sidebar extends React.Component {
                         </Link>
                     </li>
                     <li className="nav-item gaa-menu-item">
-                        <Link to="/data-source" >
+                        <Link to="/api-key" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
-                                    <i className="ti-server"></i>
+                                    <i className="fa fa-key"></i>
                                 </span>
-                                <span className="title">Data Source</span>
+                                <span className="title ">API Keys</span>
                             </span>
                         </Link>
                     </li>
+
+
                     <li className="nav-item gaa-menu-item setting-menu-item dropdown">
                         <a aria-expanded="false" data-target="#settings" aria-controls="settings" data-toggle="collapse"
                             className="dropdown-toggle" >

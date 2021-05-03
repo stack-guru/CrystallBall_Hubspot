@@ -168,7 +168,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="row ml-0 mr-0 w-100 ">
                                 <div className="col-9">
                                     <h4 className="gaa-text-primary">
-                                        Web Monitors
+                                        Website Monitors
                                         <img id="web-monitors-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('web-monitors') }} src="/images/info-logo.png" />
                                     </h4>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'web-monitors'} target="web-monitors-datasource-hint" toggle={() => { this.changeShownHint(null) }} onClick={() => { this.changeShownHint(null) }}>
@@ -263,7 +263,7 @@ export default class DataSourceIndex extends React.Component {
                                         <img id="wordpress-updates-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('wordpress-updates') }} src="/images/info-logo.png" />
                                     </h4>
                                     <div className="input-group-prepend">
-                                        <div className="input-group-text">
+                                        <div className="input-group">
                                             <input type="checkbox"
                                                 onChange={(e) => {
                                                     if (e.target.checked) {
