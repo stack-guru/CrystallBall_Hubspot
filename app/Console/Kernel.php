@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         $schedule->command('gaa:process-non-installed-extension-users')->everyMinute();
+        $schedule->command('gaa:check-monitor-statuses')->everyMinute();
         
         $schedule->command('gaa:fetch-weather-alerts')->withoutOverlapping()->hourly();
         

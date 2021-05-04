@@ -28,6 +28,14 @@ class WebMonitorController extends Controller
      */
     public function store(WebMonitorRequest $request)
     {
+
+        $pricePlan = Auth::user()->pricePlan;
+        $webMonitorsCount = WebMonitor::ofCurrentUser()->count();
+
+        if ($pricePlan->web_monitor_count <= $webMonitorsCount) {
+            return response()->json(['message' => 'Maximum number of monitors limit reached'], 402);
+        }
+
         $uptimeRobotService = new UptimeRobotService;
         $uRM = $uptimeRobotService->newMonitor($request->name, $request->url);
 
