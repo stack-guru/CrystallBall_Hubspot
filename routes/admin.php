@@ -29,3 +29,4 @@ Route::group(['prefix' => 'data-source', 'as' => 'data-source.'], function () {
 Route::resource('coupon', App\Http\Controllers\Admin\CouponController::class);
 Route::resource('cookie-coupon', App\Http\Controllers\Admin\CookieCouponController::class);
 Route::resource('price-plan-subscription', App\Http\Controllers\Admin\PricePlanSubscriptionController::class)->only(['index', 'show']);
+Route::get('web-monitor', [App\Http\Controllers\Admin\WebMonitorController::class, 'index'])->name('web-monitor.index');
