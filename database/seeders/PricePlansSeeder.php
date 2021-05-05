@@ -23,21 +23,34 @@ class PricePlansSeeder extends Seeder
                 'has_csv_upload' => true,
                 'has_api' => false,
                 'is_enabled' => true,
-                'has_integrations'=>0,
-                'has_data_sources'=>0
+                'has_integrations' => 0,
+                'has_data_sources' => 0,
             ]
         );
         DB::table('price_plans')->insert(
             [
-                'name' => 'Premium',
+                'name' => 'Basic',
                 'annotations_count' => "0",
                 'price' => "19.00",
                 'has_manual_add' => true,
                 'has_csv_upload' => true,
                 'has_api' => true,
                 'is_enabled' => true,
-                'has_integrations'=>0,
-                'has_data_sources'=>0
+                'has_integrations' => 0,
+                'has_data_sources' => 0,
+            ]
+        );
+        DB::table('price_plans')->insert(
+            [
+                'name' => 'Pro',
+                'annotations_count' => "0",
+                'price' => "99.00",
+                'has_manual_add' => true,
+                'has_csv_upload' => true,
+                'has_api' => true,
+                'is_enabled' => true,
+                'has_integrations' => 1,
+                'has_data_sources' => 1,
             ]
         );
     }

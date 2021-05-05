@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -143,5 +144,15 @@ class User extends Authenticatable
     public function scopeOfCurrentUser($query)
     {
         return $query->where('user_id', Auth::id());
+    }
+
+    /**
+     * Get all of the webMonitors for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function webMonitors(): HasMany
+    {
+        return $this->hasMany(WebMonitor::class);
     }
 }

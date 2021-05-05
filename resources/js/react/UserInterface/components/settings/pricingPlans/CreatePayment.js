@@ -45,22 +45,28 @@ export default class CreatePayment extends Component {
             .then(response => {
                 this.setState({ pricePlan: response.data.price_plan, isBusy: false });
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
 
 
-        let taxPercent = 0;
-        let xhr = new XMLHttpRequest;
-        xhr.open("GET", "https://ipapi.co/json", !1), xhr.send();
-        let resp = JSON.parse(xhr.responseText);
-        if (['IL'].indexOf(resp.country) != -1) {
-            taxPercent = 17;
-        }
-        this.setState({ taxPercent: taxPercent, paymentDetails: { ...this.state.paymentDetails, city: resp.city, country: resp.country } });
+        HttpClient.get("https://ipapi.co/json").then(response => {
+            let taxPercent = 0;
+            if (['IL'].indexOf(response.data.country) != -1) {
+                taxPercent = 17;
+            }
+            this.setState({ taxPercent: taxPercent, paymentDetails: { ...this.state.paymentDetails, city: response.data.city, country: response.data.country } });
+        });
+        // let xhr = new XMLHttpRequest;
+        // xhr.open("GET", "https://ipapi.co/json", !1), xhr.send();
+        // let resp = JSON.parse(xhr.responseText);
+        // if (['IL'].indexOf(resp.country) != -1) {
+        //     taxPercent = 17;
+        // }
+        // this.setState({ taxPercent: taxPercent, paymentDetails: { ...this.state.paymentDetails, city: resp.city, country: resp.country } });
 
         setTimeout(this.attachFieldsToBlueSnap, 5000)
     }
@@ -126,10 +132,10 @@ export default class CreatePayment extends Component {
                     window.location = "/annotation"
                 });
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
     }
@@ -219,10 +225,10 @@ export default class CreatePayment extends Component {
                 this.setState({ coupon: response.data.coupon, paymentDetails: { ...this.state.paymentDetails, coupon_id: response.data.coupon.id }, isBusy: false });
                 toast.success("Coupon applied.");
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
     }
@@ -474,15 +480,15 @@ export default class CreatePayment extends Component {
 
         bluesnap.hostedPaymentFieldsSubmitData((callback) => {
             if (null != callback.cardData) {
-                console.log('card type: ' + callback.cardData.ccType +
-                    ', last 4 digits: ' + callback.cardData.last4Digits +
-                    ', exp: ' + callback.cardData.exp +
-                    ', issuing Country: ' + callback.cardData.issuingCountry +
-                    ', isRegulatedCard: ' + callback.cardData.isRegulatedCard +
-                    ', cardSubType: ' + callback.cardData.cardSubType +
-                    ', binCategory: ' + callback.cardData.binCategory +
-                    ' and ccBin: ' + callback.cardData.ccBin +
-                    ', after that I can call final submit');
+                // console.log('card type: ' + callback.cardData.ccType +
+                //     ', last 4 digits: ' + callback.cardData.last4Digits +
+                //     ', exp: ' + callback.cardData.exp +
+                //     ', issuing Country: ' + callback.cardData.issuingCountry +
+                //     ', isRegulatedCard: ' + callback.cardData.isRegulatedCard +
+                //     ', cardSubType: ' + callback.cardData.cardSubType +
+                //     ', binCategory: ' + callback.cardData.binCategory +
+                //     ' and ccBin: ' + callback.cardData.ccBin +
+                //     ', after that I can call final submit');
 
                 let cardData = callback.cardData;
                 this.setState({ cardData });

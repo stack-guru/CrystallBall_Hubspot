@@ -10,6 +10,7 @@ use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
 use App\Services\BlueSnapService;
 use App\Services\SendGridService;
+use App\Services\UptimeRobotService;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -133,14 +134,20 @@ class PaymentController extends Controller
             $pricePlanSubscription->save();
 
             if ($user->pricePlan->name == "Pro" && $pricePlan->name == "Basic") {
+                // User is downgrading to basic plan from pro plan
                 $sGS->addUserToList($user, "11 GAa Downgraded to Basic");
+
+                $this->removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
             }
             $user->price_plan_id = $pricePlan->id;
             $user->price_plan_expiry_date = new \DateTime("+1 month");
             $user->is_billing_enabled = true;
         } else {
             if (($user->pricePlan->name == "Pro" && $pricePlan->name == "Free") || ($user->pricePlan->name == "Basic" && $pricePlan->name == "Free")) {
+                // User is downgrading to free plan
                 $sGS->addUserToList($user, "12 GAa Downgraded to FREE");
+
+                $this->removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
             }
             $user->is_billing_enabled = false;
         }
@@ -151,11 +158,13 @@ class PaymentController extends Controller
         switch ($pricePlan->name) {
             case "Basic":
                 $sGS->addUserToList($user, "9 GAa Upgraded to Basic");
+                $this->addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
                 $admin = Admin::first();
                 Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
                 break;
             case "Pro":
                 $sGS->addUserToList($user, "10 GAa Upgraded to PRO");
+                $this->addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
                 $admin = Admin::first();
                 Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
                 break;
@@ -164,4 +173,36 @@ class PaymentController extends Controller
         return ['success' => true, 'transaction_id' => $transactionId];
     }
 
+    private function removeAdditionalWebMonitors($user, $maxAllowedWebMonitors)
+    {
+        $webMonitors = $user->webMonitors()->whereNotNull('uptime_robot_id')->orderBy('name', 'ASC')->get();
+
+        $uptimeRobotService = new UptimeRobotService;
+        foreach ($webMonitors as $index => $webMonitor) {
+            if ($index >= $maxAllowedWebMonitors) {
+                if ($uptimeRobotService->deleteMonitor($webMonitor->uptime_robot_id)) {
+                    $webMonitor->uptime_robot_id = null;
+                    $webMonitor->save();
+                }
+            }
+        }
+    }
+
+    private function addAllowedWebMonitors($user, $maxAllowedWebMonitors)
+    {
+        $webMonitors = $user->webMonitors()->orderBy('uptime_robot_id', 'DESC')->orderBy('name', 'ASC')->get();
+
+        $uptimeRobotService = new UptimeRobotService;
+        foreach ($webMonitors as $index => $webMonitor) {
+            if ($webMonitor->uptime_robot_id == null) {
+                if ($index < $maxAllowedWebMonitors) {
+                    $newMonitor = $uptimeRobotService->newMonitor($webMonitor->name, $webMonitor->url);
+                    if ($newMonitor) {
+                        $webMonitor->uptime_robot_id = $newMonitor['monitor']['id'];
+                        $webMonitor->save();
+                    }
+                }
+            }
+        }
+    }
 }

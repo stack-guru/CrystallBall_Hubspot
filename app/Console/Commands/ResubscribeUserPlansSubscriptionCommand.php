@@ -10,9 +10,11 @@ use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
 use App\Models\User;
 use App\Services\BlueSnapService;
+use DB;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use DB;
+use App\Models\WebMonitor;
+use App\Services\UptimeRobotService;
 
 class ResubscribeUserPlansSubscriptionCommand extends Command
 {
@@ -23,6 +25,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
      */
     protected $signature = 'gaa:resubscribe-user-plans';
 
+    private $freePlan;
     private $freePlanId;
     private $nextExpiryDate;
     private $admin;
@@ -54,6 +57,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $freePlan = PricePlan::where('price', 0)->where('name', '<>', 'Trial')->first();
         if ($freePlan) {
             $this->freePlanId = $freePlan->id;
+            $this->freePlan = $freePlan;
         }
         $admin = Admin::first();
         if ($admin) {
@@ -101,6 +105,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                 if ($responseArr['success'] == false) {
                     $this->addTransactionToLog($user->id, $user->price_plan_id, null, $lastPaymentDetail->id, $lastPaymentDetail->card_number, $responseArr['message'], $pricePlanPrice, false);
                     $this->subscribeUserToPlan($user, $this->freePlanId);
+                    $this->removeAdditionalWebMonitors($user, $this->freePlan->web_monitor_count);
                     Mail::to($this->admin)->send(new AdminFailedPaymentTransactionMail($lastPaymentDetail, $this->admin));
                     Mail::to($user)->send(new UserFailedPaymentTransactionMail($lastPaymentDetail));
                 } else {
@@ -109,7 +114,10 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     $this->subscribeUserToPlan($user, $user->price_plan_id);
                 }
             } else {
-                if(! $user->user_id) $this->subscribeUserToPlan($user, $this->freePlanId);
+                if (!$user->user_id) {
+                    $this->subscribeUserToPlan($user, $this->freePlanId);
+                    $this->removeAdditionalWebMonitors($user, $this->freePlan->web_monitor_count);
+                }
             }
         }
         // update([
@@ -127,7 +135,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             ->update([
                 'users.price_plan_expiry_date' => $this->nextExpiryDate,
                 'users.price_plan_id' => $this->freePlanId,
-                
+
                 'users.is_ds_holidays_enabled' => false,
                 'users.is_ds_google_algorithm_updates_enabled' => false,
                 'users.is_ds_retail_marketing_enabled' => false,
@@ -174,4 +182,20 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
         DB::table('users')->where('user_id', $user->id)->update(['price_plan_id' => $planId, 'price_plan_expiry_date' => $this->nextExpiryDate]);
     }
+
+    private function removeAdditionalWebMonitors($user, $maxAllowedWebMonitors)
+    {
+        $webMonitors = $user->webMonitors()->whereNotNull('uptime_robot_id')->orderBy('name', 'DESC')->get();
+
+        $uptimeRobotService = new UptimeRobotService;
+        foreach ($webMonitors as $index => $webMonitor) {
+            if ($index >= $maxAllowedWebMonitors) {
+                if ($uptimeRobotService->deleteMonitor($webMonitor->uptime_robot_id)) {
+                    $webMonitor->uptime_robot_id = null;
+                    $webMonitor->save();
+                }
+            }
+        }
+    }
+
 }
