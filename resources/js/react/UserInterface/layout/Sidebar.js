@@ -109,7 +109,7 @@ class sidebar extends React.Component {
                                 <span className="icon-holder">
                                     <i className="ti-server"></i>
                                 </span>
-                                <span className="title">Automation</span>
+                                <span className="title">Automations</span>
                             </span>
                         </Link>
                     </li>

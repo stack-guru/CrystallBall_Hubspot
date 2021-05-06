@@ -99,6 +99,9 @@ class AnnotationController extends Controller
         if ($user->is_ds_wordpress_updates_enabled) {
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select update_date, wordpress_updates.id, category, event_name, url, description from `wordpress_updates`";
+            if (UserDataSource::ofCurrentUser()->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count()) {
+                $annotationsQuery .= " where YEAR(update_date) < YEAR(CURDATE())";
+            }
         }
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
@@ -288,6 +291,9 @@ class AnnotationController extends Controller
         if ($user->is_ds_wordpress_updates_enabled) {
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select update_date, wordpress_updates.id, category, event_name, url, description from `wordpress_updates`";
+            if (UserDataSource::ofCurrentUser()->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count()) {
+                $annotationsQuery .= " where YEAR(update_date) < YEAR(CURDATE())";
+            }
         }
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
