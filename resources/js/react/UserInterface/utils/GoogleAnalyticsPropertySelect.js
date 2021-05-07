@@ -68,12 +68,13 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             <Select
                 loadOptions={this.searchGoogleAnalyticsProperties}
                 noOptionsMessage={() => { return "Enter chars to search" }}
-
+                className={this.props.className}
                 name={this.props.name}
                 disabled={this.props.disabled}
                 value={this.state.aProperties}
                 id={this.props.id}
                 isMulti={this.props.multiple}
+                isClearable={this.props.isClearable}
                 onChange={this.onChangeHandler}
                 // options={allOptions}
                 isSearchable={true}

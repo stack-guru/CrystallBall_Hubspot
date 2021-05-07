@@ -29,7 +29,7 @@ export default class DSWebMonitorsSelect extends React.Component {
     }
 
     componentDidMount() {
-        HttpClient.get('/data-source/web-monitor').then(resp => {
+        HttpClient.get(`/data-source/web-monitor?ga_property_id=${this.props.ga_property_id}`).then(resp => {
             this.setState({ webMonitors: resp.data.web_monitors, isBusy: false })
         }, (err) => {
 

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Auth;
 
 class UserDataSource extends Model
 {
@@ -20,13 +20,15 @@ class UserDataSource extends Model
         'status',
         'value',
         'is_enabled',
+        'ga_property_id',
     ];
 
     protected $casts = [
-        'is_enabled' => 'boolean'
+        'is_enabled' => 'boolean',
     ];
 
-    public function scopeOfCurrentUser($query){
+    public function scopeOfCurrentUser($query)
+    {
         return $query->where('user_id', Auth::id());
     }
 

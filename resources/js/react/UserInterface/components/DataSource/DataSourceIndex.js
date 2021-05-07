@@ -2,7 +2,7 @@ import React from 'react';
 import { toast } from "react-toastify";
 import { Redirect } from "react-router-dom";
 import { UncontrolledPopover, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
-
+import LoaderAnimation from "../../utils/LoaderAnimation";
 import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";
 import DSRMDatesSelect from '../../utils/DSRMDatesSelect';
@@ -11,6 +11,7 @@ import DSOWMEventsSelect from '../../utils/DSOWMEventsSelect';
 import DSGAUDatesSelect from '../../utils/DSGAUDatesSelect';
 import DSGoogleAlertsSelect from '../../utils/DSGoogleAlertsSelect';
 import DSWebMonitorsSelect from '../../utils/DSWebMonitorsSelect';
+import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -20,29 +21,35 @@ export default class DataSourceIndex extends React.Component {
             userDataSources: {},
             userServices: this.props.user,
             isBusy: false,
+            isLoading: false,
             errors: '',
             redirectTo: null,
-            showHintFor: null
+            showHintFor: null,
+            ga_property_id: null
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
         this.serviceStatusHandler = this.serviceStatusHandler.bind(this);
+
+        this.loadUserDataSources = this.loadUserDataSources.bind(this);
 
         this.sectionToggler = this.sectionToggler.bind(this);
 
     }
 
     componentDidMount() {
-        document.title = 'Data Source';
-        if (!this.state.isBusy) {
-            HttpClient.get('/data-source/user-data-source').then(resp => {
-                this.setState({ isBusy: false, userDataSources: resp.data.user_data_sources });
+        document.title = 'Automation';
+        this.loadUserDataSources(null);
+    }
+    loadUserDataSources(gaPropertyId) {
+        if (!this.state.isLoading) {
+            this.setState({ isLoading: true });
+            HttpClient.get(`/data-source/user-data-source?ga_property_id=${gaPropertyId}`).then(resp => {
+                this.setState({ isLoading: false, userDataSources: resp.data.user_data_sources });
             }, (err) => {
-                this.setState({ isBusy: false, errors: (err.response).data });
-                
+                this.setState({ isLoading: false, errors: (err.response).data });
             }).catch(err => {
-                
-                this.setState({ isBusy: false, errors: err });
+                this.setState({ isLoading: false, errors: err });
             })
         }
     }
@@ -80,7 +87,7 @@ export default class DataSourceIndex extends React.Component {
             }
             (this.props.reloadUser)();
         }, (err) => {
-            
+
             this.setState({ isBusy: false, errors: (err.response).data });
             if ((err.response).status == 402) {
                 swal("Upgrade to Pro Plan!", "Data Sources are not available in this package.", "warning").then(value => {
@@ -88,7 +95,7 @@ export default class DataSourceIndex extends React.Component {
                 })
             }
         }).catch(err => {
-            
+
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -105,6 +112,7 @@ export default class DataSourceIndex extends React.Component {
             'status': dataSource.status,
             'value': dataSource.value,
             'is_enabled': 1,
+            'ga_property_id': this.state.ga_property_id
         }
         HttpClient.post('/data-source/user-data-source', formData).then(resp => {
             let uds = resp.data.user_data_source;
@@ -112,10 +120,10 @@ export default class DataSourceIndex extends React.Component {
             if (uds.ds_code == 'google_algorithm_update_dates') { ar = [uds]; } else { ar.push(uds) }
             this.setState({ userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar }, isBusy: false })
         }, (err) => {
-            
+
             this.setState({ isBusy: false });
         }).catch(err => {
-            
+
             this.setState({ isBusy: false });
         })
     }
@@ -127,10 +135,10 @@ export default class DataSourceIndex extends React.Component {
             let newAr = ar.filter(a => a.id != userDataSourceId)
             this.setState({ userDataSources: { ...this.state.userDataSources, [dsCode]: newAr }, isBusy: false })
         }, (err) => {
-            
+
             this.setState({ isBusy: false })
         }).catch(err => {
-            
+
             this.setState({ isBusy: false })
         })
     }
@@ -155,14 +163,50 @@ export default class DataSourceIndex extends React.Component {
 
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper">
+                <LoaderAnimation show={this.state.isLoading} />
                 <div className="row ml-0 mr-0">
-                    <div className="col-12">
-                        <h2 className="heading-section gaa-title">Data Source</h2>
+                    <div className="col-9">
+                        <h2 className="heading-section gaa-title">Automation</h2>
+                    </div>
+                    <div className="col-3">
+
                     </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-4">
                     <div className="col-md-8 col-sm-12" id="data-source-page-container">
+                        <div className="container border-bottom">
 
+                            <div className="row ml-0 mr-0 w-100 mb-4">
+                                <div className="col-4">
+                                    <p className="gaa-text-primary">
+                                        Set Automation for:
+                                        </p>
+                                </div>
+                                <div className="col-2"></div>
+                                <div className="col-6">
+
+                                    <GoogleAnalyticsPropertySelect
+                                        name="ga_property_id"
+                                        id="ga_property_id"
+                                        value={this.state.ga_property_id}
+                                        onChangeCallback={(gAP) => {
+                                            console.log(gAP);
+                                            if (gAP.target.value == [""]) {
+                                                this.setState({ ga_property_id: null });
+                                                this.loadUserDataSources(null);
+                                            } else {
+                                                this.setState({ ga_property_id: gAP.target.value });
+                                                this.loadUserDataSources(gAP.target.value);
+                                            }
+                                        }}
+                                        placeholder="Select GA Properties"
+                                        isClearable={true}
+                                    />
+                                </div>
+
+                            </div>
+
+                        </div>
                         <div className="container ds-sections border-bottom">
 
                             <div className="row ml-0 mr-0 w-100 ">
@@ -593,6 +637,7 @@ export default class DataSourceIndex extends React.Component {
                                 <DSWebMonitorsSelect
                                     onCheckCallback={this.userDataSourceAddHandler}
                                     onUncheckCallback={this.userDataSourceDeleteHandler}
+                                    ga_property_id={this.state.ga_property_id}
                                 />
                                 : null
                         }

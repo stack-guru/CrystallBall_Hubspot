@@ -15,8 +15,11 @@ class WebMonitorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->query('ga_property_id') !== "null") {
+            return ['web_monitors' => WebMonitor::ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->get()];
+        }
         return ['web_monitors' => WebMonitor::ofCurrentUser()->get()];
     }
 

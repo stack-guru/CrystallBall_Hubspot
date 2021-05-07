@@ -19,7 +19,7 @@ class UserDataSourceRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * 
+     *
      * @return array
      */
     public function rules()
@@ -34,6 +34,7 @@ class UserDataSourceRequest extends FormRequest
             'status' => 'nullable|string',
             'value' => 'nullable|string',
             'is_enabled' => 'nullable',
+            'ga_property_id' => 'nullable|exists:google_analytics_properties,id',
         ];
     }
 }

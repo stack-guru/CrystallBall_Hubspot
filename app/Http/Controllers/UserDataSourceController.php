@@ -15,18 +15,30 @@ class UserDataSourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
+        if ($request->query('ga_property_id')) {
+            return [
+                'user_data_sources' => [
+                    'holidays' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'holidays')->orderBy('country_name')->get(),
+                    'retail_marketings' => UserDataSource::select('id', 'ds_code', 'ds_name', 'retail_marketing_id')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'retail_marketings')->get(),
+                    'open_weather_map_cities' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_city_id')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->with('openWeatherMapCity')->where('ds_code', 'open_weather_map_cities')->get(),
+                    'open_weather_map_events' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_event')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'open_weather_map_events')->get(),
+                    'google_algorithm_update_dates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'status')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'google_algorithm_update_dates')->get(),
+                    'google_alert_keywords' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'google_alert_keywords')->get(),
+                    'wordpress_updates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'wordpress_updates')->get(),
+                ],
+            ];
+        }
         return [
             'user_data_sources' => [
-                'holidays' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name')->ofCurrentUser()->where('ds_code', 'holidays')->orderBy('country_name')->get(),
-                'retail_marketings' => UserDataSource::select('id', 'ds_code', 'ds_name', 'retail_marketing_id')->ofCurrentUser()->where('ds_code', 'retail_marketings')->get(),
-                'open_weather_map_cities' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_city_id')->ofCurrentUser()->with('openWeatherMapCity')->where('ds_code', 'open_weather_map_cities')->get(),
-                'open_weather_map_events' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_event')->ofCurrentUser()->where('ds_code', 'open_weather_map_events')->get(),
-                'google_algorithm_update_dates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'status')->ofCurrentUser()->where('ds_code', 'google_algorithm_update_dates')->get(),
-                'google_alert_keywords' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ds_code', 'google_alert_keywords')->get(),
-                'wordpress_updates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ds_code', 'wordpress_updates')->get(),
+                'holidays' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'holidays')->orderBy('country_name')->get(),
+                'retail_marketings' => UserDataSource::select('id', 'ds_code', 'ds_name', 'retail_marketing_id')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'retail_marketings')->get(),
+                'open_weather_map_cities' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_city_id')->ofCurrentUser()->whereNull('ga_property_id')->with('openWeatherMapCity')->where('ds_code', 'open_weather_map_cities')->get(),
+                'open_weather_map_events' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_event')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'open_weather_map_events')->get(),
+                'google_algorithm_update_dates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'status')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'google_algorithm_update_dates')->get(),
+                'google_alert_keywords' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'google_alert_keywords')->get(),
+                'wordpress_updates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'wordpress_updates')->get(),
             ],
         ];
     }
@@ -39,7 +51,7 @@ class UserDataSourceController extends Controller
      */
     public function store(UserDataSourceRequest $request)
     {
-        if($request->ds_code == 'google_algorithm_update_dates'){
+        if ($request->ds_code == 'google_algorithm_update_dates') {
             DB::statement("DELETE FROM user_data_sources WHERE ds_code = ? AND user_id = ?", ['google_algorithm_update_dates', Auth::id()]);
         }
 
@@ -60,7 +72,7 @@ class UserDataSourceController extends Controller
      */
     public function destroy(UserDataSource $userDataSource)
     {
-        
+
         if ($userDataSource->user_id !== Auth::id()) {
             abort(404);
         }
