@@ -40,8 +40,7 @@ class AnnotationController extends Controller
         $endDate = Carbon::parse($request->query('endDate'));
 
         $annotationsQuery = "SELECT TempTable.* FROM (";
-        $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
-
+        
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= "SELECT DISTINCT DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` FROM `annotations`";
         if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
@@ -49,7 +48,11 @@ class AnnotationController extends Controller
         }
         $annotationsQuery .= " WHERE (`annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') AND `annotations`.`is_enabled` = 1) ";
         if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
-            $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $request->query('google_analytics_property_id') . ")";
+            $gaPropertyId = $request->query('google_analytics_property_id');
+            $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
+            $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
+        }else{
+            $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
         }
         $addedByArray = [];
         if ($request->query('show_manual_annotations')) {
