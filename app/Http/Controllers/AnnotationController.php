@@ -213,12 +213,14 @@ class AnnotationController extends Controller
         $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_properties`.`id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
         $annotationsQuery .= "select annotations.is_enabled, annotations.`show_at`, annotations.created_at, `annotations`.`id`, annotations.`category`, annotations.`event_name`, annotations.`url`, annotations.`description`, `users`.`name` AS user_name from `annotations` INNER JOIN `users` ON `users`.`id` = `annotations`.`user_id` where `annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
 
+        $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
+
         if ($request->query('annotation_ga_account_id') && $request->query('annotation_ga_account_id') !== '*') {
             $annotationsQuery .= " and annotation_ga_accounts.id = " . $request->query('annotation_ga_account_id');
         }
         if ($user->is_ds_holidays_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, holiday_date AS show_at, holiday_date AS created_at, null, CONCAT(category, \" Holiday\"), event_name, NULL as url, description, 'System' AS user_name from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays'";
+            $annotationsQuery .= "select 1, holiday_date AS show_at, holiday_date AS created_at, null, CONCAT(category, \" Holiday\"), event_name, NULL as url, description, 'System' AS user_name from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays')";
         }
         if ($user->is_ds_google_algorithm_updates_enabled) {
             $annotationsQuery .= " union ";
@@ -232,15 +234,15 @@ class AnnotationController extends Controller
         }
         if ($user->is_ds_retail_marketing_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, show_at, show_at as created_at, null, category, event_name, NULL as url, description, 'System' AS user_name from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings'";
+            $annotationsQuery .= "select 1, show_at, show_at as created_at, null, category, event_name, NULL as url, description, 'System' AS user_name from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings')";
         }
         if ($user->is_ds_weather_alerts_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, alert_date, alert_date as created_at, null, \"Weather Alert\", event, NULL as url, CONCAT( open_weather_map_cities.name, \": \", description), 'System' AS user_name from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` inner join `open_weather_map_cities` on `open_weather_map_cities`.id = `open_weather_map_alerts`.`open_weather_map_city_id` where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities'";
+            $annotationsQuery .= "select 1, alert_date, alert_date as created_at, null, \"Weather Alert\", event, NULL as url, CONCAT( open_weather_map_cities.name, \": \", description), 'System' AS user_name from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` inner join `open_weather_map_cities` on `open_weather_map_cities`.id = `open_weather_map_alerts`.`open_weather_map_city_id` where  $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities')";
         }
         if ($user->is_ds_google_alerts_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, alert_date, alert_date as created_at, null, \"Google Alert\", title, url, description, 'System' AS user_name from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords'";
+            $annotationsQuery .= "select 1, alert_date, alert_date as created_at, null, \"Google Alert\", title, url, description, 'System' AS user_name from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords')";
         }
         if ($user->is_ds_wordpress_updates_enabled) {
             $annotationsQuery .= " union ";
