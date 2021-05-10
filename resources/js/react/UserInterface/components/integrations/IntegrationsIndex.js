@@ -43,7 +43,7 @@ export default class integrationsIndex extends React.Component {
                                 <div className="int-action">
                                     <a
                                         target="_blank"
-                                        href="https://www.gaannotations.com/campaign-creation-trigger"
+                                        href="https://www.gaannotations.com/integrate-google-ads-campaign-with-google-analytics-annotation-creation-trigger"
                                         className="btn btn-primary"
                                     >
                                         See instructions
@@ -75,7 +75,7 @@ export default class integrationsIndex extends React.Component {
                                 <div className="int-action">
                                     <a
                                         target="_blank"
-                                        href="https://www.gaannotations.com/mailchimp-creation-trigger"
+                                        href="https://www.gaannotations.com/integrate-mailchimp-with-ga4-annotations-new-campaign-creation-trigger"
                                         className="btn btn-primary"
                                     >
                                         See instructions
@@ -146,7 +146,7 @@ export default class integrationsIndex extends React.Component {
                             <div className="int-action">
                                 <a
                                     target="_blank"
-                                    href="https://www.gaannotations.com/shopify-creation-trigger"
+                                    href="https://www.gaannotations.com/integrate-shopify-with-google-analytics-annotation-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
@@ -181,7 +181,7 @@ export default class integrationsIndex extends React.Component {
                             <div className="int-action">
                                 <a
                                     target="_blank"
-                                    href="https://www.gaannotations.com/slack-creation-trigger"
+                                    href="https://www.gaannotations.com/integrate-slack-with-google-analytics-4-annotations-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
@@ -216,7 +216,7 @@ export default class integrationsIndex extends React.Component {
                             <div className="int-action">
                                 <a
                                     target="_blank"
-                                    href="https://www.gaannotations.com/asana-creation-trigger"
+                                    href="https://www.gaannotations.com/integrate-asana-with-ga4-annotations-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
@@ -286,7 +286,7 @@ export default class integrationsIndex extends React.Component {
                             <div className="int-action">
                                 <a
                                     target="_blank"
-                                    href="https://www.gaannotations.com/jira-creation-trigger"
+                                    href="https://www.gaannotations.com/integrate-jira-with-ga4-annotations-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
@@ -320,7 +320,7 @@ export default class integrationsIndex extends React.Component {
                             <div className="int-action">
                                 <a
                                     target="_blank"
-                                    href="https://www.gaannotations.com/trello-creation-trigger"
+                                    href="https://www.gaannotations.com/integrate-trello-with-ga4-annotations-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
@@ -355,7 +355,7 @@ export default class integrationsIndex extends React.Component {
                             <div className="int-action">
                                 <a
                                     target="_blank"
-                                    href="https://www.gaannotations.com/github-creation-trigger"
+                                    href="https://www.gaannotations.com/integrate-github-google-analytics-annotation-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
@@ -390,7 +390,7 @@ export default class integrationsIndex extends React.Component {
                             <div className="int-action">
                                 <a
                                     target="_blank"
-                                    href="https://www.gaannotations.com/bitbucket-creation-trigger"
+                                    href="https://www.gaannotations.com/integrate-bitbucket-with-ga4-annotations-creation-trigger"
                                     className="btn btn-primary"
                                 >
                                     See instructions
