@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
 import GoogleAccountSelect from "../../utils/GoogleAccountSelect";
+import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 
 class IndexAnnotations extends React.Component {
 
@@ -14,6 +15,7 @@ class IndexAnnotations extends React.Component {
             accounts: [],
             annotationCategories: [],
             googleAccount: '',
+            googleAnalyticsProperty: '',
             category: '',
 
             searchText: '',
@@ -24,7 +26,7 @@ class IndexAnnotations extends React.Component {
         this.deleteAnnotation = this.deleteAnnotation.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
         this.sort = this.sort.bind(this)
-        this.sortByAccount = this.sortByAccount.bind(this)
+        this.sortByProperty = this.sortByProperty.bind(this)
         this.sortByCategory = this.sortByCategory.bind(this)
 
         this.handleChange = this.handleChange.bind(this)
@@ -39,10 +41,10 @@ class IndexAnnotations extends React.Component {
             .then(response => {
                 this.setState({ annotations: response.data.annotations });
             }, (err) => {
-                
+
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ errors: err });
             });
         /////
@@ -50,10 +52,10 @@ class IndexAnnotations extends React.Component {
             .then(response => {
                 this.setState({ isBusy: false, annotationCategories: response.data.categories });
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
 
@@ -67,10 +69,10 @@ class IndexAnnotations extends React.Component {
             annotations = annotations.filter(a => a.id != id);
             this.setState({ isBusy: false, annotations: annotations })
         }, (err) => {
-            
+
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            
+
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -87,10 +89,10 @@ class IndexAnnotations extends React.Component {
                 let annotations = this.state.annotations.map(an => { if (an.id == id) { return newAnnotation } else { return an } })
                 this.setState({ isBusy: false, 'annotations': annotations })
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
         }
@@ -104,27 +106,27 @@ class IndexAnnotations extends React.Component {
                 .then(response => {
                     this.setState({ isBusy: false, annotations: response.data.annotations });
                 }, (err) => {
-                    
+
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                    
+
                     this.setState({ isBusy: false, errors: err });
                 });
         }
 
     }
-    sortByAccount(gaAccountId) {
-        this.setState({ googleAccount: gaAccountId });
-        if (gaAccountId !== 'select-ga-account') {
+    sortByProperty(gaPropertyId) {
+        this.setState({ googleAnalyticsProperty: gaPropertyId });
+        if (gaPropertyId !== 'select-ga-property') {
             this.setState({ isBusy: true });
-            HttpClient.get(`/annotation?google_account_id=${gaAccountId}`)
+            HttpClient.get(`/annotation?annotation_ga_property_id=${gaPropertyId}`)
                 .then(response => {
                     this.setState({ isBusy: false, annotations: response.data.annotations });
                 }, (err) => {
-                    
+
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                    
+
                     this.setState({ isBusy: false, errors: err });
                 });
         }
@@ -132,19 +134,23 @@ class IndexAnnotations extends React.Component {
     }
     sortByCategory(catName) {
         this.setState({ category: catName });
+        let url = "";
         if (catName !== 'select-category') {
-            this.setState({ isBusy: true });
-            HttpClient.get(`/annotation?by_category=${catName}`)
-                .then(response => {
-                    this.setState({ isBusy: false, annotations: response.data.annotations });
-                }, (err) => {
-                    
-                    this.setState({ isBusy: false, errors: (err.response).data });
-                }).catch(err => {
-                    
-                    this.setState({ isBusy: false, errors: err });
-                });
+            url = `/annotation?category=${catName}`;
+        } else {
+            url = `/annotation?sortBy=category`;
         }
+        this.setState({ isBusy: true });
+        HttpClient.get(url)
+            .then(response => {
+                this.setState({ isBusy: false, annotations: response.data.annotations });
+            }, (err) => {
+
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+
+                this.setState({ isBusy: false, errors: err });
+            });
 
     }
 
@@ -192,19 +198,19 @@ class IndexAnnotations extends React.Component {
                                         <option value="Null">Sort By</option>
                                         <option value="added">Added</option>
                                         <option value="date">By Date</option>
-                                        <option value="by-category">By Category</option>
-                                        <option value="ga-account">By GA account</option>
+                                        <option value="category">By Category</option>
+                                        <option value="ga-property">By GA Property</option>
                                     </select>
 
                                 </div>
                                 <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-left text-lg-left">
                                     {
-                                        this.state.sortBy == "ga-account" ?
-                                            <GoogleAccountSelect name={'googleAccount'} id={'googleAccount'} value={this.state.googleAccount} onChangeCallback={(e) => { this.sortByAccount(e.target.value) }} />
+                                        this.state.sortBy == "ga-property" ?
+                                            <GoogleAnalyticsPropertySelect name={'googleAnalyticsProperty'} id={'googleAnalyticsProperty'} value={this.state.googleAnalyticsProperty} onChangeCallback={(e) => { this.sortByProperty(e.target.value) }} />
                                             : null
                                     }
                                     {
-                                        this.state.sortBy == "by-category" ?
+                                        this.state.sortBy == "category" ?
                                             <select name="category" id="category" value={this.state.category} className="form-control" onChange={(e) => { this.sortByCategory(e.target.value) }}>
                                                 <option value="select-category">Select Category</option>
                                                 {

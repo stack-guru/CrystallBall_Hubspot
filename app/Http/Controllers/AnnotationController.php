@@ -210,17 +210,17 @@ class AnnotationController extends Controller
             $user = $user->user;
         }
 
-        $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_properties`.`id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
-        $annotationsQuery .= "select annotations.is_enabled, annotations.`show_at`, annotations.created_at, `annotations`.`id`, annotations.`category`, annotations.`event_name`, annotations.`url`, annotations.`description`, `users`.`name` AS user_name from `annotations` INNER JOIN `users` ON `users`.`id` = `annotations`.`user_id` where `annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_properties`.`google_analytics_property_id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
+        $annotationsQuery .= "select annotations.is_enabled, annotations.`show_at`, annotations.created_at, `annotations`.`id`, annotations.`category`, annotations.`event_name`, annotations.`url`, annotations.`description`, `users`.`name` AS user_name from `annotations` INNER JOIN `users` ON `users`.`id` = `annotations`.`user_id` LEFT JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id` where `annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
 
         $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
 
-        if ($request->query('annotation_ga_account_id') && $request->query('annotation_ga_account_id') !== '*') {
-            $annotationsQuery .= " and annotation_ga_accounts.id = " . $request->query('annotation_ga_account_id');
+        if ($request->query('annotation_ga_property_id') && $request->query('annotation_ga_property_id') !== '*') {
+            $annotationsQuery .= " and annotation_ga_properties.google_analytics_property_id = " . $request->query('annotation_ga_property_id');
         }
         if ($user->is_ds_holidays_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, holiday_date AS show_at, holiday_date AS created_at, null, CONCAT(category, \" Holiday\"), event_name, NULL as url, description, 'System' AS user_name from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays')";
+            $annotationsQuery .= "select 1, holiday_date AS show_at, holiday_date AS created_at, null, CONCAT(category, \"Holiday\"), event_name, NULL as url, description, 'System' AS user_name from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays')";
         }
         if ($user->is_ds_google_algorithm_updates_enabled) {
             $annotationsQuery .= " union ";
@@ -256,12 +256,18 @@ class AnnotationController extends Controller
         $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
         $annotationsQuery .= " LEFT JOIN google_analytics_properties ON annotation_ga_properties.google_analytics_property_id = google_analytics_properties.id";
 
+        if ($request->query('category') && $request->query('category') !== '') {
+            $annotationsQuery .= " WHERE category = '" . $request->query('category') . "'";
+        }
+
         if ($request->query('sortBy') == "added") {
             $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
         } elseif ($request->query('sortBy') == "date") {
             $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
         } elseif ($request->query('google_account_id')) {
             $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
+        } elseif ($request->query('sortBy') == "category") {
+            $annotationsQuery .= " ORDER BY TempTable.category ASC";
         } else {
             $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
         }
