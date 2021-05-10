@@ -28,8 +28,9 @@ class WebMonitorRequest extends FormRequest
             'url' => 'required|string|active_url',
             'email_address' => 'nullable|email',
             'sms_phone_number' => 'nullable|string',
-            'google_analytics_property_id' => 'nullable|array',
-            'google_analytics_property_id.*' => 'nullable|exists:google_analytics_properties,id',
+            'ga_property_id' => 'nullable|exists:google_analytics_properties,id',
+            // 'google_analytics_property_id' => 'nullable|array',
+            // 'google_analytics_property_id.*' => 'nullable|exists:google_analytics_properties,id',
         ];
     }
 }

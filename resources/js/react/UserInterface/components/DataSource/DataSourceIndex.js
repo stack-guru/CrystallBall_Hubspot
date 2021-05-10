@@ -190,7 +190,6 @@ export default class DataSourceIndex extends React.Component {
                                         id="ga_property_id"
                                         value={this.state.ga_property_id}
                                         onChangeCallback={(gAP) => {
-                                            console.log(gAP);
                                             if (gAP.target.value == [""]) {
                                                 this.setState({ ga_property_id: null });
                                                 this.loadUserDataSources(null);

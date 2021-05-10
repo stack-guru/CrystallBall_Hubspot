@@ -1,6 +1,7 @@
 import React from 'react';
 import HttpClient from '../utils/HttpClient'
 import ErrorAlert from '../utils/ErrorAlert';
+import GoogleAnalyticsPropertySelect from './GoogleAnalyticsPropertySelect';
 
 export default class DSWebMonitorsSelect extends React.Component {
 
@@ -9,7 +10,7 @@ export default class DSWebMonitorsSelect extends React.Component {
         this.state = {
             isBusy: false,
             errors: undefined,
-            webMonitor: { name: '', url: '', email_address: '', sms_phone_number: '' },
+            webMonitor: { name: '', url: '', email_address: '', sms_phone_number: '', ga_property_id: '' },
             webMonitors: []
         }
 
@@ -109,6 +110,23 @@ export default class DSWebMonitorsSelect extends React.Component {
                             />
                         </div>
                         <div className="input-group search-input-box mb-3">
+                            <GoogleAnalyticsPropertySelect
+                                name="ga_property_id"
+                                id="ga_property_id"
+                                value={this.state.ga_property_id}
+                                onChangeCallback={(gAP) => {
+                                    if (gAP.target.value == [""]) {
+                                        this.setState({ webMonitor: { ...this.state.webMonitor, ga_property_id: '' } });
+                                    } else {
+                                        this.setState({ webMonitor: { ...this.state.webMonitor, ga_property_id: gAP.target.value } });
+                                    }
+                                }}
+                                placeholder="Select GA Properties"
+                                isClearable={true}
+                                className="w-100"
+                            />
+                        </div>
+                        <div className="input-group search-input-box mb-3">
                             <button className="btn btn-primary" type="submit">Create</button>
                         </div>
                     </form>
@@ -117,13 +135,16 @@ export default class DSWebMonitorsSelect extends React.Component {
                             this.state.webMonitors.map(wM => {
                                 return (
                                     <div className="form-check wac mb-2" key={wM.id}>
+                                        <button className="btn btn-sm btn-danger float-left" onClick={() => this.handleDelete(wM.id)} web_monitor_id={wM.id}><i className="fa fa-times"></i></button>
                                         <label
                                             className="form-check-label ml-1"
                                             htmlFor="defaultCheck1"
                                         >
                                             {wM.name}
                                         </label>
-                                        <button className="btn btn-sm btn-danger float-right" onClick={() => this.handleDelete(wM.id)} web_monitor_id={wM.id}><i className="fa fa-times"></i></button>
+                                        <label
+                                            className="float-right"
+                                        >{wM.google_analytics_property ? wM.google_analytics_property.name : 'All Properties'}</label>
                                     </div>
                                 )
                             })

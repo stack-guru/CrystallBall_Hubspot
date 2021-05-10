@@ -18,9 +18,9 @@ class WebMonitorController extends Controller
     public function index(Request $request)
     {
         if ($request->query('ga_property_id') !== "null") {
-            return ['web_monitors' => WebMonitor::ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->get()];
+            return ['web_monitors' => WebMonitor::ofCurrentUser()->with('googleAnalyticsProperty')->where('ga_property_id', $request->query('ga_property_id'))->get()];
         }
-        return ['web_monitors' => WebMonitor::ofCurrentUser()->get()];
+        return ['web_monitors' => WebMonitor::ofCurrentUser()->with('googleAnalyticsProperty')->get()];
     }
 
     /**
@@ -54,6 +54,8 @@ class WebMonitorController extends Controller
         $webMonitor->uptime_robot_id = $uRM['monitor']['id'];
         $webMonitor->save();
 
+        $webMonitor->load('googleAnalyticsProperty');
+
         return ['web_monitor' => $webMonitor];
     }
 
@@ -84,9 +86,9 @@ class WebMonitorController extends Controller
         $uptimeRobotService = new UptimeRobotService;
         $uRM = $uptimeRobotService->deleteMonitor($webMonitor->uptime_robot_id);
 
-        if ($uRM == false) {
-            abort(500);
-        }
+        // if ($uRM == false) {
+        //     abort(500);
+        // }
 
         $webMonitor->delete();
 
