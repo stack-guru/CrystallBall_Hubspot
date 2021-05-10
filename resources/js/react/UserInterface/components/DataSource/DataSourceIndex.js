@@ -25,7 +25,7 @@ export default class DataSourceIndex extends React.Component {
             errors: '',
             redirectTo: null,
             showHintFor: null,
-            ga_property_id: null
+            ga_property_id: ''
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
@@ -39,7 +39,7 @@ export default class DataSourceIndex extends React.Component {
 
     componentDidMount() {
         document.title = 'Automation';
-        this.loadUserDataSources(null);
+        this.loadUserDataSources('');
     }
     loadUserDataSources(gaPropertyId) {
         if (!this.state.isLoading) {
