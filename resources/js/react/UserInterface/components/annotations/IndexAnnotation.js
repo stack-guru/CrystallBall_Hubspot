@@ -180,19 +180,19 @@ class IndexAnnotations extends React.Component {
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
                     <div className="container-xl p-0">
-                        <div className="row ml-0 mr-0 mb-5">
+                        <div className="row ml-0 mr-0 mb-1">
                             <div className="col-md-12">
                                 <h2 className="heading-section gaa-title">Annotations</h2>
                             </div>
                         </div>
                         <div id="annotation-index-container">
-                            <div className="row mb-4 ml-3 mr-3">
+                            <div className="row mb-3 ml-3 mr-3">
                                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
                                     <Link to="/annotation/create" className="btn btn-sm gaa-bg-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add Manual</Link>
                                     <Link to="/annotation/upload" className="btn btn-sm gaa-bg-primary text-white"><i className=" mr-2 fa fa-upload"></i>CSV Upload</Link>
                                 </div>
                             </div>
-                            <div className="row mb-4 ml-0 mr-0">
+                            <div className="row mb-1 ml-0 mr-0">
                                 <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-left text-lg-left mb-3">
                                     <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
                                         <option value="Null">Sort By</option>
