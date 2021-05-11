@@ -153,8 +153,7 @@ export default class DataSourceIndex extends React.Component {
         } else if (this.state.sectionName == sectionName) {
             this.setState({ sectionName: null })
         } else {
-            this.setState({ sectionName: sectionName })
-            window.scroll(0, 0);
+            this.setState({ sectionName: sectionName });
         }
     }
 

@@ -522,3 +522,7 @@ setting-menu-item.dropdown {
     width: 20px;
     margin: 10px;
 }
+#data-source-page-container {
+    height: 85vh;
+    overflow-y: scroll;
+}
