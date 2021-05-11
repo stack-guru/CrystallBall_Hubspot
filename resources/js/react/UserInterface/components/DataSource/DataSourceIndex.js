@@ -210,11 +210,11 @@ export default class DataSourceIndex extends React.Component {
                             <div className="row ml-0 mr-0 w-100 ">
                                 <div className="col-9">
                                     <h4 className="gaa-text-primary">
-                                        Website Monitors
+                                        Website Monitoring
                                         <img id="web-monitors-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('web-monitors') }} src="/images/info-logo.png" />
                                     </h4>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'web-monitors'} target="web-monitors-datasource-hint" toggle={() => { this.changeShownHint(null) }} onClick={() => { this.changeShownHint(null) }}>
-                                        <PopoverHeader>Web Monitors</PopoverHeader>
+                                        <PopoverHeader>Web Monitoring</PopoverHeader>
                                         <PopoverBody>Downtime happens even to the best of us. But it’s important to know it before customers are affected and also keep annotations on your reports. Add your website URL; we will monitor it every 1 minute.</PopoverBody>
                                     </UncontrolledPopover>
                                 </div>
