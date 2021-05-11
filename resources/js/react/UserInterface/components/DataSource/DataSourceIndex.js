@@ -161,7 +161,7 @@ export default class DataSourceIndex extends React.Component {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
         return (
-            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper">
+            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" style={{ height: '75vh' }}>
                 <LoaderAnimation show={this.state.isLoading} />
                 <div className="row ml-0 mr-0">
                     <div className="col-9">
@@ -194,7 +194,7 @@ export default class DataSourceIndex extends React.Component {
                     </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-4">
-                    <div className="col-md-8 col-sm-12" id="data-source-page-container">
+                    <div className="col-md-8 col-sm-12" id="data-source-page-container" style={{ height: '55vh' }}>
 
                         <div className="container ds-sections border-bottom">
 
@@ -566,7 +566,7 @@ export default class DataSourceIndex extends React.Component {
 
                         </div> */}
                     </div>
-                    <div className="col-md-4 col-sm-12 mt-3 border-left">
+                    <div className="col-md-4 col-sm-12 mt-3 border-left" style={{ height: '55vh' }}>
                         {
                             this.state.sectionName == 'holidays' && this.state.userDataSources ?
                                 <Countries

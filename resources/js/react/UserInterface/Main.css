@@ -425,8 +425,8 @@ setting-menu-item.dropdown {
 }
 
 .checkbox-box {
-    height: 650px;
-    overflow-y: auto;
+    height: 220px;
+    overflow-y: scroll;
     width: 100%;
 }
 .ds-sections {
