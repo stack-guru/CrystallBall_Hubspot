@@ -37,7 +37,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     onChangeHandler(sOption) {
         if (sOption == null) {
             this.setState({ aProperties: [{ value: "", label: "All Properties" }] });
-            this.props.onChangeCallback({ target: { name: this.props.name, value: [""] } });
+            if (this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: [""] } });
+            if (!this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: "" } });
             if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Properties" }]);
         } else {
             // aProperties.push(sOption);
@@ -48,7 +49,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 aProperties = sOption;
             }
             this.setState({ aProperties: aProperties });
-            (this.props.onChangeCallback)({ target: { name: this.props.name, value: this.props.multiple ? sOption.filter(sO => sO.value !== "").map(sO => sO.value) : sOption.value } });
+            if (this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.filter(sO => sO.value !== "").map(sO => sO.value) } });
+            if (!this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.value } });
             if (this.props.onChangeCallback2) (this.props.onChangeCallback2)(aProperties);
         }
     }

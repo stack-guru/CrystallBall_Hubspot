@@ -115,7 +115,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                                 id="ga_property_id"
                                 value={this.state.ga_property_id}
                                 onChangeCallback={(gAP) => {
-                                    if (gAP.target.value == [""]) {
+                                    if (gAP.target.value == "") {
                                         this.setState({ webMonitor: { ...this.state.webMonitor, ga_property_id: '' } });
                                     } else {
                                         this.setState({ webMonitor: { ...this.state.webMonitor, ga_property_id: gAP.target.value } });
