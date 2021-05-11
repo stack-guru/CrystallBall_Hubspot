@@ -238,7 +238,7 @@ class AnnotationController extends Controller
         }
         if ($user->is_ds_weather_alerts_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select 1, alert_date, alert_date as created_at, null, \"Weather Alert\", event, NULL as url, CONCAT( open_weather_map_cities.name, \": \", description), 'System' AS user_name from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` inner join `open_weather_map_cities` on `open_weather_map_cities`.id = `open_weather_map_alerts`.`open_weather_map_city_id` where  $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities')";
+            $annotationsQuery .= "select 1, alert_date, alert_date as created_at, null, \"Weather Alert\", event, NULL as url, CONCAT( open_weather_map_cities.name, \": \", description), 'System' AS user_name from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` inner join `open_weather_map_cities` on `open_weather_map_cities`.id = `open_weather_map_alerts`.`open_weather_map_city_id` where  $gAPropertyCriteria AND (`owmes`.`user_id` = " . $user->id . " and `uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities')";
         }
         if ($user->is_ds_google_alerts_enabled) {
             $annotationsQuery .= " union ";
