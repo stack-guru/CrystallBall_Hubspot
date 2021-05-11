@@ -169,42 +169,33 @@ export default class DataSourceIndex extends React.Component {
                     </div>
                     <div className="col-3">
 
+                        <p className="gaa-text-primary">
+                            Set Automation for:
+            </p>
+
+
+                        <GoogleAnalyticsPropertySelect
+                            name="ga_property_id"
+                            id="ga_property_id"
+                            value={this.state.ga_property_id}
+                            onChangeCallback={(gAP) => {
+                                if (gAP.target.value == "") {
+                                    this.setState({ ga_property_id: null });
+                                    this.loadUserDataSources(null);
+                                } else {
+                                    this.setState({ ga_property_id: gAP.target.value });
+                                    this.loadUserDataSources(gAP.target.value);
+                                }
+                            }}
+                            placeholder="Select GA Properties"
+                            isClearable={true}
+                        />
+
                     </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-4">
                     <div className="col-md-8 col-sm-12" id="data-source-page-container">
-                        <div className="container border-bottom">
 
-                            <div className="row ml-0 mr-0 w-100 mb-4">
-                                <div className="col-4">
-                                    <p className="gaa-text-primary">
-                                        Set Automation for:
-                                        </p>
-                                </div>
-                                <div className="col-2"></div>
-                                <div className="col-6">
-
-                                    <GoogleAnalyticsPropertySelect
-                                        name="ga_property_id"
-                                        id="ga_property_id"
-                                        value={this.state.ga_property_id}
-                                        onChangeCallback={(gAP) => {
-                                            if (gAP.target.value == "") {
-                                                this.setState({ ga_property_id: null });
-                                                this.loadUserDataSources(null);
-                                            } else {
-                                                this.setState({ ga_property_id: gAP.target.value });
-                                                this.loadUserDataSources(gAP.target.value);
-                                            }
-                                        }}
-                                        placeholder="Select GA Properties"
-                                        isClearable={true}
-                                    />
-                                </div>
-
-                            </div>
-
-                        </div>
                         <div className="container ds-sections border-bottom">
 
                             <div className="row ml-0 mr-0 w-100 ">
