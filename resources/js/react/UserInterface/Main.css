@@ -425,8 +425,6 @@ setting-menu-item.dropdown {
 }
 
 .checkbox-box {
-    height: 220px;
-    overflow-y: scroll;
     width: 100%;
 }
 .ds-sections {
@@ -523,6 +521,11 @@ setting-menu-item.dropdown {
     margin: 10px;
 }
 #data-source-page-container {
-    height: 85vh;
-    overflow-y: scroll;
+    height: inherit;
+    overflow-y: auto;
+}
+
+#data-source-detail-container {
+    height: inherit;
+    overflow-y: auto;
 }

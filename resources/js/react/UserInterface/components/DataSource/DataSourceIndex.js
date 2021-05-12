@@ -168,12 +168,7 @@ export default class DataSourceIndex extends React.Component {
                         <h2 className="heading-section gaa-title">Automation</h2>
                     </div>
                     <div className="col-3">
-
-                        <p className="gaa-text-primary">
-                            Set Automation for:
-            </p>
-
-
+                        <p className="gaa-text-primary">Set Automation for:</p>
                         <GoogleAnalyticsPropertySelect
                             name="ga_property_id"
                             id="ga_property_id"
@@ -193,8 +188,8 @@ export default class DataSourceIndex extends React.Component {
 
                     </div>
                 </div>
-                <div className="row ml-0 mr-0 mt-4">
-                    <div className="col-md-8 col-sm-12" id="data-source-page-container" style={{ height: '55vh' }}>
+                <div className="row ml-0 mr-0 mt-4" style={{ height: '55vh' }}>
+                    <div className="col-md-8 col-sm-12" id="data-source-page-container" >
 
                         <div className="container ds-sections border-bottom">
 
@@ -566,7 +561,7 @@ export default class DataSourceIndex extends React.Component {
 
                         </div> */}
                     </div>
-                    <div className="col-md-4 col-sm-12 mt-3 border-left" style={{ height: '55vh' }}>
+                    <div className="col-md-4 col-sm-12 border-left" id="data-source-detail-container">
                         {
                             this.state.sectionName == 'holidays' && this.state.userDataSources ?
                                 <Countries

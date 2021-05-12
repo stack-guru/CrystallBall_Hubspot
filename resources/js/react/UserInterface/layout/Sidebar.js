@@ -107,7 +107,7 @@ class sidebar extends React.Component {
                         <Link to="/data-source" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
-                                    <i className="ti-server"></i>
+                                    <img src="/images/automation-icon.svg" width="25px" height="25px" />
                                 </span>
                                 <span className="title">Automations</span>
                             </span>
@@ -140,7 +140,7 @@ class sidebar extends React.Component {
                             className="dropdown-toggle" >
                             <div className="wrapper sidebar-link">
                                 <span className="icon-holder">
-                                    <i className="ti-settings "></i>
+                                    <img src="/images/settings-icon.svg" width="22px" height="22px" />
                                 </span>
                                 <span className="title">Settings</span>
                                 <span className="arrow">
