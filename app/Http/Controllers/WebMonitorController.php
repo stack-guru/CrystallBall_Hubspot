@@ -39,23 +39,27 @@ class WebMonitorController extends Controller
             return response()->json(['message' => 'Maximum number of monitors limit reached'], 402);
         }
 
-        if (WebMonitor::where('url', $request->url)->count()) {
+        if (WebMonitor::where('url', $request->url)->where('user_id', Auth::id())->count()) {
             return response()->json(['message' => 'We already have this monitor setup.'], 402);
-        }
-
-        $uptimeRobotService = new UptimeRobotService;
-        $uRM = $uptimeRobotService->newMonitor($request->name, $request->url);
-
-        if ($uRM == false) {
-            abort(500);
         }
 
         $webMonitor = new WebMonitor;
         $webMonitor->fill($request->validated());
         $webMonitor->user_id = Auth::id();
-        $webMonitor->save();
 
-        $webMonitor->uptime_robot_id = $uRM['monitor']['id'];
+        $uptimeRobotService = new UptimeRobotService;
+
+        $anyOldMonitor = WebMonitor::where('url', $webMonitor->url)->whereNotNull('uptime_robot_id')->first();
+        if ($anyOldMonitor) {
+            $webMonitor->uptime_robot_id = $anyOldMonitor->uptime_robot_id;
+        } else {
+            $uRM = $uptimeRobotService->newMonitor($request->name, $request->url);
+            if ($uRM == false) {
+                abort(500);
+            }
+            $webMonitor->uptime_robot_id = $uRM['monitor']['id'];
+        }
+
         $webMonitor->save();
 
         $webMonitor->load('googleAnalyticsProperty');
@@ -88,11 +92,10 @@ class WebMonitorController extends Controller
     {
 
         $uptimeRobotService = new UptimeRobotService;
-        $uRM = $uptimeRobotService->deleteMonitor($webMonitor->uptime_robot_id);
-
-        // if ($uRM == false) {
-        //     abort(500);
-        // }
+        $anyOldMonitor = WebMonitor::where('uptime_robot_id', $webMonitor->uptime_robot_id)->where('id', '<>', $webMonitor->id)->first();
+        if (!$anyOldMonitor) {
+            $uptimeRobotService->deleteMonitor($webMonitor->uptime_robot_id);
+        }
 
         $webMonitor->delete();
 

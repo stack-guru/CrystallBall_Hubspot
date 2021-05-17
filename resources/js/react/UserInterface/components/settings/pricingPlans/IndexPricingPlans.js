@@ -146,7 +146,7 @@ export default class indexPricingPlans extends React.Component {
                                                     pricePlan.has_data_sources ?
                                                         <li>
                                                             <span className="fa-li"><i className="fa fa-asterisk"></i></span>
-                                                            Automation 
+                                                            Automations 
                                                             <img id="automation-feature-hint" className="hint-button" src="/images/info-logo.png" />
                                                             </li>
                                                         : null

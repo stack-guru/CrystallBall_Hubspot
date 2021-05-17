@@ -9,12 +9,12 @@ use App\Models\AutoPaymentLog;
 use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
 use App\Models\User;
+use App\Models\WebMonitor;
 use App\Services\BlueSnapService;
+use App\Services\UptimeRobotService;
 use DB;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use App\Models\WebMonitor;
-use App\Services\UptimeRobotService;
 
 class ResubscribeUserPlansSubscriptionCommand extends Command
 {
@@ -190,10 +190,12 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $uptimeRobotService = new UptimeRobotService;
         foreach ($webMonitors as $index => $webMonitor) {
             if ($index >= $maxAllowedWebMonitors) {
-                if ($uptimeRobotService->deleteMonitor($webMonitor->uptime_robot_id)) {
-                    $webMonitor->uptime_robot_id = null;
-                    $webMonitor->save();
+                $anyOldMonitor = WebMonitor::where('uptime_robot_id', $webMonitor->uptime_robot_id)->where('id', '<>', $webMonitor->id)->first();
+                if (!$anyOldMonitor) {
+                    $uptimeRobotService->deleteMonitor($webMonitor->uptime_robot_id);
                 }
+                $webMonitor->uptime_robot_id = null;
+                $webMonitor->save();
             }
         }
     }

@@ -290,7 +290,7 @@ export default class DataSourceIndex extends React.Component {
                                     </h4>
                                     <div className="input-group-prepend">
                                         <div className="input-group" style={{ marginTop: "7px" }}>
-                                            <input type="checkbox"
+                                            <input type="checkbox" style={{ position: 'absolute', top: '3px' }}
                                                 onChange={(e) => {
                                                     if (e.target.checked) {
                                                         this.userDataSourceAddHandler({ code: 'wordpress_updates', name: 'WordpressUpdate', country_name: null, retail_marketing_id: null, value: 'last year' })
@@ -300,7 +300,7 @@ export default class DataSourceIndex extends React.Component {
                                                 }}
                                                 checked={this.state.userDataSources.wordpress_updates && this.state.userDataSources.wordpress_updates.length > 0}
                                                 name="last_year_only" />
-                                            <h6> &nbsp;&nbsp; Show last year only</h6>
+                                            <h6 style={{ position: 'absolute', top: '0px', left: '10px' }}> &nbsp;&nbsp; Show last year only</h6>
                                         </div>
                                     </div>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'wordpress-updates'} target="wordpress-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>

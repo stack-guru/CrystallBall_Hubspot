@@ -180,10 +180,12 @@ class PaymentController extends Controller
         $uptimeRobotService = new UptimeRobotService;
         foreach ($webMonitors as $index => $webMonitor) {
             if ($index >= $maxAllowedWebMonitors) {
-                if ($uptimeRobotService->deleteMonitor($webMonitor->uptime_robot_id)) {
-                    $webMonitor->uptime_robot_id = null;
-                    $webMonitor->save();
+                $anyOldMonitor = WebMonitor::where('uptime_robot_id', $webMonitor->uptime_robot_id)->where('id', '<>', $webMonitor->id)->first();
+                if (!$anyOldMonitor) {
+                    $uptimeRobotService->deleteMonitor($webMonitor->uptime_robot_id);
                 }
+                $webMonitor->uptime_robot_id = null;
+                $webMonitor->save();
             }
         }
     }
@@ -196,10 +198,16 @@ class PaymentController extends Controller
         foreach ($webMonitors as $index => $webMonitor) {
             if ($webMonitor->uptime_robot_id == null) {
                 if ($index < $maxAllowedWebMonitors) {
-                    $newMonitor = $uptimeRobotService->newMonitor($webMonitor->name, $webMonitor->url);
-                    if ($newMonitor) {
-                        $webMonitor->uptime_robot_id = $newMonitor['monitor']['id'];
+                    $anyOldMonitor = WebMonitor::where('url', $webMonitor->url)->whereNotNull('uptime_robot_id')->first();
+                    if ($anyOldMonitor) {
+                        $webMonitor->uptime_robot_id = $anyOldMonitor->uptime_robot_id;
                         $webMonitor->save();
+                    } else {
+                        $newMonitor = $uptimeRobotService->newMonitor($webMonitor->name, $webMonitor->url);
+                        if ($newMonitor) {
+                            $webMonitor->uptime_robot_id = $newMonitor['monitor']['id'];
+                            $webMonitor->save();
+                        }
                     }
                 }
             }
