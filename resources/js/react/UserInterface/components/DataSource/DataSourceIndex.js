@@ -229,7 +229,7 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                         </div>
 
-                        <div className="container ds-sections border-bottom">
+                        <div className="container mt-3 ds-sections border-bottom">
 
                             <div className="row ml-0 mr-0 w-100 ">
                                 <div className="col-9">
