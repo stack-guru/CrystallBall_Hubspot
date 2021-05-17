@@ -15,6 +15,7 @@ export default class DSWebMonitorsSelect extends React.Component {
         }
 
         this.setDefaultState = this.setDefaultState.bind(this);
+        this.reloadWebMonitors = this.reloadWebMonitors.bind(this);
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,6 +31,10 @@ export default class DSWebMonitorsSelect extends React.Component {
     }
 
     componentDidMount() {
+        this.reloadWebMonitors();
+    }
+
+    reloadWebMonitors() {
         HttpClient.get(`/data-source/web-monitor?ga_property_id=${this.props.ga_property_id}`).then(resp => {
             this.setState({ webMonitors: resp.data.web_monitors, isBusy: false })
         }, (err) => {
@@ -39,6 +44,13 @@ export default class DSWebMonitorsSelect extends React.Component {
 
             this.setState({ isBusy: false });
         })
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props != prevProps) {
+            this.setState({ webMonitor: { ...this.state.webMonitor, ga_property_id: this.props.ga_property_id } });
+            this.reloadWebMonitors();
+        }
     }
 
     handleChange(e) {
@@ -107,23 +119,6 @@ export default class DSWebMonitorsSelect extends React.Component {
                                 value={this.state.webMonitor.url}
                                 name="url"
                                 onChange={this.handleChange}
-                            />
-                        </div>
-                        <div className="input-group search-input-box mb-3">
-                            <GoogleAnalyticsPropertySelect
-                                name="ga_property_id"
-                                id="ga_property_id"
-                                value={this.state.ga_property_id}
-                                onChangeCallback={(gAP) => {
-                                    if (gAP.target.value == "") {
-                                        this.setState({ webMonitor: { ...this.state.webMonitor, ga_property_id: '' } });
-                                    } else {
-                                        this.setState({ webMonitor: { ...this.state.webMonitor, ga_property_id: gAP.target.value } });
-                                    }
-                                }}
-                                placeholder="Select GA Properties"
-                                isClearable={true}
-                                className="w-100"
                             />
                         </div>
                         <div className="input-group search-input-box mb-3">

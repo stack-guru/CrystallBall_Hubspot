@@ -165,7 +165,7 @@ export default class DataSourceIndex extends React.Component {
                 <LoaderAnimation show={this.state.isLoading} />
                 <div className="row ml-0 mr-0">
                     <div className="col-4">
-                        <h2 className="heading-section gaa-title">Set Automation for:</h2>
+                        <h2 className="heading-section gaa-title">Set Automations for:</h2>
                         <GoogleAnalyticsPropertySelect
                             name="ga_property_id"
                             id="ga_property_id"
