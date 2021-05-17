@@ -39,6 +39,10 @@ class WebMonitorController extends Controller
             return response()->json(['message' => 'Maximum number of monitors limit reached'], 402);
         }
 
+        if (WebMonitor::where('url', $request->url)->count()) {
+            return response()->json(['message' => 'We already have this monitor setup.'], 402);
+        }
+
         $uptimeRobotService = new UptimeRobotService;
         $uRM = $uptimeRobotService->newMonitor($request->name, $request->url);
 
