@@ -248,7 +248,7 @@ class AnnotationController extends Controller
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select 1, update_date, update_date as created_at, null, category, event_name, url, description, 'System' AS user_name from `wordpress_updates`";
             if (UserDataSource::ofCurrentUser()->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count()) {
-                $annotationsQuery .= " where YEAR(update_date) < YEAR(CURDATE())";
+                $annotationsQuery .= " where (update_date BETWEEN " . Carbon::now()->subYear()->format('Y-m-d') . " AND " . Carbon::now()->format('Y-m-d') . " )";
             }
         }
         $annotationsQuery .= ") AS TempTable";

@@ -40,7 +40,7 @@ class AnnotationController extends Controller
         $endDate = Carbon::parse($request->query('endDate'));
 
         $annotationsQuery = "SELECT TempTable.* FROM (";
-        
+
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= "SELECT DISTINCT DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` FROM `annotations`";
         if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
@@ -51,7 +51,7 @@ class AnnotationController extends Controller
             $gaPropertyId = $request->query('google_analytics_property_id');
             $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
             $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
-        }else{
+        } else {
             $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
         }
         $addedByArray = [];
@@ -104,7 +104,7 @@ class AnnotationController extends Controller
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select update_date, wordpress_updates.id, category, event_name, url, description from `wordpress_updates`";
             if (UserDataSource::ofCurrentUser()->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count()) {
-                $annotationsQuery .= " where YEAR(update_date) < YEAR(CURDATE())";
+                $annotationsQuery .= " where (update_date BETWEEN " . Carbon::now()->subYear()->format('Y-m-d') . " AND " . Carbon::now()->format('Y-m-d') . " )";
             }
         }
         ////////////////////////////////////////////////////////////////////
@@ -296,7 +296,7 @@ class AnnotationController extends Controller
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select update_date, wordpress_updates.id, category, event_name, url, description from `wordpress_updates`";
             if (UserDataSource::ofCurrentUser()->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count()) {
-                $annotationsQuery .= " where YEAR(update_date) < YEAR(CURDATE())";
+                $annotationsQuery .= " where (update_date BETWEEN " . Carbon::now()->subYear()->format('Y-m-d') . " AND " . Carbon::now()->format('Y-m-d') . " )";
             }
         }
         ////////////////////////////////////////////////////////////////////
