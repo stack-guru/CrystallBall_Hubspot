@@ -164,10 +164,7 @@ export default class DataSourceIndex extends React.Component {
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" style={{ height: '75vh' }}>
                 <LoaderAnimation show={this.state.isLoading} />
                 <div className="row ml-0 mr-0">
-                    <div className="col-9">
-                        <h2 className="heading-section gaa-title">Automation</h2>
-                    </div>
-                    <div className="col-3">
+                    <div className="col-4">
                         <p className="gaa-text-primary">Set Automation for:</p>
                         <GoogleAnalyticsPropertySelect
                             name="ga_property_id"
@@ -185,12 +182,13 @@ export default class DataSourceIndex extends React.Component {
                             placeholder="Select GA Properties"
                             isClearable={true}
                         />
-
+                    </div>
+                    <div className="col-3">
                     </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-4" style={{ height: '55vh' }}>
                     <div className="col-md-8 col-sm-12" id="data-source-page-container" >
-
+                        <hr />
                         <div className="container ds-sections border-bottom">
 
                             <div className="row ml-0 mr-0 w-100 ">
@@ -291,7 +289,7 @@ export default class DataSourceIndex extends React.Component {
                                         <img id="wordpress-updates-datasource-hint" className="hint-button" onClick={() => { this.changeShownHint('wordpress-updates') }} src="/images/info-logo.png" />
                                     </h4>
                                     <div className="input-group-prepend">
-                                        <div className="input-group">
+                                        <div className="input-group" style={{ marginTop: "7px" }}>
                                             <input type="checkbox"
                                                 onChange={(e) => {
                                                     if (e.target.checked) {
@@ -302,7 +300,7 @@ export default class DataSourceIndex extends React.Component {
                                                 }}
                                                 checked={this.state.userDataSources.wordpress_updates && this.state.userDataSources.wordpress_updates.length > 0}
                                                 name="last_year_only" />
-                                            <h6 style={{ marginTop: "7px" }}> &nbsp;&nbsp; Show last year only</h6>
+                                            <h6> &nbsp;&nbsp; Show last year only</h6>
                                         </div>
                                     </div>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'wordpress-updates'} target="wordpress-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
