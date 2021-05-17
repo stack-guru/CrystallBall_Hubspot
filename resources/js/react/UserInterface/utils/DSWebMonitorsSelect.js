@@ -115,7 +115,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                             <input
                                 type="text"
                                 className="form-control search-input"
-                                placeholder="URL"
+                                placeholder="https://www.google.com"
                                 value={this.state.webMonitor.url}
                                 name="url"
                                 onChange={this.handleChange}
