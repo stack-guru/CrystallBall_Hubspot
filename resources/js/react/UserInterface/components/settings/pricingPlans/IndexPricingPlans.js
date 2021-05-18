@@ -147,7 +147,7 @@ export default class indexPricingPlans extends React.Component {
                                                         <li>
                                                             <span className="fa-li"><i className="fa fa-asterisk"></i></span>
                                                             Automations 
-                                                            <img id="automation-feature-hint" className="hint-button" src="/images/info-logo.png" />
+                                                            <img id="automation-feature-hint" className="hint-button" src="/images/info-logo-grey.png" />
                                                             </li>
                                                         : null
                                                 }
