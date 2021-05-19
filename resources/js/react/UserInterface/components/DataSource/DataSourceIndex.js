@@ -224,7 +224,7 @@ export default class DataSourceIndex extends React.Component {
                                     </div>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'wordpress-updates'} target="wordpress-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>WordPress Core Updates</PopoverHeader>
-                                        <PopoverBody>WordPress Core Updates: Our automated annotation feature will inform you when a new version, Security, or Maintenance Release of WordPress is available.</PopoverBody>
+                                        <PopoverBody><strong>WordPress Core Updates</strong> Our automated annotation feature will inform you when a new version, Security, or Maintenance Release of WordPress is available.</PopoverBody>
                                     </UncontrolledPopover>
                                 </div>
                                 <div className="col-3  d-flex flex-column justify-content-start align-items-center">
