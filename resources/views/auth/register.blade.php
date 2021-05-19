@@ -1,6 +1,7 @@
 @extends('layouts/auth')
 
 @section('page-title', 'Register')
+@section('meta-description', 'Signup to GAannotations and automate Google Analytics Annotations')
 
 @section('content')
 <form class="form-signin" method="POST" action="{{ route('register') }}">
