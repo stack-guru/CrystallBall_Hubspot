@@ -26,7 +26,8 @@ export default class DataSourceIndex extends React.Component {
             errors: '',
             redirectTo: null,
             showHintFor: null,
-            ga_property_id: ''
+            ga_property_id: '',
+            webMonitors: []
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
@@ -36,11 +37,13 @@ export default class DataSourceIndex extends React.Component {
 
         this.sectionToggler = this.sectionToggler.bind(this);
 
+        this.reloadWebMonitors = this.reloadWebMonitors.bind(this);
     }
 
     componentDidMount() {
         document.title = 'Automation';
         this.loadUserDataSources('');
+        this.reloadWebMonitors('');
     }
     loadUserDataSources(gaPropertyId) {
         if (!this.state.isLoading) {
@@ -55,103 +58,15 @@ export default class DataSourceIndex extends React.Component {
         }
     }
 
-    serviceStatusHandler(e) {
-        e.persist();
-        if (e.target.name == 'is_ds_holidays_enabled' && e.target.checked) {
-            this.sectionToggler('holidays')
-        } else if (e.target.name == 'is_ds_holidays_enabled' && !e.target.checked) {
-            this.sectionToggler(null)
-        }
-        if (e.target.name == 'is_ds_retail_marketing_enabled' && e.target.checked) {
-            this.sectionToggler('retail_marketings')
-        } else if (e.target.name == 'is_ds_retail_marketing_enabled' && !e.target.checked) {
-            this.sectionToggler(null)
-        }
-        if (e.target.name == 'is_ds_weather_alerts_enabled' && e.target.checked) {
-            this.sectionToggler('weather_alerts')
-        } else if (e.target.name == 'is_ds_weather_alerts_enabled' && !e.target.checked) {
-            this.sectionToggler(null)
-        }
-        if (e.target.name == 'is_ds_google_alerts_enabled' && e.target.checked) {
-            this.sectionToggler('google_alerts')
-        } else if (e.target.name == 'is_ds_google_alerts_enabled' && !e.target.checked) {
-            this.sectionToggler(null)
-        }
-        HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
-            if (resp.data.user_services[e.target.name] == 1) {
-                toast.success("Service activated successfully.");
-                this.setState({ userServices: resp.data.user_services })
-            }
-            if (resp.data.user_services[e.target.name] == 0) {
-                this.setState({ userServices: resp.data.user_services })
-                toast.info("Service deactivated successfully.");
-            }
-            (this.props.reloadUser)();
+
+    reloadWebMonitors(gaPropertyId) {
+        HttpClient.get(`/data-source/web-monitor?ga_property_id=${gaPropertyId}`).then(resp => {
+            this.setState({ webMonitors: resp.data.web_monitors, isBusy: false })
         }, (err) => {
-
-            this.setState({ isBusy: false, errors: (err.response).data });
-            if ((err.response).status == 402) {
-                swal("Upgrade to Pro Plan!", "Data Sources are not available in this package.", "warning").then(value => {
-                    this.setState({ redirectTo: '/settings/price-plans' });
-                })
-            }
+            this.setState({ isBusy: false });
         }).catch(err => {
-
-            this.setState({ isBusy: false, errors: err });
-        });
-    }
-
-    userDataSourceAddHandler(dataSource) {
-        this.setState({ isBusy: true });
-        let formData = {
-            'ds_code': dataSource.code,
-            'ds_name': dataSource.name,
-            'country_name': dataSource.country_name,
-            'retail_marketing_id': dataSource.retail_marketing_id,
-            'open_weather_map_city_id': dataSource.open_weather_map_city_id,
-            'open_weather_map_event': dataSource.open_weather_map_event,
-            'status': dataSource.status,
-            'value': dataSource.value,
-            'is_enabled': 1,
-            'ga_property_id': this.state.ga_property_id
-        }
-        HttpClient.post('/data-source/user-data-source', formData).then(resp => {
-            let uds = resp.data.user_data_source;
-            let ar = this.state.userDataSources[uds.ds_code];
-            if (uds.ds_code == 'google_algorithm_update_dates') { ar = [uds]; } else { ar.push(uds) }
-            this.setState({ userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar }, isBusy: false, errors: undefined })
-        }, (err) => {
-            this.setState({ isBusy: false, errors: err.response.data })
-        }).catch(err => {
-            this.setState({ isBusy: false, errors: err })
+            this.setState({ isBusy: false });
         })
-    }
-
-    userDataSourceDeleteHandler(userDataSourceId, dsCode) {
-        this.setState({ isBusy: true });
-        HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`).then(resp => {
-            let ar = this.state.userDataSources[dsCode];
-            let newAr = ar.filter(a => a.id != userDataSourceId)
-            this.setState({ userDataSources: { ...this.state.userDataSources, [dsCode]: newAr }, isBusy: false, errors: undefined })
-        }, (err) => {
-            this.setState({ isBusy: false, errors: err.response.data })
-        }).catch(err => {
-            this.setState({ isBusy: false, errors: err })
-        })
-    }
-
-    changeShownHint(obj) {
-        this.setState({ showHintFor: obj })
-    }
-
-    sectionToggler(sectionName) {
-        if (null == sectionName) {
-            this.setState({ sectionName: null })
-        } else if (this.state.sectionName == sectionName) {
-            this.setState({ sectionName: null })
-        } else {
-            this.setState({ sectionName: sectionName });
-        }
     }
 
     render() {
@@ -171,9 +86,11 @@ export default class DataSourceIndex extends React.Component {
                                 if (gAP.target.value == "") {
                                     this.setState({ ga_property_id: null });
                                     this.loadUserDataSources(null);
+                                    this.reloadWebMonitors(null);
                                 } else {
                                     this.setState({ ga_property_id: gAP.target.value });
                                     this.loadUserDataSources(gAP.target.value);
+                                    this.reloadWebMonitors(gAP.target.value);
                                 }
                             }}
                             placeholder="Select GA Properties"
@@ -217,6 +134,9 @@ export default class DataSourceIndex extends React.Component {
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-9">
                                     <div className="list-wrapper">
+                                        {
+                                            this.state.webMonitors.map(wM => wM.name + " ")
+                                        }
                                     </div>
                                 </div>
                                 <div className="col-3">
@@ -619,6 +539,7 @@ export default class DataSourceIndex extends React.Component {
                                     onCheckCallback={this.userDataSourceAddHandler}
                                     onUncheckCallback={this.userDataSourceDeleteHandler}
                                     ga_property_id={this.state.ga_property_id}
+                                    reloadWebMonitors={this.reloadWebMonitors}
                                 />
                                 : null
                         }
@@ -627,4 +548,103 @@ export default class DataSourceIndex extends React.Component {
             </div>
         );
     }
+    serviceStatusHandler(e) {
+        e.persist();
+        if (e.target.name == 'is_ds_holidays_enabled' && e.target.checked) {
+            this.sectionToggler('holidays')
+        } else if (e.target.name == 'is_ds_holidays_enabled' && !e.target.checked) {
+            this.sectionToggler(null)
+        }
+        if (e.target.name == 'is_ds_retail_marketing_enabled' && e.target.checked) {
+            this.sectionToggler('retail_marketings')
+        } else if (e.target.name == 'is_ds_retail_marketing_enabled' && !e.target.checked) {
+            this.sectionToggler(null)
+        }
+        if (e.target.name == 'is_ds_weather_alerts_enabled' && e.target.checked) {
+            this.sectionToggler('weather_alerts')
+        } else if (e.target.name == 'is_ds_weather_alerts_enabled' && !e.target.checked) {
+            this.sectionToggler(null)
+        }
+        if (e.target.name == 'is_ds_google_alerts_enabled' && e.target.checked) {
+            this.sectionToggler('google_alerts')
+        } else if (e.target.name == 'is_ds_google_alerts_enabled' && !e.target.checked) {
+            this.sectionToggler(null)
+        }
+        HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
+            if (resp.data.user_services[e.target.name] == 1) {
+                toast.success("Service activated successfully.");
+                this.setState({ userServices: resp.data.user_services })
+            }
+            if (resp.data.user_services[e.target.name] == 0) {
+                this.setState({ userServices: resp.data.user_services })
+                toast.info("Service deactivated successfully.");
+            }
+            (this.props.reloadUser)();
+        }, (err) => {
+
+            this.setState({ isBusy: false, errors: (err.response).data });
+            if ((err.response).status == 402) {
+                swal("Upgrade to Pro Plan!", "Data Sources are not available in this package.", "warning").then(value => {
+                    this.setState({ redirectTo: '/settings/price-plans' });
+                })
+            }
+        }).catch(err => {
+
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
+    userDataSourceAddHandler(dataSource) {
+        this.setState({ isBusy: true });
+        let formData = {
+            'ds_code': dataSource.code,
+            'ds_name': dataSource.name,
+            'country_name': dataSource.country_name,
+            'retail_marketing_id': dataSource.retail_marketing_id,
+            'open_weather_map_city_id': dataSource.open_weather_map_city_id,
+            'open_weather_map_event': dataSource.open_weather_map_event,
+            'status': dataSource.status,
+            'value': dataSource.value,
+            'is_enabled': 1,
+            'ga_property_id': this.state.ga_property_id
+        }
+        HttpClient.post('/data-source/user-data-source', formData).then(resp => {
+            let uds = resp.data.user_data_source;
+            let ar = this.state.userDataSources[uds.ds_code];
+            if (uds.ds_code == 'google_algorithm_update_dates') { ar = [uds]; } else { ar.push(uds) }
+            this.setState({ userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar }, isBusy: false, errors: undefined })
+        }, (err) => {
+            this.setState({ isBusy: false, errors: err.response.data })
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err })
+        })
+    }
+
+    userDataSourceDeleteHandler(userDataSourceId, dsCode) {
+        this.setState({ isBusy: true });
+        HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`).then(resp => {
+            let ar = this.state.userDataSources[dsCode];
+            let newAr = ar.filter(a => a.id != userDataSourceId)
+            this.setState({ userDataSources: { ...this.state.userDataSources, [dsCode]: newAr }, isBusy: false, errors: undefined })
+        }, (err) => {
+            this.setState({ isBusy: false, errors: err.response.data })
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err })
+        })
+    }
+
+    changeShownHint(obj) {
+        this.setState({ showHintFor: obj })
+    }
+
+    sectionToggler(sectionName) {
+        if (null == sectionName) {
+            this.setState({ sectionName: null })
+        } else if (this.state.sectionName == sectionName) {
+            this.setState({ sectionName: null })
+        } else {
+            this.setState({ sectionName: sectionName });
+        }
+    }
+
 }

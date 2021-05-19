@@ -69,6 +69,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                     isBusy: false, webMonitors, errors: undefined,
                     webMonitor: { name: '', url: '', email_address: '', sms_phone_number: '' },
                 });
+                (this.props.reloadWebMonitors)(this.props.ga_property_id);
             }, (err) => {
 
                 this.setState({ isBusy: false, errors: (err.response).data });
@@ -85,6 +86,7 @@ export default class DSWebMonitorsSelect extends React.Component {
             HttpClient.delete(`data-source/web-monitor/${id}`).then(response => {
                 let webMonitors = this.state.webMonitors.filter(wM => wM.id !== id);
                 this.setState({ isBusy: false, webMonitors, errors: undefined });
+                (this.props.reloadWebMonitors)(this.props.ga_property_id);
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
