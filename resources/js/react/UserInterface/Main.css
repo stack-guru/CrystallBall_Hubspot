@@ -533,3 +533,7 @@ setting-menu-item.dropdown {
     height: inherit;
     overflow-y: auto;
 }
+
+.m-w-215px {
+    max-width: 215px;
+}
