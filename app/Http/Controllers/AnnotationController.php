@@ -247,8 +247,13 @@ class AnnotationController extends Controller
         if ($user->is_ds_wordpress_updates_enabled) {
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select 1, update_date, update_date as created_at, null, category, event_name, url, description, 'System' AS user_name from `wordpress_updates`";
-            if (UserDataSource::ofCurrentUser()->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count()) {
-                $annotationsQuery .= " where (update_date BETWEEN " . Carbon::now()->subYear()->format('Y-m-d') . " AND " . Carbon::now()->format('Y-m-d') . " )";
+            if ($request->query('annotation_ga_property_id') && $request->query('annotation_ga_property_id') !== '*') {
+                $showLastYear = UserDataSource::ofCurrentUser()->where('ga_property_id', $request->query('annotation_ga_property_id'))->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count();
+            }else{
+                $showLastYear = UserDataSource::ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count();
+            }
+            if ($showLastYear) {
+                $annotationsQuery .= " where (update_date BETWEEN '" . Carbon::now()->subYear()->format('Y-m-d') . "' AND '" . Carbon::now()->format('Y-m-d') . "' )";
             }
         }
         $annotationsQuery .= ") AS TempTable";
