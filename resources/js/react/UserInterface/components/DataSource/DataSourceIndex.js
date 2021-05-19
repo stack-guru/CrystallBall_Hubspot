@@ -12,6 +12,7 @@ import DSGAUDatesSelect from '../../utils/DSGAUDatesSelect';
 import DSGoogleAlertsSelect from '../../utils/DSGoogleAlertsSelect';
 import DSWebMonitorsSelect from '../../utils/DSWebMonitorsSelect';
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
+import ErrorAlert from '../../utils/ErrorAlert';
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -118,13 +119,11 @@ export default class DataSourceIndex extends React.Component {
             let uds = resp.data.user_data_source;
             let ar = this.state.userDataSources[uds.ds_code];
             if (uds.ds_code == 'google_algorithm_update_dates') { ar = [uds]; } else { ar.push(uds) }
-            this.setState({ userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar }, isBusy: false })
+            this.setState({ userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar }, isBusy: false, errors: undefined })
         }, (err) => {
-
-            this.setState({ isBusy: false });
+            this.setState({ isBusy: false, errors: err.response.data })
         }).catch(err => {
-
-            this.setState({ isBusy: false });
+            this.setState({ isBusy: false, errors: err })
         })
     }
 
@@ -133,13 +132,11 @@ export default class DataSourceIndex extends React.Component {
         HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`).then(resp => {
             let ar = this.state.userDataSources[dsCode];
             let newAr = ar.filter(a => a.id != userDataSourceId)
-            this.setState({ userDataSources: { ...this.state.userDataSources, [dsCode]: newAr }, isBusy: false })
+            this.setState({ userDataSources: { ...this.state.userDataSources, [dsCode]: newAr }, isBusy: false, errors: undefined })
         }, (err) => {
-
-            this.setState({ isBusy: false })
+            this.setState({ isBusy: false, errors: err.response.data })
         }).catch(err => {
-
-            this.setState({ isBusy: false })
+            this.setState({ isBusy: false, errors: err })
         })
     }
 
@@ -186,8 +183,10 @@ export default class DataSourceIndex extends React.Component {
                     <div className="col-3">
                     </div>
                 </div>
+                <ErrorAlert errors={this.state.errors} />
                 <div className="row ml-0 mr-0 mt-4" style={{ height: '55vh' }}>
                     <div className="col-md-8 col-sm-12" id="data-source-page-container" >
+
                         <hr />
                         <div className="container ds-sections border-bottom">
 

@@ -24,7 +24,7 @@ export default class DSRMDatesSelect extends React.Component {
                 this.setState({ isBusy: false, retail_marketing_dates: resp.data.retail_marketing_dates })
             }, (err) => {
                 
-                this.setState({ isBusy: false, errors: err.response })
+                this.setState({ isBusy: false, errors: err.response.data })
             }).catch(err => {
                 
                 this.setState({ isBusy: false, errors: err })

@@ -1,5 +1,6 @@
 import React from 'react';
 import HttpClient from '../utils/HttpClient';
+import ErrorAlert from '../utils/ErrorAlert';
 
 export default class DSOWMCitiesSelect extends React.Component {
     constructor(props) {
@@ -27,10 +28,8 @@ export default class DSOWMCitiesSelect extends React.Component {
             HttpClient.get('data-source/weather-alert/country').then(resp => {
                 this.setState({ isBusy: false, weather_alerts_countries: resp.data.countries })
             }, (err) => {
-                
-                this.setState({ isBusy: false, errors: err.response })
+                this.setState({ isBusy: false, errors: err.response.data })
             }).catch(err => {
-                
                 this.setState({ isBusy: false, errors: err })
             })
         }
@@ -66,10 +65,10 @@ export default class DSOWMCitiesSelect extends React.Component {
         HttpClient.get(`data-source/weather-alert/city?country_code=${e.target.value}`).then(resp => {
             this.setState({ isBusy: false, weather_alerts_cities: resp.data.cities })
         }, (err) => {
-            
-            this.setState({ isBusy: false, errors: err.response })
+
+            this.setState({ isBusy: false, errors: err.response.data })
         }).catch(err => {
-            
+
             this.setState({ isBusy: false, errors: err })
         })
     }
@@ -95,7 +94,8 @@ export default class DSOWMCitiesSelect extends React.Component {
                 <div className="weather_alert_cities-form">
                     <h4 className="gaa-text-primary">
                         Select Cities for Weather Alerts
-                </h4>
+                    </h4>
+                    <ErrorAlert errors={this.state.errors} />
                     <div className="input-group mb-3">
                         <select
                             className="form-control"

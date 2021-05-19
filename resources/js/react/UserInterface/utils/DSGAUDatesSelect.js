@@ -28,7 +28,7 @@ export default class DSGAUDatesSelect extends React.Component {
             this.setState({ isBusy: false, google_algorithm_updates: resp.data.google_algorithm_updates })
         }, (err) => {
             
-            this.setState({ isBusy: false, errors: err.response })
+            this.setState({ isBusy: false, errors: err.response.data })
         }).catch(err => {
             
             this.setState({ isBusy: false, errors: err })

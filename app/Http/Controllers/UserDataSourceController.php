@@ -51,13 +51,23 @@ class UserDataSourceController extends Controller
      */
     public function store(UserDataSourceRequest $request)
     {
+        $user = Auth::user();
+
         if ($request->ds_code == 'google_algorithm_update_dates') {
             DB::statement("DELETE FROM user_data_sources WHERE ds_code = ? AND user_id = ?", ['google_algorithm_update_dates', Auth::id()]);
+        }
+        if ($request->ds_code == 'open_weather_map_cities') {
+            $dsCityCount = UserDataSource::where('ds_code', 'open_weather_map_cities')->where('user_id', $user->id)->count();
+            $pricePlan = $user->pricePlan;
+            if (($pricePlan->owm_city_count < $dsCityCount || $pricePlan->owm_city_count == $dsCityCount) && $pricePlan->owm_city_count != 0) {
+                // return response(['message' => "You have reached maximum number (" . $dsCityCount . ") of allowed (" . $pricePlan->owm_city_count . ") cities."], 422);
+                return response(['message' => "You have reached maximum number of allowed cities."], 422);
+            }
         }
 
         $userDataSource = new UserDataSource;
         $userDataSource->fill($request->validated());
-        $userDataSource->user_id = Auth::id();
+        $userDataSource->user_id = $user->id;
         $userDataSource->save();
         $userDataSource->load('openWeatherMapCity');
 

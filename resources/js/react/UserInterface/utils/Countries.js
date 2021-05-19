@@ -22,7 +22,7 @@ export default class countries extends React.Component {
                 this.setState({ isBusy: false, countries: resp.data.countries })
             }, (err) => {
                 
-                this.setState({ isBusy: false, errors: err.response })
+                this.setState({ isBusy: false, errors: err.response.data })
             }).catch(err => {
                 
                 this.setState({ isBusy: false, errors: err })

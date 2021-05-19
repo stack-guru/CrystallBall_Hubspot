@@ -39,6 +39,10 @@
                         <input type="number" name="web_monitor_count" id="web_monitor_count" class="form-control" />
                     </div>
                     <div class="form-group">
+                        <label>Open Weather Map City count?</label>
+                        <input type="number" name="owm_city_count" id="owm_city_count" class="form-control" />
+                    </div>
+                    <div class="form-group">
                             <label>Has manual add?</label>
                             <input type="checkbox" name="has_manual_add" id="hasManualAdd" class="form-control" />
                         </div>
