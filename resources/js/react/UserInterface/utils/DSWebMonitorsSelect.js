@@ -115,7 +115,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                             <input
                                 type="text"
                                 className="form-control search-input"
-                                placeholder="https://www.google.com"
+                                placeholder="https://www.your-domain.com/"
                                 value={this.state.webMonitor.url}
                                 name="url"
                                 onChange={this.handleChange}
@@ -130,7 +130,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                             this.state.webMonitors.map(wM => {
                                 return (
                                     <div className="form-check wac mb-2" key={wM.id}>
-                                        <button className="btn btn-sm btn-danger float-left" onClick={() => this.handleDelete(wM.id)} web_monitor_id={wM.id}><i className="fa fa-times"></i></button>
+                                        <button className="btn btn-sm btn-secondary float-left" onClick={() => this.handleDelete(wM.id)} web_monitor_id={wM.id}><i className="fa fa-times"></i></button>
                                         <label
                                             className="form-check-label ml-1"
                                             htmlFor="defaultCheck1"
