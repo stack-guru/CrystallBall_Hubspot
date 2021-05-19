@@ -69,7 +69,7 @@ class sidebar extends React.Component {
                         <Link to="/annotation" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
-                                    <i className="ti-comment-alt"></i>
+                                    <img src="/images/annotation-icon.svg" width="22px" height="22px" />
                                 </span>
                                 <span className="title">Annotations</span>
                             </span>
