@@ -1,7 +1,7 @@
 import React from 'react';
 import { toast } from "react-toastify";
 import { Redirect } from "react-router-dom";
-import { UncontrolledPopover, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 import LoaderAnimation from "../../utils/LoaderAnimation";
 import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";

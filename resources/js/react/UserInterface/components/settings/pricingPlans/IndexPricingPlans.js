@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 import HttpClient from "../../../utils/HttpClient";
 
@@ -21,10 +22,10 @@ export default class indexPricingPlans extends React.Component {
             .then(response => {
                 this.setState({ pricePlans: response.data.price_plans });
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
     }
@@ -45,10 +46,10 @@ export default class indexPricingPlans extends React.Component {
                             window.location = "/annotation"
                         })
                     }, (err) => {
-                        
+
                         this.setState({ isBusy: false, errors: (err.response).data });
                     }).catch(err => {
-                        
+
                         this.setState({ isBusy: false, errors: err });
                     });
 
@@ -146,9 +147,16 @@ export default class indexPricingPlans extends React.Component {
                                                     pricePlan.has_data_sources ?
                                                         <li>
                                                             <span className="fa-li"><i className="fa fa-asterisk"></i></span>
-                                                            Automations 
-                                                            <img id="automation-feature-hint" className="hint-button" src="/images/info-logo-grey.png" />
-                                                            </li>
+                                                            Automations
+                                                            <img id={"automation-feature-hint-" + pricePlan.id} className="hint-button" src="/images/info-logo-grey.png" onClick={() => { this.setState({ showHintFor: 'automation-hint-' + pricePlan.id }) }} />
+                                                            <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'automation-hint-' + pricePlan.id} target={"automation-feature-hint-" + pricePlan.id} toggle={() => { this.setState({ showHintFor: null }) }} onClick={() => { this.changeShownHint(null) }}>
+                                                                <PopoverHeader>{pricePlan.name}</PopoverHeader>
+                                                                <PopoverBody>
+                                                                    Website Monitoring: {pricePlan.web_monitor_count} URLs<br />
+                                                                    Weather Alerts: {pricePlan.owm_city_count == 0 ? 'unlimited' : pricePlan.owm_city_count} cities
+                                                                </PopoverBody>
+                                                            </UncontrolledPopover>
+                                                        </li>
                                                         : null
                                                 }
                                             </ul>
