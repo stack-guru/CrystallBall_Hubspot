@@ -537,3 +537,7 @@ setting-menu-item.dropdown {
 .m-w-220px {
     max-width: 220px;
 }
+
+.sidebar-inner {
+    border-right: 1px solid rgba(0, 0, 0, 0.0625);
+}
