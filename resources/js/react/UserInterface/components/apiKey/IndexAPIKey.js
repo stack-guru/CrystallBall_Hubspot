@@ -125,7 +125,7 @@ class IndexAPIKey extends React.Component {
                             </div>
                         </div>
 
-                        <div className="row  ml-0 mr-0 mt-5">
+                        <div className="row mt-5">
                             <div className="col-12">
                                 <table className="table table-hover table-bordered table-striped">
                                     <thead>
