@@ -127,11 +127,11 @@ export default class DSWebMonitorsSelect extends React.Component {
                             <button className="btn btn-primary" type="submit">Create</button>
                         </div>
                     </form>
-                    <div className="checkbox-box mt-3">
+                    <div className="checkbox-box mt-4">
                         {
                             this.state.webMonitors.map(wM => {
                                 return (
-                                    <div className="form-check wac mb-2" key={wM.id}>
+                                    <div className="form-check wac mb-2 ml-0 pl-0 mt-3" key={wM.id}>
                                         <button className="btn btn-sm btn-secondary float-left" onClick={() => this.handleDelete(wM.id)} web_monitor_id={wM.id}>X</button>
                                         <label
                                             className="form-check-label ml-1"
