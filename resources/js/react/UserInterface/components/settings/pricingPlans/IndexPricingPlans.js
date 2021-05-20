@@ -157,7 +157,7 @@ export default class indexPricingPlans extends React.Component {
                                                                     News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'unlimited' : pricePlan.google_alert_keyword_count} keywords<br />
                                                                     Retail Marketing Dates<br />
                                                                     Google Updates<br />
-                                                                    WordPress<br />
+                                                                    WordPress Updates<br />
                                                                     Holidays
                                                                 </PopoverBody>
                                                             </UncontrolledPopover>
