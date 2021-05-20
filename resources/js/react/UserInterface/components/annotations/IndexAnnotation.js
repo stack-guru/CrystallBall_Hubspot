@@ -193,7 +193,7 @@ class IndexAnnotations extends React.Component {
                                 </div>
                             </div>
                             <div className="row mb-1 ml-0 mr-0">
-                                <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-left text-lg-left mb-3">
+                                <div className="col-sm-12 col-md-2 col-lg-2  text-center text-sm-center text-md-left text-lg-left mb-3">
                                     <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
                                         <option value="Null">Sort By</option>
                                         <option value="added">Added</option>
@@ -222,7 +222,7 @@ class IndexAnnotations extends React.Component {
                                             : null
                                     }
                                 </div>
-                                <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right"></div>
+                                <div className="col-sm-12 col-md-4 col-lg-4  text-center text-sm-center text-md-right text-lg-right"></div>
                                 <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right">
                                     <input name="searchText" value={this.state.searchText} className="form-control float-right m-w-220px" placeholder="Search..." onChange={this.handleChange} />
                                 </div>
