@@ -224,7 +224,7 @@ class IndexAnnotations extends React.Component {
                                 </div>
                                 <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right"></div>
                                 <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right">
-                                    <input name="searchText" value={this.state.searchText} className="form-control float-right m-w-215px" placeholder="Search..." onChange={this.handleChange} />
+                                    <input name="searchText" value={this.state.searchText} className="form-control float-right m-w-220px" placeholder="Search..." onChange={this.handleChange} />
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0">
