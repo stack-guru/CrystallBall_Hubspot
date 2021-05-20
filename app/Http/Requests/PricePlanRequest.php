@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Auth;
+use Illuminate\Foundation\Http\FormRequest;
 
 class PricePlanRequest extends FormRequest
 {
@@ -26,7 +26,7 @@ class PricePlanRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'short_description'=>'required|string',
+            'short_description' => 'required|string',
             'annotations_count' => "required|numeric",
             'price' => "required|numeric",
             'has_manual_add' => "nullable",
@@ -38,6 +38,7 @@ class PricePlanRequest extends FormRequest
             'user_per_ga_account_count' => 'nullable|numeric',
             'web_monitor_count' => 'nullable|numeric',
             'owm_city_count' => 'nullable|numeric',
+            'google_alert_keyword_count' => 'nullable|numeric',
         ];
     }
 }

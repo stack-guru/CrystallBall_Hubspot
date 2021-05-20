@@ -13,7 +13,7 @@ class PricePlan extends Model
         'name', 'annotations_count', 'price', 'has_manual_add',
         'has_csv_upload', 'has_api', 'is_enabled', 'has_integrations', "has_data_sources",
         'ga_account_count', 'user_per_ga_account_count', 'short_description',
-        'web_monitor_count', 'owm_city_count',
+        'web_monitor_count', 'owm_city_count', 'google_alert_keyword_count',
     ];
 
     protected $hidden = [

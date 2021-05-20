@@ -64,6 +64,14 @@ class UserDataSourceController extends Controller
                 return response(['message' => "You have reached maximum number of allowed cities."], 422);
             }
         }
+        if ($request->ds_code == 'google_alert_keywords') {
+            $dsGAKeywordCount = UserDataSource::where('ds_code', 'google_alert_keywords')->where('user_id', $user->id)->count();
+            $pricePlan = $user->pricePlan;
+            if (($pricePlan->google_alert_keyword_count < $dsGAKeywordCount || $pricePlan->google_alert_keyword_count == $dsGAKeywordCount) && $pricePlan->google_alert_keyword_count != 0) {
+                // return response(['message' => "You have reached maximum number (" . $dsGAKeywordCount . ") of allowed (" . $pricePlan->google_alert_keyword_count . ") cities."], 422);
+                return response(['message' => "You have reached maximum number of allowed keywords."], 422);
+            }
+        }
 
         $userDataSource = new UserDataSource;
         $userDataSource->fill($request->validated());

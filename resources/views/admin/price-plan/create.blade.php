@@ -43,6 +43,10 @@
                         <input type="number" name="owm_city_count" id="owm_city_count" class="form-control" />
                     </div>
                     <div class="form-group">
+                        <label>Google Alerts Keyword count?</label>
+                        <input type="number" name="google_alert_keyword_count" id="google_alert_keyword_count" class="form-control" />
+                    </div>
+                    <div class="form-group">
                             <label>Has manual add?</label>
                             <input type="checkbox" name="has_manual_add" id="hasManualAdd" class="form-control" />
                         </div>
