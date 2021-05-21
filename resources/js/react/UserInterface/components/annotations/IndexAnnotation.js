@@ -286,7 +286,7 @@ class IndexAnnotations extends React.Component {
                                                                         }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white mr-1">
                                                                             <i className="fa fa-trash"></i>
                                                                         </button>
-                                                                        <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-bg-primary text-white" >
+                                                                        <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-bg-primary text-white" style={{ width: '28.3667px' }}>
                                                                             <i className="fa fa-edit"></i>
                                                                         </Link>
 
