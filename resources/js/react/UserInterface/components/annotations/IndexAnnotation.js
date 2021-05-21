@@ -268,7 +268,7 @@ class IndexAnnotations extends React.Component {
                                                             <td>
                                                                 {anno.google_analytics_property_name ? anno.google_analytics_property_name : 'All Properties'}
                                                             </td>
-                                                            <td>
+                                                            <td className="text-center">
                                                                 {anno.id ?
                                                                     <button className={"btn btn-sm" + (anno.is_enabled ? " btn-success" : " btn-danger") + (this.state.isBusy ? " disabled" : "")} onClick={() => this.toggleStatus(anno.id)}>
                                                                         {anno.is_enabled ? "On" : "Off"}
@@ -277,7 +277,7 @@ class IndexAnnotations extends React.Component {
                                                             </td>
                                                             <td>{moment(anno.show_at).format('YYYY-MM-DD')}</td>
                                                             <td>{anno.event_name == 'Sample Annotation' ? 'GAannotations' : anno.user_name}</td>
-                                                            <td>
+                                                            <td className="text-center">
                                                                 {anno.id ?
                                                                     <React.Fragment>
                                                                         <button type="button" onClick={() => {
@@ -286,7 +286,7 @@ class IndexAnnotations extends React.Component {
                                                                         }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white mr-1">
                                                                             <i className="fa fa-trash"></i>
                                                                         </button>
-                                                                        <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-bg-primary text-white" style={{ width: '28.3667px' }}>
+                                                                        <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-bg-primary text-white mt-1" style={{ width: '28.3667px' }}>
                                                                             <i className="fa fa-edit"></i>
                                                                         </Link>
 
