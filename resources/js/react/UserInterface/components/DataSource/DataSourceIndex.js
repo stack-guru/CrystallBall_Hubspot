@@ -108,7 +108,7 @@ export default class DataSourceIndex extends React.Component {
                         <div className="container ds-sections border-bottom">
 
                             <div className="row ml-0 mr-0 w-100 ">
-                                <div className="col-9">
+                                <div className="col-8">
                                     <h4 className="gaa-text-primary">
                                         Website Monitoring
                                         <img id="web-monitors-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('web-monitors') }} src="/images/info-logo.png" />
@@ -118,7 +118,7 @@ export default class DataSourceIndex extends React.Component {
                                         <PopoverBody>Downtime happens even to the best of us. But it’s important to know it before customers are affected and also keep annotations on your reports. Add your website URL; we will monitor it every 1 minute.</PopoverBody>
                                     </UncontrolledPopover>
                                 </div>
-                                <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
                                     {this.state.userServices.is_ds_web_monitors_enabled ? "Active" : "Deactive"}
                                     <label className="trigger switch">
                                         <input
@@ -132,14 +132,14 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0 w-100">
-                                <div className="col-9">
+                                <div className="col-8">
                                     <div className="list-wrapper">
                                         {
                                             this.state.webMonitors.map(wM => wM.name + " ")
                                         }
                                     </div>
                                 </div>
-                                <div className="col-3">
+                                <div className="col-4">
                                     <p className="ds-update-text m-0 text-center"
                                         onClick={() => { this.sectionToggler('web_monitors') }}>
                                         {this.state.sectionName == "web_monitors" ? "Hide" : "Configure Monitors"}
@@ -151,7 +151,7 @@ export default class DataSourceIndex extends React.Component {
                         <div className="container mt-3 ds-sections border-bottom">
 
                             <div className="row ml-0 mr-0 w-100 ">
-                                <div className="col-9">
+                                <div className="col-8">
                                     <h4 className="gaa-text-primary">Holidays
                                         <img id="holidays-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('holidays') }} src="/images/info-logo.png" />
                                     </h4>
@@ -160,7 +160,7 @@ export default class DataSourceIndex extends React.Component {
                                         <PopoverBody>How Christmas Day affect your sells? Add automatic annotations for the Holidays of any country</PopoverBody>
                                     </UncontrolledPopover>
                                 </div>
-                                <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
                                     {this.state.userServices.is_ds_holidays_enabled ? "Active" : "Deactive"}
                                     <label className="trigger switch">
                                         <input
@@ -174,7 +174,7 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0 w-100">
-                                <div className="col-9">
+                                <div className="col-8">
                                     <div className="list-wrapper">
                                         {this.state.userDataSources.holidays ?
                                             <dl className="d-flex flex-row flex-wrap userCountryList">
@@ -190,7 +190,7 @@ export default class DataSourceIndex extends React.Component {
                                             </dl> : null}
                                     </div>
                                 </div>
-                                <div className="col-3">
+                                <div className="col-4">
                                     <p className="ds-update-text m-0 text-center"
                                         onClick={() => { this.sectionToggler('holidays') }}>
                                         {this.state.sectionName == "holidays" ? "Hide" : "Choose Countries"}
@@ -200,9 +200,9 @@ export default class DataSourceIndex extends React.Component {
                         </div>
 
                         <div className="container mt-3 ds-sections border-bottom">
-                            <div className="ml-0 mr-0 row h-100 w-100">
+                            <div className="ml-0 mr-0 row w-100">
 
-                                <div className="col-9">
+                                <div className="col-8">
                                     <h4 className="gaa-text-primary">
                                         Wordpress Updates
                                         <img id="wordpress-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('wordpress-updates') }} src="/images/info-logo.png" />
@@ -227,7 +227,7 @@ export default class DataSourceIndex extends React.Component {
                                         <PopoverBody><strong>WordPress Core Updates</strong> Our automated annotation feature will inform you when a new version, Security, or Maintenance Release of WordPress is available.</PopoverBody>
                                     </UncontrolledPopover>
                                 </div>
-                                <div className="col-3  d-flex flex-column justify-content-start align-items-center">
+                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
                                     {this.state.userServices.is_ds_wordpress_updates_enabled ? "Active" : "Deactive"}
                                     <label className="trigger switch">
                                         <input type="checkbox"
@@ -250,9 +250,9 @@ export default class DataSourceIndex extends React.Component {
                         </div>
 
                         <div className="container mt-3 ds-sections border-bottom">
-                            <div className="ml-0 mr-0 row h-100 w-100">
+                            <div className="ml-0 mr-0 row w-100">
 
-                                <div className="col-9">
+                                <div className="col-8">
                                     <h4 className="gaa-text-primary">
                                         Google Updates
                                         <img id="google-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('google-updates') }} src="/images/info-logo.png" />
@@ -262,7 +262,7 @@ export default class DataSourceIndex extends React.Component {
                                         <PopoverBody>Most of these Google updates are so slight that they go completely unnoticed. However, on occasion, the search engine rolls out major algorithmic updates that significantly impact the Search Engine Results Pages</PopoverBody>
                                     </UncontrolledPopover>
                                 </div>
-                                <div className="col-3  d-flex flex-column justify-content-start align-items-center">
+                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
                                     {this.state.userServices.is_ds_google_algorithm_updates_enabled ? "Active" : "Deactive"}
                                     <label className="trigger switch">
                                         <input type="checkbox"
@@ -291,7 +291,7 @@ export default class DataSourceIndex extends React.Component {
 
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
-                                <div className="col-9">
+                                <div className="col-8">
                                     <h4 className="gaa-text-primary">
                                         News Alerts
                                         <img id="google-alert-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('google-alert') }} src="/images/info-logo.png" />
@@ -301,7 +301,7 @@ export default class DataSourceIndex extends React.Component {
                                         <PopoverBody><strong>News Alerts</strong> Is a content change detection feature on the web. GAannotations add annotations that match the user's search terms, such as web pages, newspaper articles, blogs, or scientific research. Add keywords like https://www.domain.com/, Company Name. The system will search for news once a day at midnight.</PopoverBody>
                                     </UncontrolledPopover>
                                 </div>
-                                <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
                                     {this.state.userServices.is_ds_google_alerts_enabled ? "Active" : "Deactive"}
                                     <label className="trigger switch">
                                         <input
@@ -315,7 +315,7 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0 w-100">
-                                <div className="col-9">
+                                <div className="col-8">
                                     <div className="list-wrapper">
                                         {this.state.userDataSources.holidays ?
                                             <dl className="d-flex flex-row flex-wrap userCountryList">
@@ -331,7 +331,7 @@ export default class DataSourceIndex extends React.Component {
                                             </dl> : null}
                                     </div>
                                 </div>
-                                <div className="col-3">
+                                <div className="col-4">
                                     <p
                                         className="ds-update-text m-0 text-center"
                                         onClick={() => { this.sectionToggler('google_alerts'); }}
@@ -344,7 +344,7 @@ export default class DataSourceIndex extends React.Component {
 
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
-                                <div className="col-9">
+                                <div className="col-8">
                                     <h4 className="gaa-text-primary">
                                         Retail Marketing Dates
                                         <img id="retail-marketing-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('retail-marketing') }} src="/images/info-logo.png" />
@@ -354,7 +354,7 @@ export default class DataSourceIndex extends React.Component {
                                         <PopoverBody>If you run an ecommerce business, you know the drill: Having a promotional calendar for marketing and shopping events is key to deliver on your sales targets. Add automated annotations to see how affected your site.</PopoverBody>
                                     </UncontrolledPopover>
                                 </div>
-                                <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
                                     {this.state.userServices.is_ds_retail_marketing_enabled ? "Active" : "Deactive"}
                                     <label className="trigger switch">
                                         <input
@@ -368,10 +368,10 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0 w-100">
-                                <div className="col-9">
+                                <div className="col-8">
 
                                 </div>
-                                <div className="col-3">
+                                <div className="col-4">
                                     <p
                                         className="ds-update-text m-0 text-center"
                                         onClick={() => { this.sectionToggler('retail_marketings'); }}
@@ -385,7 +385,7 @@ export default class DataSourceIndex extends React.Component {
 
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
-                                <div className="col-9">
+                                <div className="col-8">
                                     <h4 className="gaa-text-primary">
                                         Weather Alerts
                                         <img id="weather-alert-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('weather-alert') }} src="/images/info-logo.png" />
@@ -395,7 +395,7 @@ export default class DataSourceIndex extends React.Component {
                                         <PopoverBody><strong>Weather</strong> disrupts the operating and financial performance of 70% of businesses worldwide. Add automated annotations for the location you operate </PopoverBody>
                                     </UncontrolledPopover>
                                 </div>
-                                <div className="col-3 d-flex flex-column justify-content-start align-items-center">
+                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
                                     {this.state.userServices.is_ds_weather_alerts_enabled ? "Active" : "Deactive"}
                                     <label className="trigger switch">
                                         <input
@@ -409,7 +409,7 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0 w-100">
-                                <div className="col-9">
+                                <div className="col-8">
 
                                     <div className="list-wrapper">
                                         {this.state.userDataSources.open_weather_map_cities ?
@@ -427,7 +427,7 @@ export default class DataSourceIndex extends React.Component {
                                     </div>
 
                                 </div>
-                                <div className="col-3">
+                                <div className="col-4">
                                     <p
                                         className="ds-update-text m-0 text-center"
                                         onClick={() => { this.sectionToggler('weather_alerts') }}
