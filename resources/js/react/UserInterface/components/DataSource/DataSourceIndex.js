@@ -182,9 +182,9 @@ export default class DataSourceIndex extends React.Component {
                                                 <dt>Annotations for:</dt>
                                                 {this.state.userDataSources.holidays
                                                     ? this.state.userDataSources.holidays.map(country => (
-                                                        <dd className="mx-2" key={country.id}>{country.country_name}</dd>
+                                                        <dd key={country.id}>{country.country_name}&nbsp;</dd>
                                                     ))
-                                                    : <dd className="mx-2">no country added</dd>
+                                                    : <dd>no country added</dd>
                                                 }
 
                                             </dl> : null}
@@ -317,7 +317,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-8">
                                     <div className="list-wrapper">
-                                        {this.state.userDataSources.holidays ?
+                                        {this.state.userDataSources.google_alert_keywords ?
                                             <dl className="d-flex flex-row flex-wrap data-source-select-options">
 
                                                 <dt>Keywords:</dt>
@@ -418,7 +418,7 @@ export default class DataSourceIndex extends React.Component {
                                                 {this.state.userDataSources.open_weather_map_cities
                                                     ? this.state.userDataSources.open_weather_map_cities.map(owmc => (
                                                         owmc.open_weather_map_city ?
-                                                            <dd key={owmc.id}>{owmc.open_weather_map_city.name}, {owmc.open_weather_map_city.country_name}</dd>
+                                                            <dd key={owmc.id}>{owmc.open_weather_map_city.name}, {owmc.open_weather_map_city.country_name}&nbsp;</dd>
                                                             : null
                                                     ))
                                                     : <dd>no city added</dd>
