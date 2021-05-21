@@ -323,9 +323,9 @@ export default class DataSourceIndex extends React.Component {
                                                 <dt>Keywords:</dt>
                                                 {this.state.userDataSources.google_alert_keywords
                                                     ? this.state.userDataSources.google_alert_keywords.map(keyword => (
-                                                        <dd className="mx-2" key={keyword.id}>{keyword.value}</dd>
+                                                        <dd key={keyword.id}>{keyword.value}&nbsp;</dd>
                                                     ))
-                                                    : <dd className="mx-2">no keyword added</dd>
+                                                    : <dd>no keyword added&nbsp;</dd>
                                                 }
 
                                             </dl> : null}
