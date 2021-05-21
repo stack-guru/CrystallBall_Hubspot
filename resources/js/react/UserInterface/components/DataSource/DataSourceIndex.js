@@ -177,7 +177,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-8">
                                     <div className="list-wrapper">
                                         {this.state.userDataSources.holidays ?
-                                            <dl className="d-flex flex-row flex-wrap userCountryList">
+                                            <dl className="d-flex flex-row flex-wrap data-source-select-options">
 
                                                 <dt>Annotations for:</dt>
                                                 {this.state.userDataSources.holidays
@@ -318,7 +318,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-8">
                                     <div className="list-wrapper">
                                         {this.state.userDataSources.holidays ?
-                                            <dl className="d-flex flex-row flex-wrap userCountryList">
+                                            <dl className="d-flex flex-row flex-wrap data-source-select-options">
 
                                                 <dt>Keywords:</dt>
                                                 {this.state.userDataSources.google_alert_keywords
@@ -413,15 +413,15 @@ export default class DataSourceIndex extends React.Component {
 
                                     <div className="list-wrapper">
                                         {this.state.userDataSources.open_weather_map_cities ?
-                                            <dl className="d-flex flex-row flex-wrap userCountryList">
+                                            <dl className="d-flex flex-row flex-wrap data-source-select-options">
                                                 <dt>Alerts for:</dt>
                                                 {this.state.userDataSources.open_weather_map_cities
                                                     ? this.state.userDataSources.open_weather_map_cities.map(owmc => (
                                                         owmc.open_weather_map_city ?
-                                                            <dd className="mx-2" key={owmc.id}>{owmc.open_weather_map_city.name}, {owmc.open_weather_map_city.country_name}</dd>
+                                                            <dd key={owmc.id}>{owmc.open_weather_map_city.name}, {owmc.open_weather_map_city.country_name}</dd>
                                                             : null
                                                     ))
-                                                    : <dd className="mx-2">no city added</dd>
+                                                    : <dd>no city added</dd>
                                                 }
                                             </dl> : null}
                                     </div>
