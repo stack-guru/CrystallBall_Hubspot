@@ -472,6 +472,7 @@ setting-menu-item.dropdown {
     margin-bottom: 0px;
     height: 100px;
     overflow-y: auto;
+    align-content: flex-start;
 }
 .data-source-select-options dt {
     width: 100%;
