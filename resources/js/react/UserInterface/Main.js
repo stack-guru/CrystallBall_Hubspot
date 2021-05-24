@@ -67,10 +67,10 @@ class Main extends React.Component {
                     });
                 }
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
     }
@@ -126,7 +126,7 @@ class Main extends React.Component {
                                 <Index />
                             </Route>
                             <Route exact path="/annotation" refresh={true}>
-                                <IndexAnnotations />
+                                <IndexAnnotations user={this.state.user} />
                             </Route>
                             <Route exact path="/annotation/create" refresh={true}>
                                 <AnnotationsCreate />
@@ -149,7 +149,7 @@ class Main extends React.Component {
                                 <Settings user={this.state.user} />
                             </Route>
                             <Route exact path="/settings/change-password" refresh={true}>
-                                <ChangePassword user={this.state.user} reloadUser={this.loadUser}/>
+                                <ChangePassword user={this.state.user} reloadUser={this.loadUser} />
                             </Route>
                             <Route exact path="/settings/price-plans" refresh={true}>
                                 <PricingPlans user={this.state.user} />

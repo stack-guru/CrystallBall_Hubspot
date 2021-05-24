@@ -4,6 +4,7 @@ import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
 import GoogleAccountSelect from "../../utils/GoogleAccountSelect";
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
+import { timezoneToDateFormat } from '../../utils/TimezoneTodateFormat';
 
 class IndexAnnotations extends React.Component {
 
@@ -238,7 +239,7 @@ class IndexAnnotations extends React.Component {
                                                     <th>Description</th>
                                                     <th>Properties</th>
                                                     <th>Status</th>
-                                                    <th className="col-xs-1">Show At</th>
+                                                    <th style={{ width: '100px' }}>Show At</th>
                                                     <th>Added By</th>
                                                     <th>Actions</th>
 
@@ -275,7 +276,7 @@ class IndexAnnotations extends React.Component {
                                                                     </button>
                                                                     : null}
                                                             </td>
-                                                            <td>{moment(anno.show_at).format('YYYY-MM-DD')}</td>
+                                                            <td>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</td>
                                                             <td>{anno.event_name == 'Sample Annotation' ? 'GAannotations' : anno.user_name}</td>
                                                             <td className="text-center">
                                                                 {anno.id ?
