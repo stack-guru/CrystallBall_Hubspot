@@ -129,7 +129,7 @@ export default class ChangePassword extends React.Component {
         return (
             <div className="container-xl bg-white component-wrapper">
                 <div className="row ml-0 mr-0">
-                    <div className="col-12">
+                    <div className="col-6">
                         <h3 className="gaa-title">Change Password</h3>
                         <div className="row ml-0 mr-0">
                             <div className="col-md-12">
@@ -163,7 +163,7 @@ export default class ChangePassword extends React.Component {
                 </div>
 
                 <div className="row ml-0 mr-0">
-                    <div className="col-12">
+                    <div className="col-6">
                         <h3 className="gaa-title">Timezone</h3>
                         <form onSubmit={this.timezoneChangeHandler}>
                             <div className="form-group my-3">
