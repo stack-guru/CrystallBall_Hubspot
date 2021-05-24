@@ -283,7 +283,7 @@ class IndexAnnotations extends React.Component {
                                                                         <button type="button" onClick={() => {
                                                                             this.deleteAnnotation(anno.id)
 
-                                                                        }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white mr-1">
+                                                                        }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white">
                                                                             <i className="fa fa-trash"></i>
                                                                         </button>
                                                                         <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-bg-primary text-white mt-1" style={{ width: '28.3667px' }}>
