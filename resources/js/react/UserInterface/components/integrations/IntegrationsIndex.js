@@ -16,7 +16,7 @@ export default class integrationsIndex extends React.Component {
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper data-source-container">
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
-                        <h2 className="gaa-text-primary">Integrations</h2>
+                        <h2 className="heading-section gaa-title">Integrations</h2>
                     </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-5" id="integration-page-container">
