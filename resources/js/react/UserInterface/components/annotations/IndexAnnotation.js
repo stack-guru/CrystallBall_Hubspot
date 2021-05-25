@@ -187,14 +187,15 @@ class IndexAnnotations extends React.Component {
                             </div>
                         </div>
                         <div id="annotation-index-container">
-                            <div className="row mb-3 ml-3 mr-2">
-                                <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
-                                    <Link to="/annotation/create" className="btn btn-sm gaa-bg-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add Manual</Link>
-                                    <Link to="/annotation/upload" className="btn btn-sm gaa-bg-primary text-white"><i className=" mr-2 fa fa-upload"></i>CSV Upload</Link>
+                            <div className="row mb-3 ml-0 mr-0">
+                                <div className="col-sm-12 col-md-9 col-lg-9 text-center text-sm-center text-md-left text-lg-left mb-3"></div>
+                                <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-right text-lg-right">
+                                    <Link to="/annotation/create" className="btn btn-sm gaa-bg-primary text-white float-left"><i className=" mr-2 fa fa-plus"></i>Add Manual&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Link>
+                                    <Link to="/annotation/upload" className="btn btn-sm gaa-bg-primary text-white float-right"><i className=" mr-2 fa fa-upload"></i>CSV Upload&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Link>
                                 </div>
                             </div>
                             <div className="row mb-1 ml-0 mr-0">
-                                <div className="col-sm-12 col-md-2 col-lg-2  text-center text-sm-center text-md-left text-lg-left mb-3">
+                                <div className="col-sm-12 col-md-2 col-lg-2 text-center text-sm-center text-md-left text-lg-left mb-3">
                                     <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
                                         <option value="Null">Sort By</option>
                                         <option value="added">Added</option>
@@ -204,7 +205,7 @@ class IndexAnnotations extends React.Component {
                                     </select>
 
                                 </div>
-                                <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-left text-lg-left">
+                                <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-left text-lg-left">
                                     {
                                         this.state.sortBy == "ga-property" ?
                                             <GoogleAnalyticsPropertySelect name={'googleAnalyticsProperty'} id={'googleAnalyticsProperty'} value={this.state.googleAnalyticsProperty} onChangeCallback={(e) => { this.sortByProperty(e.target.value) }} />
@@ -225,7 +226,7 @@ class IndexAnnotations extends React.Component {
                                 </div>
                                 <div className="col-sm-12 col-md-4 col-lg-4  text-center text-sm-center text-md-right text-lg-right"></div>
                                 <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right">
-                                    <input name="searchText" value={this.state.searchText} className="form-control float-right m-w-220px" placeholder="Search..." onChange={this.handleChange} />
+                                    <input name="searchText" value={this.state.searchText} className="form-control float-right m-w-255px" placeholder="Search..." onChange={this.handleChange} />
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0">
