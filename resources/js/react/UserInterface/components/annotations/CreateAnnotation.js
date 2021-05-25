@@ -125,10 +125,11 @@ export default class CreateAnnotation extends React.Component {
                     <div className="container">
                         <div className="row mb-5">
                             <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">Add Annotation</h2>
+                                <h2 className="heading-section gaa-title">Add Annotation
+                                <small>Enter your annotation details</small>
+                                </h2>
                             </div>
                             <div className="col-md-12">
-                                <h5>Enter your annotation details</h5>
                             </div>
                         </div>
 

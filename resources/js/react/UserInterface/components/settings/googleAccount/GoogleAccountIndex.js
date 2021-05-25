@@ -196,7 +196,7 @@ export default class GoogleAccountIndex extends React.Component {
                         <div className="col-12 text-center text-md-right text-lg-right">
                             <a href="/settings/google-account/create"
                                 onClick={this.restrictionHandler}
-                                className="btn gaa-bg-primary text-white" >
+                                className="btn gaa-btn-primary text-white" >
                                 Connect New Account
                             </a>
                         </div>
