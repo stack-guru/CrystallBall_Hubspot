@@ -239,8 +239,8 @@ class IndexAnnotations extends React.Component {
                                                     <th>Description</th>
                                                     <th>Properties</th>
                                                     <th>Status</th>
-                                                    <th style={{ width: '100px' }}>Show At</th>
-                                                    <th>Added By</th>
+                                                    <th style={{ minWidth: '100px' }}>Show At</th>
+                                                    <th style={{ minWidth: '100px' }}>Added By</th>
                                                     <th>Actions</th>
 
                                                 </tr>
