@@ -67,7 +67,7 @@ export default class SupportIndex extends Component {
                     <div className="container p-5">
                         <div className="row mb-5 mr-0 ml-0">
                             <div className="col-md-12">
-                                <h3 className="heading-section gaa-title">Get Support</h3>
+                                <h2 className="heading-section gaa-title">Get Support</h2>
                             </div>
                             <div className="col-md-12">
                                 <ErrorAlert errors={this.state.errors} />
