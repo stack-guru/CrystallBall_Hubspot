@@ -549,3 +549,9 @@ setting-menu-item.dropdown {
 thead th {
     text-align: center;
 }
+
+tbody td {
+    margin-top: auto;
+    margin-bottom: auto;
+    vertical-align: middle !important;
+}
