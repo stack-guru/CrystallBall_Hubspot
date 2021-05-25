@@ -562,3 +562,11 @@ tbody td {
 .gaa-btn-primary {
     background: #1c79d0;
 }
+
+.table tbody td {
+    color: #446286;
+}
+
+.gaa-text-secondary {
+    color: #3d4142;
+}

@@ -109,10 +109,12 @@ export default class DataSourceIndex extends React.Component {
 
                             <div className="row ml-0 mr-0 w-100 ">
                                 <div className="col-8">
-                                    <h4 className="gaa-text-primary">
-                                        Website Monitoring
-                                        <img id="web-monitors-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('web-monitors') }} src="/images/info-logo.png" />
-                                    </h4>
+                                    <h2>
+                                        <small>
+                                            Website Monitoring
+                                            <img id="web-monitors-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('web-monitors') }} src="/images/info-logo.png" />
+                                        </small>
+                                    </h2>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'web-monitors'} target="web-monitors-datasource-hint" toggle={() => { this.changeShownHint(null) }} onClick={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>Web Monitoring</PopoverHeader>
                                         <PopoverBody>Downtime happens even to the best of us. But it’s important to know it before customers are affected and also keep annotations on your reports. Add your website URL; we will monitor it every 1 minute.</PopoverBody>
@@ -152,9 +154,11 @@ export default class DataSourceIndex extends React.Component {
 
                             <div className="row ml-0 mr-0 w-100 ">
                                 <div className="col-8">
-                                    <h4 className="gaa-text-primary">Holidays
-                                        <img id="holidays-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('holidays') }} src="/images/info-logo.png" />
-                                    </h4>
+                                    <h2>
+                                        <small>Holidays
+                                            <img id="holidays-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('holidays') }} src="/images/info-logo.png" />
+                                        </small>
+                                    </h2>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'holidays'} target="holidays-datasource-hint" toggle={() => { this.changeShownHint(null) }} onClick={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>Holidays</PopoverHeader>
                                         <PopoverBody>How Christmas Day affect your sells? Add automatic annotations for the Holidays of any country</PopoverBody>
@@ -203,10 +207,12 @@ export default class DataSourceIndex extends React.Component {
                             <div className="ml-0 mr-0 row w-100">
 
                                 <div className="col-8">
-                                    <h4 className="gaa-text-primary">
-                                        Wordpress Updates
-                                        <img id="wordpress-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('wordpress-updates') }} src="/images/info-logo.png" />
-                                    </h4>
+                                    <h2>
+                                        <small>
+                                            Wordpress Updates
+                                            <img id="wordpress-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('wordpress-updates') }} src="/images/info-logo.png" />
+                                        </small>
+                                    </h2>
                                     <div className="input-group-prepend">
                                         <div className="input-group" style={{ marginTop: "7px" }}>
                                             <input type="checkbox" style={{ position: 'absolute', top: '3px' }}
@@ -253,10 +259,12 @@ export default class DataSourceIndex extends React.Component {
                             <div className="ml-0 mr-0 row w-100">
 
                                 <div className="col-8">
-                                    <h4 className="gaa-text-primary">
-                                        Google Updates
-                                        <img id="google-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('google-updates') }} src="/images/info-logo.png" />
-                                    </h4>
+                                    <h2>
+                                        <small>
+                                            Google Updates
+                                            <img id="google-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('google-updates') }} src="/images/info-logo.png" />
+                                        </small>
+                                    </h2>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'google-updates'} target="google-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>Google Algorithm Updates</PopoverHeader>
                                         <PopoverBody>Most of these Google updates are so slight that they go completely unnoticed. However, on occasion, the search engine rolls out major algorithmic updates that significantly impact the Search Engine Results Pages</PopoverBody>
@@ -292,10 +300,12 @@ export default class DataSourceIndex extends React.Component {
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-8">
-                                    <h4 className="gaa-text-primary">
-                                        News Alerts
-                                        <img id="google-alert-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('google-alert') }} src="/images/info-logo.png" />
-                                    </h4>
+                                    <h2>
+                                        <small>
+                                            News Alerts
+                                            <img id="google-alert-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('google-alert') }} src="/images/info-logo.png" />
+                                        </small>
+                                    </h2>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'google-alert'} target="google-alert-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>News Alerts</PopoverHeader>
                                         <PopoverBody><strong>News Alerts</strong> Is a content change detection feature on the web. GAannotations add annotations that match the user's search terms, such as web pages, newspaper articles, blogs, or scientific research. Add keywords like https://www.domain.com/, Company Name. The system will search for news once a day at midnight.</PopoverBody>
@@ -345,10 +355,12 @@ export default class DataSourceIndex extends React.Component {
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-8">
-                                    <h4 className="gaa-text-primary">
-                                        Retail Marketing Dates
-                                        <img id="retail-marketing-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('retail-marketing') }} src="/images/info-logo.png" />
-                                    </h4>
+                                    <h2>
+                                        <small>
+                                            Retail Marketing Dates
+                                            <img id="retail-marketing-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('retail-marketing') }} src="/images/info-logo.png" />
+                                        </small>
+                                    </h2>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'retail-marketing'} target="retail-marketing-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>Retail Marketing Dates</PopoverHeader>
                                         <PopoverBody>If you run an ecommerce business, you know the drill: Having a promotional calendar for marketing and shopping events is key to deliver on your sales targets. Add automated annotations to see how affected your site.</PopoverBody>
@@ -386,10 +398,12 @@ export default class DataSourceIndex extends React.Component {
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-8">
-                                    <h4 className="gaa-text-primary">
-                                        Weather Alerts
-                                        <img id="weather-alert-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('weather-alert') }} src="/images/info-logo.png" />
-                                    </h4>
+                                    <h2>
+                                        <small>
+                                            Weather Alerts
+                                            <img id="weather-alert-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('weather-alert') }} src="/images/info-logo.png" />
+                                        </small>
+                                    </h2>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'weather-alert'} target="weather-alert-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>Weather Alerts</PopoverHeader>
                                         <PopoverBody><strong>Weather</strong> disrupts the operating and financial performance of 70% of businesses worldwide. Add automated annotations for the location you operate </PopoverBody>
