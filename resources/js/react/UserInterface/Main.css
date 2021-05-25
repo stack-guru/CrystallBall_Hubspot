@@ -42,7 +42,7 @@
 }
 
 .sidebar-menu li a {
-    color: #456287;
+    color: #1c79d0;
 }
 .sidebar-footer {
     position: relative;
@@ -266,7 +266,9 @@ setting-menu-item.dropdown {
 .link-active {
     color: #002e60 !important;
 }
-
+.sidebar .sidebar-inner .sidebar-menu > li > a.link-active .title {
+    color: #002e60 !important;
+}
 .gaa-text-danger {
     color: #bf0c18 !important;
 }
