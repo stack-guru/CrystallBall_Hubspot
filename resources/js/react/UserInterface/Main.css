@@ -545,3 +545,7 @@ setting-menu-item.dropdown {
 .sidebar-inner {
     border-right: 1px solid rgba(0, 0, 0, 0.0625);
 }
+
+thead th {
+    text-align: center;
+}
