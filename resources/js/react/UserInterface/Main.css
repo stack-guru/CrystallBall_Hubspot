@@ -35,7 +35,7 @@
 }
 
 .gaa-title {
-    color: #1c79d0;
+    color: #002e60;
 }
 .sidebar-menu {
     height: auto !important;
@@ -264,7 +264,7 @@ setting-menu-item.dropdown {
 }
 
 .link-active {
-    color: #2196f3 !important;
+    color: #002e60 !important;
 }
 
 .gaa-text-danger {
@@ -564,7 +564,7 @@ tbody td {
 }
 
 .table tbody td {
-    color: #446286;
+    color: #002e60;
 }
 
 .gaa-text-secondary {

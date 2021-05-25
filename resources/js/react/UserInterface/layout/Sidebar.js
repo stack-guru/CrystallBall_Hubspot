@@ -117,7 +117,7 @@ class sidebar extends React.Component {
                         <Link to="/integrations" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
-                                    <i className="fa fa-cogs"></i>
+                                    <img src="/images/integration-icon.svg" width="22px" height="22px" />
                                 </span>
                                 <span className="title">Integrations</span>
                             </span>
