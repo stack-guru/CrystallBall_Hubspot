@@ -555,3 +555,7 @@ tbody td {
     margin-bottom: auto;
     vertical-align: middle !important;
 }
+
+.sidebar .sidebar-inner .sidebar-menu > li > a .title {
+    color: #1c79d0;
+}
