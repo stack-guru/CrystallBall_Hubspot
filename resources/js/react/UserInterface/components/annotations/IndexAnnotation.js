@@ -190,8 +190,8 @@ class IndexAnnotations extends React.Component {
                             <div className="row mb-3 ml-0 mr-0">
                                 <div className="col-sm-12 col-md-9 col-lg-9 text-center text-sm-center text-md-left text-lg-left mb-3"></div>
                                 <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-right text-lg-right">
-                                    <Link to="/annotation/create" className="btn btn-sm gaa-bg-primary text-white float-left"><i className=" mr-2 fa fa-plus"></i>Add Manual&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Link>
-                                    <Link to="/annotation/upload" className="btn btn-sm gaa-bg-primary text-white float-right"><i className=" mr-2 fa fa-upload"></i>CSV Upload&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Link>
+                                    <Link to="/annotation/create" className="btn btn-sm gaa-btn-primary text-white float-left"><i className=" mr-2 fa fa-plus"></i>Add Manual&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Link>
+                                    <Link to="/annotation/upload" className="btn btn-sm gaa-btn-primary text-white float-right"><i className=" mr-2 fa fa-upload"></i>CSV Upload&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Link>
                                 </div>
                             </div>
                             <div className="row mb-1 ml-0 mr-0">
@@ -288,7 +288,7 @@ class IndexAnnotations extends React.Component {
                                                                         }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white m-1">
                                                                             <i className="fa fa-trash"></i>
                                                                         </button>
-                                                                        <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-bg-primary text-white m-1" style={{ width: '28.3667px' }}>
+                                                                        <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-btn-primary text-white m-1" style={{ width: '28.3667px' }}>
                                                                             <i className="fa fa-edit"></i>
                                                                         </Link>
 

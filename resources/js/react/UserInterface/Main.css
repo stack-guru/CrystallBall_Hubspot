@@ -35,7 +35,7 @@
 }
 
 .gaa-title {
-    color: #456287;
+    color: #1c79d0;
 }
 .sidebar-menu {
     height: auto !important;
@@ -558,4 +558,7 @@ tbody td {
 
 .sidebar .sidebar-inner .sidebar-menu > li > a .title {
     color: #1c79d0;
+}
+.gaa-btn-primary {
+    background: #1c79d0;
 }
