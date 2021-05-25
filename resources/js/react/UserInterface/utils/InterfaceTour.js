@@ -34,7 +34,7 @@ const steps = [
     {
         position: 'right',
         selector: '#data-source-page-container',
-        content: 'Automate annotations for Holidays, Weather Alerts, Google Updates & Retail Marketing Dates',
+        content: 'Automate annotations for Weather Alerts, Holidays, Google Updates, WordPress Updates, Website Monitoring, News Alerts, and Retail Marketing Dates.',
         redirectRoute: '/data-source'
     },
     {
