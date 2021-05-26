@@ -20,10 +20,10 @@ export default class PaymentHistory extends React.Component {
             .then(response => {
                 this.setState({ pricePlanSubscriptions: response.data.price_plan_subscriptions, isBusy: false });
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
 
@@ -35,7 +35,10 @@ export default class PaymentHistory extends React.Component {
 
         return (
             <div className="bg-white component-wrapper">
-                <h3>Payment History</h3>
+                <h2 className="heading-section gaa-title">
+                    Payment History<br />
+                    <small></small>
+                </h2>
                 <div className="table-responsive">
 
                     <table className="table table-hover table-bordered mt-4">

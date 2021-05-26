@@ -53,10 +53,10 @@ export default class EditAnnotation extends React.Component {
                     if (gAPIds[0] == null) gAPIds = [""];
                     this.setState({ isBusy: false, annotation: { ...response.data.annotation, google_analytics_property_id: gAPIds }, googleAnnotationProperties: gAPs });
                 }, (err) => {
-                    
+
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                    
+
                     this.setState({ isBusy: false, errors: err });
                 });
         }
@@ -94,10 +94,10 @@ export default class EditAnnotation extends React.Component {
                     toast.success("Annotation updated.");
                     this.setState({ redirectTo: "/annotation" });
                 }, (err) => {
-                    
+
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                    
+
                     this.setState({ isBusy: false, errors: err });
                 });
         }
@@ -167,29 +167,29 @@ export default class EditAnnotation extends React.Component {
                         </div>
 
                         <form onSubmit={this.submitHandler}>
-                            <div className="row ml-0 mr-0">
+                            <div className="row">
 
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
-                                        <label htmlFor="event_name" className="form-control-placeholder lead text-dark font-weight-bold">Event Name</label>
+                                        <label htmlFor="event_name" className="form-control-placeholder">Event Name</label>
                                         <input type="text" className="form-control" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" />
 
                                         {
                                             validation.event_name ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : ''
+                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : null
                                         }
 
                                     </div>
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <label htmlFor="category" className="form-control-placeholder lead text-dark font-weight-bold">Category</label>
+                                        <label htmlFor="category" className="form-control-placeholder">Category</label>
                                         <input type="text" className="form-control" id="category" name="category"
                                             value={this.state.annotation.category} onChange={this.changeHandler} />
                                         {
                                             validation.category ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : ''
+                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : null
                                         }
 
 
@@ -197,22 +197,22 @@ export default class EditAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group  has-danger ">
-                                        <label htmlFor="description" className="form-control-placeholder lead text-dark font-weight-bold">Description</label>
+                                        <label htmlFor="description" className="form-control-placeholder">Description</label>
                                         <textarea type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control" id="description" name="description"></textarea>
                                         {
                                             validation.description ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : ''
+                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : null
                                         }
                                     </div>
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
-                                        <label htmlFor="url" className="form-control-placeholder text-dark lead font-weight-bold">Link</label>
+                                        <label htmlFor="url" className="form-control-placeholder text-dark lead">Link</label>
                                         <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control" id="url" name="url" />
 
                                         {
                                             validation.url ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.url}</span> : ''
+                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.url}</span> : null
                                         }
 
                                     </div>
@@ -220,12 +220,12 @@ export default class EditAnnotation extends React.Component {
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder text-dark font-weight-bold lead">Show at</label>
+                                        <label htmlFor="show_at" className="form-control-placeholder text-dark lead">Show at</label>
                                         <input type="date" onChange={this.changeHandler} value={moment(this.state.annotation.show_at).format('YYYY-MM-DD')} className="form-control" id="show_at" name="show_at" />
 
                                         {
                                             validation.show_at ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.show_at}</span> : ''
+                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.show_at}</span> : null
                                         }
 
                                     </div>
