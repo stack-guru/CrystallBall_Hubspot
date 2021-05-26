@@ -189,9 +189,9 @@ class header extends React.Component {
                                 <li >
                                     <div className="p-5  header-profile-info">
                                         <h6 className="mb-0 gaa-text-primary border-bottom-1"><b>{this.props.user.name}</b></h6>
-                                        <small className="gaa-text-primary"><b>Email: {this.props.user.email}</b></small>
-                                        <small className="gaa-text-primary"><b>Price Plan: {this.props.user.price_plan.name}</b></small>
-                                        <small className="gaa-text-primary"><b>Team: {this.props.user.team_name}</b></small>
+                                        <h6 className="gaa-text-primary"><b>Email: {this.props.user.email}</b></h6>
+                                        <h6 className="gaa-text-primary"><b>Price Plan: {this.props.user.price_plan.name}</b></h6>
+                                        <h6 className="gaa-text-primary"><b>Team: {this.props.user.team_name}</b></h6>
                                     </div>
                                 </li>
                                 {/* <li>
@@ -201,7 +201,7 @@ class header extends React.Component {
                                 {/* <li>
                                     <a href="email.html" className="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
                                         className="ti-email mR-10"></i> <span>Messages</span></a></li> */}
-                                <li role="separator" className="divider"></li>
+                                {/* <li role="separator" className="divider"></li> */}
                                 <li>
                                     <a href={null} onClick={() => document.getElementById("header-logout-form").submit()} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                                         <i className="ti-power-off mR-10"></i><span>Log out</span>
