@@ -59,10 +59,10 @@ export default class GoogleAccountIndex extends React.Component {
         HttpClient.get('/settings/google-account').then(resp => {
             this.setState({ googleAccounts: resp.data.google_accounts, isBusy: false });
         }, (err) => {
-            
+
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            
+
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -75,10 +75,10 @@ export default class GoogleAccountIndex extends React.Component {
             googleAccounts = googleAccounts.filter(ga => ga.id != id);
             this.setState({ isBusy: false, googleAccounts: googleAccounts })
         }, (err) => {
-            
+
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            
+
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -91,10 +91,10 @@ export default class GoogleAccountIndex extends React.Component {
             this.getGAAccounts();
             this.getGAProperties();
         }, (err) => {
-            
+
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            
+
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -104,10 +104,10 @@ export default class GoogleAccountIndex extends React.Component {
         HttpClient.get(`/settings/google-analytics-account`).then(response => {
             this.setState({ isBusy: false, googleAnalyticsAccounts: response.data.google_analytics_accounts })
         }, (err) => {
-            
+
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            
+
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -130,10 +130,10 @@ export default class GoogleAccountIndex extends React.Component {
                 this.setState({ isBusy: false, googleAnalyticsAccounts: this.state.googleAnalyticsAccounts.filter(g => g.id !== gAAId) })
                 toast.success("Account removed.");
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
         }
@@ -146,10 +146,10 @@ export default class GoogleAccountIndex extends React.Component {
                 this.setState({ isBusy: false, googleAnalyticsProperties: this.state.googleAnalyticsProperties.filter(g => g.id !== gAPId) })
                 toast.success("Property removed.");
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
         }
@@ -164,10 +164,10 @@ export default class GoogleAccountIndex extends React.Component {
         HttpClient.get(`/settings/google-analytics-property`).then(response => {
             this.setState({ isBusy: false, googleAnalyticsProperties: response.data.google_analytics_properties })
         }, (err) => {
-            
+
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            
+
             this.setState({ isBusy: false, errors: err });
         });
     }
@@ -220,7 +220,7 @@ export default class GoogleAccountIndex extends React.Component {
                                                     <td><img src={googleAccount.avatar} className="social-profile-picture" /></td>
                                                     <td>{googleAccount.name}</td>
                                                     <td>{googleAccount.email}</td>
-                                                    <td>
+                                                    <td className="text-center">
                                                         <button onClick={() => this.handleDelete(googleAccount.id)} className="btn ad-ga-action gaa-btn-danger">
                                                             <i className="fa fa-unlink mr-0 mr-md-2 mr-lg"></i>
                                                             <span className="ad-ga-action-text">Disconnect</span>
@@ -261,7 +261,7 @@ export default class GoogleAccountIndex extends React.Component {
                                                 <td>{gAA.property_type}</td>
                                                 <td>{moment(gAA.created_at).format('YYYY-MM-DD HH:mm:ss')}</td>
                                                 <td>{gAA.google_account.name}</td>
-                                                <td><button className="btn btn-danger" onClick={() => this.handleGAADelete(gAA.id)}><i className="fa fa-trash-o"></i></button></td>
+                                                <td className="text-center"><button className="btn btn-danger" onClick={() => this.handleGAADelete(gAA.id)}><i className="fa fa-trash-o"></i></button></td>
                                             </tr>
                                         })}
                                     </tbody>
@@ -289,7 +289,7 @@ export default class GoogleAccountIndex extends React.Component {
                                                 <td>{gAP.google_analytics_account.name}</td>
                                                 <td>{gAP.name}</td>
                                                 <td>{gAP.google_account.name}</td>
-                                                <td><button className="btn btn-danger" onClick={() => this.handleGAPDelete(gAP.id)}><i className="fa fa-trash-o"></i></button></td>
+                                                <td className="text-center"><button className="btn btn-danger" onClick={() => this.handleGAPDelete(gAP.id)}><i className="fa fa-trash-o"></i></button></td>
                                             </tr>
                                         })}
                                     </tbody>
