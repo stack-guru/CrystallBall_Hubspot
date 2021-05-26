@@ -137,7 +137,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-8">
                                     <div className="list-wrapper">
                                         {
-                                            this.state.webMonitors.map(wM => wM.name + " ")
+                                            this.state.webMonitors.map(wM => { return <React.Fragment>{wM.name}<br /></React.Fragment>; })
                                         }
                                     </div>
                                 </div>
