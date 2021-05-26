@@ -137,7 +137,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-8">
                                     <div className="list-wrapper">
                                         {
-                                            this.state.webMonitors.map(wM => { return <React.Fragment>{wM.name}<br /></React.Fragment>; })
+                                            this.state.webMonitors.map(wM => wM.name + ", ")
                                         }
                                     </div>
                                 </div>
@@ -186,7 +186,7 @@ export default class DataSourceIndex extends React.Component {
                                                 <dt>Annotations for:</dt>
                                                 {this.state.userDataSources.holidays
                                                     ? this.state.userDataSources.holidays.map(country => (
-                                                        <dd key={country.id}>{country.country_name}&nbsp;</dd>
+                                                        <dd key={country.id}>{country.country_name},&nbsp;</dd>
                                                     ))
                                                     : <dd>no country added</dd>
                                                 }
@@ -333,7 +333,7 @@ export default class DataSourceIndex extends React.Component {
                                                 <dt>Keywords:</dt>
                                                 {this.state.userDataSources.google_alert_keywords
                                                     ? this.state.userDataSources.google_alert_keywords.map(keyword => (
-                                                        <dd key={keyword.id}>{keyword.value}&nbsp;</dd>
+                                                        <dd key={keyword.id}>{keyword.value},&nbsp;</dd>
                                                     ))
                                                     : <dd>no keyword added&nbsp;</dd>
                                                 }
