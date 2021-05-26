@@ -148,7 +148,7 @@ class IndexAPIKey extends React.Component {
                                                 <td>
                                                     {moment(apiKey.expires_at).format("YYYY-MM-DD")}
                                                 </td>
-                                                <td>
+                                                <td className="text-center">
                                                     <button className="btn gaa-btn-danger btn-sm" type="button" onClick={this.handleDelete} data-token-id={apiKey.id}><i className="fa fa-trash"></i></button>
                                                 </td>
                                             </tr>
