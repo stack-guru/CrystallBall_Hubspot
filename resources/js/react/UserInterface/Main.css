@@ -263,9 +263,9 @@ setting-menu-item.dropdown {
     color: #456287;
 }
 
-.link-active {
+/* .link-active {
     color: #1c79d0 !important;
-}
+} */
 .sidebar .sidebar-inner .sidebar-menu > li > a.link-active .title {
     color: #1c79d0 !important;
 }

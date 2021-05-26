@@ -207,7 +207,7 @@ export default class EditAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
-                                        <label htmlFor="url" className="form-control-placeholder text-dark lead">Link</label>
+                                        <label htmlFor="url" className="form-control-placeholder">Link</label>
                                         <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control" id="url" name="url" />
 
                                         {
@@ -220,7 +220,7 @@ export default class EditAnnotation extends React.Component {
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder text-dark lead">Show at</label>
+                                        <label htmlFor="show_at" className="form-control-placeholder">Show at</label>
                                         <input type="date" onChange={this.changeHandler} value={moment(this.state.annotation.show_at).format('YYYY-MM-DD')} className="form-control" id="show_at" name="show_at" />
 
                                         {
