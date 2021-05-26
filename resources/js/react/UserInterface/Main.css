@@ -264,10 +264,13 @@ setting-menu-item.dropdown {
 }
 
 .link-active {
-    color: #002e60 !important;
+    color: #003b3c !important;
 }
 .sidebar .sidebar-inner .sidebar-menu > li > a.link-active .title {
-    color: #002e60 !important;
+    color: #003b3c !important;
+}
+.sidebar .sidebar-inner .sidebar-menu > li > a .title {
+    color: #002e60;
 }
 .gaa-text-danger {
     color: #bf0c18 !important;
@@ -556,10 +559,6 @@ tbody td {
     margin-top: auto;
     margin-bottom: auto;
     vertical-align: middle !important;
-}
-
-.sidebar .sidebar-inner .sidebar-menu > li > a .title {
-    color: #1c79d0;
 }
 .gaa-btn-primary {
     background: #1c79d0;
