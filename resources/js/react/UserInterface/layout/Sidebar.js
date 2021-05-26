@@ -69,7 +69,7 @@ class sidebar extends React.Component {
                         <Link to="/annotation" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
-                                    <img src="/images/annotation-icon.svg" width="22px" height="22px" />
+                                    <img src="/images/svg/annotation-icon.svg" width="25px" height="25px" />
                                 </span>
                                 <span className="title">Annotations</span>
                             </span>
@@ -81,7 +81,7 @@ class sidebar extends React.Component {
                                 <Link to="/annotation/create">
                                     <span className="sidebar-link" >
                                         <span className="icon-holder">
-                                            <i className="fa fa-plus"></i>
+                                            <img src="/images/svg/addition-icon.svg" width="25px" height="25px" />
                                         </span>
                                         <span className="title">Add Annotation</span>
                                     </span>
@@ -95,7 +95,7 @@ class sidebar extends React.Component {
                                 <Link to="/annotation/upload">
                                     <span className="sidebar-link" >
                                         <span className="icon-holder">
-                                            <i className="fa fa-upload"></i>
+                                            <img src="/images/svg/upload-icon.svg" width="25px" height="25px" />
                                         </span>
                                         <span className="title">CSV Upload</span>
                                     </span>
@@ -107,7 +107,7 @@ class sidebar extends React.Component {
                         <Link to="/data-source" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
-                                    <img src="/images/automation-icon.svg" width="25px" height="25px" />
+                                    <img src="/images/svg/automation-icon.svg" width="25px" height="25px" />
                                 </span>
                                 <span className="title">Automations</span>
                             </span>
@@ -117,7 +117,7 @@ class sidebar extends React.Component {
                         <Link to="/integrations" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
-                                    <img src="/images/integration-icon.svg" width="22px" height="22px" />
+                                    <img src="/images/svg/integration-icon.svg" width="25px" height="25px" />
                                 </span>
                                 <span className="title">Integrations</span>
                             </span>
@@ -127,7 +127,7 @@ class sidebar extends React.Component {
                         <Link to="/api-key" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
-                                    <i className="fa fa-key"></i>
+                                    <img src="/images/svg/key-icon.svg" width="25px" height="25px" />
                                 </span>
                                 <span className="title ">API Keys</span>
                             </span>
@@ -140,7 +140,7 @@ class sidebar extends React.Component {
                             className="dropdown-toggle" >
                             <div className="wrapper sidebar-link">
                                 <span className="icon-holder">
-                                    <img src="/images/settings-icon.svg" width="22px" height="22px" />
+                                    <img src="/images/svg/settings-icon.svg" width="25px" height="25px" />
                                 </span>
                                 <span className="title">Settings</span>
                                 <span className="arrow">
