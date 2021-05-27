@@ -580,6 +580,16 @@ export default class DataSourceIndex extends React.Component {
         } else if (e.target.name == 'is_ds_google_alerts_enabled' && !e.target.checked) {
             this.sectionToggler(null)
         }
+        if (e.target.name == 'is_ds_web_monitors_enabled' && e.target.checked) {
+            this.sectionToggler('web_monitors')
+        } else if (e.target.name == 'is_ds_web_monitors_enabled' && !e.target.checked) {
+            this.sectionToggler(null)
+        }
+        if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && e.target.checked) {
+            this.sectionToggler('google_algorithm_updates')
+        } else if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && !e.target.checked) {
+            this.sectionToggler(null)
+        }
         HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
             if (resp.data.user_services[e.target.name] == 1) {
                 toast.success("Service activated successfully.");
