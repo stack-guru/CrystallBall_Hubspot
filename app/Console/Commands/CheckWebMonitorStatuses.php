@@ -72,6 +72,9 @@ class CheckWebMonitorStatuses extends Command
                             $event = "Site Down";
                             $description = "The website $webMonitor->url it's down. At $rightNowDateTime";
                             break;
+                        default:
+                            $event = "Unknown Monitor status: " . $uptimeMonitor['status'];
+                            $description = "The website $webMonitor->url turned into unknown status. At $rightNowDateTime";
                     }
 
                     $userIds = WebMonitor::select('user_id')
