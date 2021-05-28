@@ -306,7 +306,7 @@ export default class DataSourceIndex extends React.Component {
                                     </h2>
                                     <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'google-alert'} target="google-alert-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
                                         <PopoverHeader>News Alerts</PopoverHeader>
-                                        <PopoverBody><strong>News Alerts</strong> Is a content change detection feature on the web. GAannotations add annotations that match the user's search terms, such as web pages, newspaper articles, blogs, or scientific research. Add keywords like https://www.domain.com/, Company Name. The system will search for news once a day at midnight.</PopoverBody>
+                                        <PopoverBody><strong>News Alerts</strong> Is a content change detection on the web. GAannotations add annotations that match the user's search terms, such as web pages, newspaper articles, blogs, or scientific research. Add keywords like https://www.your-domain.com/, Company Name. The system will search for news once a day at midnight. Annotations for News Alerts will start showing after 48 hours the automation is activated.</PopoverBody>
                                     </UncontrolledPopover>
                                 </div>
                                 <div className="col-4 d-flex flex-column justify-content-start align-items-center">
