@@ -235,7 +235,7 @@ class AnnotationController extends Controller
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));
 
-        $annotationsQuery = "SELECT TempTable.* FROM (";
+        $annotationsQuery = "SELECT TempTable.category, TempTable.event_name, TempTable.show_at FROM (";
 
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= "SELECT DISTINCT DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` FROM `annotations`";
