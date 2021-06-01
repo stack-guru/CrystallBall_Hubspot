@@ -48,7 +48,7 @@ class AnnotationController extends Controller
         }
         $annotationsQuery .= " WHERE (`annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') AND `annotations`.`is_enabled` = 1) ";
         $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
-        
+
         if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
             $gaPropertyId = $request->query('google_analytics_property_id');
             $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
@@ -239,12 +239,16 @@ class AnnotationController extends Controller
 
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= "SELECT DISTINCT DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` FROM `annotations`";
-        if ($request->query('google_analytics_account_id') && $request->query('google_analytics_account_id') !== '*') {
-            $annotationsQuery .= " INNER JOIN `annotation_ga_accounts` ON `annotation_ga_accounts`.`annotation_id` = `annotations`.`id`";
+        if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
+            $annotationsQuery .= " INNER JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
         }
         $annotationsQuery .= " WHERE (`annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') AND `annotations`.`is_enabled` = 1) ";
-        if ($request->query('google_analytics_account_id') && $request->query('google_analytics_account_id') !== '*') {
-            $annotationsQuery .= " AND (`annotation_ga_accounts`.`google_analytics_account_id` IS NULL OR `annotation_ga_accounts`.`google_analytics_account_id` = " . $request->query('google_analytics_account_id') . ")";
+        $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
+
+        if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
+            $gaPropertyId = $request->query('google_analytics_property_id');
+            $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
+            $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
         }
         $addedByArray = [];
         if ($request->query('show_manual_annotations')) {
@@ -289,7 +293,7 @@ class AnnotationController extends Controller
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_google_alerts_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select alert_date, google_alerts.id, category, title, url, description from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords' AND DATE(google_alerts.created_at) > (DATE(uds.created_at)+1))";
+            $annotationsQuery .= "select alert_date, google_alerts.id, category, title, url, description from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords')";
         }
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_wordpress_updates_enabled) {
