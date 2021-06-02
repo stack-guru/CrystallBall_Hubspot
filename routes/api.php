@@ -39,6 +39,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
                 Route::get('google-analytics-properties', 'ChromeExtension\GoogleAnalyticsPropertyController@index');
                 Route::get('google-annotation/{id}', 'ChromeExtension\GoogleAnalyticsPropertyController@getAnnotations');
                 Route::get('memberships', 'UserController@extensionShowMembership');
+                Route::get('users', 'ChromeExtension\UserController@index');
             });
 
         });
