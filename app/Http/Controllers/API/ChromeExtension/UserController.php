@@ -17,7 +17,7 @@ class UserController extends Controller
 
         $oUsers = ($user->user_id ? $user->user->users() : $user->users())->get(['id', 'name'])->toArray();
         if (count($oUsers)) {
-            array_push($users, $oUsers);
+            $users = array_merge($users, $oUsers);
         }
 
         return ['users' => $users];
