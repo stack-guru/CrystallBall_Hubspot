@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\ChromeExtension;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
-use App\Models\AnnotationGaAccount;
+use App\Models\AnnotationGaProperty;
 use App\Models\UserDataSource;
 use Auth;
 use Carbon\Carbon;
@@ -325,20 +325,20 @@ class AnnotationController extends Controller
         $annotation->added_by = 'manual';
         $annotation->save();
 
-        if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
-            foreach ($request->google_analytics_account_id as $gAAId) {
-                $aGAA = new AnnotationGaAccount;
-                $aGAA->annotation_id = $annotation->id;
-                $aGAA->google_analytics_account_id = $gAAId;
-                $aGAA->user_id = $userId;
-                $aGAA->save();
+        if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
+            foreach ($request->google_analytics_property_id as $gAPId) {
+                $aGAP = new AnnotationGaProperty;
+                $aGAP->annotation_id = $annotation->id;
+                $aGAP->google_analytics_property_id = $gAPId;
+                $aGAP->user_id = $userId;
+                $aGAP->save();
             }
         } else {
-            $aGAA = new AnnotationGaAccount;
-            $aGAA->annotation_id = $annotation->id;
-            $aGAA->google_analytics_account_id = null;
-            $aGAA->user_id = $userId;
-            $aGAA->save();
+            $aGAP = new AnnotationGaProperty;
+            $aGAP->annotation_id = $annotation->id;
+            $aGAP->google_analytics_property_id = null;
+            $aGAP->user_id = $userId;
+            $aGAP->save();
         }
 
         return ['annotation' => $annotation];
