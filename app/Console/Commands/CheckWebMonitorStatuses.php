@@ -51,9 +51,9 @@ class CheckWebMonitorStatuses extends Command
                 if ($webMonitor->last_status != $uptimeMonitor['status']) {
                     // There is a change in monitor status
                     // 0 Paused
+                    // 1 Started
                     // 2 Up
                     // 9 Down
-                    //   Started
                     $event = "";
                     $description = "";
                     switch ($uptimeMonitor['status']) {
@@ -61,6 +61,11 @@ class CheckWebMonitorStatuses extends Command
                             //Paused
                             $event = "Monitor Paused";
                             $description = "The website $webMonitor->url is paused. At $rightNowDateTime";
+                            break;
+                        case 1:
+                            //Started
+                            $event = "Monitor Started";
+                            $description = "The website $webMonitor->url is being monitored. At $rightNowDateTime";
                             break;
                         case 2:
                             // Up
