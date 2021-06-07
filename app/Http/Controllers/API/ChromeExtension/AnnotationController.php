@@ -97,7 +97,7 @@ class AnnotationController extends Controller
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_google_alerts_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select alert_date, google_alerts.id, category, title, url, description from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords')";
+            $annotationsQuery .= "select alert_date, google_alerts.id, 'News Alerts', title, url, description from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords')";
         }
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_wordpress_updates_enabled) {
@@ -301,7 +301,7 @@ class AnnotationController extends Controller
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_google_alerts_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select alert_date, google_alerts.id, category, title, url, description from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords')";
+            $annotationsQuery .= "select alert_date, google_alerts.id, 'News Alert', title, url, description from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords')";
         }
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_wordpress_updates_enabled) {
