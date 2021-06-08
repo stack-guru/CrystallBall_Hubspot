@@ -301,7 +301,7 @@ class AnnotationController extends Controller
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_google_alerts_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select alert_date, google_alerts.id, 'News Alert', title, url, description from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords' AND DATE(google_alerts.created_at) > (DATE(uds.created_at)+1))";
+            $annotationsQuery .= "select alert_date, google_alerts.id, 'News Alert', title, url, description from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords' AND DATE(google_alerts.created_at) > DATE(DATE_ADD(uds.created_at, INTERVAL 1 DAY)) )";
         }
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_wordpress_updates_enabled) {
