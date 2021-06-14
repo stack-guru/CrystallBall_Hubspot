@@ -328,7 +328,7 @@ class AnnotationController extends Controller
             }
         }
         ////////////////////////////////////////////////////////////////////
-        $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
+        $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at DESC";
 
         $annotations = DB::select($annotationsQuery);
 
