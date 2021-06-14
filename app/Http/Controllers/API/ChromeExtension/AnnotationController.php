@@ -62,7 +62,7 @@ class AnnotationController extends Controller
         }
 
         if ($user->is_ds_web_monitors_enabled && $request->query('show_website_monitoring') == 'false') {
-            $annotationsQuery .= " AND annotations.category = 'Website Monitoring'";
+            $annotationsQuery .= " AND annotations.category <> 'Website Monitoring'";
         }
 
         $addedByArray = [];
@@ -271,7 +271,7 @@ class AnnotationController extends Controller
         }
 
         if ($user->is_ds_web_monitors_enabled && $request->query('show_website_monitoring') == 'false') {
-            $annotationsQuery .= " AND annotations.category = 'Website Monitoring'";
+            $annotationsQuery .= " AND annotations.category <> 'Website Monitoring'";
         }
         
         $addedByArray = [];
