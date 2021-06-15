@@ -46,7 +46,16 @@ class AnnotationController extends Controller
         if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
             $annotationsQuery .= " INNER JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
         }
-        $annotationsQuery .= " WHERE (`annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') AND `annotations`.`is_enabled` = 1) ";
+        
+        $annotationsQuery .= " WHERE (";
+        if ($request->query('user_id') && $request->query('user_id') !== '*' && in_array($request->query('user_id'), $userIdsArray)) {
+            $annotationsQuery .= " `annotations`.`user_id` = " . $request->query('user_id');
+        } else {
+            $annotationsQuery .= " `annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') ";
+        }
+        $annotationsQuery .= " AND `annotations`.`is_enabled` = 1 ";
+        $annotationsQuery .= " )";
+
         $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
 
         if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
