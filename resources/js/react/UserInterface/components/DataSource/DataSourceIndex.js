@@ -149,152 +149,7 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
                         </div>
-
-                        <div className="container mt-3 ds-sections border-bottom">
-
-                            <div className="row ml-0 mr-0 w-100 ">
-                                <div className="col-8">
-                                    <h2>
-                                        <small>Holidays
-                                            <img id="holidays-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('holidays') }} src="/images/info-logo.png" />
-                                        </small>
-                                    </h2>
-                                    <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'holidays'} target="holidays-datasource-hint" toggle={() => { this.changeShownHint(null) }} onClick={() => { this.changeShownHint(null) }}>
-                                        <PopoverHeader>Holidays</PopoverHeader>
-                                        <PopoverBody>How Christmas Day affect your sells? Add automatic annotations for the Holidays of any country</PopoverBody>
-                                    </UncontrolledPopover>
-                                </div>
-                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
-                                    {this.state.userServices.is_ds_holidays_enabled ? "Active" : "Deactive"}
-                                    <label className="trigger switch">
-                                        <input
-                                            type="checkbox"
-                                            name="is_ds_holidays_enabled"
-                                            onChange={this.serviceStatusHandler}
-                                            checked={this.state.userServices.is_ds_holidays_enabled}
-                                        />
-                                        <span className="slider round" />
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row ml-0 mr-0 w-100">
-                                <div className="col-8">
-                                    <div className="list-wrapper">
-                                        {this.state.userDataSources.holidays ?
-                                            <dl className="d-flex flex-row flex-wrap data-source-select-options">
-
-                                                <dt>Annotations for:</dt>
-                                                {this.state.userDataSources.holidays
-                                                    ? this.state.userDataSources.holidays.map(country => country.country_name).join(", ")
-                                                    : <dd>no country added</dd>
-                                                }
-
-                                            </dl> : null}
-                                    </div>
-                                </div>
-                                <div className="col-4">
-                                    <p className="ds-update-text m-0 text-center"
-                                        onClick={() => { this.sectionToggler('holidays') }}>
-                                        {this.state.sectionName == "holidays" ? "Hide" : "Choose Countries"}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="container mt-3 ds-sections border-bottom">
-                            <div className="ml-0 mr-0 row w-100">
-
-                                <div className="col-8">
-                                    <h2>
-                                        <small>
-                                            Wordpress Updates
-                                            <img id="wordpress-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('wordpress-updates') }} src="/images/info-logo.png" />
-                                        </small>
-                                    </h2>
-                                    <div className="input-group-prepend">
-                                        <div className="input-group" style={{ marginTop: "7px" }}>
-                                            <input type="checkbox" style={{ position: 'absolute', top: '3px' }}
-                                                onChange={(e) => {
-                                                    if (e.target.checked) {
-                                                        this.userDataSourceAddHandler({ code: 'wordpress_updates', name: 'WordpressUpdate', country_name: null, retail_marketing_id: null, value: 'last year' })
-                                                    } else {
-                                                        this.userDataSourceDeleteHandler(this.state.userDataSources.wordpress_updates[0].id, 'wordpress_updates')
-                                                    }
-                                                }}
-                                                checked={this.state.userDataSources.wordpress_updates && this.state.userDataSources.wordpress_updates.length > 0}
-                                                name="last_year_only" />
-                                            <h6 style={{ position: 'absolute', top: '0px', left: '10px' }}> &nbsp;&nbsp; Show last year only</h6>
-                                        </div>
-                                    </div>
-                                    <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'wordpress-updates'} target="wordpress-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
-                                        <PopoverHeader>WordPress Core Updates</PopoverHeader>
-                                        <PopoverBody><strong>WordPress Core Updates</strong> Our automated annotation feature will inform you when a new version, Security, or Maintenance Release of WordPress is available.</PopoverBody>
-                                    </UncontrolledPopover>
-                                </div>
-                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
-                                    {this.state.userServices.is_ds_wordpress_updates_enabled ? "Active" : "Deactive"}
-                                    <label className="trigger switch">
-                                        <input type="checkbox"
-                                            checked={this.state.userServices.is_ds_wordpress_updates_enabled}
-                                            onChange={this.serviceStatusHandler}
-                                            name="is_ds_wordpress_updates_enabled"
-                                        />
-                                        <span className="slider round" />
-                                    </label>
-                                </div>
-                                <div className="row ml-0 mr-0 w-100">
-                                    <div className="col-8">
-
-                                    </div>
-                                    <div className="col-4">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="container mt-3 ds-sections border-bottom">
-                            <div className="ml-0 mr-0 row w-100">
-
-                                <div className="col-8">
-                                    <h2>
-                                        <small>
-                                            Google Updates
-                                            <img id="google-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('google-updates') }} src="/images/info-logo.png" />
-                                        </small>
-                                    </h2>
-                                    <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'google-updates'} target="google-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
-                                        <PopoverHeader>Google Algorithm Updates</PopoverHeader>
-                                        <PopoverBody>Most of these Google updates are so slight that they go completely unnoticed. However, on occasion, the search engine rolls out major algorithmic updates that significantly impact the Search Engine Results Pages</PopoverBody>
-                                    </UncontrolledPopover>
-                                </div>
-                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
-                                    {this.state.userServices.is_ds_google_algorithm_updates_enabled ? "Active" : "Deactive"}
-                                    <label className="trigger switch">
-                                        <input type="checkbox"
-                                            checked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
-                                            onChange={this.serviceStatusHandler}
-                                            name="is_ds_google_algorithm_updates_enabled"
-                                        />
-                                        <span className="slider round" />
-                                    </label>
-                                </div>
-                                <div className="row ml-0 mr-0 w-100">
-                                    <div className="col-8">
-
-                                    </div>
-                                    <div className="col-4">
-                                        <p
-                                            className="ds-update-text m-0 text-center"
-                                            onClick={() => { this.sectionToggler('google_algorithm_updates'); }}
-                                        >
-                                            {this.state.sectionName == "google_algorithm_updates" ? "Hide" : "Confirmed/Unconfirmed"}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        {/* /////////////////////////////////////////////////////////////////////////////////////////////// */}
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-8">
@@ -347,7 +202,49 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
                         </div>
+                        {/* /////////////////////////////////////////////////////////////////////////////////////////////// */}
+                        <div className="container mt-3 ds-sections border-bottom">
+                            <div className="ml-0 mr-0 row w-100">
 
+                                <div className="col-8">
+                                    <h2>
+                                        <small>
+                                            Google Updates
+                                            <img id="google-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('google-updates') }} src="/images/info-logo.png" />
+                                        </small>
+                                    </h2>
+                                    <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'google-updates'} target="google-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
+                                        <PopoverHeader>Google Algorithm Updates</PopoverHeader>
+                                        <PopoverBody>Most of these Google updates are so slight that they go completely unnoticed. However, on occasion, the search engine rolls out major algorithmic updates that significantly impact the Search Engine Results Pages</PopoverBody>
+                                    </UncontrolledPopover>
+                                </div>
+                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
+                                    {this.state.userServices.is_ds_google_algorithm_updates_enabled ? "Active" : "Deactive"}
+                                    <label className="trigger switch">
+                                        <input type="checkbox"
+                                            checked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
+                                            onChange={this.serviceStatusHandler}
+                                            name="is_ds_google_algorithm_updates_enabled"
+                                        />
+                                        <span className="slider round" />
+                                    </label>
+                                </div>
+                                <div className="row ml-0 mr-0 w-100">
+                                    <div className="col-8">
+
+                                    </div>
+                                    <div className="col-4">
+                                        <p
+                                            className="ds-update-text m-0 text-center"
+                                            onClick={() => { this.sectionToggler('google_algorithm_updates'); }}
+                                        >
+                                            {this.state.sectionName == "google_algorithm_updates" ? "Hide" : "Confirmed/Unconfirmed"}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/* /////////////////////////////////////////////////////////////////////////////////////////////// */}
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-8">
@@ -390,7 +287,58 @@ export default class DataSourceIndex extends React.Component {
                             </div>
 
                         </div>
+                        {/* /////////////////////////////////////////////////////////////////////////////////////////////// */}
+                        <div className="container mt-3 ds-sections border-bottom">
 
+                            <div className="row ml-0 mr-0 w-100 ">
+                                <div className="col-8">
+                                    <h2>
+                                        <small>Holidays
+                                            <img id="holidays-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('holidays') }} src="/images/info-logo.png" />
+                                        </small>
+                                    </h2>
+                                    <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'holidays'} target="holidays-datasource-hint" toggle={() => { this.changeShownHint(null) }} onClick={() => { this.changeShownHint(null) }}>
+                                        <PopoverHeader>Holidays</PopoverHeader>
+                                        <PopoverBody>How Christmas Day affect your sells? Add automatic annotations for the Holidays of any country</PopoverBody>
+                                    </UncontrolledPopover>
+                                </div>
+                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
+                                    {this.state.userServices.is_ds_holidays_enabled ? "Active" : "Deactive"}
+                                    <label className="trigger switch">
+                                        <input
+                                            type="checkbox"
+                                            name="is_ds_holidays_enabled"
+                                            onChange={this.serviceStatusHandler}
+                                            checked={this.state.userServices.is_ds_holidays_enabled}
+                                        />
+                                        <span className="slider round" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="row ml-0 mr-0 w-100">
+                                <div className="col-8">
+                                    <div className="list-wrapper">
+                                        {this.state.userDataSources.holidays ?
+                                            <dl className="d-flex flex-row flex-wrap data-source-select-options">
+
+                                                <dt>Annotations for:</dt>
+                                                {this.state.userDataSources.holidays
+                                                    ? this.state.userDataSources.holidays.map(country => country.country_name).join(", ")
+                                                    : <dd>no country added</dd>
+                                                }
+
+                                            </dl> : null}
+                                    </div>
+                                </div>
+                                <div className="col-4">
+                                    <p className="ds-update-text m-0 text-center"
+                                        onClick={() => { this.sectionToggler('holidays') }}>
+                                        {this.state.sectionName == "holidays" ? "Hide" : "Choose Countries"}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {/* /////////////////////////////////////////////////////////////////////////////////////////////// */}
                         <div className="container mt-3 ds-sections border-bottom">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-8">
@@ -453,6 +401,59 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
 
+                        </div>
+                        {/* /////////////////////////////////////////////////////////////////////////////////////////////// */}
+
+                        <div className="container mt-3 ds-sections border-bottom">
+                            <div className="ml-0 mr-0 row w-100">
+
+                                <div className="col-8">
+                                    <h2>
+                                        <small>
+                                            Wordpress Updates
+                                            <img id="wordpress-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('wordpress-updates') }} src="/images/info-logo.png" />
+                                        </small>
+                                    </h2>
+                                    <div className="input-group-prepend">
+                                        <div className="input-group" style={{ marginTop: "7px" }}>
+                                            <input type="checkbox" style={{ position: 'absolute', top: '3px' }}
+                                                onChange={(e) => {
+                                                    if (e.target.checked) {
+                                                        this.userDataSourceAddHandler({ code: 'wordpress_updates', name: 'WordpressUpdate', country_name: null, retail_marketing_id: null, value: 'last year' })
+                                                    } else {
+                                                        this.userDataSourceDeleteHandler(this.state.userDataSources.wordpress_updates[0].id, 'wordpress_updates')
+                                                    }
+                                                }}
+                                                checked={this.state.userDataSources.wordpress_updates && this.state.userDataSources.wordpress_updates.length > 0}
+                                                name="last_year_only" />
+                                            <h6 style={{ position: 'absolute', top: '0px', left: '10px' }}> &nbsp;&nbsp; Show last year only</h6>
+                                        </div>
+                                    </div>
+                                    <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'wordpress-updates'} target="wordpress-updates-datasource-hint" toggle={() => { this.changeShownHint(null) }}>
+                                        <PopoverHeader>WordPress Core Updates</PopoverHeader>
+                                        <PopoverBody><strong>WordPress Core Updates</strong> Our automated annotation feature will inform you when a new version, Security, or Maintenance Release of WordPress is available.</PopoverBody>
+                                    </UncontrolledPopover>
+                                </div>
+                                <div className="col-4 d-flex flex-column justify-content-start align-items-center">
+                                    {this.state.userServices.is_ds_wordpress_updates_enabled ? "Active" : "Deactive"}
+                                    <label className="trigger switch">
+                                        <input type="checkbox"
+                                            checked={this.state.userServices.is_ds_wordpress_updates_enabled}
+                                            onChange={this.serviceStatusHandler}
+                                            name="is_ds_wordpress_updates_enabled"
+                                        />
+                                        <span className="slider round" />
+                                    </label>
+                                </div>
+                                <div className="row ml-0 mr-0 w-100">
+                                    <div className="col-8">
+
+                                    </div>
+                                    <div className="col-4">
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         {/* <div className="container mt-3 ds-sections border-bottom">
@@ -558,6 +559,7 @@ export default class DataSourceIndex extends React.Component {
             </div>
         );
     }
+    
     serviceStatusHandler(e) {
         e.persist();
         if (e.target.name == 'is_ds_holidays_enabled' && e.target.checked) {
