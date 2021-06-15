@@ -66,15 +66,15 @@ class AnnotationController extends Controller
         }
 
         $addedByArray = [];
-        if ($request->query('show_manual_annotations')) {
+        if ($request->query('show_manual_annotations') && $request->query('show_manual_annotations') == 'true') {
             array_push($addedByArray, 'manual');
         }
 
-        if ($request->query('show_csv_annotations')) {
+        if ($request->query('show_csv_annotations') && $request->query('show_csv_annotations') == 'true') {
             array_push($addedByArray, 'csv-upload');
         }
 
-        if ($request->query('show_api_annotations')) {
+        if ($request->query('show_api_annotations') && $request->query('show_api_annotations') == 'true') {
             array_push($addedByArray, 'api');
         }
 
@@ -275,15 +275,15 @@ class AnnotationController extends Controller
         }
         
         $addedByArray = [];
-        if ($request->query('show_manual_annotations')) {
+        if ($request->query('show_manual_annotations') && $request->query('show_manual_annotations') == 'true') {
             array_push($addedByArray, 'manual');
         }
 
-        if ($request->query('show_csv_annotations')) {
+        if ($request->query('show_csv_annotations') && $request->query('show_csv_annotations') == 'true') {
             array_push($addedByArray, 'csv-upload');
         }
 
-        if ($request->query('show_api_annotations')) {
+        if ($request->query('show_api_annotations') && $request->query('show_api_annotations') == 'true') {
             array_push($addedByArray, 'api');
         }
 
