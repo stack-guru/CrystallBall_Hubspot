@@ -135,7 +135,7 @@ class PaymentController extends Controller
 
             if ($user->pricePlan->name == "Pro" && $pricePlan->name == "Basic") {
                 // User is downgrading to basic plan from pro plan
-                $sGS->addUserToList($user, "11 GAa Downgraded to Basic");
+                $sGS->addUserToMarketingList($user, "11 GAa Downgraded to Basic");
 
                 $this->removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
             }
@@ -145,7 +145,7 @@ class PaymentController extends Controller
         } else {
             if (($user->pricePlan->name == "Pro" && $pricePlan->name == "Free") || ($user->pricePlan->name == "Basic" && $pricePlan->name == "Free")) {
                 // User is downgrading to free plan
-                $sGS->addUserToList($user, "12 GAa Downgraded to FREE");
+                $sGS->addUserToMarketingList($user, "12 GAa Downgraded to FREE");
 
                 $this->removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
             }
@@ -157,13 +157,13 @@ class PaymentController extends Controller
 
         switch ($pricePlan->name) {
             case "Basic":
-                $sGS->addUserToList($user, "9 GAa Upgraded to Basic");
+                $sGS->addUserToMarketingList($user, "9 GAa Upgraded to Basic");
                 $this->addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
                 $admin = Admin::first();
                 Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
                 break;
             case "Pro":
-                $sGS->addUserToList($user, "10 GAa Upgraded to PRO");
+                $sGS->addUserToMarketingList($user, "10 GAa Upgraded to PRO");
                 $this->addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
                 $admin = Admin::first();
                 Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));

@@ -98,7 +98,7 @@ class RegisterController extends Controller
         ]);
 
         $sGS = new SendGridService;
-        $sGS->addUserToList($user, "1 GAa New registrations");
+        $sGS->addUserToMarketingList($user, "1 GAa New registrations");
 
         // event_name:
         // Sample Annotation
@@ -166,7 +166,7 @@ class RegisterController extends Controller
                 ]);
 
                 $sGS = new SendGridService;
-                $sGS->addUserToList($user, "1 GAa New registrations");
+                $sGS->addUserToMarketingList($user, "1 GAa New registrations");
 
             }
         }

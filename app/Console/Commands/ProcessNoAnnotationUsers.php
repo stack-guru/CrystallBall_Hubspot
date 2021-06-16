@@ -49,7 +49,7 @@ class ProcessNoAnnotationUsers extends Command
         $users = User::whereIn('id', $userIds)->get()->toArray();
         if (count($users)) {
             $sGS = new SendGridService;
-            $sGS->addUsersToList($users, "3 GAa create your fist annotation");
+            $sGS->addUsersToMarketingList($users, "3 GAa create your fist annotation");
         }
 
         print count($users) . " users have been processed.\n";

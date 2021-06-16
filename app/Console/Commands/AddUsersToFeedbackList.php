@@ -48,7 +48,7 @@ class AddUsersToFeedbackList extends Command
 
         if (count($users)) {
             $sGS = new SendGridService;
-            $sGS->addUsersToList($users, "13 GAa submit your feedback to GA");
+            $sGS->addUsersToMarketingList($users, "13 GAa submit your feedback to GA");
         }
 
         print count($users) . " users have been processed.\n";

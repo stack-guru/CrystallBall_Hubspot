@@ -46,7 +46,7 @@ class ProcessNonAPIUsingUsers extends Command
         $users = User::whereNull('last_generated_api_token_at')->whereRaw("DATE(created_at) = '" . Carbon::now()->subDays(4)->format("Y-m-d") . "'")->get()->toArray();
         if (count($users)) {
             $sGS = new SendGridService;
-            $sGS->addUsersToList($users, "5 GAa active API");
+            $sGS->addUsersToMarketingList($users, "5 GAa active API");
         }
 
         print count($users) . " users have been processed.\n";

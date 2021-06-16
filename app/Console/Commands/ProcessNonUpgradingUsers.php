@@ -46,7 +46,7 @@ class ProcessNonUpgradingUsers extends Command
         $users = User::whereRaw("DATE(price_plan_expiry_date) = '" . Carbon::now()->addDays(2)->format("Y-m-d") . "'")->whereRaw("DATE(created_at) = '" . Carbon::now()->subDays(12)->format("Y-m-d") . "'")->get()->toArray();
         if (count($users)) {
             $sGS = new SendGridService;
-            $sGS->addUsersToList($users, "6 GAa Two days until Trial ends");
+            $sGS->addUsersToMarketingList($users, "6 GAa Two days until Trial ends");
         }
 
         print count($users) . " users have been processed.\n";

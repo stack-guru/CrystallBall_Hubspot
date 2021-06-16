@@ -47,7 +47,7 @@ class ProcessNotEnabledDataSourceUsers extends Command
         $users = User::whereNull('last_activated_any_data_source_at')->whereRaw("DATE(created_at) = '" . Carbon::now()->subDays(3)->format("Y-m-d") . "'")->get()->toArray();
         if (count($users)) {
             $sGS = new SendGridService;
-            $sGS->addUsersToList($users, "4 GAa active Data Source");
+            $sGS->addUsersToMarketingList($users, "4 GAa active Data Source");
         }
 
         print count($users) . " users have been processed.\n";

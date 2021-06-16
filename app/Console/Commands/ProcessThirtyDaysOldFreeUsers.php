@@ -47,7 +47,7 @@ class ProcessThirtyDaysOldFreeUsers extends Command
         $users = User::whereRaw("DATE(created_at) = '" . Carbon::now()->subDays(30)->format("Y-m-d") . "'")->where("price_plan_id", $freePlanId)->get()->toArray();
         if (count($users)) {
             $sGS = new SendGridService;
-            $sGS->addUsersToList($users, "8 GAa 30 days on FREE");
+            $sGS->addUsersToMarketingList($users, "8 GAa 30 days on FREE");
         }
 
         print count($users) . " users have been processed.\n";

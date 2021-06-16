@@ -47,7 +47,7 @@ class ProcessNonInstalledExtensionUsers extends Command
         $users = User::whereBetween('created_at', [Carbon::now()->subHours(1)->subMinutes(1)->format("Y-m-d H:i:00"), Carbon::now()->subHours(1)->format("Y-m-d H:i:00")])->whereNull('last_logged_into_extension_at')->get()->toArray();
         if(count($users)){
             $sGS = new SendGridService;
-            $sGS->addUsersToList($users, "2 GAa Register but didn’t install the extension");
+            $sGS->addUsersToMarketingList($users, "2 GAa Register but didn’t install the extension");
         }
 
         print count($users) . " users have been processed.\n";

@@ -47,7 +47,7 @@ class ProcessTrialExpiredUsers extends Command
         $users = User::whereRaw("DATE(created_at) = '" . Carbon::now()->subDays(14)->format("Y-m-d") . "'")->where("price_plan_id", $trialPlanId)->get()->toArray();
         if (count($users)) {
             $sGS = new SendGridService;
-            $sGS->addUsersToList($users, "7 GAa Today Trial ends");
+            $sGS->addUsersToMarketingList($users, "7 GAa Today Trial ends");
         }
 
         print count($users) . " users have been processed.\n";

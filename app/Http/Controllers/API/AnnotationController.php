@@ -31,7 +31,7 @@ class AnnotationController extends Controller
 
         if ($user->last_api_called_at == null) {
             $sGS = new SendGridService;
-            $sGS->addUserToList($user, "14 GAa API users");
+            $sGS->addUserToMarketingList($user, "14 GAa API users");
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
@@ -52,7 +52,7 @@ class AnnotationController extends Controller
 
         if ($user->last_api_called_at == null) {
             $sGS = new SendGridService;
-            $sGS->addUserToList($user, "14 GAa API users");
+            $sGS->addUserToMarketingList($user, "14 GAa API users");
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
@@ -99,7 +99,7 @@ class AnnotationController extends Controller
 
         if ($user->last_api_called_at == null) {
             $sGS = new SendGridService;
-            $sGS->addUserToList($user, "14 GAa API users");
+            $sGS->addUserToMarketingList($user, "14 GAa API users");
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
@@ -163,7 +163,7 @@ class AnnotationController extends Controller
 
         if ($user->last_api_called_at == null) {
             $sGS = new SendGridService;
-            $sGS->addUserToList($user, "14 GAa API users");
+            $sGS->addUserToMarketingList($user, "14 GAa API users");
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
@@ -198,7 +198,7 @@ class AnnotationController extends Controller
 
         if ($user->last_api_called_at == null) {
             $sGS = new SendGridService;
-            $sGS->addUserToList($user, "14 GAa API users");
+            $sGS->addUserToMarketingList($user, "14 GAa API users");
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
