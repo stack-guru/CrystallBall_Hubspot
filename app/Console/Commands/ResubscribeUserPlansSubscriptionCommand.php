@@ -11,6 +11,7 @@ use App\Models\PricePlanSubscription;
 use App\Models\User;
 use App\Models\WebMonitor;
 use App\Services\BlueSnapService;
+use App\Services\SendGridService;
 use App\Services\UptimeRobotService;
 use DB;
 use Illuminate\Console\Command;
@@ -129,6 +130,38 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
     private function resubscribeFreePlanUsers()
     {
+        $trialUsers = User::where('price_plan_expiry_date', '<', new \DateTime)
+            ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
+            ->where('price_plans.price', 0)
+            ->where('price_plans.name', 'Trial')
+            ->get();
+
+        $sGS = new SendGridService;
+
+        foreach ($trialUsers as $trialUser) {
+            $trialUser->price_plan_expiry_date = $this->nextExpiryDate;
+            $trialUser->price_plan_id = $this->freePlanId;
+
+            $trialUser->is_ds_holidays_enabled = false;
+            $trialUser->is_ds_google_algorithm_updates_enabled = false;
+            $trialUser->is_ds_retail_marketing_enabled = false;
+            $trialUser->is_ds_google_alerts_enabled = false;
+            $trialUser->is_ds_weather_alerts_enabled = false;
+            $trialUser->is_ds_wordpress_updates_enabled = false;
+            $trialUser->is_ds_web_monitors_enabled = false;
+
+            $trialUsers->save();
+
+            $sGS->addUserToContactList($trialUser, "Holidays for [Country_name] Deactivated because from Trial to Free");
+            $sGS->addUserToContactList($trialUser, "Google Updates Deactivated from Trial to Free");
+            $sGS->addUserToContactList($trialUser, "Retail Marketing Dates Deactivated from Trial to Free");
+            $sGS->addUserToContactList($trialUser, "News Alerts for [keywords] Deactivated because from Trial to Free");
+            $sGS->addUserToContactList($trialUser, "Weather for [cities] Deactivated from Trial to Free");
+            $sGS->addUserToContactList($trialUser, "WordPress Deactivated because from Trial to Free");
+            $sGS->addUserToContactList($trialUser, "Website Monitoring Deactivated because Trial to Free");
+        }
+        print count($trialUsers) . " Users have been subscribed from trial to free plan.\n";
+
         $updateCount = User::where('price_plan_expiry_date', '<', new \DateTime)
             ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
             ->where('price_plans.price', 0)

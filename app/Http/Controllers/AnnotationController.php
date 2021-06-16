@@ -7,6 +7,7 @@ use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
 use App\Models\AnnotationGaProperty;
 use App\Models\UserDataSource;
+use App\Services\SendGridService;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -249,7 +250,7 @@ class AnnotationController extends Controller
             $annotationsQuery .= "select 1, update_date, update_date as created_at, null, category, event_name, url, description, 'System' AS user_name from `wordpress_updates`";
             if ($request->query('annotation_ga_property_id') && $request->query('annotation_ga_property_id') !== '*') {
                 $showLastYear = UserDataSource::ofCurrentUser()->where('ga_property_id', $request->query('annotation_ga_property_id'))->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count();
-            }else{
+            } else {
                 $showLastYear = UserDataSource::ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count();
             }
             if ($showLastYear) {
@@ -431,6 +432,9 @@ class AnnotationController extends Controller
                 DB::statement($sql);
             }
         }
+
+        $sGS = new SendGridService;
+        $sGS->addUserToContactList($user, "New CSV [file name] Uploaded");
 
         return ['success' => true];
     }
