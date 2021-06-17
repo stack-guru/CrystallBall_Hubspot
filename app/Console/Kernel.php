@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:check-monitor-statuses')->everyMinute();
         
         $schedule->command('gaa:fetch-weather-alerts')->withoutOverlapping()->hourly();
+        $schedule->command('gaa:send-new-data-sources-email')->hourly();
         
         $schedule->command('gaa:process-no-annotation-users')->daily();
         $schedule->command('gaa:process-non-api-using-users')->daily();

@@ -434,7 +434,7 @@ class AnnotationController extends Controller
         }
 
         $sGS = new SendGridService;
-        $sGS->addUserToContactList($user, "New CSV [file name] Uploaded");
+        $sGS->addUserToContactList($user, "New CSV [file name] Uploaded", ['file_name' => $request->file('csv')->getClientOriginalName()]);
 
         return ['success' => true];
     }

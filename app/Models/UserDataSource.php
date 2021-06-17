@@ -5,6 +5,7 @@ namespace App\Models;
 use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserDataSource extends Model
 {
@@ -37,4 +38,13 @@ class UserDataSource extends Model
         return $this->belongsTo('App\Models\OpenWeatherMapCity');
     }
 
+    /**
+     * Get the user that owns the UserDataSource
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
