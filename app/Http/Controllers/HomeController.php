@@ -40,7 +40,6 @@ class HomeController extends Controller
             $user->is_ds_holidays_enabled = $request->is_ds_holidays_enabled;
             if ($request->is_ds_holidays_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
-                $sGS->addUserToContactList($user, "Holidays for [Country_name] Activated");
             } else {
                 $sGS->addUserToContactList($user, "Holidays for [Country_name] Deactivated manually");
             }
@@ -70,7 +69,6 @@ class HomeController extends Controller
             $user->is_ds_weather_alerts_enabled = $request->is_ds_weather_alerts_enabled;
             if ($request->is_ds_weather_alerts_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
-                $sGS->addUserToContactList($user, "Weather for [cities] Activated");
             } else {
                 $sGS->addUserToContactList($user, "Weather for [cities] Deactivated manually");
             }
@@ -80,7 +78,6 @@ class HomeController extends Controller
             $user->is_ds_google_alerts_enabled = $request->is_ds_google_alerts_enabled;
             if ($request->is_ds_google_alerts_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
-                $sGS->addUserToContactList($user, "News Alerts for [keywords] Activated");
             } else {
                 $sGS->addUserToContactList($user, "News Alerts for [keywords] Deactivated manually");
             }
