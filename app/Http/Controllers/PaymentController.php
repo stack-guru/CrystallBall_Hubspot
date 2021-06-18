@@ -38,7 +38,7 @@ class PaymentController extends Controller
 
         $user = Auth::user();
         if ($user->user_id) {
-            abort(403);
+            abort(403, "Only account owners are allowed to subscribe price plans");
         }
 
         if (!$request->query('_token')) {
