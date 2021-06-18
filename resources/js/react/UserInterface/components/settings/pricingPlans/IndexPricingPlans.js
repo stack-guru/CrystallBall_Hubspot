@@ -4,7 +4,7 @@ import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 import HttpClient from "../../../utils/HttpClient";
 
-export default class indexPricingPlans extends React.Component {
+export default class IndexPricingPlans extends React.Component {
 
     constructor(props) {
         super(props);
@@ -12,7 +12,9 @@ export default class indexPricingPlans extends React.Component {
             pricePlans: [],
             redirectTo: null
         };
+
         this.freeSubscribe = this.freeSubscribe.bind(this);
+        this.changePricePlan = this.changePricePlan.bind(this);
     }
 
     componentDidMount() {
@@ -28,6 +30,21 @@ export default class indexPricingPlans extends React.Component {
 
                 this.setState({ isBusy: false, errors: err });
             });
+    }
+
+    changePricePlan(pricePlan) {
+        if (this.props.user.user_id) {
+            swal("Unauthorized", "Only the Admin of your team can change the plan", "error");
+        } else {
+            if (pricePlan.price == 0) {
+                this.freeSubscribe(pricePlan.id)
+            } else if (pricePlan.is_available == false) {
+
+            } else {
+                window.location.href = `/settings/price-plans/payment?price_plan_id=${pricePlan.id}`;
+            }
+        }
+
     }
 
     freeSubscribe(id) {
@@ -173,12 +190,12 @@ export default class indexPricingPlans extends React.Component {
                                                         <span value="subscribed" className="btn mx-auto pp-c-action btn-success text-uppercase mt-auto">Subscribed</span>
                                                         :
                                                         pricePlan.price == 0 ?
-                                                            <button className="btn mx-auto btn-primary pp-c-action text-uppercase mt-auto " onClick={() => { this.freeSubscribe(pricePlan.id) }} >Subscribe</button>
+                                                            <button className="btn mx-auto btn-primary pp-c-action text-uppercase mt-auto " onClick={() => { this.changePricePlan(pricePlan); }} >Subscribe</button>
                                                             :
                                                             pricePlan.is_available == false ?
                                                                 <a href="#" className="btn pp-c-action mx-auto btn-primary text-uppercase mt-auto disabled">Coming Soon</a>
                                                                 :
-                                                                <a href={`/settings/price-plans/payment?price_plan_id=${pricePlan.id}`} className="btn pp-c-action mx-auto btn-primary text-uppercase mt-auto">Subscribe</a>
+                                                                <a href="#" className="btn pp-c-action mx-auto btn-primary text-uppercase mt-auto" onClick={() => { this.changePricePlan(pricePlan); }}>Subscribe</a>
                                             }
                                         </div>
                                     </div>
