@@ -23,7 +23,7 @@ class PaymentController extends Controller
 
     public function indexPaymentHistory()
     {
-        if (Auth::user()->user_level !== 'admin') {
+        if (Auth::user()->user_id) {
             abort(403);
         }
 
@@ -35,6 +35,11 @@ class PaymentController extends Controller
 
     public function show(Request $request)
     {
+
+        $user = Auth::user();
+        if ($user->user_id) {
+            abort(403);
+        }
 
         if (!$request->query('_token')) {
             $blueSnapService = new BlueSnapService;
@@ -49,7 +54,7 @@ class PaymentController extends Controller
     public function subscribePlan(Request $request)
     {
         $user = Auth::user();
-        if ($user->user_level !== 'admin') {
+        if ($user->user_id) {
             abort(403);
         }
 

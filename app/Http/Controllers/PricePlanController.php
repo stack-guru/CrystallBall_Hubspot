@@ -21,7 +21,6 @@ class PricePlanController extends Controller
 
     public function uiIndex()
     {
-        if(Auth::user()->user_level !== 'admin') abort(403);
         $pricePlans = PricePlan::where('is_enabled', true)->get();
 
         return ['price_plans' => $pricePlans];
