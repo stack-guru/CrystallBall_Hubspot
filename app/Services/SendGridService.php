@@ -268,16 +268,19 @@ class SendGridService
         $firstName = $nameChunks[0];
         $lastName = $nameChunks[count($nameChunks) - 1] != $firstName ? $nameChunks[count($nameChunks) - 1] : '';
 
+        $contact = [
+            'email' => $user->email,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+        ];
+
+        if (count($customFields)) {
+            $contact['custom_fields'] = $customFields;
+        }
+
         $bodyData = [
             "list_ids" => [$list['id']],
-            "contacts" => [
-                [
-                    'email' => $user->email,
-                    'first_name' => $firstName,
-                    'last_name' => $lastName,
-                    'custom_fields' => $customFields,
-                ],
-            ],
+            "contacts" => [$contact],
         ];
 
         $response = Http::withToken($this->key)
