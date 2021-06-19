@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\UserDataSource;
+use App\Models\WebMonitor;
 use App\Services\SendGridService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -101,8 +102,9 @@ class SendNewDataSourcesEmail extends Command
             }
             $this->addToRelevantList($sGS, $dsCode, $user->user, $values);
         }
-
-        $this->info("Finding users who have added user data sources between $startDateTime and $endDateTime.");
+        /////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////
+        $this->info("Finding users who have added web monitors between $startDateTime and $endDateTime.");
         $users = WebMonitor::select('user_id')
             ->whereBetween('created_at', [$startDateTime, $endDateTime])
             ->with('user')
@@ -122,7 +124,7 @@ class SendNewDataSourcesEmail extends Command
                 ->pluck("url")
                 ->toArray();
 
-            $this->info(count($userWebMonitors) . " web monitors found.");
+            $this->info(count($userWebMonitorsURL) . " web monitors found.");
 
             $values = $userWebMonitorsURL;
 
