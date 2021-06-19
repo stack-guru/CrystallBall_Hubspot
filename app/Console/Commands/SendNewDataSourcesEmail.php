@@ -44,10 +44,12 @@ class SendNewDataSourcesEmail extends Command
         $endDateTime = Carbon::now()->addHours(11);
         $sGS = new SendGridService;
 
+        $neededDSCodes = ['holidays', 'google_alert_keywords', 'open_weather_map_cities'];
+
         $this->info("Finding users who have added user data sources between $startDateTime and $endDateTime.");
         $users = UserDataSource::select('user_id')
             ->whereBetween('created_at', [$startDateTime, $endDateTime])
-            ->whereIn('ds_code', ['holidays', 'google_alert_keywords', 'open_weather_map_cities'])
+            ->whereIn('ds_code', $neededDSCodes)
             ->with('user')
             ->distinct()
             ->orderBy('user_id')
@@ -61,7 +63,7 @@ class SendNewDataSourcesEmail extends Command
 
             $userDataSources = UserDataSource::where('user_id', $user->user_id)
                 ->whereBetween('created_at', [$startDateTime, $endDateTime])
-                ->whereIn('ds_code', ['holidays', 'google_alert_keywords', 'open_weather_map_cities'])
+                ->whereIn('ds_code', $neededDSCodes)
                 ->orderBy('ds_code')
                 ->with('openWeatherMapCity')
                 ->get();
@@ -99,6 +101,33 @@ class SendNewDataSourcesEmail extends Command
             }
             $this->addToRelevantList($sGS, $dsCode, $user->user, $values);
         }
+
+        $this->info("Finding users who have added user data sources between $startDateTime and $endDateTime.");
+        $users = WebMonitor::select('user_id')
+            ->whereBetween('created_at', [$startDateTime, $endDateTime])
+            ->with('user')
+            ->distinct()
+            ->orderBy('user_id')
+            ->get();
+
+        $this->info(count($users) . " users found.");
+
+        $this->info("Iterating through users to gather web monitors.");
+        foreach ($users as $user) {
+            $this->info("Processing user of id $user->user_id.");
+
+            $userWebMonitorsURL = WebMonitor::where('user_id', $user->user_id)
+                ->whereBetween('created_at', [$startDateTime, $endDateTime])
+                ->get(["url"])
+                ->pluck("url")
+                ->toArray();
+
+            $this->info(count($userWebMonitors) . " web monitors found.");
+
+            $values = $userWebMonitorsURL;
+
+            $this->addToRelevantList($sGS, "web_monitors", $user->user, $values);
+        }
     }
 
     private function addToRelevantList($sGS, $dsCode, $user, $values)
@@ -112,6 +141,9 @@ class SendNewDataSourcesEmail extends Command
                 break;
             case 'open_weather_map_cities':
                 $sGS->addUserToContactList($user, "Weather for [cities] Activated", ['w12_T' => implode(" ", $values)]);
+                break;
+            case 'web_monitors':
+                $sGS->addUserToContactList($user, "Website Monitoring Activated");
                 break;
         }
     }

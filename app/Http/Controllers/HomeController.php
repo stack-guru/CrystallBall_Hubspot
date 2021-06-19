@@ -97,7 +97,6 @@ class HomeController extends Controller
             $user->is_ds_web_monitors_enabled = $request->is_ds_web_monitors_enabled;
             if ($request->is_ds_web_monitors_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
-                $sGS->addUserToContactList($user, "Website Monitoring Activated");
             } else {
                 $sGS->addUserToContactList($user, "Website Monitoring Deactivated because URL was removed");
             }
