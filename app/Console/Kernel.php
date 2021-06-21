@@ -26,12 +26,17 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
+        // Every minute
         $schedule->command('gaa:process-non-installed-extension-users')->everyMinute();
         $schedule->command('gaa:check-monitor-statuses')->everyMinute();
-        
+
+        // Every ten minute
+        $schedule->command('gaa:send-new-data-sources-email')->everyTenMinutes();
+
+        // Every hour
         $schedule->command('gaa:fetch-weather-alerts')->withoutOverlapping()->hourly();
-        $schedule->command('gaa:send-new-data-sources-email')->hourly();
-        
+
+        // Everyday
         $schedule->command('gaa:process-no-annotation-users')->daily();
         $schedule->command('gaa:process-non-api-using-users')->daily();
         $schedule->command('gaa:process-non-upgrading-users')->daily();
@@ -42,9 +47,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:fetch-adwords-keywords-clicks')->daily();
         $schedule->command('gaa:fetch-google-alerts')->daily();
 
+        // Every month
         $schedule->command('gaa:send-card-expiry-mail')->monthly();
-
-        
 
     }
 
@@ -55,7 +59,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

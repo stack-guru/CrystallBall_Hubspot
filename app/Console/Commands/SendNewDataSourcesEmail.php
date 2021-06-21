@@ -41,7 +41,7 @@ class SendNewDataSourcesEmail extends Command
      */
     public function handle()
     {
-        $startDateTime = Carbon::now()->subHour(); //->addHours(11);
+        $startDateTime = Carbon::now()->subMinutes(10); //->addHours(11);
         $endDateTime = Carbon::now(); //->addHours(11);
         $sGS = new SendGridService;
 
