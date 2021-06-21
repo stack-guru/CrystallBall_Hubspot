@@ -27,6 +27,7 @@ class UptimeRobotService
             'format' => $this->outputFormat,
         ]);
 
+        Log::channel('uptimerobot')->debug($response->body());
         if (!$response->successful()) {
             return false;
         }
@@ -43,6 +44,7 @@ class UptimeRobotService
             'format' => $this->outputFormat,
         ]);
 
+        Log::channel('uptimerobot')->debug($response->body());
         if (!$response->successful()) {
             return false;
         }
@@ -57,15 +59,18 @@ class UptimeRobotService
     public function newMonitor($name, $link, $type = 1, $interval = 60)
     {
         $url = "https://api.uptimerobot.com/v2/newMonitor";
-        $response = Http::post($url, [
+        $bodyData = [
             'api_key' => $this->apiKey,
             'format' => $this->outputFormat,
             'friendly_name' => $name,
             'url' => $link,
             'interval' => $interval,
             'type' => $type, //type must be a number
-        ]);
+        ];
+        $response = Http::post($url, $bodyData);
 
+        Log::channel('uptimerobot')->info('Adding web monitor', $bodyData);
+        Log::channel('uptimerobot')->debug($response->body());
         if (!$response->successful()) {
             return false;
         }
@@ -87,6 +92,7 @@ class UptimeRobotService
             'id' => $id,
         ]);
 
+        Log::channel('uptimerobot')->debug($response->body());
         if (!$response->successful()) {
             return false;
         }
