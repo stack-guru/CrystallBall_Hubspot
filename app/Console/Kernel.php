@@ -42,6 +42,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:process-non-upgrading-users')->daily();
         $schedule->command('gaa:process-not-enabled-data-source-users')->daily();
         $schedule->command('gaa:process-trial-expired-users')->daily();
+        $schedule->command('gaa:process-two-days-old-free-users')->daily();
         $schedule->command('gaa:process-thirty-days-old-free-users')->daily();
         $schedule->command('gaa:resubscribe-user-plans')->daily();
         $schedule->command('gaa:fetch-adwords-keywords-clicks')->daily();

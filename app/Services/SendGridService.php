@@ -241,6 +241,13 @@ class SendGridService
             ],
         ],
         [
+            "name" => "2 days on FREE",
+            "id" => "5dcdbcce-da56-496e-aa71-339df985f420",
+            "_metadata" => [
+                "self" => "https://api.sendgrid.com/v3/marketing/lists/5dcdbcce-da56-496e-aa71-339df985f420",
+            ],
+        ],
+        [
             "name" => "8 GAa 30 days on FREE",
             "id" => "c73ecc96-6b96-4548-9e0d-f43b3f338fb4",
             "_metadata" => [
