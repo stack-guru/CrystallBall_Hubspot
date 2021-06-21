@@ -145,7 +145,7 @@ class SendNewDataSourcesEmail extends Command
                 $sGS->addUserToContactList($user, "Weather for [cities] Activated", ['w12_T' => implode(" ", $values)]);
                 break;
             case 'web_monitors':
-                $sGS->addUserToContactList($user, "Website Monitoring Activated");
+                $sGS->addUserToContactList($user, "Website Monitoring Activated", ['w14_T' => implode(" ", $values)]);
                 break;
         }
     }
