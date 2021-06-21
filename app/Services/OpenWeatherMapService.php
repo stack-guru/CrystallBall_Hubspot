@@ -49,7 +49,6 @@ class OpenWeatherMapService
             return ['success' => false, 'message' => $error];
         }
         Log::channel('open_weather_map')->info('Calling Weather API.', ['id' => $id]);
-        Log::channel('open_weather_map')->debug($response->body());
 
         $data = $response->json();
         return ['success' => true, 'data' => $data];
