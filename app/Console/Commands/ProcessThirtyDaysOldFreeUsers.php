@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Models\User;
-use Carbon\Carbon;
 use App\Models\PricePlan;
+use App\Models\User;
 use App\Services\SendGridService;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class ProcessThirtyDaysOldFreeUsers extends Command
 {
@@ -44,7 +44,11 @@ class ProcessThirtyDaysOldFreeUsers extends Command
         $freePlanId = PricePlan::where('name', 'Free')->first()->id;
         print "Looking for users whos are on free plan but registered on " . Carbon::now()->subDays(30)->format("Y-m-d") . "\n";
 
-        $users = User::whereRaw("DATE(created_at) = '" . Carbon::now()->subDays(30)->format("Y-m-d") . "'")->where("price_plan_id", $freePlanId)->get()->toArray();
+        $users = User::whereRaw("DATE(created_at) = '" . Carbon::now()->subDays(30)->format("Y-m-d") . "'")
+            ->where("price_plan_id", $freePlanId)
+            ->get()
+            ->toArray();
+
         if (count($users)) {
             $sGS = new SendGridService;
             $sGS->addUsersToMarketingList($users, "8 GAa 30 days on FREE");

@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Models\User;
-use Carbon\Carbon;
 use App\Models\PricePlan;
+use App\Models\User;
 use App\Services\SendGridService;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class ProcessTwoDaysOldFreeUsers extends Command
 {
@@ -22,7 +22,7 @@ class ProcessTwoDaysOldFreeUsers extends Command
      *
      * @var string
      */
-    protected $description = 'Get all users who registered 2 days ago and are using free plan';
+    protected $description = 'Get all users who left trial 2 days ago and are using free plan';
 
     /**
      * Create a new command instance.
@@ -42,9 +42,14 @@ class ProcessTwoDaysOldFreeUsers extends Command
     public function handle()
     {
         $freePlanId = PricePlan::where('name', 'Free')->first()->id;
-        print "Looking for users whos are on free plan but registered on " . Carbon::now()->subDays(2)->format("Y-m-d") . "\n";
+        print "Looking for users whos are on free plan but trial ended on " . Carbon::now()->subDays(2)->format("Y-m-d") . "\n";
 
-        $users = User::whereRaw("DATE(created_at) = '" . Carbon::now()->subDays(2)->format("Y-m-d") . "'")->where("price_plan_id", $freePlanId)->get()->toArray();
+        $users = User::whereRaw("DATE(trial_ended_at) = '" . Carbon::now()->subDays(2)->format("Y-m-d") . "'")
+            ->whereNotNull('trial_ended_at')
+            ->where("price_plan_id", $freePlanId)
+            ->get()
+            ->toArray();
+            
         if (count($users)) {
             $sGS = new SendGridService;
             $sGS->addUsersToMarketingList($users, "2 days on FREE");

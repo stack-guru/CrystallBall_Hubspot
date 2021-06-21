@@ -29,6 +29,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
     private $freePlan;
     private $freePlanId;
     private $nextExpiryDate;
+    private $currentDate;
     private $admin;
     /**
      * The console command description.
@@ -65,6 +66,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             $this->admin = $admin;
         }
         $this->nextExpiryDate = new \DateTime("+1 month");
+        $this->currentDate = new \DateTime();
 
         $this->resubscribeFreePlanUsers();
         $this->resubscribePaidPlanUsers();
@@ -130,13 +132,14 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
     private function resubscribeFreePlanUsers()
     {
+        $sGS = new SendGridService;
+
+        // Trial users moving to free plan
         $trialUsers = User::where('price_plan_expiry_date', '<', new \DateTime)
             ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
             ->where('price_plans.price', 0)
             ->where('price_plans.name', 'Trial')
             ->get();
-
-        $sGS = new SendGridService;
 
         foreach ($trialUsers as $trialUser) {
             $trialUser->price_plan_expiry_date = $this->nextExpiryDate;
@@ -150,6 +153,8 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             $trialUser->is_ds_wordpress_updates_enabled = false;
             $trialUser->is_ds_web_monitors_enabled = false;
 
+            $trialUser->trial_ended_at = $this->currentDate;
+
             $trialUsers->save();
 
             $sGS->addUserToContactList($trialUser, "Holidays for [Country_name] Deactivated because from Trial to Free");
@@ -162,6 +167,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         }
         print count($trialUsers) . " Users have been subscribed from trial to free plan.\n";
 
+        // Free plan users resubscribing to free plan with new expiry dates
         $updateCount = User::where('price_plan_expiry_date', '<', new \DateTime)
             ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
             ->where('price_plans.price', 0)

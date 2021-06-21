@@ -61,6 +61,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
+        'trial_ended_at' => 'datetime',
 
         'is_ds_holidays_enabled' => 'boolean',
         'is_ds_google_algorithm_updates_enabled' => 'boolean',
