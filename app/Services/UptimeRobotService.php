@@ -45,7 +45,6 @@ class UptimeRobotService
             'format' => $this->outputFormat,
         ]);
 
-        Log::channel('uptimerobot')->debug($response->body());
         if (!$response->successful()) {
             return false;
         }
