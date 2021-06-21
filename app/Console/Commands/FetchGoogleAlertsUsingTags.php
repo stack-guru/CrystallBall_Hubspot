@@ -52,23 +52,25 @@ class FetchGoogleAlertsUsingTags extends Command
         $alertDate = new Carbon;
         foreach ($keywords as $keyword) {
             $allAlerts = $googleAlertService->getAllFeeds($keyword);
-            foreach ($allAlerts as $categoryName => $categoryAlert) {
-                foreach ($categoryAlert as $alert) {
-                    if (stripos($alert['title'], $keyword) || stripos($alert['description'], $keyword)) {
-                        if (!GoogleAlert::where('url', $alert['url'])->count()) {
-                            $googleAlert = new GoogleAlert;
-                            $googleAlert->alert_date = $alertDate;
-                            $googleAlert->tag_name = $keyword;
-                            $googleAlert->category = $categoryName;
-                            $googleAlert->title = $alert['title'];
-                            $googleAlert->url = $alert['url'];
-                            $googleAlert->description = $alert['description'];
+            if ($allAlerts !== false) {
+                foreach ($allAlerts as $categoryName => $categoryAlert) {
+                    foreach ($categoryAlert as $alert) {
+                        if (stripos($alert['title'], $keyword) || stripos($alert['description'], $keyword)) {
+                            if (!GoogleAlert::where('url', $alert['url'])->count()) {
+                                $googleAlert = new GoogleAlert;
+                                $googleAlert->alert_date = $alertDate;
+                                $googleAlert->tag_name = $keyword;
+                                $googleAlert->category = $categoryName;
+                                $googleAlert->title = $alert['title'];
+                                $googleAlert->url = $alert['url'];
+                                $googleAlert->description = $alert['description'];
 
-                            if (array_key_exists('image', $alert)) {
-                                $googleAlert->image = $alert['image'];
+                                if (array_key_exists('image', $alert)) {
+                                    $googleAlert->image = $alert['image'];
+                                }
+
+                                $googleAlert->save();
                             }
-
-                            $googleAlert->save();
                         }
                     }
                 }
