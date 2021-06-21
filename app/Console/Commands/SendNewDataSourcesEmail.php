@@ -41,8 +41,8 @@ class SendNewDataSourcesEmail extends Command
      */
     public function handle()
     {
-        $startDateTime = Carbon::now()->subHour()->addHours(11);
-        $endDateTime = Carbon::now()->addHours(11);
+        $startDateTime = Carbon::now()->subHour(); //->addHours(11);
+        $endDateTime = Carbon::now(); //->addHours(11);
         $sGS = new SendGridService;
 
         $neededDSCodes = ['holidays', 'google_alert_keywords', 'open_weather_map_cities'];
