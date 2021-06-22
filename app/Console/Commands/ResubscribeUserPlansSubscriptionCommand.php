@@ -155,7 +155,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
             $trialUser->trial_ended_at = $this->currentDate;
 
-            $trialUsers->save();
+            $trialUser->save();
 
             $sGS->addUserToContactList($trialUser, "Holidays for [Country_name] Deactivated because from Trial to Free");
             $sGS->addUserToContactList($trialUser, "Google Updates Deactivated from Trial to Free");
