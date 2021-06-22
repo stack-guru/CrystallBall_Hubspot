@@ -52,7 +52,7 @@ class FetchGoogleAlertsUsingTags extends Command
         $alertDate = new Carbon;
         foreach ($keywords as $keyword) {
             $allAlerts = $googleAlertService->getAllFeeds($keyword);
-            if ($allAlerts !== false) {
+            if (is_array($allAlerts)) {
                 foreach ($allAlerts as $categoryName => $categoryAlert) {
                     foreach ($categoryAlert as $alert) {
                         if (stripos($alert['title'], $keyword) || stripos($alert['description'], $keyword)) {

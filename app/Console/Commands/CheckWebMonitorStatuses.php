@@ -44,7 +44,7 @@ class CheckWebMonitorStatuses extends Command
         $uptimeRobotService = new UptimeRobotService;
         $uptimeMonitors = $uptimeRobotService->getMonitors()['monitors'];
 
-        if ($uptimeMonitors !== false) {
+        if (is_array($uptimeMonitors)) {
 
             foreach ($uptimeMonitors as $uptimeMonitor) {
                 $webMonitor = WebMonitor::where('uptime_robot_id', $uptimeMonitor['id'])->first();
