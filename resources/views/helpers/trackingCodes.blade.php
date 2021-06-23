@@ -1,11 +1,3 @@
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XCX0NLCCYT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-XCX0NLCCYT');
-</script>
 <script>
     !function (f, b, e, v, n, t, s) {
     if (f.fbq) return; n = f.fbq = function () {
