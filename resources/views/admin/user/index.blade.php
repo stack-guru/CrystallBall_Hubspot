@@ -66,7 +66,7 @@
                                             <form id="loginUserForm{{$user->id}}" method="POST" action="{{ route('admin.user.login', $user->id) }}">
                                                 @csrf
                                             </form>
-                                            <button type="button" onclick="document.getElementById('loginUserForm{{$user->id}}').submit()" class="btn btn-secondary m-2">Login</button>
+                                            <button type="button" onclick="document.getElementById('loginUserForm{{$user->id}}').submit()" class="btn btn-secondary m-2">Impersonate</button>
                                             
                                             </div>
                                         </td>
