@@ -136,16 +136,16 @@ class SendNewDataSourcesEmail extends Command
     {
         switch ($dsCode) {
             case 'google_alert_keywords':
-                $sGS->addUserToContactList($user, "News Alerts for [keywords] Activated", ['w11_T' => implode(" ", $values)]);
+                $sGS->addUserToContactList($user, "News Alerts for [keywords] Activated", ['w11_T' => implode(", ", $values)]);
                 break;
             case 'holidays':
-                $sGS->addUserToContactList($user, "Holidays for [Country_name] Activated", ['w10_T' => implode(" ", $values)]);
+                $sGS->addUserToContactList($user, "Holidays for [Country_name] Activated", ['w10_T' => implode(", ", $values)]);
                 break;
             case 'open_weather_map_cities':
-                $sGS->addUserToContactList($user, "Weather for [cities] Activated", ['w12_T' => implode(" ", $values)]);
+                $sGS->addUserToContactList($user, "Weather for [cities] Activated", ['w12_T' => implode(", ", $values)]);
                 break;
             case 'web_monitors':
-                $sGS->addUserToContactList($user, "Website Monitoring Activated", ['w14_T' => implode(" ", $values)]);
+                $sGS->addUserToContactList($user, "Website Monitoring Activated", ['w14_T' => implode(", ", $values)]);
                 break;
         }
     }
