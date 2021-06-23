@@ -69,7 +69,7 @@
 
   <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
   {{-- <a class="btn btn-lg btn-primary btn-block" href="{{ route('login') }}">Login</a> --}}
-  {{-- <a class="minified-provider mt-3" href="{{ route('socialite.google') }}"><img class="oauth-logo" src="/images/google-icon.svg"><span class="minified-provider-name">Sign Up with Google</span></a> --}}
+  <a class="minified-provider mt-3" href="{{ route('socialite.google') }}"><img class="oauth-logo" src="/images/google-logo.png"><span class="minified-provider-name">Sign up with Google</span></a>
   <p class="mt-2">Already have an account? <a href="{{ route('login') }}">Login</a></p>
 </form>
 @endsection
