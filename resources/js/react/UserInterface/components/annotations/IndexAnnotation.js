@@ -277,11 +277,11 @@ class IndexAnnotations extends React.Component {
                                                             case "WordPress Updates": borderLeftColor = this.state.userAnnotationColors.wordpress_updates; break;
                                                             case "News Alert": borderLeftColor = this.state.userAnnotationColors.google_alerts; break;
                                                         }
-                                                        // switch (anno.added_by) {
-                                                        //     case "manual": borderLeftColor = this.state.userAnnotationColors.manual; break;
-                                                        //     case "csv-upload": borderLeftColor = this.state.userAnnotationColors.csv; break;
-                                                        //     case "api": borderLeftColor = this.state.userAnnotationColors.api; break;
-                                                        // }
+                                                        switch (anno.added_by) {
+                                                            case "manual": borderLeftColor = "#002e60"; break;
+                                                            case "csv-upload": borderLeftColor = this.state.userAnnotationColors.csv; break;
+                                                            case "api": borderLeftColor = this.state.userAnnotationColors.api; break;
+                                                        }
                                                         if (anno.category.indexOf("Holiday") !== -1) borderLeftColor = this.state.userAnnotationColors.holidays;
                                                         return (
                                                             <tr>
