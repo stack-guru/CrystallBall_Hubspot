@@ -86,6 +86,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('retail-marketing-dates', [App\Http\Controllers\RetailMarketingController::class, 'uiIndex']);
             Route::get('weather-alert/country', [App\Http\Controllers\WeatherAlertController::class, 'uiCountriesIndex']);
             Route::get('weather-alert/city', [App\Http\Controllers\WeatherAlertController::class, 'uiCitiesIndex']);
+
+            Route::post('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'store']);
+            Route::get('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'index']);
+
         });
 
         Route::group(['prefix' => 'settings'], function () {
@@ -108,6 +112,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('user', [App\Http\Controllers\UserController::class, 'uiIndex']);
 
             Route::post('support', [App\Http\Controllers\HomeController::class, 'storeSupport']);
+
         });
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);

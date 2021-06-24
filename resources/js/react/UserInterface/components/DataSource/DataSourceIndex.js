@@ -12,6 +12,7 @@ import DSGAUDatesSelect from '../../utils/DSGAUDatesSelect';
 import DSGoogleAlertsSelect from '../../utils/DSGoogleAlertsSelect';
 import DSWebMonitorsSelect from '../../utils/DSWebMonitorsSelect';
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
+import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
 import ErrorAlert from '../../utils/ErrorAlert';
 
 export default class DataSourceIndex extends React.Component {
@@ -20,6 +21,7 @@ export default class DataSourceIndex extends React.Component {
         this.state = {
             sectionName: null,
             userDataSources: {},
+            userAnnotationColors: {},
             userServices: this.props.user,
             isBusy: false,
             isLoading: false,
@@ -35,6 +37,9 @@ export default class DataSourceIndex extends React.Component {
 
         this.loadUserDataSources = this.loadUserDataSources.bind(this);
 
+        this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
+        this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
+
         this.sectionToggler = this.sectionToggler.bind(this);
 
         this.reloadWebMonitors = this.reloadWebMonitors.bind(this);
@@ -43,6 +48,7 @@ export default class DataSourceIndex extends React.Component {
     componentDidMount() {
         document.title = 'Automation';
         this.loadUserDataSources('');
+        this.loadUserAnnotationColors();
         this.reloadWebMonitors('');
     }
     loadUserDataSources(gaPropertyId) {
@@ -58,6 +64,22 @@ export default class DataSourceIndex extends React.Component {
         }
     }
 
+    loadUserAnnotationColors() {
+        if (!this.state.isLoading) {
+            this.setState({ isLoading: true });
+            HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
+                this.setState({ isLoading: false, userAnnotationColors: resp.data.user_annotation_color });
+            }, (err) => {
+                this.setState({ isLoading: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isLoading: false, errors: err });
+            })
+        }
+    }
+
+    updateUserAnnotationColors(userAnnotationColors) {
+        this.setState({ userAnnotationColors: userAnnotationColors });
+    }
 
     reloadWebMonitors(gaPropertyId) {
         HttpClient.get(`/data-source/web-monitor?ga_property_id=${gaPropertyId}`).then(resp => {
@@ -111,7 +133,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-8">
                                     <h2>
                                         <small>
-                                            Website Monitoring
+                                            Website Monitoring <UserAnnotationColorPicker name="web_monitors" value={this.state.userAnnotationColors.web_monitors} updateCallback={this.updateUserAnnotationColors}/>
                                             <img id="web-monitors-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('web-monitors') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
@@ -155,7 +177,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-8">
                                     <h2>
                                         <small>
-                                            News Alerts
+                                            News Alerts <UserAnnotationColorPicker name="google_alerts" value={this.state.userAnnotationColors.google_alerts} updateCallback={this.updateUserAnnotationColors}/>
                                             <img id="google-alert-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('google-alert') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
@@ -209,7 +231,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-8">
                                     <h2>
                                         <small>
-                                            Google Updates
+                                            Google Updates <UserAnnotationColorPicker name="google_algorithm_updates" value={this.state.userAnnotationColors.google_algorithm_updates} updateCallback={this.updateUserAnnotationColors}/>
                                             <img id="google-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('google-updates') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
@@ -250,7 +272,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-8">
                                     <h2>
                                         <small>
-                                            Retail Marketing Dates
+                                            Retail Marketing Dates <UserAnnotationColorPicker name="retail_marketings" value={this.state.userAnnotationColors.retail_marketings} updateCallback={this.updateUserAnnotationColors}/>
                                             <img id="retail-marketing-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('retail-marketing') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
@@ -293,7 +315,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="row ml-0 mr-0 w-100 ">
                                 <div className="col-8">
                                     <h2>
-                                        <small>Holidays
+                                        <small>Holidays <UserAnnotationColorPicker name="holidays" value={this.state.userAnnotationColors.holidays} updateCallback={this.updateUserAnnotationColors}/>
                                             <img id="holidays-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('holidays') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
@@ -344,7 +366,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-8">
                                     <h2>
                                         <small>
-                                            Weather Alerts
+                                            Weather Alerts <UserAnnotationColorPicker name="weather_alerts" value={this.state.userAnnotationColors.weather_alerts} updateCallback={this.updateUserAnnotationColors}/>
                                             <img id="weather-alert-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('weather-alert') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
@@ -410,7 +432,7 @@ export default class DataSourceIndex extends React.Component {
                                 <div className="col-8">
                                     <h2>
                                         <small>
-                                            Wordpress Updates
+                                            Wordpress Updates <UserAnnotationColorPicker name="wordpress_updates" value={this.state.userAnnotationColors.wordpress_updates} updateCallback={this.updateUserAnnotationColors}/>
                                             <img id="wordpress-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('wordpress-updates') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
