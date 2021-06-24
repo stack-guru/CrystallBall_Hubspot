@@ -277,7 +277,7 @@ class IndexAnnotations extends React.Component {
                                                             case "Retail Marketing Dates": borderLeftColor = this.state.userAnnotationColors.retail_marketings; break;
                                                             case "Weather Alert": borderLeftColor = this.state.userAnnotationColors.weather_alerts; break;
                                                             case "Website Monitoring": borderLeftColor = this.state.userAnnotationColors.web_monitors; break;
-                                                            case "Wordpress Updates": borderLeftColor = this.state.userAnnotationColors.wordpress_updates; break;
+                                                            case "WordPress Updates": borderLeftColor = this.state.userAnnotationColors.wordpress_updates; break;
                                                             case "News Alert": borderLeftColor = this.state.userAnnotationColors.google_alerts; break;
                                                         }
                                                         if (anno.category.indexOf("Holiday") !== -1) borderLeftColor = this.state.userAnnotationColors.holidays;
