@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
-import GoogleAccountSelect from "../../utils/GoogleAccountSelect";
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 import { timezoneToDateFormat } from '../../utils/TimezoneTodateFormat';
+import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
 
 class IndexAnnotations extends React.Component {
 
@@ -12,15 +12,14 @@ class IndexAnnotations extends React.Component {
         super();
         this.state = {
             annotations: [],
-            sortBy: '',
             accounts: [],
             annotationCategories: [],
+            userAnnotationColors: {},
+            sortBy: '',
             googleAccount: '',
             googleAnalyticsProperty: '',
             category: '',
-
             searchText: '',
-
             error: '',
             isBusy: false
         }
@@ -33,11 +32,15 @@ class IndexAnnotations extends React.Component {
         this.handleChange = this.handleChange.bind(this)
         this.checkSearchText = this.checkSearchText.bind(this)
 
+        this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
+
+
     }
     componentDidMount() {
         document.title = 'Annotation';
 
         this.setState({ isBusy: true });
+        this.loadUserAnnotationColors();
         HttpClient.get(`/annotation`)
             .then(response => {
                 this.setState({ annotations: response.data.annotations });
@@ -48,7 +51,7 @@ class IndexAnnotations extends React.Component {
 
                 this.setState({ errors: err });
             });
-        /////
+        //////////////////////////////////////////////////////////////////////////////////////
         HttpClient.get(`/annotation-categories`)
             .then(response => {
                 this.setState({ isBusy: false, annotationCategories: response.data.categories });
@@ -60,6 +63,19 @@ class IndexAnnotations extends React.Component {
                 this.setState({ isBusy: false, errors: err });
             });
 
+    }
+
+    loadUserAnnotationColors() {
+        if (!this.state.isLoading) {
+            this.setState({ isLoading: true });
+            HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
+                this.setState({ isLoading: false, userAnnotationColors: resp.data.user_annotation_color });
+            }, (err) => {
+                this.setState({ isLoading: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isLoading: false, errors: err });
+            })
+        }
     }
 
     deleteAnnotation(id) {
@@ -252,50 +268,60 @@ class IndexAnnotations extends React.Component {
                                                 {
 
                                                     this.state.annotations.filter(this.checkSearchText).map(anno => {
-                                                        return <tr className={
-                                                            anno.category == "Holidays" || anno.category == "holidays" ? "text-primary" :
-                                                                anno.category == "google updates" || anno.category == "Google Updates" ? "text-success" :
-                                                                    anno.category == "sales event" || anno.category == "Sales Event" ? "text-alert" : "text-primary"
-
-                                                        }>
-                                                            <td>{anno.category}</td>
-                                                            <td>{anno.event_name}</td>
-                                                            <td>
-                                                                <div className="desc-wrap">
-                                                                    <div className="desc-td">
-                                                                        <p>{anno.description}</p>
+                                                        let borderLeftColor = "rgba(0,0,0,.0625)";
+                                                        switch (anno.category) {
+                                                            // case "": borderLeftColor = this.state.userAnnotationColors.manual; break;
+                                                            // case "": borderLeftColor = this.state.userAnnotationColors.csv; break;
+                                                            case "API": borderLeftColor = this.state.userAnnotationColors.api; break;
+                                                            case "Google Updates": borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates; break;
+                                                            case "Retail Marketing Dates": borderLeftColor = this.state.userAnnotationColors.retail_marketings; break;
+                                                            case "Weather Alert": borderLeftColor = this.state.userAnnotationColors.weather_alerts; break;
+                                                            case "Website Monitoring": borderLeftColor = this.state.userAnnotationColors.web_monitors; break;
+                                                            case "Wordpress Updates": borderLeftColor = this.state.userAnnotationColors.wordpress_updates; break;
+                                                            case "News Alert": borderLeftColor = this.state.userAnnotationColors.google_alerts; break;
+                                                        }
+                                                        if (anno.category.indexOf("Holiday") !== -1) borderLeftColor = this.state.userAnnotationColors.holidays;
+                                                        return (
+                                                            <tr>
+                                                                <td style={{ borderLeft: `${borderLeftColor} solid 20px` }}>{anno.category}</td>
+                                                                <td>{anno.event_name}</td>
+                                                                <td>
+                                                                    <div className="desc-wrap">
+                                                                        <div className="desc-td">
+                                                                            <p>{anno.description}</p>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                {anno.google_analytics_property_name ? anno.google_analytics_property_name : 'All Properties'}
-                                                            </td>
-                                                            <td className="text-center">
-                                                                {anno.id ?
-                                                                    <button className={"btn btn-sm" + (anno.is_enabled ? " btn-success" : " btn-danger") + (this.state.isBusy ? " disabled" : "")} onClick={() => this.toggleStatus(anno.id)}>
-                                                                        {anno.is_enabled ? "On" : "Off"}
-                                                                    </button>
-                                                                    : null}
-                                                            </td>
-                                                            <td>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</td>
-                                                            <td>{anno.event_name == 'Sample Annotation' ? 'GAannotations' : anno.user_name}</td>
-                                                            <td className="text-center">
-                                                                {anno.id ?
-                                                                    <React.Fragment>
-                                                                        <button type="button" onClick={() => {
-                                                                            this.deleteAnnotation(anno.id)
-
-                                                                        }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white m-1">
-                                                                            <i className="fa fa-trash"></i>
+                                                                </td>
+                                                                <td>
+                                                                    {anno.google_analytics_property_name ? anno.google_analytics_property_name : 'All Properties'}
+                                                                </td>
+                                                                <td className="text-center">
+                                                                    {anno.id ?
+                                                                        <button className={"btn btn-sm" + (anno.is_enabled ? " btn-success" : " btn-danger") + (this.state.isBusy ? " disabled" : "")} onClick={() => this.toggleStatus(anno.id)}>
+                                                                            {anno.is_enabled ? "On" : "Off"}
                                                                         </button>
-                                                                        <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-btn-primary text-white m-1" style={{ width: '28.3667px' }}>
-                                                                            <i className="fa fa-edit"></i>
-                                                                        </Link>
+                                                                        : null}
+                                                                </td>
+                                                                <td>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</td>
+                                                                <td>{anno.event_name == 'Sample Annotation' ? 'GAannotations' : anno.user_name}</td>
+                                                                <td className="text-center">
+                                                                    {anno.id ?
+                                                                        <React.Fragment>
+                                                                            <button type="button" onClick={() => {
+                                                                                this.deleteAnnotation(anno.id)
 
-                                                                    </React.Fragment>
-                                                                    : null}
-                                                            </td>
-                                                        </tr>
+                                                                            }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white m-1">
+                                                                                <i className="fa fa-trash"></i>
+                                                                            </button>
+                                                                            <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-btn-primary text-white m-1" style={{ width: '28.3667px' }}>
+                                                                                <i className="fa fa-edit"></i>
+                                                                            </Link>
+
+                                                                        </React.Fragment>
+                                                                        : null}
+                                                                </td>
+                                                            </tr>
+                                                        )
                                                     })
                                                 }
 
