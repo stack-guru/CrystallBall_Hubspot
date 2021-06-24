@@ -455,39 +455,6 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
                         </div>
-
-                        {/* <div className="container mt-3 ds-sections border-bottom">
-                            <div className="row ml-0 mr-0 w-100">
-                                <div className="col-9">
-                                    <h4 className="gaa-text-primary">Google Ads History</h4>
-                                </div>
-                                <div className="col-3 d-flex flex-column justify-content-start align-items-center">
-                                    {this.state.userServices.is_ds_google_ads_history_enabled ? "Active" : "Deactive"}
-                                    <label className="trigger switch">
-                                        <input
-                                            type="checkbox"
-                                            name="is_ds_google_ads_history_enabled"
-                                            onChange={() => { swal("Coming soon!", '', 'info'); }}
-                                            checked={this.state.userServices.is_ds_google_ads_history_enabled}
-                                        />
-                                        <span className="slider round" />
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row ml-0 mr-0 w-100">
-                                <div className="col-9">
-
-                                </div>
-                                <div className="col-3">
-                                    <p
-                                        className="ds-update-text m-0 text-center"
-                                        onClick={() => { this.setState({ sectionName: this.state.sectionName == "google_ads_history" ? null : "google_ads_history" }) }}
-                                    >
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div> */}
                     </div>
                     <div className="col-md-4 col-sm-12 border-left" id="data-source-detail-container">
                         {
@@ -559,7 +526,7 @@ export default class DataSourceIndex extends React.Component {
             </div>
         );
     }
-    
+
     serviceStatusHandler(e) {
         e.persist();
         if (e.target.name == 'is_ds_holidays_enabled' && e.target.checked) {
