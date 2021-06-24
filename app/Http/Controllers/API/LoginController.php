@@ -88,7 +88,7 @@ class LoginController extends Controller
             $response = ['token' => $token];
             return response($response, 200);
         } else {
-            $response = ["message" => 'User does not exist'];
+            $response = ["message" => "The Email used in this browser isn't registered yet. Log in to Chrome with the same email you registered to GAannotations and clicked Sign In again."];
             return response($response, 422);
         }
     }
