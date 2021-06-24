@@ -270,9 +270,6 @@ class IndexAnnotations extends React.Component {
                                                     this.state.annotations.filter(this.checkSearchText).map(anno => {
                                                         let borderLeftColor = "rgba(0,0,0,.0625)";
                                                         switch (anno.category) {
-                                                            // case "": borderLeftColor = this.state.userAnnotationColors.manual; break;
-                                                            // case "": borderLeftColor = this.state.userAnnotationColors.csv; break;
-                                                            case "API": borderLeftColor = this.state.userAnnotationColors.api; break;
                                                             case "Google Updates": borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates; break;
                                                             case "Retail Marketing Dates": borderLeftColor = this.state.userAnnotationColors.retail_marketings; break;
                                                             case "Weather Alert": borderLeftColor = this.state.userAnnotationColors.weather_alerts; break;
@@ -280,6 +277,11 @@ class IndexAnnotations extends React.Component {
                                                             case "WordPress Updates": borderLeftColor = this.state.userAnnotationColors.wordpress_updates; break;
                                                             case "News Alert": borderLeftColor = this.state.userAnnotationColors.google_alerts; break;
                                                         }
+                                                        // switch (anno.added_by) {
+                                                        //     case "manual": borderLeftColor = this.state.userAnnotationColors.manual; break;
+                                                        //     case "csv-upload": borderLeftColor = this.state.userAnnotationColors.csv; break;
+                                                        //     case "api": borderLeftColor = this.state.userAnnotationColors.api; break;
+                                                        // }
                                                         if (anno.category.indexOf("Holiday") !== -1) borderLeftColor = this.state.userAnnotationColors.holidays;
                                                         return (
                                                             <tr>
