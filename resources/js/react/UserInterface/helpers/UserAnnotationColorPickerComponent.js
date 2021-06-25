@@ -19,6 +19,7 @@ export default class UserAnnotationColorPicker extends React.Component {
     handleChange = (color) => {
         HttpClient.post(`/data-source/user-annotation-color`, { [this.props.name]: color.hex }).then(resp => {
             (this.props.updateCallback)(resp.data.user_annotation_color);
+            this.handleClose();
         })
     };
 
