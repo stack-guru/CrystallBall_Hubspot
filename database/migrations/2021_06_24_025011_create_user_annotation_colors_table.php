@@ -16,16 +16,16 @@ class CreateUserAnnotationColorsTable extends Migration
         Schema::create('user_annotation_colors', function (Blueprint $table) {
             $table->id();
 
-            $table->string('manual', 10)->nullable()->default('#d00000');
-            $table->string('csv', 10)->nullable()->default('#d00000');
-            $table->string('api', 10)->nullable()->default('#d00000');
-            $table->string('holidays', 10)->nullable()->default('#d00000');
-            $table->string('google_algorithm_updates', 10)->nullable()->default('#d00000');
-            $table->string('retail_marketings', 10)->nullable()->default('#d00000');
-            $table->string('weather_alerts', 10)->nullable()->default('#d00000');
-            $table->string('web_monitors', 10)->nullable()->default('#d00000');
-            $table->string('wordpress_updates', 10)->nullable()->default('#d00000');
-            $table->string('google_alerts', 10)->nullable()->default('#d00000');
+            $table->string('manual', 10)->nullable()->default('#227c9d');
+            $table->string('csv', 10)->nullable()->default('#227c9d');
+            $table->string('api', 10)->nullable()->default('#227c9d');
+            $table->string('holidays', 10)->nullable()->default('#227c9d');
+            $table->string('google_algorithm_updates', 10)->nullable()->default('#227c9d');
+            $table->string('retail_marketings', 10)->nullable()->default('#227c9d');
+            $table->string('weather_alerts', 10)->nullable()->default('#227c9d');
+            $table->string('web_monitors', 10)->nullable()->default('#227c9d');
+            $table->string('wordpress_updates', 10)->nullable()->default('#227c9d');
+            $table->string('google_alerts', 10)->nullable()->default('#227c9d');
 
             $table->foreignId("user_id")->unique()->required()->constrained()->onDelete('CASCADE');
 
