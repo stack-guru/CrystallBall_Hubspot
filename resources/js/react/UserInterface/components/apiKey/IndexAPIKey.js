@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
 import ErrorAlert from '../../utils/ErrorAlert';
+import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
 
 class IndexAPIKey extends React.Component {
 
@@ -12,12 +13,16 @@ class IndexAPIKey extends React.Component {
             error: '',
             apiKeys: [],
             token_name: '',
-            redirectTo: null
+            redirectTo: null,
+            userAnnotationColors: {},
         }
         this.generateAPIKey = this.generateAPIKey.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
         this.copyAccessToken = this.copyAccessToken.bind(this)
+
+        this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
+        this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
     }
 
     componentDidMount() {
@@ -28,15 +33,17 @@ class IndexAPIKey extends React.Component {
             .then(response => {
                 this.setState({ isBusy: false, apiKeys: response.data });
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
+
+        this.loadUserAnnotationColors();
     }
 
-    copyAccessToken(){
+    copyAccessToken() {
         let copyText = document.getElementById("input-access-token");
         copyText.select();
         copyText.setSelectionRange(0, 99999);
@@ -58,10 +65,10 @@ class IndexAPIKey extends React.Component {
                         tokens.push(response.data.token);
                         this.setState({ isBusy: false, apiKeys: tokens, accessToken: response.data.accessToken })
                     }, (err) => {
-                        
+
                         this.setState({ isBusy: false, errors: (err.response).data });
                     }).catch(err => {
-                        
+
                         this.setState({ isBusy: false, errors: err });
                     });
             }
@@ -72,7 +79,7 @@ class IndexAPIKey extends React.Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    handleDelete(e){
+    handleDelete(e) {
         let tokenId = e.target.getAttribute('data-token-id');
         if (!this.state.isBusy && tokenId) {
             this.setState({ isBusy: true });
@@ -83,13 +90,30 @@ class IndexAPIKey extends React.Component {
                     tokens = tokens.filter(t => t.id !== tokenId);
                     this.setState({ isBusy: false, apiKeys: tokens })
                 }, (err) => {
-                    
+
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                    
+
                     this.setState({ isBusy: false, errors: err });
                 });
         }
+    }
+
+    loadUserAnnotationColors() {
+        if (!this.state.isLoading) {
+            this.setState({ isLoading: true });
+            HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
+                this.setState({ isLoading: false, userAnnotationColors: resp.data.user_annotation_color });
+            }, (err) => {
+                this.setState({ isLoading: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isLoading: false, errors: err });
+            })
+        }
+    }
+
+    updateUserAnnotationColors(userAnnotationColors) {
+        this.setState({ userAnnotationColors: userAnnotationColors });
     }
 
     render() {
@@ -100,7 +124,7 @@ class IndexAPIKey extends React.Component {
                     <div className="container p-5">
                         <div className="row mb-5">
                             <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">API Keys</h2>
+                                <h2 className="heading-section gaa-title">API Keys <UserAnnotationColorPicker name="api" value={this.state.userAnnotationColors.api} updateCallback={this.updateUserAnnotationColors} /></h2>
                                 <sub className="float-right"><a href="/documentation" target="_blank">Check documentation</a></sub>
                             </div>
                             <div className="col-md-12">

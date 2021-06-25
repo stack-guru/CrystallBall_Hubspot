@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
+import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
 
 export default class UploadAnnotation extends React.Component {
 
@@ -12,9 +13,14 @@ export default class UploadAnnotation extends React.Component {
         this.state = {
             google_analytics_property_id: [""],
             date_format: '',
+            userAnnotationColors: {},
+
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.changeHandler = this.changeHandler.bind(this)
+
+        this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
+        this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
     }
 
     handleSubmit(e) {
@@ -24,9 +30,9 @@ export default class UploadAnnotation extends React.Component {
             this.setState({ isBusy: true });
             const formData = new FormData();
             formData.append('csv', document.getElementById('csv').files[0]);
-            
+
             this.state.google_analytics_property_id.map(gAA => { formData.append('google_analytics_property_id[]', gAA) })
-            
+
             formData.append('date_format', this.state.date_format);
             HttpClient({
                 url: `/annotation/upload`, baseURL: "/", method: 'post', headers: { 'Content-Type': 'multipart/form-data' },
@@ -35,10 +41,10 @@ export default class UploadAnnotation extends React.Component {
                 toast.success("CSV file uploaded.");
                 this.setState({ isBusy: false, errors: response.data.message });
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
         }
@@ -46,9 +52,28 @@ export default class UploadAnnotation extends React.Component {
 
     componentDidMount() {
         document.title = 'Upload CSV';
+
+        this.loadUserAnnotationColors();
     }
     changeHandler(e) {
         this.setState({ [e.target.name]: e.target.value })
+    }
+
+    loadUserAnnotationColors() {
+        if (!this.state.isLoading) {
+            this.setState({ isLoading: true });
+            HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
+                this.setState({ isLoading: false, userAnnotationColors: resp.data.user_annotation_color });
+            }, (err) => {
+                this.setState({ isLoading: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isLoading: false, errors: err });
+            })
+        }
+    }
+
+    updateUserAnnotationColors(userAnnotationColors) {
+        this.setState({ userAnnotationColors: userAnnotationColors });
     }
 
     render() {
@@ -58,7 +83,7 @@ export default class UploadAnnotation extends React.Component {
                     <div className="container p-5">
                         <div className="mb-5">
                             <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">Upload Annotations <br />
+                                <h2 className="heading-section gaa-title">Upload Annotations <UserAnnotationColorPicker name="csv" value={this.state.userAnnotationColors.csv} updateCallback={this.updateUserAnnotationColors} /><br />
                                     <small>Upload all your annotations using CSV</small>
                                 </h2>
                             </div>
@@ -90,7 +115,7 @@ export default class UploadAnnotation extends React.Component {
                                             <select name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
                                                 <option value="">select your date format</option>
                                                 <option value="j/n/Y">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
-                                                
+
                                                 <option value="n-j-Y">{moment("2021-01-15").format('M-D-YYYY')}</option>
                                                 <option value="n-j-y">{moment("2021-01-15").format('M-D-YY')}</option>
                                                 <option value="m-d-y">{moment("2021-01-15").format('MM-DD-YY')}</option>
