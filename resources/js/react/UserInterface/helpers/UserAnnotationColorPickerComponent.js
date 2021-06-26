@@ -4,19 +4,27 @@ import { GithubPicker } from 'react-color';
 
 export default class UserAnnotationColorPicker extends React.Component {
 
-    state = {
-        displayColorPicker: false,
-    };
+    constructor(props) {
+        super(props)
 
-    handleClick = () => {
+        this.state = {
+            displayColorPicker: false,
+        };
+
+        this.handleClick = this.handleClick.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleClick() {
         this.setState({ displayColorPicker: !this.state.displayColorPicker })
     };
 
-    handleClose = () => {
+    handleClose() {
         this.setState({ displayColorPicker: false })
     };
 
-    handleChange = (color) => {
+    handleChange(color) {
         HttpClient.post(`/data-source/user-annotation-color`, { [this.props.name]: color.hex }).then(resp => {
             (this.props.updateCallback)(resp.data.user_annotation_color);
             this.handleClose();
@@ -76,10 +84,10 @@ export default class UserAnnotationColorPicker extends React.Component {
             </div >
 
         )
-        return <input className="user-annotation-color-picker" type="color" name={props.name} value={props.value} onInput={(e) => {
-            HttpClient.post(`/data-source/user-annotation-color`, { [props.name]: e.target.value }).then(resp => {
-                (props.updateCallback)(resp.data.user_annotation_color);
-            })
-        }} />
+        // return <input className="user-annotation-color-picker" type="color" name={props.name} value={props.value} onInput={(e) => {
+        //     HttpClient.post(`/data-source/user-annotation-color`, { [props.name]: e.target.value }).then(resp => {
+        //         (props.updateCallback)(resp.data.user_annotation_color);
+        //     })
+        // }} />
     }
 }
