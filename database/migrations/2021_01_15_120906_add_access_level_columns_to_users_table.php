@@ -27,7 +27,7 @@ class AddAccessLevelColumnsToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeignId('user_id');
+            $table->dropForeign(['user_id']);
             $table->dropColumn('user_level');
         });
     }
