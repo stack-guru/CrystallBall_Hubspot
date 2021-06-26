@@ -17,6 +17,7 @@ class PricePlansSeeder extends Seeder
         DB::table('price_plans')->insert(
             [
                 'name' => 'Free',
+                'short_description' => ".",
                 'annotations_count' => "0",
                 'price' => "0",
                 'has_manual_add' => true,
@@ -30,6 +31,7 @@ class PricePlansSeeder extends Seeder
         DB::table('price_plans')->insert(
             [
                 'name' => 'Basic',
+                'short_description' => ".",
                 'annotations_count' => "0",
                 'price' => "19.00",
                 'has_manual_add' => true,
@@ -43,6 +45,7 @@ class PricePlansSeeder extends Seeder
         DB::table('price_plans')->insert(
             [
                 'name' => 'Pro',
+                'short_description' => ".",
                 'annotations_count' => "0",
                 'price' => "99.00",
                 'has_manual_add' => true,
