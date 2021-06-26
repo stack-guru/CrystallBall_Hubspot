@@ -56,5 +56,20 @@ class PricePlansSeeder extends Seeder
                 'has_data_sources' => 1,
             ]
         );
+
+        DB::table('price_plans')->insert(
+            [
+                'name' => 'Trial',
+                'short_description' => ".",
+                'annotations_count' => "0",
+                'price' => "0",
+                'has_manual_add' => true,
+                'has_csv_upload' => true,
+                'has_api' => true,
+                'is_enabled' => false,
+                'has_integrations' => 1,
+                'has_data_sources' => 1,
+            ]
+        );
     }
 }
