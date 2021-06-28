@@ -156,4 +156,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(WebMonitor::class);
     }
+
+    /**
+     * Get the userAnnotationColor associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function userAnnotationColor(): HasOne
+    {
+        return $this->hasOne(UserAnnotationColor::class);
+    }
 }

@@ -46,7 +46,7 @@ class AnnotationController extends Controller
         if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
             $annotationsQuery .= " INNER JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
         }
-        
+
         $annotationsQuery .= " WHERE (";
         if ($request->query('user_id') && $request->query('user_id') !== '*' && in_array($request->query('user_id'), $userIdsArray)) {
             $annotationsQuery .= " `annotations`.`user_id` = " . $request->query('user_id');
@@ -225,7 +225,10 @@ class AnnotationController extends Controller
             }
         }
 
-        return ['annotations' => $fAnnotations];
+        return [
+            'annotations' => $fAnnotations,
+            'user_annotation_color' => $user->userAnnotationColor,
+        ];
 
     }
 
@@ -282,7 +285,7 @@ class AnnotationController extends Controller
         if ($user->is_ds_web_monitors_enabled && $request->query('show_website_monitoring') == 'false') {
             $annotationsQuery .= " AND annotations.category <> 'Website Monitoring'";
         }
-        
+
         $addedByArray = [];
         if ($request->query('show_manual_annotations') && $request->query('show_manual_annotations') == 'true') {
             array_push($addedByArray, 'manual');
@@ -341,7 +344,11 @@ class AnnotationController extends Controller
 
         $annotations = DB::select($annotationsQuery);
 
-        return ['annotations' => $annotations];
+        return [
+            'annotations' => $annotations,
+            'user_annotation_color' => $user->userAnnotationColor,
+
+        ];
 
     }
 
