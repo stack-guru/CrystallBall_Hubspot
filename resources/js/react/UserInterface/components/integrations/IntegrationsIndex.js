@@ -35,8 +35,8 @@ export default class integrationsIndex extends React.Component {
                                             data-target="#google-modal"
                                         >
                                             <i className="fa fa-play pr-2" />
-                                        See how this works
-                                    </div>
+                                            See how this works
+                                        </div>
                                         <VideoModalBox id="google-modal" src="https://www.youtube.com/embed/bRjoZtmkUxU" />
                                     </div>
                                 </div>
@@ -47,7 +47,7 @@ export default class integrationsIndex extends React.Component {
                                         className="btn btn-primary"
                                     >
                                         See instructions
-                                </a>
+                                    </a>
                                 </div>
                             </div>
                             <div className="d-flex flex-row integration-pack justify-content-between">
@@ -67,8 +67,8 @@ export default class integrationsIndex extends React.Component {
                                             data-target="#mail-chimp-modal"
                                         >
                                             <i className="fa fa-play pr-2" />
-                                        See how this works
-                                    </div>
+                                            See how this works
+                                        </div>
                                         <VideoModalBox id="mail-chimp-modal" src="https://www.youtube.com/embed/IRUUQ6jVvks" />
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@ export default class integrationsIndex extends React.Component {
                                         className="btn btn-primary"
                                     >
                                         See instructions
-                                </a>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +130,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    Add an annotation to GA automatically when a New Product added to your Shopify store.
+                                        Add an annotation to GA automatically when a New Product added to your Shopify store.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
@@ -270,7 +270,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    Add an annotation to GA automatically when a New Issue Type in Jira.
+                                        Add an annotation to GA automatically when a New Issue Type in Jira.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
@@ -304,7 +304,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    Add an annotation to GA automatically when a New Card in Trello.
+                                        Add an annotation to GA automatically when a New Card in Trello.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
@@ -338,7 +338,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    Add an annotation to GA automatically when a New Commit on Github.
+                                        Add an annotation to GA automatically when a New Commit on Github.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
@@ -373,7 +373,7 @@ export default class integrationsIndex extends React.Component {
                                 </figure>
                                 <div className="int-description w-100 ml-2">
                                     <p>
-                                    Add an annotation to GA automatically when a New Commit on Bitbucket.
+                                        Add an annotation to GA automatically when a New Commit on Bitbucket.
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"

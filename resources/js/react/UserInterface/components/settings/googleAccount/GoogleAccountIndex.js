@@ -2,9 +2,10 @@ import React from 'react';
 import { toast } from 'react-toastify'
 import { Redirect } from "react-router-dom";
 
-import HttpClient from './../../../utils/HttpClient';
+import HttpClient from '../../../utils/HttpClient';
 import ErrorAlert from '../../../utils/ErrorAlert'
 import AdwordsClientCustomerIdSaverModal from '../../../helpers/AdwordsClientCustomerIdSaverModalComponent';
+import VideoModalBox from '../../../utils/VideoModalBox';
 
 export default class GoogleAccountIndex extends React.Component {
 
@@ -186,6 +187,13 @@ export default class GoogleAccountIndex extends React.Component {
                         <div className="col-12">
                             <h2 className="heading-section gaa-title">Connect Multiple GA Accounts</h2>
                         </div>
+                    </div>
+
+                    <div className="row ml-0 mr-0">
+                        <div className="col-md-12">
+                            <sub className="float-right"><a href="#" target="_blank" data-toggle="modal" data-target="#properties-video-modal">How to use the properties</a></sub>
+                        </div>
+                        <VideoModalBox id="properties-video-modal" src="https://www.youtube.com/embed/4tRGhuK7ZWQ" />
                     </div>
                     <div className="row ml-0 mr-0">
                         <div className="col-12">
