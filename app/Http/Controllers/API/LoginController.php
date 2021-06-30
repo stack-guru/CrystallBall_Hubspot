@@ -4,12 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -33,7 +31,7 @@ class LoginController extends Controller
 
                 $user->last_logged_into_extension_at = Carbon::now();
                 $user->save();
-                
+
                 $response = ['token' => $token];
                 return response($response, 200);
             } else {
@@ -64,8 +62,7 @@ class LoginController extends Controller
         }
 
         $headers = array('Content-Type: Application/json');
-        $endPoint = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=".$request->google_token;
-
+        $endPoint = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" . $request->google_token;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $endPoint);
@@ -84,11 +81,11 @@ class LoginController extends Controller
 
             $user->last_logged_into_extension_at = Carbon::now();
             $user->save();
-            
+
             $response = ['token' => $token];
             return response($response, 200);
         } else {
-            $response = ["message" => "The Email used in this browser isn't registered yet. Log in to Chrome with the same email you registered to GAannotations and clicked Sign In again."];
+            $response = ["message" => "The Email used in this browser isn't registered yet. Log in to Chrome with the same Email you registered to GAannotations and try again."];
             return response($response, 422);
         }
     }

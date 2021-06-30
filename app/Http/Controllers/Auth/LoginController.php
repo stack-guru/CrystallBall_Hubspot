@@ -51,9 +51,9 @@ class LoginController extends Controller
     {
         $user->last_login_at = new \DateTime;
         $user->save();
-        $today=Carbon::now();
-        $todayDate=$today->toDateString();
-        if($user->price_plan_expiry_date==$todayDate){
+        $today = Carbon::now();
+        $todayDate = $today->toDateString();
+        if ($user->price_plan_expiry_date == $todayDate) {
             return redirect()->route('settings.price-plans');
         }
     }
