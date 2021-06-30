@@ -3,20 +3,21 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\CookieCoupon;
 use App\Models\PricePlan;
 use App\Models\User;
+use App\Models\UserDataSource;
 use App\Providers\RouteServiceProvider;
 use App\Rules\HasLettersNumbers;
 use App\Rules\HasSymbol;
+use App\Services\SendGridService;
 use Auth;
 use Cookie;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Http\Request;
-use App\Services\SendGridService;
-use App\Models\CookieCoupon;
 
 class RegisterController extends Controller
 {
@@ -77,15 +78,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if(Cookie::get('coupon_code')){
+        if (Cookie::get('coupon_code')) {
             $cookieCoupon = CookieCoupon::where('code', Cookie::get('coupon_code'))->first();
-            if($cookieCoupon){
+            if ($cookieCoupon) {
                 Cookie::queue(Cookie::forget('coupon_code'));
                 $planExpiryDate = new \DateTime("+" . $cookieCoupon->plan_extension_days . " days");
-            }else{
+            } else {
                 $planExpiryDate = new \DateTime("+14 days");
             }
-        }else{
+        } else {
             $planExpiryDate = new \DateTime("+14 days");
         }
         $user = User::create([
@@ -96,6 +97,15 @@ class RegisterController extends Controller
             'price_plan_expiry_date' => $planExpiryDate,
             'is_billing_enabled' => false,
         ]);
+
+        $userDataSource = new UserDataSource;
+        $userDataSource->user_id = $user->id;
+        $userDataSource->ds_code = 'wordpress_updates';
+        $userDataSource->ds_name = 'WordpressUpdate';
+        $userDataSource->country_name = null;
+        $userDataSource->retail_marketing_id = null;
+        $userDataSource->value = 'last year';
+        $userDataSource->save();
 
         $sGS = new SendGridService;
         $sGS->addUserToMarketingList($user, "1 GAa New registrations");
@@ -183,9 +193,9 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm(Request $request)
     {
-        if($request->query('coupon_code')){
+        if ($request->query('coupon_code')) {
             $cookieCoupon = CookieCoupon::where('code', $request->query('coupon_code'))->first();
-            if($cookieCoupon){
+            if ($cookieCoupon) {
                 Cookie::queue('coupon_code', $request->query('coupon_code'));
             }
         }
