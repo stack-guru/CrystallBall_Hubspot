@@ -284,13 +284,16 @@ class IndexAnnotations extends React.Component {
                                                         }
                                                         if (anno.category.indexOf("Holiday") !== -1) borderLeftColor = this.state.userAnnotationColors.holidays;
                                                         return (
-                                                            <tr key={ anno.id }>
+                                                            <tr key={anno.id}>
                                                                 <td style={{ borderLeft: `${borderLeftColor} solid 20px` }}>{anno.category}</td>
                                                                 <td>{anno.event_name}</td>
                                                                 <td>
                                                                     <div className="desc-wrap">
                                                                         <div className="desc-td">
-                                                                            <p>{anno.description}</p>
+                                                                            <p>
+                                                                                {anno.description}
+                                                                                {anno.url ? <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a> : null}
+                                                                            </p>
                                                                         </div>
                                                                     </div>
                                                                 </td>
