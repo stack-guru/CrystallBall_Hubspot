@@ -14,6 +14,7 @@ import DSWebMonitorsSelect from '../../utils/DSWebMonitorsSelect';
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
 import ErrorAlert from '../../utils/ErrorAlert';
+import DataSourceInterfaceTour from '../../helpers/DataSourceInterfaceTour';
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -95,7 +96,8 @@ export default class DataSourceIndex extends React.Component {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
         return (
-            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" style={{ height: '75vh' }}>
+            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" style={{ height: '75vh' }}  >
+                <DataSourceInterfaceTour isOpen={this.props.user.data_source_tour_showed_at == null} toggleShowTour={this.props.reloadUser} userId={this.props.user.id} />
                 <LoaderAnimation show={this.state.isLoading} />
                 <div className="row ml-0 mr-0">
                     <div className="col-4">
@@ -127,13 +129,13 @@ export default class DataSourceIndex extends React.Component {
                     <div className="col-md-8 col-sm-12" id="data-source-page-container" >
 
                         <hr />
-                        <div className="container ds-sections border-bottom">
+                        <div className="container ds-sections border-bottom" id="web-monitoring-data-source-section">
 
                             <div className="row ml-0 mr-0 w-100 ">
                                 <div className="col-8">
                                     <h2>
                                         <small>
-                                            Website Monitoring <UserAnnotationColorPicker name="web_monitors" value={this.state.userAnnotationColors.web_monitors} updateCallback={this.updateUserAnnotationColors}/>
+                                            Website Monitoring <UserAnnotationColorPicker name="web_monitors" value={this.state.userAnnotationColors.web_monitors} updateCallback={this.updateUserAnnotationColors} />
                                             <img id="web-monitors-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('web-monitors') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
@@ -172,12 +174,12 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                         </div>
                         {/* /////////////////////////////////////////////////////////////////////////////////////////////// */}
-                        <div className="container mt-3 ds-sections border-bottom">
+                        <div className="container mt-3 ds-sections border-bottom" id="news-alerts-data-source-section">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-8">
                                     <h2>
                                         <small>
-                                            News Alerts <UserAnnotationColorPicker name="google_alerts" value={this.state.userAnnotationColors.google_alerts} updateCallback={this.updateUserAnnotationColors}/>
+                                            News Alerts <UserAnnotationColorPicker name="google_alerts" value={this.state.userAnnotationColors.google_alerts} updateCallback={this.updateUserAnnotationColors} />
                                             <img id="google-alert-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('google-alert') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
@@ -225,13 +227,13 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                         </div>
                         {/* /////////////////////////////////////////////////////////////////////////////////////////////// */}
-                        <div className="container mt-3 ds-sections border-bottom">
+                        <div className="container mt-3 ds-sections border-bottom" id="google-updates-data-source-section">
                             <div className="ml-0 mr-0 row w-100">
 
                                 <div className="col-8">
                                     <h2>
                                         <small>
-                                            Google Updates <UserAnnotationColorPicker name="google_algorithm_updates" value={this.state.userAnnotationColors.google_algorithm_updates} updateCallback={this.updateUserAnnotationColors}/>
+                                            Google Updates <UserAnnotationColorPicker name="google_algorithm_updates" value={this.state.userAnnotationColors.google_algorithm_updates} updateCallback={this.updateUserAnnotationColors} />
                                             <img id="google-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('google-updates') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
@@ -267,12 +269,12 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                         </div>
                         {/* /////////////////////////////////////////////////////////////////////////////////////////////// */}
-                        <div className="container mt-3 ds-sections border-bottom">
+                        <div className="container mt-3 ds-sections border-bottom" id="retail-marketing-dates-data-source-section">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-8">
                                     <h2>
                                         <small>
-                                            Retail Marketing Dates <UserAnnotationColorPicker name="retail_marketings" value={this.state.userAnnotationColors.retail_marketings} updateCallback={this.updateUserAnnotationColors}/>
+                                            Retail Marketing Dates <UserAnnotationColorPicker name="retail_marketings" value={this.state.userAnnotationColors.retail_marketings} updateCallback={this.updateUserAnnotationColors} />
                                             <img id="retail-marketing-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('retail-marketing') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
@@ -310,12 +312,12 @@ export default class DataSourceIndex extends React.Component {
 
                         </div>
                         {/* /////////////////////////////////////////////////////////////////////////////////////////////// */}
-                        <div className="container mt-3 ds-sections border-bottom">
+                        <div className="container mt-3 ds-sections border-bottom" id="holidays-data-source-section">
 
                             <div className="row ml-0 mr-0 w-100 ">
                                 <div className="col-8">
                                     <h2>
-                                        <small>Holidays <UserAnnotationColorPicker name="holidays" value={this.state.userAnnotationColors.holidays} updateCallback={this.updateUserAnnotationColors}/>
+                                        <small>Holidays <UserAnnotationColorPicker name="holidays" value={this.state.userAnnotationColors.holidays} updateCallback={this.updateUserAnnotationColors} />
                                             <img id="holidays-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('holidays') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
@@ -361,12 +363,12 @@ export default class DataSourceIndex extends React.Component {
                             </div>
                         </div>
                         {/* /////////////////////////////////////////////////////////////////////////////////////////////// */}
-                        <div className="container mt-3 ds-sections border-bottom">
+                        <div className="container mt-3 ds-sections border-bottom" id="weather-alerts-data-source-section">
                             <div className="row ml-0 mr-0 w-100">
                                 <div className="col-8">
                                     <h2>
                                         <small>
-                                            Weather Alerts <UserAnnotationColorPicker name="weather_alerts" value={this.state.userAnnotationColors.weather_alerts} updateCallback={this.updateUserAnnotationColors}/>
+                                            Weather Alerts <UserAnnotationColorPicker name="weather_alerts" value={this.state.userAnnotationColors.weather_alerts} updateCallback={this.updateUserAnnotationColors} />
                                             <img id="weather-alert-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('weather-alert') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>
@@ -426,13 +428,13 @@ export default class DataSourceIndex extends React.Component {
                         </div>
                         {/* /////////////////////////////////////////////////////////////////////////////////////////////// */}
 
-                        <div className="container mt-3 ds-sections border-bottom">
+                        <div className="container mt-3 ds-sections border-bottom" id="wordpress-updates-data-source-section">
                             <div className="ml-0 mr-0 row w-100">
 
                                 <div className="col-8">
                                     <h2>
                                         <small>
-                                            Wordpress Updates <UserAnnotationColorPicker name="wordpress_updates" value={this.state.userAnnotationColors.wordpress_updates} updateCallback={this.updateUserAnnotationColors}/>
+                                            Wordpress Updates <UserAnnotationColorPicker name="wordpress_updates" value={this.state.userAnnotationColors.wordpress_updates} updateCallback={this.updateUserAnnotationColors} />
                                             <img id="wordpress-updates-datasource-hint" className="hint-button-2" onClick={() => { this.changeShownHint('wordpress-updates') }} src="/images/info-logo.png" />
                                         </small>
                                     </h2>

@@ -4,12 +4,10 @@ import { Redirect } from "react-router-dom";
 
 const steps = [
     {
-        // selector: '.btn',
         position: 'top',
         content: 'Welcome! Take this quick tour',
         redirectRoute: null,
         style: {
-            // width: '50%', height: '50%',
             padding: '60px'
         }
     },

@@ -78,6 +78,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('annotation-categories', [App\Http\Controllers\AnnotationController::class, 'getCategories']);
 
         Route::group(['prefix' => 'data-source'], function () {
+            Route::put('mark-data-source-tour', [App\Http\Controllers\HomeController::class, 'markDataSourceTourDone']);
+
             Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'destroy']);
 
             Route::resource('web-monitor', App\Http\Controllers\WebMonitorController::class)->only(['index', 'store', 'update', 'destroy']);

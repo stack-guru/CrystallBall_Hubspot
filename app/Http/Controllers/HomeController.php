@@ -136,4 +136,12 @@ class HomeController extends Controller
         return response()->json(['success' => 'true', 'message' => 'TimeZone updated successfully'], 200);
     }
 
+    public function markDataSourceTourDone(Request $request)
+    {
+        $user = Auth::user();
+        $user->data_source_tour_showed_at = \Carbon\Carbon::now();
+        $user->save();
+
+        return ['success' => true];
+    }
 }

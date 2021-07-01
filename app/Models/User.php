@@ -38,6 +38,8 @@ class User extends Authenticatable
         'department',
 
         'team_name',
+
+        'data_source_tour_showed_at',
     ];
 
     /**

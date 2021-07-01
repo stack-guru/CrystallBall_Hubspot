@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import InterfaceTour from '../utils/InterfaceTour';
+import InterfaceTour from '../helpers/InterfaceTour';
 import * as $ from 'jquery';
 
 class sidebar extends React.Component {
