@@ -3,6 +3,7 @@ import Tour from 'reactour'
 import { Redirect } from "react-router-dom";
 
 const steps = [
+    // 1
     {
         position: 'top',
         content: 'Welcome! Take this quick tour',
@@ -11,30 +12,35 @@ const steps = [
             padding: '60px'
         }
     },
+    // 2
     {
         position: 'bottom',
         selector: '#annotation-index-container',
         content: 'Here you can see and manage all your annotations',
         redirectRoute: '/annotation'
     },
-    {
-        position: 'bottom',
-        selector: '#csv-upload-form-container',
-        content: 'If you already have a list of annotations, you can bulk upload them here',
-        redirectRoute: '/annotation/upload'
-    },
-    {
-        position: 'bottom',
-        selector: '#integration-page-top-options',
-        content: "Automate annotations from your Ad Platforms, Newsletters, Slack and more",
-        redirectRoute: '/integrations'
-    },
+    // 3
     {
         position: 'right',
         selector: '#data-source-page-container',
         content: 'Automate annotations for Weather Alerts, Holidays, Google Updates, WordPress Updates, Website Monitoring, News Alerts, and Retail Marketing Dates.',
         redirectRoute: '/data-source'
     },
+    // 4
+    {
+        position: 'bottom',
+        selector: '#integration-page-top-options',
+        content: "Automate annotations from your Ad Platforms, Newsletters, Slack and more",
+        redirectRoute: '/integrations'
+    },
+    // 5
+    {
+        position: 'bottom',
+        selector: '#csv-upload-form-container',
+        content: 'If you already have a list of annotations, you can bulk upload them here',
+        redirectRoute: '/annotation/upload'
+    },
+    // 6
     {
         position: [window.screen.width - (window.screen.width * 25 / 100), 10],
         selector: '#chrome-extension-download-button',
@@ -43,6 +49,7 @@ const steps = [
         </div>,
         redirectRoute: null
     },
+    // 7
     {
         position: 'top',
         content: <div>We added a Sample Annotation to show you how it looks like, once you go to <a href="https://analytics.google.com/analytics/web/#/" target="_blank">Google Analytics</a>
@@ -53,7 +60,6 @@ const steps = [
             width: '50%', height: 'auto', maxWidth: '677px', top: '25px'
         }
     }
-
 ];
 
 export default class InterfaceTour extends Component {
