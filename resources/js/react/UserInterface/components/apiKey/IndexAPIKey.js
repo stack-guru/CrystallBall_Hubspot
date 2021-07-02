@@ -125,7 +125,7 @@ class IndexAPIKey extends React.Component {
                         <div className="row mb-5">
                             <div className="col-md-12">
                                 <h2 className="heading-section gaa-title">API Keys <UserAnnotationColorPicker name="api" value={this.state.userAnnotationColors.api} updateCallback={this.updateUserAnnotationColors} /></h2>
-                                <sub className="float-right"><a href="/documentation" target="_blank">Check documentation</a></sub>
+                                <a className="float-right" href="/documentation" target="_blank">Check documentation</a>
                             </div>
                             <div className="col-md-12">
                                 <ErrorAlert errors={this.state.errors} />

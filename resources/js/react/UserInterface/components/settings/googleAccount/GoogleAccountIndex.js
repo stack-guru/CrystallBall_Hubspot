@@ -191,7 +191,7 @@ export default class GoogleAccountIndex extends React.Component {
 
                     <div className="row ml-0 mr-0">
                         <div className="col-md-12">
-                            <sub className="float-right"><a href="#" target="_blank" data-toggle="modal" data-target="#properties-video-modal">How to use the properties</a></sub>
+                            <a className="float-right" href="#" target="_blank" data-toggle="modal" data-target="#properties-video-modal">How to use the properties</a>
                         </div>
                         <VideoModalBox id="properties-video-modal" src="https://www.youtube.com/embed/4tRGhuK7ZWQ" />
                     </div>
