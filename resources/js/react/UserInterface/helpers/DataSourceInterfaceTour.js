@@ -8,9 +8,6 @@ const steps = [
         position: 'top',
         content: 'Welcome! Take this quick tour to understand automation',
         redirectRoute: null,
-        style: {
-            padding: '60px'
-        }
     },
     {
         position: 'right',
@@ -43,13 +40,10 @@ const steps = [
         redirectRoute: null
     },
     {
-        position: 'right',
+        position: 'top',
         selector: '#weather-alerts-data-source-section',
         content: <p><strong>Weather</strong> disrupts the operating and financial performance of 70% of businesses worldwide. Add automated annotations for the location you operate</p>,
         redirectRoute: null,
-        style: {
-            width: '50%', height: 'auto', maxWidth: '677px', top: '25px'
-        }
     },
     {
         position: 'right',
