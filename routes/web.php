@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/login', 301);
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('socialite/google', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogle'])->name('socialite.google');
 Route::get('socialite/google/redirect', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogleRedirect'])->name('socialite.google.redirect');
