@@ -5,6 +5,7 @@ import { Redirect } from 'react-router';
 import ErrorAlert from '../../../utils/ErrorAlert';
 import CCDetector from '../../../utils/CreditCardDetector';
 import CountryCodeSelect from "../../../utils/CountryCodeSelect";
+import { Link } from 'react-router-dom';
 
 export default class CreatePayment extends Component {
     constructor(props) {
@@ -166,18 +167,17 @@ export default class CreatePayment extends Component {
 
         if (!expirationMonth) {
             isValid = false;
-            errors["expirationMonth"] = "Please select your expirationMonth.";
+            errors["expirationMonth"] = "Please select your card's expiring month.";
         }
 
         if (!expirationYear) {
             isValid = false;
-            errors["expirationYear"] = "Please select your expirationYear.";
+            errors["expirationYear"] = "Please select your card's expiring year.";
         }
         if (!securityCode || securityCode.length < 3) {
             // isValid = false;
             // errors["securityCode"] = "Please enter your card securityCode.";
         }
-
 
         this.setState({
             validation: errors
@@ -445,7 +445,6 @@ export default class CreatePayment extends Component {
                                                 {/* <button type="button" className={"btn btn-default btn-md "} onClick={this.cancelSubscription}>Cancel</button> */}
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </form>
@@ -461,12 +460,17 @@ export default class CreatePayment extends Component {
                                     </div>
                                 </div>
                             </div>
+                            <div className="row mt-1 ml-0 mr-0 d-flex flex-row justify-content-center align-items-center bg-white">
+                                <div className="img-col-wrap">
+                                    <div className="col-12 text-right  secure-img">
+                                        <Link className="gaa-text-primary" to="/settings/support">Are you having problems with the payment? Want to pay with <strong className="text-primary">PayPal</strong>? <strong className="text-primary">Contact us</strong>, and we will send you a link</Link>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         )
     }
 
