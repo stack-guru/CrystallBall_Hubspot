@@ -74,6 +74,10 @@ class LoginController extends Controller
         curl_close($ch);
         $response = json_decode($result);
 
+        if (!$response) {
+            return response(["message" => "Unable to get user details from Google."], 422);
+        }
+
         $user = User::where('email', $response->email)->first();
         if ($user) {
             // If you are changing token name prefix, don't forget to change it in app/Listeners/APITokenCreated.php as well
@@ -82,11 +86,9 @@ class LoginController extends Controller
             $user->last_logged_into_extension_at = Carbon::now();
             $user->save();
 
-            $response = ['token' => $token];
-            return response($response, 200);
+            return response(['token' => $token], 200);
         } else {
-            $response = ["message" => "The Email used in this browser isn't registered yet. Log in to Chrome with the same Email you registered to GAannotations and try again."];
-            return response($response, 422);
+            return response(["message" => "The Email used in this browser isn't registered yet. Log in to Chrome with the same Email you registered to GAannotations and try again."], 422);
         }
     }
 
