@@ -50,6 +50,7 @@ export default class integrationsIndex extends React.Component {
                                     </a>
                                 </div>
                             </div>
+                            {/* ///////////////////////////////////////////////////////////////////////////////////////////// */}
                             <div className="d-flex flex-row integration-pack justify-content-between">
                                 <div className="d-flex w-100 integration-pack-content">
                                     <figure>
@@ -83,6 +84,7 @@ export default class integrationsIndex extends React.Component {
                                 </div>
                             </div>
                         </div>
+                        {/* ///////////////////////////////////////////////////////////////////////////////////////////// */}
                         {/* <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
@@ -119,6 +121,7 @@ export default class integrationsIndex extends React.Component {
                                 </a>
                             </div>
                         </div> */}
+                        {/* ///////////////////////////////////////////////////////////////////////////////////////////// */}
                         <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
@@ -153,6 +156,7 @@ export default class integrationsIndex extends React.Component {
                                 </a>
                             </div>
                         </div>
+                        {/* ///////////////////////////////////////////////////////////////////////////////////////////// */}
                         <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
@@ -188,6 +192,7 @@ export default class integrationsIndex extends React.Component {
                                 </a>
                             </div>
                         </div>
+                        {/* ///////////////////////////////////////////////////////////////////////////////////////////// */}
                         <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
@@ -223,6 +228,7 @@ export default class integrationsIndex extends React.Component {
                                 </a>
                             </div>
                         </div>
+                        {/* ///////////////////////////////////////////////////////////////////////////////////////////// */}
                         {/* <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
@@ -259,6 +265,7 @@ export default class integrationsIndex extends React.Component {
                                 </a>
                             </div>
                         </div> */}
+                        {/* ///////////////////////////////////////////////////////////////////////////////////////////// */}
                         <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
@@ -293,6 +300,7 @@ export default class integrationsIndex extends React.Component {
                                 </a>
                             </div>
                         </div>
+                        {/* ///////////////////////////////////////////////////////////////////////////////////////////// */}
                         <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
@@ -327,6 +335,7 @@ export default class integrationsIndex extends React.Component {
                                 </a>
                             </div>
                         </div>
+                        {/* ///////////////////////////////////////////////////////////////////////////////////////////// */}
                         <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
@@ -362,6 +371,7 @@ export default class integrationsIndex extends React.Component {
                                 </a>
                             </div>
                         </div>
+                        {/* ///////////////////////////////////////////////////////////////////////////////////////////// */}
                         <div className="d-flex flex-row integration-pack justify-content-between">
                             <div className="d-flex w-100 integration-pack-content">
                                 <figure>
@@ -394,6 +404,42 @@ export default class integrationsIndex extends React.Component {
                                     className="btn btn-primary"
                                 >
                                     See instructions
+                                </a>
+                            </div>
+                        </div>
+                        {/* ///////////////////////////////////////////////////////////////////////////////////////////// */}
+                        <div className="d-flex flex-row integration-pack justify-content-between">
+                            <div className="d-flex w-100 integration-pack-content">
+                                <figure>
+                                    <img
+                                        src="/images/google-sheets.png"
+                                        className="img-fluid int-img"
+                                        alt="google sheet image here"
+                                    />
+                                </figure>
+                                <div className="int-description w-100 ml-2">
+                                    <p>
+                                    Add an annotation to GA automatically when "New or Updated Spreadsheet Row in Google Sheets".
+                                    </p>
+                                    <div
+                                        className="mt-3 integration-video-link"
+                                        // data-toggle="modal"
+                                        // data-target="#monday-modal"
+                                        onClick={() => { swal("Coming soon!", '', 'info'); }}
+                                    >
+                                        <i className="fa fa-play pr-2" />
+                                        See how this works
+                                    </div>
+                                    <VideoModalBox id="google-sheets-modal" src="#" />
+                                </div>
+                            </div>
+                            <div className="int-action">
+                                <a
+                                    // target="_blank"
+                                    // href="#"
+                                    className="btn btn-primary"
+                                >
+                                    Coming Soon!
                                 </a>
                             </div>
                         </div>
