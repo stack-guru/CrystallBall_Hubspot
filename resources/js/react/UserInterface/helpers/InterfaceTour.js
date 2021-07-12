@@ -45,7 +45,7 @@ const steps = [
         position: [window.screen.width - (window.screen.width * 25 / 100), 10],
         selector: '#chrome-extension-download-button',
         content: <div>Make sure to add the extension, pin it and to log in.<br />
-            <img src="/images/pin_extension.gif" width="100%" height="auto" />
+            <img src="/images/walkthrough_step6.gif" width="100%" height="auto" />
         </div>,
         redirectRoute: null
     },
