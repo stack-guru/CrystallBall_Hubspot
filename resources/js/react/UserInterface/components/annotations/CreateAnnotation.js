@@ -1,5 +1,6 @@
 import React from 'react';
 import { toast } from "react-toastify";
+import VideoModalBox from '../../utils/VideoModalBox';
 
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
@@ -209,7 +210,9 @@ export default class CreateAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder">Google Properties</label>
+                                        <label htmlFor="show_at" className="form-control-placeholder">Google Properties <a id="google-properties-video-modal-button" className="float-right" href="#" target="_blank" data-toggle="modal" data-target="#google-properties-video-modal"><img className="hint-button-2 p-0 ml-2 mt-0 mb-0" src="/images/info-logo.png" /></a></label>
+                                        <VideoModalBox id="google-properties-video-modal" src="https://www.youtube.com/embed/4tRGhuK7ZWQ" />
+
                                         <GoogleAnalyticsPropertySelect
                                             name="google_analytics_property_id"
                                             id="google_analytics_property_id"
