@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -29,7 +28,7 @@ class SendGridService
                 'email' => $user->email,
                 'first_name' => $firstName,
                 'last_name' => $lastName,
-                'custom_fields' => [['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]],
+                // 'custom_fields' => [['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]],
             ],
         ];
 
@@ -70,7 +69,7 @@ class SendGridService
                     'email' => $user->email,
                     'first_name' => $firstName,
                     'last_name' => $lastName,
-                    'custom_fields' => [['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]],
+                    // 'custom_fields' => [['e9_D' => $user->created_at->subDays(2)->format('Y-m-d')]],
                 ],
             ],
         ];
@@ -108,7 +107,7 @@ class SendGridService
                 'email' => $user['email'],
                 'first_name' => $firstName,
                 'last_name' => $lastName,
-                'custom_fields' => [['e9_D' => Carbon::parse($user['created_at'])->subDays(2)->format('Y-m-d')]],
+                // 'custom_fields' => [['e9_D' => Carbon::parse($user['created_at'])->subDays(2)->format('Y-m-d')]],
             ];
         }, $users);
 
