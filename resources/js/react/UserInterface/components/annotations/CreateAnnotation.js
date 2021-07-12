@@ -210,7 +210,13 @@ export default class CreateAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="show_at" className="form-control-placeholder">Google Properties</label>
-                                        <GoogleAnalyticsPropertySelect name="google_analytics_property_id" id="google_analytics_property_id" value={this.state.annotation.google_analytics_property_id} onChangeCallback={this.changeHandler} placeholder="Select GA Properties" multiple></GoogleAnalyticsPropertySelect>
+                                        <GoogleAnalyticsPropertySelect
+                                            name="google_analytics_property_id"
+                                            id="google_analytics_property_id"
+                                            value={this.state.annotation.google_analytics_property_id}
+                                            onChangeCallback={this.changeHandler} placeholder="Select GA Properties"
+                                            components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
+                                            multiple></GoogleAnalyticsPropertySelect>
 
                                     </div>
                                 </div>
@@ -220,7 +226,7 @@ export default class CreateAnnotation extends React.Component {
                                 <div className="col-12 text-right pr-0">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">
                                         <i className="fa fa-plus mr-1"></i>Add
-                                        </button>
+                                    </button>
                                 </div>
                             </div>
                         </form>
