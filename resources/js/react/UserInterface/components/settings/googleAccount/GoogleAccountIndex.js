@@ -53,6 +53,16 @@ export default class GoogleAccountIndex extends React.Component {
                 this.fetchGAAccounts(searchParams.get('google_account_id'));
             }
         }
+
+        if (this.props.user.google_accounts_tour_showed_at == null) {
+            setTimeout(function () { document.getElementById("properties-video-modal-button").click(); }, 3000)
+            HttpClient.put(`/data-source/mark-google-accounts-tour`, { google_accounts_tour_showed_at: true })
+                .then(response => {
+                }, (err) => {
+                }).catch(err => {
+                });
+        }
+
     }
 
     getGoogleAccounts() {
@@ -175,6 +185,7 @@ export default class GoogleAccountIndex extends React.Component {
 
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
 
@@ -191,7 +202,7 @@ export default class GoogleAccountIndex extends React.Component {
 
                     <div className="row ml-0 mr-0">
                         <div className="col-md-12">
-                            <a className="float-right" href="#" target="_blank" data-toggle="modal" data-target="#properties-video-modal">How to use the properties</a>
+                            <a id="properties-video-modal-button" className="float-right" href="#" target="_blank" data-toggle="modal" data-target="#properties-video-modal">How to use the properties</a>
                         </div>
                         <VideoModalBox id="properties-video-modal" src="https://www.youtube.com/embed/4tRGhuK7ZWQ" />
                     </div>

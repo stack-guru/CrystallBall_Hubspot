@@ -79,6 +79,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::group(['prefix' => 'data-source'], function () {
             Route::put('mark-data-source-tour', [App\Http\Controllers\HomeController::class, 'markDataSourceTourDone']);
+            Route::put('mark-google-accounts-tour', [App\Http\Controllers\HomeController::class, 'markGoogleAccountsTourDone']);
 
             Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'destroy']);
 

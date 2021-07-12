@@ -41,6 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'team_name',
 
         'data_source_tour_showed_at',
+        'google_accounts_tour_showed_at',
     ];
 
     /**

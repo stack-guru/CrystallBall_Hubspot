@@ -144,4 +144,13 @@ class HomeController extends Controller
 
         return ['success' => true];
     }
+
+    public function markGoogleAccountsTourDone(Request $request)
+    {
+        $user = Auth::user();
+        $user->google_accounts_tour_showed_at = \Carbon\Carbon::now();
+        $user->save();
+
+        return ['success' => true];
+    }
 }
