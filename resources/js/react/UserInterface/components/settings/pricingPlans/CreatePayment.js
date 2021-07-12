@@ -54,20 +54,13 @@ export default class CreatePayment extends Component {
             });
 
 
-        HttpClient.get("https://ipapi.co/json").then(response => {
+        HttpClient.get("https://ipinfo.io/?token=cc0c476b4a3fc7").then(response => {
             let taxPercent = 0;
             if (['IL'].indexOf(response.data.country) != -1) {
                 taxPercent = 17;
             }
             this.setState({ taxPercent: taxPercent, paymentDetails: { ...this.state.paymentDetails, city: response.data.city, country: response.data.country } });
         });
-        // let xhr = new XMLHttpRequest;
-        // xhr.open("GET", "https://ipapi.co/json", !1), xhr.send();
-        // let resp = JSON.parse(xhr.responseText);
-        // if (['IL'].indexOf(resp.country) != -1) {
-        //     taxPercent = 17;
-        // }
-        // this.setState({ taxPercent: taxPercent, paymentDetails: { ...this.state.paymentDetails, city: resp.city, country: resp.country } });
 
         setTimeout(this.attachFieldsToBlueSnap, 5000)
     }
