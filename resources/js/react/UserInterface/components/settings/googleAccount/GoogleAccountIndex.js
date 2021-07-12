@@ -54,7 +54,7 @@ export default class GoogleAccountIndex extends React.Component {
             }
         }
 
-        if (this.props.user.google_accounts_tour_showed_at == null) {
+        if (this.props.user.google_accounts_tour_showed_at == null && this.props.user.last_login_at !== null) {
             setTimeout(function () { document.getElementById("properties-video-modal-button").click(); }, 3000)
             HttpClient.put(`/data-source/mark-google-accounts-tour`, { google_accounts_tour_showed_at: true })
                 .then(response => {
