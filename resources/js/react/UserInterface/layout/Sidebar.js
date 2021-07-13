@@ -187,7 +187,7 @@ class sidebar extends React.Component {
                                     </Link>
                                 </li>
                                 <li className="nav-item dropdown">
-                                    <InterfaceTour isOpen={this.state.showTour} toggleShowTour={() => { this.setState({ showTour: !this.state.showTour }) }} />
+                                    <InterfaceTour isOpen={this.state.showTour} toggleShowTour={() => { this.setState({ showTour: !this.state.showTour }); (this.props.reloadUser)(); }} />
                                     <div className="sidebar-link nav-link">
                                         <a href="#" onClick={(e) => { e.preventDefault(); this.setState({ showTour: true }) }}>Take a Tour</a>
                                     </div>

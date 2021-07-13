@@ -58,6 +58,7 @@ export default class GoogleAccountIndex extends React.Component {
             setTimeout(function () { document.getElementById("properties-video-modal-button").click(); }, 3000)
             HttpClient.put(`/data-source/mark-google-accounts-tour`, { google_accounts_tour_showed_at: true })
                 .then(response => {
+                    (this.props.reloadUser)();
                 }, (err) => {
                 }).catch(err => {
                 });

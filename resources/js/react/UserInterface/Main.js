@@ -111,7 +111,7 @@ class Main extends React.Component {
             <React.Fragment>
 
                 <div className="sidebar">
-                    <Sidebar user={this.state.user} />
+                    <Sidebar user={this.state.user} reloadUser={this.loadUser} />
                 </div>
 
                 <div className="page-container">
@@ -161,7 +161,7 @@ class Main extends React.Component {
                                 <PaymentHistory user={this.state.user} />
                             </Route>
                             <Route exact path="/settings/google-account" refresh={true}>
-                                <GoogleAccountIndex user={this.state.user} />
+                                <GoogleAccountIndex user={this.state.user} reloadUser={this.loadUser} />
                             </Route>
                             <Route exact path="/settings/support" refresh={true}>
                                 <SupportIndex user={this.state.user} />
