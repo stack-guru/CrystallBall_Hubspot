@@ -39,9 +39,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('annotation/upload', 'ui/app');
     Route::post('annotation/upload', [App\Http\Controllers\AnnotationController::class, 'upload']);
 
-    Route::view('api-key', 'ui/app');
     Route::view('data-source', 'ui/app');
     Route::view('integrations', 'ui/app');
+    Route::view('api-key', 'ui/app');
+    Route::view('notifications', 'ui/app');
 
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
@@ -76,6 +77,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('countries', [App\Http\Controllers\HolidayController::class, 'holidayApi']);
         Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);
         Route::get('annotation-categories', [App\Http\Controllers\AnnotationController::class, 'getCategories']);
+
+        Route::resource('notification-setting', App\Http\Controllers\NotificationSettingController::class)->only(['index', 'update']);
 
         Route::group(['prefix' => 'data-source'], function () {
             Route::put('mark-data-source-tour', [App\Http\Controllers\HomeController::class, 'markDataSourceTourDone']);

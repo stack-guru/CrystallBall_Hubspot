@@ -30,6 +30,7 @@ import SupportIndex from './components/support/supportIndex';
 import IndexUsers from './components/settings/user/IndexUsers';
 import CreateUser from './components/settings/user/CreateUser';
 import EditUser from './components/settings/user/EditUser';
+import IndexNotificationSettings from "./components/NotificationSettings/IndexNotificationSettingsComponent";
 
 class Main extends React.Component {
 
@@ -144,6 +145,9 @@ class Main extends React.Component {
                             </Route>
                             <Route exact path="/integrations" refresh={true}>
                                 <IntegrationsIndex user={this.state.user} />
+                            </Route>
+                            <Route exact path="/notifications" refresh={true}>
+                                <IndexNotificationSettings user={this.state.user} />
                             </Route>
                             <Route exact path="/settings" refresh={true}>
                                 <Settings user={this.state.user} />
