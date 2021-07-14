@@ -430,16 +430,16 @@ export default class integrationsIndex extends React.Component {
                                         <i className="fa fa-play pr-2" />
                                         See how this works
                                     </div>
-                                    <VideoModalBox id="google-sheets-modal" src="#" />
+                                    <VideoModalBox id="google-sheets-modal" src="https://www.youtube.com/embed/SkKAGSDyAMM" />
                                 </div>
                             </div>
                             <div className="int-action">
                                 <a
-                                    // target="_blank"
-                                    // href="#"
+                                    target="_blank"
+                                    href="https://www.gaannotations.com/integrate-with-google-sheets"
                                     className="btn btn-primary"
                                 >
-                                    Coming Soon!
+                                    See instructions
                                 </a>
                             </div>
                         </div>
