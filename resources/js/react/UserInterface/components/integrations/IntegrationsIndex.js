@@ -423,9 +423,8 @@ export default class integrationsIndex extends React.Component {
                                     </p>
                                     <div
                                         className="mt-3 integration-video-link"
-                                        // data-toggle="modal"
-                                        // data-target="#monday-modal"
-                                        onClick={() => { swal("Coming soon!", '', 'info'); }}
+                                        data-toggle="modal"
+                                        data-target="#google-sheets-modal"
                                     >
                                         <i className="fa fa-play pr-2" />
                                         See how this works
