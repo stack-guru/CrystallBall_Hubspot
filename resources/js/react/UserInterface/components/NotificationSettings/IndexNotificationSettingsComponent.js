@@ -37,7 +37,7 @@ export default class IndexNotificationSettings extends Component {
                             <div className="row ml-0 mr-0">
                                 <div className="col-12">
                                     <div className="table-responsive">
-                                        <table className="table table-hover table-borderless">
+                                        <table className="table table-hover table-borderless text-center">
                                             <thead>
                                                 <tr>
                                                     <th></th>
@@ -68,7 +68,7 @@ export default class IndexNotificationSettings extends Component {
                                                                 <span className="slider round" />
                                                             </label>
                                                         </td>
-                                                        <td>{notificationSetting.label}</td>
+                                                        <td className="text-left">{notificationSetting.label}</td>
                                                         <td>{notificationSetting.email_seven_days_before !== -1 ?<input type="checkbox" checked={notificationSetting.email_seven_days_before} /> : null}</td>
                                                         <td>{notificationSetting.email_one_days_before !== -1 ?<input type="checkbox" checked={notificationSetting.email_one_days_before} /> : null}</td>
                                                         <td>{notificationSetting.email_on_event_day !== -1 ?<input type="checkbox" checked={notificationSetting.email_on_event_day} /> : null}</td>
