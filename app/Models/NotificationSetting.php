@@ -9,6 +9,8 @@ class NotificationSetting extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         
         'is_enabled',

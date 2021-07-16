@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\NotificationSetting;
 use Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\NotificationSettingRequest;
 
 class NotificationSettingController extends Controller
 {
@@ -27,12 +28,14 @@ class NotificationSettingController extends Controller
      * @param  \App\Models\NotificationSetting  $notificationSetting
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NotificationSetting $notificationSetting)
+    public function update(NotificationSettingRequest $request, NotificationSetting $notificationSetting)
     {
         
         if($notificationSetting->user_id == Auth::id()){
             $notificationSetting->fill($request->validated());
             $notificationSetting->save();
+
+            return ['notification_setting' => $notificationSetting];
         }else{
             abort(403);
         }
