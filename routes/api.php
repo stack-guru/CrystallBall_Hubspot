@@ -24,6 +24,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
         Route::post('open-weather-map/alert', 'OWMPushNotificationController@store');
         Route::get('event-sources', 'EventSourceController@index')->name('event-sources.index');
 
+        // Chrome Extension
         Route::get('chrome-extension/event-sources', 'EventSourceController@index');
         Route::group(['middleware' => ['auth:api']], function () {
 
@@ -40,10 +41,13 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
                 Route::get('google-annotation/{id}', 'ChromeExtension\GoogleAnalyticsPropertyController@getAnnotations');
                 Route::get('memberships', 'UserController@extensionShowMembership');
                 Route::get('users', 'ChromeExtension\UserController@index');
+
+                Route::post('log', 'ChromeExtension\ChromeExtensionLogController@store');
+
             });
 
         });
-
+        // End Chrome Extension
     });
 
 });
