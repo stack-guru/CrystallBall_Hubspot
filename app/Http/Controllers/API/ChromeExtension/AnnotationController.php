@@ -361,6 +361,7 @@ class AnnotationController extends Controller
 
         $annotation = new Annotation;
         $annotation->fill($request->validated());
+        $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
         $annotation->user_id = $userId;
         $annotation->is_enabled = true;
         $annotation->added_by = 'manual';
@@ -381,8 +382,6 @@ class AnnotationController extends Controller
             $aGAP->user_id = $userId;
             $aGAP->save();
         }
-
-        \App\Events\UserAddedAnAnnotationViaAPI::dispatch(Auth::user());
 
         return ['annotation' => $annotation];
     }

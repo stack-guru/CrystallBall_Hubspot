@@ -40,7 +40,7 @@
                                         <td>{{ $user->last_login_at }} + {{ $user->login_logs_count }}</td>
                                         <td></td>
                                         <td></td>
-                                        <td>{{ $user->last_api_called_at }}</td>
+                                        <td>{{ $user->last_api_called_at }} + {{ $user->last30_days_api_annotation_created_logs_count }}</td>
                                         <td></td>
                                         <td>{{ $user->pricePlan->name }}</td>
                                         <td></td>

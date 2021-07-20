@@ -103,6 +103,9 @@ class AnnotationController extends Controller
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
+
+        \App\Events\UserAddedAnAnnotationViaAPI::dispatch(Auth::user());
+
         return response()->json(['annotation' => $annotation], 201);
 
     }

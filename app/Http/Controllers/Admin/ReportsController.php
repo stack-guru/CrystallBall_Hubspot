@@ -8,7 +8,12 @@ use App\Models\User;
 
 class ReportsController extends Controller {
     public function showUserActiveReport (Request $request){
-        $users = User::with(['pricePlan', 'lastAnnotation'])->orderBy('created_at', 'DESC')->withCount('loginLogs')->get();
+        $users = User::with(['pricePlan', 'lastAnnotation'])
+            ->orderBy('created_at', 'DESC')
+            ->withCount('loginLogs')
+            ->withCount('last30DaysApiAnnotationCreatedLogs')
+            ->get();
+
         return view('admin/reports/user-active-report')->with('users', $users);
     }
 }

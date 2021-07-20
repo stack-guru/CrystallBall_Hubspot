@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Carbon\carbon;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -145,6 +146,18 @@ class User extends Authenticatable implements MustVerifyEmail
     public function lastLoginLog()
     {
         return $this->hasOne('App\Models\LoginLog')->orderBy('created_at', 'DESC');
+    }
+
+    public function last30DaysApiAnnotationCreatedLogs(){
+        return $this->hasMany('App\Models\ApiLog')
+            ->where('event_name', 'AnnotationCreated')
+            ->where('created_at', '>=', Carbon::now()->subDays(30))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function lastApiLog()
+    {
+        return $this->hasOne('App\Models\ApiLog')->orderBy('created_at', 'DESC');
     }
 
     public function userGaAccounts()
