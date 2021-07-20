@@ -9,6 +9,8 @@ class ChromeExtensionLog extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public $fillable = [
 
         'event_name',
