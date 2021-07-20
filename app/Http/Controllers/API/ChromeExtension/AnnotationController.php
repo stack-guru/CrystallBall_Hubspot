@@ -382,6 +382,8 @@ class AnnotationController extends Controller
             $aGAP->save();
         }
 
+        \App\Events\UserAddedAnAnnotationViaAPI::dispatch(Auth::user());
+
         return ['annotation' => $annotation];
     }
 }

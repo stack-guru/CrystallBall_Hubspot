@@ -29,7 +29,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\UserAddedAnAnnotationViaAPI::class => [
-
+            \App\Listeners\AddAPICreateUsageToApiLog::class
         ],
     ];
 
