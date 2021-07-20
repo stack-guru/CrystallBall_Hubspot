@@ -142,6 +142,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\LoginLog');
     }
 
+    public function lastLoginLog()
+    {
+        return $this->hasOne('App\Models\LoginLog')->orderBy('created_at', 'DESC');
+    }
+
     public function userGaAccounts()
     {
         return $this->hasMany('App\Models\UserGaAccount');
