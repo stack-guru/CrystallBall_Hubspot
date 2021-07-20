@@ -155,6 +155,18 @@ class User extends Authenticatable implements MustVerifyEmail
             ->orderBy('created_at', 'DESC');
     }
 
+    public function AnnotationButtonClickedChromeExtensionLogs(){
+        return $this->hasMany('App\Models\ChromeExtensionLog')
+            ->where('event_name', 'AnnotationButtonClicked')
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function lastAnnotationButtonClickedChromeExtensionLog(){
+        return $this->hasOne('App\Models\ChromeExtensionLog')
+            ->where('event_name', 'AnnotationButtonClicked')
+            ->orderBy('created_at', 'DESC');
+    }
+
     public function lastApiLog()
     {
         return $this->hasOne('App\Models\ApiLog')->orderBy('created_at', 'DESC');

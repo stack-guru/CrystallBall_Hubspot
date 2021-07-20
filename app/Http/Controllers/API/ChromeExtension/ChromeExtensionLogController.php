@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ChromeExtensionLog;
 use Carbon\Carbon;
+use App\Http\Requests\ChromeExtensionLogRequest;
+use Auth;
 
 class ChromeExtensionLogController extends Controller
 {
