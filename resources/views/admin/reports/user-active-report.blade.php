@@ -37,7 +37,7 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->created_at }}</td>
-                                        <td>{{ $user->last_login_at }}</td>
+                                        <td>{{ $user->last_login_at }} + {{ $user->login_logs_count }}</td>
                                         <td></td>
                                         <td></td>
                                         <td>{{ $user->last_api_called_at }}</td>
