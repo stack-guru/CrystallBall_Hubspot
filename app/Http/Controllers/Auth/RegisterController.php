@@ -99,37 +99,8 @@ class RegisterController extends Controller
             'is_billing_enabled' => false,
         ]);
 
-        $this->seedNotificationSetting($user);
-
-        $userDataSource = new UserDataSource;
-        $userDataSource->user_id = $user->id;
-        $userDataSource->ds_code = 'wordpress_updates';
-        $userDataSource->ds_name = 'WordpressUpdate';
-        $userDataSource->country_name = null;
-        $userDataSource->retail_marketing_id = null;
-        $userDataSource->value = 'last year';
-        $userDataSource->save();
-
         $sGS = new SendGridService;
         $sGS->addUserToMarketingList($user, "1 GAa New registrations");
-
-        // event_name:
-        // Sample Annotation
-        // category:
-        // GAannotations
-        // description:
-        // This is an example to show you how looks the annotations
-        // Date:
-        // [Two_days_before_user_registration_date]
-
-        $user->annotations()->create([
-            'category' => 'GAannotations',
-            'event_name' => 'Sample Annotation',
-            'url' => route('annotation.index'),
-            'description' => 'This is an annotation example',
-            'show_at' => new \DateTime('-02 days'),
-            'is_enabled' => true,
-        ]);
 
         return $user;
     }
@@ -169,15 +140,6 @@ class RegisterController extends Controller
                 $user->is_billing_enabled = false;
                 $user->save();
 
-                $user->annotations()->create([
-                    'category' => 'GAannotations',
-                    'event_name' => 'Sample Annotation',
-                    'url' => 'https://gaannotations.com',
-                    'description' => 'This is an example to show you how looks the annotations',
-                    'show_at' => new \DateTime('-02 days'),
-                    'is_enabled' => true,
-                ]);
-
                 $sGS = new SendGridService;
                 $sGS->addUserToMarketingList($user, "1 GAa New registrations");
 
@@ -205,16 +167,4 @@ class RegisterController extends Controller
         return view('auth.register');
     }
 
-    public function seedNotificationSetting($user){
-        NotificationSetting::insert([
-            ['is_enabled' => false, 'name' => 'web_monitors', 'label' => 'Website Monitoring', 'user_id' => $user->id, 'email_seven_days_before' => -1, 'email_one_days_before' => -1, 'sms_on_event_day' => 0],
-            ['is_enabled' => false, 'name' => 'news_alerts', 'label' => 'News Alerts', 'user_id' => $user->id, 'email_seven_days_before' => -1, 'email_one_days_before' => -1, 'sms_on_event_day'=>-1],
-            ['is_enabled' => false, 'name' => 'google_algorithm_updates', 'label' => 'Google Updates', 'user_id' => $user->id, 'email_seven_days_before' => -1, 'email_one_days_before' => -1, 'sms_on_event_day'=>-1],
-            ['is_enabled' => false, 'name' => 'retail_marketing_dates', 'label' => 'Retail Marketing Dates', 'user_id' => $user->id, 'email_seven_days_before' => 0, 'email_one_days_before' => 0, 'sms_on_event_day'=>-1],
-            ['is_enabled' => false, 'name' => 'holidays', 'label' => 'Holidays', 'user_id' => $user->id, 'email_seven_days_before' => 0, 'email_one_days_before' => 0, 'sms_on_event_day'=>-1],
-            ['is_enabled' => false, 'name' => 'weather_alerts', 'label' => 'Weather Alerts', 'user_id' => $user->id, 'email_seven_days_before' => -1, 'email_one_days_before' => -1, 'sms_on_event_day'=>-1],
-            ['is_enabled' => false, 'name' => 'wordpress_updates', 'label' => 'Wordpress Updates', 'user_id' => $user->id, 'email_seven_days_before' => -1, 'email_one_days_before' => -1, 'sms_on_event_day'=>-1],
-            ['is_enabled' => false, 'name' => 'api', 'label' => 'Annotation from API', 'user_id' => $user->id, 'email_seven_days_before' => -1, 'email_one_days_before' => -1, 'sms_on_event_day'=>-1],
-        ]);
-    }
 }
