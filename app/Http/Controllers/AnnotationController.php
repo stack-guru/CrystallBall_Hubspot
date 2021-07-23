@@ -72,8 +72,6 @@ class AnnotationController extends Controller
             $aGAP->save();
         }
 
-        // $user->notify(new NewAnnotationNotification($annotation));
-        // event(new \App\Events\NewAnnotationAdded($annotation));
         return ['annotation' => $annotation];
     }
 
