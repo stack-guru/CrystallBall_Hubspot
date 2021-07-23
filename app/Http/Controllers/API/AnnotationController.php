@@ -11,6 +11,7 @@ use App\Services\SendGridService;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Notifications\AnnotationCreatedThroughAPI;
 
 class AnnotationController extends Controller
 {
@@ -104,7 +105,9 @@ class AnnotationController extends Controller
         $user->last_api_called_at = new \DateTime;
         $user->save();
 
-        \App\Events\UserAddedAnAnnotationViaAPI::dispatch(Auth::user());
+        $currentUser = Auth::user();
+        \App\Events\UserAddedAnAnnotationViaAPI::dispatch($currentUser);
+        $currentUser->notify(new AnnotationCreatedThroughAPI);
 
         return response()->json(['annotation' => $annotation], 201);
 

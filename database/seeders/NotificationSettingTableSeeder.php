@@ -21,7 +21,7 @@ class NotificationSettingTableSeeder extends Seeder
             ->distinct()
             ->get();
 
-        info(count($users) . " users found to be seeded.");
+        print count($users) . " users found to be seeded.\n";
 
         foreach($users as $user){
             NotificationSetting::insert([
