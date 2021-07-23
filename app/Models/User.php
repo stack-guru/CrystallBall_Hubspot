@@ -155,6 +155,19 @@ class User extends Authenticatable implements MustVerifyEmail
             ->orderBy('created_at', 'DESC');
     }
 
+    public function last30DaysPopupOpenedChromeExtensionLogs(){
+        return $this->hasMany('App\Models\ChromeExtensionLog')
+            ->where('event_name', 'PopupOpened')
+            ->where('created_at', '>=', Carbon::now()->subDays(30))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function lastPopupOpenedChromeExtensionLog(){
+        return $this->hasOne('App\Models\ChromeExtensionLog')
+            ->where('event_name', 'PopupOpened')
+            ->orderBy('created_at', 'DESC');
+    }
+
     public function AnnotationButtonClickedChromeExtensionLogs(){
         return $this->hasMany('App\Models\ChromeExtensionLog')
             ->where('event_name', 'AnnotationButtonClicked')
