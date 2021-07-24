@@ -49,7 +49,7 @@ class GoogleAnalyticsAccountController extends Controller
 
         $googleAnalyticsAccouts = $user->googleAnalyticsAccounts;
         foreach ($googleAnalyticsAccouts as $googleAnalyticsAccount) {
-            $googleAnalyticsProperties = $gAS->getAccountProperties($googleAccount, $googleAnalyticsAccount);
+            $googleAnalyticsProperties = $gAS->getAccountUAProperties($googleAccount, $googleAnalyticsAccount);
             $savedGoogleAnalyticPropertyIds = GoogleAnalyticsProperty::select('property_id')->ofCurrentUser()->orderBy('property_id')->get()->pluck('property_id')->toArray();
             if ($googleAnalyticsProperties != false) {
                 foreach ($googleAnalyticsProperties as $index => $googleAnalyticsProperty) {

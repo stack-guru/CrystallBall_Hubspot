@@ -46,7 +46,7 @@ class FetchAllAnalyticsProperties extends Command
         foreach ($googleAccounts as $googleAccount) {
             $googleAnalyticsAccounts = $googleAccount->googleAnalyticsAccounts;
             foreach ($googleAnalyticsAccounts as $googleAnalyticsAccount) {
-                $googleAnalyticsProperties = $gAS->getAccountProperties($googleAccount, $googleAnalyticsAccount);
+                $googleAnalyticsProperties = $gAS->getAccountUAProperties($googleAccount, $googleAnalyticsAccount);
                 $savedGoogleAnalyticPropertyIds = GoogleAnalyticsProperty::select('property_id')->where('user_id', $googleAnalyticsAccount->user_id)->orderBy('property_id')->get()->pluck('property_id')->toArray();
 
                 if ($googleAnalyticsProperties != false) {
