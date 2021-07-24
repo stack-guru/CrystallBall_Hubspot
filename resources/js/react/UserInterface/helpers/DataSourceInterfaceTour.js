@@ -6,7 +6,7 @@ import HttpClient from "../utils/HttpClient";
 const steps = [
     {
         position: 'top',
-        content: 'Welcome! Take this quick tour to understand automation',
+        content: 'Take this quick tour to understand automation',
         redirectRoute: null,
     },
     {
