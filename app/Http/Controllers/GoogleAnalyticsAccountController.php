@@ -54,30 +54,17 @@ class GoogleAnalyticsAccountController extends Controller
             if ($googleAnalyticsProperties != false) {
                 foreach ($googleAnalyticsProperties as $index => $googleAnalyticsProperty) {
                     if (!in_array($googleAnalyticsProperty['id'], $savedGoogleAnalyticPropertyIds)) {
-                        $nGAP = new GoogleAnalyticsProperty;
-                        $nGAP->property_id = $googleAnalyticsProperty['id'];
-                        $nGAP->kind = $googleAnalyticsProperty['kind'];
-                        $nGAP->self_link = $googleAnalyticsProperty['selfLink'];
-                        $nGAP->account_id = $googleAnalyticsProperty['accountId'];
-                        $nGAP->internal_property_id = $googleAnalyticsProperty['internalWebPropertyId'];
-                        $nGAP->name = $googleAnalyticsProperty['name'];
-                        $nGAP->website_url = $googleAnalyticsProperty['websiteUrl'];
-                        $nGAP->level = $googleAnalyticsProperty['level'];
-                        $nGAP->profile_count = $googleAnalyticsProperty['profileCount'];
-                        $nGAP->industry_vertical = @$googleAnalyticsProperty['industryVertical'];
-                        $nGAP->default_profile_id = @$googleAnalyticsProperty['defaultProfileId'];
-                        $nGAP->data_retention_ttl = @$googleAnalyticsProperty['dataRetentionTtl'];
-                        $nGAP->ga_created = new \DateTime(@$googleAnalyticsProperty['created']);
-                        $nGAP->ga_updated = new \DateTime(@$googleAnalyticsProperty['updated']);
-                        $nGAP->parent_type = @$googleAnalyticsProperty['parentLink']['type'];
-                        $nGAP->parent_link = @$googleAnalyticsProperty['parentLink']['href'];
-                        $nGAP->child_type = @$googleAnalyticsProperty['childLink']['type'];
-                        $nGAP->child_link = @$googleAnalyticsProperty['childLink']['href'];
-                        $nGAP->permissions = json_encode(@$googleAnalyticsProperty['permissions']);
-                        $nGAP->google_analytics_account_id = @$googleAnalyticsAccount->id;
-                        $nGAP->google_account_id = $googleAccount->id;
-                        $nGAP->user_id = $user->id;
-                        $nGAP->save();
+                        $this->saveGoogleAnalyticsUAPropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user);
+                    }
+                }
+            }
+
+            $googleAnalyticsProperties = $gAS->getAccountGA4Properties($googleAccount, $googleAnalyticsAccount);
+            $savedGoogleAnalyticPropertyIds = GoogleAnalyticsProperty::select('property_id')->ofCurrentUser()->orderBy('property_id')->get()->pluck('property_id')->toArray();
+            if ($googleAnalyticsProperties != false) {
+                foreach ($googleAnalyticsProperties as $index => $googleAnalyticsProperty) {
+                    if (!in_array(explode( '/', $googleAnalyticsProperty['name'])[1], $savedGoogleAnalyticPropertyIds)) {
+                        $this->saveGoogleAnalyticsGA4PropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user);
                     }
                 }
             }
@@ -94,5 +81,59 @@ class GoogleAnalyticsAccountController extends Controller
 
         $googleAnalyticsAccount->delete();
         return ['success' => true];
+    }
+
+    private function saveGoogleAnalyticsUAPropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user){
+        $nGAP = new GoogleAnalyticsProperty;
+        $nGAP->property_id = $googleAnalyticsProperty['id'];
+        $nGAP->kind = $googleAnalyticsProperty['kind'];
+        $nGAP->self_link = $googleAnalyticsProperty['selfLink'];
+        $nGAP->account_id = $googleAnalyticsProperty['accountId'];
+        $nGAP->internal_property_id = $googleAnalyticsProperty['internalWebPropertyId'];
+        $nGAP->name = $googleAnalyticsProperty['name'];
+        $nGAP->website_url = $googleAnalyticsProperty['websiteUrl'];
+        $nGAP->level = $googleAnalyticsProperty['level'];
+        $nGAP->profile_count = $googleAnalyticsProperty['profileCount'];
+        $nGAP->industry_vertical = @$googleAnalyticsProperty['industryVertical'];
+        $nGAP->default_profile_id = @$googleAnalyticsProperty['defaultProfileId'];
+        $nGAP->data_retention_ttl = @$googleAnalyticsProperty['dataRetentionTtl'];
+        $nGAP->ga_created = new \DateTime(@$googleAnalyticsProperty['created']);
+        $nGAP->ga_updated = new \DateTime(@$googleAnalyticsProperty['updated']);
+        $nGAP->parent_type = @$googleAnalyticsProperty['parentLink']['type'];
+        $nGAP->parent_link = @$googleAnalyticsProperty['parentLink']['href'];
+        $nGAP->child_type = @$googleAnalyticsProperty['childLink']['type'];
+        $nGAP->child_link = @$googleAnalyticsProperty['childLink']['href'];
+        $nGAP->permissions = json_encode(@$googleAnalyticsProperty['permissions']);
+        $nGAP->google_analytics_account_id = @$googleAnalyticsAccount->id;
+        $nGAP->google_account_id = $googleAccount->id;
+        $nGAP->user_id = $user->id;
+        $nGAP->save();
+    }
+
+    private function saveGoogleAnalyticsGA4PropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user){
+        $nGAP = new GoogleAnalyticsProperty;
+        $nGAP->property_id = explode( '/', $googleAnalyticsProperty['name'])[1];
+        $nGAP->kind = @$googleAnalyticsProperty['industryCategory'];
+        $nGAP->self_link = @$googleAnalyticsProperty['selfLink'];
+        $nGAP->account_id = explode('/', $googleAnalyticsProperty['parent'])[1];
+        $nGAP->internal_property_id = explode( '/', $googleAnalyticsProperty['name'])[1];
+        $nGAP->name = $googleAnalyticsProperty['displayName'];
+        $nGAP->website_url = null;
+        $nGAP->level = null;
+        $nGAP->profile_count = null;
+        $nGAP->industry_vertical = @$googleAnalyticsProperty['industryCategory'];
+        $nGAP->default_profile_id = null;
+        $nGAP->data_retention_ttl = null;
+        $nGAP->ga_created = new \DateTime(@$googleAnalyticsProperty['createTime']);
+        $nGAP->ga_updated = new \DateTime(@$googleAnalyticsProperty['updateTime']);
+        $nGAP->parent_type = null;
+        $nGAP->parent_link = null;
+        $nGAP->child_type = null;
+        $nGAP->child_link = null;
+        $nGAP->permissions = null;
+        $nGAP->google_analytics_account_id = @$googleAnalyticsAccount->id;
+        $nGAP->google_account_id = $googleAccount->id;
+        $nGAP->user_id = $user->id;
+        $nGAP->save();
     }
 }
