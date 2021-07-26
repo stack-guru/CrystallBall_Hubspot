@@ -9,9 +9,10 @@ class GoogleAnalyticsPropertyController extends Controller
 {
     public function index(Request $request)
     {
-        $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::ofCurrentUser()->with(['googleAccount', 'GoogleAnalyticsAccount'])->orderBy('name')->take(10);
+        $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::ofCurrentUser()->with(['googleAccount', 'GoogleAnalyticsAccount'])->orderBy('name');
         if($request->has('keyword')){
             $googleAnalyticsPropertiesQuery->where('name', 'LIKE','%'. $request->query('keyword') .'%');
+            $googleAnalyticsPropertiesQuery->take(10);
         }
 
         return ['google_analytics_properties' => $googleAnalyticsPropertiesQuery->get()];
