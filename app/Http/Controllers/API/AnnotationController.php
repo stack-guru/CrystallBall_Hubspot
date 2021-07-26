@@ -71,8 +71,15 @@ class AnnotationController extends Controller
     {
         $user = Auth::user();
         $userId = $user->id;
-        if (!$user->pricePlan->has_api) {
+        $pricePlan = $user->pricePlan;
+        if (!$pricePlan->has_api) {
             abort(402);
+        }
+
+        if($request->has('google_analytics_property_id')){
+            if($pricePlan->ga_account_count == 1){
+                return response()->json(['message' => "Google Aalytics Properties are not available in this plan."], 402);
+            }
         }
 
         $annotation = new Annotation;
@@ -123,12 +130,19 @@ class AnnotationController extends Controller
     public function update(AnnotationRequest $request, Annotation $annotation)
     {
         $user = Auth::user();
-        if (!$user->pricePlan->has_api) {
+        if ($annotation->user_id != $user->id) {
+            abort(404);
+        }
+        
+        $pricePlan = $user->pricePlan;
+        if (!$pricePlan->has_api) {
             abort(402);
         }
 
-        if ($annotation->user_id != Auth::id()) {
-            abort(404);
+        if($request->has('google_analytics_property_id')){
+            if($pricePlan->ga_account_count == 1){
+                return response()->json(['message' => "Google Aalytics Properties are not available in this plan."], 402);
+            }
         }
 
         $annotation->fill($request->validated());
