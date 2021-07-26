@@ -234,7 +234,19 @@ export default class EditAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="show_at" className="form-control-placeholder">Analytics Properties</label>
-                                        <GoogleAnalyticsPropertySelect aProperties={this.state.googleAnnotationProperties} name="google_analytics_property_id" id="google_analytics_property_id" value={this.state.annotation.google_analytics_property_id} onChangeCallback={this.changeHandler} onChangeCallback2={this.gAPropertyChangeHandler} placeholder="Select GA Properties" multiple></GoogleAnalyticsPropertySelect>
+                                        <GoogleAnalyticsPropertySelect
+                                            aProperties={this.state.googleAnnotationProperties}
+                                            name="google_analytics_property_id"
+                                            id="google_analytics_property_id"
+                                            value={this.state.annotation.google_analytics_property_id}
+                                            onChangeCallback={this.changeHandler}
+                                            onChangeCallback2={this.gAPropertyChangeHandler}
+                                            placeholder="Select GA Properties"
+                                            multiple
+                                            onFocus={(e) => {
+                                                if (this.props.currentPricePlan.ga_account_count == 1) swal("Upgrade to Pro Plan!", "Google Aalytics Properties are not available in this plan.", "warning");
+                                            }}
+                                        ></GoogleAnalyticsPropertySelect>
                                     </div>
                                 </div>
 

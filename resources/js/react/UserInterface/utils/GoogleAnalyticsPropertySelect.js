@@ -82,6 +82,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 isSearchable={true}
                 placeholder={this.props.placeholder}
                 components={this.props.components}
+                onFocus={this.props.onFocus}
             />
         )
     }

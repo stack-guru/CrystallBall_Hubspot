@@ -107,7 +107,17 @@ export default class UploadAnnotation extends React.Component {
                                     <div className="row ml-0 mr-0 mt-2">
                                         <div className="form-group  col-12 col-sm-12 col-md-5 col-lg-5 p-0 ua-r-pr ">
                                             <label htmlFor="property" className="form-control-placeholder">Google Properties</label>
-                                            <GoogleAnalyticsPropertySelect name="google_analytics_property_id" id="google_analytics_property_id" value={this.state.google_analytics_property_id} onChangeCallback={this.changeHandler} placeholder="Select GA Propertys" multiple></GoogleAnalyticsPropertySelect>
+                                            <GoogleAnalyticsPropertySelect
+                                                name="google_analytics_property_id"
+                                                id="google_analytics_property_id"
+                                                value={this.state.google_analytics_property_id}
+                                                onChangeCallback={this.changeHandler}
+                                                placeholder="Select GA Propertys"
+                                                multiple
+                                                onFocus={(e) => {
+                                                    if (this.props.currentPricePlan.ga_account_count == 1) swal("Upgrade to Pro Plan!", "Google Aalytics Properties are not available in this plan.", "warning");
+                                                }}
+                                            ></GoogleAnalyticsPropertySelect>
                                         </div>
                                         <div className="col-md-2 col-lg-2"></div>
                                         <div className="form-group col-12 col-sm-12 col-md-5 col-lg-5 p-0 ua-r-pl ">

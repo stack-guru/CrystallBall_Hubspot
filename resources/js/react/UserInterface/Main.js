@@ -130,15 +130,17 @@ class Main extends React.Component {
                                 <IndexAnnotations user={this.state.user} />
                             </Route>
                             <Route exact path="/annotation/create" refresh={true}>
-                                <AnnotationsCreate />
+                                <AnnotationsCreate currentPricePlan={this.state.user.price_plan} />
                             </Route>
-                            <Route exact path="/annotation/:id?/edit" refresh={true}
-                                render={(routeParams) => <AnnotationsUpdate routeParams={routeParams} />} />
+                            <Route exact path="/annotation/:id?/edit" refresh={true} render={(routeParams) =>
+                                <AnnotationsUpdate routeParams={routeParams} currentPricePlan={this.state.user.price_plan} />}
+                            >
+                            </Route>
                             <Route exact path="/api-key" refresh={true}>
                                 <IndexAPIKey currentPricePlan={this.state.user.price_plan} />
                             </Route>
                             <Route exact path="/annotation/upload" refresh={true}>
-                                <AnnotationsUpload />
+                                <AnnotationsUpload currentPricePlan={this.state.user.price_plan} />
                             </Route>
                             <Route exact path="/data-source" refresh={true}>
                                 <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} />

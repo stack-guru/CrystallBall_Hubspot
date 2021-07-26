@@ -219,7 +219,11 @@ export default class CreateAnnotation extends React.Component {
                                             value={this.state.annotation.google_analytics_property_id}
                                             onChangeCallback={this.changeHandler} placeholder="Select GA Properties"
                                             components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
-                                            multiple></GoogleAnalyticsPropertySelect>
+                                            multiple
+                                            onFocus={(e) => {
+                                                if(this.props.currentPricePlan.ga_account_count == 1)swal("Upgrade to Pro Plan!", "Google Aalytics Properties are not available in this plan.", "warning");
+                                            }}
+                                            />
 
                                     </div>
                                 </div>
