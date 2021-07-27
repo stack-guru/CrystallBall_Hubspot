@@ -73,7 +73,7 @@ class AnnotationController extends Controller
         $userId = $user->id;
         $pricePlan = $user->pricePlan;
         if (!$pricePlan->has_api) {
-            abort(402);
+            abort(402, "API Access is not allowed in your price plan.");
         }
 
         if($request->has('google_analytics_property_id')){
@@ -136,7 +136,7 @@ class AnnotationController extends Controller
         
         $pricePlan = $user->pricePlan;
         if (!$pricePlan->has_api) {
-            abort(402);
+            abort(402, "API Access is not allowed in your price plan.");
         }
 
         if($request->has('google_analytics_property_id')){
