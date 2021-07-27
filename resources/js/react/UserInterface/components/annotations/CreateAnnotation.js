@@ -221,7 +221,7 @@ export default class CreateAnnotation extends React.Component {
                                             components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
                                             multiple
                                             onFocus={(e) => {
-                                                if(this.props.currentPricePlan.ga_account_count == 1)swal("Upgrade to Pro Plan!", "Google Aalytics Properties are not available in this plan.", "warning");
+                                                if(this.props.currentPricePlan.ga_account_count == 1)swal("Upgrade to Pro Plan!", "Google Analytics Properties are not available in this plan.", "warning");
                                             }}
                                             />
 
