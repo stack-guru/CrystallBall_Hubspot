@@ -29,6 +29,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 });
 
 Route::view('documentation', 'documentation');
+Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
 
 Route::group(['middleware' => ['auth']], function () {
 

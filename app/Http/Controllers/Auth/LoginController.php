@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request as AuthRequest;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -51,6 +52,14 @@ class LoginController extends Controller
     {
         $user->last_login_at = new \DateTime;
         $user->save();
+
+        if($user->user_id){
+            if(!($user->user->pricePlan->ga_account_count > 1)){
+                Auth::logout();
+                return redirect()->route('upgrade-plan');
+            }
+        }
+
         $today = Carbon::now();
         $todayDate = $today->toDateString();
         if ($user->price_plan_expiry_date == $todayDate) {

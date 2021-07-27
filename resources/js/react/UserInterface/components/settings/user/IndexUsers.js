@@ -72,7 +72,7 @@ export default class IndexUsers extends Component {
                                 this.props.user.user_level == 'admin' ?
                                     <div className="row mb-4 ml-3 mr-3">
                                         <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
-                                            {this.props.user.price_plan.user_per_ga_account_count > 1 ?
+                                            {this.props.user.price_plan.user_per_ga_account_count == 0?
                                                 <Link to="/settings/user/create" className="btn btn-sm gaa-btn-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add User</Link>
                                                 :
                                                 <button onClick={() => {
