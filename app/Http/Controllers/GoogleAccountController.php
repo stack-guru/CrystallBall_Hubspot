@@ -29,9 +29,9 @@ class GoogleAccountController extends Controller
             'https://www.googleapis.com/auth/analytics.readonly',
         ];
 
-        if (config('app.env') == 'development' || config('app.env') == 'local') {
-            array_push($scopes, 'https://www.googleapis.com/auth/adwords');
-        }
+        // if (config('app.env') == 'development' || config('app.env') == 'local') {
+        //     array_push($scopes, 'https://www.googleapis.com/auth/adwords');
+        // }
         
         return Socialite::driver('google')
             ->scopes($scopes)
