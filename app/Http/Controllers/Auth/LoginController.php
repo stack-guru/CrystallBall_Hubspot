@@ -54,7 +54,7 @@ class LoginController extends Controller
         $user->save();
 
         if($user->user_id){
-            if(!($user->user->pricePlan->ga_account_count > 1)){
+            if(!($user->user->pricePlan->ga_account_count > 1 || $user->user->pricePlan->ga_account_count == 0)){
                 Auth::logout();
                 return redirect()->route('upgrade-plan');
             }
