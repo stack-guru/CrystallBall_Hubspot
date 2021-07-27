@@ -597,7 +597,7 @@ export default class DataSourceIndex extends React.Component {
 
             this.setState({ isBusy: false, errors: (err.response).data });
             if ((err.response).status == 402) {
-                swal("Upgrade to Pro Plan!", "Data Sources are not available in this package.", "warning").then(value => {
+                swal("Upgrade to Pro Plan!", "Data Sources are not available in this plan.", "warning").then(value => {
                     this.setState({ redirectTo: '/settings/price-plans' });
                 })
             }

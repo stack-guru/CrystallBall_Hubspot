@@ -52,7 +52,7 @@ class IndexAPIKey extends React.Component {
 
     generateAPIKey() {
         if (this.props.currentPricePlan.has_api == 0) {
-            swal("Upgrade to Basic Plan!", "API feature is not available in this package.", "warning").then(value => {
+            swal("Upgrade Your Plan!", "API feature is not available in this plan.", "warning").then(value => {
                 this.setState({ redirectTo: '/settings/price-plans' });
             })
         } else {
