@@ -5,13 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Http\Resources\annotation as annotationResource;
+use App\Mail\BasicUserUsedGAPropertyMail;
+use App\Mail\FreeUserCalledAPIMail;
 use App\Models\Annotation;
 use App\Models\AnnotationGaProperty;
+use App\Notifications\AnnotationCreatedThroughAPI;
 use App\Services\SendGridService;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Notifications\AnnotationCreatedThroughAPI;
+use Illuminate\Support\Facades\Mail;
 
 class AnnotationController extends Controller
 {
@@ -73,11 +76,13 @@ class AnnotationController extends Controller
         $userId = $user->id;
         $pricePlan = $user->pricePlan;
         if (!$pricePlan->has_api) {
-            abort(402, "API Access is not allowed in your price plan.");
+            Mail::to($user)->send(new FreeUserCalledAPIMail);
+            return response()->json(['message' => "API Access is not allowed in your price plan."], 402);
         }
 
-        if($request->has('google_analytics_property_id')){
-            if($pricePlan->ga_account_count == 1){
+        if ($request->has('google_analytics_property_id')) {
+            if ($pricePlan->ga_account_count == 1) {
+                Mail::to($user)->send(new BasicUserUsedGAPropertyMail);
                 return response()->json(['message' => "Apologies! Your current plan doesn't support properties on API.\nAsk the admin of this account to upgrade and continue enjoying the GAannotations properties feature."], 402);
             }
         }
@@ -133,14 +138,16 @@ class AnnotationController extends Controller
         if ($annotation->user_id != $user->id) {
             abort(404);
         }
-        
+
         $pricePlan = $user->pricePlan;
         if (!$pricePlan->has_api) {
-            abort(402, "API Access is not allowed in your price plan.");
+            Mail::to($user)->send(new FreeUserCalledAPIMail);
+            return response()->json(['message' => "API Access is not allowed in your price plan."], 402);
         }
 
-        if($request->has('google_analytics_property_id')){
-            if($pricePlan->ga_account_count == 1){
+        if ($request->has('google_analytics_property_id')) {
+            if ($pricePlan->ga_account_count == 1) {
+                Mail::to($user)->send(new BasicUserUsedGAPropertyMail);
                 return response()->json(['message' => "Apologies! Your current plan doesn't support properties on API.\nAsk the admin of this account to upgrade and continue enjoying the GAannotations properties feature."], 402);
             }
         }
