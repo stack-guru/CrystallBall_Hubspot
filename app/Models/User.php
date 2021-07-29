@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Auth;
+use Carbon\carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,11 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use Carbon\carbon;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasApiTokens;
+
+    public $pushNotificationType = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -148,33 +150,38 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\Models\LoginLog')->orderBy('created_at', 'DESC');
     }
 
-    public function last30DaysApiAnnotationCreatedLogs(){
+    public function last30DaysApiAnnotationCreatedLogs()
+    {
         return $this->hasMany('App\Models\ApiLog')
             ->where('event_name', 'AnnotationCreated')
             ->where('created_at', '>=', Carbon::now()->subDays(30))
             ->orderBy('created_at', 'DESC');
     }
 
-    public function last30DaysPopupOpenedChromeExtensionLogs(){
+    public function last30DaysPopupOpenedChromeExtensionLogs()
+    {
         return $this->hasMany('App\Models\ChromeExtensionLog')
             ->where('event_name', 'PopupOpened')
             ->where('created_at', '>=', Carbon::now()->subDays(30))
             ->orderBy('created_at', 'DESC');
     }
 
-    public function lastPopupOpenedChromeExtensionLog(){
+    public function lastPopupOpenedChromeExtensionLog()
+    {
         return $this->hasOne('App\Models\ChromeExtensionLog')
             ->where('event_name', 'PopupOpened')
             ->orderBy('created_at', 'DESC');
     }
 
-    public function AnnotationButtonClickedChromeExtensionLogs(){
+    public function AnnotationButtonClickedChromeExtensionLogs()
+    {
         return $this->hasMany('App\Models\ChromeExtensionLog')
             ->where('event_name', 'AnnotationButtonClicked')
             ->orderBy('created_at', 'DESC');
     }
 
-    public function lastAnnotationButtonClickedChromeExtensionLog(){
+    public function lastAnnotationButtonClickedChromeExtensionLog()
+    {
         return $this->hasOne('App\Models\ChromeExtensionLog')
             ->where('event_name', 'AnnotationButtonClicked')
             ->orderBy('created_at', 'DESC');
@@ -215,7 +222,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(UserAnnotationColor::class);
     }
 
-    public function notificationSettingFor($settingName){
+    public function notificationSettingFor($settingName)
+    {
         return NotificationSetting::where('name', $settingName)->where('user_id', $this->id)->first();
+    }
+
+    public function routeNotificationForPusherPushNotifications($notification)
+    {
+        return (string) $this->getKey();
     }
 }

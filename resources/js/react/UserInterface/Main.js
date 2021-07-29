@@ -1,16 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import 'react-toastify/dist/ReactToastify.css';
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
 import HttpClient from "./utils/HttpClient";
 
-import './Sidebarjs.js';
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer"
-
-import './Main.css';
-import './Responsiveness.css';
 
 import Index from "./components/Index";
 import AnnotationsCreate from './components/annotations/CreateAnnotation';
@@ -67,11 +63,26 @@ class Main extends React.Component {
                         eventLabel: 'SignUp'
                     });
                 }
-            }, (err) => {
 
+                const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
+                    url: "/beaming/auth",
+                    queryParams: {
+                        // someQueryParam: "parameter-content", // URL query params your auth endpoint needs
+                    },
+                    headers: {
+                        // someHeader: "header-content", // Headers your auth endpoint needs
+                    },
+                });
+                window.beamsClient = new PusherPushNotifications.Client({
+                    instanceId: process.env.PUSHER_BEAMS_INSTANCE_ID,
+                });
+                beamsClient.start()
+                    .then(() => beamsClient.setUserId(response.data.user.id.toString(), beamsTokenProvider))
+                    .catch(console.error);
+                    
+            }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-
                 this.setState({ isBusy: false, errors: err });
             });
     }

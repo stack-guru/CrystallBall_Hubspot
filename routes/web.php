@@ -125,4 +125,23 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
 
     });
+
+    Route::get('/beaming/auth', function (Request $request) {
+        $userID = Auth::id();
+
+        $beamsClient = new \Pusher\PushNotifications\PushNotifications(
+            array(
+              "instanceId" => config('services.pusher.beams_instance_id'),
+              "secretKey" => config('services.pusher.beams_secret_key'),
+            )
+        );
+
+        if ($userID != request()->query('user_id')) {
+            return response('Inconsistent request', 401);
+        } else {
+            $beamsToken = $beamsClient->generateToken((string) $userID);
+            return response()->json($beamsToken);
+        }
+        return response()->json($beamsToken);
+    });
 });

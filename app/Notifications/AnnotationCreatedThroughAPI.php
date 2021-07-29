@@ -6,6 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\PusherPushNotifications\PusherChannel;
+use NotificationChannels\PusherPushNotifications\PusherMessage;
 use App\Models\User;
 
 class AnnotationCreatedThroughAPI extends Notification
@@ -34,9 +36,10 @@ class AnnotationCreatedThroughAPI extends Notification
         
         $notificationSetting = $notifiable->notificationSettingFor("api");
         if(! $notificationSetting) return [];
-        if(! $notificationSetting->is_enabled) return [];
 
+        if(! $notificationSetting->is_enabled) return [];
         if($notificationSetting->email_on_event_day) array_push($channels, "mail");
+        if($notificationSetting->browser_notification_on_event_day) array_push($channels, PusherChannel::class);
 
         return $channels;
     }
@@ -53,6 +56,16 @@ class AnnotationCreatedThroughAPI extends Notification
                     ->subject("New Annotation for [API_KEY_NAME]")
                     ->greeting('Hi [NAME],')
                     ->line('A new annotation was received from the API KEY: [API_KEY_NAME]');
+    }
+
+    public function toPushNotification($notifiable)
+    {
+        return PusherMessage::create()
+            ->platform('web')
+            ->web()
+            ->sound('default')
+            ->title("New Annotation received through API")
+            ->body("");
     }
 
 }
