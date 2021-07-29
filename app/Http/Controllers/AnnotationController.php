@@ -273,7 +273,7 @@ class AnnotationController extends Controller
         } elseif ($request->query('sortBy') == "category") {
             $annotationsQuery .= " ORDER BY TempTable.category ASC";
         } else {
-            $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
+            $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
         }
         $annotations = DB::select($annotationsQuery);
 
