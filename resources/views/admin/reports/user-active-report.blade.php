@@ -10,10 +10,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Users
-                    <span class="badge badge-warning float-right">Total Active Users in Last 30 days: </span>
-                    <span class="badge badge-warning float-right">Number of registrations in Last 30 days: </span>
-                </div>
+                <div class="card-header">Users</div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hoved table-bordered" id="myTable">
@@ -32,7 +29,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $totalActiveUsers = 0;
+                                    $newUsersInLast30Days = 0;
+                                @endphp
                                 @foreach($users as $user)
+                                    @if(\Carbon\Carbon::now()->subDays(30) >= $user->created_at )
+                                        @php
+                                            $newUsersInLast30Days++;
+                                        @endphp
+                                    @endif
                                     <tr>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
@@ -43,12 +49,32 @@
                                         <td>{{ $user->last_api_called_at }} + {{ $user->last30_days_api_annotation_created_logs_count }}</td>
                                         <td></td>
                                         <td>{{ $user->pricePlan->name }}</td>
-                                        <td></td>
+                                        <td>
+                                            @if($user->last30_days_popup_opened_chrome_extension_logs_count
+                                                || $user->annotation_button_clicked_chrome_extension_logs_count
+                                                || $user->last30_days_api_annotation_created_logs_count
+                                                || $user->pricePlan->price
+                                                || $user->login_logs_count)
+                                                @php
+                                                    $totalActiveUsers++;
+                                                @endphp
+                                                Yes
+                                            @else
+                                                @php
+
+                                                @endphp
+                                                No
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="card-footer">
+                    <span class="badge badge-warning float-right">Total Active Users in Last 30 days: {{ $totalActiveUsers }}</span>
+                    <span class="badge badge-warning float-right">Number of registrations in Last 30 days: {{ $newUsersInLast30Days }}</span>
                 </div>
             </div>
         </div>
