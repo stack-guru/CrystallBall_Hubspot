@@ -13,7 +13,7 @@ const mix = require('laravel-mix');
 
 
  
-mix.react('resources/js/react/UserInterface/UI.js', 'public/js');
+// mix.react('resources/js/react/UserInterface/UI.js', 'public/js');
 
 // mix.styles([
 //     'resources/css/bootstrap.css',
@@ -29,6 +29,5 @@ mix.react('resources/js/react/UserInterface/UI.js', 'public/js');
 //     'resources/css/bootstrap.css',
 // ], 'public/css/admin.css');
 // mix.scripts([
-//     'resources/js/jquery.js',
 //     'resources/js/bootstrap.js',
 // ], 'public/js/admin.js');
