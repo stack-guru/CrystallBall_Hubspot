@@ -137,8 +137,7 @@ class RegisterController extends Controller
                 $user->is_billing_enabled = false;
                 $user->save();
 
-                $sGS = new SendGridService;
-                $sGS->addUserToMarketingList($user, "1 GAa New registrations");
+                event(new \Illuminate\Auth\Events\Registered($user));
 
             }
         }
