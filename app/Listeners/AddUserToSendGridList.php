@@ -29,6 +29,14 @@ class AddUserToSendGridList
         info(get_class($event));
 
         switch (get_class($event)) {
+            /////////////////////////////////////////////////////
+            // New Registration
+            case 'Illuminate\Auth\Events\Registered':
+                $sGS->addUserToMarketingList($event->user, "1 GAa New registrations");
+                break;
+
+            /////////////////////////////////////////////////////
+            // Data Source Events
             case 'App\Events\NewCSVFileUploaded':
                 $sGS->addUserToContactList($event->user, "New CSV [file name] Uploaded", ['file_name' => $event->fileName]);
                 break;

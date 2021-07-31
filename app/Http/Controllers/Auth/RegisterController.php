@@ -99,9 +99,6 @@ class RegisterController extends Controller
             'is_billing_enabled' => false,
         ]);
 
-        $sGS = new SendGridService;
-        $sGS->addUserToMarketingList($user, "1 GAa New registrations");
-
         return $user;
     }
 
