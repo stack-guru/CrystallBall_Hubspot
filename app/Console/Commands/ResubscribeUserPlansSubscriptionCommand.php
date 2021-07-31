@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\UserTrialPricePlanEnded;
 use App\Mail\AdminFailedPaymentTransactionMail;
 use App\Mail\UserFailedPaymentTransactionMail;
 use App\Models\Admin;
@@ -157,13 +158,8 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
             $trialUser->save();
 
-            $sGS->addUserToContactList($trialUser, "Holidays for [Country_name] Deactivated because from Trial to Free");
-            $sGS->addUserToContactList($trialUser, "Google Updates Deactivated from Trial to Free");
-            $sGS->addUserToContactList($trialUser, "Retail Marketing Dates Deactivated from Trial to Free");
-            $sGS->addUserToContactList($trialUser, "News Alerts for [keywords] Deactivated because from Trial to Free");
-            $sGS->addUserToContactList($trialUser, "Weather for [cities] Deactivated from Trial to Free");
-            $sGS->addUserToContactList($trialUser, "WordPress Deactivated because from Trial to Free");
-            $sGS->addUserToContactList($trialUser, "Website Monitoring Deactivated because Trial to Free");
+            event(new UserTrialPricePlanEnded($trialUser));
+
         }
         print count($trialUsers) . " Users have been subscribed from trial to free plan.\n";
 

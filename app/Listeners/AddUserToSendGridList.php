@@ -76,6 +76,16 @@ class AddUserToSendGridList
             case 'App\Events\UserUsedApiForFirstTime':
                 $sGS->addUserToMarketingList($event->user, "14 GAa API users");
                 break;
+
+            case 'App\Events\UserTrialPricePlanEnded':
+                $sGS->addUserToContactList($event->user, "Holidays for [Country_name] Deactivated because from Trial to Free");
+                $sGS->addUserToContactList($event->user, "Google Updates Deactivated from Trial to Free");
+                $sGS->addUserToContactList($event->user, "Retail Marketing Dates Deactivated from Trial to Free");
+                $sGS->addUserToContactList($event->user, "News Alerts for [keywords] Deactivated because from Trial to Free");
+                $sGS->addUserToContactList($event->user, "Weather for [cities] Deactivated from Trial to Free");
+                $sGS->addUserToContactList($event->user, "WordPress Deactivated because from Trial to Free");
+                $sGS->addUserToContactList($event->user, "Website Monitoring Deactivated because Trial to Free");
+                break;
         }
     }
 }
