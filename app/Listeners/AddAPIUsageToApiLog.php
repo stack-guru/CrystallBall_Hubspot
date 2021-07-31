@@ -7,7 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use App\Models\ApiLog;
 use Carbon\Carbon;
 
-class AddAPICreateUsageToApiLog
+class AddAPIUsageToApiLog
 {
     /**
      * Create the event listener.
@@ -31,7 +31,13 @@ class AddAPICreateUsageToApiLog
         $request = request();
 
         $apiLog = new ApiLog;
-        $apiLog->event_name  = "AnnotationCreated";
+
+        switch(get_class($event)){
+            case 'App\Events\UserAddedAnAnnotationViaAPI':
+                $apiLog->event_name  = "AnnotationCreated";
+                break;
+        }
+
         $apiLog->user_id  = $user->id;
         $apiLog->ip_address  = $request->ip();
         $apiLog->bearer_token  = $request->bearerToken();

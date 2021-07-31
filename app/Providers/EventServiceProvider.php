@@ -29,7 +29,11 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         \App\Events\UserAddedAnAnnotationViaAPI::class => [
-            \App\Listeners\AddAPICreateUsageToApiLog::class
+            \App\Listeners\AddAPIUsageToApiLog::class
+        ],
+
+        \App\Events\NewCSVFileUploaded::class => [
+            \App\Listeners\AddUserToSendGridList::class
         ],
     ];
 

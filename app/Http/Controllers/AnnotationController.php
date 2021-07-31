@@ -12,6 +12,7 @@ use Auth;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
+use App\Events\NewCSVFileUploaded;
 
 class AnnotationController extends Controller
 {
@@ -431,8 +432,7 @@ class AnnotationController extends Controller
             }
         }
 
-        $sGS = new SendGridService;
-        $sGS->addUserToContactList($user, "New CSV [file name] Uploaded", ['file_name' => $request->file('csv')->getClientOriginalName()]);
+        event(new NewCSVFileUploaded($user, $request->file('csv')->getClientOriginalName()));
 
         return ['success' => true];
     }
