@@ -38,7 +38,7 @@ class AddUserToSendGridList
             /////////////////////////////////////////////////////
             // Data Source Events
             case 'App\Events\NewCSVFileUploaded':
-                $sGS->addUserToContactList($event->user, "New CSV [file name] Uploaded", ['file_name' => $event->fileName]);
+                $sGS->addUserToContactList($event->user, "New CSV [file name] Uploaded", ['w13_T' => $event->fileName]);
                 break;
             case 'App\Events\HolidaysDeactivatedManually':
                 $sGS->addUserToContactList($event->user, "Holidays for [Country_name] Deactivated manually");
