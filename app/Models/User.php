@@ -224,7 +224,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function notificationSettingFor($settingName)
     {
-        return NotificationSetting::where('name', $settingName)->where('user_id', $this->id)->first();
+        return NotificationSetting::where('name', $settingName)->where('user_id', $this->getKey())->first();
     }
 
     public function routeNotificationForPusherPushNotifications($notification)
