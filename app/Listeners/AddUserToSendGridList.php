@@ -62,6 +62,12 @@ class AddUserToSendGridList
             case 'App\Events\NewsAlertDeactivatedManually':
                 $sGS->addUserToContactList($event->user, "News Alerts for [keywords] Deactivated manually");
                 break;
+
+            /////////////////////////////////////////////////////
+            // Marketing Lists
+            case 'App\Events\UserUsedApiForFirstTime':
+                $sGS->addUserToMarketingList($event->user, "14 GAa API users");
+                break;
         }
     }
 }

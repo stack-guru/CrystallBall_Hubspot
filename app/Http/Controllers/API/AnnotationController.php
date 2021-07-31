@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\UserUsedAPI;
+use App\Events\UserUsedApiForFirstTime;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Http\Resources\annotation as annotationResource;
@@ -10,7 +12,6 @@ use App\Mail\FreeUserCalledAPIMail;
 use App\Models\Annotation;
 use App\Models\AnnotationGaProperty;
 use App\Notifications\AnnotationCreatedThroughAPI;
-use App\Services\SendGridService;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,12 +35,12 @@ class AnnotationController extends Controller
         $resource = new annotationResource($annotations);
 
         if ($user->last_api_called_at == null) {
-            $sGS = new SendGridService;
-            $sGS->addUserToMarketingList($user, "14 GAa API users");
+            event(new UserUsedApiForFirstTime($user));
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
 
+        event(new UserUsedAPI);
         return ['annotations' => $resource];
     }
 
@@ -55,11 +56,12 @@ class AnnotationController extends Controller
         }
 
         if ($user->last_api_called_at == null) {
-            $sGS = new SendGridService;
-            $sGS->addUserToMarketingList($user, "14 GAa API users");
+            event(new UserUsedApiForFirstTime($user));
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
+
+        event(new UserUsedAPI);
 
         return ['annotation' => $annotation];
     }
@@ -111,8 +113,7 @@ class AnnotationController extends Controller
         }
 
         if ($user->last_api_called_at == null) {
-            $sGS = new SendGridService;
-            $sGS->addUserToMarketingList($user, "14 GAa API users");
+            event(new UserUsedApiForFirstTime($user));
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
@@ -120,6 +121,8 @@ class AnnotationController extends Controller
         $currentUser = Auth::user();
         \App\Events\UserAddedAnAnnotationViaAPI::dispatch($currentUser);
         $currentUser->notify(new AnnotationCreatedThroughAPI);
+
+        event(new UserUsedAPI);
 
         return response()->json(['annotation' => $annotation], 201);
 
@@ -189,11 +192,12 @@ class AnnotationController extends Controller
         $annotation->load('annotationGaProperties');
 
         if ($user->last_api_called_at == null) {
-            $sGS = new SendGridService;
-            $sGS->addUserToMarketingList($user, "14 GAa API users");
+            event(new UserUsedApiForFirstTime($user));
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
+
+        event(new UserUsedAPI);
 
         return response()->json(['annotation' => $annotation], 200);
 
@@ -224,11 +228,12 @@ class AnnotationController extends Controller
         $annotation->delete();
 
         if ($user->last_api_called_at == null) {
-            $sGS = new SendGridService;
-            $sGS->addUserToMarketingList($user, "14 GAa API users");
+            event(new UserUsedApiForFirstTime($user));
         }
         $user->last_api_called_at = new \DateTime;
         $user->save();
+
+        event(new UserUsedAPI);
 
         return response()->json([], 204);
     }

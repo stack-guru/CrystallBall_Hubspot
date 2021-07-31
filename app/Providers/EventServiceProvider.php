@@ -42,6 +42,8 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\WordPressActivated::class => [\App\Listeners\AddUserToSendGridList::class],
         \App\Events\WordPressDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
 
+        \App\Events\UserUsedApiForFirstTime::class => [\App\Listeners\AddUserToSendGridList::class],
+
     ];
 
     /**

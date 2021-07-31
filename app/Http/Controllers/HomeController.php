@@ -14,7 +14,6 @@ use App\Events\WordPressActivated;
 use App\Events\WordPressDeactivatedManually;
 use App\Mail\SupportRequestMail;
 use App\Models\User;
-use App\Services\SendGridService;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -43,8 +42,6 @@ class HomeController extends Controller
         if (!$user->pricePlan->has_data_sources) {
             abort(402);
         }
-
-        $sGS = new SendGridService;
 
         if ($request->has('is_ds_holidays_enabled')) {
             $user->is_ds_holidays_enabled = $request->is_ds_holidays_enabled;
