@@ -18,27 +18,30 @@ class EventServiceProvider extends ServiceProvider
             \Illuminate\Auth\Listeners\SendEmailVerificationNotification::class,
             \App\Listeners\SeedUserDataSource::class,
             \App\Listeners\AddSampleAnnotation::class,
-            'App\Listeners\SendAdminNewUserEmail'
+            'App\Listeners\SendAdminNewUserEmail',
         ],
         \Illuminate\Auth\Events\Login::class => [
-            'App\Listeners\LoginListener'
+            'App\Listeners\LoginListener',
         ],
 
         'Laravel\Passport\Events\AccessTokenCreated' => [
             'App\Listeners\APITokenCreated',
         ],
 
-        \App\Events\UserAddedAnAnnotationViaAPI::class => [
-            \App\Listeners\AddAPIUsageToApiLog::class
-        ],
+        \App\Events\UserAddedAnAnnotationViaAPI::class => [\App\Listeners\AddAPIUsageToApiLog::class],
 
-        \App\Events\NewCSVFileUploaded::class => [
-            \App\Listeners\AddUserToSendGridList::class
-        ],
+        \App\Events\NewCSVFileUploaded::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\HolidaysDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\GoogleUpdatesActivated::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\GoogleUpdatesDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\NewsAlertDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\RetailMarketingDatesActivated::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\RetailMarketingDatesDeactivated::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\WeatherForCitiesDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\WebsiteMonitoringDeactivated::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\WordPressActivated::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\WordPressDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
 
-        \App\Events\HolidaysDeactivatedManually::class => [
-            \App\Listeners\AddUserToSendGridList::class
-        ],
     ];
 
     /**

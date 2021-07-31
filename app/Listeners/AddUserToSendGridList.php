@@ -2,8 +2,6 @@
 
 namespace App\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use App\Services\SendGridService;
 
 class AddUserToSendGridList
@@ -30,12 +28,39 @@ class AddUserToSendGridList
 
         info(get_class($event));
 
-        switch(get_class($event)){
+        switch (get_class($event)) {
             case 'App\Events\NewCSVFileUploaded':
                 $sGS->addUserToContactList($event->user, "New CSV [file name] Uploaded", ['file_name' => $event->fileName]);
                 break;
             case 'App\Events\HolidaysDeactivatedManually':
                 $sGS->addUserToContactList($event->user, "Holidays for [Country_name] Deactivated manually");
+                break;
+            case 'App\Events\GoogleUpdatesActivated':
+                $sGS->addUserToContactList($event->user, "Google Updates Activated");
+                break;
+            case 'App\Events\GoogleUpdatesDeactivatedManually':
+                $sGS->addUserToContactList($event->user, "Google Updates Deactivated manually");
+                break;
+            case 'App\Events\RetailMarketingDatesActivated':
+                $sGS->addUserToContactList($event->user, "Retail Marketing Dates Activated");
+                break;
+            case 'App\Events\RetailMarketingDatesDeactivated':
+                $sGS->addUserToContactList($event->user, "Retail Marketing Dates Deactivated manually");
+                break;
+            case 'App\Events\WeatherForCitiesDeactivatedManually':
+                $sGS->addUserToContactList($event->user, "Weather for [cities] Deactivated manually");
+                break;
+            case 'App\Events\WordPressActivated':
+                $sGS->addUserToContactList($event->user, "WordPress Activated");
+                break;
+            case 'App\Events\WordPressDeactivatedManually':
+                $sGS->addUserToContactList($event->user, "WordPress Deactivated manually");
+                break;
+            case 'App\Events\WebsiteMonitoringDeactivated':
+                $sGS->addUserToContactList($event->user, "Website Monitoring Deactivated because URL was removed");
+                break;
+            case 'App\Events\NewsAlertDeactivatedManually':
+                $sGS->addUserToContactList($event->user, "News Alerts for [keywords] Deactivated manually");
                 break;
         }
     }

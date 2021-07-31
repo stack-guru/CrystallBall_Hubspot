@@ -2,6 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\GoogleUpdatesActivated;
+use App\Events\GoogleUpdatesDeactivatedManually;
+use App\Events\HolidaysDeactivatedManually;
+use App\Events\NewsAlertDeactivatedManually;
+use App\Events\RetailMarketingDatesActivated;
+use App\Events\RetailMarketingDatesDeactivated;
+use App\Events\WeatherForCitiesDeactivatedManually;
+use App\Events\WebsiteMonitoringDeactivated;
+use App\Events\WordPressActivated;
+use App\Events\WordPressDeactivatedManually;
 use App\Mail\SupportRequestMail;
 use App\Models\User;
 use App\Services\SendGridService;
@@ -9,7 +19,6 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Events\HolidaysDeactivatedManually;
 
 class HomeController extends Controller
 {
@@ -50,9 +59,9 @@ class HomeController extends Controller
             $user->is_ds_google_algorithm_updates_enabled = $request->is_ds_google_algorithm_updates_enabled;
             if ($request->is_ds_google_algorithm_updates_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
-                $sGS->addUserToContactList($user, "Google Updates Activated");
+                event(new GoogleUpdatesActivated($user));
             } else {
-                $sGS->addUserToContactList($user, "Google Updates Deactivated manually");
+                event(new GoogleUpdatesDeactivatedManually($user));
             }
             $user->save();
         }
@@ -60,9 +69,9 @@ class HomeController extends Controller
             $user->is_ds_retail_marketing_enabled = $request->is_ds_retail_marketing_enabled;
             if ($request->is_ds_retail_marketing_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
-                $sGS->addUserToContactList($user, "Retail Marketing Dates Activated");
+                event(new RetailMarketingDatesActivated($user));
             } else {
-                $sGS->addUserToContactList($user, "Retail Marketing Dates Deactivated manually");
+                event(new RetailMarketingDatesDeactivated($user));
             }
             $user->save();
         }
@@ -71,7 +80,7 @@ class HomeController extends Controller
             if ($request->is_ds_weather_alerts_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
             } else {
-                $sGS->addUserToContactList($user, "Weather for [cities] Deactivated manually");
+                event(new WeatherForCitiesDeactivatedManually($user));
             }
             $user->save();
         }
@@ -80,7 +89,7 @@ class HomeController extends Controller
             if ($request->is_ds_google_alerts_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
             } else {
-                $sGS->addUserToContactList($user, "News Alerts for [keywords] Deactivated manually");
+                event(new NewsAlertDeactivatedManually($user));
             }
             $user->save();
         }
@@ -88,9 +97,9 @@ class HomeController extends Controller
             $user->is_ds_wordpress_updates_enabled = $request->is_ds_wordpress_updates_enabled;
             if ($request->is_ds_wordpress_updates_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
-                $sGS->addUserToContactList($user, "WordPress Activated");
+                event(new WordPressActivated($user));
             } else {
-                $sGS->addUserToContactList($user, "WordPress Deactivated manually");
+                event(new WordPressDeactivatedManually($user));
             }
             $user->save();
         }
@@ -99,7 +108,7 @@ class HomeController extends Controller
             if ($request->is_ds_web_monitors_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
             } else {
-                $sGS->addUserToContactList($user, "Website Monitoring Deactivated because URL was removed");
+                event(new WebsiteMonitoringDeactivated($user));
             }
             $user->save();
         }
