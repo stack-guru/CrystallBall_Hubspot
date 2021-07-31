@@ -35,6 +35,10 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\NewCSVFileUploaded::class => [
             \App\Listeners\AddUserToSendGridList::class
         ],
+
+        \App\Events\HolidaysDeactivatedManually::class => [
+            \App\Listeners\AddUserToSendGridList::class
+        ],
     ];
 
     /**

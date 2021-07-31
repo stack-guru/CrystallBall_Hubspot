@@ -34,6 +34,9 @@ class AddUserToSendGridList
             case 'App\Events\NewCSVFileUploaded':
                 $sGS->addUserToContactList($event->user, "New CSV [file name] Uploaded", ['file_name' => $event->fileName]);
                 break;
+            case 'App\Events\HolidaysDeactivatedManually':
+                $sGS->addUserToContactList($event->user, "Holidays for [Country_name] Deactivated manually");
+                break;
         }
     }
 }

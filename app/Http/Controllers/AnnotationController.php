@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewCSVFileUploaded;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
 use App\Models\AnnotationGaProperty;
 use App\Models\UserDataSource;
-use App\Services\SendGridService;
 use Auth;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
-use App\Events\NewCSVFileUploaded;
 
 class AnnotationController extends Controller
 {
@@ -359,7 +358,7 @@ class AnnotationController extends Controller
                             try {
                                 $date = Carbon::createFromFormat($request->date_format, $values[$i]);
                                 $row['show_at'] = $date->format('Y-m-d');
-                            } catch (\Exception$e) {
+                            } catch (\Exception $e) {
                                 return ['message' => "Please select correct date format according to your CSV file from the list below."];
                             }
 

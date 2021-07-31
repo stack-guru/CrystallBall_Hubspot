@@ -9,6 +9,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Events\HolidaysDeactivatedManually;
 
 class HomeController extends Controller
 {
@@ -41,7 +42,7 @@ class HomeController extends Controller
             if ($request->is_ds_holidays_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
             } else {
-                $sGS->addUserToContactList($user, "Holidays for [Country_name] Deactivated manually");
+                event(new HolidaysDeactivatedManually($user));
             }
             $user->save();
         }
