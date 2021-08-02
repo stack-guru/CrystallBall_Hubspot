@@ -8,19 +8,18 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 
-class WordpressUpdate extends Notification
+class GoogleAlert extends Notification
 {
     use Queueable;
 
-    public $wordPressUpdate;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(\App\Models\WordpressUpdate $wordPressUpdate)
+    public function __construct()
     {
-        $this->wordPressUpdate = $wordPressUpdate;
+        //
     }
 
     /**
@@ -33,7 +32,7 @@ class WordpressUpdate extends Notification
     {
         $channels = [];
 
-        $notificationSetting = $notifiable->notificationSettingFor("wordpress_updates");
+        $notificationSetting = $notifiable->notificationSettingFor("news_alerts");
 
         if (!$notificationSetting) {
             return [];
@@ -63,10 +62,9 @@ class WordpressUpdate extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("New Google Algorithm Update.")
-            ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('There is a new WordPress Update.')
-            ->line('We added an annotation for you. Check out what’s new ' . $this->wordPressUpdate->url);
+            ->subject("Google Alert")
+            ->greeting('Hi [NAME],')
+            ->line('Google alert has been received for your tag.');
     }
 
     public function toPushNotification($notifiable)
@@ -75,7 +73,7 @@ class WordpressUpdate extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("There is a new WordPress Update.")
+            ->title("Google Alert")
             ->body("");
     }
 

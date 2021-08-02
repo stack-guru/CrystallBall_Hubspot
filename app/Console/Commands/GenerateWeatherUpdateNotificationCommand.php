@@ -42,7 +42,7 @@ class GenerateWeatherUpdateNotificationCommand extends Command
      */
     public function handle()
     {
-        $openWeatherMapAlerts = OpenWeatherMapAlert::where('alert_date', Carbon::now()->format('Y-m-d'))->get();
+        $openWeatherMapAlerts = OpenWeatherMapAlert::with('openWeatherMapCity')->where('alert_date', Carbon::now()->format('Y-m-d'))->get();
         if (count($openWeatherMapAlerts)) {
             print "Sending open weather map alert notification of " . count($openWeatherMapAlerts) . " event(s).\n";
             foreach ($openWeatherMapAlerts as $index => $openWeatherMapAlert) {
@@ -54,7 +54,7 @@ class GenerateWeatherUpdateNotificationCommand extends Command
                     ->get();
 
                 print "Sending notification to " . count($users) . " users.\n";
-                Notification::send($users, new OpenWeatherMapAlertNotification);
+                Notification::send($users, new OpenWeatherMapAlertNotification($openWeatherMapAlert));
             }
             print "Notification sent successfully!\n";
         } else {

@@ -12,14 +12,15 @@ class OpenWeatherMapAlert extends Notification
 {
     use Queueable;
 
+    public $openWeatherMapAlert;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\App\Models\OpenWeatherMapAlert $openWeatherMapAlert)
     {
-        //
+        $this->openWeatherMapAlert = $openWeatherMapAlert;
     }
 
     /**
@@ -62,9 +63,9 @@ class OpenWeatherMapAlert extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Weather Alert")
-            ->greeting('Hi [NAME],')
-            ->line('Weather alert has been received for your city.');
+            ->subject("Weather Alert in: " . $this->openWeatherMapAlert->openWeatherMapCity->name)
+            ->greeting('Hi ' . $notifiable->name . ',')
+            ->line('We detected a new Weather Alert: ' . $this->openWeatherMapAlert->event . ' in ' . $this->openWeatherMapAlert->openWeatherMapCity->name . ' at ' . $this->openWeatherMapAlert->alert_date . '.');
     }
 
     public function toPushNotification($notifiable)
@@ -73,7 +74,7 @@ class OpenWeatherMapAlert extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("Weather Alert")
+            ->title("We detected a new Weather Alert: " . $this->openWeatherMapAlert->event . " in " . $this->openWeatherMapAlert->openWeatherMapCity->name . " at " . $this->openWeatherMapAlert->alert_date . ".")
             ->body("");
     }
 

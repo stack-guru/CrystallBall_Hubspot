@@ -14,4 +14,8 @@ class OpenWeatherMapAlert extends Model
     protected $fillable = [
         'sender_name', 'event', 'description', 'alert_date', 'open_weather_map_city_id',
     ];
+
+    public function openWeatherMapCity(){
+        return $this->belongsTo(OpenWeatherMapCity::class);
+    }
 }
