@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\OpenWeatherMapAlert;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\WordpressUpdate as WordpressUpdateNotification;
+use App\Notifications\OpenWeatherMapAlert as OpenWeatherMapAlertNotification;
 
 class GenerateWeatherUpdateNotificationCommand extends Command
 {
@@ -16,14 +16,14 @@ class GenerateWeatherUpdateNotificationCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'gaa:generate-weather-update-notification';
+    protected $signature = 'gaa:generate-weather-alert-notification';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This command will generate events if there is any weather update for users.';
+    protected $description = 'This command will generate events if there is any weather alert for users.';
 
     /**
      * Create a new command instance.
@@ -42,21 +42,30 @@ class GenerateWeatherUpdateNotificationCommand extends Command
      */
     public function handle()
     {
-        $wordPressUpdates = OpenWeatherMapAlert::where('update_date', Carbon::now()->format('Y-m-d'))->get();
-        if(count($wordPressUpdates)){
-            print "Sending wordpress update notification of " . count($wordPressUpdates) . " event(s).\n";
-            foreach ($wordPressUpdates as $index => $wordPressUpdate) {
+        $openWeatherMapAlerts = OpenWeatherMapAlert::where('alert_date', Carbon::now()->format('Y-m-d'))->get();
+        if(count($openWeatherMapAlerts)){
+            print "Sending open weather map alert notification of " . count($openWeatherMapAlerts) . " event(s).\n";
+            foreach ($openWeatherMapAlerts as $index => $OpenWeatherMapAlert) {
                 $users = User::select('users.*')
                     ->join('notification_settings', 'users.id', 'notification_settings.user_id')
-                    ->where('notification_settings.name', 'wordpress_updates')
+                    ->where('notification_settings.name', 'weather_alerts')
                     ->where('notification_settings.is_enabled', true)
+
+                    ->join('user_data_sources as uds', 'uds.open_weather_map_city_id' , 'open_weather_map_alerts.open_weather_map_city_id')
+                    ->join('user_data_sources as owmes', 'owmes.open_weather_map_event', 'open_weather_map_alerts.event')
+                    ->join('open_weather_map_cities', 'open_weather_map_cities.id' , 'open_weather_map_alerts.open_weather_map_city_id')
+
+                    ->where('uds.ds_code', 'open_weather_map_cities')
+                    ->where('uds.user_id', 'users.id')
+                    ->where('owmes.user_id', 'users.id')
+                    
                     ->get();
                 print "Sending notification to " . count($users) . " users.\n";
-                Notification::send($users, new WordpressUpdateNotification($wordPressUpdate));
+                Notification::send($users, new OpenWeatherMapAlertNotification($OpenWeatherMapAlert));
             }
             print "Notification sent successfully!\n";
         }else{
-            print "No user has enabled this notification.\n";
+            print "No notification to send.\n";
         }
     }
 }

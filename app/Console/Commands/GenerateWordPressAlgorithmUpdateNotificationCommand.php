@@ -56,7 +56,7 @@ class GenerateWordPressAlgorithmUpdateNotificationCommand extends Command
             }
             print "Notification sent successfully!\n";
         }else{
-            print "No user has enabled this notification.\n";
+            print "No notification to send.\n";
         }
     }
 }
