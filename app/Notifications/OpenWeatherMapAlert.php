@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 
-class WordpressUpdate extends Notification
+class OpenWeatherMapAlert extends Notification
 {
     use Queueable;
 
