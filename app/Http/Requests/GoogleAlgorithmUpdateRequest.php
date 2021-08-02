@@ -28,7 +28,7 @@ class GoogleAlgorithmUpdateRequest extends FormRequest
             'event_name' => 'required|string',
             'description' => 'required|string',
             'update_date' => 'required|date',
-            'url' => 'nullable|string',
+            'url' => 'required|string',
             'status' => 'nullable'
         ];
     }
