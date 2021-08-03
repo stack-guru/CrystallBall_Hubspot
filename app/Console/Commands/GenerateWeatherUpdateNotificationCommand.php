@@ -51,6 +51,11 @@ class GenerateWeatherUpdateNotificationCommand extends Command
                     ->join('open_weather_map_cities', 'open_weather_map_cities.id', 'user_data_sources.open_weather_map_city_id')
                     ->join('open_weather_map_alerts', 'open_weather_map_cities.id', 'open_weather_map_alerts.open_weather_map_city_id')
                     ->where('open_weather_map_alerts.id', $openWeatherMapAlert->id)
+
+                    ->join('notification_settings', 'users.id', 'notification_settings.user_id')
+                    ->where('notification_settings.name', 'weather_alerts')
+                    ->where('notification_settings.is_enabled', true)
+
                     ->get();
 
                 print "Sending notification to " . count($users) . " users.\n";
