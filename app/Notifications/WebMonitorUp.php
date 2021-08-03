@@ -7,6 +7,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
+use Carbon\Carbon;
 
 class WebMonitorUp extends Notification
 {
@@ -63,10 +64,10 @@ class WebMonitorUp extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Website Monitoring: [Monitoring_Name]  is back UP")
+            ->subject("Website Monitoring: " . $this->webMonitor->name . "  is back UP")
             ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('The monitor [Monitoring_Name] ([URL])  is back UP (It was down for [TIME]).')
-            ->line('Event timestamp: [TIME]');
+            ->line('The monitor ' . $this->webMonitor->name . ' (' . $this->webMonitor->url . ')  is back UP (It was down for [TIME]).')
+            ->line('Event timestamp: ' . Carbon::now());
     }
 
     public function toPushNotification($notifiable)
@@ -75,7 +76,7 @@ class WebMonitorUp extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("The monitor [Monitoring_Name] ([URL])  is back UP (It was down for [TIME]).")
-            ->body("Event timestamp: [TIME]");
+            ->title("The monitor " . $this->webMonitor->name . " (' . $this->webMonitor->url . ')  is back UP (It was down for [TIME]).")
+            ->body("Event timestamp: " . Carbon::now());
     }
 }

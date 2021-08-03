@@ -7,7 +7,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
-
+use Carbon\Carbon;
 class WebMonitorDown extends Notification
 {
     use Queueable;
@@ -63,11 +63,11 @@ class WebMonitorDown extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Website Monitoring: [Monitoring_Name]  is currently DOWN. ")
+            ->subject("Website Monitoring: " . $this->webMonitor->name . "  is currently DOWN. ")
             ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('The monitor [Monitoring_Name] ([URL])  is currently DOWN. ')
+            ->line('The monitor ' . $this->webMonitor->name . ' (' . $this->webMonitor->url . ')  is currently DOWN. ')
             ->line('You should check the issue right away! [ERROR]')
-            ->line('Event timestamp: [TIME]')
+            ->line('Event timestamp: ' . Carbon::now() . '')
             ->line('GAannotations will alert you when it is back up. ');
     }
 
@@ -77,7 +77,7 @@ class WebMonitorDown extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("The monitor [Monitoring_Name] ([URL])  is currently DOWN. You should check the issue right away! [ERROR]")
-            ->body("Event timestamp: [TIME]");
+            ->title("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is currently DOWN. You should check the issue right away! [ERROR]")
+            ->body("Event timestamp: " . Carbon::now());
     }
 }

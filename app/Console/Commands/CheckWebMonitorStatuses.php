@@ -57,6 +57,7 @@ class CheckWebMonitorStatuses extends Command
                     if ($webMonitor->last_status != $uptimeMonitor['status']) {
                         $users = User::select('users.*')
                             ->join('web_monitors', 'web_monitors.user_id', 'users.id')
+                            ->where('web_monitors.id', $webMonitor->id)
                             ->get();
                         // There is a change in monitor status
                         // 0 Paused
