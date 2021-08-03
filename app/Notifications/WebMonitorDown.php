@@ -7,19 +7,20 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
-
-class AnnotationCreatedThroughAPI extends Notification
+use Carbon\Carbon;
+class WebMonitorDown extends Notification
 {
     use Queueable;
 
+    public $webMonitor;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\App\Models\WebMonitor $webMonitor)
     {
-        //
+        $this->webMonitor = $webMonitor;
     }
 
     /**
@@ -32,7 +33,8 @@ class AnnotationCreatedThroughAPI extends Notification
     {
         $channels = [];
 
-        $notificationSetting = $notifiable->notificationSettingFor("api");
+        $notificationSetting = $notifiable->notificationSettingFor("web_monitors");
+
         if (!$notificationSetting) {
             return [];
         }
@@ -61,9 +63,12 @@ class AnnotationCreatedThroughAPI extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("New Annotation for [API_KEY_NAME]")
+            ->subject("Website Monitoring: " . $this->webMonitor->name . "  is currently DOWN. ")
             ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('A new annotation was received from the API KEY: [API_KEY_NAME]');
+            ->line('The monitor ' . $this->webMonitor->name . ' (' . $this->webMonitor->url . ')  is currently DOWN. ')
+            ->line('You should check the issue right away! [ERROR]')
+            ->line('Event timestamp: ' . Carbon::now() . '')
+            ->line('GAannotations will alert you when it is back up. ');
     }
 
     public function toPushNotification($notifiable)
@@ -72,8 +77,7 @@ class AnnotationCreatedThroughAPI extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("A new annotation was received from the API KEY: [API_KEY_NAME]")
-            ->body("");
+            ->title("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is currently DOWN. You should check the issue right away! [ERROR]")
+            ->body("Event timestamp: " . Carbon::now());
     }
-
 }

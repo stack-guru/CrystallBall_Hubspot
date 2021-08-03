@@ -7,19 +7,21 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
+use Carbon\Carbon;
 
-class AnnotationCreatedThroughAPI extends Notification
+class WebMonitorUp extends Notification
 {
     use Queueable;
 
+    public $webMonitor;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\App\Models\WebMonitor $webMonitor)
     {
-        //
+        $this->webMonitor = $webMonitor;
     }
 
     /**
@@ -32,7 +34,8 @@ class AnnotationCreatedThroughAPI extends Notification
     {
         $channels = [];
 
-        $notificationSetting = $notifiable->notificationSettingFor("api");
+        $notificationSetting = $notifiable->notificationSettingFor("web_monitors");
+
         if (!$notificationSetting) {
             return [];
         }
@@ -61,9 +64,10 @@ class AnnotationCreatedThroughAPI extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("New Annotation for [API_KEY_NAME]")
+            ->subject("Website Monitoring: " . $this->webMonitor->name . "  is back UP")
             ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('A new annotation was received from the API KEY: [API_KEY_NAME]');
+            ->line('The monitor ' . $this->webMonitor->name . ' (' . $this->webMonitor->url . ')  is back UP (It was down for [TIME]).')
+            ->line('Event timestamp: ' . Carbon::now());
     }
 
     public function toPushNotification($notifiable)
@@ -72,8 +76,7 @@ class AnnotationCreatedThroughAPI extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("A new annotation was received from the API KEY: [API_KEY_NAME]")
-            ->body("");
+            ->title("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is back UP (It was down for [TIME]).")
+            ->body("Event timestamp: " . Carbon::now());
     }
-
 }

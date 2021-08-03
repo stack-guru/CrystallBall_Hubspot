@@ -8,18 +8,19 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 
-class AnnotationCreatedThroughAPI extends Notification
+class WordpressUpdate extends Notification
 {
     use Queueable;
 
+    public $wordPressUpdate;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\App\Models\WordpressUpdate $wordPressUpdate)
     {
-        //
+        $this->wordPressUpdate = $wordPressUpdate;
     }
 
     /**
@@ -32,7 +33,8 @@ class AnnotationCreatedThroughAPI extends Notification
     {
         $channels = [];
 
-        $notificationSetting = $notifiable->notificationSettingFor("api");
+        $notificationSetting = $notifiable->notificationSettingFor("wordpress_updates");
+
         if (!$notificationSetting) {
             return [];
         }
@@ -61,9 +63,10 @@ class AnnotationCreatedThroughAPI extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("New Annotation for [API_KEY_NAME]")
+            ->subject("New Google Algorithm Update.")
             ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('A new annotation was received from the API KEY: [API_KEY_NAME]');
+            ->line('There is a new WordPress Update.')
+            ->line('We added an annotation for you. Check out what’s new ' . $this->wordPressUpdate->url);
     }
 
     public function toPushNotification($notifiable)
@@ -72,7 +75,7 @@ class AnnotationCreatedThroughAPI extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("A new annotation was received from the API KEY: [API_KEY_NAME]")
+            ->title("There is a new WordPress Update.")
             ->body("");
     }
 

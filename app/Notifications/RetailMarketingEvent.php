@@ -8,18 +8,19 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 
-class AnnotationCreatedThroughAPI extends Notification
+class RetailMarketingEvent extends Notification
 {
     use Queueable;
 
+    public $retailMarketing;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\App\Models\RetailMarketing $retailMarketing)
     {
-        //
+        $this->retailMarketing = $retailMarketing;
     }
 
     /**
@@ -32,7 +33,8 @@ class AnnotationCreatedThroughAPI extends Notification
     {
         $channels = [];
 
-        $notificationSetting = $notifiable->notificationSettingFor("api");
+        $notificationSetting = $notifiable->notificationSettingFor("retail_marketing_dates");
+
         if (!$notificationSetting) {
             return [];
         }
@@ -61,9 +63,11 @@ class AnnotationCreatedThroughAPI extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("New Annotation for [API_KEY_NAME]")
+            ->subject("Retail Marketing Day (Today): " . $this->retailMarketing->event_name)
             ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('A new annotation was received from the API KEY: [API_KEY_NAME]');
+            ->line('Today is ' . $this->retailMarketing->event_name . '.')
+            ->line('We hope you did the proper adaptations on your site and are ready to release a great email.')
+            ->line('Check out our email templates HERE, feel free to use them ;)');
     }
 
     public function toPushNotification($notifiable)
@@ -72,8 +76,8 @@ class AnnotationCreatedThroughAPI extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("A new annotation was received from the API KEY: [API_KEY_NAME]")
-            ->body("");
+            ->title("Retail Marketing Dates Notification.")
+            ->body("Today is " . $this->retailMarketing->event_name . ".");
     }
 
 }

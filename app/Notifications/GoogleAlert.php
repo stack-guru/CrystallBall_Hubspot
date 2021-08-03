@@ -8,18 +8,19 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 
-class AnnotationCreatedThroughAPI extends Notification
+class GoogleAlert extends Notification
 {
     use Queueable;
 
+    public $googleAlert;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\App\Models\GoogleAlert $googleAlert)
     {
-        //
+        $this->googleAlert = $googleAlert;
     }
 
     /**
@@ -32,7 +33,8 @@ class AnnotationCreatedThroughAPI extends Notification
     {
         $channels = [];
 
-        $notificationSetting = $notifiable->notificationSettingFor("api");
+        $notificationSetting = $notifiable->notificationSettingFor("news_alerts");
+
         if (!$notificationSetting) {
             return [];
         }
@@ -61,9 +63,11 @@ class AnnotationCreatedThroughAPI extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("New Annotation for [API_KEY_NAME]")
+            ->subject("News Alerts: " . $this->googleAlert->tag_name . ".")
             ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('A new annotation was received from the API KEY: [API_KEY_NAME]');
+            ->line('We detected a new web page with your keyword: ' . $this->googleAlert->tag_name . '.')
+            ->line('The title is: ' . $this->googleAlert->title)
+            ->line('We added an annotation for you, here is the ' . $this->googleAlert->url . '.');
     }
 
     public function toPushNotification($notifiable)
@@ -72,7 +76,8 @@ class AnnotationCreatedThroughAPI extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("A new annotation was received from the API KEY: [API_KEY_NAME]")
+            ->link($this->googleAlert->url)
+            ->title("We detected a new web page with your keyword: " . $this->googleAlert->tag_name . ".")
             ->body("");
     }
 

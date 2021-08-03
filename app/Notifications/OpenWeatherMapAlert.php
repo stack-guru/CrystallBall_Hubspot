@@ -8,18 +8,19 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 
-class AnnotationCreatedThroughAPI extends Notification
+class OpenWeatherMapAlert extends Notification
 {
     use Queueable;
 
+    public $openWeatherMapAlert;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\App\Models\OpenWeatherMapAlert $openWeatherMapAlert)
     {
-        //
+        $this->openWeatherMapAlert = $openWeatherMapAlert;
     }
 
     /**
@@ -32,7 +33,8 @@ class AnnotationCreatedThroughAPI extends Notification
     {
         $channels = [];
 
-        $notificationSetting = $notifiable->notificationSettingFor("api");
+        $notificationSetting = $notifiable->notificationSettingFor("weather_alerts");
+
         if (!$notificationSetting) {
             return [];
         }
@@ -61,9 +63,9 @@ class AnnotationCreatedThroughAPI extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("New Annotation for [API_KEY_NAME]")
+            ->subject("Weather Alert in: " . $this->openWeatherMapAlert->openWeatherMapCity->name)
             ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('A new annotation was received from the API KEY: [API_KEY_NAME]');
+            ->line('We detected a new Weather Alert: ' . $this->openWeatherMapAlert->event . ' in ' . $this->openWeatherMapAlert->openWeatherMapCity->name . ' at ' . $this->openWeatherMapAlert->alert_date . '.');
     }
 
     public function toPushNotification($notifiable)
@@ -72,7 +74,7 @@ class AnnotationCreatedThroughAPI extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("A new annotation was received from the API KEY: [API_KEY_NAME]")
+            ->title("We detected a new Weather Alert: " . $this->openWeatherMapAlert->event . " in " . $this->openWeatherMapAlert->openWeatherMapCity->name . " at " . $this->openWeatherMapAlert->alert_date . ".")
             ->body("");
     }
 

@@ -8,18 +8,19 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 
-class AnnotationCreatedThroughAPI extends Notification
+class RetailMarketingTomorrow extends Notification
 {
     use Queueable;
 
+    public $retailMarketing;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\App\Models\RetailMarketing $retailMarketing)
     {
-        //
+        $this->retailMarketing = $retailMarketing;
     }
 
     /**
@@ -32,7 +33,8 @@ class AnnotationCreatedThroughAPI extends Notification
     {
         $channels = [];
 
-        $notificationSetting = $notifiable->notificationSettingFor("api");
+        $notificationSetting = $notifiable->notificationSettingFor("retail_marketing_dates");
+
         if (!$notificationSetting) {
             return [];
         }
@@ -41,12 +43,8 @@ class AnnotationCreatedThroughAPI extends Notification
             return [];
         }
 
-        if ($notificationSetting->email_on_event_day) {
+        if ($notificationSetting->email_one_days_before) {
             array_push($channels, "mail");
-        }
-
-        if ($notificationSetting->browser_notification_on_event_day) {
-            array_push($channels, PusherChannel::class);
         }
 
         return $channels;
@@ -61,19 +59,11 @@ class AnnotationCreatedThroughAPI extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("New Annotation for [API_KEY_NAME]")
+            ->subject("Retail Marketing Day (in 1 day): " . $this->retailMarketing->event_name)
             ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('A new annotation was received from the API KEY: [API_KEY_NAME]');
-    }
-
-    public function toPushNotification($notifiable)
-    {
-        return PusherMessage::create()
-            ->platform('web')
-            ->web()
-            ->sound('default')
-            ->title("A new annotation was received from the API KEY: [API_KEY_NAME]")
-            ->body("");
+            ->line('Tomorrow is ' . $this->retailMarketing->event_name . '.')
+            ->line('Get the most of it by doing the proper adaptations on your site or sending an email.')
+            ->line('Check out our email templates HERE, feel free to use them ;)');
     }
 
 }

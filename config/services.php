@@ -92,4 +92,10 @@ return [
     'uptime_robot' => [
         'api_key' => env('UPTIME_ROBOT_API_KEY')
     ],
+
+    'pusher' => [
+        'beams_instance_id' => env('PUSHER_BEAMS_INSTANCE_ID'),
+        'beams_secret_key' => env('PUSHER_BEAMS_SECRET'),
+    ],
+
 ];
