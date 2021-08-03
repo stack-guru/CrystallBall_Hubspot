@@ -4,9 +4,13 @@ namespace App\Console\Commands;
 
 use App\Models\Annotation;
 use App\Models\WebMonitor;
+use App\Notifications\WebMonitorUp;
+use App\Notifications\WebMonitorDown;
 use App\Services\UptimeRobotService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Notification;
+use App\Models\User;
 
 class CheckWebMonitorStatuses extends Command
 {
@@ -51,6 +55,9 @@ class CheckWebMonitorStatuses extends Command
                 if ($webMonitor) {
                     $rightNowDateTime = Carbon::now();
                     if ($webMonitor->last_status != $uptimeMonitor['status']) {
+                        $users = User::select('users.*')
+                            ->join('web_monitors', 'web_monitors.user_id', 'users.id')
+                            ->get();
                         // There is a change in monitor status
                         // 0 Paused
                         // 1 Started
@@ -73,11 +80,13 @@ class CheckWebMonitorStatuses extends Command
                                 // Up
                                 $event = "Site Online";
                                 $description = "The website $webMonitor->url is back online. At $rightNowDateTime";
+                                Notification::send($users, new WebMonitorUp($webMonitor));
                                 break;
                             case 9:
                                 // Down
                                 $event = "Site Down";
                                 $description = "The website $webMonitor->url it's down. At $rightNowDateTime";
+                                Notification::send($users, new WebMonitorDown($webMonitor));
                                 break;
                             default:
                                 $event = "Unknown Monitor status: " . $uptimeMonitor['status'];
