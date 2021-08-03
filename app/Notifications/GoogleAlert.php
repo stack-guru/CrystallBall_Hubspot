@@ -12,14 +12,15 @@ class GoogleAlert extends Notification
 {
     use Queueable;
 
+    public $googleAlert;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\App\Models\GoogleAlert $googleAlert)
     {
-        //
+        $this->googleAlert = $googleAlert;
     }
 
     /**
@@ -62,9 +63,11 @@ class GoogleAlert extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Google Alert")
-            ->greeting('Hi [NAME],')
-            ->line('Google alert has been received for your tag.');
+            ->subject("News Alerts: " . $this->googleAlert->tag_name . ".")
+            ->greeting('Hi ' . $notifiable->name . ',')
+            ->line('We detected a new web page with your keyword: ' . $this->googleAlert->tag_name . '.')
+            ->line('The title is: ' . $this->googleAlert->title)
+            ->line('We added an annotation for you, here is the ' . $this->googleAlert->url . '.');
     }
 
     public function toPushNotification($notifiable)
@@ -73,7 +76,8 @@ class GoogleAlert extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("Google Alert")
+            ->link($this->googleAlert->url)
+            ->title("We detected a new web page with your keyword: " . $this->googleAlert->tag_name . ".")
             ->body("");
     }
 

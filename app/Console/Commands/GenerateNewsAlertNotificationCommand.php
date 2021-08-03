@@ -53,7 +53,7 @@ class GenerateNewsAlertNotificationCommand extends Command
                     ->get();
 
                 print "Sending notification to " . count($users) . " users.\n";
-                Notification::send($users, new GoogleAlertNotification);
+                Notification::send($users, new GoogleAlertNotification($googleAlert));
             }
             print "Notification sent successfully!\n";
         } else {
