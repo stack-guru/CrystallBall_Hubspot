@@ -76,7 +76,7 @@ class WebMonitorUp extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("The monitor " . $this->webMonitor->name . " (' . $this->webMonitor->url . ')  is back UP (It was down for [TIME]).")
+            ->title("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is back UP (It was down for [TIME]).")
             ->body("Event timestamp: " . Carbon::now());
     }
 }
