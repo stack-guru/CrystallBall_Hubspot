@@ -74,7 +74,7 @@ class Main extends React.Component {
                     },
                 });
                 window.beamsClient = new PusherPushNotifications.Client({
-                    instanceId: process.env.PUSHER_BEAMS_INSTANCE_ID,
+                    instanceId: process.env.MIX_PUSHER_BEAMS_INSTANCE_ID,
                 });
                 beamsClient.start()
                     .then(() => beamsClient.setUserId(response.data.user.id.toString(), beamsTokenProvider))
