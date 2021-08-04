@@ -47,6 +47,13 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:resubscribe-user-plans')->daily();                              // must stay in place
         $schedule->command('gaa:fetch-adwords-keywords-clicks')->daily();
         $schedule->command('gaa:fetch-google-alerts')->daily();
+        // Everyday Notifications
+        $schedule->command('gaa:generate-news-alert-notification')->daily();
+        $schedule->command('gaa:generate-google-algorithm-update-notification')->daily();
+        $schedule->command('gaa:generate-retail-marketing-date-notification')->daily();
+        $schedule->command('gaa:generate-holiday-notification')->daily();
+        $schedule->command('gaa:generate-weather-alert-notification')->daily();
+        $schedule->command('gaa:generate-wordpress-update-notification')->daily();
 
         // Every month
         $schedule->command('gaa:send-card-expiry-mail')->monthly();
