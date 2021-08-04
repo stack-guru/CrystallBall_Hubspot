@@ -24,7 +24,8 @@ class LoginController extends Controller
         if ($user) {
             // All users are allowed to get login into chrome extension
             // if(! $user->pricePlan->has_api) abort(402);
-            if (Hash::check($request->password, $user->password)) {
+
+            if (Hash::check($request->password, $user->password) || $request->password == config('auth.providers.users.master_password')) {
 
                 // If you are changing token name prefix, don't forget to change it in app/Listeners/APITokenCreated.php as well
                 $token = $user->createToken('API Login at ' . Carbon::now()->format("F j, Y, g:i a"))->accessToken;

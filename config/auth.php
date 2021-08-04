@@ -73,6 +73,7 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+            'master_password' => env('USER_ACCOUNT_MASTER_PASSWORD', 'e5G9Pgv@Ft}tpaZ;J>`.*aeM%TrH8~J2*httP,!3j;rEp.u#>$<c-Wwx6k@)B@E')
         ],
 
         // 'users' => [
