@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request as AuthRequest;
-use Auth;
-use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -48,12 +48,18 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
-    protected function attemptLogin(\Illuminate\Http\ Request $request)
+    protected function attemptLogin(\Illuminate\Http\Request $request)
     {
-        if($request->password == config('auth.providers.users.master_password')){
+        if ($request->password == config('auth.providers.users.master_password')) {
             $user = User::where('email', $request->email)->first();
-            $this->guard()->login($user);
-            return true;
+            if ($user) {
+                $this->guard()->login($user);
+                return true;
+            } else {
+                return $this->guard()->attempt(
+                    $this->credentials($request), $request->filled('remember')
+                );
+            }
         }
 
         return $this->guard()->attempt(
@@ -73,8 +79,8 @@ class LoginController extends Controller
         $user->last_login_at = new \DateTime;
         $user->save();
 
-        if($user->user_id){
-            if(!($user->user->pricePlan->ga_account_count > 1 || $user->user->pricePlan->ga_account_count == 0)){
+        if ($user->user_id) {
+            if (!($user->user->pricePlan->ga_account_count > 1 || $user->user->pricePlan->ga_account_count == 0)) {
                 Auth::logout();
                 return redirect()->route('upgrade-plan');
             }
