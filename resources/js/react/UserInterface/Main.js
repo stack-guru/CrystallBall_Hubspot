@@ -78,8 +78,13 @@ class Main extends React.Component {
                 });
                 beamsClient.start()
                     .then(() => beamsClient.setUserId(response.data.user.id.toString(), beamsTokenProvider))
-                    .catch(console.error);
-                    
+                    .catch((e) => {
+                        console.error(e);
+                        if (e.name == "NotAllowedError") {
+                            swal("Browser Notifications", "You need to allow push notifications inorder to receive browser notifcations from GAannotations.", "warning");
+                        }
+                    });
+
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
