@@ -81,7 +81,7 @@ class Main extends React.Component {
                     .catch((e) => {
                         console.error(e);
                         if (e.name == "NotAllowedError") {
-                            swal("Browser Notifications", "You need to allow push notifications inorder to receive browser notifcations from GAannotations.", "warning");
+                            // swal("Browser Notifications", "You need to allow push notifications inorder to receive browser notifcations from GAannotations.", "warning");
                         }
                     });
 
