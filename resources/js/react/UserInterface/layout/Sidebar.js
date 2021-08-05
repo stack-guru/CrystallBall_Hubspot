@@ -133,16 +133,16 @@ class sidebar extends React.Component {
                             </span>
                         </Link>
                     </li>
-                    {/* <li className="nav-item gaa-menu-item">
+                    <li className="nav-item gaa-menu-item">
                         <Link to="/notifications" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
-                                    <img src="/images/svg/key-icon.svg" width="25px" height="25px" />
+                                    <img src="/images/svg/notification-icon.svg" width="25px" height="25px" />
                                 </span>
                                 <span className="title ">Notifications</span>
                             </span>
                         </Link>
-                    </li> */}
+                    </li>
 
 
                     <li className="nav-item gaa-menu-item setting-menu-item dropdown">
