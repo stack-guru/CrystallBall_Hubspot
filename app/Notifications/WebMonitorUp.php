@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -72,7 +73,7 @@ class WebMonitorUp extends Notification
         return (new MailMessage)
             ->subject("Website Monitoring: " . $this->webMonitor->name . "  is back UP")
             ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('The monitor ' . $this->webMonitor->name . ' (' . $this->webMonitor->url . ')  is back UP (It was down for [TIME]).')
+            ->line('The monitor ' . $this->webMonitor->name . ' (' . $this->webMonitor->url . ')  is back UP (It was down for ' . Carbon::now()->diffForHumans($this->webMonitor->updated_at, CarbonInterface::DIFF_ABSOLUTE) . ').')
             ->line('Event timestamp: ' . Carbon::now());
     }
 
@@ -82,13 +83,13 @@ class WebMonitorUp extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is back UP (It was down for [TIME]).")
+            ->title("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is back UP (It was down for " . Carbon::now()->diffForHumans($this->webMonitor->updated_at, CarbonInterface::DIFF_ABSOLUTE) . ").")
             ->body("Event timestamp: " . Carbon::now());
     }
 
     public function toTwilio($notifiable)
     {
         return (new TwilioSmsMessage())
-            ->content("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is back UP (It was down for [TIME]).\nEvent timestamp: " . Carbon::now());
+            ->content("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is back UP (It was down for " . Carbon::now()->diffForHumans($this->webMonitor->updated_at, CarbonInterface::DIFF_ABSOLUTE) . ").\nEvent timestamp: " . Carbon::now());
     }
 }
