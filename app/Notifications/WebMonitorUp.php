@@ -2,12 +2,14 @@
 
 namespace App\Notifications;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
-use Carbon\Carbon;
+use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioSmsMessage;
 
 class WebMonitorUp extends Notification
 {
@@ -52,6 +54,10 @@ class WebMonitorUp extends Notification
             array_push($channels, PusherChannel::class);
         }
 
+        if ($notificationSetting->sms_on_event_day) {
+            array_push($channels, TwilioChannel::class);
+        }
+
         return $channels;
     }
 
@@ -78,5 +84,11 @@ class WebMonitorUp extends Notification
             ->sound('default')
             ->title("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is back UP (It was down for [TIME]).")
             ->body("Event timestamp: " . Carbon::now());
+    }
+
+    public function toTwilio($notifiable)
+    {
+        return (new TwilioSmsMessage())
+            ->content("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is back UP (It was down for [TIME]).\nEvent timestamp: " . Carbon::now());
     }
 }
