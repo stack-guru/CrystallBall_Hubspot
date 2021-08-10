@@ -3,14 +3,14 @@
 namespace App\Console\Commands;
 
 use App\Models\Annotation;
+use App\Models\User;
 use App\Models\WebMonitor;
-use App\Notifications\WebMonitorUp;
 use App\Notifications\WebMonitorDown;
+use App\Notifications\WebMonitorUp;
 use App\Services\UptimeRobotService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Notification;
-use App\Models\User;
 
 class CheckWebMonitorStatuses extends Command
 {
@@ -114,6 +114,7 @@ class CheckWebMonitorStatuses extends Command
                     WebMonitor::where('uptime_robot_id', $uptimeMonitor['id'])->update([
                         'last_status' => $uptimeMonitor['status'],
                         'last_synced_at' => $rightNowDateTime,
+                        'updated_at' => Carbon::now(),
                     ]);
                 }
             }
