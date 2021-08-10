@@ -83,6 +83,7 @@ class WebMonitorUp extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
+            ->link($this->webMonitor->url)
             ->title("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is back UP (It was down for " . Carbon::now()->diffForHumans($this->webMonitor->updated_at, CarbonInterface::DIFF_ABSOLUTE) . ").")
             ->body("Event timestamp: " . Carbon::now());
     }

@@ -76,6 +76,7 @@ class RetailMarketingEvent extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
+            ->link($this->retailMarketing->url)
             ->title("Retail Marketing Dates Notification.")
             ->body("Today is " . $this->retailMarketing->event_name . ".");
     }

@@ -75,6 +75,7 @@ class WordpressUpdate extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
+            ->link($this->wordPressUpdate->url)
             ->title("There is a new WordPress Update.")
             ->body("");
     }

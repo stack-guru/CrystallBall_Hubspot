@@ -84,6 +84,7 @@ class WebMonitorDown extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
+            ->link($this->webMonitor->url)
             ->title("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is currently DOWN. You should check the issue right away! [ERROR]")
             ->body("Event timestamp: " . Carbon::now());
     }

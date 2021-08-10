@@ -75,6 +75,7 @@ class GoogleAlgorithmUpdate extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
+            ->link($this->googleAlgorithmUpdate->url)
             ->title("There is a new Google Algorithm Update. ")
             ->body("");
     }
