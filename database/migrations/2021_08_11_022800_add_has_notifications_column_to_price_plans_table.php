@@ -14,7 +14,7 @@ class AddHasNotificationsColumnToPricePlansTable extends Migration
     public function up()
     {
         Schema::table('price_plans', function (Blueprint $table) {
-            $table->boolean('has_notifications')->nullable()->default(-1);
+            $table->boolean('has_notifications')->nullable()->default(0);
         });
     }
 
