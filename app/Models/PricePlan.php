@@ -14,6 +14,7 @@ class PricePlan extends Model
         'has_csv_upload', 'has_api', 'is_enabled', 'has_integrations', "has_data_sources",
         'ga_account_count', 'user_per_ga_account_count', 'short_description',
         'web_monitor_count', 'owm_city_count', 'google_alert_keyword_count',
+        'has_notifications',
     ];
 
     protected $hidden = [
@@ -31,6 +32,7 @@ class PricePlan extends Model
         'has_api' => 'boolean',
         'has_integrations' => 'boolean',
         'has_data_sources' => 'boolean',
+        'has_notifications' => 'boolean',
 
         'is_available' => 'boolean',
     ];
