@@ -12,7 +12,7 @@
 
 {{-- Intro Lines --}}
 @foreach ($introLines as $line)
-{{ $line }}
+{!! $line !!}
 
 @endforeach
 
@@ -44,7 +44,7 @@
 {{ $salutation }}
 @else
 @lang('Sincerely'),<br>
-{{ config('app.name') }}<br />
+{{ config('mail.from.name') }}<br />
 {{ config('app.url') }}
 @endif
 
