@@ -2,44 +2,56 @@ import React, { Component } from 'react'
 import HttpClient from "../../utils/HttpClient";
 
 export default class IndexNotificationSettings extends Component {
-    
+
     constructor(props) {
         super(props)
-    
+
         this.state = {
-             notification_settings: []
+            notification_settings: []
         }
 
         this.handleChange = this.handleChange.bind(this);
     }
-    
 
-    componentDidMount(){
+
+    componentDidMount() {
         document.title = "Notifications";
 
         HttpClient.get(`/notification-setting`)
-        .then(response => {
-            this.setState({ notification_settings: response.data.notification_settings});
-        }, (err) => {
-            this.setState({ errors: (err.response).data });
-        }).catch(err => {
-            this.setState({ errors: err });
-        });
+            .then(response => {
+                this.setState({ notification_settings: response.data.notification_settings });
+            }, (err) => {
+                this.setState({ errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ errors: err });
+            });
     }
 
-    handleChange(e){
-        HttpClient.put(`/notification-setting/` + e.target.getAttribute('notification-setting-id'), {[e.target.name]: e.target.checked})
-        .then(response => {
-            let notificationSettings = this.state.notification_settings.map(nS => { if(nS.id == response.data.notification_setting.id) { return response.data.notification_setting; }else{ return nS;}})
-            this.setState({ notification_settings: notificationSettings});
-        }, (err) => {
-            this.setState({ errors: (err.response).data });
-        }).catch(err => {
-            this.setState({ errors: err });
-        });
+    handleChange(e) {
+        switch (e.target.getAttribute('notification-setting-name')) {
+            case 'web_monitors':
+                if (!this.props.user.is_ds_web_monitors_enabled) {
+                    swal("Configure Data Source for this Notification","You must configure web monitors in data sources page before you configure notifications for them.","info");
+                }
+                break;
+            case 'news_alerts':
+                if (!this.props.user.is_ds_google_alerts_enabled) {
+                    swal("Configure Data Source for this Notification","You must configure news alert tags in data sources page before you configure notifications for them.","info");
+                }
+                break;
+        }
+        HttpClient.put(`/notification-setting/` + e.target.getAttribute('notification-setting-id'), { [e.target.name]: e.target.checked })
+            .then(response => {
+                let notificationSettings = this.state.notification_settings.map(nS => { if (nS.id == response.data.notification_setting.id) { return response.data.notification_setting; } else { return nS; } })
+                this.setState({ notification_settings: notificationSettings });
+            }, (err) => {
+                this.setState({ errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ errors: err });
+            });
     }
-    
-    render(){
+
+    render() {
         return (
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
@@ -87,11 +99,11 @@ export default class IndexNotificationSettings extends Component {
                                                             </label>
                                                         </td>
                                                         <td className="text-left">{notificationSetting.label}</td>
-                                                        <td className="border-left light-gray-border thin-border">{notificationSetting.sms_on_event_day !== -1 ?<input name="sms_on_event_day" notification-setting-id={notificationSetting.id} onChange={this.handleChange} type="checkbox" checked={notificationSetting.sms_on_event_day} /> : null}</td>
-                                                        <td className="border-left light-gray-border thin-border">{notificationSetting.browser_notification_on_event_day !== -1 ?<input name="browser_notification_on_event_day" notification-setting-id={notificationSetting.id} onChange={this.handleChange} type="checkbox" checked={notificationSetting.browser_notification_on_event_day} /> : null}</td>
-                                                        <td className="border-left light-gray-border thin-border">{notificationSetting.email_on_event_day !== -1 ?<input name="email_on_event_day" notification-setting-id={notificationSetting.id} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_on_event_day} /> : null}</td>
-                                                        <td>{notificationSetting.email_one_days_before !== -1 ?<input name="email_one_days_before" notification-setting-id={notificationSetting.id} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_one_days_before} /> : null}</td>
-                                                        <td className="border-right light-gray-border thin-border">{notificationSetting.email_seven_days_before !== -1 ?<input name="email_seven_days_before" notification-setting-id={notificationSetting.id} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_seven_days_before} /> : null}</td>
+                                                        <td className="border-left light-gray-border thin-border">{notificationSetting.sms_on_event_day !== -1 ? <input name="sms_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.sms_on_event_day} /> : null}</td>
+                                                        <td className="border-left light-gray-border thin-border">{notificationSetting.browser_notification_on_event_day !== -1 ? <input name="browser_notification_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.browser_notification_on_event_day} /> : null}</td>
+                                                        <td className="border-left light-gray-border thin-border">{notificationSetting.email_on_event_day !== -1 ? <input name="email_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_on_event_day} /> : null}</td>
+                                                        <td>{notificationSetting.email_one_days_before !== -1 ? <input name="email_one_days_before" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_one_days_before} /> : null}</td>
+                                                        <td className="border-right light-gray-border thin-border">{notificationSetting.email_seven_days_before !== -1 ? <input name="email_seven_days_before" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_seven_days_before} /> : null}</td>
                                                     </tr>)
                                                 })}
                                             </tbody>
