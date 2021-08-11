@@ -7,6 +7,7 @@ use App\Mail\AdminFailedPaymentTransactionMail;
 use App\Mail\UserFailedPaymentTransactionMail;
 use App\Models\Admin;
 use App\Models\AutoPaymentLog;
+use App\Models\NotificationSetting;
 use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
 use App\Models\User;
@@ -107,20 +108,27 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                 $pricePlanPrice = round($pricePlanPrice, 2);
                 $responseArr = $blueSnapService->createTransaction($pricePlanPrice, $card, $lastPaymentDetail->bluesnap_vaulted_shopper_id);
                 if ($responseArr['success'] == false) {
+                    // Downgrading user to free plan
                     $this->addTransactionToLog($user->id, $user->price_plan_id, null, $lastPaymentDetail->id, $lastPaymentDetail->card_number, $responseArr['message'], $pricePlanPrice, false);
                     $this->subscribeUserToPlan($user, $this->freePlanId);
                     $this->removeAdditionalWebMonitors($user, $this->freePlan->web_monitor_count);
+                    $this->disableDataSources($user);
+                    $this->disableNotifications($user);
                     Mail::to($this->admin)->send(new AdminFailedPaymentTransactionMail($lastPaymentDetail, $this->admin));
                     Mail::to($user)->send(new UserFailedPaymentTransactionMail($lastPaymentDetail));
                 } else {
+                    // Continuing user paid plan
                     $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice);
                     $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $lastPaymentDetail->id, $lastPaymentDetail->card_number, null, $pricePlanPrice, true);
                     $this->subscribeUserToPlan($user, $user->price_plan_id);
                 }
             } else {
+                // Downgrading user to free plan
                 if (!$user->user_id) {
                     $this->subscribeUserToPlan($user, $this->freePlanId);
                     $this->removeAdditionalWebMonitors($user, $this->freePlan->web_monitor_count);
+                    $this->disableDataSources($user);
+                    $this->disableNotifications($user);
                 }
             }
         }
@@ -146,13 +154,9 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             $trialUser->price_plan_expiry_date = $this->nextExpiryDate;
             $trialUser->price_plan_id = $this->freePlanId;
 
-            $trialUser->is_ds_holidays_enabled = false;
-            $trialUser->is_ds_google_algorithm_updates_enabled = false;
-            $trialUser->is_ds_retail_marketing_enabled = false;
-            $trialUser->is_ds_google_alerts_enabled = false;
-            $trialUser->is_ds_weather_alerts_enabled = false;
-            $trialUser->is_ds_wordpress_updates_enabled = false;
-            $trialUser->is_ds_web_monitors_enabled = false;
+            $this->removeAdditionalWebMonitors($user, $this->freePlan->web_monitor_count);
+            $this->disableDataSources($trialUser);
+            $this->disableNotifications($trialUser);
 
             $trialUser->trial_ended_at = $this->currentDate;
 
@@ -236,4 +240,23 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         }
     }
 
+    private function disableDataSources($user)
+    {
+
+        $user->is_ds_holidays_enabled = false;
+        $user->is_ds_google_algorithm_updates_enabled = false;
+        $user->is_ds_retail_marketing_enabled = false;
+        $user->is_ds_google_alerts_enabled = false;
+        $user->is_ds_weather_alerts_enabled = false;
+        $user->is_ds_wordpress_updates_enabled = false;
+        $user->is_ds_web_monitors_enabled = false;
+
+    }
+
+    private function disableNotifications($user)
+    {
+        NotificationSetting::where('user_id', $user->id)->update([
+            'is_enabled' => false,
+        ]);
+    }
 }

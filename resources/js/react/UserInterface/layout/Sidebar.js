@@ -11,6 +11,7 @@ class sidebar extends React.Component {
             show: false,
             showTour: false
         }
+        this.checkPricePlan = this.checkPricePlan.bind(this);
     }
 
     componentDidMount() {
@@ -39,8 +40,15 @@ class sidebar extends React.Component {
         this.setState({ showTour: this.props.user.last_login_at == null });
     }
 
-    render() {
+    checkPricePlan(e) {
+        if (!this.props.user.price_plan.has_notifications) {
+            e.preventDefault();
+            swal("Upgrade Your Plan!", "Notifications feature is not available in this plan.", "warning");
+        }
+    }
 
+    render() {
+        console.log(this.props);
         return (
             <div className="sidebar-inner">
                 <div className="sidebar-logo bg-white">
@@ -133,8 +141,8 @@ class sidebar extends React.Component {
                             </span>
                         </Link>
                     </li>
-                    {/* <li className="nav-item gaa-menu-item">
-                        <Link to="/notifications" >
+                    <li className="nav-item gaa-menu-item">
+                        <Link to="/notifications" onClick={this.checkPricePlan} >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
                                     <img src="/images/svg/notification-icon.svg" width="25px" height="25px" />
@@ -142,7 +150,7 @@ class sidebar extends React.Component {
                                 <span className="title ">Notifications</span>
                             </span>
                         </Link>
-                    </li> */}
+                    </li>
 
 
                     <li className="nav-item gaa-menu-item setting-menu-item dropdown">
