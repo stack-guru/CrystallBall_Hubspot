@@ -67,7 +67,7 @@ class GoogleAlert extends Notification
             ->greeting('Hi ' . $notifiable->name . ',')
             ->line('We detected a new web page with your keyword: ' . $this->googleAlert->tag_name . '.')
             ->line('The title is: ' . $this->googleAlert->title)
-            ->line('We added an annotation for you, here is the ' . $this->googleAlert->url . '.');
+            ->line('We added an annotation for you, here is the <a href="' . $this->googleAlert->url . '">LINK</a>.');
     }
 
     public function toPushNotification($notifiable)
