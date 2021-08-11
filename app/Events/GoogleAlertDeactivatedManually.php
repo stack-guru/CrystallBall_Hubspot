@@ -11,7 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\User;
 
-class NewsAlertDeactivatedManually
+class GoogleAlertDeactivatedManually
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

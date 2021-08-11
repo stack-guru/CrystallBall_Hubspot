@@ -33,7 +33,7 @@ class GoogleAlert extends Notification
     {
         $channels = [];
 
-        $notificationSetting = $notifiable->notificationSettingFor("news_alerts");
+        $notificationSetting = $notifiable->notificationSettingFor("google_alerts");
 
         if (!$notificationSetting) {
             return [];

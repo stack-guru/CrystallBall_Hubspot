@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\GoogleUpdatesActivated;
 use App\Events\GoogleUpdatesDeactivatedManually;
 use App\Events\HolidaysDeactivatedManually;
-use App\Events\NewsAlertDeactivatedManually;
+use App\Events\GoogleAlertDeactivatedManually;
 use App\Events\RetailMarketingDatesActivated;
 use App\Events\RetailMarketingDatesDeactivated;
 use App\Events\WeatherForCitiesDeactivatedManually;
@@ -86,7 +86,7 @@ class HomeController extends Controller
             if ($request->is_ds_google_alerts_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
             } else {
-                event(new NewsAlertDeactivatedManually($user));
+                event(new GoogleAlertDeactivatedManually($user));
             }
             $user->save();
         }

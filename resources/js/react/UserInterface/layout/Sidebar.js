@@ -48,7 +48,6 @@ class sidebar extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div className="sidebar-inner">
                 <div className="sidebar-logo bg-white">

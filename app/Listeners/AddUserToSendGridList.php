@@ -67,7 +67,7 @@ class AddUserToSendGridList
             case 'App\Events\WebsiteMonitoringDeactivated':
                 $sGS->addUserToContactList($event->user, "Website Monitoring Deactivated because URL was removed");
                 break;
-            case 'App\Events\NewsAlertDeactivatedManually':
+            case 'App\Events\GoogleAlertDeactivatedManually':
                 $sGS->addUserToContactList($event->user, "News Alerts for [keywords] Deactivated manually");
                 break;
 

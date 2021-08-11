@@ -34,7 +34,7 @@ export default class IndexNotificationSettings extends Component {
                     swal("Configure Data Source for this Notification","You must configure web monitors in data sources page before you configure notifications for them.","info");
                 }
                 break;
-            case 'news_alerts':
+            case 'google_alerts':
                 if (!this.props.user.is_ds_google_alerts_enabled) {
                     swal("Configure Data Source for this Notification","You must configure news alert tags in data sources page before you configure notifications for them.","info");
                 }

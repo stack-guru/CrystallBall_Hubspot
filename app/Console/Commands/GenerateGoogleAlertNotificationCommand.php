@@ -9,21 +9,21 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Notification;
 
-class GenerateNewsAlertNotificationCommand extends Command
+class GenerateGoogleAlertNotificationCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'gaa:generate-news-alert-notification';
+    protected $signature = 'gaa:generate-google-alert-notification';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This command will generate events if there is any news alert for users.';
+    protected $description = 'This command will generate events if there is any google alert for users.';
 
     /**
      * Create a new command instance.
