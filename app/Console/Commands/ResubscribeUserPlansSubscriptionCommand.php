@@ -154,7 +154,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             $trialUser->price_plan_expiry_date = $this->nextExpiryDate;
             $trialUser->price_plan_id = $this->freePlanId;
 
-            $this->removeAdditionalWebMonitors($user, $this->freePlan->web_monitor_count);
+            $this->removeAdditionalWebMonitors($trialUser, $this->freePlan->web_monitor_count);
             $this->disableDataSources($trialUser);
             $this->disableNotifications($trialUser);
 
