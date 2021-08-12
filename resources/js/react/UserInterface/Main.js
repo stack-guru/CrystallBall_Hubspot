@@ -45,6 +45,19 @@ class Main extends React.Component {
         let loader = document.getElementById("loader");
         loader.classList.remove("fadeOut")
         this.loadUser();
+
+        const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
+            url: "/beaming/auth",
+            queryParams: {
+                // someQueryParam: "parameter-content", // URL query params your auth endpoint needs
+            },
+            headers: {
+                // someHeader: "header-content", // Headers your auth endpoint needs
+            },
+        });
+        window.beamsClient = new PusherPushNotifications.Client({
+            instanceId: process.env.MIX_PUSHER_BEAMS_INSTANCE_ID,
+        });
     }
 
     loadUser() {
@@ -63,28 +76,6 @@ class Main extends React.Component {
                         eventLabel: 'SignUp'
                     });
                 }
-
-                const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
-                    url: "/beaming/auth",
-                    queryParams: {
-                        // someQueryParam: "parameter-content", // URL query params your auth endpoint needs
-                    },
-                    headers: {
-                        // someHeader: "header-content", // Headers your auth endpoint needs
-                    },
-                });
-                window.beamsClient = new PusherPushNotifications.Client({
-                    instanceId: process.env.MIX_PUSHER_BEAMS_INSTANCE_ID,
-                });
-                beamsClient.start()
-                    .then(() => beamsClient.setUserId(response.data.user.id.toString(), beamsTokenProvider))
-                    .catch((e) => {
-                        console.error(e);
-                        if (e.name == "NotAllowedError") {
-                            // swal("Browser Notifications", "You need to allow push notifications inorder to receive browser notifcations from GAannotations.", "warning");
-                        }
-                    });
-
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {

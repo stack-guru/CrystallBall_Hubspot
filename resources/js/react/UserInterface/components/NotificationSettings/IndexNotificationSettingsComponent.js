@@ -28,17 +28,30 @@ export default class IndexNotificationSettings extends Component {
     }
 
     handleChange(e) {
-        switch (e.target.getAttribute('notification-setting-name')) {
-            case 'web_monitors':
-                if (!this.props.user.is_ds_web_monitors_enabled) {
-                    swal("Configure Data Source for this Notification","You must configure web monitors in data sources page before you configure notifications for them.","info");
-                }
-                break;
-            case 'google_alerts':
-                if (!this.props.user.is_ds_google_alerts_enabled) {
-                    swal("Configure Data Source for this Notification","You must configure news alert tags in data sources page before you configure notifications for them.","info");
-                }
-                break;
+        if (e.target.checked) {
+            switch (e.target.getAttribute('notification-setting-name')) {
+                case 'web_monitors':
+                    if (!this.props.user.is_ds_web_monitors_enabled) {
+                        swal("Configure Data Source for this Notification", "You must configure web monitors in data sources page before you configure notifications for them.", "info");
+                    }
+                    break;
+                case 'google_alerts':
+                    if (!this.props.user.is_ds_google_alerts_enabled) {
+                        swal("Configure Data Source for this Notification", "You must configure news alert tags in data sources page before you configure notifications for them.", "info");
+                    }
+                    break;
+            }
+            if (e.target.name == 'is_enabled') {
+                beamsClient.start()
+                    .then(() => beamsClient.setUserId(this.props.user.id.toString(), beamsTokenProvider))
+                    .catch((e) => {
+                        console.error(e);
+                        if (e.name == "NotAllowedError") {
+                            swal("Browser Notifications", "You need to allow push notifications inorder to receive browser notifcations from GAannotations.", "warning");
+                        }
+                    });
+
+            }
         }
         HttpClient.put(`/notification-setting/` + e.target.getAttribute('notification-setting-id'), { [e.target.name]: e.target.checked })
             .then(response => {
