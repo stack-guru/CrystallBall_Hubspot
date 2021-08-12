@@ -46,7 +46,7 @@ class Main extends React.Component {
         loader.classList.remove("fadeOut")
         this.loadUser();
 
-        const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
+        window.beamsTokenProvider = new PusherPushNotifications.TokenProvider({
             url: "/beaming/auth",
             queryParams: {
                 // someQueryParam: "parameter-content", // URL query params your auth endpoint needs

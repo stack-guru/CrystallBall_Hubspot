@@ -52,7 +52,7 @@ export default class IndexNotificationSettings extends Component {
             }
             if (e.target.name == 'is_enabled') {
                 beamsClient.start()
-                    .then(() => beamsClient.setUserId(this.props.user.id.toString(), beamsTokenProvider))
+                    .then(() => beamsClient.setUserId(this.props.user.id.toString(), window.beamsTokenProvider))
                     .catch((e) => {
                         console.error(e);
                         if (e.name == "NotAllowedError") {
