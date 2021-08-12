@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router';
 import HttpClient from "../../utils/HttpClient";
 
 export default class IndexNotificationSettings extends Component {
@@ -7,7 +8,8 @@ export default class IndexNotificationSettings extends Component {
         super(props)
 
         this.state = {
-            notification_settings: []
+            notification_settings: [],
+            redirectTo: null,
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -25,6 +27,13 @@ export default class IndexNotificationSettings extends Component {
             }).catch(err => {
                 this.setState({ errors: err });
             });
+
+        if (!this.props.user.price_plan.has_notifications) {
+            swal("Upgrade Your Plan!", "Notifications feature is not available in this plan.", "warning").then((b) => {
+                this.setState({ redirectTo: '/settings/price-plans' });
+            });
+        }
+
     }
 
     handleChange(e) {
@@ -65,6 +74,7 @@ export default class IndexNotificationSettings extends Component {
     }
 
     render() {
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
