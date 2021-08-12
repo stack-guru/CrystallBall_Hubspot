@@ -116,6 +116,7 @@ export default class IndexNotificationSettings extends Component {
                                                                     checked={notificationSetting.is_enabled}
                                                                     onChange={this.handleChange}
                                                                     notification-setting-id={notificationSetting.id}
+                                                                    notification-setting-name={notificationSetting.name}
                                                                     name="is_enabled"
                                                                 />
                                                                 <span className="slider round" />
