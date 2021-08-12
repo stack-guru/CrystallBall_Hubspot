@@ -5,8 +5,6 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\PusherPushNotifications\PusherChannel;
-use NotificationChannels\PusherPushNotifications\PusherMessage;
 
 class HolidayWeek extends Notification
 {
@@ -58,13 +56,18 @@ class HolidayWeek extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        $mailMessage = (new MailMessage)
             ->subject("Holidays (in 7 days): " . $this->holiday->event_name)
             ->greeting('Hi ' . $notifiable->name . ',')
             ->line('In seven days, it is ' . $this->holiday->event_name . '.')
             ->line('Get the most of it by doing the proper adaptations on your site or sending an email.')
             ->line('Check out our email templates <a href="https://www.gaannotations.com/email-templates-retail-marketing-dates">HERE</a>, feel free to use them ;)');
-    }
 
+        if ($this->holiday->url) {
+            $mailMessage->line('Learn more about this Holiday <a href="' . $this->holiday->url . '">HERE</a>.');
+        }
+
+        return $mailMessage;
+    }
 
 }
