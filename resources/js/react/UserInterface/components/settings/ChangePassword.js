@@ -13,7 +13,7 @@ export default class ChangePassword extends React.Component {
             passwords: {
                 new_password: '',
                 new_password_confirmation: '',
-                email: '',
+               
             },
             isDirty: false,
             isBusy: false,
@@ -60,16 +60,11 @@ export default class ChangePassword extends React.Component {
     validate() {
         let new_password = this.state.passwords.new_password;
         let new_password_confirmation = this.state.passwords.new_password_confirmation;
-        let email = this.state.passwords.email;
 
 
         let errors = {};
         let isValid = true;
 
-        if (!email) {
-            isValid = false;
-            errors["email"] = "Please enter your new email.";
-        }  
         if (!new_password) {
             isValid = false;
             errors["new_password"] = "Please enter your new password.";
@@ -123,7 +118,6 @@ export default class ChangePassword extends React.Component {
             passwords: {
                 new_password: '',
                 new_password_confirmation: '',
-                email: '',
             },
             validation: {},
             isBusy: false,
@@ -144,14 +138,7 @@ export default class ChangePassword extends React.Component {
                             </div>
                         </div>
                         <form onSubmit={this.passwordChangeHandler}>
-                        <div className="form-group my-3">
-                                <label htmlFor="">Email</label>
-                                <input type="email" className="form-control" name="email" value={this.state.passwords.email} onChange={this.changeHandler} placeholder="New Email" id="" />
-                                {
-                                    this.state.validation.email ?
-                                        <span className="text-danger mt-1">{this.state.validation.email}</span> : ''
-                                }
-                            </div>
+                    
 
                             <div className="form-group my-3">
                                 <label htmlFor="">Password</label>

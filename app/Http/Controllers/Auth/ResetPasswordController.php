@@ -38,13 +38,11 @@ class ResetPasswordController extends Controller
     {
         $this->validate($request, [
             'new_password' => ['confirmed', 'required', 'string', 'min:8', new HasSymbol, new HasLettersNumbers],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         ]);
 
 
         $user = Auth::user();
         $user->password = Hash::make($request->new_password);
-        $user->email = $request->email;
         $user->save();
         return response()->json(['success' => 'true', 'message' => 'Updated successfully'], 200);
     }
@@ -58,7 +56,6 @@ class ResetPasswordController extends Controller
     {
         return [
             'token' => 'required',
-            'email' => 'required|email',
             'password' => ['confirmed', 'required', 'string', 'min:8', new HasSymbol, new HasLettersNumbers],
         ];
     }
