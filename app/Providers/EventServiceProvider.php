@@ -45,7 +45,10 @@ class EventServiceProvider extends ServiceProvider
 
         \App\Events\UserUsedApiForFirstTime::class => [\App\Listeners\AddUserToSendGridList::class],
 
-        \App\Events\UserTrialPricePlanEnded::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\UserTrialPricePlanEnded::class => [
+            \App\Listeners\AddUserToSendGridList::class,
+            // \App\Listeners\SendTrialEndedEmail::class,
+        ],
 
     ];
 
