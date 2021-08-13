@@ -96,8 +96,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'price_plan_id' => PricePlan::where('name', '=', 'Trial')->first()->id,
             'price_plan_expiry_date' => $planExpiryDate,
-            'is_billing_enabled' => false,
         ]);
+        $user->is_billing_enabled = false;
+        $user->save();
 
         return $user;
     }
