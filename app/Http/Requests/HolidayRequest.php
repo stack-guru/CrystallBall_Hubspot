@@ -24,29 +24,34 @@ class HolidayRequest extends FormRequest
     public function rules()
     {
 
-            //
-             switch ($this->method()) {
-                 case 'POST':
-                     return [
-                         'category' => 'required|string|max:100',
-                         'event_name' => 'required|string|max:100',
-                         'description' => 'nullable|string',
-                         'country_name'=>'required|string|max:100',
-                         'holiday_date' => 'required|date',
+        //
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'category' => 'required|string|max:100',
+                    'event_name' => 'required|string|max:100',
+                    'description' => 'nullable|string',
+                    'country_name' => 'required|string|max:100',
+                    'holiday_date' => 'required|date',
+                    'url' => 'nullable|string',
+                    'event_type' => 'nullable|string',
+                    'description2' => 'nullable|string',
+                ];
+                break;
 
-                     ];
-                     break;
-
-                 case 'PUT':
-                     return [
-                         'category' => 'required|string|max:100',
-                         'event_name' => 'required|string|max:100',
-                         'description' => 'nullable|string',
-                         'country_name'=>'required|string|max:100',
-                         'holiday_date' => 'required|date'
-                     ];
-                     break;
-             }
+            case 'PUT':
+                return [
+                    'category' => 'required|string|max:100',
+                    'event_name' => 'required|string|max:100',
+                    'description' => 'nullable|string',
+                    'country_name' => 'required|string|max:100',
+                    'holiday_date' => 'required|date',
+                    'url' => 'nullable|string',
+                    'event_type' => 'nullable|string',
+                    'description2' => 'nullable|string',
+                ];
+                break;
+        }
 
     }
 }

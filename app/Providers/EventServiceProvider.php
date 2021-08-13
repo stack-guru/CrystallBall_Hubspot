@@ -35,7 +35,7 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\HolidaysDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
         \App\Events\GoogleUpdatesActivated::class => [\App\Listeners\AddUserToSendGridList::class],
         \App\Events\GoogleUpdatesDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
-        \App\Events\NewsAlertDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\GoogleAlertDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
         \App\Events\RetailMarketingDatesActivated::class => [\App\Listeners\AddUserToSendGridList::class],
         \App\Events\RetailMarketingDatesDeactivated::class => [\App\Listeners\AddUserToSendGridList::class],
         \App\Events\WeatherForCitiesDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
@@ -45,7 +45,10 @@ class EventServiceProvider extends ServiceProvider
 
         \App\Events\UserUsedApiForFirstTime::class => [\App\Listeners\AddUserToSendGridList::class],
 
-        \App\Events\UserTrialPricePlanEnded::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\UserTrialPricePlanEnded::class => [
+            \App\Listeners\AddUserToSendGridList::class,
+            // \App\Listeners\SendTrialEndedEmail::class,
+        ],
 
     ];
 

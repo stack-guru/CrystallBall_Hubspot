@@ -81,14 +81,6 @@ export default class IndexPricingPlans extends React.Component {
             <div className=" bg-white component-wrapper">
                 <section className="pricing bg-white ">
                     <div className="container">
-                        {
-                            this.props.user.price_plan.price != 0 && this.props.user.is_billing_enabled == 0 ?
-                                <div className="alert alert-info" role="alert">
-                                    <h4 className="alert-heading"><i className="icon fa fa-info"></i> Downgrade scheduled!</h4>
-                                    <p>Your account will be automatically downgraded to $0 plan on next billing cycle.</p>
-                                </div>
-                                : null
-                        }
                         <div className="row ml-0 mr-0 p-2">
                             <div className="col-12 text-center">
                                 <h2 className="gaa-title">Choose Your Plan</h2>
@@ -116,7 +108,7 @@ export default class IndexPricingPlans extends React.Component {
                                                     pricePlan.short_description.length == 0 ? <p className="mb-0 card-text">&nbsp;<br />&nbsp;</p> :
                                                         <p className="mb-0 card-text">{pricePlan.short_description}<br />&nbsp;</p>
                                             }
-                                            <h6 className="card-price text-center">${pricePlan.price}<span className="period">/month</span></h6>
+                                            <h6 className="card-price text-center">${pricePlan.price}<span className="period">/per month</span></h6>
                                             <hr />
                                             <ul className="fa-ul">
 
@@ -135,7 +127,7 @@ export default class IndexPricingPlans extends React.Component {
                                                 }
                                                 {
                                                     pricePlan.ga_account_count == 0 ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations account filtering</li>
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations Properties Filtering</li>
                                                         : null
                                                 }
                                                 {
@@ -202,9 +194,16 @@ export default class IndexPricingPlans extends React.Component {
 
                                 </div>
                             })}
-
-
                         </div>
+
+                        {
+                            this.props.user.price_plan.name != "Free" && this.props.user.is_billing_enabled == 0 ?
+                                <div className="p-5 text-center">
+                                    <p>Your account will be automatically downgraded to the Free plan at {this.props.user.price_plan_expiry_date}.<br />
+                                    So to keep enjoying all the features, upgrade your account.</p>
+                                </div>
+                                : null
+                        }
                     </div>
                 </section>
             </div>

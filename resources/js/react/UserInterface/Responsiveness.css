@@ -16,7 +16,7 @@
         display: none;
     }
     .is-collapsed .sidebar .sidebar-inner .sidebar-footer > a .title {
-        display: none;
+        display: inline-block;
     }
 
     .is-collapsed .desc-td {

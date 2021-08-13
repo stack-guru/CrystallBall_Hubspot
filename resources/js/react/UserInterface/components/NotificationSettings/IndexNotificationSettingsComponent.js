@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router';
 import HttpClient from "../../utils/HttpClient";
 
 export default class IndexNotificationSettings extends Component {
@@ -7,7 +8,8 @@ export default class IndexNotificationSettings extends Component {
         super(props)
 
         this.state = {
-            notification_settings: []
+            notification_settings: [],
+            redirectTo: null,
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -25,9 +27,47 @@ export default class IndexNotificationSettings extends Component {
             }).catch(err => {
                 this.setState({ errors: err });
             });
+<<<<<<< HEAD
     }
 
     handleChange(e) {
+=======
+
+        if (!this.props.user.price_plan.has_notifications) {
+            swal("Upgrade Your Plan!", "Notifications feature is not available in this plan.", "warning").then((b) => {
+                this.setState({ redirectTo: '/settings/price-plans' });
+            });
+        }
+
+    }
+
+    handleChange(e) {
+        if (e.target.checked) {
+            switch (e.target.getAttribute('notification-setting-name')) {
+                case 'web_monitors':
+                    if (!this.props.user.is_ds_web_monitors_enabled) {
+                        swal("Activate the Automation", "To receive notifications, you need to activate and configure Website Monitoring on the automation page first.", "info");
+                    }
+                    break;
+                case 'google_alerts':
+                    if (!this.props.user.is_ds_google_alerts_enabled) {
+                        swal("Activate the Automation", "To receive notifications, you need to activate and configure News Alerts on the automation page first.", "info");
+                    }
+                    break;
+            }
+            if (e.target.name == 'is_enabled') {
+                beamsClient.start()
+                    .then(() => beamsClient.setUserId(this.props.user.id.toString(), window.beamsTokenProvider))
+                    .catch((e) => {
+                        console.error(e);
+                        if (e.name == "NotAllowedError") {
+                            swal("Browser Notifications", "You need to allow push notifications inorder to receive browser notifcations from GAannotations.", "warning");
+                        }
+                    });
+
+            }
+        }
+>>>>>>> 551f7381a0c2e9144274b1db55543098d9097fd6
         HttpClient.put(`/notification-setting/` + e.target.getAttribute('notification-setting-id'), { [e.target.name]: e.target.checked })
             .then(response => {
                 let notificationSettings = this.state.notification_settings.map(nS => { if (nS.id == response.data.notification_setting.id) { return response.data.notification_setting; } else { return nS; } })
@@ -40,6 +80,10 @@ export default class IndexNotificationSettings extends Component {
     }
 
     render() {
+<<<<<<< HEAD
+=======
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+>>>>>>> 551f7381a0c2e9144274b1db55543098d9097fd6
         return (
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
@@ -95,17 +139,26 @@ export default class IndexNotificationSettings extends Component {
                                                                     checked={notificationSetting.is_enabled}
                                                                     onChange={this.handleChange}
                                                                     notification-setting-id={notificationSetting.id}
+                                                                    notification-setting-name={notificationSetting.name}
                                                                     name="is_enabled"
                                                                 />
                                                                 <span className="slider round" />
                                                             </label>
                                                         </td>
                                                         <td className="text-left">{notificationSetting.label}</td>
+<<<<<<< HEAD
                                                         <td className="border-left light-gray-border thin-border">{notificationSetting.sms_on_event_day !== -1 ? <input name="sms_on_event_day" notification-setting-id={notificationSetting.id} onChange={this.handleChange} type="checkbox" checked={notificationSetting.sms_on_event_day} /> : null}</td>
                                                         <td className="border-left light-gray-border thin-border">{notificationSetting.browser_notification_on_event_day !== -1 ? <input name="browser_notification_on_event_day" notification-setting-id={notificationSetting.id} onChange={this.handleChange} type="checkbox" checked={notificationSetting.browser_notification_on_event_day} /> : null}</td>
                                                         <td className="border-left light-gray-border thin-border">{notificationSetting.email_on_event_day !== -1 ? <input name="email_on_event_day" notification-setting-id={notificationSetting.id} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_on_event_day} /> : null}</td>
                                                         <td>{notificationSetting.email_one_days_before !== -1 ? <input name="email_one_days_before" notification-setting-id={notificationSetting.id} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_one_days_before} /> : null}</td>
                                                         <td className="border-right light-gray-border thin-border">{notificationSetting.email_seven_days_before !== -1 ? <input name="email_seven_days_before" notification-setting-id={notificationSetting.id} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_seven_days_before} /> : null}</td>
+=======
+                                                        <td className="border-left light-gray-border thin-border">{notificationSetting.sms_on_event_day !== -1 ? <input name="sms_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.sms_on_event_day} /> : null}</td>
+                                                        <td className="border-left light-gray-border thin-border">{notificationSetting.browser_notification_on_event_day !== -1 ? <input name="browser_notification_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.browser_notification_on_event_day} /> : null}</td>
+                                                        <td className="border-left light-gray-border thin-border">{notificationSetting.email_on_event_day !== -1 ? <input name="email_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_on_event_day} /> : null}</td>
+                                                        <td>{notificationSetting.email_one_days_before !== -1 ? <input name="email_one_days_before" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_one_days_before} /> : null}</td>
+                                                        <td className="border-right light-gray-border thin-border">{notificationSetting.email_seven_days_before !== -1 ? <input name="email_seven_days_before" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_seven_days_before} /> : null}</td>
+>>>>>>> 551f7381a0c2e9144274b1db55543098d9097fd6
                                                     </tr>)
                                                 })}
                                             </tbody>

@@ -67,6 +67,10 @@
                         <label>Has Data Sources?</label>
                         <input type="checkbox" name="has_data_sources" id="hasDataSources" class="form-control" @if($pricePlan->has_data_sources) checked @endif />
                     </div>
+                    <div class="form-group">
+                        <label>Has Notifications?</label>
+                        <input type="checkbox" name="has_notifications" id="hasNotifications" class="form-control" @if($pricePlan->has_notifications) checked @endif />
+                    </div>
 
                     <div class="form-group">
                         <label>Available?</label>

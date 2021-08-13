@@ -40,7 +40,6 @@ class sidebar extends React.Component {
     }
 
     render() {
-
         return (
             <div className="sidebar-inner">
                 <div className="sidebar-logo bg-white">
@@ -133,7 +132,7 @@ class sidebar extends React.Component {
                             </span>
                         </Link>
                     </li>
-                    {/* <li className="nav-item gaa-menu-item">
+                    <li className="nav-item gaa-menu-item">
                         <Link to="/notifications" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
@@ -142,7 +141,7 @@ class sidebar extends React.Component {
                                 <span className="title ">Notifications</span>
                             </span>
                         </Link>
-                    </li> */}
+                    </li>
 
 
                     <li className="nav-item gaa-menu-item setting-menu-item dropdown">

@@ -33,7 +33,7 @@ class HolidayEvent extends Notification
     {
         $channels = [];
 
-        $notificationSetting = $notifiable->notificationSettingFor("retail_marketing_dates");
+        $notificationSetting = $notifiable->notificationSettingFor("holidays");
 
         if (!$notificationSetting) {
             return [];
@@ -62,12 +62,18 @@ class HolidayEvent extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        $mailMessage = (new MailMessage)
             ->subject("Holiday (Today): " . $this->holiday->event_name)
             ->greeting('Hi ' . $notifiable->name . ',')
             ->line('Today is ' . $this->holiday->event_name . '.')
             ->line('We hope you did the proper adaptations on your site and are ready to release a great email.')
-            ->line('Check out our email templates HERE, feel free to use them ;)');
+            ->line('Check out our email templates <a href="https://www.gaannotations.com/email-templates-retail-marketing-dates">HERE</a>, feel free to use them ;)');
+
+        if ($this->holiday->url) {
+            $mailMessage->line('Learn more about this Holiday <a href="' . $this->holiday->url . '">HERE</a>.');
+        }
+
+        return $mailMessage;
     }
 
     public function toPushNotification($notifiable)

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HolidayRequest;
 use App\Models\Holiday;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class HolidayController extends Controller
 {
@@ -19,8 +19,8 @@ class HolidayController extends Controller
     {
         //
 
-        $data['holidays']=Holiday::orderBy('created_at','DESC')->get();
-        return view('admin/data-source/holiday/index',$data);
+        $data['holidays'] = Holiday::orderBy('created_at', 'DESC')->get();
+        return view('admin/data-source/holiday/index', $data);
     }
 
     /**
@@ -43,10 +43,10 @@ class HolidayController extends Controller
     public function store(HolidayRequest $request)
     {
         //
-        $holiday =new Holiday;
+        $holiday = new Holiday;
         $holiday->fill($request->validated());
         $holiday->save();
-        return redirect()->route('admin.data-source.index')->with('success','holiday saved successfully');
+        return redirect()->route('admin.data-source.index')->with('success', 'holiday saved successfully');
     }
 
     /**
@@ -69,8 +69,8 @@ class HolidayController extends Controller
     public function edit($id)
     {
         //
-        $data['holiday']=Holiday::find($id);
-        return view('admin.data-source.holiday.edit',$data);
+        $data['holiday'] = Holiday::find($id);
+        return view('admin.data-source.holiday.edit', $data);
     }
 
     /**
@@ -84,10 +84,10 @@ class HolidayController extends Controller
     {
         //
         //
-        $holiday =Holiday::find($id);
+        $holiday = Holiday::find($id);
         $holiday->fill($request->validated());
         $holiday->save();
-        return redirect()->route('admin.data-source.index')->with('success','holiday updated successfully');
+        return redirect()->route('admin.data-source.index')->with('success', 'holiday updated successfully');
     }
 
     /**
@@ -99,12 +99,11 @@ class HolidayController extends Controller
     public function destroy($id)
     {
         //
-        $holiday =Holiday::find($id);
-         $holiday->delete();
-        return redirect()->route('admin.data-source.index')->with('error','holiday deleted successfully');
+        $holiday = Holiday::find($id);
+        $holiday->delete();
+        return redirect()->route('admin.data-source.index')->with('error', 'holiday deleted successfully');
 
     }
-
 
     public function upload(Request $request)
     {
@@ -117,15 +116,15 @@ class HolidayController extends Controller
         $filecontent = file($filepath);
         $headers = str_getcsv($filecontent[0]);
 
-        if (count($headers) !== 5) {
-            return redirect()->back()->with('error', 'Invalid number of columns.');
+        if (count($headers) !== 7) {
+            return redirect()->back()->with('error', 'Invalid number of columns (' . count($headers) . ').');
         }
         foreach ($headers as $header) {
             if (!in_array($header, [
-                'category', 'event_name',
-                'country_name', 'description', 'holiday_date',
+                'category', 'event_name', 'event_type', 'url',
+                'country_name', 'description', 'holiday_date', 'description2',
             ])) {
-                return redirect()->back()->with('error', 'Invalid CSV file headers.');
+                return redirect()->back()->with('error', 'Invalid CSV file headers (' . $header . ').');
             }
         }
 
@@ -141,9 +140,9 @@ class HolidayController extends Controller
             $values = str_getcsv($line);
 
             if ($headers !== $values && count($values) == count($headers)) {
-                try{
+                try {
                     $date = Carbon::createFromFormat('Y-m-d', $values[$dateColIndex]);
-                }catch (\Exception $e){
+                } catch (\Exception $e) {
                     continue;
                     // return ['message'=>"Please upload file with '2020-12-31' date format given is $values[$i] on line $ln column $i."];
                 }

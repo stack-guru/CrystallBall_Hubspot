@@ -46,6 +46,7 @@ class PricePlanController extends Controller
         $pricePlan->is_available = $request->is_available == 'on';
         $pricePlan->has_integrations = $request->has_integrations == 'on';
         $pricePlan->has_data_sources = $request->has_data_sources == 'on';
+        $pricePlan->has_notifications = $request->has_notifications == 'on';
         $pricePlan->save();
 
         return redirect()->route('admin.price-plan.index');
@@ -90,6 +91,7 @@ class PricePlanController extends Controller
         $pricePlan->is_available = $request->is_available == 'on';
         $pricePlan->has_integrations = $request->has_integrations == 'on';
         $pricePlan->has_data_sources = $request->has_data_sources == 'on';
+        $pricePlan->has_notifications = $request->has_notifications == 'on';
         $pricePlan->save();
 
         return redirect()->route('admin.price-plan.index');
