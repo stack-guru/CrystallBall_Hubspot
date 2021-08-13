@@ -197,7 +197,7 @@ class header extends React.Component {
                                 {/* <li>
                                     <a href={null} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
                                         className="ti-user mR-10"></i>
-                                        <span>Profile</span></a></li> */}
+                                <span>Profile</span></a></li>*/ }
                                 {/* <li>
                                     <a href="email.html" className="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
                                         className="ti-email mR-10"></i> <span>Messages</span></a></li> */}
@@ -206,11 +206,14 @@ class header extends React.Component {
                                     <a href={null} onClick={() => document.getElementById("header-logout-form").submit()} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                                         <i className="ti-power-off mR-10"></i><span>Log out</span>
                                     </a>
+                                       
+                                    
                                     <form id="header-logout-form" action={'/logout'} method="POST">
                                         <input type="hidden" name={"_token"} value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />
                                     </form>
 
                                 </li>
+                               
                             </ul>
                         </li>
                     </ul>

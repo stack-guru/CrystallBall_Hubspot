@@ -98,8 +98,8 @@ class RegisterController extends Controller
             'price_plan_expiry_date' => $planExpiryDate,
             'is_billing_enabled' => false,
         ]);
-
         return $user;
+        
     }
 
     public function registerLoginGoogle()

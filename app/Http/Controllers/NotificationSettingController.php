@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\NotificationSetting;
+use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\NotificationSettingRequest;
@@ -17,8 +18,8 @@ class NotificationSettingController extends Controller
     public function index()
     {
         $notificationSettings = NotificationSetting::where('user_id', Auth::id())->get()->toArray();
-
-        return ['notification_settings' => $notificationSettings];
+          $user=User::find(Auth::id());
+        return ['notification_settings' => $notificationSettings,'user'=>$user];
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\Rules\HasLettersNumbers;
 use App\Rules\HasSymbol;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +25,7 @@ class ResetPasswordController extends Controller
     |
      */
 
-    use ResetsPasswords;
+    use RegistersUsers;
 
     /**
      * Where to redirect users after resetting their password.
@@ -37,13 +38,15 @@ class ResetPasswordController extends Controller
     {
         $this->validate($request, [
             'new_password' => ['confirmed', 'required', 'string', 'min:8', new HasSymbol, new HasLettersNumbers],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         ]);
 
-        $user = Auth::user();
 
+        $user = Auth::user();
         $user->password = Hash::make($request->new_password);
+        $user->email = $request->email;
         $user->save();
-        return response()->json(['success' => 'true', 'message' => 'password updated successfully'], 200);
+        return response()->json(['success' => 'true', 'message' => 'Updated successfully'], 200);
     }
 
     /**
