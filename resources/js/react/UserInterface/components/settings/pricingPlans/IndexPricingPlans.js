@@ -116,7 +116,7 @@ export default class IndexPricingPlans extends React.Component {
                                                     pricePlan.short_description.length == 0 ? <p className="mb-0 card-text">&nbsp;<br />&nbsp;</p> :
                                                         <p className="mb-0 card-text">{pricePlan.short_description}<br />&nbsp;</p>
                                             }
-                                            <h6 className="card-price text-center">${pricePlan.price}<span className="period">/month</span></h6>
+                                            <h6 className="card-price text-center">${pricePlan.price}<span className="period">/per month</span></h6>
                                             <hr />
                                             <ul className="fa-ul">
 
@@ -135,7 +135,7 @@ export default class IndexPricingPlans extends React.Component {
                                                 }
                                                 {
                                                     pricePlan.ga_account_count == 0 ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations account filtering</li>
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations Properties Filtering</li>
                                                         : null
                                                 }
                                                 {
