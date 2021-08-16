@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/login', 301);
 
 Auth::routes(['verify' => true]);
+Route::group(['middleware' => ['auth']], function () {
+    Route::post('phone/resend', [App\Http\Controllers\Auth\VerificationController::class, 'resendPhone']);
+    Route::post('phone/verify', [App\Http\Controllers\Auth\VerificationController::class, 'verifyPhone']);
+});
 
 Route::get('socialite/google', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogle'])->name('socialite.google');
 Route::get('socialite/google/redirect', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogleRedirect'])->name('socialite.google.redirect');
@@ -131,8 +135,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         $beamsClient = new \Pusher\PushNotifications\PushNotifications(
             array(
-              "instanceId" => config('services.pusher.beams_instance_id'),
-              "secretKey" => config('services.pusher.beams_secret_key'),
+                "instanceId" => config('services.pusher.beams_instance_id'),
+                "secretKey" => config('services.pusher.beams_secret_key'),
             )
         );
 
