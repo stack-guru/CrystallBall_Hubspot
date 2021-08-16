@@ -206,14 +206,14 @@ class header extends React.Component {
                                     <a href={null} onClick={() => document.getElementById("header-logout-form").submit()} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                                         <i className="ti-power-off mR-10"></i><span>Log out</span>
                                     </a>
-                                       
-                                    
+
+
                                     <form id="header-logout-form" action={'/logout'} method="POST">
                                         <input type="hidden" name={"_token"} value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />
                                     </form>
 
                                 </li>
-                               
+
                             </ul>
                         </li>
                     </ul>
