@@ -13,6 +13,7 @@ export default class IndexNotificationSettings extends Component {
         }
 
         this.handleChange = this.handleChange.bind(this);
+        this.sendVerificationEmail = this.sendVerificationEmail.bind(this);
     }
 
 
@@ -74,26 +75,30 @@ export default class IndexNotificationSettings extends Component {
             });
     }
 
+    sendVerificationEmail() {
+        HttpClient({ method: 'POST', url: '/email/resend', baseURL: "/", data: { email: this.props.user.email } })
+            .then(response => {
+                swal('Verify Email', 'An email has been sent to your email address for verification. Please click the link in that email to verify your email.', 'info');
+            }, (err) => {
+                this.setState({ errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ errors: err });
+            });
+    }
+
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
                     <div className="container-xl p-0">
-                        <div className="row ml-0 mr-0 mb-1">
-                            <div className="col-md-8">
-                                <h2 className="heading-section gaa-title">Notifications</h2>
-                            </div>
-                            <div className="col-md-4">
-                                <div>
-                                    <lable>Email: {this.props.user.email} </lable>
-                                </div>
-                                <div>
-                                    <lable>Phone Number: {this.props.user.phone_number}</lable>
+                        <div id="notification-settings-container">
+                            <div className="row ml-0 mr-0">
+                                <div className="offset-8 col-4 text-right">
+                                    <p>{this.props.user.email_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={this.sendVerificationEmail}>Verify now</button> : null}<strong>Email:</strong> {this.props.user.email} </p>
+                                    <p><strong>Phone Number:</strong> {this.props.user.phone_number}</p>
                                 </div>
                             </div>
-                        </div>
-                        <div id="annotation-index-container">
                             <div className="row ml-0 mr-0">
                                 <div className="col-12">
                                     <div className="table-responsive">
