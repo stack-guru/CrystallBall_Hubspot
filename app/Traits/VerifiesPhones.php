@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Foundation\Auth;
+namespace App\Traits;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Verified;
@@ -18,7 +18,7 @@ trait VerifiesPhones
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function show(Request $request)
+    public function showPhone(Request $request)
     {
         return $request->user()->hasVerifiedPhone()
                         ? redirect($this->redirectPath())
@@ -68,7 +68,7 @@ trait VerifiesPhones
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
-    protected function verified(Request $request)
+    protected function verifiedPhone(Request $request)
     {
         //
     }

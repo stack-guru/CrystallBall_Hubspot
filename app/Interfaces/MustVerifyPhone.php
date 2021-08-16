@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Auth;
+namespace App\Interfaces;
 
 interface MustVerifyPhone
 {

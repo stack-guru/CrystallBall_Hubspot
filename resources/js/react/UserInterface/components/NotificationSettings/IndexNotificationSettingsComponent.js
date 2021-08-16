@@ -14,6 +14,7 @@ export default class IndexNotificationSettings extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.sendVerificationEmail = this.sendVerificationEmail.bind(this);
+        this.sendVerificationPhone = this.sendVerificationPhone.bind(this);
     }
 
 
@@ -86,6 +87,17 @@ export default class IndexNotificationSettings extends Component {
             });
     }
 
+    sendVerificationPhone() {
+        HttpClient({ method: 'POST', url: '/phone/resend', baseURL: "/", data: { phone: this.props.user.phone_number } })
+            .then(response => {
+                swal('Verify Phone', 'An phone has been sent to your phone address for verification. Please click the link in that phone to verify your phone.', 'info');
+            }, (err) => {
+                this.setState({ errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ errors: err });
+            });
+    }
+
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
@@ -96,7 +108,7 @@ export default class IndexNotificationSettings extends Component {
                             <div className="row ml-0 mr-0">
                                 <div className="offset-8 col-4 text-right">
                                     <p>{this.props.user.email_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={this.sendVerificationEmail}>Verify now</button> : null}<strong>Email:</strong> {this.props.user.email} </p>
-                                    <p><strong>Phone Number:</strong> {this.props.user.phone_number}</p>
+                                    <p>{this.props.user.phone_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={this.sendVerificationPhone}>Verify now</button> : null}<strong>Phone Number:</strong> {this.props.user.phone_number}</p>
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0">

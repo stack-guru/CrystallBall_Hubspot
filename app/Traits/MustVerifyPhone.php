@@ -1,8 +1,8 @@
 <?php
 
-namespace Illuminate\Auth;
+namespace App\Traits;
 
-use Illuminate\Auth\Notifications\VerifyPhone;
+use App\Notifications\VerifyPhone;
 
 trait MustVerifyPhone
 {
