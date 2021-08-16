@@ -90,7 +90,7 @@ return [
         ],
     ],
     'uptime_robot' => [
-        'api_key' => env('UPTIME_ROBOT_API_KEY')
+        'api_key' => env('UPTIME_ROBOT_API_KEY'),
     ],
 
     'pusher' => [
@@ -98,4 +98,9 @@ return [
         'beams_secret_key' => env('PUSHER_BEAMS_SECRET'),
     ],
 
+    'hotjar' => [
+        'site' => [
+            'code' => env('HOTJAR_SITE_CODE'),
+        ],
+    ],
 ];
