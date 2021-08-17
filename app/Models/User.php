@@ -60,6 +60,11 @@ class User extends Authenticatable implements MustVerifyEmail
         "last_logged_into_extension_at",
         "last_activated_any_data_source_at",
         "last_generated_api_token_at",
+        "last_api_called_at",
+
+        "phone_verification_code",
+        "phone_verification_expiry"
+
     ];
 
     /**
