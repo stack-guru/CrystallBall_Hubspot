@@ -29,16 +29,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $totalActiveUsers = 0;
-                                    $newUsersInLast30Days = 0;
-                                @endphp
                                 @foreach($users as $user)
-                                    @if(\Carbon\Carbon::now()->subDays(30) >= $user->created_at )
-                                        @php
-                                            $newUsersInLast30Days++;
-                                        @endphp
-                                    @endif
                                     <tr>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
@@ -55,9 +46,6 @@
                                                 || $user->last30_days_api_annotation_created_logs_count
                                                 || $user->pricePlan->price
                                                 || $user->login_logs_count)
-                                                @php
-                                                    $totalActiveUsers++;
-                                                @endphp
                                                 Yes
                                             @else
                                                 @php
@@ -71,10 +59,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <span class="badge badge-warning float-right">Total Active Users in Last 30 days: {{ $totalActiveUsers }}</span>
-                    <span class="badge badge-warning float-right">Number of registrations in Last 30 days: {{ $newUsersInLast30Days }}</span>
                 </div>
             </div>
         </div>
