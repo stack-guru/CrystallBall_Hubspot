@@ -216,7 +216,7 @@ class sidebar extends React.Component {
                             <span className="icon-holder gaa-text-danger">
                                 <i className="fa fa-cube"></i>
                             </span>
-                            <span className="title">Add Chrome Extension</span>
+                            <span className="title">Chrome Extension</span>
                         </span>
                     </a>
                 </div>
