@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './PhoneVerificationModal.css';
 import HttpClient from "../utils/HttpClient";
+import { Link } from 'react-router-dom';
 
 export default class PhoneVerificationModal extends Component {
 
@@ -9,7 +10,8 @@ export default class PhoneVerificationModal extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
 
         this.state = {
-            'errors': ''
+            'errors': '',
+            redirectTo: null,
         };
     }
 
@@ -81,7 +83,8 @@ export default class PhoneVerificationModal extends Component {
                                         <button className="btn btn-primary btn-embossed" type="submit">Verify</button>
                                     </form>
                                     <div>
-                                        {/* <p>Didn't receive the code? <a href="#">Send again</a></p> */}
+                                        <p>Didn't receive the code? <Link to="/settings/change-password">Change Phone</Link></p>
+                                        {/* <p> <a href="#">Send again</a></p> */}
                                     </div>
                                 </div>
                             </div>
