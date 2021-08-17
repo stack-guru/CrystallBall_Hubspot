@@ -97,7 +97,6 @@ export default class ChangePassword extends React.Component {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
             HttpClient.put('/settings/change-timezone', { 'timezone': this.state.timezone }).then(resp => {
-                console.log(resp);
                 toast.success("Timezone changed successfully.");
                 this.setDefaultState();
                 this.setState({ isBusy: false });
