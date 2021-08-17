@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router';
+import PhoneVerificationModal from '../../helpers/PhoneVerificationModal';
 import HttpClient from "../../utils/HttpClient";
 
 export default class IndexNotificationSettings extends Component {
@@ -10,6 +11,7 @@ export default class IndexNotificationSettings extends Component {
         this.state = {
             notification_settings: [],
             redirectTo: null,
+            showPhoneVerificationModal: false,
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -90,7 +92,7 @@ export default class IndexNotificationSettings extends Component {
     sendVerificationPhone() {
         HttpClient({ method: 'POST', url: '/phone/resend', baseURL: "/", data: { phone: this.props.user.phone_number } })
             .then(response => {
-                swal('Verify Phone', 'An phone has been sent to your phone address for verification. Please click the link in that phone to verify your phone.', 'info');
+                this.setState({ showPhoneVerificationModal: true });
             }, (err) => {
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
@@ -107,8 +109,9 @@ export default class IndexNotificationSettings extends Component {
                         <div id="notification-settings-container">
                             <div className="row ml-0 mr-0">
                                 <div className="offset-8 col-4 text-right">
-                                    <p>{this.props.user.email_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={this.sendVerificationEmail}>Verify now</button> : null}<strong>Email:</strong> {this.props.user.email} </p>
-                                    <p>{this.props.user.phone_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={this.sendVerificationPhone}>Verify now</button> : null}<strong>Phone Number:</strong> {this.props.user.phone_number}</p>
+                                    <PhoneVerificationModal show={this.state.showPhoneVerificationModal} phoneNumber={this.props.user.phone_number} handlePhoneVerification={() => { }} />
+                                    {/* <p>{this.props.user.email_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={this.sendVerificationEmail}>Verify now</button> : null}<strong>Email:</strong> {this.props.user.email} </p> */}
+                                    {/* <p>{this.props.user.phone_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={this.sendVerificationPhone}>Verify now</button> : null}<strong>Phone Number:</strong> {this.props.user.phone_number}</p> */}
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0">
