@@ -6,12 +6,12 @@
         {
             "label": "Pull, Merge and Deploy To Development",
             "type": "shell",
-            "command": "git checkout 8.0 && git pull origin 8.0 && git checkout development && git merge 8.0 && git checkout 8.0 && git push origin development"
+            "command": "git checkout 9.0 && git pull origin 9.0 && git checkout development && git merge 9.0 && git checkout 9.0 && git push origin development"
         },
         {
             "label": "Pull, Merge and Deploy To Production",
             "type": "shell",
-            "command": "git checkout master && git merge development && git checkout 8.0 && git push origin master"
+            "command": "git checkout master && git merge development && git checkout 9.0 && git push origin master"
         },
         {
             "label": "Download Production site error log file",
