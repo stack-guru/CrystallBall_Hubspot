@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\GoogleAlertDeactivatedManually;
 use App\Events\GoogleUpdatesActivated;
 use App\Events\GoogleUpdatesDeactivatedManually;
 use App\Events\HolidaysDeactivatedManually;
-use App\Events\GoogleAlertDeactivatedManually;
 use App\Events\RetailMarketingDatesActivated;
 use App\Events\RetailMarketingDatesDeactivated;
 use App\Events\WeatherForCitiesDeactivatedManually;
@@ -159,5 +159,21 @@ class HomeController extends Controller
         $user->save();
 
         return ['success' => true];
+    }
+
+    public function updatePhone(Request $request)
+    {
+        // return $request->timezone;
+        $request->validate([
+            'phone' => 'nullable|string',
+        ]);
+        $user = Auth::user();
+        if ($user->phone_number !== $request->phone) {
+            $user->phone_verified_at = null;
+        }
+
+        $user->phone_number = $request->phone;
+        $user->save();
+        return response()->json(['success' => 'true', 'message' => 'Phone updated successfully'], 200);
     }
 }

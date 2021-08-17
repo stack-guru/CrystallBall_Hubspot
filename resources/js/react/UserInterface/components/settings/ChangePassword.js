@@ -13,7 +13,7 @@ export default class ChangePassword extends React.Component {
             passwords: {
                 new_password: '',
                 new_password_confirmation: '',
-               
+
             },
             isDirty: false,
             isBusy: false,
@@ -21,14 +21,15 @@ export default class ChangePassword extends React.Component {
             validation: '',
 
         }
-        this.changeHandler = this.changeHandler.bind(this)
-        this.passwordChangeHandler = this.passwordChangeHandler.bind(this)
-        this.timezoneChangeHandler = this.timezoneChangeHandler.bind(this)
-        this.setDefaultState = this.setDefaultState.bind(this)
+        this.changeHandler = this.changeHandler.bind(this);
+        this.handlePasswordSubmit = this.handlePasswordSubmit.bind(this);
+        this.timezoneChangeHandler = this.timezoneChangeHandler.bind(this);
+        this.setDefaultState = this.setDefaultState.bind(this);
+        this.handlePhoneSubmit = this.handlePhoneSubmit.bind(this);
     }
     componentDidMount() {
         document.title = 'Change Password'
-        if (this.props.user) this.setState({ timezone: this.props.user.timezone });
+        if (this.props.user) this.setState({ timezone: this.props.user.timezone, phone: this.props.user.phone_number });
 
     }
 
@@ -36,7 +37,7 @@ export default class ChangePassword extends React.Component {
         this.setState({ isDirty: true, passwords: { ...this.state.passwords, [e.target.name]: e.target.value } });
     }
 
-    passwordChangeHandler(e) {
+    handlePasswordSubmit(e) {
         e.preventDefault();
 
         if (this.validate() && !this.state.isBusy) {
@@ -47,10 +48,10 @@ export default class ChangePassword extends React.Component {
                 this.setState({ isBusy: false });
 
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             })
         }
@@ -99,17 +100,15 @@ export default class ChangePassword extends React.Component {
             HttpClient.put('/settings/change-timezone', { 'timezone': this.state.timezone }).then(resp => {
                 toast.success("Timezone changed successfully.");
                 this.setDefaultState();
-                this.setState({ isBusy: false });
                 (this.props.reloadUser)();
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             })
         }
-
     }
 
     setDefaultState() {
@@ -125,19 +124,37 @@ export default class ChangePassword extends React.Component {
         });
     }
 
+    handlePhoneSubmit(e) {
+        e.preventDefault();
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true });
+            HttpClient.put('/settings/change-phone', { 'phone': this.state.phone }).then(resp => {
+                toast.success("Phone changed successfully.");
+                this.setDefaultState();
+                (this.props.reloadUser)();
+            }, (err) => {
+
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+
+                this.setState({ isBusy: false, errors: err });
+            })
+        }
+    }
+
     render() {
         return (
             <div className="container-xl bg-white component-wrapper">
                 <div className="row ml-0 mr-0">
                     <div className="col-6">
-                        <h3 className="gaa-title">Change Password</h3>
+                        <h3 className="gaa-title">Password</h3>
                         <div className="row ml-0 mr-0">
                             <div className="col-md-12">
                                 <ErrorAlert errors={this.state.errors} />
                             </div>
                         </div>
-                        <form onSubmit={this.passwordChangeHandler}>
-                    
+                        <form onSubmit={this.handlePasswordSubmit}>
+
 
                             <div className="form-group my-3">
                                 <label htmlFor="">Password</label>
@@ -162,6 +179,23 @@ export default class ChangePassword extends React.Component {
                             </div>
                         </form>
                     </div>
+                    <div className="col-6">
+                        <h3 className="gaa-title">Phone</h3>
+                        <form onSubmit={this.handlePhoneSubmit}>
+
+
+                            <div className="form-group my-3">
+                                <label htmlFor="">Phone</label>
+                                <input type="text" className="form-control" name="phone" value={this.state.phone} onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} placeholder="+XXXXX" id="" />
+                            </div>
+                            <div className="row ml-0 mr-0 my-3">
+                                <div className="col-12 text-right p-0">
+                                    <button className="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
 
                 <div className="row ml-0 mr-0">
