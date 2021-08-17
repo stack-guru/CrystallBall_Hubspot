@@ -2,11 +2,13 @@
 
 namespace App\Traits;
 
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Auth\Events\Verified;
+use App\Exceptions\ExpiredPhoneCodeException;
+use App\Exceptions\InvalidPhoneCodeException;
+// use Illuminate\Auth\Events\VerifiedPhone;
+use Carbon\Carbon;
+use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\RedirectsUsers;
 
 trait VerifiesPhones
 {
@@ -21,8 +23,8 @@ trait VerifiesPhones
     public function showPhone(Request $request)
     {
         return $request->user()->hasVerifiedPhone()
-                        ? redirect($this->redirectPath())
-                        : view('auth.verify');
+        ? redirect($this->redirectPath())
+        : view('auth.verify');
     }
 
     /**
@@ -35,31 +37,31 @@ trait VerifiesPhones
      */
     public function verifyPhone(Request $request)
     {
-        if (! hash_equals((string) $request->route('id'), (string) $request->user()->getKey())) {
-            throw new AuthorizationException;
+        if (Carbon::now() > Carbon::parse($request->user()->phone_verification_expiry)) {
+            throw new ExpiredPhoneCodeException;
         }
-
-        if (! hash_equals((string) $request->route('hash'), sha1($request->user()->getPhoneForVerification()))) {
-            throw new AuthorizationException;
+        
+        if (sha1($request->verification_code) !== $request->user()->phone_verification_code) {
+            throw new InvalidPhoneCodeException;
         }
 
         if ($request->user()->hasVerifiedPhone()) {
             return $request->wantsJson()
-                        ? new JsonResponse([], 204)
-                        : redirect($this->redirectPath());
+            ? new JsonResponse([], 204)
+            : redirect($this->redirectPath());
         }
 
         if ($request->user()->markPhoneAsVerified()) {
-            event(new Verified($request->user()));
+            // event(new VerifiedPhone($request->user()));
         }
 
-        if ($response = $this->verified($request)) {
+        if ($response = $this->verifiedPhone($request)) {
             return $response;
         }
 
         return $request->wantsJson()
-                    ? new JsonResponse([], 204)
-                    : redirect($this->redirectPath())->with('verified', true);
+        ? new JsonResponse([], 204)
+        : redirect($this->redirectPath())->with('verified', true);
     }
 
     /**
@@ -83,14 +85,14 @@ trait VerifiesPhones
     {
         if ($request->user()->hasVerifiedPhone()) {
             return $request->wantsJson()
-                        ? new JsonResponse([], 204)
-                        : redirect($this->redirectPath());
+            ? new JsonResponse([], 204)
+            : redirect($this->redirectPath());
         }
 
         $request->user()->sendPhoneVerificationNotification();
 
         return $request->wantsJson()
-                    ? new JsonResponse([], 202)
-                    : back()->with('resent', true);
+        ? new JsonResponse([], 202)
+        : back()->with('resent', true);
     }
 }

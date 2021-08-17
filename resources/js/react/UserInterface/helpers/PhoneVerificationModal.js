@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import './PhoneVerificationModal.css'
+import './PhoneVerificationModal.css';
+import HttpClient from "../utils/HttpClient";
 
 export default class PhoneVerificationModal extends Component {
 
     constructor(props) {
         super(props)
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.state = {
+            'errors': ''
+        };
     }
 
     moveNext(e) {
@@ -42,7 +47,16 @@ export default class PhoneVerificationModal extends Component {
         e.preventDefault();
         var verificationCode = "";
         e.target.childNodes.forEach(function (i) { if (i.tagName == "INPUT" && i.type == "text") { verificationCode = verificationCode.concat(i.value); } });
-        (this.props.handePhoneVerification)(verificationCode);
+        HttpClient({ method: 'POST', url: '/phone/verify', baseURL: "/", data: { verification_code: verificationCode } })
+            .then(response => {
+                swal('Phone Verified', 'Your phone number has been verified.', 'success').then(b => {
+                    (this.props.closeCallback)();
+                });
+            }, (err) => {
+                this.setState({ errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ errors: err });
+            });
     }
 
     render() {
@@ -55,7 +69,8 @@ export default class PhoneVerificationModal extends Component {
                             <div id="wrapper">
                                 <div id="dialog">
                                     <h5>Please enter the 6-digit verification code we sent via SMS:</h5>
-                                    <span>The code sent to {this.props.phoneNumber} is valid for 30 minutes only.</span>
+                                    <span>The code sent to {this.props.phoneNumber} is valid for 5 minutes only.</span><br />
+                                    <span className="text-danger">{this.state.errors.message}</span>
                                     <form onSubmit={this.handleSubmit} id="form" onKeyUp={this.moveNext}>
                                         <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
                                         <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />

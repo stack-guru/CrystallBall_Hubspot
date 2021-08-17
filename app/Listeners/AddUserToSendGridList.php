@@ -26,8 +26,6 @@ class AddUserToSendGridList
     {
         $sGS = new SendGridService;
 
-        info(get_class($event));
-
         switch (get_class($event)) {
             /////////////////////////////////////////////////////
             // New Registration

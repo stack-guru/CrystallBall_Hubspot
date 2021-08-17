@@ -6,13 +6,14 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\URL;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
 
 class VerifyPhone extends Notification
 {
+
+    private const verificationCodeExipireMinutes = 5;
 
     /**
      * Get the notification's channels.
@@ -47,7 +48,7 @@ class VerifyPhone extends Notification
     protected function buildPhoneMessage($verificationCode)
     {
         return (new TwilioSmsMessage())
-            ->content("$verificationCode is your GAannotations verification code. It is only valid for 30 minutes.");
+            ->content("$verificationCode is your GAannotations verification code. It is only valid for " . self::verificationCodeExipireMinutes . " minutes.");
     }
 
     /**
@@ -59,8 +60,12 @@ class VerifyPhone extends Notification
     protected function verificationCode($notifiable)
     {
         $phoneVerificationCode = rand(100000, 999999);
-        $notifiable->phone_verification_code = bcrypt($phoneVerificationCode);
-        $notifiable->phone_verification_expiry = Carbon::now()->addMinutes(30);
+        if (config('app.debug')) {
+            info("Phone verification code for user " . $notifiable->email . " is " . $phoneVerificationCode);
+        }
+
+        $notifiable->phone_verification_code = sha1($phoneVerificationCode);
+        $notifiable->phone_verification_expiry = Carbon::now()->addMinutes(self::verificationCodeExipireMinutes);
         $notifiable->save();
         return $phoneVerificationCode;
     }

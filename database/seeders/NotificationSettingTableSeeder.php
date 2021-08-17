@@ -35,6 +35,6 @@ class NotificationSettingTableSeeder extends Seeder
                 ['is_enabled' => false, 'name' => 'api', 'label' => 'Annotation from API', 'user_id' => $user->id, 'email_seven_days_before' => -1, 'email_one_days_before' => -1, 'sms_on_event_day' => -1, 'browser_notification_on_event_day' => true, 'email_on_event_day' => true],
             ]);
         }
-        info("Seeding completed!");
+        print "Seeding completed!";
     }
 }
