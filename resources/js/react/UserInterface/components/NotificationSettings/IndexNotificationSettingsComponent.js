@@ -44,12 +44,12 @@ export default class IndexNotificationSettings extends Component {
             switch (e.target.getAttribute('notification-setting-name')) {
                 case 'web_monitors':
                     if (!this.props.user.is_ds_web_monitors_enabled) {
-                        swal("Activate the Automation", "To receive notifications, you need to activate and configure Website Monitoring on the automation page first.", "info");
+                        swal("Activate the Automation", "To receive notifications, you need to activate and configure Website Monitoring on the automation page.", "info");
                     }
                     break;
                 case 'google_alerts':
                     if (!this.props.user.is_ds_google_alerts_enabled) {
-                        swal("Activate the Automation", "To receive notifications, you need to activate and configure News Alerts on the automation page first.", "info");
+                        swal("Activate the Automation", "To receive notifications, you need to activate and configure News Alerts on the automation page.", "info");
                     }
                     break;
             }
