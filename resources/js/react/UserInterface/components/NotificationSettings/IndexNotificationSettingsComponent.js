@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router';
 import PhoneVerificationModal from '../../helpers/PhoneVerificationModal';
 import HttpClient from "../../utils/HttpClient";
+import ChangePhoneModal from '../../helpers/ChangePhoneModal';
 
 export default class IndexNotificationSettings extends Component {
 
@@ -12,6 +13,7 @@ export default class IndexNotificationSettings extends Component {
             notification_settings: [],
             redirectTo: null,
             showPhoneVerificationModal: false,
+            showChangePhoneModal: false,
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -99,7 +101,8 @@ export default class IndexNotificationSettings extends Component {
                                 <div className="col-12 text-right">
                                     <PhoneVerificationModal show={this.state.showPhoneVerificationModal} phoneNumber={this.props.user.phone_number} toggleCallback={() => { this.setState({ showPhoneVerificationModal: !this.state.showPhoneVerificationModal }); this.props.reloadUser(); }} />
                                     <p>{this.props.user.email_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={this.sendVerificationEmail}>Verify now</button> : null}<strong>Email:</strong> {this.props.user.email} </p>
-                                    <p>{this.props.user.phone_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={() => { this.setState({ showPhoneVerificationModal: true }); }}>Verify now</button> : null}<strong>Phone Number:</strong> {this.props.user.phone_number ? this.props.user.phone_number : <button className="btn btn-sm btn-info" onClick={() => { this.setState({ redirectTo: '/settings/change-password' }); }}>Set Phone</button>}</p>
+                                    <p>{this.props.user.phone_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={() => { this.setState({ showPhoneVerificationModal: true }); }}>Verify now</button> : null}<strong>Phone Number:</strong> {this.props.user.phone_number ? this.props.user.phone_number : <button className="btn btn-sm btn-info" onClick={() => { this.setState({ showChangePhoneModal: true }); }}>Set Phone</button>}</p>
+                                    <ChangePhoneModal show={this.state.showChangePhoneModal} toggleCallback={() => { this.setState({ showChangePhoneModal: !this.state.showChangePhoneModal }); this.props.reloadUser(); }} />
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0">
