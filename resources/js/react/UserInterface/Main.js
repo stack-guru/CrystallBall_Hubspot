@@ -156,7 +156,7 @@ class Main extends React.Component {
                                 <IntegrationsIndex user={this.state.user} />
                             </Route>
                             <Route exact path="/notifications" refresh={true}>
-                                <IndexNotificationSettings user={this.state.user} />
+                                <IndexNotificationSettings user={this.state.user} reloadUser={this.loadUser} />
                             </Route>
                             <Route exact path="/settings" refresh={true}>
                                 <Settings user={this.state.user} />
