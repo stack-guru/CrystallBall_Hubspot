@@ -16,7 +16,6 @@ export default class IndexNotificationSettings extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.sendVerificationEmail = this.sendVerificationEmail.bind(this);
-        this.sendVerificationPhone = this.sendVerificationPhone.bind(this);
     }
 
 
@@ -89,17 +88,6 @@ export default class IndexNotificationSettings extends Component {
             });
     }
 
-    sendVerificationPhone() {
-        HttpClient({ method: 'POST', url: '/phone/resend', baseURL: "/", data: { phone: this.props.user.phone_number } })
-            .then(response => {
-                this.setState({ showPhoneVerificationModal: true });
-            }, (err) => {
-                this.setState({ errors: (err.response).data });
-            }).catch(err => {
-                this.setState({ errors: err });
-            });
-    }
-
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
@@ -109,9 +97,9 @@ export default class IndexNotificationSettings extends Component {
                         <div id="notification-settings-container">
                             <div className="row ml-0 mr-0">
                                 <div className="col-12 text-right">
-                                    <PhoneVerificationModal show={this.state.showPhoneVerificationModal} phoneNumber={this.props.user.phone_number} closeCallback={() => { this.setState({ showPhoneVerificationModal: false }); }} />
+                                    <PhoneVerificationModal show={this.state.showPhoneVerificationModal} phoneNumber={this.props.user.phone_number} toggleCallback={() => { this.setState({ showPhoneVerificationModal: !this.state.showPhoneVerificationModal }); }} />
                                     <p>{this.props.user.email_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={this.sendVerificationEmail}>Verify now</button> : null}<strong>Email:</strong> {this.props.user.email} </p>
-                                    <p>{this.props.user.phone_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={this.sendVerificationPhone}>Verify now</button> : null}<strong>Phone Number:</strong> {this.props.user.phone_number ? this.props.user.phone_number : <button className="btn btn-sm btn-info" onClick={() => { this.setState({ redirectTo: '/settings/change-password' }); }}>Set Phone</button>}</p>
+                                    <p>{this.props.user.phone_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={() => { this.setState({ showPhoneVerificationModal: true }); }}>Verify now</button> : null}<strong>Phone Number:</strong> {this.props.user.phone_number ? this.props.user.phone_number : <button className="btn btn-sm btn-info" onClick={() => { this.setState({ redirectTo: '/settings/change-password' }); }}>Set Phone</button>}</p>
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0">
@@ -138,7 +126,7 @@ export default class IndexNotificationSettings extends Component {
                                             </thead>
                                             <tbody>
                                                 {this.state.notification_settings.map(notificationSetting => {
-                                                    return (<tr>
+                                                    return (<tr key={notificationSetting.id}>
                                                         <td>
                                                             <label className="trigger switch">
                                                                 <input type="checkbox"
