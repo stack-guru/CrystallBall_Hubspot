@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import HttpClient from "../utils/HttpClient";
 import { toast } from "react-toastify";
+import CountryCallingCodeSelect from '../utils/CountryCallingCodeSelect';
 
 
 export default class ChangePhoneModal extends Component {
@@ -10,6 +11,7 @@ export default class ChangePhoneModal extends Component {
         super(props)
 
         this.state = {
+            callingCode: '',
             'phone': ''
         };
 
@@ -20,7 +22,7 @@ export default class ChangePhoneModal extends Component {
         e.preventDefault();
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
-            HttpClient.put('/settings/change-phone', { 'phone': this.state.phone }).then(resp => {
+            HttpClient.put('/settings/change-phone', { 'phone': ("+").concat(this.state.callingCode).concat(this.state.phone) }).then(resp => {
                 toast.success("Phone changed successfully.");
                 (this.props.toggleCallback)();
             }, (err) => {
@@ -41,12 +43,17 @@ export default class ChangePhoneModal extends Component {
                     <div className="modal-content" >
                         <form onSubmit={this.handlePhoneSubmit}>
                             <div className="modal-header">
-                                Change Phone
+                                Enter your mobile number
                             </div>
-                            <div className="modal-body">
-                                <div className="form-group my-3 text-left">
-                                    <label htmlFor="">Enter phone number below:</label>
-                                    <input type="text" className="form-control" name="phone" value={this.state.phone} onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} placeholder="+XXXXX" id="" />
+                            <div className="modal-body text-left">
+                                We will use this number to send you a text message with a confirmation code.
+                                <div className="form-group my-3">
+                                    <label htmlFor="">Country Code</label>
+                                    <CountryCallingCodeSelect onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} className="form-control" name="callingCode" value={this.state.callingCode} />
+                                </div>
+                                <div className="form-group my-3">
+                                    <label htmlFor="">Mobile Phone Number</label>
+                                    <input type="text" className="form-control" name="phone" value={this.state.phone} onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} placeholder="" id="" />
                                 </div>
                             </div>
                             <div className="modal-footer">

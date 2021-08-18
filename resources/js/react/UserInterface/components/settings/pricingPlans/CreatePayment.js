@@ -291,7 +291,7 @@ export default class CreatePayment extends Component {
                                             <div className="col-4  pl-0">
                                                 <div className="form-group ">
                                                     <label htmlFor="">Country</label>
-                                                    <CountryCodeSelect class="form-control" name="country" changeHandler={this.changeHandler} value={this.state.paymentDetails.country} ></CountryCodeSelect>
+                                                    <CountryCodeSelect className="form-control" name="country" onChange={this.changeHandler} value={this.state.paymentDetails.country} ></CountryCodeSelect>
                                                 </div>
                                             </div>
                                             <div className="col-4">

@@ -20,7 +20,7 @@ export default class PhoneVerificationModal extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.phoneNumber !== this.props.phoneNumber || prevProps.show !== this.props.show) {
-            if (this.props.show) {
+            if (this.props.show && this.props.phoneNumber) {
                 this.setState({ isBusy: true });
                 HttpClient({ method: 'POST', url: '/phone/resend', baseURL: "/", data: { phone: this.props.phoneNumber } })
                     .then(response => {

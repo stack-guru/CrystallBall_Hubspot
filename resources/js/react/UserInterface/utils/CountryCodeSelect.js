@@ -2,7 +2,7 @@ import React from "react";
 
 export default function CountryCodeSelect(props) {
         return (
-            <select className={props.class} name={props.name} onChange={props.changeHandler} value={props.value}>
+            <select className={props.className} name={props.name} onChange={props.onChange} value={props.value}>
                 <option value="AF">Afghanistan</option>
                 <option value="AX">Åland Islands</option>
                 <option value="AL">Albania</option>
