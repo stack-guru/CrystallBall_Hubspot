@@ -76,6 +76,18 @@ export default class DataSourceInterfaceTour extends Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.isOpen !== this.props.isOpen) {
+            if (this.props.isOpen) {
+                HttpClient.put(`/data-source/mark-data-source-tour`, { data_source_tour_showed_at: true })
+                    .then(response => {
+                    }, (err) => {
+                    }).catch(err => {
+                    });
+            }
+        }
+    }
+
     handleRedirecter() {
         if (this.state.redirectTo !== null) {
             let rL = this.state.redirectTo
