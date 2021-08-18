@@ -6,13 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\CookieCoupon;
 use App\Models\PricePlan;
 use App\Models\User;
-use App\Models\NotificationSetting;
-use App\Models\UserDataSource;
 use App\Providers\RouteServiceProvider;
 use App\Rules\HasLettersNumbers;
 use App\Rules\HasSymbol;
-use App\Services\SendGridService;
 use Auth;
+use Carbon\Carbon;
 use Cookie;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -101,7 +99,7 @@ class RegisterController extends Controller
         $user->save();
 
         return $user;
-        
+
     }
 
     public function registerLoginGoogle()
@@ -137,6 +135,7 @@ class RegisterController extends Controller
                 $user->price_plan_id = PricePlan::where('name', '=', 'Trial')->first()->id;
                 $user->price_plan_expiry_date = new \DateTime("+14 days");
                 $user->is_billing_enabled = false;
+                $user->email_verified_at = Carbon::now();
                 $user->save();
 
                 event(new \Illuminate\Auth\Events\Registered($user));

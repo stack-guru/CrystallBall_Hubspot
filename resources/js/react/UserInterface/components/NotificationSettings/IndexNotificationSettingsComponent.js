@@ -80,7 +80,7 @@ export default class IndexNotificationSettings extends Component {
     sendVerificationEmail() {
         HttpClient({ method: 'POST', url: '/email/resend', baseURL: "/", data: { email: this.props.user.email } })
             .then(response => {
-                swal('Verify Email', 'An email has been sent to your email address for verification. Please click the link in that email to verify your email.', 'info');
+                swal('Verify Email', 'An email has been sent to your email address for verification.', 'info');
             }, (err) => {
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
