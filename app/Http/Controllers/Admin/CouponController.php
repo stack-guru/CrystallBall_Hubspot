@@ -41,7 +41,7 @@ class CouponController extends Controller
     public function store(CouponRequest $request)
     {
         $coupon =new Coupon;
-        $coupon->fill($request->validated());
+        $coupon->fill($request->validated());   
         $coupon->save();
         return redirect()->route('admin.coupon.index')->with('success','New coupon added successfully');
 

@@ -24,10 +24,10 @@ class CouponRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'code' => 'required',
-            'discount_percent' => 'required',
-            'expires_at' => 'date|required',
+            'name' => 'required|string',
+            'code' => 'required|string',
+            'discount_percent' => 'required|numeric',
+            'expires_at' => 'required|date',
         ];
     }
 }
