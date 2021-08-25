@@ -31,6 +31,9 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
             Route::get('user', function (Request $request) {return $request->user();})->name('user.show');
             Route::resource('annotations', 'AnnotationController');
 
+            Route::group(['prefix' => 'google-data-studio', 'as' => 'google-data-studio.'], function () {
+                Route::get('annotations', 'GoogleDataStudio\AnnotationController@index');
+            });
             Route::group(['prefix' => 'chrome-extension', 'as' => 'chrome-extension'], function () {
                 Route::get('annotations', 'ChromeExtension\AnnotationController@index');
                 Route::post('annotations', 'ChromeExtension\AnnotationController@store');
