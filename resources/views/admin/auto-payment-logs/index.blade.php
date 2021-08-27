@@ -27,7 +27,7 @@
                             <tr>
                                 <td>{{$autoPaymentLog->user->name}}</td>
                                 <td>{{$autoPaymentLog->paymentDetail->first_name}} {{$autoPaymentLog->paymentDetail->last_name}}</td>
-                                <td>{{$autoPaymentLog->pricePlanSubscription->transaction_id}}</td>
+                                <td>{{@$autoPaymentLog->pricePlanSubscription->transaction_id}}</td>
                                 <td>{{$autoPaymentLog->pricePlan->name}}</td>
                                 <td>{{$autoPaymentLog->card_number}}</td>
                                 <td>{{$autoPaymentLog->transaction_message}}</td>
