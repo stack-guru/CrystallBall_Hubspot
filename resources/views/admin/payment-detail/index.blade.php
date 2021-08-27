@@ -4,7 +4,7 @@
 
 <div class="contianer">
     <div class="row ml-0 mr-0 justify-content-center">
-        <div class="col-md-10 p-5">
+        <div class="col-md-12 p-5">
             <div class="card">
                 <div class="card-header">Payment History</div>
                 <div class="card-body">

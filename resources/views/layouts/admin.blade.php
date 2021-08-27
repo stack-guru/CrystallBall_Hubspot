@@ -67,6 +67,9 @@
                                 <a class="nav-link" href="{{ route('admin.price-plan-subscription.index') }}">Payment History</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.auto-payment-log.index') }}">Payment Log</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.reports.user-active-report.show') }}">Active User Report</a>
                             </li>
                         @endguest
