@@ -11,9 +11,10 @@
                     <table class="table table-hover table-bordered ">
                         <thead>
                             <tr>
+                                <th>BlueSnap</th>
                                 <th>User</th>
                                 <th>Payment Detail</th>
-                                <th>Price Plan Subscription</th>
+                                <th>Price Plan Subscription Transaction</th>
                                 <th>Price Plan</th>
                                 <th>Card</th>
                                 <th>Transaction Message</th>
@@ -25,6 +26,7 @@
                         <tbody>
                             @forelse($autoPaymentLogs as $autoPaymentLog)
                             <tr>
+                                <td>{{$autoPaymentLog->paymentDetail->bluesnap_vaulted_shopper_id}}</td>
                                 <td>{{$autoPaymentLog->user->name}}</td>
                                 <td>{{$autoPaymentLog->paymentDetail->first_name}} {{$autoPaymentLog->paymentDetail->last_name}}</td>
                                 <td>{{@$autoPaymentLog->pricePlanSubscription->transaction_id}}</td>
