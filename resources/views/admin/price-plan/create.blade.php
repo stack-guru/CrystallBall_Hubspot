@@ -71,6 +71,10 @@
                         <label>Has Notifications?</label>
                         <input type="checkbox" name="has_notifications" id="hasNotifications" class="form-control" />
                     </div>
+                    <div class="form-group">
+                        <label>Has Google Data Studio?</label>
+                        <input type="checkbox" name="has_google_data_studio" id="hasGoogleDataStudio" class="form-control" />
+                    </div>
 
                     <div class="form-group">
                         <label>Available?</label>
