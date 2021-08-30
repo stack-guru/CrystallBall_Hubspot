@@ -33,6 +33,7 @@ class PricePlan extends Model
         'has_integrations' => 'boolean',
         'has_data_sources' => 'boolean',
         'has_notifications' => 'boolean',
+        'has_google_data_studio' => 'boolean',
 
         'is_available' => 'boolean',
     ];

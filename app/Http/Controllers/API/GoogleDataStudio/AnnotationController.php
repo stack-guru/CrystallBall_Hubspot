@@ -10,11 +10,15 @@ use DB;
 
 class AnnotationController extends Controller{
     public function index(Request $request){
+        $user = Auth::user();
+        if (!$user->pricePlan->has_google_data_studio) {
+            abort(402);
+        }
+
         if (!$request->has('startDate') && !$request->has('endDate')) {
             return ['annotations' => []];
         }
 
-        $user = Auth::user();
         $userIdsArray = [];
 
         if ($user->user_id) {
