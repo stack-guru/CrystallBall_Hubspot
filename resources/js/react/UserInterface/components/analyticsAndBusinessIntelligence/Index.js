@@ -1,0 +1,75 @@
+import React from 'react';
+import { toast } from "react-toastify";
+import VideoModalBox from '../../utils/VideoModalBox';
+
+
+import ErrorAlert from '../../utils/ErrorAlert';
+
+export default class AnalyticsAndBusinessIntelligenceIndex extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: undefined,
+            isBusy: false,
+            isDirty: false
+        }
+        this.changeHandler = this.changeHandler.bind(this)
+        this.submitHandler = this.submitHandler.bind(this)
+        this.setDefaultState = this.setDefaultState.bind(this)
+    }
+
+    setDefaultState() {
+        this.setState({
+            error: undefined,
+            isBusy: false,
+            isDirty: false
+        });
+    }
+
+    changeHandler(e) {
+    }
+
+    submitHandler(e) {
+        e.preventDefault();
+    }
+
+    componentDidMount() {
+        document.title = 'Analytics & BI'
+    }
+
+    render() {
+        return (
+            <div className="container-xl bg-white  component-wrapper" >
+                <section className="ftco-section" id="buttons">
+                    <div className="container">
+                        <div className="row mb-5">
+                            <div className="col-md-12">
+                                <h2 className="heading-section gaa-title">
+                                    Analytics &amp; BI<br />
+                                    <small>Display your annotations on BI and Analytics tools</small>
+                                </h2>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-12">
+                                <ErrorAlert errors={this.state.errors} />
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-lg-3 col-sm-4">
+                                <a target="_blank" href="#"><img src="/images/buttons/google-analytics.png" /></a>
+                            </div>
+                            <div className="col-lg-3 col-sm-4">
+                                <a target="_blank" href="#"><img src="/images/buttons/google-data-studio.png" /></a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        )
+    }
+
+}

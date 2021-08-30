@@ -123,6 +123,16 @@ class sidebar extends React.Component {
                         </Link>
                     </li>
                     <li className="nav-item gaa-menu-item">
+                        <Link to="/analytics-and-business-intelligence" >
+                            <span className="sidebar-link" >
+                                <span className="icon-holder">
+                                    <img src="/images/svg/analytics-and-business-intelligence-icon.svg" width="25px" height="25px" />
+                                </span>
+                                <span className="title">Analytics &amp; BI</span>
+                            </span>
+                        </Link>
+                    </li>
+                    <li className="nav-item gaa-menu-item">
                         <Link to="/api-key" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
@@ -210,7 +220,7 @@ class sidebar extends React.Component {
                         </div>
                     </li>
                 </ul>
-                <div className="nav-item sidebar-footer  gaa-menu-item gaa-text-danger ">
+                {/* <div className="nav-item sidebar-footer  gaa-menu-item gaa-text-danger ">
                     <a href="https://chrome.google.com/webstore/detail/google-analytics-annotati/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en&authuser=1" target="_blank" id="chrome-extension-download-button">
                         <span className="sidebar-link gaa-text-danger" >
                             <span className="icon-holder gaa-text-danger">
@@ -219,7 +229,7 @@ class sidebar extends React.Component {
                             <span className="title">Chrome Extension</span>
                         </span>
                     </a>
-                </div>
+                </div> */}
             </div>
         )
     }

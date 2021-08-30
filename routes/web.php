@@ -29,7 +29,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
     Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('logout');
-
 });
 
 Route::view('documentation', 'documentation');
@@ -48,6 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('integrations', 'ui/app');
     Route::view('api-key', 'ui/app');
     Route::view('notifications', 'ui/app');
+    Route::view('analytics-and-business-intelligence', 'ui/app');
 
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
@@ -100,7 +100,6 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::post('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'store']);
             Route::get('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'index']);
-
         });
 
         Route::group(['prefix' => 'settings'], function () {
@@ -124,11 +123,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('user', [App\Http\Controllers\UserController::class, 'uiIndex']);
 
             Route::post('support', [App\Http\Controllers\HomeController::class, 'storeSupport']);
-
         });
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
-
     });
 
     Route::get('/beaming/auth', function (Request $request) {
