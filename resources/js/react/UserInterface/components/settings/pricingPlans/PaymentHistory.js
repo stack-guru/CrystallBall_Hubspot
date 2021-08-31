@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import HttpClient from '../../../utils/HttpClient';
 
 export default class PaymentHistory extends React.Component {
@@ -39,6 +40,11 @@ export default class PaymentHistory extends React.Component {
                     Payment History<br />
                     <small></small>
                 </h2>
+                <div className="row">
+                    <div className="col-12">
+                        <Link to="/settings/payment-detail/create">Add a new Card</Link>
+                    </div>
+                </div>
                 <div className="table-responsive">
 
                     <table className="table table-hover table-bordered mt-4">
