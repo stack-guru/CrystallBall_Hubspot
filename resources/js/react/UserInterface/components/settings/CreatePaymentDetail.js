@@ -84,61 +84,69 @@ export default class CreatePaymentDetail extends Component {
 
                         <form onSubmit={this.submitHandler}>
                             <div className="row">
-                                <div className="col-lg-3 col-sm-4">
+                                <div className="col-3">
                                     <div className="form-group">
                                         <label htmlFor="firstName" className="form-control-placeholder">First name</label>
                                         <input type="text" value={this.state.paymentDetail.first_name} onChange={this.changeHandler} className="form-control" id="firstName" name="first_name" />
                                     </div>
                                 </div>
-                                <div className="col-lg-3 col-sm-4">
+                                <div className="col-3">
                                     <div className="form-group">
                                         <label htmlFor="lastName" className="form-control-placeholder">Last name</label>
                                         <input type="text" value={this.state.paymentDetail.last_name} onChange={this.changeHandler} className="form-control" id="lastName" name="last_name" />
                                     </div>
                                 </div>
-                                <div className="col-lg-3 col-sm-4">
+                            </div>
+                            <div className="row">
+                                <div className="col-6">
                                     <div className="form-group">
                                         <label htmlFor="billingAddress" className="form-control-placeholder">Billing Address</label>
                                         <input type="text" value={this.state.paymentDetail.billing_address} onChange={this.changeHandler} className="form-control" id="billingAddress" name="billing_address" />
                                     </div>
                                 </div>
-                                <div className="col-lg-3 col-sm-4">
+                            </div>
+                            <div className="row">
+                                <div className="col-2">
                                     <div className="form-group">
                                         <label htmlFor="city" className="form-control-placeholder">City</label>
                                         <input type="text" value={this.state.paymentDetail.city} onChange={this.changeHandler} className="form-control" id="city" name="city" />
                                     </div>
                                 </div>
-                                <div className="col-lg-3 col-sm-4">
+                                <div className="col-2">
                                     <div className="form-group">
                                         <label htmlFor="zipCode" className="form-control-placeholder">Zip Code</label>
                                         <input type="text" value={this.state.paymentDetail.zip_code} onChange={this.changeHandler} className="form-control" id="zipCode" name="zip_code" />
                                     </div>
                                 </div>
-                                <div className="col-4  pl-0">
+                                <div className="col-2">
                                     <div className="form-group ">
                                         <label htmlFor="">Country</label>
                                         <CountryCodeSelect className="form-control" name="country" onChange={this.changeHandler} value={this.state.paymentDetail.country} ></CountryCodeSelect>
                                     </div>
                                 </div>
-                                <div className="col-4  pl-0">
+                            </div>
+                            <div className="row">
+                                <div className="col-6">
                                     <div className="form-group ">
                                         <label htmlFor="cardNumber">Card Number</label>
                                         <input type="text" value={this.state.paymentDetail.card_number} onChange={this.changeHandler} className="form-control" id="cardNumber" name="card_number" />
                                     </div>
                                 </div>
-                                <div className="col-4  pl-0">
+                            </div>
+                            <div className="row">
+                                <div className="col-2">
                                     <div className="form-group ">
                                         <label htmlFor="expiryMonth">Expiry Month</label>
                                         <input type="text" value={this.state.paymentDetail.expiry_month} onChange={this.changeHandler} className="form-control" id="expiryMonth" name="expiry_month" />
                                     </div>
                                 </div>
-                                <div className="col-4  pl-0">
+                                <div className="col-2">
                                     <div className="form-group ">
                                         <label htmlFor="expiryYear">Expiry Year</label>
                                         <input type="text" value={this.state.paymentDetail.expiry_year} onChange={this.changeHandler} className="form-control" id="expiryYear" name="expiry_year" />
                                     </div>
                                 </div>
-                                <div className="col-4  pl-0">
+                                <div className="col-2">
                                     <div className="form-group ">
                                         <label htmlFor="securityCode">Security Code</label>
                                         <input type="text" value={this.state.paymentDetail.security_code} onChange={this.changeHandler} className="form-control" id="securityCode" name="security_code" />
