@@ -41,7 +41,7 @@ export default class PaymentHistory extends React.Component {
                     <small></small>
                 </h2>
                 <div className="row">
-                    <div className="col-12">
+                    <div className="col-12 text-right">
                         <Link to="/settings/payment-detail/create">Add a new Card</Link>
                     </div>
                 </div>
