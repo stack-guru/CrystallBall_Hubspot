@@ -1,50 +1,45 @@
 @extends('layouts/admin')
-@section('page-title','Payment History')
+@section('page-title','Payment Details')
 @section('content')
 
 <div class="contianer">
     <div class="row ml-0 mr-0 justify-content-center">
         <div class="col-md-12 p-5">
             <div class="card">
-                <div class="card-header">Payment History</div>
+                <div class="card-header">Payment Details</div>
                 <div class="card-body">
                     <table class="table table-hover table-bordered ">
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Card</th>
+                                <th>Expiry</th>
+                                <th>Name</th>
+                                <th>Billing Address</th>
+                                <th>BlueSnap Vaulted Shopper Id</th>
                                 <th>User</th>
-                                <th>User email</th>
-                                <th>BlueSnap vaulted shopper id</th>
-                                <th>Coupon / Discount</th>
-                                <th>Amount</th>
-                                <th>Paid at</th>
-                                <th>Card end with</th>
-                                <th>Next Billing At</th>
-                                <th>Plan Price</th>
-                                <th>Actions</th>
+                                <th>Created At</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($pricePlanSubscriptions as $pricePlanSubscription)
+                            @forelse($paymentDetails as $paymentDetail)
                             <tr>
-                                <td>{{$pricePlanSubscription->id}}</td>
-                                <td>{{$pricePlanSubscription->user->name}}</td>
-                                <td>{{$pricePlanSubscription->user->email}}</td>
-                                <td>{{@$pricePlanSubscription->paymentDetail->bluesnap_vaulted_shopper_id}}</td>
-                                <td>@if($pricePlanSubscription->coupon){{$pricePlanSubscription->coupon->code}} / {{$pricePlanSubscription->coupon->discount_percent}}%@endif</td>
-                                <td>${{$pricePlanSubscription->charged_price}}</td>
-                                <td>{{$pricePlanSubscription->created_at->todateString()}}</td>
-                                <td>{{@$pricePlanSubscription->paymentDetail->card_number}}</td>
-
-                                <td>{{$pricePlanSubscription->created_at->addMonths(1)->todateString()}}</td>
-                                <td>${{@$pricePlanSubscription->pricePlan->price}}</td>
+                                <td>{{$paymentDetail->id}}</td>
+                                <td>{{$paymentDetail->card_number}}</td>
+                                <td>{{$paymentDetail->expiry_month}} / {{$paymentDetail->expiry_year}}</td>
+                                <td>{{$paymentDetail->first_name}} {{$paymentDetail->last_name}}</td>
                                 <td>
-                                    <a href="{{ route('admin.price-plan-subscription.show', $pricePlanSubscription->id) }}" class="btn btn-sm btn-primary">Show</a>
+                                    {{$paymentDetail->billing_address}}<br />
+                                    {{$paymentDetail->city}}, {{$paymentDetail->zip_code}}<br />
+                                    {{$paymentDetail->country}}
                                 </td>
+                                <td>{{$paymentDetail->bluesnap_vaulted_shopper_id}}</td>
+                                <td>{{$paymentDetail->user->email}}</td>
+                                <td>{{$paymentDetail->created_at}}</td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="10" class="alert-danger">No record Found</td>
+                                <td colspan="8" class="alert-danger">No record Found</td>
                             </tr>
                             @endforelse
                         </tbody>

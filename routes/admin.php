@@ -31,6 +31,7 @@ Route::resource('cookie-coupon', App\Http\Controllers\Admin\CookieCouponControll
 Route::resource('price-plan-subscription', App\Http\Controllers\Admin\PricePlanSubscriptionController::class)->only(['index', 'show']);
 Route::get('web-monitor', [App\Http\Controllers\Admin\WebMonitorController::class, 'index'])->name('web-monitor.index');
 Route::get('auto-payment-log', [App\Http\Controllers\Admin\AutoPaymentLogController::class, 'index'])->name('auto-payment-log.index');
+Route::get('payment-detail', [App\Http\Controllers\Admin\PaymentDetailController::class, 'index'])->name('payment-detail.index');
 
 Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
     Route::get('user-active-report', [App\Http\Controllers\Admin\ReportsController::class, 'showUserActiveReport'])->name('user-active-report.show');
