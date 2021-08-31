@@ -14,7 +14,6 @@ use App\Services\UptimeRobotService;
 use Auth;
 use Carbon\Carbon;
 use DB;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 

@@ -28,6 +28,7 @@ import CreateUser from './components/settings/user/CreateUser';
 import EditUser from './components/settings/user/EditUser';
 import IndexNotificationSettings from "./components/NotificationSettings/IndexNotificationSettingsComponent";
 import AnalyticsAndBusinessIntelligenceIndex from './components/analyticsAndBusinessIntelligence/Index';
+import CreatePaymentDetail from './components/settings/CreatePaymentDetail';
 
 class Main extends React.Component {
 
@@ -176,6 +177,9 @@ class Main extends React.Component {
                             </Route>
                             <Route exact path="/settings/payment-history" refresh={true}>
                                 <PaymentHistory user={this.state.user} />
+                            </Route>
+                            <Route exact path="/settings/payment-detail/create" refresh={true}>
+                                <CreatePaymentDetail user={this.state.user} />
                             </Route>
                             <Route exact path="/settings/google-account" refresh={true}>
                                 <GoogleAccountIndex user={this.state.user} reloadUser={this.loadUser} />

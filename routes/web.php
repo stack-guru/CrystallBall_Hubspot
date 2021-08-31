@@ -60,6 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store']);
 
         Route::view('change-password', 'ui/app');
+        Route::view('payment-detail/create', 'ui/app');
         Route::view('price-plans', 'ui/app')->name('settings.price-plans');
         Route::get('price-plans/payment', [App\Http\Controllers\PaymentController::class, 'show'])->name('settings.price-plan.payment');
         Route::view('payment-history', 'ui/app');
@@ -106,6 +107,7 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::post('price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');
             Route::get('price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
+            Route::post('payment-detail', [App\Http\Controllers\PaymentDetailController::class, 'store']);
 
             Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
             Route::put('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'update']);
@@ -128,7 +130,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
     });
 
-    Route::get('/beaming/auth', function (Request $request) {
+    Route::get('/beaming/auth', function () {
         $userID = Auth::id();
 
         $beamsClient = new \Pusher\PushNotifications\PushNotifications(
@@ -144,6 +146,5 @@ Route::group(['middleware' => ['auth']], function () {
             $beamsToken = $beamsClient->generateToken((string) $userID);
             return response()->json($beamsToken);
         }
-        return response()->json($beamsToken);
     });
 });

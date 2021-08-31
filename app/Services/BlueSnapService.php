@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Bluesnap;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class BlueSnapService
 {
@@ -35,7 +36,6 @@ class BlueSnapService
         $tokenURL = $response->header('location');
 
         return substr($tokenURL, strlen($url) + 1);
-
     }
 
     /**
@@ -59,11 +59,11 @@ class BlueSnapService
         return ['success' => true];
     }
 
-/**
- * Create a New Transaction (simple)
- *
- * @return \Bluesnap\Models\CardTransaction
- */
+    /**
+     * Create a New Transaction (simple)
+     *
+     * @return \Bluesnap\Models\CardTransaction
+     */
     public function createTransaction($price, $card, $vaultedShopperId = null, $token = null)
     {
 
@@ -104,14 +104,16 @@ class BlueSnapService
         ];
     }
 
-/**
- * Create a VaultedShopper
- *
- * @return \Bluesnap\Models\VaultedShopper
- */
+    /**
+     * Create a VaultedShopper
+     *
+     * @return \Bluesnap\Models\VaultedShopper
+     */
     public function createVaultedShopper($data)
     {
-        $response = \Bluesnap\VaultedShopper::create($data);
+        Log::channel('bluesnap')->info("Creating Vaulted Shopper: ", ['firstName' => $data['first_name'], 'lastName' => $data['last_name']]);
+        $response = \Bluesnap\VaultedShopper::create(['firstName' => $data['first_name'], 'lastName' => $data['last_name']]);
+        Log::channel('bluesnap')->info("New Shopper Id: " . $response->data->id);
 
         if ($response->failed()) {
             $error = $response->data;
@@ -128,73 +130,72 @@ class BlueSnapService
         ];
     }
 
-/**
- * Get a VaultedShopper
- *
- * @param int $vaulted_shopper_id
- * @return \Bluesnap\Models\VaultedShopper
- */
+    /**
+     * Get a VaultedShopper
+     *
+     * @param int $vaulted_shopper_id
+     * @return \Bluesnap\Models\VaultedShopper
+     */
     public function getVaultedShopper($vaulted_shopper_id)
     {
+        Log::channel('bluesnap')->info("Fetching Vaulted Shopper: " . $vaulted_shopper_id);
         $response = \Bluesnap\VaultedShopper::get($vaulted_shopper_id);
+        Log::channel('bluesnap')->info("Fetched Vaulted Shopper: ", (array) $response->data);
 
         if ($response->failed()) {
             $error = $response->data;
-
-            // handle error
+            return ['success' => false, 'message' => $error];
         }
-
         $vaulted_shopper = $response->data;
 
-        return $vaulted_shopper;
+        return ['success' => true, 'vaultedShopper' => $vaulted_shopper];
     }
 
-/**
- * Add a New Card to a VaultedShopper
- *
- * @param int $vaulted_shopper_id
- * @return \Bluesnap\Models\VaultedShopper
- */
-    public function addCardToVaultedShopper($vaulted_shopper_id)
+    /**
+     * Add a New Card to a VaultedShopper
+     *
+     * @param int $vaulted_shopper_id
+     * @return \Bluesnap\Models\VaultedShopper
+     */
+    public function addCardToVaultedShopper($vaulted_shopper_id, $card)
     {
-        $vaulted_shopper = $this->getVaultedShopper($vaulted_shopper_id);
+        $vaulted_shopper = $this->getVaultedShopper($vaulted_shopper_id)['vaultedShopper'];
 
         $vaulted_shopper->paymentSources = [
             'creditCardInfo' => [
                 [
                     'billingContactInfo' => [
-                        'firstName' => 'John',
-                        'lastName' => 'Smith',
+                        'firstName' => $card['first_name'],
+                        'lastName' => $card['last_name'],
                     ],
                     'creditCard' => [
-                        'cardNumber' => '4263982640269299',
-                        'expirationMonth' => '02',
-                        'expirationYear' => '2018',
-                        'securityCode' => '837',
+                        'cardNumber' => $card['card_number'],
+                        'expirationMonth' => $card['expiry_month'],
+                        'expirationYear' => $card['expiry_year'],
+                        'securityCode' => $card['security_code'],
                     ],
                 ],
             ],
         ];
-
+        Log::channel('bluesnap')->info("Adding Card to Vaulted Shopper: " . $vaulted_shopper_id, $vaulted_shopper->paymentSources);
         $response = \Bluesnap\VaultedShopper::update($vaulted_shopper_id, $vaulted_shopper);
+        Log::channel('bluesnap')->info("Added Card to Shopper: " . $vaulted_shopper_id, (array) $response->data);
 
         if ($response->failed()) {
             $error = $response->data;
-
-            // handle error
+            return ['success' => false, 'message' => $error];
         }
 
         $vaulted_shopper = $response->data;
-
-        return $vaulted_shopper;
+        return ['success' => true, 'vaultedShopper' => $vaulted_shopper, 'card' => ''];
     }
-/**
- * Authorize a New Transaction (with vendor, vaultedShopper, saved card)
- *
- * @param int $vaulted_shopper_id
- * @param int $vendor_id
- * @return \Bluesnap\Models\CardTransaction
- */
+    /**
+     * Authorize a New Transaction (with vendor, vaultedShopper, saved card)
+     *
+     * @param int $vaulted_shopper_id
+     * @param int $vendor_id
+     * @return \Bluesnap\Models\CardTransaction
+     */
     public function authorizeTransaction($vaulted_shopper_id, $vendor_id)
     {
         $response = \Bluesnap\CardTransaction::create([
@@ -225,5 +226,4 @@ class BlueSnapService
 
         return $transaction;
     }
-
 }

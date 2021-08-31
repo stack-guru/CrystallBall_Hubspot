@@ -68,6 +68,13 @@ return [
             'days' => 3,
         ],
 
+        'bluesnap' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/bluesnap.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 3,
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
