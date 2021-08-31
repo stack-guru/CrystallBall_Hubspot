@@ -30,10 +30,6 @@ class PaymentDetailRequest extends FormRequest
             'security_code' => 'required|numeric',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'billing_address' => 'required|string',
-            'city' => 'required|string',
-            'zip_code' => 'nullable|string',
-            'country' => 'required|string',
         ];
     }
 }

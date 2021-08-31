@@ -23,12 +23,13 @@ class PaymentDetailController extends Controller
         $user = Auth::user();
         $lastPaymentDetail = $user->lastPaymentDetail;
         if (!$lastPaymentDetail) {
-            $response = $blueSnapService->createVaultedShopper($request->only(['first_name', 'last_name']));
-            if ($response['success']) {
-                $vaultedShopperId = $response['vaultedShopperId'];
-            } else {
-                return $response;
-            }
+            abort(400);
+            // $response = $blueSnapService->createVaultedShopper($request->only(['first_name', 'last_name']));
+            // if ($response['success']) {
+            //     $vaultedShopperId = $response['vaultedShopperId'];
+            // } else {
+            //     return $response;
+            // }
         } else {
             $vaultedShopperId = $lastPaymentDetail->bluesnap_vaulted_shopper_id;
         }
@@ -38,6 +39,10 @@ class PaymentDetailController extends Controller
         $paymentDetail = new PaymentDetail;
         $paymentDetail->fill($request->validated());
         $paymentDetail->card_number = substr($request->card_number, -4, 4);
+        $paymentDetail->billing_address = $lastPaymentDetail->billing_address;
+        $paymentDetail->city = $lastPaymentDetail->city;
+        $paymentDetail->zip_code = $lastPaymentDetail->zip_code;
+        $paymentDetail->country = $lastPaymentDetail->country;
         //$paymentDetail->bluesnap_card_id
         $paymentDetail->bluesnap_vaulted_shopper_id = $vaultedShopperId;
         $paymentDetail->user_id = $user->id;

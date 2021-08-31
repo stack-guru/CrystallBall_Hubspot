@@ -99,34 +99,6 @@ export default class CreatePaymentDetail extends Component {
                             </div>
                             <div className="row">
                                 <div className="col-6">
-                                    <div className="form-group">
-                                        <label htmlFor="billingAddress" className="form-control-placeholder">Billing Address</label>
-                                        <input type="text" value={this.state.paymentDetail.billing_address} onChange={this.changeHandler} className="form-control" id="billingAddress" name="billing_address" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-2">
-                                    <div className="form-group">
-                                        <label htmlFor="city" className="form-control-placeholder">City</label>
-                                        <input type="text" value={this.state.paymentDetail.city} onChange={this.changeHandler} className="form-control" id="city" name="city" />
-                                    </div>
-                                </div>
-                                <div className="col-2">
-                                    <div className="form-group">
-                                        <label htmlFor="zipCode" className="form-control-placeholder">Zip Code</label>
-                                        <input type="text" value={this.state.paymentDetail.zip_code} onChange={this.changeHandler} className="form-control" id="zipCode" name="zip_code" />
-                                    </div>
-                                </div>
-                                <div className="col-2">
-                                    <div className="form-group ">
-                                        <label htmlFor="">Country</label>
-                                        <CountryCodeSelect className="form-control" name="country" onChange={this.changeHandler} value={this.state.paymentDetail.country} ></CountryCodeSelect>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-6">
                                     <div className="form-group ">
                                         <label htmlFor="cardNumber">Card Number</label>
                                         <input type="text" value={this.state.paymentDetail.card_number} onChange={this.changeHandler} className="form-control" id="cardNumber" name="card_number" />
@@ -148,15 +120,15 @@ export default class CreatePaymentDetail extends Component {
                                 </div>
                                 <div className="col-2">
                                     <div className="form-group ">
-                                        <label htmlFor="securityCode">Security Code</label>
+                                        <label htmlFor="securityCode">CVV</label>
                                         <input type="text" value={this.state.paymentDetail.security_code} onChange={this.changeHandler} className="form-control" id="securityCode" name="security_code" />
                                     </div>
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0 mt-3 mt-sm-3 mt-md-1 mt-lg-1">
-                                <div className="col-12 text-right pr-0">
+                                <div className="col-6 text-right pr-0">
                                     <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">
-                                        <i className="fa fa-plus mr-1"></i>Add
+                                        <i className="fa fa-plus mr-1"></i>Save
                                     </button>
                                 </div>
                             </div>
