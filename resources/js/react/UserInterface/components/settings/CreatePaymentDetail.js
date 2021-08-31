@@ -11,7 +11,7 @@ export default class CreatePaymentDetail extends Component {
         this.state = {
             errors: undefined,
             paymentDetail: {
-                'first_name': '', card_number: '', 'expiry_month': '', expiry_year: '', 'security_code': '',
+                'first_name': '', 'last_name': '', card_number: '', 'expiry_month': '', expiry_year: '', 'security_code': '',
                 'billing_address': '', city: '', zip_code: '', country: ''
             },
             isBusy: false
@@ -31,7 +31,7 @@ export default class CreatePaymentDetail extends Component {
         this.setState({
             errors: undefined,
             paymentDetail: {
-                'first_name': '', card_number: '', 'expiry_month': '', expiry_year: '', 'security_code': '',
+                'first_name': '', 'last_name': '', card_number: '', 'expiry_month': '', expiry_year: '', 'security_code': '',
                 'billing_address': '', city: '', zip_code: '', country: ''
             },
             isBusy: false
