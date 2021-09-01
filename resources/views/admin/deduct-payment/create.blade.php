@@ -7,7 +7,7 @@
                 <div style="width: 50%">
                 <form action="{{route('admin.deduct-payment.store')}}" method="post">
                     @csrf
-
+                    <input type="hidden" name="user_id" value="{{ $user->id }}">
                     <div class="form-group"><label>Name</label><input type="text" value="{{ $user->name }}" class="form-control" disabled></div>
                     <div class="form-group"><label>Email</label><input type="text" value="{{ $user->email }}" class="form-control" disabled></div>
 
