@@ -51,19 +51,19 @@ class DeductPaymentController extends Controller
         $amount = round($amount, 2);
         $responseArr = $blueSnapService->createTransaction($amount, $card, $paymentDetail->bluesnap_vaulted_shopper_id);
 
-        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $paymentDetail->id, $user->price_plan_id, $amount);
+        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user, $paymentDetail->id, $user->price_plan_id, $amount);
         $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $paymentDetail->id, $paymentDetail->card_number, null, $amount, true);
 
 
         return redirect()->route('admin.auto-payment-log.index')->with('success', $responseArr['success']);
     }
 
-    private function addPricePlanSubscription($transactionId, $userId, $paymentDetailId, $pricePlanId, $chargedPrice)
+    private function addPricePlanSubscription($transactionId, $user, $paymentDetailId, $pricePlanId, $chargedPrice)
     {
         $pricePlanSubscription = new PricePlanSubscription;
         $pricePlanSubscription->transaction_id = $transactionId;
-        $pricePlanSubscription->expires_at = new \DateTime("+1 month");
-        $pricePlanSubscription->user_id = $userId;
+        $pricePlanSubscription->expires_at = $user->price_plan_expiry_date;
+        $pricePlanSubscription->user_id = $user->id;
         $pricePlanSubscription->payment_detail_id = $paymentDetailId;
         $pricePlanSubscription->price_plan_id = $pricePlanId;
         $pricePlanSubscription->charged_price = $chargedPrice;
