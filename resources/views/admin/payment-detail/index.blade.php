@@ -19,6 +19,7 @@
                                 <th>BlueSnap Vaulted Shopper Id</th>
                                 <th>User</th>
                                 <th>Created At</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,6 +37,9 @@
                                 <td>{{$paymentDetail->bluesnap_vaulted_shopper_id}}</td>
                                 <td>{{$paymentDetail->user->email}}</td>
                                 <td>{{$paymentDetail->created_at}}</td>
+                                <td>
+                                    <a href="{{ route('admin.deduct-payment.create', ['user_id' => $paymentDetail->user_id, 'payment_detail_id' => $paymentDetail->id]) }}" class="btn btn-primary">Charge</a>
+                                </td>
                             </tr>
                             @empty
                             <tr>

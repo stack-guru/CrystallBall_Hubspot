@@ -33,6 +33,9 @@ Route::get('web-monitor', [App\Http\Controllers\Admin\WebMonitorController::clas
 Route::get('auto-payment-log', [App\Http\Controllers\Admin\AutoPaymentLogController::class, 'index'])->name('auto-payment-log.index');
 Route::get('payment-detail', [App\Http\Controllers\Admin\PaymentDetailController::class, 'index'])->name('payment-detail.index');
 
+Route::get('deduct-payment/create', [App\Http\Controllers\Admin\DeductPaymentController::class, 'create'])->name('deduct-payment.create');
+Route::post('deduct-payment', [App\Http\Controllers\Admin\DeductPaymentController::class, 'store'])->name('deduct-payment.store');
+
 Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
     Route::get('user-active-report', [App\Http\Controllers\Admin\ReportsController::class, 'showUserActiveReport'])->name('user-active-report.show');
 });

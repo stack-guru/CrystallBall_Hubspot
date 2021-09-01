@@ -96,9 +96,9 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             if ($lastPaymentDetail && $user->is_billing_enabled) {
                 $card = [
                     'cardNumber' => $lastPaymentDetail->cardNumber,
-                    'expirationMonth' => $lastPaymentDetail->expirationMonth,
-                    'expirationYear' => $lastPaymentDetail->expirationYear,
-                    'securityCode' => $lastPaymentDetail->securityCode,
+                    'expirationMonth' => $lastPaymentDetail->expiry_month,
+                    'expirationYear' => $lastPaymentDetail->expiry_year,
+                    'securityCode' => $lastPaymentDetail->security_code,
                 ];
                 $pricePlanPrice = $user->pricePlan->price;
                 if (array_search($lastPaymentDetail->country, ["PK", "IL"]) !== false) {
