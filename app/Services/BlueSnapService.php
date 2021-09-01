@@ -66,7 +66,7 @@ class BlueSnapService
      */
     public function createTransaction($price, $card, $vaultedShopperId = null, $token = null)
     {
-
+        Log::channel('bluesnap')->info("Deducting charges from: ", ['vaultedShopper' => $vaultedShopperId, 'price' => $price, 'token' => $token, 'card' => $card]);
         $response = Bluesnap\CardTransaction::create([
             // 'creditCard' => [
             //     // 'cardNumber' => $card['cardNumber'],
@@ -84,6 +84,7 @@ class BlueSnapService
             'vaultedShopperId' => $vaultedShopperId,
             'storeCard' => $vaultedShopperId == null,
         ]);
+        Log::channel('bluesnap')->info("Deduction attempt: ", (array) $response->data);
 
         // Bluesnap\Response {#1325 ▼
         //     -_status: "error"
