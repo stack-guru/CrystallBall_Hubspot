@@ -59,10 +59,10 @@ export default class AnalyticsAndBusinessIntelligenceIndex extends React.Compone
                         </div>
 
                         <div className="row">
-                            <div className="col-lg-5 col-sm-12">
+                            <div className="col-lg-3 col-sm-6">
                                 <a target="_blank" href="#"><img style={{ width: '100%', height: 'auto' }} src="/images/buttons/microsoft-power-business-intelligence.png" /></a>
                             </div>
-                            <div className="col-lg-5 col-sm-12">
+                            <div className="col-lg-3 col-sm-6">
                                 <a target="_blank" href="#"><img style={{ width: '100%', height: 'auto' }} src="/images/buttons/google-data-studio.png" /></a>
                             </div>
                         </div>
