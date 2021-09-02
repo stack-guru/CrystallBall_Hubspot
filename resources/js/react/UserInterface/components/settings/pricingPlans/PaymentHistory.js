@@ -65,7 +65,7 @@ export default class PaymentHistory extends React.Component {
                                         <td>{index + 1}</td>
                                         <td>{pricePlanSubscription.transaction_id}</td>
                                         <td>{pricePlanSubscription.price_plan ? pricePlanSubscription.price_plan.name : null}</td>
-                                        <td>${pricePlanSubscription.payment_detail ? parseFloat(pricePlanSubscription.payment_detail.charged_price).toFixed(2) : '0'}</td>
+                                        <td>${pricePlanSubscription.payment_detail ? parseFloat(pricePlanSubscription.charged_price).toFixed(2) : '0'}</td>
                                         <td>
                                             {moment(pricePlanSubscription.created_at).format("YYYY-MM-DD")}&nbsp;&nbsp;&nbsp;{moment(pricePlanSubscription.created_at).format("hh:mm")}
                                         </td>
