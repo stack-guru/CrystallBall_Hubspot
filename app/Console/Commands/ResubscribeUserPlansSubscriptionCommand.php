@@ -48,7 +48,6 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
     public function __construct()
     {
         parent::__construct();
-
     }
 
     /**
@@ -163,7 +162,6 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             $trialUser->save();
 
             event(new UserTrialPricePlanEnded($trialUser));
-
         }
         print count($trialUsers) . " Users have been subscribed from trial to free plan.\n";
 
@@ -250,7 +248,6 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $user->is_ds_weather_alerts_enabled = false;
         $user->is_ds_wordpress_updates_enabled = false;
         $user->is_ds_web_monitors_enabled = false;
-
     }
 
     private function disableNotifications($user)

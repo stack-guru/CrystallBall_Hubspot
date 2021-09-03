@@ -59,14 +59,20 @@ export default class AnalyticsAndBusinessIntelligenceIndex extends React.Compone
                         </div>
 
                         <div className="row">
-                            <div className="col-lg-2 col-sm-4">
-                                <a target="_blank" href="#"><img style={{ width: '100%', height: 'auto' }} src="/images/buttons/google-analytics.png" /></a>
+                            <div className="col-lg-3 col-sm-4">
+                                <a target="_blank" href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en">
+                                    <img style={{ width: '80%', height: 'auto' }} src="/images/buttons/google-analytics.png" />
+                                </a>
                             </div>
-                            <div className="col-lg-2 col-sm-4">
-                                <a target="_blank" href="#"><img style={{ width: '100%', height: 'auto' }} src="/images/buttons/microsoft-power-business-intelligence.png" /></a>
+                            <div className="col-lg-3 col-sm-4">
+                                <a className="disabled" href="#" onClick={e => { e.preventDefault(); swal('Coming Soon!', '', 'info'); }}>
+                                    <img style={{ width: '80%', height: 'auto' }} src="/images/buttons/google-data-studio.png" />
+                                </a>
                             </div>
-                            <div className="col-lg-2 col-sm-4">
-                                <a target="_blank" href="#"><img style={{ width: '100%', height: 'auto' }} src="/images/buttons/google-data-studio.png" /></a>
+                            <div className="col-lg-3 col-sm-4">
+                                <a className="disabled" href="#" onClick={e => { e.preventDefault(); swal('Coming Soon!', '', 'info'); }}>
+                                    <img style={{ width: '80%', height: 'auto' }} src="/images/buttons/microsoft-power-business-intelligence.png" />
+                                </a>
                             </div>
                         </div>
                     </div>
