@@ -29,6 +29,7 @@ import EditUser from './components/settings/user/EditUser';
 import IndexNotificationSettings from "./components/NotificationSettings/IndexNotificationSettingsComponent";
 import AnalyticsAndBusinessIntelligenceIndex from './components/analyticsAndBusinessIntelligence/Index';
 import CreatePaymentDetail from './components/settings/CreatePaymentDetail';
+import DiscountTopNotice from './utils/DiscountTopNotice';
 
 class Main extends React.Component {
 
@@ -125,10 +126,10 @@ class Main extends React.Component {
                 </div>
 
                 <div className="page-container">
+                    <DiscountTopNotice />
                     <div className="header navbar">
                         <Header user={this.state.user} />
                     </div>
-
 
                     <main className="main-content bgc-grey-100">
                         <Switch>
