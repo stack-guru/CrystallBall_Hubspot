@@ -9,7 +9,6 @@ export default class StartupConfigurationWizardModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isOpen: true,
             stepNumber: 0,
             stepResponses: {},
             automations: [],
@@ -91,7 +90,7 @@ export default class StartupConfigurationWizardModal extends Component {
 
     render() {
 
-        const { isOpen, stepNumber, automations, integrations } = this.state;
+        const { stepNumber, automations, integrations } = this.state;
 
         let modalBodyFooter = undefined;
         switch (stepNumber) {
@@ -205,13 +204,13 @@ export default class StartupConfigurationWizardModal extends Component {
                     </ModalBody>
                     ,
                     <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => { this.recordStepResponse('feedback', this.state.feedback, this.handleSubmit); this.toggleModal() }}  >Finish</Button>
+                        <Button color="primary" onClick={() => { this.recordStepResponse('feedback', this.state.feedback, this.handleSubmit); this.props.toggleShowTour(); }}  >Finish</Button>
                     </ModalFooter>
                 ];
                 break;
         }
         return (
-            <Modal isOpen={isOpen} toggle={this.toggleModal} className="modal-lg">
+            <Modal isOpen={this.props.isOpen} toggle={this.props.toggleShowTour} className="modal-lg">
                 {modalBodyFooter}
             </Modal>
         )

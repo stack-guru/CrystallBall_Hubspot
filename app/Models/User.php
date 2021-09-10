@@ -46,6 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         'data_source_tour_showed_at',
         'google_accounts_tour_showed_at',
+        'startup_wizard_showed_at'
     ];
 
     /**
@@ -76,6 +77,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
         'trial_ended_at' => 'datetime',
+        'data_source_tour_showed_at' => 'datetime',
+        'google_accounts_tour_showed_at' => 'datetime',
+        'startup_wizard_showed_at' => 'datetime',
 
         'is_ds_holidays_enabled' => 'boolean',
         'is_ds_google_algorithm_updates_enabled' => 'boolean',
@@ -237,5 +241,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return (string) $this->getKey();
     }
-
 }

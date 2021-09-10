@@ -11,7 +11,7 @@ class UserStartupWizardController extends Controller
 {
     public function store(UserStartupWizardRequest $request)
     {
-        $userId = Auth::id();
+        $user = Auth::user();
 
         $rows = [];
         $stepNumbers = $request->step_number;
@@ -20,11 +20,13 @@ class UserStartupWizardController extends Controller
             $row['step_number'] = $stepNumber;
             $row['data_label'] = $request->data_label[$key];
             $row['data_value'] = $request->data_value[$key];
-            $row['user_id'] = $userId;
+            $row['user_id'] = $user->id;
             $rows[] = $row;
         }
 
         UserStartupWizard::insert($rows);
+        $user->startup_wizard_showed_at = new \DateTime();
+        $user->save();
 
         return ['success' => true];
     }

@@ -29,7 +29,6 @@ import EditUser from './components/settings/user/EditUser';
 import IndexNotificationSettings from "./components/NotificationSettings/IndexNotificationSettingsComponent";
 import AnalyticsAndBusinessIntelligenceIndex from './components/analyticsAndBusinessIntelligence/Index';
 import CreatePaymentDetail from './components/settings/CreatePaymentDetail';
-import StartupConfigurationWizardModal from './helpers/StartupConfigurationWizardModal';
 
 class Main extends React.Component {
 
@@ -120,7 +119,6 @@ class Main extends React.Component {
         return (
 
             <React.Fragment>
-                <StartupConfigurationWizardModal />
                 <div className="sidebar">
                     <Sidebar user={this.state.user} reloadUser={this.loadUser} />
                 </div>
