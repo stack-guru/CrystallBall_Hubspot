@@ -8,10 +8,23 @@ export default class StartupConfigurationWizardModal extends Component {
         super(props);
         this.state = {
             isOpen: true,
-            stepNumber: 0
+            stepNumber: 0,
+            stepResponses: {},
+            automations: [],
+            integrations: [],
+            feedback: ''
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.incrementStep = this.incrementStep.bind(this);
+        this.recordStepResponse = this.recordStepResponse.bind(this);
+        this.toggleAutomation = this.toggleAutomation.bind(this);
+        this.toggleIntegration = this.toggleIntegration.bind(this);
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     toggleModal() {
@@ -22,9 +35,41 @@ export default class StartupConfigurationWizardModal extends Component {
         this.setState({ stepNumber: this.state.stepNumber + increment })
     }
 
+    recordStepResponse(name, value) {
+        this.setState({
+            stepResponses: {
+                ...this.state.stepResponses,
+                [this.state.stepNumber]: {
+                    ...this.state.stepResponses[this.state.stepNumber],
+                    [name]: value
+                }
+            }
+        });
+    }
+
+    toggleAutomation(automationName) {
+        const { automations } = this.state;
+
+        if (automations.indexOf(automationName) > -1) {
+            this.setState({ automations: automations.filter(a => a !== automationName) });
+        } else {
+            this.setState({ automations: [...automations, automationName] });
+        }
+    }
+
+    toggleIntegration(integrationName) {
+        const { integrations } = this.state;
+
+        if (integrations.indexOf(integrationName) > -1) {
+            this.setState({ integrations: integrations.filter(a => a !== integrationName) });
+        } else {
+            this.setState({ integrations: [...integrations, integrationName] });
+        }
+    }
+
     render() {
 
-        const { isOpen, stepNumber } = this.state;
+        const { isOpen, stepNumber, automations, integrations } = this.state;
 
         let modalBodyFooter = undefined;
         switch (stepNumber) {
@@ -35,7 +80,7 @@ export default class StartupConfigurationWizardModal extends Component {
                     </ModalBody>
                     ,
                     <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => this.incrementStep(1)} >Next</Button>
+                        <Button color="primary" onClick={() => { this.recordStepResponse('NEXT', true); this.incrementStep(1) }} >Next</Button>
                     </ModalFooter>
                 ];
                 break;
@@ -44,8 +89,8 @@ export default class StartupConfigurationWizardModal extends Component {
                     <ModalBody id="scw-modal-body">
                         <center>
                             <h1>Do you want to import old annotations from Universal Analytics?</h1>
-                            <Button color="primary" onClick={() => this.incrementStep(1)}>Yes</Button>
-                            <Button color="secondary" onClick={() => this.incrementStep(2)} className="ml-4">No</Button>
+                            <Button color="primary" onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', true); this.incrementStep(1) }}>Yes</Button>
+                            <Button color="secondary" onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(2) }} className="ml-4">No</Button>
                         </center>
                     </ModalBody>
                     ,
@@ -57,18 +102,18 @@ export default class StartupConfigurationWizardModal extends Component {
                     <ModalBody id="scw-modal-body">
                         <center>
                             <h1>What Automation would you like to add?</h1>
-                            <Button color="primary">Web Monitoring</Button>
-                            <Button color="primary" className="ml-3">News Alert</Button>
-                            <Button color="primary" className="ml-3">Google Updates</Button>
-                            <Button color="primary" className="ml-3">Retail Marketing Dates</Button>
-                            <Button color="primary" className="ml-3">Holidays</Button>
-                            <Button color="primary" className="ml-3">Weather Alerts</Button>
-                            <Button color="primary" className="ml-3">WordPress Updates</Button>
+                            <Button color="light" onClick={() => { this.toggleAutomation('WEB_MONITORING'); }} className={"mt-3" + (automations.indexOf('WEB_MONITORING') > -1 ? " active" : "")}>Web Monitoring</Button>
+                            <Button color="light" onClick={() => { this.toggleAutomation('NEWS_ALERT'); }} className={"mt-3 ml-3" + (automations.indexOf('NEWS_ALERT') > -1 ? " active" : "")}>News Alert</Button>
+                            <Button color="light" onClick={() => { this.toggleAutomation('GOOGLE_UPDATES'); }} className={"mt-3 ml-3" + (automations.indexOf('GOOGLE_UPDATES') > -1 ? " active" : "")}>Google Updates</Button>
+                            <Button color="light" onClick={() => { this.toggleAutomation('RETAIL_MARKETING_DATES'); }} className={"mt-3 ml-3" + (automations.indexOf('RETAIL_MARKETING_DATES') > -1 ? " active" : "")}>Retail Marketing Dates</Button>
+                            <Button color="light" onClick={() => { this.toggleAutomation('HOLIDAYS'); }} className={"mt-3 ml-3" + (automations.indexOf('HOLIDAYS') > -1 ? " active" : "")}>Holidays</Button>
+                            <Button color="light" onClick={() => { this.toggleAutomation('WEATHER_ALERTS'); }} className={"mt-3 ml-3" + (automations.indexOf('WEATHER_ALERTS') > -1 ? " active" : "")}>Weather Alerts</Button>
+                            <Button color="light" onClick={() => { this.toggleAutomation('WORDPRESS_UPDATES'); }} className={"mt-3 ml-3" + (automations.indexOf('WORDPRESS_UPDATES') > -1 ? " active" : "")}>WordPress Updates</Button>
                         </center>
                     </ModalBody>
                     ,
                     <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => this.incrementStep(1)} >Next</Button>
+                        <Button color="primary" onClick={() => { this.recordStepResponse('automations', JSON.stringify(this.state.automations)); this.incrementStep(1) }} >Next</Button>
                     </ModalFooter>
                 ];
                 break;
@@ -77,21 +122,21 @@ export default class StartupConfigurationWizardModal extends Component {
                     <ModalBody id="scw-modal-body">
                         <center>
                             <h1>What tools would you like to connect?</h1>
-                            <Button color="default"><img src="/images/icons/adwords.png" width="20px" height="auto" className="mr-2" /> Google AdWords</Button>
-                            <Button color="default" className="ml-3"><img src="/images/icons/mailchimp.png" width="20px" height="auto" className="mr-2" /> MailChimp</Button>
-                            <Button color="default" className="ml-3"><img src="/images/icons/shopify.png" width="20px" height="auto" className="mr-2" /> Shopify</Button>
-                            <Button color="default" className="ml-3"><img src="/images/icons/slack.png" width="20px" height="auto" className="mr-2" /> Slack</Button>
-                            <Button color="default" className="ml-3"><img src="/images/icons/asana.png" width="20px" height="auto" className="mr-2" /> Asana</Button>
-                            <Button color="default" className="ml-3"><img src="/images/icons/jira.png" width="20px" height="auto" className="mr-2" /> Jira</Button>
-                            <Button color="default" className="ml-3"><img src="/images/icons/trello.png" width="20px" height="auto" className="mr-2" /> Trello</Button>
-                            <Button color="default" className="ml-3"><img src="/images/icons/github.png" width="20px" height="auto" className="mr-2" /> GitHub</Button>
-                            <Button color="default" className="ml-3"><img src="/images/icons/bitbucket.png" width="20px" height="auto" className="mr-2" /> BitBucket</Button>
-                            <Button color="default" className="ml-3"><img src="/images/icons/google-sheets.png" width="20px" height="auto" className="mr-2" /> Google Spreadsheet</Button>
+                            <Button color="light" onClick={() => { this.toggleIntegration('ADWORDS'); }} className={"mt-3" + (integrations.indexOf('ADWORDS') > -1 ? " active" : "")}><img src="/images/icons/adwords.png" width="20px" height="auto" className="mr-2" /> Google AdWords</Button>
+                            <Button color="light" onClick={() => { this.toggleIntegration('MAILCHIMP'); }} className={"mt-3 ml-3" + (integrations.indexOf('MAILCHIMP') > -1 ? " active" : "")}><img src="/images/icons/mailchimp.png" width="20px" height="auto" className="mr-2" /> MailChimp</Button>
+                            <Button color="light" onClick={() => { this.toggleIntegration('SHOPIFY'); }} className={"mt-3 ml-3" + (integrations.indexOf('SHOPIFY') > -1 ? " active" : "")}><img src="/images/icons/shopify.png" width="20px" height="auto" className="mr-2" /> Shopify</Button>
+                            <Button color="light" onClick={() => { this.toggleIntegration('SLACK'); }} className={"mt-3 ml-3" + (integrations.indexOf('SLACK') > -1 ? " active" : "")}><img src="/images/icons/slack.png" width="20px" height="auto" className="mr-2" /> Slack</Button>
+                            <Button color="light" onClick={() => { this.toggleIntegration('ASANA'); }} className={"mt-3 ml-3" + (integrations.indexOf('ASANA') > -1 ? " active" : "")}><img src="/images/icons/asana.png" width="20px" height="auto" className="mr-2" /> Asana</Button>
+                            <Button color="light" onClick={() => { this.toggleIntegration('JIRA'); }} className={"mt-3 ml-3" + (integrations.indexOf('JIRA') > -1 ? " active" : "")}><img src="/images/icons/jira.png" width="20px" height="auto" className="mr-2" /> Jira</Button>
+                            <Button color="light" onClick={() => { this.toggleIntegration('TRELLO'); }} className={"mt-3 ml-3" + (integrations.indexOf('TRELLO') > -1 ? " active" : "")}><img src="/images/icons/trello.png" width="20px" height="auto" className="mr-2" /> Trello</Button>
+                            <Button color="light" onClick={() => { this.toggleIntegration('GITHUB'); }} className={"mt-3 ml-3" + (integrations.indexOf('GITHUB') > -1 ? " active" : "")}><img src="/images/icons/github.png" width="20px" height="auto" className="mr-2" /> GitHub</Button>
+                            <Button color="light" onClick={() => { this.toggleIntegration('BITBUCKET'); }} className={"mt-3 ml-3" + (integrations.indexOf('BITBUCKET') > -1 ? " active" : "")}><img src="/images/icons/bitbucket.png" width="20px" height="auto" className="mr-2" /> BitBucket</Button>
+                            <Button color="light" onClick={() => { this.toggleIntegration('GOOGLE_SHEETS'); }} className={"mt-3 ml-3" + (integrations.indexOf('GOOGLE_SHEETS') > -1 ? " active" : "")}><img src="/images/icons/google-sheets.png" width="20px" height="auto" className="mr-2" /> Google Spreadsheet</Button>
                         </center>
                     </ModalBody>
                     ,
                     <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => this.incrementStep(1)} >Next</Button>
+                        <Button color="primary" onClick={() => { this.recordStepResponse('integrations', JSON.stringify(this.state.integrations)); this.incrementStep(1) }} >Next</Button>
                     </ModalFooter>
                 ];
                 break;
@@ -124,7 +169,7 @@ export default class StartupConfigurationWizardModal extends Component {
                     </ModalBody>
                     ,
                     <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => this.incrementStep(1)} >Next</Button>
+                        <Button color="primary" onClick={() => { this.recordStepResponse('NEXT', true); this.incrementStep(1) }}  >Next</Button>
                     </ModalFooter>
                 ];
                 break;
@@ -132,13 +177,13 @@ export default class StartupConfigurationWizardModal extends Component {
                 modalBodyFooter = [
                     <ModalBody id="scw-modal-body">
                         <center>
-                            <h1>What tools would you like to connect?</h1>
-                            <textarea className="form-control"></textarea>
+                            <h1>Is it something else do you need?</h1>
+                            <textarea name="feedback" value={this.state.feedback} onChange={this.handleChange} className="form-control"></textarea>
                         </center>
                     </ModalBody>
                     ,
                     <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={this.toggleModal} >Next</Button>
+                        <Button color="primary" onClick={() => { this.recordStepResponse('feedback', this.state.feedback); this.toggleModal() }}  >Finish</Button>
                     </ModalFooter>
                 ];
                 break;
