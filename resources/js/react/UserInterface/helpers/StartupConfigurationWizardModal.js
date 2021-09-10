@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-import './StartupConfigurationWizardModal.css'
+import HttpClient from '../utils/HttpClient';
+
+import './StartupConfigurationWizardModal.css';
 
 export default class StartupConfigurationWizardModal extends Component {
     constructor(props) {
@@ -21,10 +23,29 @@ export default class StartupConfigurationWizardModal extends Component {
         this.toggleIntegration = this.toggleIntegration.bind(this);
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    handleSubmit() {
+        let formData = new FormData;
+        Object.keys(this.state.stepResponses).map(k => {
+            const stepResponse = this.state.stepResponses[k];
+            formData.append('step_number[]', k);
+            formData.append('data_label[]', stepResponse.data_label);
+            formData.append('data_value[]', stepResponse.data_value);
+        });
+
+        HttpClient.post('/user-startup-wizard', formData).then(resp => {
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+
+            this.setState({ isBusy: false, errors: err });
+        });
     }
 
     toggleModal() {
@@ -35,16 +56,17 @@ export default class StartupConfigurationWizardModal extends Component {
         this.setState({ stepNumber: this.state.stepNumber + increment })
     }
 
-    recordStepResponse(name, value) {
+    recordStepResponse(name, value, stateCallback = () => { }) {
         this.setState({
             stepResponses: {
                 ...this.state.stepResponses,
                 [this.state.stepNumber]: {
                     ...this.state.stepResponses[this.state.stepNumber],
-                    [name]: value
+                    data_label: name,
+                    data_value: value
                 }
             }
-        });
+        }, stateCallback);
     }
 
     toggleAutomation(automationName) {
@@ -183,7 +205,7 @@ export default class StartupConfigurationWizardModal extends Component {
                     </ModalBody>
                     ,
                     <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => { this.recordStepResponse('feedback', this.state.feedback); this.toggleModal() }}  >Finish</Button>
+                        <Button color="primary" onClick={() => { this.recordStepResponse('feedback', this.state.feedback, this.handleSubmit); this.toggleModal() }}  >Finish</Button>
                     </ModalFooter>
                 ];
                 break;
