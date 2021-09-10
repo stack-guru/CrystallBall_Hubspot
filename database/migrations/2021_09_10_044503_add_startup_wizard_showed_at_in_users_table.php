@@ -14,7 +14,7 @@ class AddStartupWizardShowedAtInUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('startup_wizard_showed_at')->nullable()->default(false);
+            $table->boolean('startup_wizard_showed_at')->nullable()->default(null);
         });
     }
 
