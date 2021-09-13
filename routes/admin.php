@@ -12,18 +12,17 @@ Route::group(['prefix' => 'data-source', 'as' => 'data-source.'], function () {
     Route::post('holiday/upload', [App\Http\Controllers\Admin\HolidayController::class, 'upload'])->name('holiday.upload');
 
     Route::resource('google-alert', App\Http\Controllers\Admin\GoogleAlertController::class)->only(['index', 'destroy']);
-    
+
     Route::resource('google-algorithm-update', App\Http\Controllers\Admin\GoogleAlgorithmUpdateController::class)->except('show');
     Route::post('google-algorithm-update/upload', [App\Http\Controllers\Admin\GoogleAlgorithmUpdateController::class, 'upload'])->name('google-algorithm-update.upload');
-    
+
     Route::resource('retail-marketing', App\Http\Controllers\Admin\RetailMarketingController::class);
     Route::post('retail-marketing/upload', [App\Http\Controllers\Admin\RetailMarketingController::class, 'upload'])->name('retail-marketing.upload');
-    
+
     Route::resource('o-w-m-push-notification', App\Http\Controllers\Admin\OWMPushNotificationController::class)->only(['index', 'show', 'destroy']);
 
     Route::resource('wordpress-update', App\Http\Controllers\Admin\WordpressUpdateController::class)->except('show');
     Route::post('wordpress-update/upload', [App\Http\Controllers\Admin\WordpressUpdateController::class, 'upload'])->name('wordpress-update.upload');
-    
 });
 
 Route::resource('coupon', App\Http\Controllers\Admin\CouponController::class);
@@ -35,6 +34,8 @@ Route::get('payment-detail', [App\Http\Controllers\Admin\PaymentDetailController
 
 Route::get('deduct-payment/create', [App\Http\Controllers\Admin\DeductPaymentController::class, 'create'])->name('deduct-payment.create');
 Route::post('deduct-payment', [App\Http\Controllers\Admin\DeductPaymentController::class, 'store'])->name('deduct-payment.store');
+
+Route::get('user-startup-wizard', [App\Http\Controllers\Admin\UserStartupWizardController::class, 'index'])->name('user-startup-wizard.index');
 
 Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
     Route::get('user-active-report', [App\Http\Controllers\Admin\ReportsController::class, 'showUserActiveReport'])->name('user-active-report.show');

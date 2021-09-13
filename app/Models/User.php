@@ -232,6 +232,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(UserAnnotationColor::class);
     }
 
+    public function userStartupWizards()
+    {
+        return $this->hasMany(UserStartupWizard::class);
+    }
+
     public function notificationSettingFor($settingName)
     {
         return NotificationSetting::where('name', $settingName)->where('user_id', $this->getKey())->first();
