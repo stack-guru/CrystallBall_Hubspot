@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddStartupWizardShowedAtInUsersTable extends Migration
+class AddStartupConfigurationShowedAtInUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddStartupWizardShowedAtInUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('startup_wizard_showed_at')->nullable()->default(null);
+            $table->boolean('startup_configuration_showed_at')->nullable()->default(null);
         });
     }
 
@@ -26,7 +26,7 @@ class AddStartupWizardShowedAtInUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('startup_wizard_showed_at');
+            $table->dropColumn('startup_configuration_showed_at');
         });
     }
 }

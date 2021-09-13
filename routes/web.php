@@ -72,7 +72,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'ui'], function () {
 
-        Route::post('user-startup-wizard', [App\Http\Controllers\UserStartupWizardController::class, 'store']);
+        Route::post('user-startup-configuration', [App\Http\Controllers\UserStartupConfigurationController::class, 'store']);
 
         Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
         Route::get('coupon', [App\Http\Controllers\CouponController::class, 'verify']);

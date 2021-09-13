@@ -3,9 +3,9 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import HttpClient from '../utils/HttpClient';
 
-import './StartupConfigurationWizardModal.css';
+import './UserStartupConfigurationModal.css';
 
-export default class StartupConfigurationWizardModal extends Component {
+export default class UserStartupConfigurationModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,7 +38,7 @@ export default class StartupConfigurationWizardModal extends Component {
             formData.append('data_value[]', stepResponse.data_value);
         });
 
-        HttpClient.post('/user-startup-wizard', formData).then(resp => {
+        HttpClient.post('/user-startup-configuration', formData).then(resp => {
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {

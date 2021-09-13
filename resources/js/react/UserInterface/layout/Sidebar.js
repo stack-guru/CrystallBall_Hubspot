@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import InterfaceTour from '../helpers/InterfaceTour';
-import StartupConfigurationWizardModal from '../helpers/StartupConfigurationWizardModal';
+import UserStartupConfigurationModal from '../helpers/UserStartupConfigurationModal';
 import * as $ from 'jquery';
 
 class sidebar extends React.Component {
@@ -11,7 +11,7 @@ class sidebar extends React.Component {
         this.state = {
             show: false,
             showTour: false,
-            showStartupWizard: false
+            showStartupConfiguration: false
         }
     }
 
@@ -39,8 +39,8 @@ class sidebar extends React.Component {
         });
 
         this.setState({
-            showTour: this.props.user.last_login_at == null && this.props.user.startup_wizard_showed_at == null,
-            showStartupWizard: this.props.user.startup_wizard_showed_at == null
+            showTour: this.props.user.last_login_at == null && this.props.user.startup_configuration_showed_at == null,
+            showStartupConfiguration: this.props.user.startup_configuration_showed_at == null
         });
     }
 
@@ -212,7 +212,7 @@ class sidebar extends React.Component {
                                 </li>
                                 <li className="nav-item dropdown">
                                     <InterfaceTour isOpen={this.state.showTour} toggleShowTour={() => { this.setState({ showTour: !this.state.showTour }); (this.props.reloadUser)(); }} />
-                                    <StartupConfigurationWizardModal isOpen={this.state.showStartupWizard} toggleShowTour={() => { this.setState({ showStartupWizard: !this.state.showStartupWizard }); (this.props.reloadUser)(); }} />
+                                    <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={() => { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration }); (this.props.reloadUser)(); }} />
 
                                     <div className="sidebar-link nav-link">
                                         <a href="#" onClick={(e) => { e.preventDefault(); this.setState({ showTour: true }) }}>Take a Tour</a>

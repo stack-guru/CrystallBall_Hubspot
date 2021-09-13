@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         'data_source_tour_showed_at',
         'google_accounts_tour_showed_at',
-        'startup_wizard_showed_at'
+        'startup_configuration_showed_at'
     ];
 
     /**
@@ -79,7 +79,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'trial_ended_at' => 'datetime',
         'data_source_tour_showed_at' => 'datetime',
         'google_accounts_tour_showed_at' => 'datetime',
-        'startup_wizard_showed_at' => 'datetime',
+        'startup_configuration_showed_at' => 'datetime',
 
         'is_ds_holidays_enabled' => 'boolean',
         'is_ds_google_algorithm_updates_enabled' => 'boolean',
@@ -232,9 +232,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(UserAnnotationColor::class);
     }
 
-    public function userStartupWizards()
+    public function userStartupConfigurations()
     {
-        return $this->hasMany(UserStartupWizard::class);
+        return $this->hasMany(UserStartupConfiguration::class);
     }
 
     public function notificationSettingFor($settingName)

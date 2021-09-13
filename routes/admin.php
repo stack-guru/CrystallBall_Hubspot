@@ -35,7 +35,7 @@ Route::get('payment-detail', [App\Http\Controllers\Admin\PaymentDetailController
 Route::get('deduct-payment/create', [App\Http\Controllers\Admin\DeductPaymentController::class, 'create'])->name('deduct-payment.create');
 Route::post('deduct-payment', [App\Http\Controllers\Admin\DeductPaymentController::class, 'store'])->name('deduct-payment.store');
 
-Route::get('user-startup-wizard', [App\Http\Controllers\Admin\UserStartupWizardController::class, 'index'])->name('user-startup-wizard.index');
+Route::get('user-startup-configuration', [App\Http\Controllers\Admin\UserStartupConfigurationController::class, 'index'])->name('user-startup-configuration.index');
 
 Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
     Route::get('user-active-report', [App\Http\Controllers\Admin\ReportsController::class, 'showUserActiveReport'])->name('user-active-report.show');

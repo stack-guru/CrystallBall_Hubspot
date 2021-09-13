@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserStartupWizardsTable extends Migration
+class CreateUserStartupConfigurationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUserStartupWizardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_startup_wizards', function (Blueprint $table) {
+        Schema::create('user_startup_configurations', function (Blueprint $table) {
             $table->id();
 
             $table->integer('step_number')->unsigned()->required();
@@ -34,6 +34,6 @@ class CreateUserStartupWizardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_startup_wizards');
+        Schema::dropIfExists('user_startup_configurations');
     }
 }

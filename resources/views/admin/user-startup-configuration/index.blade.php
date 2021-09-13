@@ -18,7 +18,7 @@
                                 <tr>
                                     <th>Email</th>
                                     <th>Name</th>
-                                    <th>Wizard Steps</th>
+                                    <th>Configuration Steps</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,11 +36,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($user->userStartupWizards as $userStartupWizard)
+                                                @foreach($user->userStartupConfigurations as $userStartupConfiguration)
                                                     <tr>
-                                                        <td>{{ $userStartupWizard->step_number }}</td>
-                                                        <td>{{ $userStartupWizard->data_label }}</td>
-                                                        <td>{{ $userStartupWizard->data_value }}</td>
+                                                        <td>{{ $userStartupConfiguration->step_number }}</td>
+                                                        <td>{{ $userStartupConfiguration->data_label }}</td>
+                                                        <td>{{ $userStartupConfiguration->data_value }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
