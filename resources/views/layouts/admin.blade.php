@@ -55,6 +55,9 @@
                                 <a class="nav-link" href="{{route('admin.coupon.index')}}">Coupons</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{route('admin.checklist-item.index')}}">Checklist Items</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.user.index') }}">Users</a>
                             </li>
                             <li class="nav-item">

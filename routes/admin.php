@@ -35,6 +35,7 @@ Route::get('payment-detail', [App\Http\Controllers\Admin\PaymentDetailController
 Route::get('deduct-payment/create', [App\Http\Controllers\Admin\DeductPaymentController::class, 'create'])->name('deduct-payment.create');
 Route::post('deduct-payment', [App\Http\Controllers\Admin\DeductPaymentController::class, 'store'])->name('deduct-payment.store');
 
+Route::resource('checklist-item', App\Http\Controllers\Admin\ChecklistItemController::class);
 Route::get('user-startup-configuration', [App\Http\Controllers\Admin\UserStartupConfigurationController::class, 'index'])->name('user-startup-configuration.index');
 
 Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {

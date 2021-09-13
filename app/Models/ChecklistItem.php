@@ -5,12 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Holiday extends Model
+class ChecklistItem extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
-        'category', 'event_name', 'description', 'country_name', 'holiday_date',
-        'url', 'event_type', 'description2',
+
+        'name',
+        'label',
+        'description',
+        'url',
+
+        'sort_rank',
     ];
 }

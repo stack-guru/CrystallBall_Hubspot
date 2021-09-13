@@ -11,7 +11,7 @@ class ChromeExtensionLog extends Model
 
     public $timestamps = false;
 
-    public $fillable = [
+    protected $fillable = [
 
         'event_name',
 
