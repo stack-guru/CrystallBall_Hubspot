@@ -124,7 +124,7 @@ export default class UserStartupConfigurationModal extends Component {
                         <center>
                             <h1>What Automation would you like to add?</h1>
                             <Button color="light" onClick={() => { this.toggleAutomation('WEB_MONITORING'); }} className={"mt-3" + (automations.indexOf('WEB_MONITORING') > -1 ? " active" : "")}>Web Monitoring</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('NEWS_ALERT'); }} className={"mt-3 ml-3" + (automations.indexOf('NEWS_ALERT') > -1 ? " active" : "")}>News Alert</Button>
+                            <Button color="light" onClick={() => { this.toggleAutomation('GOOGLE_ALERT'); }} className={"mt-3 ml-3" + (automations.indexOf('GOOGLE_ALERT') > -1 ? " active" : "")}>News Alert</Button>
                             <Button color="light" onClick={() => { this.toggleAutomation('GOOGLE_UPDATES'); }} className={"mt-3 ml-3" + (automations.indexOf('GOOGLE_UPDATES') > -1 ? " active" : "")}>Google Updates</Button>
                             <Button color="light" onClick={() => { this.toggleAutomation('RETAIL_MARKETING_DATES'); }} className={"mt-3 ml-3" + (automations.indexOf('RETAIL_MARKETING_DATES') > -1 ? " active" : "")}>Retail Marketing Dates</Button>
                             <Button color="light" onClick={() => { this.toggleAutomation('HOLIDAYS'); }} className={"mt-3 ml-3" + (automations.indexOf('HOLIDAYS') > -1 ? " active" : "")}>Holidays</Button>
