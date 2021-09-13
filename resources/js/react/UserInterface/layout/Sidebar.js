@@ -40,7 +40,7 @@ class sidebar extends React.Component {
 
         this.setState({
             showTour: this.props.user.last_login_at == null && this.props.user.startup_configuration_showed_at !== null,
-            showStartupConfiguration: this.props.user.last_login_at == null && this.props.user.startup_configuration_showed_at == null
+            showStartupConfiguration: this.props.user.startup_configuration_showed_at == null
         });
     }
 
