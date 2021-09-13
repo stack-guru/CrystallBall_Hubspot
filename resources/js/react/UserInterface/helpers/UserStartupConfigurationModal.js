@@ -153,6 +153,7 @@ export default class UserStartupConfigurationModal extends Component {
                             <Button color="light" onClick={() => { this.toggleIntegration('GITHUB'); }} className={"mt-3 ml-3" + (integrations.indexOf('GITHUB') > -1 ? " active" : "")}><img src="/images/icons/github.png" width="20px" height="auto" className="mr-2" /> GitHub</Button>
                             <Button color="light" onClick={() => { this.toggleIntegration('BITBUCKET'); }} className={"mt-3 ml-3" + (integrations.indexOf('BITBUCKET') > -1 ? " active" : "")}><img src="/images/icons/bitbucket.png" width="20px" height="auto" className="mr-2" /> BitBucket</Button>
                             <Button color="light" onClick={() => { this.toggleIntegration('GOOGLE_SHEETS'); }} className={"mt-3 ml-3" + (integrations.indexOf('GOOGLE_SHEETS') > -1 ? " active" : "")}><img src="/images/icons/google-sheets.png" width="20px" height="auto" className="mr-2" /> Google Spreadsheet</Button>
+                            <Button color="light" onClick={() => { this.toggleIntegration('OTHER'); }} className={"mt-3 ml-3" + (integrations.indexOf('OTHER') > -1 ? " active" : "")}>Other</Button>
                         </center>
                     </ModalBody>
                     ,
