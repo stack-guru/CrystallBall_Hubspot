@@ -1,0 +1,78 @@
+.floating-checklist-button{
+    border-radius: 100%;
+    bottom: 20px;
+    right: 20px;
+    position: fixed;
+
+    font-size: 18pt;
+}
+
+.floating-checklist-button .incomplete-checklist-items-count {
+    top: 0px;
+    right: 0px;
+    position: absolute;
+
+    background-color: red;
+    color: white;
+    border-radius: 100%;
+
+    width: 21px;
+    height: 21px;
+
+    font-size: 10pt;
+}
+
+
+.right-checklist-pane {
+    z-index: 9999;
+    width: 300px;
+    height: 100%;
+    right: 0px;
+    top: 0px;
+    position: fixed;
+    border-radius: 15px 0px 0px 15px;
+    border: #002e60 2px solid;
+    background-color: white;
+}
+
+.right-checklist-pane .top-area {
+    color: white;
+    border-radius: 15px 0px 0px 0px;
+    background-color: #004fa3;
+    border-bottom: 2px solid white;
+}
+
+.right-checklist-pane .top-area h3 {
+    margin: 5px;
+    padding-bottom: 5px;
+}
+
+.right-checklist-pane .body-area{
+    color: black;
+    padding-top: 10px;
+    font-size: 12pt;
+    overflow: scroll;
+    height: 80%;
+}
+
+.right-checklist-pane .body-area ul {
+    list-style-image: url('/images/icons/white-round-circle.png');
+}
+
+.right-checklist-pane .body-area ul li {
+    font-weight: bold;
+}
+
+.right-checklist-pane .body-area ul li:nth-last-child(1) {
+    margin-bottom: 10px;
+}
+
+.right-checklist-pane .body-area ul li.read {
+    font-weight: normal;
+}
+
+.right-checklist-pane .body-area ul li.completed {
+    text-decoration: line-through;
+    font-weight: lighter;
+    list-style-image: url('/images/icons/green-tick-round.png');
+}
