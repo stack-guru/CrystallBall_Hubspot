@@ -29,6 +29,7 @@ import EditUser from './components/settings/user/EditUser';
 import IndexNotificationSettings from "./components/NotificationSettings/IndexNotificationSettingsComponent";
 import AnalyticsAndBusinessIntelligenceIndex from './components/analyticsAndBusinessIntelligence/Index';
 import CreatePaymentDetail from './components/settings/CreatePaymentDetail';
+import StartupChecklist from './helpers/StartupChecklist';
 
 class Main extends React.Component {
 
@@ -201,6 +202,7 @@ class Main extends React.Component {
                     <Footer />
                 </div>
 
+                <StartupChecklist />
             </React.Fragment>
 
         )
