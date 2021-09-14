@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PricePlanRequest;
 use App\Models\PricePlan;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class PricePlanController extends Controller
 {

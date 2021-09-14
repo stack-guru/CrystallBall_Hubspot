@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserDataSourceRequest;
 use App\Models\UserDataSource;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use DB;
 use Illuminate\Http\Request;
 

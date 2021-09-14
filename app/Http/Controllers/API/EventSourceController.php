@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Annotation;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class EventSourceController extends Controller
 {

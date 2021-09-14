@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserAnnotationColorRequest;
 use App\Models\UserAnnotationColor;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class UserAnnotationColorController extends Controller

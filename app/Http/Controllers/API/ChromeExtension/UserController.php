@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\ChromeExtension;
 
 use App\Http\Controllers\Controller;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {

@@ -11,7 +11,7 @@ use App\Models\PricePlanSubscription;
 use App\Services\BlueSnapService;
 use App\Services\SendGridService;
 use App\Services\UptimeRobotService;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;

@@ -7,7 +7,7 @@ use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
 use App\Models\AnnotationGaProperty;
 use App\Models\UserDataSource;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\HasLettersNumbers;
 use App\Rules\HasSymbol;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest

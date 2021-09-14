@@ -6,7 +6,7 @@ use App\Models\PaymentDetail;
 use Illuminate\Http\Request;
 use App\Http\Requests\PaymentDetailRequest;
 use App\Services\BlueSnapService;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentDetailController extends Controller
 {

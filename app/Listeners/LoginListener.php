@@ -4,7 +4,7 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\LoginLog;
 
 class LoginListener

@@ -6,7 +6,7 @@ use App\Models\GoogleAccount;
 use App\Models\GoogleAnalyticsAccount;
 use App\Models\GoogleAnalyticsProperty;
 use App\Services\GoogleAnalyticsService;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class GoogleAnalyticsAccountController extends Controller
 {

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\WebMonitorRequest;
 use App\Models\WebMonitor;
 use App\Services\UptimeRobotService;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class WebMonitorController extends Controller

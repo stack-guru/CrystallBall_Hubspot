@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Rules\HasLettersNumbers;
 use App\Rules\HasSymbol;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Cookie;
 use Illuminate\Foundation\Auth\RegistersUsers;

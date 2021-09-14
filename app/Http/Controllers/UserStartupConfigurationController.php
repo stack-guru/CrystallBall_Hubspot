@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserStartupConfigurationRequest;
 use App\Models\UserStartupConfiguration;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\ChecklistItem;
 use App\Models\UserChecklistItem;
 
