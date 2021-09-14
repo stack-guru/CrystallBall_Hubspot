@@ -64,16 +64,17 @@ export default class StartupChecklist extends Component {
                     <div className="text-right">
                         <i className="fa fa-times" onClick={this.toggleView}></i>
                     </div>
-                    <h3>Let's start with the basics</h3>
+                    <h3>Complete your Onboarding</h3>
                 </div>
                 <div className="body-area">
                     <ul>
                         {this.state.userChecklistItems.map(uCI => {
                             return <li key={uCI.id} className={"gaa-text-primary" + (uCI.completed_at !== null ? " completed" : "") + (uCI.last_viewed_at !== null ? " read" : "")}>
+                                uCI.checklist_item.label
                                 {uCI.checklist_item.url ?
-                                    <a title={uCI.checklist_item.description} href={uCI.checklist_item.url}>{uCI.checklist_item.label}</a>
+                                    <a title={uCI.checklist_item.description} href={uCI.checklist_item.url}><i className="fa fa-link"></i></a>
                                     :
-                                    uCI.checklist_item.label
+                                    null
                                 }
                             </li>;
                         })}
