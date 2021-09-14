@@ -48,7 +48,6 @@
 }
 
 .right-checklist-pane .body-area{
-    color: black;
     padding-top: 10px;
     font-size: 12pt;
     overflow: scroll;
@@ -56,11 +55,12 @@
 }
 
 .right-checklist-pane .body-area ul {
-    list-style-image: url('/images/icons/white-round-circle.png');
+    list-style-image: url('/images/icons/gray-circle.png');
+    color: black;
 }
 
 .right-checklist-pane .body-area ul li {
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .right-checklist-pane .body-area ul li:nth-last-child(1) {
@@ -75,4 +75,9 @@
     text-decoration: line-through;
     font-weight: lighter;
     list-style-image: url('/images/icons/green-tick-round.png');
+    color: rgb(49, 49, 49);
+}
+
+.right-checklist-pane .body-area ul li span {
+    cursor: pointer;
 }

@@ -36,7 +36,15 @@ export default class StartupChecklist extends Component {
         });
     }
 
-    handleUpdate(userChecklistItem) { }
+    handleUpdate(userChecklistItemId, newValuesObject) {
+        HttpClient.put('/user-checklist-item/' + userChecklistItemId).then(resp => {
+            this.setState({ userChecklistItems: this.state.userChecklistItems.map(uCI => (uCI.id == userChecklistItemId ? resp.data.user_checklist_item : uCI)) });
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
 
 
     handleDelete(userChecklistItemId) {
@@ -50,10 +58,18 @@ export default class StartupChecklist extends Component {
     }
 
     render() {
-        if (!this.state.isExpanded) {
+        const { userChecklistItems, isExpanded } = this.state;
+        let incompleteCount = 0;
+        userChecklistItems.forEach(uCI => {
+            if (uCI.completed_at == null) incompleteCount++;
+        })
+
+        if (!incompleteCount) return null;
+
+        if (!isExpanded) {
             return (
                 <button onClick={this.toggleView} className="btn gaa-btn-primary btn-rounded floating-checklist-button">
-                    <span className="incomplete-checklist-items-count">{this.state.userChecklistItems.length}</span>
+                    <span className="incomplete-checklist-items-count">{incompleteCount}</span>
                     <i className="fa fa-check-square-o"></i>
                 </button>
             )
@@ -68,15 +84,10 @@ export default class StartupChecklist extends Component {
                 </div>
                 <div className="body-area">
                     <ul>
-                        {this.state.userChecklistItems.map(uCI => {
-                            return <li key={uCI.id} className={"gaa-text-primary" + (uCI.completed_at !== null ? " completed" : "") + (uCI.last_viewed_at !== null ? " read" : "")}>
-                                uCI.checklist_item.label
-                                {uCI.checklist_item.url ?
-                                    <a title={uCI.checklist_item.description} href={uCI.checklist_item.url}><i className="fa fa-link"></i></a>
-                                    :
-                                    null
-                                }
-                            </li>;
+                        {userChecklistItems.map(uCI => {
+                            return <li key={uCI.id} className={(uCI.completed_at !== null ? " completed" : "") + (uCI.last_viewed_at !== null ? " read" : "")}>
+                                <span onClick={() => { this.handleUpdate(uCI.id, {}); window.open(uCI.checklist_item.url); }} title={uCI.checklist_item.description}>{uCI.checklist_item.label}</span>
+                            </li>
                         })}
                     </ul>
                 </div>
