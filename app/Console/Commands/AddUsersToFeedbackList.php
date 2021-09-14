@@ -7,7 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use App\Models\PricePlan;
 use App\Services\SendGridService;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class AddUsersToFeedbackList extends Command
 {

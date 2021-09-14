@@ -13,7 +13,7 @@ use App\Services\SendGridService;
 use App\Services\UptimeRobotService;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 

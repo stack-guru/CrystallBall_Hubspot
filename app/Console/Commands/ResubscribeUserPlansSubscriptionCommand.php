@@ -15,7 +15,7 @@ use App\Models\WebMonitor;
 use App\Services\BlueSnapService;
 use App\Services\SendGridService;
 use App\Services\UptimeRobotService;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 

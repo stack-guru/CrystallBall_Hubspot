@@ -31,19 +31,48 @@ class EventServiceProvider extends ServiceProvider
 
         \App\Events\UserAddedAnAnnotationViaAPI::class => [\App\Listeners\AddAPIUsageToApiLog::class],
 
-        \App\Events\NewCSVFileUploaded::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\NewCSVFileUploaded::class => [
+            \App\Listeners\AddUserToSendGridList::class,
+            \App\Listeners\MarkChecklistItemCompleted::class
+        ],
+        \App\Events\HolidaysActivated::class => [
+            \App\Listeners\MarkChecklistItemCompleted::class
+        ],
         \App\Events\HolidaysDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
-        \App\Events\GoogleUpdatesActivated::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\GoogleAlertsActivated::class => [
+            \App\Listeners\MarkChecklistItemCompleted::class
+        ],
+        \App\Events\GoogleUpdatesActivated::class => [
+            \App\Listeners\AddUserToSendGridList::class,
+            \App\Listeners\MarkChecklistItemCompleted::class
+        ],
         \App\Events\GoogleUpdatesDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
         \App\Events\GoogleAlertDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
-        \App\Events\RetailMarketingDatesActivated::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\RetailMarketingDatesActivated::class => [
+            \App\Listeners\AddUserToSendGridList::class,
+            \App\Listeners\MarkChecklistItemCompleted::class
+        ],
         \App\Events\RetailMarketingDatesDeactivated::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\WeatherActivated::class => [
+            \App\Listeners\MarkChecklistItemCompleted::class
+        ],
         \App\Events\WeatherForCitiesDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
+
+        \App\Events\WebsiteMonitoringActivated::class => [
+            \App\Listeners\MarkChecklistItemCompleted::class
+        ],
         \App\Events\WebsiteMonitoringDeactivated::class => [\App\Listeners\AddUserToSendGridList::class],
-        \App\Events\WordPressActivated::class => [\App\Listeners\AddUserToSendGridList::class],
+
+        \App\Events\WordPressActivated::class => [
+            \App\Listeners\AddUserToSendGridList::class,
+            \App\Listeners\MarkChecklistItemCompleted::class
+        ],
         \App\Events\WordPressDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
 
-        \App\Events\UserUsedApiForFirstTime::class => [\App\Listeners\AddUserToSendGridList::class],
+        \App\Events\UserUsedApiForFirstTime::class => [
+            \App\Listeners\AddUserToSendGridList::class,
+            \App\Listeners\MarkChecklistItemCompleted::class
+        ],
 
         \App\Events\UserTrialPricePlanEnded::class => [
             \App\Listeners\AddUserToSendGridList::class,
