@@ -76,7 +76,7 @@ export default class StartupChecklist extends Component {
         }
         return (
             <div className="right-checklist-pane">
-                <div className="top-area gaa-bg-primary">
+                <div className="top-area">
                     <div className="text-right">
                         <i className="fa fa-times" onClick={this.toggleView}></i>
                     </div>
