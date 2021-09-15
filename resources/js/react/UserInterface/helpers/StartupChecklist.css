@@ -38,7 +38,6 @@
 .right-checklist-pane .top-area {
     color: white;
     border-radius: 15px 0px 0px 0px;
-    background-color: #004fa3;
     border-bottom: 2px solid white;
 }
 
@@ -60,7 +59,7 @@
 }
 
 .right-checklist-pane .body-area ul li {
-    font-weight: normal;
+    font-weight: lighter;
 }
 
 .right-checklist-pane .body-area ul li:nth-last-child(1) {
@@ -68,14 +67,13 @@
 }
 
 .right-checklist-pane .body-area ul li.read {
-    font-weight: normal;
 }
 
 .right-checklist-pane .body-area ul li.completed {
-    text-decoration: line-through;
-    font-weight: lighter;
-    list-style-image: url('/images/icons/green-tick-round.png');
     color: rgb(49, 49, 49);
+    text-decoration: line-through;
+    text-decoration-color: rgb(49, 49, 49);
+    list-style-image: url('/images/icons/green-tick-round.png');
 }
 
 .right-checklist-pane .body-area ul li span {

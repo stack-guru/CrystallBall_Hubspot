@@ -35,7 +35,7 @@ class MarkChecklistItemCompleted
                 // Annotation Events
             case 'App\Events\NewCSVFileUploaded':
                 DB::statement("
-                    UPDATE user_checklist_items INNER JOIN checklist_items 
+                    UPDATE user_checklist_items INNER JOIN checklist_items ON checklist_items.id = user_checklist_items.checklist_item_id
                     SET user_checklist_items.completed_at = '$currentDateTime'
                     WHERE
                         user_checklist_items.user_id = $userId
@@ -48,7 +48,7 @@ class MarkChecklistItemCompleted
                 // Data Source Events
             case 'App\Events\WebsiteMonitoringActivated':
                 DB::statement("
-                    UPDATE user_checklist_items INNER JOIN checklist_items 
+                    UPDATE user_checklist_items INNER JOIN checklist_items ON checklist_items.id = user_checklist_items.checklist_item_id
                     SET user_checklist_items.completed_at = '$currentDateTime'
                     WHERE
                         user_checklist_items.user_id = $userId
@@ -58,7 +58,7 @@ class MarkChecklistItemCompleted
                 break;
             case 'App\Events\GoogleAlertActivated':
                 DB::statement("
-                    UPDATE user_checklist_items INNER JOIN checklist_items 
+                    UPDATE user_checklist_items INNER JOIN checklist_items ON checklist_items.id = user_checklist_items.checklist_item_id
                     SET user_checklist_items.completed_at = '$currentDateTime'
                     WHERE
                         user_checklist_items.user_id = $userId
@@ -68,7 +68,7 @@ class MarkChecklistItemCompleted
                 break;
             case 'App\Events\GoogleUpdatesActivated':
                 DB::statement("
-                    UPDATE user_checklist_items INNER JOIN checklist_items 
+                    UPDATE user_checklist_items INNER JOIN checklist_items ON checklist_items.id = user_checklist_items.checklist_item_id
                     SET user_checklist_items.completed_at = '$currentDateTime'
                     WHERE
                         user_checklist_items.user_id = $userId
@@ -78,7 +78,7 @@ class MarkChecklistItemCompleted
                 break;
             case 'App\Events\RetailMarketingDatesActivated':
                 DB::statement("
-                    UPDATE user_checklist_items INNER JOIN checklist_items 
+                    UPDATE user_checklist_items INNER JOIN checklist_items ON checklist_items.id = user_checklist_items.checklist_item_id
                     SET user_checklist_items.completed_at = '$currentDateTime'
                     WHERE
                         user_checklist_items.user_id = $userId
@@ -88,7 +88,7 @@ class MarkChecklistItemCompleted
                 break;
             case 'App\Events\HolidaysActivated':
                 DB::statement("
-                    UPDATE user_checklist_items INNER JOIN checklist_items 
+                    UPDATE user_checklist_items INNER JOIN checklist_items ON checklist_items.id = user_checklist_items.checklist_item_id
                     SET user_checklist_items.completed_at = '$currentDateTime'
                     WHERE
                         user_checklist_items.user_id = $userId
@@ -98,7 +98,7 @@ class MarkChecklistItemCompleted
                 break;
             case 'App\Events\WordPressActivated':
                 DB::statement("
-                    UPDATE user_checklist_items INNER JOIN checklist_items 
+                    UPDATE user_checklist_items INNER JOIN checklist_items ON checklist_items.id = user_checklist_items.checklist_item_id
                     SET user_checklist_items.completed_at = '$currentDateTime'
                     WHERE
                         user_checklist_items.user_id = $userId
@@ -108,7 +108,7 @@ class MarkChecklistItemCompleted
                 break;
             case 'App\Events\WeatherActivated':
                 DB::statement("
-                    UPDATE user_checklist_items INNER JOIN checklist_items 
+                    UPDATE user_checklist_items INNER JOIN checklist_items ON checklist_items.id = user_checklist_items.checklist_item_id
                     SET user_checklist_items.completed_at = '$currentDateTime'
                     WHERE
                         user_checklist_items.user_id = $userId
@@ -118,7 +118,7 @@ class MarkChecklistItemCompleted
                 break;
             case 'App\Events\UserUsedApiForFirstTime':
                 DB::statement("
-                    UPDATE user_checklist_items INNER JOIN checklist_items 
+                    UPDATE user_checklist_items INNER JOIN checklist_items ON checklist_items.id = user_checklist_items.checklist_item_id
                     SET user_checklist_items.completed_at = '$currentDateTime'
                     WHERE
                         user_checklist_items.user_id = $userId

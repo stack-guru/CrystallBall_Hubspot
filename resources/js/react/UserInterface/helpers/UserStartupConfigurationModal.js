@@ -97,12 +97,8 @@ export default class UserStartupConfigurationModal extends Component {
             case 0:
                 modalBodyFooter = [
                     <ModalBody id="scw-modal-body">
-                        <h1><center>Let's build the best experience for you</center></h1>
+                        <img style={{ width: '100%', height: 'auto' }} src="/images/startup-configuration/step-1.png" onClick={() => { this.recordStepResponse('NEXT', true); this.incrementStep(1) }} />
                     </ModalBody>
-                    ,
-                    <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => { this.recordStepResponse('NEXT', true); this.incrementStep(1) }} >Next</Button>
-                    </ModalFooter>
                 ];
                 break;
             case 1:

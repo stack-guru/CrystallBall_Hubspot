@@ -12,6 +12,10 @@ use App\Events\WeatherForCitiesDeactivatedManually;
 use App\Events\WebsiteMonitoringDeactivated;
 use App\Events\WordPressActivated;
 use App\Events\WordPressDeactivatedManually;
+use App\Events\GoogleAlertActivated;
+use App\Events\HolidaysActivated;
+use App\Events\WeatherActivated;
+use App\Events\WebsiteMonitoringActivated;
 use App\Mail\SupportRequestMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +51,7 @@ class HomeController extends Controller
             $user->is_ds_holidays_enabled = $request->is_ds_holidays_enabled;
             if ($request->is_ds_holidays_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
+                event(new HolidaysActivated($user));
             } else {
                 event(new HolidaysDeactivatedManually($user));
             }
@@ -76,6 +81,7 @@ class HomeController extends Controller
             $user->is_ds_weather_alerts_enabled = $request->is_ds_weather_alerts_enabled;
             if ($request->is_ds_weather_alerts_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
+                event(new WeatherActivated($user));
             } else {
                 event(new WeatherForCitiesDeactivatedManually($user));
             }
@@ -85,6 +91,7 @@ class HomeController extends Controller
             $user->is_ds_google_alerts_enabled = $request->is_ds_google_alerts_enabled;
             if ($request->is_ds_google_alerts_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
+                event(new GoogleAlertActivated($user));
             } else {
                 event(new GoogleAlertDeactivatedManually($user));
             }
@@ -104,6 +111,7 @@ class HomeController extends Controller
             $user->is_ds_web_monitors_enabled = $request->is_ds_web_monitors_enabled;
             if ($request->is_ds_web_monitors_enabled) {
                 $user->last_activated_any_data_source_at = Carbon::now();
+                event(new WebsiteMonitoringActivated($user));
             } else {
                 event(new WebsiteMonitoringDeactivated($user));
             }
@@ -111,7 +119,6 @@ class HomeController extends Controller
         }
 
         return ['user_services' => $user];
-
     }
 
     public function storeSupport(Request $request)

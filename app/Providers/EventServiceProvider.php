@@ -39,7 +39,7 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\MarkChecklistItemCompleted::class
         ],
         \App\Events\HolidaysDeactivatedManually::class => [\App\Listeners\AddUserToSendGridList::class],
-        \App\Events\GoogleAlertsActivated::class => [
+        \App\Events\GoogleAlertActivated::class => [
             \App\Listeners\MarkChecklistItemCompleted::class
         ],
         \App\Events\GoogleUpdatesActivated::class => [
