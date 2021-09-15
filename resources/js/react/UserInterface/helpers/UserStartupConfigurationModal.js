@@ -96,7 +96,7 @@ export default class UserStartupConfigurationModal extends Component {
         switch (stepNumber) {
             case 0:
                 modalBodyFooter = [
-                    <ModalBody id="scw-modal-body">
+                    <ModalBody id="scw-modal-body p-0">
                         <img style={{ width: '100%', height: 'auto' }} src="/images/startup-configuration/step-1.png" onClick={() => { this.recordStepResponse('NEXT', true); this.incrementStep(1) }} />
                     </ModalBody>
                 ];
@@ -167,12 +167,12 @@ export default class UserStartupConfigurationModal extends Component {
                         <div className="row">
                             <div className="col-lg-3 col-sm-4">
                                 <a target="_blank" href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en">
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-analytics.png" />
+                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-analytics.svg" />
                                 </a>
                             </div>
                             <div className="col-lg-3 col-sm-4">
                                 <a className="disabled" href="#" onClick={e => { e.preventDefault(); swal('Coming Soon!', '', 'info'); }}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-data-studio.png" />
+                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-data-studio-cs.png" />
                                 </a>
                             </div>
                             <div className="col-lg-3 col-sm-4">
@@ -181,7 +181,7 @@ export default class UserStartupConfigurationModal extends Component {
                                 </a>
                             </div>
                             <div className="col-lg-3 col-sm-4">
-                                <a className="btn btn-primary w-90 h-auto">Browser Extension</a>
+                                <a className="btn btn-primary w-90 h-auto">Chrome Extension</a>
                             </div>
                         </div>
                     </ModalBody>
@@ -207,7 +207,7 @@ export default class UserStartupConfigurationModal extends Component {
                 break;
         }
         return (
-            <Modal isOpen={this.props.isOpen} toggle={this.props.toggleShowTour} className="modal-lg">
+            <Modal isOpen={this.props.isOpen} toggle={this.props.toggleShowTour} className="modal-lg modal-dialog-centered" id="scw-modal">
                 {modalBodyFooter}
             </Modal>
         )

@@ -1,5 +1,11 @@
+#scw-modal{
+    font-size: 32pt;
+    font-family: 'Roboto Light';
+}
 #scw-modal-body{
     min-height: 300px;
-    font-size: 24px;
-    padding-top: 100px;
+    height: 380px;
+    padding-top: 150px;
+    color: #002e60;
+    overflow-y: hidden;
 }
