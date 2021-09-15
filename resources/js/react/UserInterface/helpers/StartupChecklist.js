@@ -37,7 +37,7 @@ export default class StartupChecklist extends Component {
     }
 
     handleUpdate(userChecklistItemId, newValuesObject) {
-        HttpClient.put('/user-checklist-item/' + userChecklistItemId).then(resp => {
+        HttpClient.put('/user-checklist-item/' + userChecklistItemId, newValuesObject).then(resp => {
             this.setState({ userChecklistItems: this.state.userChecklistItems.map(uCI => (uCI.id == userChecklistItemId ? resp.data.user_checklist_item : uCI)) });
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
@@ -86,6 +86,7 @@ export default class StartupChecklist extends Component {
                     <ul>
                         {userChecklistItems.map(uCI => {
                             return <li key={uCI.id} className={(uCI.completed_at !== null ? " completed" : "") + (uCI.last_viewed_at !== null ? " read" : "")}>
+                                <img src={uCI.completed_at !== null ? "/images/icons/green-tick-round.png" : "/images/icons/gray-circle.png"} onClick={() => { this.handleUpdate(uCI.id, { completed_at: "just now" }); }} />
                                 <span onClick={() => { this.handleUpdate(uCI.id, {}); window.open(uCI.checklist_item.url); }} title={uCI.checklist_item.description}>{uCI.checklist_item.label}</span>
                             </li>
                         })}
