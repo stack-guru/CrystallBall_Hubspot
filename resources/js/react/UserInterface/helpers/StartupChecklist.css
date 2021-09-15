@@ -64,6 +64,10 @@
     font-weight: lighter;
 }
 
+.right-checklist-pane .body-area ul li img {
+    margin-right: 5px;
+}
+
 .right-checklist-pane .body-area ul li:nth-last-child(1) {
     margin-bottom: 10px;
 }
