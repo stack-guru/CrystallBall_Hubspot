@@ -80,7 +80,7 @@ export default class StartupChecklist extends Component {
                     <div className="text-right">
                         <i className="fa fa-times" onClick={this.toggleView}></i>
                     </div>
-                    <h1>Complete your Onboarding</h1>
+                    <h4>Complete your Onboarding</h4>
                 </div>
                 <div className="body-area">
                     <ul>

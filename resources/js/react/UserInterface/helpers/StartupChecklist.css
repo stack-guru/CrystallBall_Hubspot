@@ -31,7 +31,7 @@
     top: 0px;
     position: fixed;
     border-radius: 15px 0px 0px 15px;
-    border: #002e60 2px solid;
+    border: rgb(49, 49, 49) 2px solid;
     background-color: white;
 }
 
@@ -55,9 +55,11 @@
 }
 
 .right-checklist-pane .body-area ul {
-    color: black;
+    font-family: Roboto;
+    color: #002e60;
     list-style: none;
     padding-left: 20px;
+    font-size: 12px;
 }
 
 .right-checklist-pane .body-area ul li {

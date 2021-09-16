@@ -195,11 +195,11 @@ export default class UserStartupConfigurationModal extends Component {
                                     <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/microsoft-power-business-intelligence.png" />
                                 </a>
                             </div>
-                            <div className="col-lg-3 col-sm-4">
+                            {/* <div className="col-lg-3 col-sm-4">
                                 <a onClick={() => { this.toggleView('CHROME_EXTENSION'); }} className={"image-button mt-3" + (views.indexOf('CHROME_EXTENSION') > -1 ? " active" : "")}>
                                     <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-analytics.png" />
                                 </a>
-                            </div>
+                            </div> */}
                         </div>
                     </ModalBody>
                     ,
