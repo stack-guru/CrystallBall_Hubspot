@@ -18,7 +18,7 @@ class CreateUserStartupConfigurationsTable extends Migration
 
             $table->integer('step_number')->unsigned()->required();
             $table->string('data_label', 50)->required();
-            $table->string('data_value', 500)->required();
+            $table->string('data_value', 500)->nullable();
 
             $table->bigInteger('user_id')->required()->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
