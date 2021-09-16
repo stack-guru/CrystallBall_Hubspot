@@ -28,7 +28,7 @@ class UserStartupConfigurationController extends Controller
             $startupConfiguration['user_id'] = $user->id;
             $startupConfigurations[] = $startupConfiguration;
 
-            if (in_array($request->data_label[$key], ['IMPORT_OLD_ANNOTATIONS', 'automations', 'integrations'])) {
+            if (in_array($request->data_label[$key], ['IMPORT_OLD_ANNOTATIONS', 'automations', 'integrations', 'views', 'INVITE_YOUR_TEAM'])) {
                 $userChecklistItem = [];
                 switch ($request->data_label[$key]) {
                     case 'IMPORT_OLD_ANNOTATIONS':
@@ -37,7 +37,13 @@ class UserStartupConfigurationController extends Controller
                         $userChecklistItems[] = $userChecklistItem;
 
                         break;
-                    case  'automations':
+                    case 'INVITE_YOUR_TEAM':
+                        $userChecklistItem['checklist_item_id'] = ChecklistItem::where('name', 'INV_TEAM')->first()->id;
+                        $userChecklistItem['user_id'] = $user->id;
+                        $userChecklistItems[] = $userChecklistItem;
+
+                        break;
+                    case 'automations':
                         $automations = json_decode($request->data_value[$key]);
 
                         foreach ($automations as $automation) {
@@ -142,6 +148,33 @@ class UserStartupConfigurationController extends Controller
                             }
                         }
                         break;
+                    case  'views':
+                        $views = json_decode($request->data_value[$key]);
+                        foreach ($views as $view) {
+                            switch ($view) {
+                                case 'GOOGLE_ANALYTICS':
+                                    $userChecklistItem['checklist_item_id'] = ChecklistItem::where('name', 'CONN_GOOG_ANALYTICS')->first()->id;
+                                    $userChecklistItem['user_id'] = $user->id;
+                                    $userChecklistItems[] = $userChecklistItem;
+                                    break;
+                                case 'GOOGLE_DATA_STUDIO':
+                                    $userChecklistItem['checklist_item_id'] = ChecklistItem::where('name', 'CONN_DATA_STUDIO')->first()->id;
+                                    $userChecklistItem['user_id'] = $user->id;
+                                    $userChecklistItems[] = $userChecklistItem;
+                                    break;
+                                case 'MICROSOFT_POWER_BI':
+                                    $userChecklistItem['checklist_item_id'] = ChecklistItem::where('name', 'CONN_MICRO_POWER_BI')->first()->id;
+                                    $userChecklistItem['user_id'] = $user->id;
+                                    $userChecklistItems[] = $userChecklistItem;
+                                    break;
+                                case 'CHROME_EXTENSION':
+                                    $userChecklistItem['checklist_item_id'] = ChecklistItem::where('name', 'CONN_CHR_EXT')->first()->id;
+                                    $userChecklistItem['user_id'] = $user->id;
+                                    $userChecklistItems[] = $userChecklistItem;
+                                    break;
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -152,6 +185,6 @@ class UserStartupConfigurationController extends Controller
         $user->startup_configuration_showed_at = new \DateTime();
         $user->save();
 
-        return ['success' => true];
+        return ['success' => true, $request->validated()];
     }
 }

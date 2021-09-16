@@ -39,9 +39,10 @@ class ChecklistItemsTableSeeder extends Seeder
             
             ['name' => 'CONN_DATA_STUDIO', 'label' => 'Connect with Data Studio', 'description' => null, 'url' => null, 'sort_rank' => 190],
             ['name' => 'CONN_GOOG_ANALYTICS', 'label' => 'Connect with Google Analytics', 'description' => null, 'url' => null, 'sort_rank' => 200],
+            ['name' => 'CONN_MICRO_POWER_BI', 'label' => 'Connect with Microsoft Power BI', 'description' => null, 'url' => null, 'sort_rank' => 210],
+            ['name' => 'CONN_CHR_EXT', 'label' => 'Install Chrome Extension', 'description' => null, 'url' => null, 'sort_rank' => 220],
             
-            ['name' => 'INST_CHR_EXT', 'label' => 'Install Chrome Extension', 'description' => null, 'url' => null, 'sort_rank' => 210],
-            ['name' => 'INV_TEAM', 'label' => 'Invite your Team', 'description' => null, 'url' => '/settings/user', 'sort_rank' => 220],
+            ['name' => 'INV_TEAM', 'label' => 'Invite your Team', 'description' => null, 'url' => '/settings/user', 'sort_rank' => 230],
         ]);
     }
 }

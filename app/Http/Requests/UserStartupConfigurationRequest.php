@@ -26,7 +26,7 @@ class UserStartupConfigurationRequest extends FormRequest
         return [
             'step_number.*' => 'required|numeric|max:50',
             'data_label.*' => 'required|string|max:500',
-            'data_value.*' => 'required|string|max:500',
+            'data_value.*' => 'nullable|string|max:500',
         ];
     }
 }

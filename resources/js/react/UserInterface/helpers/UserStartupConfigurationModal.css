@@ -8,4 +8,13 @@
     padding-top: 150px;
     color: #002e60;
     overflow-y: hidden;
+    background-image: url('/images/startup-configuration/background1.png');
+}
+
+#scw-modal-body button{
+    font-size: 12pt;
+}
+
+#scw-modal-body .image-button.active {
+    box-shadow: 0 4px 8px 0 #002e60a6, 0 6px 20px 0 #002e60a6;
 }
