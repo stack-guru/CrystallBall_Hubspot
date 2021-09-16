@@ -108,7 +108,7 @@ export default class UserStartupConfigurationModal extends Component {
         switch (stepNumber) {
             case 0:
                 modalBodyFooter = [
-                    <ModalBody id="scw-modal-body">
+                    <ModalBody id="scw-modal-body" className="with-background">
                         <center>
                             <h1>Let's build the best experience for you</h1>
                             <Button color="primary" onClick={() => { this.recordStepResponse('START', true); this.incrementStep(1) }}>Let's Start</Button>
