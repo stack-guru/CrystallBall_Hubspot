@@ -61,6 +61,7 @@
 }
 
 .right-checklist-pane .body-area ul li {
+    margin-top: 10px;
     font-weight: lighter;
 }
 

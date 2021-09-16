@@ -111,7 +111,7 @@ export default class UserStartupConfigurationModal extends Component {
                     <ModalBody id="scw-modal-body" className="with-background">
                         <center>
                             <h1>Let's build the best experience for you</h1>
-                            <Button color="primary" onClick={() => { this.recordStepResponse('START', true); this.incrementStep(1) }}>Let's Start</Button>
+                            <Button className="mt-8" color="primary" onClick={() => { this.recordStepResponse('START', true); this.incrementStep(1) }}>Let's Start</Button>
                         </center>
                     </ModalBody>
                 ];
@@ -187,12 +187,12 @@ export default class UserStartupConfigurationModal extends Component {
                             </div>
                             <div className="col-lg-3 col-sm-4">
                                 <a onClick={() => { this.toggleView('GOOGLE_DATA_STUDIO'); }} className={"image-button mt-3" + (views.indexOf('GOOGLE_DATA_STUDIO') > -1 ? " active" : "")}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-data-studio-cs.png" />
+                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-data-studio.png" />
                                 </a>
                             </div>
                             <div className="col-lg-3 col-sm-4">
                                 <a onClick={() => { this.toggleView('MICROSOFT_POWER_BI'); }} className={"image-button mt-3" + (views.indexOf('MICROSOFT_POWER_BI') > -1 ? " active" : "")}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/microsoft-power-business-intelligence-cs.png" />
+                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/microsoft-power-business-intelligence.png" />
                                 </a>
                             </div>
                             <div className="col-lg-3 col-sm-4">
@@ -210,7 +210,7 @@ export default class UserStartupConfigurationModal extends Component {
                 break;
             case 5:
                 modalBodyFooter = [
-                    <ModalBody id="scw-modal-body">
+                    <ModalBody id="scw-modal-body" className="with-background">
                         <center>
                             <h1>Invite your team</h1>
                             <Button color="primary" onClick={() => { this.recordStepResponse('INVITE_YOUR_TEAM', true); this.incrementStep(1) }}>Yes</Button>

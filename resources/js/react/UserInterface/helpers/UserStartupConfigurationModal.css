@@ -1,3 +1,12 @@
+.mt-8{
+    margin-top: 48px !important;
+    margin-top: 3.0rem !important;
+}
+
+.modal-content {
+    width: 800px;
+}
+
 #scw-modal{
     font-size: 32pt;
     font-family: 'Roboto Light';
