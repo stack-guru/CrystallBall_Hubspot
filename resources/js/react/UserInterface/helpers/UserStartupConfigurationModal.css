@@ -23,8 +23,10 @@
     background-image: url('/images/startup-configuration/background1.png');
 }
 
-#scw-modal-body button{
+#scw-modal-body button.to-below{
     font-size: 12pt;
+    position: absolute;
+    bottom: 40px;
 }
 
 #scw-modal-body .image-button.active {

@@ -111,7 +111,7 @@ export default class UserStartupConfigurationModal extends Component {
                     <ModalBody id="scw-modal-body" className="with-background">
                         <center>
                             <h1>Let's build the best experience for you</h1>
-                            <Button className="mt-8" color="primary" onClick={() => { this.recordStepResponse('START', true); this.incrementStep(1) }}>Let's Start</Button>
+                            <Button style={{ left: '45%' }} className="mt-8" color="primary" onClick={() => { this.recordStepResponse('START', true); this.incrementStep(1) }} className="to-below">Let's Start</Button>
                         </center>
                     </ModalBody>
                 ];
@@ -121,8 +121,8 @@ export default class UserStartupConfigurationModal extends Component {
                     <ModalBody id="scw-modal-body">
                         <center>
                             <h1>Do you want to import old annotations from Universal Analytics?</h1>
-                            <Button color="primary" onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', true); this.incrementStep(1) }}>Yes</Button>
-                            <Button color="secondary" onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(2) }} className="ml-4">No</Button>
+                            <Button style={{ left: '40%' }} color="primary" onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', true); this.incrementStep(1) }} className="to-below">Yes</Button>
+                            <Button style={{ right: '40%' }} color="secondary" onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(2) }} className="ml-4 to-below">No</Button>
                         </center>
                     </ModalBody>
                     ,
@@ -213,8 +213,8 @@ export default class UserStartupConfigurationModal extends Component {
                     <ModalBody id="scw-modal-body" className="with-background">
                         <center>
                             <h1>Invite your team</h1>
-                            <Button color="primary" onClick={() => { this.recordStepResponse('INVITE_YOUR_TEAM', true); this.incrementStep(1) }}>Yes</Button>
-                            <Button color="secondary" onClick={() => { this.recordStepResponse('INVITE_YOUR_TEAM', false); this.incrementStep(1) }} className="ml-4">No</Button>
+                            <Button style={{ left: '40%' }} color="primary" onClick={() => { this.recordStepResponse('INVITE_YOUR_TEAM', true); this.incrementStep(1) }} className="to-below">Yes</Button>
+                            <Button style={{ right: '40%' }} color="secondary" onClick={() => { this.recordStepResponse('INVITE_YOUR_TEAM', false); this.incrementStep(1) }} className="ml-4 to-below">No</Button>
                         </center>
                     </ModalBody>
                     ,
