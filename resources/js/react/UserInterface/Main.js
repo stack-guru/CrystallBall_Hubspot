@@ -52,7 +52,7 @@ class Main extends React.Component {
     }
 
     toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
-    toggleInterfaceTour() { this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour }); }
+    toggleInterfaceTour() { this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(); }
     toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); }
 
     render() {
@@ -145,7 +145,7 @@ class Main extends React.Component {
                     <Footer />
                 </div>
 
-                <StartupChecklist />
+                <StartupChecklist lastStartupConfigurationShowedAt={this.state.user.startup_configuration_showed_at} />
             </React.Fragment>
 
         )

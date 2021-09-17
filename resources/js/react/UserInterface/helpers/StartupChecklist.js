@@ -26,6 +26,12 @@ export default class StartupChecklist extends Component {
         this.loadUserChecklistItems();
     }
 
+    componentDidUpdate(prevProps){
+        if(prevProps.lastStartupConfigurationShowedAt !== this.props.lastStartupConfigurationShowedAt){
+            this.loadUserChecklistItems();
+        }
+    }
+
     loadUserChecklistItems() {
         HttpClient.get('/user-checklist-item').then(resp => {
             this.setState({ userChecklistItems: resp.data.user_checklist_items });
