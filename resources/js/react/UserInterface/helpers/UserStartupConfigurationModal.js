@@ -41,7 +41,6 @@ export default class UserStartupConfigurationModal extends Component {
         });
 
         HttpClient.post('/user-startup-configuration', formData).then(resp => {
-            window.location.reload();
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
