@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import InterfaceTour from '../helpers/InterfaceTour';
-import UserStartupConfigurationModal from '../helpers/UserStartupConfigurationModal';
 import * as $ from 'jquery';
 
 class sidebar extends React.Component {
@@ -10,8 +8,6 @@ class sidebar extends React.Component {
         super(props);
         this.state = {
             show: false,
-            showTour: false,
-            showStartupConfiguration: false
         }
     }
 
@@ -38,10 +34,6 @@ class sidebar extends React.Component {
             $("body").toggleClass("is-collapsed");
         });
 
-        this.setState({
-            showTour: this.props.user.last_login_at == null && this.props.user.startup_configuration_showed_at !== null,
-            showStartupConfiguration: this.props.user.startup_configuration_showed_at == null
-        });
     }
 
     render() {
@@ -211,11 +203,9 @@ class sidebar extends React.Component {
                                     </Link>
                                 </li>
                                 <li className="nav-item dropdown">
-                                    <InterfaceTour isOpen={this.state.showTour} toggleShowTour={() => { this.setState({ showTour: !this.state.showTour }); (this.props.reloadUser)(); }} />
-                                    <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={() => { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration }); (this.props.reloadUser)(); }} />
 
                                     <div className="sidebar-link nav-link">
-                                        <a href="#" onClick={(e) => { e.preventDefault(); this.setState({ showTour: true }) }}>Take a Tour</a>
+                                        <a href="#" onClick={(e) => { e.preventDefault(); this.props.toggleInterfaceTour(); }}>Take a Tour</a>
                                     </div>
                                 </li>
                                 <li className="nav-item dropdown">

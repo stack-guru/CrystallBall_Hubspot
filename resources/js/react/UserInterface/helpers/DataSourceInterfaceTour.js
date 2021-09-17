@@ -106,7 +106,7 @@ export default class DataSourceInterfaceTour extends Component {
                     isOpen={this.props.isOpen}
                     onRequestClose={this.props.toggleShowTour}
                     closeWithMask={false}
-                    lastStepNextButton={<button className="btn btn-primary" onClick={(e) => { this.props.toggleShowTour(); }}>Finish</button>}
+                    lastStepNextButton={<button className="btn btn-primary" onClick={(e) => { (this.props.toggleShowTour)(); }}>Finish</button>}
                 />
             </>
         )

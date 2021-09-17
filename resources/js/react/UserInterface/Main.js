@@ -30,6 +30,8 @@ import IndexNotificationSettings from "./components/NotificationSettings/IndexNo
 import AnalyticsAndBusinessIntelligenceIndex from './components/analyticsAndBusinessIntelligence/Index';
 import CreatePaymentDetail from './components/settings/CreatePaymentDetail';
 import StartupChecklist from './helpers/StartupChecklist';
+import UserStartupConfigurationModal from './helpers/UserStartupConfigurationModal';
+import InterfaceTour from './helpers/InterfaceTour';
 
 class Main extends React.Component {
 
@@ -37,83 +39,21 @@ class Main extends React.Component {
         super(props)
 
         this.state = {
-            user: undefined
+            user: undefined,
+            showStartupConfiguration: false,
+            showInterfaceTour: false,
+            showDataSourceTour: false
         }
         this.loadUser = this.loadUser.bind(this)
+
+        this.toggleStartupConfiguration = this.toggleStartupConfiguration.bind(this);
+        this.toggleInterfaceTour = this.toggleInterfaceTour.bind(this);
+        this.toggleDataSourceTour = this.toggleDataSourceTour.bind(this);
     }
 
-
-    componentDidMount() {
-
-        let loader = document.getElementById("loader");
-        loader.classList.remove("fadeOut")
-        this.loadUser();
-
-        window.beamsTokenProvider = new PusherPushNotifications.TokenProvider({
-            url: "/beaming/auth",
-            queryParams: {
-                // someQueryParam: "parameter-content", // URL query params your auth endpoint needs
-            },
-            headers: {
-                // someHeader: "header-content", // Headers your auth endpoint needs
-            },
-        });
-        window.beamsClient = new PusherPushNotifications.Client({
-            instanceId: process.env.MIX_PUSHER_BEAMS_INSTANCE_ID,
-        });
-    }
-
-    loadUser() {
-        HttpClient.get('/user')
-            .then(response => {
-                this.setState({ user: response.data.user });
-                loader.classList.add("fadeOut")
-
-                if (response.data.user.last_login_at == null) {
-                    fbq('track', 'CompleteRegistration');
-                    gtag('event', 'conversion', { 'send_to': 'AW-645973826/wQD3CJnzvugBEMKOg7QC' });
-                    ga('send', {
-                        hitType: 'event',
-                        eventCategory: 'SignUp',
-                        eventAction: 'SignUp',
-                        eventLabel: 'SignUp'
-                    });
-                }
-            }, (err) => {
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-                this.setState({ isBusy: false, errors: err });
-            });
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.location !== prevProps.location) {
-            this.onRouteChanged();
-        }
-    }
-
-    onRouteChanged() {
-        window.scrollTo(0, 0);
-        let anchors = document.getElementsByTagName("a");
-        for (var i = 0; i < anchors.length; ++i) {
-            if (anchors[i].parentElement.localName == "li") {
-                anchors[i].classList.remove("link-active")
-                anchors[i].parentElement.classList.remove("link-active")
-            } else {
-                anchors[i].classList.remove("link-active")
-            }
-        }
-        for (var i = 0; i < anchors.length; ++i) {
-            if (anchors[i].href == window.location.href) {
-                if (anchors[i].parentElement.localName == "li") {
-                    anchors[i].classList.add("link-active")
-                    anchors[i].parentElement.classList.add("link-active")
-                } else {
-                    anchors[i].classList.add("link-active")
-                }
-            }
-        }
-    }
+    toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
+    toggleInterfaceTour() { this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour }); }
+    toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); }
 
     render() {
         if (this.state.user == undefined) return null;
@@ -121,6 +61,9 @@ class Main extends React.Component {
 
             <React.Fragment>
                 <div className="sidebar">
+                    <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={this.toggleStartupConfiguration} />
+                    <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} />
+
                     <Sidebar user={this.state.user} reloadUser={this.loadUser} />
                 </div>
 
@@ -152,7 +95,7 @@ class Main extends React.Component {
                                 <AnnotationsUpload currentPricePlan={this.state.user.price_plan} />
                             </Route>
                             <Route exact path="/data-source" refresh={true}>
-                                <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} />
+                                <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} />
                             </Route>
                             <Route exact path="/integrations" refresh={true}>
                                 <IntegrationsIndex user={this.state.user} />
@@ -206,6 +149,83 @@ class Main extends React.Component {
             </React.Fragment>
 
         )
+    }
+
+    componentDidMount() {
+
+        let loader = document.getElementById("loader");
+        loader.classList.remove("fadeOut")
+        this.loadUser();
+
+        window.beamsTokenProvider = new PusherPushNotifications.TokenProvider({
+            url: "/beaming/auth",
+            queryParams: {
+                // someQueryParam: "parameter-content", // URL query params your auth endpoint needs
+            },
+            headers: {
+                // someHeader: "header-content", // Headers your auth endpoint needs
+            },
+        });
+        window.beamsClient = new PusherPushNotifications.Client({
+            instanceId: process.env.MIX_PUSHER_BEAMS_INSTANCE_ID,
+        });
+    }
+
+    loadUser() {
+        HttpClient.get('/user')
+            .then(response => {
+                this.setState({
+                    user: response.data.user,
+                    showStartupConfiguration: response.data.user.startup_configuration_showed_at == null,
+                    showInterfaceTour: response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at == null,
+                    showDataSourceTour: response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at !== null,
+                });
+                loader.classList.add("fadeOut")
+
+                if (response.data.user.last_login_at == null) {
+                    fbq('track', 'CompleteRegistration');
+                    gtag('event', 'conversion', { 'send_to': 'AW-645973826/wQD3CJnzvugBEMKOg7QC' });
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'SignUp',
+                        eventAction: 'SignUp',
+                        eventLabel: 'SignUp'
+                    });
+                }
+            }, (err) => {
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isBusy: false, errors: err });
+            });
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.location !== prevProps.location) {
+            this.onRouteChanged();
+        }
+    }
+
+    onRouteChanged() {
+        window.scrollTo(0, 0);
+        let anchors = document.getElementsByTagName("a");
+        for (var i = 0; i < anchors.length; ++i) {
+            if (anchors[i].parentElement.localName == "li") {
+                anchors[i].classList.remove("link-active")
+                anchors[i].parentElement.classList.remove("link-active")
+            } else {
+                anchors[i].classList.remove("link-active")
+            }
+        }
+        for (var i = 0; i < anchors.length; ++i) {
+            if (anchors[i].href == window.location.href) {
+                if (anchors[i].parentElement.localName == "li") {
+                    anchors[i].classList.add("link-active")
+                    anchors[i].parentElement.classList.add("link-active")
+                } else {
+                    anchors[i].classList.add("link-active")
+                }
+            }
+        }
     }
 }
 export default Main;

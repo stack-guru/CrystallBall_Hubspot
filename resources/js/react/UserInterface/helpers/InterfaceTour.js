@@ -86,7 +86,7 @@ export default class InterfaceTour extends Component {
     handleRedirecter() {
         if (this.state.redirectTo !== null) {
             let rL = this.state.redirectTo
-            this.setState({ redirectTo: null })
+            // this.setState({ redirectTo: null })
             return <Redirect to={rL} />
         }
     }
@@ -101,7 +101,7 @@ export default class InterfaceTour extends Component {
                     isOpen={this.props.isOpen}
                     onRequestClose={this.props.toggleShowTour}
                     closeWithMask={false}
-                    lastStepNextButton={<button className="btn btn-primary" onClick={(e) => { this.setState({ redirectTo: '/annotation' }); this.props.toggleShowTour(e); }}>Finish</button>}
+                    lastStepNextButton={<button className="btn btn-primary" onClick={(e) => { this.setState({ redirectTo: '/annotation' }); (this.props.toggleShowTour)(e); }}>Finish</button>}
                 />
             </>
         )

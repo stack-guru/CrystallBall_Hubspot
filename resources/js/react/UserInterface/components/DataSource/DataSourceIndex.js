@@ -97,7 +97,7 @@ export default class DataSourceIndex extends React.Component {
 
         return (
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" style={{ height: '75vh' }}  >
-                <DataSourceInterfaceTour isOpen={this.props.user.data_source_tour_showed_at == null && this.props.user.last_login_at !== null} toggleShowTour={this.props.reloadUser} userId={this.props.user.id} />
+                <DataSourceInterfaceTour isOpen={this.props.showDataSourceTour} toggleShowTour={this.props.toggleDataSourceTour} userId={this.props.user.id} />
                 <LoaderAnimation show={this.state.isLoading} />
                 <div className="row ml-0 mr-0">
                     <div className="col-4">

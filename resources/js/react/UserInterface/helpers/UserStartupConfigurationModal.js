@@ -44,7 +44,6 @@ export default class UserStartupConfigurationModal extends Component {
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-
             this.setState({ isBusy: false, errors: err });
         });
     }
