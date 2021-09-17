@@ -191,7 +191,7 @@ export default class UserStartupConfigurationModal extends Component {
                             </div>
                             <div className="col-lg-3 col-sm-4">
                                 <a onClick={() => { this.toggleView('MICROSOFT_POWER_BI'); }} className={"image-button mt-3" + (views.indexOf('MICROSOFT_POWER_BI') > -1 ? " active" : "")}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/microsoft-power-business-intelligence.png" />
+                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/microsoft-power-business-intelligence-cs.png" />
                                 </a>
                             </div>
                             {/* <div className="col-lg-3 col-sm-4">
@@ -209,7 +209,7 @@ export default class UserStartupConfigurationModal extends Component {
                 break;
             case 5:
                 modalBodyFooter = [
-                    <ModalBody id="scw-modal-body" className="with-background">
+                    <ModalBody id="scw-modal-body" className="">
                         <center>
                             <h1>Invite your team</h1>
                             <Button style={{ left: '40%' }} color="primary" onClick={() => { this.recordStepResponse('INVITE_YOUR_TEAM', true); this.incrementStep(1) }} className="to-below">Yes</Button>

@@ -80,14 +80,19 @@ export default class StartupChecklist extends Component {
                     <div className="text-right">
                         <i className="fa fa-times" onClick={this.toggleView}></i>
                     </div>
-                    <h4>Complete your Onboarding</h4>
+                    <center>
+                        <h4>Complete your Onboarding</h4>
+                    </center>
                 </div>
                 <div className="body-area">
                     <ul>
                         {userChecklistItems.map(uCI => {
                             return <li key={uCI.id} className={(uCI.completed_at !== null ? " completed" : "") + (uCI.last_viewed_at !== null ? " read" : "")}>
                                 <img src={uCI.completed_at !== null ? "/images/icons/green-tick-round.png" : "/images/icons/gray-circle.png"} onClick={() => { this.handleUpdate(uCI.id, { completed_at: "just now" }); }} />
-                                <span onClick={() => { this.handleUpdate(uCI.id, {}); window.open(uCI.checklist_item.url); }} title={uCI.checklist_item.description}>{uCI.checklist_item.label}</span>
+                                <span onClick={() => {
+                                    this.handleUpdate(uCI.id, {});
+                                    window.open(uCI.checklist_item.url);
+                                }} title={uCI.checklist_item.description}>{uCI.checklist_item.label}</span>
                             </li>
                         })}
                     </ul>
