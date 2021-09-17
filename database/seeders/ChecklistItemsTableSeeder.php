@@ -14,6 +14,7 @@ class ChecklistItemsTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('checklist_items')->delete();
         DB::table('checklist_items')->insert([
             ['name' => 'IMP_ANN_CSV', 'label' => 'Import Annotations from CSV', 'description' => null, 'url' => '/annotation/upload', 'sort_rank' => 10],
             
@@ -37,10 +38,10 @@ class ChecklistItemsTableSeeder extends Seeder
             ['name' => 'CONN_GOOG_SHTS', 'label' => 'Connect with Google Sheets', 'description' => null, 'url' => 'https://www.gaannotations.com/integrate-with-google-sheets', 'sort_rank' => 180],
             ['name' => 'CONN_A_TOOL', 'label' => 'Connect a tool', 'description' => null, 'url' => '/api-key', 'sort_rank' => 200],
             
-            ['name' => 'CONN_DATA_STUDIO', 'label' => 'Connect with Data Studio', 'description' => null, 'url' => null, 'sort_rank' => 190],
-            ['name' => 'CONN_GOOG_ANALYTICS', 'label' => 'Connect with Google Analytics', 'description' => null, 'url' => null, 'sort_rank' => 200],
-            ['name' => 'CONN_MICRO_POWER_BI', 'label' => 'Connect with Microsoft Power BI', 'description' => null, 'url' => null, 'sort_rank' => 210],
-            ['name' => 'CONN_CHR_EXT', 'label' => 'Install Chrome Extension', 'description' => null, 'url' => null, 'sort_rank' => 220],
+            ['name' => 'CONN_DATA_STUDIO', 'label' => 'Connect with Data Studio', 'description' => null, 'url' => '/analytics-and-business-intelligence', 'sort_rank' => 190],
+            ['name' => 'CONN_GOOG_ANALYTICS', 'label' => 'Connect with Google Analytics', 'description' => null, 'url' => '/analytics-and-business-intelligence', 'sort_rank' => 200],
+            ['name' => 'CONN_MICRO_POWER_BI', 'label' => 'Connect with Microsoft Power BI', 'description' => null, 'url' => '/analytics-and-business-intelligence', 'sort_rank' => 210],
+            ['name' => 'CONN_CHR_EXT', 'label' => 'Install Chrome Extension', 'description' => null, 'url' => 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en', 'sort_rank' => 220],
             
             ['name' => 'INV_TEAM', 'label' => 'Invite your Team', 'description' => null, 'url' => '/settings/user', 'sort_rank' => 230],
         ]);

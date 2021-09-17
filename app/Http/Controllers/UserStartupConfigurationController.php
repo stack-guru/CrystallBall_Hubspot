@@ -179,8 +179,12 @@ class UserStartupConfigurationController extends Controller
             }
         }
 
+
         UserStartupConfiguration::insert($startupConfigurations);
-        if (count($userChecklistItems)) userChecklistItem::insert($userChecklistItems);
+        if (count($userChecklistItems)) {
+            UserChecklistItem::where('user_id', $user->id)->delete();
+            UserChecklistItem::insert($userChecklistItems);
+        }
 
         $user->startup_configuration_showed_at = new \DateTime();
         $user->save();
