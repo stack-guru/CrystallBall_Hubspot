@@ -27,9 +27,8 @@ class EventServiceProvider extends ServiceProvider
 
         'Laravel\Passport\Events\AccessTokenCreated' => [
             'App\Listeners\APITokenCreated',
+            \App\Listeners\MarkChecklistItemCompleted::class
         ],
-
-        \App\Events\UserGeneratedApiToken::class => [\App\Listeners\MarkChecklistItemCompleted::class],
 
         \App\Events\UserAddedAnAnnotationViaAPI::class => [\App\Listeners\AddAPIUsageToApiLog::class],
 
