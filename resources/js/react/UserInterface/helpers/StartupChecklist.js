@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router';
 import HttpClient from "../utils/HttpClient";
 
 import './StartupChecklist.css';
@@ -9,7 +10,8 @@ export default class StartupChecklist extends Component {
 
         this.state = {
             isExpanded: false,
-            userChecklistItems: []
+            userChecklistItems: [],
+            redirectTo: null
         };
 
         this.toggleView = this.toggleView.bind(this);
@@ -23,12 +25,13 @@ export default class StartupChecklist extends Component {
     }
 
     componentDidMount() {
-        this.loadUserChecklistItems();
+        setInterval(() => { this.loadUserChecklistItems(); }, 5000); // 5 seconds
+        // this.loadUserChecklistItems();
     }
 
-    componentDidUpdate(prevProps){
-        if(prevProps.lastStartupConfigurationShowedAt !== this.props.lastStartupConfigurationShowedAt){
-            this.loadUserChecklistItems();
+    componentDidUpdate(prevProps) {
+        if (prevProps.lastStartupConfigurationShowedAt !== this.props.lastStartupConfigurationShowedAt) {
+            // this.loadUserChecklistItems();
         }
     }
 
@@ -91,13 +94,19 @@ export default class StartupChecklist extends Component {
                     </center>
                 </div>
                 <div className="body-area">
+                    {this.state.redirectTo ? <Redirect to={this.state.redirectTo} /> : null}
                     <ul>
                         {userChecklistItems.map(uCI => {
                             return <li key={uCI.id} className={(uCI.completed_at !== null ? " completed" : "") + (uCI.last_viewed_at !== null ? " read" : "")}>
                                 <img src={uCI.completed_at !== null ? "/images/icons/green-tick-round.png" : "/images/icons/gray-circle.png"} onClick={() => { this.handleUpdate(uCI.id, { completed_at: "just now" }); }} />
                                 <span onClick={() => {
                                     this.handleUpdate(uCI.id, {});
-                                    window.open(uCI.checklist_item.url);
+                                    console.log();
+                                    if (uCI.checklist_item.url.substr(0, 1) == '/') {
+                                        this.setState({ redirectTo: uCI.checklist_item.url });
+                                    } else {
+                                        window.open(uCI.checklist_item.url);
+                                    }
                                 }} title={uCI.checklist_item.description}>{uCI.checklist_item.label}</span>
                             </li>
                         })}

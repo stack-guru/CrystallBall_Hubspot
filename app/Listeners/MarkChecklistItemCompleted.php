@@ -126,6 +126,34 @@ class MarkChecklistItemCompleted
                         AND checklist_items.name = 'CONN_A_TOOL'
                 ");
                 break;
+
+            case 'App\Events\UserInvitedTeamMember':
+                DB::statement("
+                    UPDATE user_checklist_items INNER JOIN checklist_items ON checklist_items.id = user_checklist_items.checklist_item_id
+                    SET user_checklist_items.completed_at = '$currentDateTime'
+                    WHERE
+                        user_checklist_items.user_id = $userId
+                        AND user_checklist_items.completed_at IS NULL
+                        AND checklist_items.name = 'INV_TEAM'
+                ");
+                break;
+            case 'App\Events\UserGeneratedApiToken':
+                DB::statement("
+                    UPDATE user_checklist_items INNER JOIN checklist_items ON checklist_items.id = user_checklist_items.checklist_item_id
+                    SET user_checklist_items.completed_at = '$currentDateTime'
+                    WHERE
+                        user_checklist_items.user_id = $userId
+                        AND user_checklist_items.completed_at IS NULL
+                        AND (
+                            checklist_items.name = 'CONN_ADWORDS' OR checklist_items.name = 'CONN_MAILCHIMP'
+                            OR checklist_items.name = 'CONN_SHOPIFY' OR checklist_items.name = 'CONN_SLACK'
+                            OR checklist_items.name = 'CONN_ASANA' OR checklist_items.name = 'CONN_JIRA'
+                            OR checklist_items.name = 'CONN_TRELLO' OR checklist_items.name = 'CONN_GITHUB'
+                            OR checklist_items.name = 'CONN_BITBUCKET' OR checklist_items.name = 'CONN_GOOG_SHTS'
+                            OR checklist_items.name = 'CONN_A_TOOL'
+                        )
+                ");
+                break;
         }
     }
 }

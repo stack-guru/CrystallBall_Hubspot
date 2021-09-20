@@ -29,6 +29,8 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\APITokenCreated',
         ],
 
+        \App\Events\UserGeneratedApiToken::class => [\App\Listeners\MarkChecklistItemCompleted::class],
+
         \App\Events\UserAddedAnAnnotationViaAPI::class => [\App\Listeners\AddAPIUsageToApiLog::class],
 
         \App\Events\NewCSVFileUploaded::class => [
@@ -79,6 +81,9 @@ class EventServiceProvider extends ServiceProvider
             // \App\Listeners\SendTrialEndedEmail::class,
         ],
 
+        \App\Events\UserInvitedTeamMember::class => [
+            \App\Listeners\MarkChecklistItemCompleted::class
+        ],
     ];
 
     /**

@@ -31,7 +31,7 @@
     top: 0px;
     position: fixed;
     border-radius: 15px 0px 0px 15px;
-    border: rgb(49, 49, 49) 2px solid;
+    border: rgb(80, 80, 80) 2px solid;
     background-color: white;
 }
 
@@ -49,22 +49,18 @@
 
 .right-checklist-pane .body-area{
     padding-top: 10px;
-    font-size: 10pt;
     overflow: scroll;
     height: 80%;
 }
 
 .right-checklist-pane .body-area ul {
-    font-family: Roboto;
     color: #002e60;
     list-style: none;
     padding-left: 20px;
-    font-size: 12px;
 }
 
 .right-checklist-pane .body-area ul li {
     margin-top: 10px;
-    font-weight: lighter;
 }
 
 .right-checklist-pane .body-area ul li img {

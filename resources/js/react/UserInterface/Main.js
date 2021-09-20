@@ -53,7 +53,7 @@ class Main extends React.Component {
 
     toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
     toggleInterfaceTour() { this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(); }
-    toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); }
+    toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(); }
 
     render() {
         if (this.state.user == undefined) return null;

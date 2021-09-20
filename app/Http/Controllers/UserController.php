@@ -88,6 +88,7 @@ class UserController extends Controller
             $uGAA->save();
         }
 
+        event(new \App\Events\UserInvitedTeamMember($parentUser));
         return ['user' => $user];
 
     }
