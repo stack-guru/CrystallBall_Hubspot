@@ -27,7 +27,11 @@ class MarkChecklistItemCompleted
      */
     public function handle($event)
     {
-        $userId = $event->user->id;
+        if (get_class($event) == 'Laravel\Passport\Events\AccessTokenCreated') {
+            $userId = $event->userId;
+        } else {
+            $userId = $event->user->id;
+        }
         $currentDateTime = Carbon::now();
 
         switch (get_class($event)) {
