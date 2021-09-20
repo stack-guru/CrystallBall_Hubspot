@@ -178,7 +178,7 @@ class Main extends React.Component {
                     user: response.data.user,
                     showStartupConfiguration: response.data.user.startup_configuration_showed_at == null,
                     showInterfaceTour: response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at == null,
-                    showDataSourceTour: response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at !== null && data_source_tour_showed_at == null,
+                    showDataSourceTour: response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at !== null && response.data.user.data_source_tour_showed_at == null,
                 });
                 loader.classList.add("fadeOut")
 
