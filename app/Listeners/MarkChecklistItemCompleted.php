@@ -141,7 +141,7 @@ class MarkChecklistItemCompleted
                         AND checklist_items.name = 'INV_TEAM'
                 ");
                 break;
-            case 'App\Events\UserGeneratedApiToken':
+            case 'Laravel\Passport\Events\AccessTokenCreated':
                 DB::statement("
                     UPDATE user_checklist_items INNER JOIN checklist_items ON checklist_items.id = user_checklist_items.checklist_item_id
                     SET user_checklist_items.completed_at = '$currentDateTime'
