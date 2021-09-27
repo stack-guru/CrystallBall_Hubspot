@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function () {
-    
+
     Route::post('login', 'API\LoginController@login')->name('login')->middleware('cors');
     Route::post('login/google', 'API\LoginController@loginWithGoogle')->name('login.google')->middleware('cors');
     Route::post('logout', 'API\LoginController@logout')->name('logout')->middleware('cors');
@@ -28,9 +28,14 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
         Route::get('chrome-extension/event-sources', 'EventSourceController@index');
         Route::group(['middleware' => ['auth:api']], function () {
 
-            Route::get('user', function (Request $request) {return $request->user();})->name('user.show');
+            Route::get('user', function (Request $request) {
+                return $request->user();
+            })->name('user.show');
             Route::resource('annotations', 'AnnotationController');
 
+            Route::group(['prefix' => 'microsoft-power-bi', 'as' => 'microsoft-power-bi.'], function () {
+                Route::get('annotations', 'MicrosoftPowerBI\AnnotationController@index');
+            });
             Route::group(['prefix' => 'google-data-studio', 'as' => 'google-data-studio.'], function () {
                 Route::get('annotations', 'GoogleDataStudio\AnnotationController@index');
             });
@@ -46,11 +51,8 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
                 Route::get('users', 'ChromeExtension\UserController@index');
 
                 Route::post('log', 'ChromeExtension\ChromeExtensionLogController@store');
-
             });
-
         });
         // End Chrome Extension
     });
-
 });

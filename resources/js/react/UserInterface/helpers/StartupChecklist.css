@@ -31,20 +31,19 @@
     top: 0px;
     position: fixed;
     border-radius: 15px 0px 0px 15px;
-    border: rgb(80, 80, 80) 2px solid;
+    border: rgb(80, 80, 80) 1px solid;
     background-color: white;
 }
 
 .right-checklist-pane .top-area {
     color: white;
-    border-radius: 15px 0px 0px 0px;
+    border-radius: 10px 0px 0px 0px;
     border-bottom: 2px solid white;
     background-color: #1c79d0;
 }
 
-.right-checklist-pane .top-area h3 {
-    margin: 5px;
-    padding-bottom: 5px;
+.right-checklist-pane .top-area h4 {
+    font-weight: lighter;
 }
 
 .right-checklist-pane .body-area{

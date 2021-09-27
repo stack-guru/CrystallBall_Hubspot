@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\GoogleDataStudio;
+namespace App\Http\Controllers\API\MicrosoftPowerBI;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ use App\Models\UserDataSource;
 class AnnotationController extends Controller{
     public function index(Request $request){
         $user = Auth::user();
-        if (!$user->pricePlan->has_google_data_studio) {
+        if (!$user->pricePlan->has_microsoft_power_bi) {
             abort(402);
         }
 
