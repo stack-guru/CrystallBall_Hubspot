@@ -48,6 +48,7 @@ class PricePlanController extends Controller
         $pricePlan->has_data_sources = $request->has_data_sources == 'on';
         $pricePlan->has_notifications = $request->has_notifications == 'on';
         $pricePlan->has_google_data_studio = $request->has_google_data_studio == 'on';
+        $pricePlan->has_microsoft_power_bi = $request->has_microsoft_power_bi == 'on';
         $pricePlan->save();
 
         return redirect()->route('admin.price-plan.index');
@@ -94,6 +95,7 @@ class PricePlanController extends Controller
         $pricePlan->has_data_sources = $request->has_data_sources == 'on';
         $pricePlan->has_notifications = $request->has_notifications == 'on';
         $pricePlan->has_google_data_studio = $request->has_google_data_studio == 'on';
+        $pricePlan->has_microsoft_power_bi = $request->has_microsoft_power_bi == 'on';
         $pricePlan->save();
 
         return redirect()->route('admin.price-plan.index');

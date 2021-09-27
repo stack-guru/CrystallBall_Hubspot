@@ -34,6 +34,7 @@ class PricePlanRequest extends FormRequest
             'has_api' => "nullable",
             'has_notifications' => "nullable",
             'has_google_data_studio' => "nullable",
+            'has_microsoft_power_bi' => "nullable",
             'is_enabled' => "nullable",
             'is_available' => "nullable",
             'ga_account_count' => 'nullable|numeric',
