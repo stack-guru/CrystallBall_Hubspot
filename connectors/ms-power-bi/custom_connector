@@ -1,0 +1,63 @@
+swagger: '2.0'
+info: {title: Default title, description: Connect to GAannotations for your event
+    list, version: '1.0'}
+host: app.gaannotations.com
+basePath: /api/v1/microsoft-power-bi/
+schemes: [https]
+consumes: []
+produces: []
+paths:
+  /annotations:
+    get:
+      responses:
+        default:
+          description: default
+          schema:
+            type: object
+            properties:
+              annotations:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    show_at: {type: string, description: show_at}
+                    id: {type: integer, format: int32, description: id}
+                    category: {type: string, description: category}
+                    event_name: {type: string, description: event_name}
+                    url: {type: string, description: url}
+                    description: {type: string, description: description}
+                description: Array of annotations
+          headers:
+            Content-Type: {description: Content-Type, type: string}
+            Accept: {description: Accept, type: string}
+      summary: Fetch annotations from GAannotations Account
+      description: This API returns a complete list of annotations which are currently
+        in the user's account
+      operationId: annotations.index
+      x-ms-visibility: important
+      parameters:
+      - {name: startDate, in: query, required: true, type: string, default: '2001-01-01',
+        description: StartDate to fetch annotations from, x-ms-visibility: internal,
+        format: date}
+      - {name: endDate, in: query, required: true, type: string, default: '2030-12-31',
+        description: End date to fetch annotations upto, x-ms-visibility: internal,
+        format: date}
+      - {name: show_manual_annotations, in: query, required: false, type: boolean,
+        default: true, description: Show annotations added by the GAannotations interface,
+        x-ms-visibility: important}
+      - {name: show_csv_annotations, in: query, required: false, type: boolean, description: Show
+          annotations added by uploading CSV, x-ms-visibility: important, default: true}
+      - {name: show_api_annotations, in: query, required: false, type: boolean, description: Show
+          annotations added via API, x-ms-visibility: important, default: true}
+      - {name: Content-Type, in: header, required: true, type: string, default: application/json,
+        format: '', x-ms-visibility: internal}
+      - {name: Accept, in: header, required: true, type: string, default: application/json,
+        x-ms-visibility: internal}
+definitions: {}
+parameters: {}
+responses: {}
+securityDefinitions:
+  API Key: {type: apiKey, in: header, name: Authorization}
+security:
+- API Key: []
+tags: []
