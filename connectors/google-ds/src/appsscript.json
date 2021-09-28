@@ -1,0 +1,33 @@
+{
+  "dataStudio": {
+    "name": "GAannotations",
+    "logoUrl": "https://app.gaannotations.com/images/company_logo.png",
+    "company": "GAannotations",
+    "companyUrl": "https://www.gaannotations.com",
+    "addonUrl": "https://www.gaannotations.com",
+    "supportUrl": "https://app.gaannotations.com/settings/support",
+    "privacyPolicyUrl":"https://www.gaannotations.com/privacy-policy",
+    "termsOfServiceUrl":"https://www.gaannotations.com/privacy-policy",
+    "description": "Get all your annotations from GAannotations and show a list in Data Studio",
+    "shortDescription": "Connect to GAannotations for your event list",
+    "sources": [
+      "GAANNOTATIONS"
+    ],
+    "authType": ["KEY"],
+    "feeType": ["FREE"],
+    "templates": {
+      "default": "011fbf4f-013b-4ee3-baba-60ed7641ce8c"
+    }
+
+  },
+  "timeZone": "Asia/Karachi",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "urlFetchWhitelist": [
+    "https://app.gaannotations.com/"
+  ],
+  "oauthScopes":[
+    "https://www.googleapis.com/auth/script.external_request"
+  ]
+
+}
