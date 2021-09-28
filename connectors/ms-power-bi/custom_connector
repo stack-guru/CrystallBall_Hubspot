@@ -9,6 +9,24 @@ produces: []
 paths:
   /annotations:
     get:
+      parameters:
+      - {name: startDate, in: query, required: true, type: string, default: '2001-01-01',
+        description: StartDate to fetch annotations from, x-ms-visibility: internal,
+        format: date}
+      - {name: endDate, in: query, required: true, type: string, default: '2030-12-31',
+        description: End date to fetch annotations upto, x-ms-visibility: internal,
+        format: date}
+      - {name: show_manual_annotations, in: query, required: false, type: boolean,
+        default: true, description: Show annotations added by the GAannotations interface,
+        x-ms-visibility: important}
+      - {name: show_csv_annotations, in: query, required: false, type: boolean, description: Show
+          annotations added by uploading CSV, x-ms-visibility: important, default: true}
+      - {name: show_api_annotations, in: query, required: false, type: boolean, description: Show
+          annotations added via API, x-ms-visibility: important, default: true}
+      - {name: Content-Type, in: header, required: true, type: string, default: application/json,
+        format: '', x-ms-visibility: internal}
+      - {name: Accept, in: header, required: true, type: string, default: application/json,
+        x-ms-visibility: internal}
       responses:
         default:
           description: default
@@ -35,24 +53,6 @@ paths:
         in the user's account
       operationId: annotations.index
       x-ms-visibility: important
-      parameters:
-      - {name: startDate, in: query, required: true, type: string, default: '2001-01-01',
-        description: StartDate to fetch annotations from, x-ms-visibility: internal,
-        format: date}
-      - {name: endDate, in: query, required: true, type: string, default: '2030-12-31',
-        description: End date to fetch annotations upto, x-ms-visibility: internal,
-        format: date}
-      - {name: show_manual_annotations, in: query, required: false, type: boolean,
-        default: true, description: Show annotations added by the GAannotations interface,
-        x-ms-visibility: important}
-      - {name: show_csv_annotations, in: query, required: false, type: boolean, description: Show
-          annotations added by uploading CSV, x-ms-visibility: important, default: true}
-      - {name: show_api_annotations, in: query, required: false, type: boolean, description: Show
-          annotations added via API, x-ms-visibility: important, default: true}
-      - {name: Content-Type, in: header, required: true, type: string, default: application/json,
-        format: '', x-ms-visibility: internal}
-      - {name: Accept, in: header, required: true, type: string, default: application/json,
-        x-ms-visibility: internal}
 definitions: {}
 parameters: {}
 responses: {}
