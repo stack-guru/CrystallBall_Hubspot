@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
@@ -63,6 +63,12 @@ class IndexAnnotations extends React.Component {
                 this.setState({ isBusy: false, errors: err });
             });
 
+        setTimeout(() => {
+            const scrollableAnnotation = document.getElementById("scrollable-annotation");
+            if (scrollableAnnotation) {
+                window.scrollTo(0, scrollableAnnotation.offsetTop);
+            }
+        }, 5000);
     }
 
     loadUserAnnotationColors() {
@@ -191,7 +197,7 @@ class IndexAnnotations extends React.Component {
     }
 
     render() {
-
+        let wasLastAnnotationInFuture = true;
         const categories = this.state.annotationCategories;
         return (
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
@@ -283,8 +289,15 @@ class IndexAnnotations extends React.Component {
                                                             case "api": borderLeftColor = this.state.userAnnotationColors.api; break;
                                                         }
                                                         if (anno.category.indexOf("Holiday") !== -1) borderLeftColor = this.state.userAnnotationColors.holidays;
+
+                                                        const currentDateTime = new Date; const annotationDateTime = new Date(anno.show_at);
+                                                        const diffTime = annotationDateTime - currentDateTime;
+                                                        let rowId = null;
+                                                        if (diffTime < 0 && wasLastAnnotationInFuture == true) rowId = 'scrollable-annotation';
+                                                        if (diffTime > 0) { wasLastAnnotationInFuture = true; } else { wasLastAnnotationInFuture = false; }
+
                                                         return (
-                                                            <tr key={anno.id}>
+                                                            <tr key={anno.id} data-diff-in-milliseconds={diffTime} id={rowId}>
                                                                 <td style={{ borderLeft: `${borderLeftColor} solid 20px` }}>{anno.category}</td>
                                                                 <td>{anno.event_name}</td>
                                                                 <td>
