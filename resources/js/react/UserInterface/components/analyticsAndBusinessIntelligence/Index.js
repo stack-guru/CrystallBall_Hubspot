@@ -65,8 +65,8 @@ export default class AnalyticsAndBusinessIntelligenceIndex extends React.Compone
                                 </a>
                             </div>
                             <div className="col-lg-3 col-sm-4">
-                                <a className="disabled" href="#" onClick={e => { e.preventDefault(); swal('Coming Soon!', '', 'info'); }}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-data-studio-cs.png" />
+                                <a target="_blank" href="https://datastudio.google.com/data?search=gaannotations">
+                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-data-studio.png" />
                                 </a>
                             </div>
                             <div className="col-lg-3 col-sm-4">

@@ -178,6 +178,27 @@ export default class IndexPricingPlans extends React.Component {
                                                         </li>
                                                         : null
                                                 }
+                                                {
+                                                    pricePlan.has_notifications ?
+                                                        <li>
+                                                            <span className="fa-li"><i className="fa fa-asterisk"></i></span>
+                                                            Notifications
+                                                            {/* <img id={"automation-feature-hint-" + pricePlan.id} className="hint-button" src="/images/info-logo-grey.png" onClick={() => { this.setState({ showHintFor: 'automation-hint-' + pricePlan.id }) }} />
+                                                            <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'automation-hint-' + pricePlan.id} target={"automation-feature-hint-" + pricePlan.id} toggle={() => { this.setState({ showHintFor: null }) }} onClick={() => { this.changeShownHint(null) }}>
+                                                                <PopoverHeader>{pricePlan.name}</PopoverHeader>
+                                                                <PopoverBody>
+                                                                    Website Monitoring: {pricePlan.web_monitor_count} URLs<br />
+                                                                    Weather Alerts: {pricePlan.owm_city_count == 0 ? 'unlimited' : pricePlan.owm_city_count} cities<br />
+                                                                    News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'unlimited' : pricePlan.google_alert_keyword_count} keywords<br />
+                                                                    Retail Marketing Dates<br />
+                                                                    Google Updates<br />
+                                                                    WordPress Updates<br />
+                                                                    Holidays
+                                                                </PopoverBody>
+                                                            </UncontrolledPopover> */}
+                                                        </li>
+                                                        : null
+                                                }
                                             </ul>
 
                                             {
