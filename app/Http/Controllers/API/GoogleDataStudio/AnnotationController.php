@@ -88,10 +88,7 @@ class AnnotationController extends Controller
 
         $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
         $annotationsQuery .= " LEFT JOIN google_analytics_properties ON annotation_ga_properties.google_analytics_property_id = google_analytics_properties.id";
-
-        if ($request->query('category') && $request->query('category') !== '') {
-            $annotationsQuery .= " WHERE category = '" . $request->query('category') . "'";
-        }
+        $annotationsQuery .= " WHERE DATE(`show_at`) BETWEEN '" . $request->query('startDate') . "' AND '" . $request->query('endDate') . "'";
 
         $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
 
