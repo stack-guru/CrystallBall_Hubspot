@@ -212,8 +212,7 @@ class IndexAnnotations extends React.Component {
                             <div className="row mb-3 ml-0 mr-0">
                                 <div className="col-sm-12 col-md-9 col-lg-9 text-center text-sm-center text-md-left text-lg-left mb-3"></div>
                                 <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-right text-lg-right">
-                                    <Link to="/annotation/create" className="btn btn-sm gaa-btn-primary text-white float-left"><i className=" mr-2 fa fa-plus"></i>Add Manual&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Link>
-                                    <Link to="/annotation/upload" className="btn btn-sm gaa-btn-primary text-white float-right"><i className=" mr-2 fa fa-upload"></i>CSV Upload&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Link>
+                                    <Link to="/annotation/create" className="btn btn-sm gaa-btn-primary text-white float-left w-100"><i className=" mr-2 fa fa-plus"></i>Add Manual</Link>
                                 </div>
                             </div>
                             <div className="row mb-1 ml-0 mr-0">
