@@ -272,6 +272,8 @@ class AnnotationController extends Controller
             $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
         } elseif ($request->query('sortBy') == "category") {
             $annotationsQuery .= " ORDER BY TempTable.category ASC";
+        } elseif ($request->query('sortBy') == "added-by") {
+            $annotationsQuery .= " ORDER BY TempTable.added_by ASC";
         } else {
             $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
         }
@@ -361,7 +363,6 @@ class AnnotationController extends Controller
                             } catch (\Exception $e) {
                                 return ['message' => "Please select correct date format according to your CSV file from the list below."];
                             }
-
                         } else if ($headers[$i] == 'url') {
                             $row['url'] = $values[$i];
                         } else {
@@ -373,7 +374,6 @@ class AnnotationController extends Controller
                 $row['user_id'] = $user_id;
                 $row['added_by'] = 'csv-upload';
                 array_push($rows, $row);
-
             }
 
             if (count($rows) > 99) {
@@ -442,5 +442,4 @@ class AnnotationController extends Controller
         $categories = Annotation::select('category')->distinct()->ofCurrentUser()->orderBy('category')->get();
         return ['categories' => $categories];
     }
-
 }
