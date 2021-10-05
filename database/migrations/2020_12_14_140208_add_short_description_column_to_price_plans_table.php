@@ -26,7 +26,7 @@ class AddShortDescriptionColumnToPricePlansTable extends Migration
     public function down()
     {
         Schema::table('price_plans', function (Blueprint $table) {
-            //
+            $table->dropColumn('short_description');
         });
     }
 }

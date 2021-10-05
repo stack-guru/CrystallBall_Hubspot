@@ -27,7 +27,7 @@ class AnnotationFactory extends Factory
             'event_name' => $this->faker->randomElement(['The Daily Podcast', 'Newsletter Sent', 'Spike in Referral Traffic', 'Nav Menu Update', 'Lowered Bing Ads spend by 25%', 'Client Site']),
 
             'url' => null,
-            'description' => $this->faker->paragraph(4),
+            'description' => $this->faker->paragraph(2),
             'title' => $this->faker->sentence(),
             'show_at' => $this->faker->dateTimeThisYear(),
             'type' => $this->faker->randomelement(['public', 'test', 'type']),
