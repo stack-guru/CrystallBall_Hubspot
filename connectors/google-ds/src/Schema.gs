@@ -41,6 +41,19 @@ function getFields() {
     .setName('Description')
     .setType(types.TEXT);
   
+  fields
+    .newDimension()
+    .setIsHidden(false)
+    .setId('user_name')
+    .setName('Added By')
+    .setType(types.TEXT);
+  
+  fields
+    .newDimension()
+    .setIsHidden(false)
+    .setId('google_analytics_property_name')
+    .setName('Property')
+    .setType(types.TEXT);
   
   return fields;
 }

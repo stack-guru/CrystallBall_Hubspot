@@ -110,6 +110,10 @@ function formatData(requestedFields, annotation) {
         return annotation.url;
       case 'description':
         return annotation.description;
+      case 'user_name':
+        return annotation.user_name;
+      case 'google_analytics_property_name':
+        return (annotation.google_analytics_property_name == null ? 'All Properties' : annotation.google_analytics_property_name);
       default:
         return '';
     }

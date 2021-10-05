@@ -13,6 +13,10 @@ function getAnnotations(apiKey, startDate, endDate) {
   ].join('');
   
   // https://developers.google.com/apps-script/reference/url-fetch/url-fetch-app
-  var response = UrlFetchApp.fetch(url, {headers:{'authorization': "Bearer " + apiKey}});
+  var response = UrlFetchApp.fetch(url, {headers:{
+    'authorization': "Bearer " + apiKey,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }});
   return response;
 }
