@@ -254,7 +254,7 @@ class IndexAnnotations extends React.Component {
                             </div>
                             <div className="row ml-0 mr-0">
                                 <div className="col-12">
-                                    <div id="annotation-table-container" className="table-responsive" style={{ height: '70vh' }}>
+                                    <div id="annotation-table-container" className="table-responsive">
                                         <table className="table table-hover table-borderless table-striped">
                                             <thead>
                                                 <tr>
@@ -266,7 +266,6 @@ class IndexAnnotations extends React.Component {
                                                     <th style={{ minWidth: '100px' }}>Show At</th>
                                                     <th style={{ minWidth: '100px' }}>Added By</th>
                                                     <th>Actions</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody id="annotation-table-body">
