@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Annotation extends Model
 {
+
+    use HasFactory;
+    
     protected $fillable = [
         'category', 'event_type', 'event_name',
         'url', 'description', 'title', 'show_at', 'type',
