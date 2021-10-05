@@ -65,8 +65,9 @@ class IndexAnnotations extends React.Component {
 
         setTimeout(() => {
             const scrollableAnnotation = document.getElementById("scrollable-annotation");
-            if (scrollableAnnotation) {
-                window.scrollTo(0, scrollableAnnotation.offsetTop);
+            const annotationTableContainer = document.getElementById("annotation-table-container");
+            if (scrollableAnnotation && annotationTableContainer) {
+                annotationTableContainer.scrollTo(0, scrollableAnnotation.offsetTop);
             }
         }, 5000);
     }
@@ -253,7 +254,7 @@ class IndexAnnotations extends React.Component {
                             </div>
                             <div className="row ml-0 mr-0">
                                 <div className="col-12">
-                                    <div className="table-responsive">
+                                    <div className="table-responsive annotation-table-container" style={{ height: '70vh' }}>
                                         <table className="table table-hover table-borderless table-striped">
                                             <thead>
                                                 <tr>
