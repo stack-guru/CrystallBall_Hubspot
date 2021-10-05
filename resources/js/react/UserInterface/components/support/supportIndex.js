@@ -52,10 +52,10 @@ export default class SupportIndex extends Component {
                 toast.info("Your request has been submitted.");
                 this.setDefaultState();
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
     }
@@ -86,7 +86,8 @@ export default class SupportIndex extends Component {
                                 <div className="col-lg-5 col-sm-5">
                                     <div className="form-group">
                                         <label htmlFor="attachment" className="form-control-placeholder">Add Attachment</label>
-                                        <input type="file" className="form-control" id="attachment" name="attachment" />
+                                        <br />
+                                        <input type="file" id="attachment" name="attachment" />
                                     </div>
                                 </div>
                             </div>

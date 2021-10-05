@@ -65,9 +65,9 @@ class IndexAnnotations extends React.Component {
 
         setTimeout(() => {
             const scrollableAnnotation = document.getElementById("scrollable-annotation");
-            const annotationTableContainer = document.getElementById("annotation-table-container");
-            if (scrollableAnnotation && annotationTableContainer) {
-                annotationTableContainer.scrollTo(0, scrollableAnnotation.offsetTop);
+            const annotationTableBody = document.getElementById("annotation-table-body");
+            if (scrollableAnnotation && annotationTableBody) {
+                annotationTableBody.scrollTo(0, scrollableAnnotation.offsetTop);
             }
         }, 5000);
     }
@@ -269,9 +269,7 @@ class IndexAnnotations extends React.Component {
 
                                                 </tr>
                                             </thead>
-                                            <tbody>
-
-
+                                            <tbody id="annotation-table-body">
                                                 {
 
                                                     this.state.annotations.filter(this.checkSearchText).map(anno => {
