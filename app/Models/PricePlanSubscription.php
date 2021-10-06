@@ -11,7 +11,8 @@ class PricePlanSubscription extends Model
 
     protected $fillable = [
         'expires_at', 'coupon_id',
-        'transaction_id', 'charged_price'
+        'transaction_id', 'charged_price',
+        'left_coupon_recurring'
     ];
 
     public function paymentDetail(){

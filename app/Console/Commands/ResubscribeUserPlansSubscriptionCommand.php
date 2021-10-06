@@ -91,6 +91,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $blueSnapService = new BlueSnapService;
         foreach ($users as $user) {
             $lastPaymentDetail = $user->lastPaymentDetail;
+            $lastPricePlanSubscription = $user->lastPricePlanSubscription;
 
             if ($lastPaymentDetail && $user->is_billing_enabled) {
                 $card = [
@@ -100,6 +101,14 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     'securityCode' => $lastPaymentDetail->security_code,
                 ];
                 $pricePlanPrice = $user->pricePlan->price;
+
+                $isCouponApplied = false;
+                if ($lastPricePlanSubscription->coupon && $lastPricePlanSubscription->left_coupon_recurring > 0) {
+                    $couponApplied = true;
+                    $coupon = $lastPricePlanSubscription->coupon;
+                    $pricePlanPrice = $pricePlanPrice - (($coupon->discount_percent / 100) * $pricePlanPrice);
+                }
+
                 if (array_search($lastPaymentDetail->country, ["PK", "IL"]) !== false) {
                     $pricePlanPrice = $pricePlanPrice + ((17 / 100) * $pricePlanPrice);
                 }
@@ -117,7 +126,12 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     Mail::to($user)->send(new UserFailedPaymentTransactionMail($lastPaymentDetail));
                 } else {
                     // Continuing user paid plan
-                    $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice);
+                    // checking if recurring coupon applied
+                    if ($isCouponApplied) {
+                        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice, $coupon->id, $coupon->recurring_discount_count - 1);
+                    } else {
+                        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice);
+                    }
                     $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $lastPaymentDetail->id, $lastPaymentDetail->card_number, null, $pricePlanPrice, true);
                     $this->subscribeUserToPlan($user, $user->price_plan_id);
                 }
@@ -185,7 +199,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         print "$updateCount Users have been resubscribed to their free plans.\n";
     }
 
-    private function addPricePlanSubscription($transactionId, $userId, $paymentDetailId, $pricePlanId, $chargedPrice)
+    private function addPricePlanSubscription($transactionId, $userId, $paymentDetailId, $pricePlanId, $chargedPrice, $couponId = null, $couponLeftRecurringCount = 0)
     {
         $pricePlanSubscription = new PricePlanSubscription;
         $pricePlanSubscription->transaction_id = $transactionId;
@@ -194,6 +208,8 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $pricePlanSubscription->payment_detail_id = $paymentDetailId;
         $pricePlanSubscription->price_plan_id = $pricePlanId;
         $pricePlanSubscription->charged_price = $chargedPrice;
+        $pricePlanSubscription->coupon_id = $couponId;
+        $pricePlanSubscription->left_coupon_recurring = $couponLeftRecurringCount;
         $pricePlanSubscription->save();
         return $pricePlanSubscription->id;
     }

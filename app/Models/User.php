@@ -112,6 +112,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\PaymentDetail');
     }
 
+    public function lastPricePlanSubscription()
+    {
+        return $this->hasOne('App\Models\PricePlanSubscription')->orderBy('created_at', 'DESC');
+    }
+
     public function lastPaymentDetail()
     {
         return $this->hasOne('App\Models\PaymentDetail')->orderBy('created_at', 'DESC');

@@ -36,6 +36,15 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                        <label for="recurring_discount_count">Number of recurring discounts</label>
+                        <input type="number" name="recurring_discount_count" value="{{old('recurring_discount_count',$coupon->recurring_discount_count)}}" id="recurring_discount_count" class="form-control">
+                        @error('recurring_discount_count')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                        <div class="form-group">
                             <label for="expires_at">Expiry</label>
                             <input type="date" name="expires_at" value="{{old('expires_at',  $coupon->expires_at->todateString())}}" id="expires_at" class="form-control">
                             @error('expires_at')

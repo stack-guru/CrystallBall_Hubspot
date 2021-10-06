@@ -29,7 +29,6 @@ class PaymentController extends Controller
         $pricePlanSubscriptions = PricePlanSubscription::with(['paymentDetail', 'pricePlan'])->orderBy('created_at', 'DESC')->where('user_id', Auth::id())->get();
 
         return ['price_plan_subscriptions' => $pricePlanSubscriptions];
-
     }
 
     public function show(Request $request)
@@ -96,6 +95,7 @@ class PaymentController extends Controller
 
                 $pricePlanSubscription->coupon_id = $coupon->id;
                 $price = $price - (($coupon->discount_percent / 100) * $price);
+                $pricePlanSubscription->left_coupon_recurring = $coupon->recurring_discount_count;
             }
             if (array_search($request->country, ["PK", "IL"]) !== false) {
                 $price = $price + ((17 / 100) * $price);

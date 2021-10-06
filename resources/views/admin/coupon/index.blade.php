@@ -20,6 +20,7 @@
                             <th>Name</th>
                             <th>Code</th>
                             <th>Discount Percent</th>
+                            <th>Recurring Count</th>
                             <th>Expire At</th>
                             <th>Actions</th>
                             </thead>
@@ -30,6 +31,7 @@
                                     <td>{{$coupon->name}}</td>
                                     <td>{{$coupon->code}}</td>
                                     <td>{{$coupon->discount_percent}}</td>
+                                    <td>{{$coupon->recurring_discount_count}}</td>
                                     <td>{{$coupon->expires_at->todateString()}}</td>
                                     <td class="d-flex flex-row">
                                         <a href="{{route('admin.coupon.edit',$coupon->id)}}" class="btn btn-primary m-2">Edit</a>

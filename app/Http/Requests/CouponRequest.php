@@ -28,6 +28,7 @@ class CouponRequest extends FormRequest
             'code' => 'required|string',
             'discount_percent' => 'required|numeric',
             'expires_at' => 'required|date',
+            'recurring_discount_count' => 'required|numeric'
         ];
     }
 }

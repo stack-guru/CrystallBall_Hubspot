@@ -6,12 +6,12 @@
         {
             "label": "Pull, Merge and Deploy To Development",
             "type": "shell",
-            "command": "git checkout 9.0 && git pull origin 9.0 && git checkout development && git merge 9.0 && git checkout 9.0 && git push origin development"
+            "command": "git checkout ${input:branchName} && git pull origin ${input:branchName} && git checkout development && git merge ${input:branchName} && git checkout ${input:branchName} && git push origin development"
         },
         {
             "label": "Pull, Merge and Deploy To Production",
             "type": "shell",
-            "command": "git checkout master && git merge development && git checkout 9.0 && git push origin master"
+            "command": "git checkout master && git merge development && git checkout ${input:branchName} && git push origin master"
         },
         {
             "label": "Download Production site error log file",
@@ -23,5 +23,12 @@
             "type": "shell",
             "command": "scp -i ~/.ssh/highintent_root root@app.gaannotations.com:/var/www/html/dev_gaannotations/dev_gaannotations/storage/logs/laravel.log storage/logs/laravel.log"
         },
-    ]
+    ],
+    "inputs": [
+        {
+          "id": "branchName",
+          "type": "promptString",
+          "description": "Enter branch name here to merge and return to."
+        }
+      ]
 }
