@@ -63,16 +63,21 @@ export default class AnalyticsAndBusinessIntelligenceIndex extends React.Compone
                                 <a target="_blank" href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en">
                                     <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-analytics.png" />
                                 </a>
+                                <br />
+                                <a target="_blank" href="https://www.youtube.com/watch?v=YLhIBKcFwFI">See how it works</a>
                             </div>
                             <div className="col-lg-3 col-sm-4">
                                 <a target="_blank" href="https://datastudio.google.com/data?search=gaannotations">
                                     <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-data-studio.png" />
                                 </a>
+                                <br />
+                                <a target="_blank" href="https://youtu.be/rIOB3Pc3N5E">See how it works</a>
                             </div>
                             <div className="col-lg-3 col-sm-4">
                                 <a className="disabled" href="#" onClick={e => { e.preventDefault(); swal('Coming Soon!', '', 'info'); }}>
                                     <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/microsoft-power-business-intelligence-cs.png" />
                                 </a>
+                                <br />
                             </div>
                         </div>
                     </div>
