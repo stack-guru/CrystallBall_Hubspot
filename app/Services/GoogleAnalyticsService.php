@@ -6,6 +6,9 @@ use App\Models\GoogleAccount;
 use App\Models\GoogleAnalyticsAccount;
 use Illuminate\Support\Facades\Http;
 
+// https://discovery.googleapis.com/discovery/v1/apis
+// https://analyticsdata.googleapis.com/$discovery/rest?version=v1beta
+
 class GoogleAnalyticsService
 {
     protected $clientId;
