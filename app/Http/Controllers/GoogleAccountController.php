@@ -6,6 +6,7 @@ use App\Models\GoogleAccount;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Requests\GoogleAccountRequest;
+use App\Services\GoogleAPIService;
 
 class GoogleAccountController extends Controller
 {
@@ -32,7 +33,7 @@ class GoogleAccountController extends Controller
         // if (config('app.env') == 'development' || config('app.env') == 'local') {
         //     array_push($scopes, 'https://www.googleapis.com/auth/adwords');
         // }
-        
+
         return Socialite::driver('google')
             ->scopes($scopes)
             ->with(['access_type' => 'offline'])
@@ -62,10 +63,10 @@ class GoogleAccountController extends Controller
         $googleAccount->save();
 
         return redirect()->route('google-account.index', ['google_account_id' => $googleAccount->id, 'do-refresh' => true]);
-
     }
 
-    public function update(GoogleAccountRequest $request, GoogleAccount $googleAccount){
+    public function update(GoogleAccountRequest $request, GoogleAccount $googleAccount)
+    {
         $googleAccount->fill($request->validated());
         $googleAccount->save();
         return $googleAccount;
@@ -73,24 +74,8 @@ class GoogleAccountController extends Controller
 
     public function destroy(GoogleAccount $googleAccount)
     {
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, 'https://oauth2.googleapis.com/revoke?token=' . $googleAccount->token . '');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "-X");
-        curl_setopt($ch, CURLOPT_POST, 1);
-
-        $headers = array();
-        $headers[] = 'Content-Type: application/x-www-form-urlencoded';
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        $result = curl_exec($ch);
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
-        }
-        curl_close($ch);
+        (new GoogleAPIService)->revokeAccess($googleAccount->token);
 
         return ['success' => $googleAccount->delete()];
     }
-
 }
