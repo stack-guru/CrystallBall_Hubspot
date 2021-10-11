@@ -24,6 +24,15 @@ class CreateGoogleAnalyticsMetricDimensionsTable extends Migration
             $table->integer('users_count')->unsigned()->nullable()->default(null);
             $table->integer('sessions_count')->unsigned()->nullable()->default(null);
 
+            $table->unsignedBigInteger('ga_property_id')->required();
+            $table->foreign('ga_property_id')->references('id')->on('google_analytics_properties');
+
+            $table->unsignedBigInteger('ga_account_id')->required();
+            $table->foreign('ga_account_id')->references('id')->on('google_analytics_accounts');
+
+            $table->unsignedBigInteger('google_account_id')->required();
+            $table->foreign('google_account_id')->references('id')->on('google_accounts');
+
             $table->timestamps();
         });
     }
