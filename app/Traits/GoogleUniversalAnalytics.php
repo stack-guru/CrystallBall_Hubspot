@@ -52,7 +52,7 @@ trait GoogleUniversalAnalytics
         return $respJson['items'];
     }
 
-    public function getUAMetricsAndDimensions(GoogleAccount $googleAccount, GoogleAnalyticsProperty $googleAnalyticsProperty, $startDate, $endDate = null, $repeatCall = false)
+    private function getUAMetricsAndDimensions(GoogleAccount $googleAccount, GoogleAnalyticsProperty $googleAnalyticsProperty, $startDate, $endDate = null, $repeatCall = false)
     {
         $url = "https://content-analyticsreporting.googleapis.com/v4/reports:batchGet?alt=json";
 
@@ -99,11 +99,16 @@ trait GoogleUniversalAnalytics
             return false;
         }
 
-        return $respJson = $response->json();
+        $respJson = $response->json();
         if (!array_key_exists('reports', $respJson)) {
             return false;
         }
 
-        return $respJson->reports[0]->data;
+        return array_map(function ($r) {
+            return [
+                'dimensions' => $r['dimensions'],
+                'metrics' => $r['metrics'][0]['values']
+            ];
+        }, $respJson['reports'][0]['data']);
     }
 }

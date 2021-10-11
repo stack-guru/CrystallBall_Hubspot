@@ -53,7 +53,7 @@ trait GoogleAnalyticsFour
         return $respJson['properties'];
     }
 
-    public function getGA4MetricsAndDimensions(GoogleAccount $googleAccount, GoogleAnalyticsProperty $googleAnalyticsProperty, $startDate, $endDate = null, $repeatCall = false)
+    private function getGA4MetricsAndDimensions(GoogleAccount $googleAccount, GoogleAnalyticsProperty $googleAnalyticsProperty, $startDate, $endDate = null, $repeatCall = false)
     {
         $url = "https://analyticsdata.googleapis.com/v1beta/properties/$googleAnalyticsProperty->internal_property_id:runReport";
 
@@ -95,11 +95,20 @@ trait GoogleAnalyticsFour
             return false;
         }
 
-        return $respJson = $response->json();
+        $respJson = $response->json();
         if (!array_key_exists('rows', $respJson)) {
             return false;
         }
 
-        return $respJson->rows;
+        return array_map(function ($r) {
+            return [
+                'dimensions' => array_map(function ($d) {
+                    return $d['value'];
+                }, $r['dimensionValues']),
+                'metrics' => array_map(function ($d) {
+                    return $d['value'];
+                }, $r['metricValues']),
+            ];
+        }, $respJson['rows']);
     }
 }

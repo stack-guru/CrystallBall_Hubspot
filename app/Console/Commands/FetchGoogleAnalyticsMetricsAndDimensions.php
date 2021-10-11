@@ -41,19 +41,12 @@ class FetchGoogleAnalyticsMetricsAndDimensions extends Command
     public function handle()
     {
         $gAS = new GoogleAnalyticsService;
-        $yesterdayDate = Carbon::yesterday()->format('Y-m-d');
+        $startDate = Carbon::yesterday()->subYears(10)->format('Y-m-d');
+        $endDate = Carbon::today()->format('Y-m-d');
         $googleAnalyticsProperties = GoogleAnalyticsProperty::with('googleAccount')->get();
         foreach ($googleAnalyticsProperties as $googleAnalyticsProperty) {
             $this->info("Fetching metrics and dimensions for $googleAnalyticsProperty->name($googleAnalyticsProperty->internal_property_id) under account " . $googleAnalyticsProperty->googleAccount->name . "(" . $googleAnalyticsProperty->googleAccount->account_id . ")");
-            switch ($googleAnalyticsProperty->kind) {
-                case 'analytics#webproperty':
-                    $dataRows = $gAS->getUAMetricsAndDimensions($googleAnalyticsProperty->googleAccount, $googleAnalyticsProperty, $yesterdayDate);
-                    break;
-
-                case 'analytics#ga4property':
-                    $dataRows = $gAS->getGA4MetricsAndDimensions($googleAnalyticsProperty->googleAccount, $googleAnalyticsProperty, $yesterdayDate);
-                    break;
-            }
+            $dataRows = $gAS->getMetricsAndDimensions($googleAnalyticsProperty->googleAccount, $googleAnalyticsProperty, $startDate, $endDate);
             var_dump($dataRows);
         }
 
