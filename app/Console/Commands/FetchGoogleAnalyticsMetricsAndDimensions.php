@@ -51,7 +51,7 @@ class FetchGoogleAnalyticsMetricsAndDimensions extends Command
 
         $googleAnalyticsProperties = GoogleAnalyticsProperty::with('googleAccount')->get();
         foreach ($googleAnalyticsProperties as $googleAnalyticsProperty) {
-            $this->info("Fetching metrics and dimensions for $googleAnalyticsProperty->name($googleAnalyticsProperty->internal_property_id) under account " . $googleAnalyticsProperty->googleAccount->name . "(" . $googleAnalyticsProperty->googleAccount->account_id . ")");
+            $this->info("Fetching metrics and dimensions for $googleAnalyticsProperty->internal_property_id property of kind $googleAnalyticsProperty->kind under account " . $googleAnalyticsProperty->googleAccount->account_id);
             $dataRows = $gAS->getMetricsAndDimensions($googleAnalyticsProperty->googleAccount, $googleAnalyticsProperty, $startDate, $endDate);
             if ($dataRows !== false) {
                 $this->info(count($dataRows) . " rows fetched.");

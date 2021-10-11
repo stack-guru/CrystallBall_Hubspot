@@ -13,6 +13,8 @@ class GoogleAnalyticsService extends GoogleAPIService
 
     public function getMetricsAndDimensions(GoogleAccount $googleAccount, GoogleAnalyticsProperty $googleAnalyticsProperty, $startDate, $endDate = null)
     {
+        // If you hit a UA property with GA4 API you will get "Either this isn't a Gold property or it hasn't been migrated yet and you should specify a scion_profile_id instead.; while checking access against Config Service"
+        // If you hit a GA4 property with UA API you will get "User does not have sufficient permissions for this profile."
         switch ($googleAnalyticsProperty->kind) {
             case 'analytics#webproperty':
                 $response = $this->getUAMetricsAndDimensions($googleAccount, $googleAnalyticsProperty, $startDate, $endDate);
