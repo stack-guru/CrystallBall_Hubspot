@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\GoogleAccount;
 use App\Models\GoogleAnalyticsAccount;
+use App\Models\GoogleAnalyticsProperty;
 use Illuminate\Support\Facades\Http;
 
 // https://discovery.googleapis.com/discovery/v1/apis
@@ -49,5 +50,60 @@ trait GoogleUniversalAnalytics
         }
 
         return $respJson['items'];
+    }
+
+    public function getUAMetricsAndDimensions(GoogleAccount $googleAccount, GoogleAnalyticsProperty $googleAnalyticsProperty, $startDate, $endDate = null, $repeatCall = false)
+    {
+        $url = "https://content-analyticsreporting.googleapis.com/v4/reports:batchGet?alt=json";
+
+        $jsonBody = [
+            'reportRequests' => [
+                [
+                    'viewId' => (string) $googleAnalyticsProperty->internal_property_id,
+                    'dateRanges' => [
+                        ['endDate' => $endDate ?? $startDate, 'startDate' => $startDate]
+                    ],
+                    'metrics' => [
+                        ['expression' => 'ga:users'],
+                        ['expression' => 'ga:sessions'],
+                        ['expression' => 'ga:goalConversionRateAll']
+                    ],
+                    'dimensions' => [
+                        ['name' => 'ga:date'],
+                        ['name' => 'ga:source'],
+                        ['name' => 'ga:medium'],
+                        ['name' => 'ga:deviceCategory']
+                    ],
+                    'orderBys' => [
+                        ['fieldName' => 'ga:date']
+                    ]
+                ]
+            ]
+        ];
+        $response = Http::withToken($googleAccount->token)->post($url, $jsonBody);
+
+        if ($response->status() == 401 && !$repeatCall) {
+            // This code block only checks if google accounts can be fetched after refreshing access token
+            if ($this->refreshToken($googleAccount) == false) {
+                return false;
+            } else {
+                $gCA = $this->getUAMetricsAndDimensions($googleAccount, $googleAnalyticsProperty, $startDate, $endDate, true);
+                // On success it returns google analytics accounts else false
+                if ($gCA !== false) {
+                    return $gCA;
+                } else {
+                    return false;
+                }
+            }
+        } else if ($response->status() == 401 && $repeatCall) {
+            return false;
+        }
+
+        return $respJson = $response->json();
+        if (!array_key_exists('reports', $respJson)) {
+            return false;
+        }
+
+        return $respJson->reports[0]->data;
     }
 }
