@@ -43,7 +43,8 @@ class FetchGoogleAnalyticsMetricsAndDimensions extends Command
     {
         $gAS = new GoogleAnalyticsService;
         if ($this->option('from-past')) {
-            $startDate = '2001-01-01';
+            // Don't reduce startDate any further as it will result in an error. "Date <your reduced date> precedes Google Analytics launch date 2005-01-01"
+            $startDate = '2005-01-01';
             $endDate = Carbon::yesterday()->format('Y-m-d');
         } else {
             $startDate = $endDate = Carbon::yesterday()->format('Y-m-d');
