@@ -61,6 +61,13 @@ return [
             'days' => 3,
         ],
 
+        'google' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/google.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 3,
+        ],
+
         'uptimerobot' => [
             'driver' => 'single',
             'path' => storage_path('logs/uptimerobot.log'),
