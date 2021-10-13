@@ -11,6 +11,7 @@ use App\Models\UserDataSource;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class AnnotationController extends Controller
@@ -345,38 +346,70 @@ class AnnotationController extends Controller
         $user_id = Auth::id();
 
         $rows = array();
-        foreach ($filecontent as $line) {
-            if (strlen($line) < (6 + 7)) {
-                continue;
-            }
+        try {
 
-            $row = array();
-            $values = str_getcsv($line);
-
-            if ($headers !== $values && count($values) == count($headers)) {
-                for ($i = 0; $i < count($headers); $i++) {
-                    if (in_array($headers[$i], $kHs)) {
-                        if ($headers[$i] == 'show_at') {
-                            try {
-                                $date = Carbon::createFromFormat($request->date_format, $values[$i]);
-                                $row['show_at'] = $date->format('Y-m-d');
-                            } catch (\Exception $e) {
-                                return ['message' => "Please select correct date format according to your CSV file from the list below."];
-                            }
-                        } else if ($headers[$i] == 'url') {
-                            $row['url'] = $values[$i];
-                        } else {
-                            $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
-                        }
-                    }
+            DB::beginTransaction();
+            foreach ($filecontent as $line) {
+                if (strlen($line) < (6 + 7)) {
+                    continue;
                 }
 
-                $row['user_id'] = $user_id;
-                $row['added_by'] = 'csv-upload';
-                array_push($rows, $row);
+                $row = array();
+                $values = str_getcsv($line);
+
+                if ($headers !== $values && count($values) == count($headers)) {
+                    for ($i = 0; $i < count($headers); $i++) {
+                        if (in_array($headers[$i], $kHs)) {
+                            if ($headers[$i] == 'show_at') {
+                                try {
+                                    $date = Carbon::createFromFormat($request->date_format, $values[$i]);
+                                    $row['show_at'] = $date->format('Y-m-d');
+                                } catch (\Exception $e) {
+                                    return ['message' => "Please select correct date format according to your CSV file from the list below."];
+                                }
+                            } else if ($headers[$i] == 'url') {
+                                $row['url'] = $values[$i];
+                            } else {
+                                $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+                            }
+                        }
+                    }
+
+                    $row['user_id'] = $user_id;
+                    $row['added_by'] = 'csv-upload';
+                    array_push($rows, $row);
+                }
+
+                if (count($rows) > 99) {
+                    Annotation::insert($rows);
+                    $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
+                    $totalNewRows = count($rows);
+                    $lastInsertId = $firstInsertId + ($totalNewRows - 1);
+                    if ($request->has('google_analytics_property_id') && !in_array("", $request->google_analytics_property_id)) {
+                        foreach ($request->google_analytics_property_id as $googleAnalyticsPropertyId) {
+                            $sql = "
+                            INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
+                                SELECT id, $googleAnalyticsPropertyId, user_id FROM annotations
+                                    WHERE id BETWEEN $firstInsertId AND $lastInsertId
+                            ;
+                            ";
+                            DB::statement($sql);
+                        }
+                    } else {
+                        $sql = "
+                            INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
+                                SELECT id, NULL, user_id FROM annotations
+                                    WHERE id BETWEEN $firstInsertId AND $lastInsertId
+                            ;
+                            ";
+                        DB::statement($sql);
+                    }
+
+                    $rows = array();
+                }
             }
 
-            if (count($rows) > 99) {
+            if (count($rows)) {
                 Annotation::insert($rows);
                 $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
                 $totalNewRows = count($rows);
@@ -400,37 +433,13 @@ class AnnotationController extends Controller
                         ";
                     DB::statement($sql);
                 }
-
-                $rows = array();
             }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            abort(422, "Error occured while processing your CSV. Please contact support for more information.");
         }
-
-        if (count($rows)) {
-            Annotation::insert($rows);
-            $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
-            $totalNewRows = count($rows);
-            $lastInsertId = $firstInsertId + ($totalNewRows - 1);
-            if ($request->has('google_analytics_property_id') && !in_array("", $request->google_analytics_property_id)) {
-                foreach ($request->google_analytics_property_id as $googleAnalyticsPropertyId) {
-                    $sql = "
-                    INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
-                        SELECT id, $googleAnalyticsPropertyId, user_id FROM annotations
-                            WHERE id BETWEEN $firstInsertId AND $lastInsertId
-                    ;
-                    ";
-                    DB::statement($sql);
-                }
-            } else {
-                $sql = "
-                    INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
-                        SELECT id, NULL, user_id FROM annotations
-                            WHERE id BETWEEN $firstInsertId AND $lastInsertId
-                    ;
-                    ";
-                DB::statement($sql);
-            }
-        }
-
         event(new NewCSVFileUploaded($user, $request->file('csv')->getClientOriginalName()));
 
         return ['success' => true];
