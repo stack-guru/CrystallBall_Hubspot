@@ -71,7 +71,7 @@ trait GoogleUniversalAnalytics
                     'metrics' => [
                         ['expression' => 'ga:users'],
                         ['expression' => 'ga:sessions'],
-                        ['expression' => 'ga:goalConversionRateAll']
+                        ['expression' => 'ga:totalEvents']
                     ],
                     'dimensions' => [
                         ['name' => 'ga:date'],

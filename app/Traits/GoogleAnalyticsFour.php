@@ -50,7 +50,7 @@ trait GoogleAnalyticsFour
 
         $respJson = $response->json();
         if (!array_key_exists('properties', $respJson)) {
-            Log::channel('google')->error("Error fetching GA4 Properties: ", ['message' => $response->json()['error']['message']]);
+            if (array_key_exists('error', $respJson)) Log::channel('google')->error("Error fetching GA4 Properties: ", ['message' => $response->json()['error']['message']]);
             return false;
         }
 
@@ -69,7 +69,7 @@ trait GoogleAnalyticsFour
             'metrics' => [
                 ['name' => 'activeUsersN', 'expression' => 'activeUsers'],
                 ['name' => 'sessionsN', 'expression' => 'sessions'],
-                ['name' => 'conversionsN', 'expression' => 'conversions']
+                ['name' => 'eventCountN', 'expression' => 'eventCount']
             ],
             'dimensions' => [
                 ['name' => 'date'],

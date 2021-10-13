@@ -65,6 +65,7 @@ class FetchGoogleAnalyticsMetricsAndDimensions extends Command
                     $gAMD->device_category = $dataRow['dimensions'][3];
                     $gAMD->users_count = $dataRow['metrics'][0];
                     $gAMD->sessions_count = $dataRow['metrics'][1];
+                    $gAMD->events_count = $dataRow['metrics'][2];
                     $gAMD->ga_property_id = $googleAnalyticsProperty->id;
                     $gAMD->ga_account_id = $googleAnalyticsProperty->google_analytics_account_id;
                     $gAMD->google_account_id = $googleAnalyticsProperty->googleAccount->id;
