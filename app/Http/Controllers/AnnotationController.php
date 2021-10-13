@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AnnotationController extends Controller
 {
@@ -365,10 +366,19 @@ class AnnotationController extends Controller
                                     $date = Carbon::createFromFormat($request->date_format, $values[$i]);
                                     $row['show_at'] = $date->format('Y-m-d');
                                 } catch (\Exception $e) {
-                                    return ['message' => "Please select correct date format according to your CSV file from the list below."];
+                                    DB::rollBack();
+                                    return response()->json(['message' => "Please select correct date format according to your CSV file from the list below."], 422);
                                 }
                             } else if ($headers[$i] == 'url') {
                                 $row['url'] = $values[$i];
+                            } else if ($headers[$i] == 'category') {
+                                $row['category'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            } else if ($headers[$i] == 'event_type') {
+                                $row['event_type'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            } else if ($headers[$i] == 'event_name') {
+                                $row['event_name'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            } else if ($headers[$i] == 'title') {
+                                $row['title'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
                             } else {
                                 $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
                             }
