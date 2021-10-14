@@ -16,59 +16,18 @@ class PricePlansSeeder extends Seeder
     {
         DB::table('price_plans')->insert(
             [
-                'name' => 'Free',
-                'short_description' => ".",
-                'annotations_count' => "0",
-                'price' => "0",
-                'has_manual_add' => true,
-                'has_csv_upload' => true,
-                'has_api' => false,
-                'is_enabled' => true,
-                'has_integrations' => 0,
-                'has_data_sources' => 0,
-            ]
-        );
-        DB::table('price_plans')->insert(
-            [
-                'name' => 'Basic',
-                'short_description' => ".",
-                'annotations_count' => "0",
-                'price' => "19.00",
-                'has_manual_add' => true,
-                'has_csv_upload' => true,
-                'has_api' => true,
-                'is_enabled' => true,
-                'has_integrations' => 0,
-                'has_data_sources' => 0,
-            ]
-        );
-        DB::table('price_plans')->insert(
-            [
-                'name' => 'Pro',
-                'short_description' => ".",
-                'annotations_count' => "0",
-                'price' => "99.00",
-                'has_manual_add' => true,
-                'has_csv_upload' => true,
-                'has_api' => true,
-                'is_enabled' => true,
-                'has_integrations' => 1,
-                'has_data_sources' => 1,
-            ]
-        );
-
-        DB::table('price_plans')->insert(
-            [
-                'name' => 'Trial',
-                'short_description' => ".",
-                'annotations_count' => "0",
-                'price' => "0",
-                'has_manual_add' => true,
-                'has_csv_upload' => true,
-                'has_api' => true,
-                'is_enabled' => false,
-                'has_integrations' => 1,
-                'has_data_sources' => 1,
+                [
+                    'name' => 'Free', 'annotations_count' => '0', 'price' => '0', 'has_manual_add' => '1', 'has_csv_upload' => '1', 'has_api' => '0', 'is_enabled' => '1', 'has_integrations' => '0', 'has_data_sources' => '0', 'ga_account_count' => '1', 'user_per_ga_account_count' => '1', 'short_description' => 'For Small Businesses', 'is_available' => '1', 'web_monitor_count' => '0', 'owm_city_count' => '-1', 'google_alert_keyword_count' => '-1', 'has_notifications' => '0', 'has_google_data_studio' => '0', 'has_microsoft_power_bi' => '0'
+                ],
+                [
+                    'name' => 'Basic', 'annotations_count' => '0', 'price' => '19', 'has_manual_add' => '1', 'has_csv_upload' => '1', 'has_api' => '1', 'is_enabled' => '1', 'has_integrations' => '0', 'has_data_sources' => '1', 'ga_account_count' => '1', 'user_per_ga_account_count' => '1', 'short_description' => 'For Medium Businesses', 'is_available' => '1', 'web_monitor_count' => '1', 'owm_city_count' => '50', 'google_alert_keyword_count' => '10', 'has_notifications' => '1', 'has_google_data_studio' => '0', 'has_microsoft_power_bi' => '0'
+                ],
+                [
+                    'name' => 'Pro', 'annotations_count' => '0', 'price' => '99', 'has_manual_add' => '1', 'has_csv_upload' => '1', 'has_api' => '1', 'is_enabled' => '1', 'has_integrations' => '0', 'has_data_sources' => '1', 'ga_account_count' => '0', 'user_per_ga_account_count' => '0', 'short_description' => 'For Big Businesses & Professionals Marketers', 'is_available' => '1', 'web_monitor_count' => '3', 'owm_city_count' => '0', 'google_alert_keyword_count' => '100', 'has_notifications' => '1', 'has_google_data_studio' => '1', 'has_microsoft_power_bi' => '1'
+                ],
+                [
+                    'name' => 'Trial', 'annotations_count' => '0', 'price' => '0', 'has_manual_add' => '1', 'has_csv_upload' => '1', 'has_api' => '1', 'is_enabled' => '0', 'has_integrations' => '1', 'has_data_sources' => '1', 'ga_account_count' => '0', 'user_per_ga_account_count' => '0', 'short_description' => 'New Sign up 14 days', 'is_available' => '1', 'web_monitor_count' => '3', 'owm_city_count' => '50', 'google_alert_keyword_count' => '10', 'has_notifications' => '1', 'has_google_data_studio' => '1', 'has_microsoft_power_bi' => '1'
+                ]
             ]
         );
     }

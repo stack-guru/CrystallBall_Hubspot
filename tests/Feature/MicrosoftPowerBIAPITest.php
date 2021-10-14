@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Passport\Passport;
 
-class GoogleDataStudioAPITest extends TestCase
+class MicrosoftPowerBIAPITest extends TestCase
 {
     
     public function testFetchAnnotationsAPITest()
@@ -19,7 +19,7 @@ class GoogleDataStudioAPITest extends TestCase
 
         $response = $this->getJson(implode([
             'https://app.gaannotations.com',
-            '/api/v1/google-data-studio/annotations',
+            '/api/v1/microsoft-power-bi/annotations',
             '?',
             'startDate=2001-01-01',
             '&endDate=2030-01-01',
@@ -43,8 +43,8 @@ class GoogleDataStudioAPITest extends TestCase
                                 ->has("url")
                                 ->has("description")
                                 ->has("user_name")
-                                ->has("annotation_ga_property_id")
-                                ->has("google_analytics_property_name")
+                                // ->has("annotation_ga_property_id")
+                                // ->has("google_analytics_property_name")
                                 ->etc();
                         });
                 }
