@@ -32,6 +32,7 @@ import CreatePaymentDetail from './components/settings/CreatePaymentDetail';
 import StartupChecklist from './helpers/StartupChecklist';
 import UserStartupConfigurationModal from './helpers/UserStartupConfigurationModal';
 import InterfaceTour from './helpers/InterfaceTour';
+import IndexDashboard from './components/dashboard/IndexDashboard';
 
 class Main extends React.Component {
 
@@ -76,7 +77,7 @@ class Main extends React.Component {
                     <main className="main-content bgc-grey-100">
                         <Switch>
                             <Route exact path="/dashboard" refresh={true}>
-                                <Index />
+                                <IndexDashboard />
                             </Route>
                             <Route exact path="/annotation" refresh={true}>
                                 <IndexAnnotations user={this.state.user} />
