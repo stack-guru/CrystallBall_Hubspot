@@ -72,6 +72,14 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'ui'], function () {
 
+        Route::group(['prefix' => 'dashboard'], function () {
+            Route::get('annotations-metrics-dimensions', [App\Http\Controllers\DashboardController::class, 'annotationsMetricsDimensionsIndex']);
+            Route::get('users-days', [App\Http\Controllers\DashboardController::class, 'usersDaysIndex']);
+            Route::get('mediums', [App\Http\Controllers\DashboardController::class, 'mediumsIndex']);
+            Route::get('sources', [App\Http\Controllers\DashboardController::class, 'sourcesIndex']);
+            Route::get('devices', [App\Http\Controllers\DashboardController::class, 'devicesIndex']);
+        });
+
         Route::post('user-startup-configuration', [App\Http\Controllers\UserStartupConfigurationController::class, 'store']);
         Route::resource('user-checklist-item', App\Http\Controllers\UserChecklistItemController::class)->only(['index', 'update']);
 
