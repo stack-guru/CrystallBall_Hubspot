@@ -40,4 +40,75 @@ class DashboardPageTest extends TestCase
             );
     }
 
+    public function testUsersDaysAPITest()
+    {
+
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/users-days?start_date=2005-01-02&end_date=2021-01-01');
+
+        $response->assertStatus(200)
+            ->assertJson(
+                function (AssertableJson $json) {
+                    $json->has('statistics')
+                        ->has('statistics.0', function ($json) {
+                            $json->has('statistics_date')
+                                ->has("sum_users_count")
+                                ->etc();
+                        });
+                }
+            );
+    }
+
+    public function testMediumsAPITest()
+    {
+
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/mediums?start_date=2005-01-02&end_date=2021-01-01');
+
+        $response->assertStatus(200)
+            ->assertJson(
+                function (AssertableJson $json) {
+                    $json->has('statistics')
+                        ->has('statistics.0', function ($json) {
+                            $json->has('medium_name')
+                                ->has("sum_users_count")
+                                ->etc();
+                        });
+                }
+            );
+    }
+
+    public function testSourcesAPITest()
+    {
+
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/sources?start_date=2005-01-02&end_date=2021-01-01');
+
+        $response->assertStatus(200)
+            ->assertJson(
+                function (AssertableJson $json) {
+                    $json->has('statistics')
+                        ->has('statistics.0', function ($json) {
+                            $json->has('source_name')
+                                ->has("sum_users_count")
+                                ->etc();
+                        });
+                }
+            );
+    }
+
+    public function testDevicesAPITest()
+    {
+
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/devices?start_date=2005-01-02&end_date=2021-01-01');
+
+        $response->assertStatus(200)
+            ->assertJson(
+                function (AssertableJson $json) {
+                    $json->has('statistics')
+                        ->has('statistics.0', function ($json) {
+                            $json->has('device_category')
+                                ->has("sum_users_count")
+                                ->etc();
+                        });
+                }
+            );
+    }
 }

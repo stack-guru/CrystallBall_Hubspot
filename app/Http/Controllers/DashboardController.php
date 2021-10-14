@@ -5,16 +5,59 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\UserDataSource;
+use App\Models\GoogleAnalyticsMetricDimension;
 use App\Models\Annotation;
-use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    // public function func(Request $request){}
-    // public function func(Request $request){}
-    // public function func(Request $request){}
-    // public function func(Request $request){}
+
+    public function devicesIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date|before:tomorrow',
+        ]);
+
+        $statistics = GoogleAnalyticsMetricDimension::selectRaw('device_category, SUM(users_count) as sum_users_count')->groupBy('device_category')->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])->get();
+
+        return ['statistics' => $statistics];
+    }
+
+    public function sourcesIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date|before:tomorrow',
+        ]);
+
+        $statistics = GoogleAnalyticsMetricDimension::selectRaw('source_name, SUM(users_count) as sum_users_count')->groupBy('source_name')->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])->get();
+
+        return ['statistics' => $statistics];
+    }
+
+    public function mediumsIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date|before:tomorrow',
+        ]);
+
+        $statistics = GoogleAnalyticsMetricDimension::selectRaw('medium_name, SUM(users_count) as sum_users_count')->groupBy('medium_name')->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])->get();
+
+        return ['statistics' => $statistics];
+    }
+
+    public function usersDaysIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date|before:tomorrow',
+        ]);
+
+        $statistics = GoogleAnalyticsMetricDimension::selectRaw('statistics_date, SUM(users_count) as sum_users_count')->groupBy('statistics_date')->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])->get();
+
+        return ['statistics' => $statistics];
+    }
 
     public function annotationsMetricsDimensionsIndex(Request $request)
     {
