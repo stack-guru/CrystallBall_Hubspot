@@ -11,7 +11,7 @@ use App\Models\Annotation;
 class DashboardController extends Controller
 {
 
-    public function devicesIndex(Request $request)
+    public function deviceCategoriesIndex(Request $request)
     {
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',

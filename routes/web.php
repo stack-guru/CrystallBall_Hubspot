@@ -77,7 +77,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('users-days', [App\Http\Controllers\DashboardController::class, 'usersDaysIndex']);
             Route::get('mediums', [App\Http\Controllers\DashboardController::class, 'mediumsIndex']);
             Route::get('sources', [App\Http\Controllers\DashboardController::class, 'sourcesIndex']);
-            Route::get('devices', [App\Http\Controllers\DashboardController::class, 'devicesIndex']);
+            Route::get('device-categories', [App\Http\Controllers\DashboardController::class, 'deviceCategoriesIndex']);
         });
 
         Route::post('user-startup-configuration', [App\Http\Controllers\UserStartupConfigurationController::class, 'store']);
