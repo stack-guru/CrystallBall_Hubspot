@@ -75,7 +75,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['prefix' => 'dashboard'], function () {
             Route::get('annotations-metrics-dimensions', [App\Http\Controllers\DashboardController::class, 'annotationsMetricsDimensionsIndex']);
             Route::get('users-days', [App\Http\Controllers\DashboardController::class, 'usersDaysIndex']);
-            Route::get('mediums', [App\Http\Controllers\DashboardController::class, 'mediumsIndex']);
+            Route::get('media', [App\Http\Controllers\DashboardController::class, 'mediaIndex']);
             Route::get('sources', [App\Http\Controllers\DashboardController::class, 'sourcesIndex']);
             Route::get('device-categories', [App\Http\Controllers\DashboardController::class, 'deviceCategoriesIndex']);
         });

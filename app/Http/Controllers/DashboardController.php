@@ -18,7 +18,7 @@ class DashboardController extends Controller
             'end_date' => 'required|date|after:2005-01-01|after:start_date|before:tomorrow',
         ]);
 
-        $statistics = GoogleAnalyticsMetricDimension::selectRaw('device_category, SUM(users_count) as sum_users_count')->groupBy('device_category')->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])->get();
+        $statistics = GoogleAnalyticsMetricDimension::selectRaw('device_category, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count')->groupBy('device_category')->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])->get();
 
         return ['statistics' => $statistics];
     }
@@ -30,12 +30,12 @@ class DashboardController extends Controller
             'end_date' => 'required|date|after:2005-01-01|after:start_date|before:tomorrow',
         ]);
 
-        $statistics = GoogleAnalyticsMetricDimension::selectRaw('source_name, SUM(users_count) as sum_users_count')->groupBy('source_name')->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])->get();
+        $statistics = GoogleAnalyticsMetricDimension::selectRaw('source_name, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count')->groupBy('source_name')->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])->get();
 
         return ['statistics' => $statistics];
     }
 
-    public function mediumsIndex(Request $request)
+    public function mediaIndex(Request $request)
     {
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',

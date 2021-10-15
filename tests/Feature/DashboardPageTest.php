@@ -63,10 +63,10 @@ class DashboardPageTest extends TestCase
             );
     }
 
-    public function testMediumsAPITest()
+    public function testMediaAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/mediums?start_date=2005-01-02&end_date=2021-01-01');
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/media?start_date=2005-01-02&end_date=2021-01-01');
 
         $response->assertStatus(200)
             ->assertJson(
@@ -93,6 +93,7 @@ class DashboardPageTest extends TestCase
                         ->has('statistics.0', function ($json) {
                             $json->has('source_name')
                                 ->has("sum_users_count")
+                                ->has("sum_events_count")
                                 ->etc();
                         });
                 }
@@ -102,7 +103,7 @@ class DashboardPageTest extends TestCase
     public function testDevicesAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/devices?start_date=2005-01-02&end_date=2021-01-01');
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/device-categories?start_date=2005-01-02&end_date=2021-01-01');
 
         $response->assertStatus(200)
             ->assertJson(
@@ -111,6 +112,7 @@ class DashboardPageTest extends TestCase
                         ->has('statistics.0', function ($json) {
                             $json->has('device_category')
                                 ->has("sum_users_count")
+                                ->has("sum_events_count")
                                 ->etc();
                         });
                 }
