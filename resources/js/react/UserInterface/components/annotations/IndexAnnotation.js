@@ -184,11 +184,12 @@ class IndexAnnotations extends React.Component {
 
     checkSearchText(annotation) {
         if (this.state.searchText.length) {
+            const searchText = this.state.searchText.toLowerCase();
             if (
-                (annotation.category && annotation.category.toLowerCase().indexOf(this.state.searchText) > -1)
-                || (annotation.event_name && annotation.event_name.toLowerCase().indexOf(this.state.searchText) > -1)
-                || (annotation.description && annotation.description.toLowerCase().indexOf(this.state.searchText) > -1)
-                || (annotation.show_at && annotation.show_at.toLowerCase().indexOf(this.state.searchText) > -1)
+                (annotation.category && annotation.category.toLowerCase().indexOf(searchText) > -1)
+                || (annotation.event_name && annotation.event_name.toLowerCase().indexOf(searchText) > -1)
+                || (annotation.description && annotation.description.toLowerCase().indexOf(searchText) > -1)
+                || (annotation.show_at && annotation.show_at.toLowerCase().indexOf(searchText) > -1)
             ) {
                 return true;
             }
