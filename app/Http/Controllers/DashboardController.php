@@ -88,7 +88,7 @@ class DashboardController extends Controller
         $annotationsQuery .= ") AS TempTable";
         $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
 
-        $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T3.* FROM ($annotationsQuery) AS T2 LEFT JOIN (
+        $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T3.* FROM ($annotationsQuery) AS T2 INNER JOIN (
             SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL 7 DAY) as seven_day_old_date, SUM(sessions_count) as sum_sessions_count, SUM(events_count) as sum_events_count  FROM google_analytics_metric_dimensions
             GROUP BY statistics_date
         ) AS T3 ON T2.show_at = T3.seven_day_old_date;");
