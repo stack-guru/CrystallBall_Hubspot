@@ -35,6 +35,7 @@ class DashboardPageTest extends TestCase
                                 ->has("category")
                                 ->has("show_at")
                                 ->has("seven_day_old_date")
+                                ->has("sum_users_count")
                                 ->has("sum_sessions_count")
                                 ->has("sum_events_count")
                                 ->has("statistics_date")
