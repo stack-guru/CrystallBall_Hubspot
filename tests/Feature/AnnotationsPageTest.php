@@ -6,9 +6,13 @@ use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\Fluent\AssertableJson;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AnnotationsPageTest extends TestCase
 {
+    use RefreshDatabase;
+    public $seed = true;
+
     public function testUserViewsAnnotationsPage()
     {
 

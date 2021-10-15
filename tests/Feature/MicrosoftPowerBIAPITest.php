@@ -8,10 +8,13 @@ use App\Models\PricePlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Passport\Passport;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class MicrosoftPowerBIAPITest extends TestCase
 {
-    
+    use RefreshDatabase;
+    public $seed = true;
+
     public function testFetchAnnotationsAPITest()
     {
         ;

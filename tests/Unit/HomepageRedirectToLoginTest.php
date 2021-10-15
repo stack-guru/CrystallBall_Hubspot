@@ -7,6 +7,8 @@ use Tests\TestCase;
 
 class HomepageRedirectToLoginTest extends TestCase
 {
+    use RefreshDatabase;
+    public $seed = true;
     /**
      * A basic test example.
      *

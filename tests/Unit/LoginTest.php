@@ -3,9 +3,13 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoginTest extends TestCase
 {
+    use RefreshDatabase;
+    public $seed = true;
+
     /**
      * A basic test example.
      *
