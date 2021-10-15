@@ -76,7 +76,7 @@ class Main extends React.Component {
                     <main className="main-content bgc-grey-100">
                         <Switch>
                             <Route exact path="/dashboard" refresh={true}>
-                                <IndexDashboard />
+                                <IndexDashboard user={this.state.user} />
                             </Route>
                             <Route exact path="/annotation" refresh={true}>
                                 <IndexAnnotations user={this.state.user} />
