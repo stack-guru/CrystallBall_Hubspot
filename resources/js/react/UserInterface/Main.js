@@ -8,7 +8,6 @@ import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer"
 
-import Index from "./components/Index";
 import AnnotationsCreate from './components/annotations/CreateAnnotation';
 import AnnotationsUpdate from './components/annotations/EditAnnotation';
 import IndexAnnotations from './components/annotations/IndexAnnotation';
