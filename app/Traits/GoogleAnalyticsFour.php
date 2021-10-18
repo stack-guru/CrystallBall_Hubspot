@@ -69,7 +69,8 @@ trait GoogleAnalyticsFour
             'metrics' => [
                 ['name' => 'activeUsersN', 'expression' => 'activeUsers'],
                 ['name' => 'sessionsN', 'expression' => 'sessions'],
-                ['name' => 'eventCountN', 'expression' => 'eventCount']
+                ['name' => 'eventCountN', 'expression' => 'eventCount'],
+                ['name' => 'conversionsN', 'expression' => 'conversions']
             ],
             'dimensions' => [
                 ['name' => 'date'],

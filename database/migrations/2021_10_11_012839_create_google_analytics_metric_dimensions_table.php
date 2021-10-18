@@ -24,6 +24,7 @@ class CreateGoogleAnalyticsMetricDimensionsTable extends Migration
             $table->integer('users_count')->unsigned()->nullable()->default(null);
             $table->integer('sessions_count')->unsigned()->nullable()->default(null);
             $table->integer('events_count')->unsigned()->nullable()->default(null);
+            $table->integer('conversions_count')->unsigned()->nullable()->default(null);
 
             $table->unsignedBigInteger('ga_property_id')->required();
             $table->foreign('ga_property_id')->references('id')->on('google_analytics_properties');
