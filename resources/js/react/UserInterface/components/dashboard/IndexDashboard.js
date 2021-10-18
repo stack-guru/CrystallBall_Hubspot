@@ -17,7 +17,7 @@ export default class IndexDashboard extends Component {
             mediaStatistics: [],
             sourcesStatistics: [],
             deviceCategoriesStatistics: [],
-            startDate: '2005-01-02',
+            startDate: '2021-01-01',
             endDate: '2021-10-15',
             ga_property_id: '*',
             errors: undefined
