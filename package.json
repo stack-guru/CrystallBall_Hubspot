@@ -28,6 +28,7 @@
         "react": "^16.14.0",
         "react-chartjs-2": "^3.0.5",
         "react-color": "^2.19.3",
+        "react-date-range": "^1.4.0",
         "react-dom": "^16.14.0",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",

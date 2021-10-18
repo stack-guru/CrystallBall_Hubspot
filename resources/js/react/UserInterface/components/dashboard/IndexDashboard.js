@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { DateRange } from 'react-date-range';
+
 import UsersDaysGraph from './graphs/usersDaysGraph';
 import HttpClient from '../../utils/HttpClient';
 import AnnotationsTable from './tables/annotationsTable';
@@ -12,6 +14,7 @@ export default class IndexDashboard extends Component {
 
         this.state = {
             isBusy: false,
+            showDateRangeSelect: false,
             usersDaysStatistics: [],
             annotations: [],
             mediaStatistics: [],
@@ -48,12 +51,37 @@ export default class IndexDashboard extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-6"></div>
-                            <div className="col-2">
-                                <input type="date" name="startDate" onBlur={(e) => { this.setState({ [e.target.name]: e.target.value }); this.fetchStatistics(this.state.ga_property_id); }} className="form-control" />
+                            <div className="col-3">
+                                <p>{this.state.startDate} - {this.state.endDate}</p>
                             </div>
-                            <div className="col-2">
-                                <input type="date" name="endDate" onBlur={(e) => { this.setState({ [e.target.name]: e.target.value }); this.fetchStatistics(this.state.ga_property_id); }} className="form-control" />
+                            <div className="col-4">
+                                {
+                                    this.state.showDateRangeSelect ?
+                                        <DateRange
+                                            editableDateInputs={true}
+                                            moveRangeOnFirstSelection={false}
+                                            ranges={[{
+                                                startDate: new Date(this.state.startDate),
+                                                endDate: new Date(this.state.endDate),
+                                                key: 'selection',
+                                            }]}
+                                            onChange={(ranges) => {
+                                                this.setState({
+                                                    startDate: moment(ranges.selection.startDate).format("YYYY-MM-DD"),
+                                                    endDate: moment(ranges.selection.endDate).format("YYYY-MM-DD"),
+                                                }, () => {
+                                                    if (moment(ranges.selection.startDate).format("YYYY-MM-DD") !== moment(ranges.selection.endDate).format("YYYY-MM-DD")) {
+                                                        this.fetchStatistics(this.state.ga_property_id);
+                                                    }
+                                                });
+                                            }}
+                                        />
+                                        :
+                                        <p></p>
+                                }
+                            </div>
+                            <div className="col-1">
+                                <button className="btn btn-secondary" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>Select Date</button>
                             </div>
                             <div className="col-2">
                                 <GoogleAnalyticsPropertySelect
