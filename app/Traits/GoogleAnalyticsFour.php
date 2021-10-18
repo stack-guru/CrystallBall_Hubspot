@@ -63,6 +63,7 @@ trait GoogleAnalyticsFour
         $url = "https://analyticsdata.googleapis.com/v1beta/properties/$googleAnalyticsProperty->internal_property_id:runReport";
 
         $jsonBody = [
+            'limit' => 100000,
             'dateRanges' => [
                 ['endDate' => $endDate ?? $startDate, 'startDate' => $startDate]
             ],
@@ -79,7 +80,10 @@ trait GoogleAnalyticsFour
                 ['name' => 'deviceCategory']
             ],
             'orderBys' => [
-                ['dimension' => ['dimensionName' => 'date', 'orderType' => 'NUMERIC']]
+                [
+                    'desc' => true,
+                    'dimension' => ['dimensionName' => 'date', 'orderType' => 'NUMERIC']
+                ]
             ]
         ];
         Log::channel('google')->info("Fetching GA4 Account Metrics and Dimensions: ", ['GoogleAccount' => $googleAnalyticsProperty->internal_property_id]);

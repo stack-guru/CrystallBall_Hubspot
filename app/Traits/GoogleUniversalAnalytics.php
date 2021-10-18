@@ -62,6 +62,7 @@ trait GoogleUniversalAnalytics
         $url = "https://content-analyticsreporting.googleapis.com/v4/reports:batchGet?alt=json";
 
         $jsonBody = [
+            'limit' => 100000,
             'reportRequests' => [
                 [
                     'viewId' => (string) $googleAnalyticsProperty->internal_property_id,
@@ -80,7 +81,7 @@ trait GoogleUniversalAnalytics
                         ['name' => 'ga:deviceCategory']
                     ],
                     'orderBys' => [
-                        ['fieldName' => 'ga:date']
+                        ['fieldName' => 'ga:date', 'sortOrder' => 'DESCENDING']
                     ]
                 ]
             ]
