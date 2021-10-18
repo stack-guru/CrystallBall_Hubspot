@@ -22,19 +22,7 @@ class AnnotationController extends Controller
         }
 
         $user = Auth::user();
-        $userIdsArray = [];
-
-        if ($user->user_id) {
-            // Current user is child, find parent, grab all child users, pluck ids
-            $userIdsArray = $user->user->users->pluck('id')->toArray();
-            array_push($userIdsArray, $user->user->id);
-            // Set Current User to parent so that data source configuration which applies are that of parent
-            $user = $user->user;
-        } else {
-            // Current user is parent, grab all child users, pluck ids
-            $userIdsArray = $user->users->pluck('id')->toArray();
-            array_push($userIdsArray, $user->id);
-        }
+        $userIdsArray = $this->getAllGroupUserIdsArray();
 
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));
@@ -229,7 +217,6 @@ class AnnotationController extends Controller
             'annotations' => $fAnnotations,
             'user_annotation_color' => $user->userAnnotationColor,
         ];
-
     }
 
     //another method used tp show annotations with selected date(same as method defined above)
@@ -241,19 +228,7 @@ class AnnotationController extends Controller
         }
 
         $user = Auth::user();
-        $userIdsArray = [];
-
-        if ($user->user_id) {
-            // Current user is child, find parent, grab all child users, pluck ids
-            $userIdsArray = $user->user->users->pluck('id')->toArray();
-            array_push($userIdsArray, $user->user->id);
-            // Set Current User to parent so that data source configuration which applies are that of parent
-            $user = $user->user;
-        } else {
-            // Current user is parent, grab all child users, pluck ids
-            $userIdsArray = $user->users->pluck('id')->toArray();
-            array_push($userIdsArray, $user->id);
-        }
+        $userIdsArray = $this->getAllGroupUserIdsArray();
 
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));
@@ -349,7 +324,6 @@ class AnnotationController extends Controller
             'user_annotation_color' => $user->userAnnotationColor,
 
         ];
-
     }
 
     public function store(AnnotationRequest $request)

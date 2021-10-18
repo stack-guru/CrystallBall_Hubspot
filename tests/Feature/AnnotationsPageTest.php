@@ -10,8 +10,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AnnotationsPageTest extends TestCase
 {
-    use RefreshDatabase;
-    public $seed = true;
+    // use RefreshDatabase;
+    // public $seed = true;
 
     public function testUserViewsAnnotationsPage()
     {

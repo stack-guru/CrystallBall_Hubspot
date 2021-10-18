@@ -12,12 +12,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class MicrosoftPowerBIAPITest extends TestCase
 {
-    use RefreshDatabase;
-    public $seed = true;
+    // use RefreshDatabase;
+    // public $seed = true;
 
     public function testFetchAnnotationsAPITest()
     {
-        ;
         Passport::actingAs(User::where('price_plan_id', PricePlan::where('has_google_data_studio', true)->first()->id)->inRandomOrder()->first());
 
         $response = $this->getJson(implode([

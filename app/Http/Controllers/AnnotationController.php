@@ -99,19 +99,8 @@ class AnnotationController extends Controller
         $this->authorize('update', $annotation);
 
         $user = Auth::user();
-        $userIdsArray = [];
-        switch ($user->user_level) {
-            case 'admin':
-                // Current user is admin, grab all child users, pluck ids
-                $userIdsArray = $user->users->pluck('id')->toArray();
-                array_push($userIdsArray, $user->id);
-                break;
-            case 'team':
-                // Current user is team, find admin, grab all child users, pluck ids
-                $userIdsArray = $user->user->users->pluck('id')->toArray();
-                array_push($userIdsArray, $user->user->id);
-                break;
-        }
+        $userIdsArray = $this->getAllGroupUserIdsArray();
+
         if (!in_array($annotation->user_id, $userIdsArray)) {
             abort(404);
         }
@@ -168,20 +157,7 @@ class AnnotationController extends Controller
     {
         $this->authorize('delete', $annotation);
 
-        $user = Auth::user();
-        $userIdsArray = [];
-        switch ($user->user_level) {
-            case 'admin':
-                // Current user is admin, grab all child users, pluck ids
-                $userIdsArray = $user->users->pluck('id')->toArray();
-                array_push($userIdsArray, $user->id);
-                break;
-            case 'team':
-                // Current user is team, find admin, grab all child users, pluck ids
-                $userIdsArray = $user->user->users->pluck('id')->toArray();
-                array_push($userIdsArray, $user->user->id);
-                break;
-        }
+        $userIdsArray = $this->getAllGroupUserIdsArray();
 
         if (!in_array($annotation->user_id, $userIdsArray)) {
             abort(404);
@@ -197,19 +173,7 @@ class AnnotationController extends Controller
         $this->authorize('viewAny', Annotation::class);
 
         $user = Auth::user();
-        $userIdsArray = [];
-
-        if (!$user->user_id) {
-            // Current user is not child, grab all child users, pluck ids
-            $userIdsArray = $user->users->pluck('id')->toArray();
-            array_push($userIdsArray, $user->id);
-        } else {
-            // Current user is child, find admin, grab all child users, pluck ids
-            $userIdsArray = $user->user->users->pluck('id')->toArray();
-            array_push($userIdsArray, $user->user->id);
-            // Set Current User to Admin so that data source configuration which applies are that of admin
-            $user = $user->user;
-        }
+        $userIdsArray = $this->getAllGroupUserIdsArray();
 
         $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_properties`.`google_analytics_property_id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
         $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('annotation_ga_property_id'), $userIdsArray);
@@ -243,20 +207,7 @@ class AnnotationController extends Controller
     {
         $this->authorize('view', $annotation);
 
-        $user = Auth::user();
-        $userIdsArray = [];
-        switch ($user->user_level) {
-            case 'admin':
-                // Current user is admin, grab all child users, pluck ids
-                $userIdsArray = $user->users->pluck('id')->toArray();
-                array_push($userIdsArray, $user->id);
-                break;
-            case 'team':
-                // Current user is team, find admin, grab all child users, pluck ids
-                $userIdsArray = $user->user->users->pluck('id')->toArray();
-                array_push($userIdsArray, $user->user->id);
-                break;
-        }
+        $userIdsArray = $this->getAllGroupUserIdsArray();
 
         if (!in_array($annotation->user_id, $userIdsArray)) {
             abort(403);
