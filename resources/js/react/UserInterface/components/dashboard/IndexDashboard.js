@@ -20,8 +20,8 @@ export default class IndexDashboard extends Component {
             mediaStatistics: [],
             sourcesStatistics: [],
             deviceCategoriesStatistics: [],
-            startDate: '2021-01-01',
-            endDate: '2021-10-15',
+            startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
+            endDate: moment().format('YYYY-MM-DD'),
             ga_property_id: '*',
             errors: undefined
         };
@@ -78,7 +78,7 @@ export default class IndexDashboard extends Component {
                                             }}
                                         />
                                         :
-                                        <p></p>
+                                        <p>{this.state.startDate}-{this.state.endDate}</p>
                                 }
                             </div>
                             <div className="col-2">

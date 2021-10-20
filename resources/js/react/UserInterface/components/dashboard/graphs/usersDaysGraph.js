@@ -3,7 +3,7 @@ import { Line } from 'react-chartjs-2';
 
 export default function UsersDaysGraph(props) {
 
-    const dates = props.statistics.map(s => moment(s.statistics_date).format("DD"));
+    const dates = props.statistics.map(s => moment(s.statistics_date).format("DD MMM"));
     const months = props.statistics.map(s => moment(s.statistics_date).format("MMM"));
     const noOfUsers = props.statistics.map(s => s.sum_users_count);
 
@@ -31,34 +31,33 @@ export default function UsersDaysGraph(props) {
                     display: false
                 },
             },
-            scales: {
-                x: {
-                    ticks: {
-                        // For a category axis, the val is the index so the lookup via getLabelForValue is needed
-                        callback: function (val, index) {
-                            // Hide the label of every 2nd dataset
-                            return index % 2 === 0 ? this.getLabelForValue(val) : '';
-                        },
-                        color: 'red',
-                        maxRotation: 0
-                    }
-                },
-                x2: {
-                    id: 'x2',
-                    type: 'linear',
-                    display: true,
-                    position: 'bottom',
-                    ticks: {
-                        callback: function (value, index, values) {
-                            return months[index];
-                        },
+            // scales: {
+            //     x: {
+            //         ticks: {
+            //             // For a category axis, the val is the index so the lookup via getLabelForValue is needed
+            //             callback: function (val, index) {
+            //                 // Hide the label of every 2nd dataset
+            //                 return index % 2 === 0 ? this.getLabelForValue(val) : '';
+            //             },
+            //             maxRotation: 0
+            //         }
+            //     },
+            //     x2: {
+            //         id: 'x2',
+            //         type: 'linear',
+            //         display: true,
+            //         position: 'bottom',
+            //         ticks: {
+            //             callback: function (value, index, values) {
+            //                 return months[index];
+            //             },
 
-                    },
-                    grid: {
-                        display: false,
-                    },
-                }
-            }
+            //         },
+            //         grid: {
+            //             display: false,
+            //         },
+            //     }
+            // }
         }} />
 };
 
