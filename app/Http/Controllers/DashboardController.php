@@ -149,6 +149,8 @@ class DashboardController extends Controller
         ]);
 
         $this->authorize('viewAny', Annotation::class);
+        $startDate = $request->query('startDate');
+        $endDate = $request->query('endDate');
 
         $user = Auth::user();
 
@@ -165,9 +167,9 @@ class DashboardController extends Controller
             $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T3.* FROM ($annotationsQuery) AS T2 INNER JOIN (
                     SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL 7 DAY) as seven_day_old_date, SUM(users_count) as sum_users_count, SUM(sessions_count) as sum_sessions_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count  FROM google_analytics_metric_dimensions
                     WHERE ga_property_id IN $gAPropertyIds
-                        AND statistics_date BETWEEN '$request->start_date' AND '$request->end_date'
                     GROUP BY statistics_date
-                ) AS T3 ON T2.show_at = T3.seven_day_old_date;");
+                ) AS T3 ON T2.show_at = T3.seven_day_old_date
+                WHERE statistics_date BETWEEN '$startDate' AND '$endDate';");
         } else {
             $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
             if (!in_array($gAProperty->user_id, $userIdsArray)) {
@@ -181,9 +183,9 @@ class DashboardController extends Controller
             $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T3.* FROM ($annotationsQuery) AS T2 INNER JOIN (
                     SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL 7 DAY) as seven_day_old_date, SUM(users_count) as sum_users_count, SUM(sessions_count) as sum_sessions_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count  FROM google_analytics_metric_dimensions
                     WHERE ga_property_id = $gAProperty->id
-                        AND statistics_date BETWEEN '$request->start_date' AND '$request->end_date'
                     GROUP BY statistics_date
-                ) AS T3 ON T2.show_at = T3.seven_day_old_date;");
+                ) AS T3 ON T2.show_at = T3.seven_day_old_date
+                WHERE statistics_date BETWEEN '$startDate' AND '$endDate';");
         }
 
         return ['annotations' => $annotations];
