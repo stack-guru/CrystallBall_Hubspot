@@ -53,7 +53,7 @@ export default class IndexDashboard extends Component {
                         <div className="row">
                             <div className="col-2">
                             </div>
-                            <div className="col-4">
+                            <div className="col-4 text-right">
                                 {
                                     this.state.showDateRangeSelect ?
                                         <DateRange
