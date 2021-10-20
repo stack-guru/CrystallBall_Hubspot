@@ -104,7 +104,7 @@ export default class IndexDashboard extends Component {
                                     <tbody>
                                         {
                                             this.state.sourcesStatistics.map(sS => {
-                                                const conversionRate = sS.sum_events_count && sS.sum_users_count ? ((sS.sum_events_count / sS.sum_users_count) * 100).toFixed(2) : 0;
+                                                const conversionRate = sS.sum_conversions_count && sS.sum_users_count ? ((sS.sum_conversions_count / sS.sum_users_count) * 100).toFixed(2) : 0;
                                                 return <tr>
                                                     <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} /></td>
                                                     <td>{sS.source_name}</td>
@@ -122,7 +122,7 @@ export default class IndexDashboard extends Component {
                                     <tbody>
                                         {
                                             this.state.deviceCategoriesStatistics.map(dS => {
-                                                const conversionRate = dS.sum_events_count && dS.sum_users_count ? ((dS.sum_events_count / dS.sum_users_count) * 100).toFixed(2) : 0;
+                                                const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0;
                                                 return <tr><td>{dS.source_name}</td><td>{dS.sum_users_count}</td><td>{conversionRate}</td></tr>
                                             })
                                         }

@@ -24,7 +24,7 @@ class DashboardController extends Controller
 
         if ($request->query('ga_property_id') == '*') {
             $gAPropertyIds = GoogleAnalyticsProperty::select('id')->orderBy('created_at')->whereIn('user_id', $userIdsArray)->get()->pluck('id')->all();
-            $statistics = GoogleAnalyticsMetricDimension::selectRaw('device_category, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count')
+            $statistics = GoogleAnalyticsMetricDimension::selectRaw('device_category, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count')
                 ->groupBy('device_category')
                 ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
                 ->whereIn('ga_property_id', $gAPropertyIds)
@@ -34,7 +34,7 @@ class DashboardController extends Controller
             if (!in_array($gAProperty->user_id, $userIdsArray)) {
                 abort(404);
             }
-            $statistics = GoogleAnalyticsMetricDimension::selectRaw('device_category, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count')
+            $statistics = GoogleAnalyticsMetricDimension::selectRaw('device_category, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count')
                 ->groupBy('device_category')
                 ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
                 ->where('ga_property_id', $gAProperty->id)
@@ -56,7 +56,7 @@ class DashboardController extends Controller
 
         if ($request->query('ga_property_id') == '*') {
             $gAPropertyIds = GoogleAnalyticsProperty::select('id')->orderBy('created_at')->whereIn('user_id', $userIdsArray)->get()->pluck('id')->all();
-            $statistics = GoogleAnalyticsMetricDimension::selectRaw('source_name, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count')
+            $statistics = GoogleAnalyticsMetricDimension::selectRaw('source_name, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count')
                 ->groupBy('source_name')
                 ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
                 ->whereIn('ga_property_id', $gAPropertyIds)
@@ -66,7 +66,7 @@ class DashboardController extends Controller
             if (!in_array($gAProperty->user_id, $userIdsArray)) {
                 abort(404);
             }
-            $statistics = GoogleAnalyticsMetricDimension::selectRaw('source_name, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count')
+            $statistics = GoogleAnalyticsMetricDimension::selectRaw('source_name, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count')
                 ->groupBy('source_name')
                 ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
                 ->where('ga_property_id', $gAProperty->id)
@@ -163,7 +163,7 @@ class DashboardController extends Controller
 
             $gAPropertyIds = "(" . implode(',', $gAPropertyIds) . ")";
             $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T3.* FROM ($annotationsQuery) AS T2 INNER JOIN (
-                    SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL 7 DAY) as seven_day_old_date, SUM(users_count) as sum_users_count, SUM(sessions_count) as sum_sessions_count, SUM(events_count) as sum_events_count  FROM google_analytics_metric_dimensions
+                    SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL 7 DAY) as seven_day_old_date, SUM(users_count) as sum_users_count, SUM(sessions_count) as sum_sessions_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count  FROM google_analytics_metric_dimensions
                     WHERE ga_property_id IN $gAPropertyIds
                     GROUP BY statistics_date
                 ) AS T3 ON T2.show_at = T3.seven_day_old_date;");
@@ -178,7 +178,7 @@ class DashboardController extends Controller
             $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
 
             $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T3.* FROM ($annotationsQuery) AS T2 INNER JOIN (
-                    SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL 7 DAY) as seven_day_old_date, SUM(users_count) as sum_users_count, SUM(sessions_count) as sum_sessions_count, SUM(events_count) as sum_events_count  FROM google_analytics_metric_dimensions
+                    SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL 7 DAY) as seven_day_old_date, SUM(users_count) as sum_users_count, SUM(sessions_count) as sum_sessions_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count  FROM google_analytics_metric_dimensions
                     WHERE ga_property_id = $gAProperty->id
                     GROUP BY statistics_date
                 ) AS T3 ON T2.show_at = T3.seven_day_old_date;");
