@@ -51,13 +51,13 @@ export default class IndexDashboard extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-3">
-                                <p>{this.state.startDate} - {this.state.endDate}</p>
+                            <div className="col-2">
                             </div>
                             <div className="col-4">
                                 {
                                     this.state.showDateRangeSelect ?
                                         <DateRange
+                                            style={{ 'position': 'absolute', backgroundColor: 'white', zIndex: 9999999999999 }}
                                             editableDateInputs={true}
                                             moveRangeOnFirstSelection={false}
                                             ranges={[{
@@ -69,6 +69,7 @@ export default class IndexDashboard extends Component {
                                                 this.setState({
                                                     startDate: moment(ranges.selection.startDate).format("YYYY-MM-DD"),
                                                     endDate: moment(ranges.selection.endDate).format("YYYY-MM-DD"),
+                                                    showDateRangeSelect: moment(ranges.selection.startDate).format("YYYY-MM-DD") == moment(ranges.selection.endDate).format("YYYY-MM-DD")
                                                 }, () => {
                                                     if (moment(ranges.selection.startDate).format("YYYY-MM-DD") !== moment(ranges.selection.endDate).format("YYYY-MM-DD")) {
                                                         this.fetchStatistics(this.state.ga_property_id);
@@ -80,7 +81,7 @@ export default class IndexDashboard extends Component {
                                         <p></p>
                                 }
                             </div>
-                            <div className="col-1">
+                            <div className="col-2">
                                 <button className="btn btn-secondary" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>Select Date</button>
                             </div>
                             <div className="col-2">
