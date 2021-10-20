@@ -19,7 +19,7 @@ export default class VideoModalBox extends Component {
                     >
                         <div className="modal-body">
                             <iframe
-                                className="w-100 h-450px"
+                                className="w-100 h-100"
                                 src={this.props.src}
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
