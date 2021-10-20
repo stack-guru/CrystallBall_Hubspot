@@ -38,6 +38,7 @@ class DashboardPageTest extends TestCase
                                 ->has("sum_users_count")
                                 ->has("sum_sessions_count")
                                 ->has("sum_events_count")
+                                ->has("sum_conversions_count")
                                 ->has("statistics_date")
                                 ->etc();
                         });
@@ -94,6 +95,7 @@ class DashboardPageTest extends TestCase
                             $json->has('source_name')
                                 ->has("sum_users_count")
                                 ->has("sum_events_count")
+                                ->has("sum_conversions_count")
                                 ->etc();
                         });
                 }
@@ -113,6 +115,7 @@ class DashboardPageTest extends TestCase
                             $json->has('device_category')
                                 ->has("sum_users_count")
                                 ->has("sum_events_count")
+                                ->has("sum_conversions_count")
                                 ->etc();
                         });
                 }
