@@ -149,8 +149,8 @@ class DashboardController extends Controller
         ]);
 
         $this->authorize('viewAny', Annotation::class);
-        $startDate = $request->query('startDate');
-        $endDate = $request->query('endDate');
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
 
         $user = Auth::user();
 
@@ -169,7 +169,7 @@ class DashboardController extends Controller
                     WHERE ga_property_id IN $gAPropertyIds
                     GROUP BY statistics_date
                 ) AS T3 ON T2.show_at = T3.seven_day_old_date
-                WHERE statistics_date BETWEEN '$startDate' AND '$endDate';");
+                WHERE T2.show_at BETWEEN '$startDate' AND '$endDate';");
         } else {
             $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
             if (!in_array($gAProperty->user_id, $userIdsArray)) {
@@ -185,7 +185,7 @@ class DashboardController extends Controller
                     WHERE ga_property_id = $gAProperty->id
                     GROUP BY statistics_date
                 ) AS T3 ON T2.show_at = T3.seven_day_old_date
-                WHERE statistics_date BETWEEN '$startDate' AND '$endDate';");
+                WHERE T2.show_at BETWEEN '$startDate' AND '$endDate';");
         }
 
         return ['annotations' => $annotations];
