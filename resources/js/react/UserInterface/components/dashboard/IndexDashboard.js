@@ -123,7 +123,7 @@ export default class IndexDashboard extends Component {
                                         {
                                             this.state.deviceCategoriesStatistics.map(dS => {
                                                 const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0;
-                                                return <tr><td>{dS.source_name}</td><td>{dS.sum_users_count}</td><td>{conversionRate}</td></tr>
+                                                return <tr><td>{dS.device_category}</td><td>{dS.sum_users_count}</td><td>{conversionRate}</td></tr>
                                             })
                                         }
                                     </tbody>
