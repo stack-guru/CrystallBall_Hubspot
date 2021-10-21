@@ -31,7 +31,6 @@ export default class IndexDashboard extends Component {
     }
 
     componentDidMount() {
-        this.fetchStatistics('*');
     }
 
 
@@ -95,6 +94,7 @@ export default class IndexDashboard extends Component {
                                     value={this.state.ga_property_id}
                                     onChangeCallback={(event) => { this.setState({ ga_property_id: event.target.value }); this.fetchStatistics(event.target.value); }} placeholder="Select GA Properties"
                                     components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
+                                    autoSelectFirst
                                 />
                             </div>
                         </div>
