@@ -7,6 +7,7 @@ import AnnotationsTable from './tables/annotationsTable';
 import MediaGraph from './graphs/mediaGraph';
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 import ErrorAlert from '../../utils/ErrorAlert';
+import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
 
 export default class IndexDashboard extends Component {
     constructor(props) {
@@ -36,6 +37,9 @@ export default class IndexDashboard extends Component {
 
 
     render() {
+
+        if(!this.props.user.google_accounts_count)return <NoGoogleAccountConnectedPage />
+
         return <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
             <section className="ftco-section" id="inputs">
                 <div className="container-xl p-0">

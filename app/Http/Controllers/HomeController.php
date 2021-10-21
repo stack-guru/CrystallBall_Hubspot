@@ -29,6 +29,8 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $user->load('pricePlan');
+        $user->loadCount('googleAccounts');
+
         if ($user->last_login_at == null) {
             User::where('id', $user->id)
                 ->update([

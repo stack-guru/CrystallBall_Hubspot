@@ -27,13 +27,13 @@ class CreateGoogleAnalyticsMetricDimensionsTable extends Migration
             $table->integer('conversions_count')->unsigned()->nullable()->default(null);
 
             $table->unsignedBigInteger('ga_property_id')->required();
-            $table->foreign('ga_property_id')->references('id')->on('google_analytics_properties');
+            $table->foreign('ga_property_id')->references('id')->on('google_analytics_properties')->onDelete('CASCADE');
 
             $table->unsignedBigInteger('ga_account_id')->required();
-            $table->foreign('ga_account_id')->references('id')->on('google_analytics_accounts');
+            $table->foreign('ga_account_id')->references('id')->on('google_analytics_accounts')->onDelete('CASCADE');
 
             $table->unsignedBigInteger('google_account_id')->required();
-            $table->foreign('google_account_id')->references('id')->on('google_accounts');
+            $table->foreign('google_account_id')->references('id')->on('google_accounts')->onDelete('CASCADE');
 
             $table->timestamps();
         });
