@@ -16,10 +16,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.autoSelectFirst);
         if (this.props.autoSelectFirst) {
             this.searchGoogleAnalyticsProperties(' ', (options) => {
-                console.log(options);
                 if (options.length) this.onChangeHandler(options[0]);
             });
         }

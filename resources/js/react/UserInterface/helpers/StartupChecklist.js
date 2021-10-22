@@ -101,7 +101,6 @@ export default class StartupChecklist extends Component {
                                 <img src={uCI.completed_at !== null ? "/images/icons/green-tick-round.png" : "/images/icons/gray-circle.png"} onClick={() => { this.handleUpdate(uCI.id, { completed_at: "just now" }); }} />
                                 <span onClick={() => {
                                     this.handleUpdate(uCI.id, {});
-                                    console.log();
                                     if (uCI.checklist_item.url.substr(0, 1) == '/') {
                                         this.setState({ redirectTo: uCI.checklist_item.url });
                                     } else {

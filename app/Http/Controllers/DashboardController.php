@@ -124,6 +124,7 @@ class DashboardController extends Controller
                 ->groupBy('statistics_date')
                 ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
                 ->whereIn('ga_property_id', $gAPropertyIds)
+                ->orderBy('statistics_date')
                 ->get();
         } else {
             $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
@@ -134,6 +135,7 @@ class DashboardController extends Controller
                 ->groupBy('statistics_date')
                 ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
                 ->where('ga_property_id', $gAProperty->id)
+                ->orderBy('statistics_date')
                 ->get();
         }
 

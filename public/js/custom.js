@@ -23,13 +23,13 @@
 //     $('#collapse-icon').toggleClass('fa-angle-double-left fa-angle-double-right');
 // }
 // $(document).ready(function(){
-    console.log('heol');
+    
 
     $('.dropdown').click(function(){
         $('.gaa-menu-item.dropdown').toggleClass('open');
-        console.log('heol');
+        
     });
 // })
 $(".dropdown").click(function(){
-    console.log("The paragraph was clicked.");
+    
 });

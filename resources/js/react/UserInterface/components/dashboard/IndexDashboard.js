@@ -8,6 +8,7 @@ import MediaGraph from './graphs/mediaGraph';
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 import ErrorAlert from '../../utils/ErrorAlert';
 import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
+import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGraph';
 
 export default class IndexDashboard extends Component {
     constructor(props) {
@@ -37,7 +38,7 @@ export default class IndexDashboard extends Component {
 
     render() {
 
-        if(!this.props.user.google_accounts_count)return <NoGoogleAccountConnectedPage />
+        if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
 
         return <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
             <section className="ftco-section" id="inputs">
@@ -99,6 +100,7 @@ export default class IndexDashboard extends Component {
                             </div>
                         </div>
                         <UsersDaysGraph statistics={this.state.usersDaysStatistics} />
+                        <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
                         <AnnotationsTable user={this.props.user} annotations={this.state.annotations} />
                         <MediaGraph statistics={this.state.mediaStatistics} />
                         <div className="row">
