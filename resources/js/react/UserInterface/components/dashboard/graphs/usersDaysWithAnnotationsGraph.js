@@ -12,7 +12,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
         return [
             new Date(momentDate.format('YYYY'), momentDate.format('MM') - 1, momentDate.format('DD')),
             Number.parseInt(s.sum_users_count),
-            s.event_name ? e.event_name.toUpperCase().split(' ').map(a => a.substr(0, 1)).join('') : null,
+            s.event_name ? s.event_name.toUpperCase().split(' ').map(a => a.substr(0, 1)).join('') : null,
             s.description ? s.description : null,
         ];
     });
