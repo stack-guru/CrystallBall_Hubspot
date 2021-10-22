@@ -136,7 +136,8 @@ class DashboardController extends Controller
                     WHERE ga_property_id = $gAProperty->id
                     GROUP BY statistics_date
                 ) AS T3 ON T2.show_at = T3.seven_day_old_date
-                WHERE T3.statistics_date BETWEEN '$startDate' AND '$endDate';");
+                WHERE T3.statistics_date BETWEEN '$startDate' AND '$endDate'
+                ORDER BY T3.statistics_date;");
 
         return ['statistics' => $statistics];
     }

@@ -46,7 +46,7 @@ class Annotation extends Model
         $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
 
         if ($annotationGAPropertyId && $annotationGAPropertyId !== '*') {
-            $annotationsQuery .= " and annotation_ga_properties.google_analytics_property_id = " . $annotationGAPropertyId;
+            $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $annotationGAPropertyId . ") ";
         }
         if ($user->is_ds_holidays_enabled) {
             $annotationsQuery .= " union ";
