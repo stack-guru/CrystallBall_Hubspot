@@ -64,6 +64,29 @@ class DashboardPageTest extends TestCase
             );
     }
 
+    public function testUsersDaysAnnotationsAPITest()
+    {
+
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/users-days-annotations?start_date=2005-01-02&end_date=2021-01-01');
+
+        $response->assertStatus(200)
+            ->assertJson(
+                function (AssertableJson $json) {
+                    $json->has('statistics')
+                        ->has('statistics.0', function ($json) {
+                            $json->has('statistics_date')
+                                ->has("sum_users_count")
+                                ->has("event_name")
+                                ->has("category")
+                                ->has("show_at")
+                                ->has("description")
+                                ->has("seven_day_old_date")
+                                ->etc();
+                        });
+                }
+            );
+    }
+
     public function testMediaAPITest()
     {
 

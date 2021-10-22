@@ -9,12 +9,11 @@ export default function UsersDaysWithAnnotationsGraph(props) {
     // const noOfUsers = props.statistics.map(s => s.sum_users_count);
     const combinedArray = props.statistics.map(s => {
         const momentDate = moment(s.statistics_date);
-        const randomAnnotation = Math.floor(Math.random() * 2);
         return [
             new Date(momentDate.format('YYYY'), momentDate.format('MM') - 1, momentDate.format('DD')),
             Number.parseInt(s.sum_users_count),
-            randomAnnotation ? String.fromCharCode(65 + (Math.floor(Math.random() * 20))).concat(String.fromCharCode(65 + (Math.floor(Math.random() * 20)))) : null,
-            randomAnnotation ? 'Testing Annotation' : null,
+            s.event_name ? e.event_name.toUpperCase().split(' ').map(a => a.substr(0, 1)).join('') : null,
+            s.description ? s.description : null,
         ];
     });
 

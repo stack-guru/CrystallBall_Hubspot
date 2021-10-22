@@ -146,7 +146,7 @@ export default class IndexDashboard extends Component {
     fetchStatistics(gaPropertyId) {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
-            HttpClient.get(`/dashboard/users-days?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+            HttpClient.get(`/dashboard/users-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
                     this.setState({ isBusy: false, usersDaysStatistics: response.data.statistics });
                 }, (err) => {
