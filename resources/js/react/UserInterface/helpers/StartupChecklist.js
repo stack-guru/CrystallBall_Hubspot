@@ -25,7 +25,7 @@ export default class StartupChecklist extends Component {
     }
 
     componentDidMount() {
-        setInterval(() => { this.loadUserChecklistItems(); }, 5000); // 5 seconds
+        setInterval(() => { this.loadUserChecklistItems(); }, 15000); // 15 seconds
         // this.loadUserChecklistItems();
     }
 
