@@ -11,6 +11,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
         const momentDate = moment(s.statistics_date);
         return [
             new Date(momentDate.format('YYYY'), momentDate.format('MM') - 1, momentDate.format('DD')),
+            // momentDate.format("DD") + "\n" + momentDate.format("MMM"),
             Number.parseInt(s.sum_users_count),
             s.event_name ? s.event_name.toUpperCase().split(' ').map(a => a.substr(0, 1)).join('') : null,
             s.description ? s.description : null,
@@ -29,10 +30,13 @@ export default function UsersDaysWithAnnotationsGraph(props) {
 
     const optionsArray = {
         pointSize: 5,
-        axes: {
-            x: {
-                0: { side: 'top' }
-            }
+        hAxis: {
+            scaleType: 'linear',
+            side: 'top',
+            format: "d\nMMM",
+            textStyle: {
+                fontSize: '12',
+            },
         },
         annotations: {
             textStyle: {
