@@ -28,6 +28,12 @@ export default function UsersDaysWithAnnotationsGraph(props) {
     ];
 
     const optionsArray = {
+        pointSize: 5,
+        axes: {
+            x: {
+                0: { side: 'top' }
+            }
+        },
         annotations: {
             textStyle: {
                 fontSize: 8,
@@ -84,7 +90,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
     return <Chart
         width={'100%'}
         height={'50'}
-        chartType="LineChart"
+        chartType="AreaChart"
         loader={<div>Loading Chart</div>}
         data={dataArray}
         options={optionsArray}
