@@ -99,7 +99,7 @@ export default class IndexDashboard extends Component {
                                 />
                             </div>
                         </div>
-                        <UsersDaysGraph statistics={this.state.usersDaysStatistics} />
+                        {/* <UsersDaysGraph statistics={this.state.usersDaysStatistics} /> */}
                         <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
                         <AnnotationsTable user={this.props.user} annotations={this.state.annotations} />
                         <MediaGraph statistics={this.state.mediaStatistics} />
