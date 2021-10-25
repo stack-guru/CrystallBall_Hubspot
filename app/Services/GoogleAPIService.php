@@ -9,11 +9,13 @@ class GoogleAPIService
 {
     protected $clientId;
     protected $clientSecret;
+    protected $adwordsDeveloperToken;
 
     public function __construct()
     {
         $this->clientId = config('services.google.client_id');
         $this->clientSecret = config('services.google.client_secret');
+        $this->adwordsDeveloperToken = config('services.google.adwords.developer_token');
     }
 
 

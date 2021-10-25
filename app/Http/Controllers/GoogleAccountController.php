@@ -34,6 +34,10 @@ class GoogleAccountController extends Controller
         //     array_push($scopes, 'https://www.googleapis.com/auth/adwords');
         // }
 
+        if (config('app.env') == 'development' || config('app.env') == 'local') {
+            array_push($scopes, 'https://www.googleapis.com/auth/webmasters.readonly', 'https://www.googleapis.com/auth/webmasters');
+        }
+
         return Socialite::driver('google')
             ->scopes($scopes)
             ->with(['access_type' => 'offline'])

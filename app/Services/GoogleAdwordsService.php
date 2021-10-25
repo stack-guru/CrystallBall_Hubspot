@@ -4,22 +4,10 @@ namespace App\Services;
 
 use App\Models\GoogleAccount;
 use Illuminate\Support\Facades\Http;
+use App\Services\GoogleAPIService;
 
-class GoogleAdwordsService
+class GoogleAdwordsService  extends GoogleAPIService
 {
-    protected $clientId;
-    protected $clientSecret;
-    protected $developerToken;
-
-    public function __construct()
-    {
-        $this->clientId = config('services.google.client_id');
-        $this->clientSecret = config('services.google.client_secret');
-        $this->developerToken = config('services.google.adwords.developer_token');
-        //https://googleads.googleapis.com
-        //https://googleads.googleapis.com/v6/customers/1234567890/campaignBudgets:mutate
-
-    }
 
     public function getAccountKeywords(GoogleAccount $googleAccount, $repeatCall = false)
     {
@@ -27,7 +15,7 @@ class GoogleAdwordsService
 
         $response = Http::withHeaders([
             'clientCustomerId' => $googleAccount->adwords_client_customer_id,
-            'developerToken' => $this->developerToken,
+            'adwordsDeveloperToken' => $this->adwordsDeveloperToken,
         ])->withToken($googleAccount->token)->asForm()->post($url, [
             '__rdquery' => 'SELECT Id, AdGroupId, AdGroupName, Clicks, Labels, CampaignId, CampaignName FROM KEYWORDS_PERFORMANCE_REPORT',
             '__fmt' => 'XML',
@@ -66,32 +54,4 @@ class GoogleAdwordsService
         }
         return $keywords;
     }
-
-    public function refreshToken(GoogleAccount $googleAccount)
-    {
-        if (!$googleAccount->refresh_token) {
-            return false;
-        }
-
-        $url = "https://www.googleapis.com/oauth2/v4/token";
-
-        $response = Http::post($url, [
-            'client_id' => $this->clientId,
-            'client_secret' => $this->clientSecret,
-            'refresh_token' => $googleAccount->refresh_token,
-            'grant_type' => 'refresh_token',
-        ]);
-
-        if ($response->status() == 401) {
-            return false;
-        }
-
-        $respJson = $response->json();
-        $googleAccount->token = $respJson['access_token'];
-        $googleAccount->expires_in = \Carbon\Carbon::now()->addSeconds($respJson['expires_in']);
-        $googleAccount->save();
-
-        return $googleAccount;
-    }
-
 }
