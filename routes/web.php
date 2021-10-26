@@ -134,6 +134,9 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::resource('google-analytics-property', App\Http\Controllers\GoogleAnalyticsPropertyController::class)->only(['index', 'destroy']);
 
+            Route::resource('google-search-console-site', App\Http\Controllers\GoogleSearchConsoleSiteController::class)->only(['index', 'destroy']);
+            Route::post('google-search-console-site/google-account/{google_account}', [App\Http\Controllers\GoogleSearchConsoleSiteController::class, 'fetch']);
+
             Route::apiResource('user', App\Http\Controllers\UserController::class)->except(['index']);
             Route::get('user', [App\Http\Controllers\UserController::class, 'uiIndex']);
 

@@ -16,6 +16,7 @@ export default class GoogleAccountIndex extends React.Component {
             googleAccounts: [],
             googleAnalyticsAccounts: [],
             googleAnalyticsProperties: [],
+            googleSearchConsoleSites: [],
             redirectTo: null,
         }
 
@@ -30,6 +31,11 @@ export default class GoogleAccountIndex extends React.Component {
         this.closeACCISModal = this.closeACCISModal.bind(this);
 
         this.getGAProperties = this.getGAProperties.bind(this);
+
+        this.fetchGSCSites = this.fetchGSCSites.bind(this);
+        this.getGSCSites = this.getGSCSites.bind(this);
+        this.handleGSCSDelete = this.handleGSCSDelete.bind(this);
+
     }
 
     componentDidMount() {
@@ -38,6 +44,7 @@ export default class GoogleAccountIndex extends React.Component {
         this.getGoogleAccounts();
         this.getGAAccounts();
         this.getGAProperties();
+        this.getGSCSites();
 
         let searchParams = new URLSearchParams(document.location.search);
         this.setState({ showACCISModal: searchParams && searchParams.has('do-refresh') && searchParams.has('google_account_id') })
@@ -51,6 +58,7 @@ export default class GoogleAccountIndex extends React.Component {
         if (searchParams.has('do-refresh') && searchParams.has('google_account_id')) {
             if (searchParams.get('do-refresh') == "1") {
                 this.fetchGAAccounts(searchParams.get('google_account_id'));
+                this.fetchGSCSites(searchParams.get('google_account_id'));
             }
         }
 
@@ -111,10 +119,38 @@ export default class GoogleAccountIndex extends React.Component {
         });
     }
 
+    fetchGSCSites(id) {
+        this.setState({ isBusy: true });
+        HttpClient.post(`/settings/google-search-console-site/google-account/${id}`).then(resp => {
+            toast.success("Sites fetched.");
+            this.setState({ isBusy: false })
+            this.getGSCSites();
+        }, (err) => {
+
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
     getGAAccounts() {
         this.setState({ isBusy: true });
         HttpClient.get(`/settings/google-analytics-account`).then(response => {
             this.setState({ isBusy: false, googleAnalyticsAccounts: response.data.google_analytics_accounts })
+        }, (err) => {
+
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
+    getGSCSites() {
+        this.setState({ isBusy: true });
+        HttpClient.get(`/settings/google-search-console-site`).then(response => {
+            this.setState({ isBusy: false, googleSearchConsoleSites: response.data.google_search_console_sites })
         }, (err) => {
 
             this.setState({ isBusy: false, errors: (err.response).data });
@@ -157,6 +193,22 @@ export default class GoogleAccountIndex extends React.Component {
             HttpClient.delete(`/settings/google-analytics-property/${gAPId}`).then(response => {
                 this.setState({ isBusy: false, googleAnalyticsProperties: this.state.googleAnalyticsProperties.filter(g => g.id !== gAPId) })
                 toast.success("Property removed.");
+            }, (err) => {
+
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+
+                this.setState({ isBusy: false, errors: err });
+            });
+        }
+    }
+
+    handleGSCSDelete(gSCS) {
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true })
+            HttpClient.delete(`/settings/google-search-console-site/${gSCS}`).then(response => {
+                this.setState({ isBusy: false, googleSearchConsoleSites: this.state.googleSearchConsoleSites.filter(g => g.id !== gSCS) })
+                toast.success("Site removed.");
             }, (err) => {
 
                 this.setState({ isBusy: false, errors: (err.response).data });
@@ -245,7 +297,7 @@ export default class GoogleAccountIndex extends React.Component {
                                                             <i className="fa fa-unlink mr-0 mr-md-2 mr-lg"></i>
                                                             <span className="ad-ga-action-text">Disconnect</span>
                                                         </button>
-                                                        <button onClick={() => this.fetchGAAccounts(googleAccount.id)} className="btn ad-ga-action gaa-btn-primary ml-1">
+                                                        <button onClick={() => { this.fetchGAAccounts(googleAccount.id); this.fetchGSCSites(googleAccount.id); }} className="btn ad-ga-action gaa-btn-primary ml-1">
                                                             <i className="fa fa-search mr-0 mr-md-2 mr-lg"></i>
                                                             <span className="ad-ga-action-text">Search Accounts</span>
                                                         </button>
@@ -310,6 +362,32 @@ export default class GoogleAccountIndex extends React.Component {
                                                 <td>{gAP.name}</td>
                                                 <td>{gAP.google_account.name}</td>
                                                 <td className="text-center"><button className="btn btn-danger" onClick={() => this.handleGAPDelete(gAP.id)}><i className="fa fa-trash-o"></i></button></td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row ml-0 mr-0 mt-5">
+                        <div className="col-12">
+                            <div className="table-responsive">
+                                <table className="table table-hover table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Site URL</th>
+                                            <th>Permission Level</th>
+                                            <th>Google Account</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.googleSearchConsoleSites.map(gSCS => {
+                                            return <tr key={gSCS.id}>
+                                                <td>{gSCS.site_url}</td>
+                                                <td>{gSCS.permission_level}</td>
+                                                <td>{gSCS.google_account.name}</td>
+                                                <td className="text-center"><button className="btn btn-danger" onClick={() => this.handleGSCSDelete(gSCS.id)}><i className="fa fa-trash-o"></i></button></td>
                                             </tr>
                                         })}
                                     </tbody>
