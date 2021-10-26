@@ -36,7 +36,7 @@ class SupportRequestMail extends Mailable
     public function build()
     {
         $r = $this->view('mails/user/support-request')
-            ->subject('Support requested received from ' . $this->user->name);
+            ->subject('Support request received from ' . $this->user->name);
 
         if($this->fileLocation !== null) $r->attach($this->fileLocation, ['as' => 'attachment.' . $this->fileExtension]);
         
