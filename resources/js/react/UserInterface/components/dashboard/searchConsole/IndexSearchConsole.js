@@ -18,11 +18,12 @@ export default class IndexSearchConsole extends Component {
         this.state = {
             isBusy: false,
             showDateRangeSelect: false,
-            usersDaysStatistics: [],
+            queriesStatistics: [],
+            pagesStatistics: [],
+            countriesStatistics: [],
+            devicesStatistics: [],
+            searchApearancesStatistics: [],
             annotations: [],
-            mediaStatistics: [],
-            sourcesStatistics: [],
-            deviceCategoriesStatistics: [],
             startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
             endDate: moment().format('YYYY-MM-DD'),
             google_search_console_site_id: '*',
@@ -101,22 +102,20 @@ export default class IndexSearchConsole extends Component {
                             </div>
                         </div>
                         {/* <UsersDaysGraph statistics={this.state.usersDaysStatistics} /> */}
-                        <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
+                        {/* <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} /> */}
                         <AnnotationsTable user={this.props.user} annotations={this.state.annotations} />
-                        <MediaGraph statistics={this.state.mediaStatistics} />
+                        {/* <MediaGraph statistics={this.state.mediaStatistics} /> */}
                         <div className="row">
                             <div className="col-6">
                                 <table className="table table-bordered table-hover">
-                                    <thead><tr><th></th><th></th><th>Users</th><th>Conversion Rate</th></tr></thead>
+                                    <thead><tr><th>Query</th><th>Clicks</th><th>Impressions</th></tr></thead>
                                     <tbody>
                                         {
-                                            this.state.sourcesStatistics.map(sS => {
-                                                const conversionRate = sS.sum_conversions_count && sS.sum_users_count ? ((sS.sum_conversions_count / sS.sum_users_count) * 100).toFixed(2) : 0;
+                                            this.state.queriesStatistics.map(qS => {
                                                 return <tr>
-                                                    <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} /></td>
-                                                    <td>{sS.source_name}</td>
-                                                    <td>{sS.sum_users_count}</td>
-                                                    <td>{conversionRate}</td>
+                                                    <td>{qS.query}</td>
+                                                    <td>{qS.sum_clicks_count}</td>
+                                                    <td>{qS.sum_impressions_count}</td>
                                                 </tr>
                                             })
                                         }
@@ -125,12 +124,67 @@ export default class IndexSearchConsole extends Component {
                             </div>
                             <div className="col-6">
                                 <table className="table table-bordered table-hover">
-                                    <thead><tr><th></th><th>Users</th><th>Conversion Rate</th></tr></thead>
+                                    <thead><tr><th>Page</th><th>Clicks</th><th>Impressions</th></tr></thead>
                                     <tbody>
                                         {
-                                            this.state.deviceCategoriesStatistics.map(dS => {
-                                                const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0;
-                                                return <tr><td>{dS.device_category}</td><td>{dS.sum_users_count}</td><td>{conversionRate}</td></tr>
+                                            this.state.pagesStatistics.map(pS => {
+                                                return <tr>
+                                                    <td>{pS.page}</td>
+                                                    <td>{pS.sum_clicks_count}</td>
+                                                    <td>{pS.sum_impressions_count}</td>
+                                                </tr>
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-6">
+                                <table className="table table-bordered table-hover">
+                                    <thead><tr><th>Country</th><th>Clicks</th><th>Impressions</th></tr></thead>
+                                    <tbody>
+                                        {
+                                            this.state.countriesStatistics.map(cS => {
+                                                return <tr>
+                                                    <td>{cS.country}</td>
+                                                    <td>{cS.sum_clicks_count}</td>
+                                                    <td>{cS.sum_impressions_count}</td>
+                                                </tr>
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="col-6">
+                                <table className="table table-bordered table-hover">
+                                    <thead><tr><th>Device</th><th>Clicks</th><th>Impressions</th></tr></thead>
+                                    <tbody>
+                                        {
+                                            this.state.devicesStatistics.map(dS => {
+                                                return <tr>
+                                                    <td>{dS.device}</td>
+                                                    <td>{dS.sum_clicks_count}</td>
+                                                    <td>{dS.sum_impressions_count}</td>
+                                                </tr>
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-6">
+                                <table className="table table-bordered table-hover">
+                                    <thead><tr><th>Search Appearance</th><th>Clicks</th><th>Impressions</th></tr></thead>
+                                    <tbody>
+                                        {
+                                            this.state.searchApearancesStatistics.map(sAS => {
+                                                return <tr>
+                                                    <td>{sAS.search_appearance}</td>
+                                                    <td>{sAS.sum_clicks_count}</td>
+                                                    <td>{sAS.sum_impressions_count}</td>
+                                                </tr>
                                             })
                                         }
                                     </tbody>
@@ -157,7 +211,7 @@ export default class IndexSearchConsole extends Component {
                 });
             HttpClient.get(`/dashboard/search-console/pages?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}`)
                 .then(response => {
-                    this.setState({ isBusy: false, pagesStatistics: response.data.annotations });
+                    this.setState({ isBusy: false, pagesStatistics: response.data.statistics });
                 }, (err) => {
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {

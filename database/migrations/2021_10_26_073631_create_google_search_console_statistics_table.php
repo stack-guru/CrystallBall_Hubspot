@@ -16,7 +16,6 @@ class CreateGoogleSearchConsoleStatisticsTable extends Migration
         Schema::create('google_search_console_statistics', function (Blueprint $table) {
             $table->id();
 
-
             $table->date('statistics_date')->required();
             $table->mediumText('query')->nullable()->default(null);
             $table->mediumText('page')->nullable()->default(null);
@@ -34,7 +33,6 @@ class CreateGoogleSearchConsoleStatisticsTable extends Migration
 
             $table->unsignedBigInteger('google_account_id')->required();
             $table->foreign('google_account_id')->references('id')->on('google_accounts')->onDelete('CASCADE');
-
 
             $table->timestamps();
         });
