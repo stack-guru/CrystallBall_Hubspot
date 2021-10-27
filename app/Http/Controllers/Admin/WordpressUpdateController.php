@@ -136,7 +136,7 @@ class WordpressUpdateController extends Controller
 
             }
 
-            if (count($rows) > 99) {
+            if (count($rows) > 1000) {
                 WordpressUpdate::insert($rows);
                 $rows = array();
             }

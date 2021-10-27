@@ -136,7 +136,7 @@ class GoogleAlgorithmUpdateController extends Controller
 
             }
 
-            if (count($rows) > 99) {
+            if (count($rows) > 1000) {
                 GoogleAlgorithmUpdate::insert($rows);
                 $rows = array();
             }

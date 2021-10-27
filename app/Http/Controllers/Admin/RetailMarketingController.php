@@ -158,7 +158,7 @@ class RetailMarketingController extends Controller
 
             }
 
-            if (count($rows) > 99) {
+            if (count($rows) > 1000) {
                 RetailMarketing::insert($rows);
                 $rows = array();
             }

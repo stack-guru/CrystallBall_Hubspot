@@ -297,7 +297,7 @@ class AnnotationController extends Controller
                     array_push($rows, $row);
                 }
 
-                if (count($rows) > 99) {
+                if (count($rows) > 1000) {
                     Annotation::insert($rows);
                     $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
                     $totalNewRows = count($rows);

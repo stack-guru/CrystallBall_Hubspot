@@ -38,7 +38,7 @@ class OpenWeatherMapCitySeeder extends Seeder
             $row['latitude'] = $city->coord->lat;
 
             array_push($rows, $row);
-            if (count($rows) > 99) {
+            if (count($rows) > 1000) {
                 OpenWeatherMapCity::insert($rows);
                 $rows = array();
             }

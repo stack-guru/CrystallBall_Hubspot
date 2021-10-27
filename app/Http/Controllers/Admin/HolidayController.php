@@ -160,7 +160,7 @@ class HolidayController extends Controller
 
             }
 
-            if (count($rows) > 99) {
+            if (count($rows) > 1000) {
                 Holiday::insert($rows);
                 $rows = array();
             }
