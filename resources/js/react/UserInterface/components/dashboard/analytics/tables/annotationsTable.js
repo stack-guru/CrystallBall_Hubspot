@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
+import { timezoneToDateFormat } from '../../../../utils/TimezoneTodateFormat';
 
 export default function AnnotationsTable(props) {
     return <div id="annotation-table-container">

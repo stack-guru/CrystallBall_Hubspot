@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\GoogleAnalyticsMetricDimension;
 use App\Models\Annotation;
 use App\Models\GoogleAnalyticsProperty;
+use App\Http\Controllers\Controller;
 
-class DashboardController extends Controller
+class AnalyticsController extends Controller
 {
 
     public function deviceCategoriesIndex(Request $request)

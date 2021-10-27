@@ -36,7 +36,8 @@ Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::view('dashboard', 'ui/app');
+    Route::view('dashboard/analytics', 'ui/app');
+    Route::view('dashboard/search-console', 'ui/app');
 
     Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except(['store', 'show', 'update', 'destroy']);
 
@@ -73,13 +74,24 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'ui'], function () {
 
         Route::group(['prefix' => 'dashboard'], function () {
-            Route::get('annotations-metrics-dimensions', [App\Http\Controllers\DashboardController::class, 'annotationsMetricsDimensionsIndex']);
-            Route::get('users-days', [App\Http\Controllers\DashboardController::class, 'usersDaysIndex']);
-            Route::get('users-days', [App\Http\Controllers\DashboardController::class, 'usersDaysIndex']);
-            Route::get('users-days-annotations', [App\Http\Controllers\DashboardController::class, 'usersDaysAnnotationsIndex']);
-            Route::get('media', [App\Http\Controllers\DashboardController::class, 'mediaIndex']);
-            Route::get('sources', [App\Http\Controllers\DashboardController::class, 'sourcesIndex']);
-            Route::get('device-categories', [App\Http\Controllers\DashboardController::class, 'deviceCategoriesIndex']);
+            Route::group(['prefix' => 'analytics'], function () {
+                Route::get('annotations-metrics-dimensions', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'annotationsMetricsDimensionsIndex']);
+                Route::get('users-days', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'usersDaysIndex']);
+                Route::get('users-days', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'usersDaysIndex']);
+                Route::get('users-days-annotations', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'usersDaysAnnotationsIndex']);
+                Route::get('media', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'mediaIndex']);
+                Route::get('sources', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'sourcesIndex']);
+                Route::get('device-categories', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'deviceCategoriesIndex']);
+            });
+
+            Route::group(['prefix' => 'search-console'], function () {
+                Route::get('queries', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'queriesIndex']);
+                Route::get('pages', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'pagesIndex']);
+                Route::get('countries', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'countriesIndex']);
+                Route::get('devices', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'devicesIndex']);
+                Route::get('search-appearances', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'searchAppearancesIndex']);
+                Route::get('annotations-dates', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'annotationsDatesIndex']);
+            });
         });
 
         Route::post('user-startup-configuration', [App\Http\Controllers\UserStartupConfigurationController::class, 'store']);

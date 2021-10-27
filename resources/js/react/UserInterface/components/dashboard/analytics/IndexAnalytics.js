@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { DateRange } from 'react-date-range';
 
 import UsersDaysGraph from './graphs/usersDaysGraph';
-import HttpClient from '../../utils/HttpClient';
+import HttpClient from '../../../utils/HttpClient';
 import AnnotationsTable from './tables/annotationsTable';
 import MediaGraph from './graphs/mediaGraph';
-import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
-import ErrorAlert from '../../utils/ErrorAlert';
+import GoogleAnalyticsPropertySelect from '../../../utils/GoogleAnalyticsPropertySelect';
+import ErrorAlert from '../../../utils/ErrorAlert';
 import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
 import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGraph';
 
-export default class IndexDashboard extends Component {
+export default class IndexAnalytics extends Component {
     constructor(props) {
         super(props);
 
@@ -146,7 +146,7 @@ export default class IndexDashboard extends Component {
     fetchStatistics(gaPropertyId) {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
-            HttpClient.get(`/dashboard/users-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+            HttpClient.get(`/dashboard/analytics/users-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
                     this.setState({ isBusy: false, usersDaysStatistics: response.data.statistics });
                 }, (err) => {
@@ -154,7 +154,7 @@ export default class IndexDashboard extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
-            HttpClient.get(`/dashboard/annotations-metrics-dimensions?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+            HttpClient.get(`/dashboard/analytics/annotations-metrics-dimensions?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
                     this.setState({ isBusy: false, annotations: response.data.annotations });
                 }, (err) => {
@@ -162,7 +162,7 @@ export default class IndexDashboard extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
-            HttpClient.get(`/dashboard/media?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+            HttpClient.get(`/dashboard/analytics/media?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
                     this.setState({ isBusy: false, mediaStatistics: response.data.statistics });
                 }, (err) => {
@@ -170,7 +170,7 @@ export default class IndexDashboard extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
-            HttpClient.get(`/dashboard/sources?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+            HttpClient.get(`/dashboard/analytics/sources?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
                     this.setState({ isBusy: false, sourcesStatistics: response.data.statistics });
                 }, (err) => {
@@ -178,7 +178,7 @@ export default class IndexDashboard extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
-            HttpClient.get(`/dashboard/device-categories?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+            HttpClient.get(`/dashboard/analytics/device-categories?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
                     this.setState({ isBusy: false, deviceCategoriesStatistics: response.data.statistics });
                 }, (err) => {
