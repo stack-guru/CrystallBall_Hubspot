@@ -32,6 +32,7 @@ import StartupChecklist from './helpers/StartupChecklist';
 import UserStartupConfigurationModal from './helpers/UserStartupConfigurationModal';
 import InterfaceTour from './helpers/InterfaceTour';
 import IndexAnalytics from './components/dashboard/analytics/IndexAnalytics';
+import IndexSearchConsole from './components/dashboard/searchConsole/IndexSearchConsole';
 
 class Main extends React.Component {
 
@@ -77,6 +78,9 @@ class Main extends React.Component {
                         <Switch>
                             <Route exact path="/dashboard/analytics" refresh={true}>
                                 <IndexAnalytics user={this.state.user} />
+                            </Route>
+                            <Route exact path="/dashboard/search-console" refresh={true}>
+                                <IndexSearchConsole user={this.state.user} />
                             </Route>
                             <Route exact path="/annotation" refresh={true}>
                                 <IndexAnnotations user={this.state.user} />

@@ -10,9 +10,15 @@ use App\Services\GoogleSearchConsoleService;
 
 class GoogleSearchConsoleSiteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return ['google_search_console_sites' => GoogleSearchConsoleSite::ofCurrentUser()->with('googleAccount')->orderBy('site_url')->get()];
+        $googleSearchConsoleSitesQuery = GoogleSearchConsoleSite::ofCurrentUser()->with('googleAccount')->orderBy('site_url');
+        if ($request->has('keyword')) {
+            $googleSearchConsoleSitesQuery->where('site_url', 'LIKE', '%' . $request->query('keyword') . '%');
+            $googleSearchConsoleSitesQuery->take(10);
+        }
+
+        return ['google_search_console_sites' => $googleSearchConsoleSitesQuery->get()];
     }
 
     public function fetch(GoogleAccount $googleAccount)
