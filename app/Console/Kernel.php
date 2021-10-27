@@ -56,6 +56,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:generate-wordpress-update-notification')->daily();
         // Everyday non critical
         $schedule->command('gaa:fetch-google-analytics-metrics-and-dimensions')->daily();
+        $schedule->command('gaa:fetch-google-search-console-sites-statistics')->daily();
 
         // Every month
         $schedule->command('gaa:send-card-expiry-mail')->monthly();
