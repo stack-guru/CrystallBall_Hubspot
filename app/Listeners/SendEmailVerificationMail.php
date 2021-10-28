@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Mail\AdminNewUserRegisterMail;
-use App\Models\Admin;
-use App\Models\User;
+use App\Mail\EmailVerificationMail;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendAdminNewUserEmail
+class SendEmailVerificationMail
 {
     /**
      * Create the event listener.
@@ -27,9 +27,10 @@ class SendAdminNewUserEmail
      */
     public function handle($event)
     {
-        $admin = Admin::first();
+        $user = $event->user;
+
         try {
-            Mail::to($admin)->send(new AdminNewUserRegisterMail($admin, $event->user));
+            Mail::to($user)->send(new EmailVerificationMail($user));
         } catch (\Exception $e) {
             report($e);
         }

@@ -15,10 +15,11 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         \Illuminate\Auth\Events\Registered::class => [
             \App\Listeners\SeedNotificationSetting::class,
-            \Illuminate\Auth\Listeners\SendEmailVerificationNotification::class,
+            // \Illuminate\Auth\Listeners\SendEmailVerificationNotification::class,
+            \App\Listeners\SendEmailVerificationMail::class,
             \App\Listeners\SeedUserDataSource::class,
             \App\Listeners\AddSampleAnnotation::class,
-            'App\Listeners\SendAdminNewUserEmail',
+            \App\Listeners\SendAdminNewUserEmail::class,
             \App\Listeners\AddUserToSendGridList::class,
         ],
         \Illuminate\Auth\Events\Login::class => [
