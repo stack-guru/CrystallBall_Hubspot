@@ -35,10 +35,9 @@ class EmailVerificationMail extends Mailable
      */
     public function build()
     {
-        return $this->subject("Your current plan does not support API")
+        return $this->subject(Lang::get('Verify Email Address'))
             ->html(
                 (new MailMessage)
-                    ->subject(Lang::get('Verify Email Address'))
                     ->line(Lang::get('Please click the button below to verify your email address.'))
                     ->action(Lang::get('Verify Email Address'), URL::temporarySignedRoute(
                         'verification.verify',
