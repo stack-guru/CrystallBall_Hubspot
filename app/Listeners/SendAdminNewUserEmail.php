@@ -6,6 +6,7 @@ use App\Mail\AdminNewUserRegisterMail;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class SendAdminNewUserEmail
 {
@@ -31,7 +32,7 @@ class SendAdminNewUserEmail
         try {
             Mail::to($admin)->send(new AdminNewUserRegisterMail($admin, $event->user));
         } catch (\Exception $e) {
-            report($e);
+            Log::error($e);
         }
     }
 }

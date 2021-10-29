@@ -11,6 +11,7 @@ use App\Services\UptimeRobotService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Log;
 
 class CheckWebMonitorStatuses extends Command
 {
@@ -81,13 +82,21 @@ class CheckWebMonitorStatuses extends Command
                                 // Up
                                 $event = "Site Online";
                                 $description = "The website $webMonitor->url is back online. At $rightNowDateTime";
-                                Notification::send($users, new WebMonitorUp($webMonitor));
+                                try {
+                                    Notification::send($users, new WebMonitorUp($webMonitor));
+                                } catch (\Exception $e) {
+                                    Log::error($e);
+                                }
                                 break;
                             case 9:
                                 // Down
                                 $event = "Site Down";
                                 $description = "The website $webMonitor->url it's down. At $rightNowDateTime";
-                                Notification::send($users, new WebMonitorDown($webMonitor));
+                                try {
+                                    Notification::send($users, new WebMonitorDown($webMonitor));
+                                } catch (\Exception $e) {
+                                    Log::error($e);
+                                }
                                 break;
                             default:
                                 $event = "Unknown Monitor status: " . $uptimeMonitor['status'];

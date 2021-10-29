@@ -6,6 +6,7 @@ use App\Mail\EmailVerificationMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class SendEmailVerificationMail
 {
@@ -32,7 +33,7 @@ class SendEmailVerificationMail
         try {
             Mail::to($user)->send(new EmailVerificationMail($user));
         } catch (\Exception $e) {
-            report($e);
+            Log::error($e);
         }
     }
 }
