@@ -225,7 +225,7 @@ class IndexAnnotations extends React.Component {
                                         <option value="date">By Date</option>
                                         <option value="category">By Category</option>
                                         <option value="ga-property">By GA Property</option>
-                                        <option value="added-by">By Colour</option>
+                                        {/* <option value="added-by">By Colour</option> */}
                                     </select>
 
                                 </div>
