@@ -63,7 +63,7 @@ class RetailMarketingTomorrow extends Notification
             ->greeting('Hi ' . $notifiable->name . ',')
             ->line('Tomorrow is ' . $this->retailMarketing->event_name . '.')
             ->line('Get the most of it by doing the proper adaptations on your site or sending an email.')
-            ->line('Check out our email templates HERE, feel free to use them ;)');
+            ->line('Check out our email templates <a href="' . $this->retailMarketing->url . '">HERE</a>, feel free to use them ;)');
     }
 
 }
