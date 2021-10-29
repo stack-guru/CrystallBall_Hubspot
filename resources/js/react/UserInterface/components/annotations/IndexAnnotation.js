@@ -296,7 +296,7 @@ class IndexAnnotations extends React.Component {
                                                         if (diffTime > 0) { wasLastAnnotationInFuture = true; } else { wasLastAnnotationInFuture = false; }
 
                                                         return (
-                                                            <tr key={anno.id + anno.event_name + anno.category} data-diff-in-milliseconds={diffTime} id={rowId}>
+                                                            <tr key={anno.category.concat(anno.event_name).concat(anno.id)} data-diff-in-milliseconds={diffTime} id={rowId}>
                                                                 <td style={{ borderLeft: `${borderLeftColor} solid 20px` }}>{anno.category}</td>
                                                                 <td>{anno.event_name}</td>
                                                                 <td>
