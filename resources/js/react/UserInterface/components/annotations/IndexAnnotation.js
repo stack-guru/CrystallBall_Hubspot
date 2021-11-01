@@ -167,6 +167,7 @@ class IndexAnnotations extends React.Component {
         this.setState({ isBusy: true });
         HttpClient.get(url)
             .then(response => {
+                this.setState({ annotations: [] });
                 this.setState({ isBusy: false, annotations: response.data.annotations });
             }, (err) => {
 
