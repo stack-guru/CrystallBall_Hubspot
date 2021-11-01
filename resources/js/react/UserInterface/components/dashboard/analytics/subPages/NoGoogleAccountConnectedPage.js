@@ -18,7 +18,7 @@ export default function NoGoogleAccountConnectedPage(props) {
                     </div>
                     <div className="row">
                         <div className="col-12 text-center">
-                            <Link to="/settings/google-account"><img src="/images/connect-google-analytics.png" width="400" height="auto"/></Link>
+                            <a href="/settings/google-account/create"><img src="/images/connect-google-analytics.png" width="400" height="auto" /></a>
                         </div>
                     </div>
                 </div>
