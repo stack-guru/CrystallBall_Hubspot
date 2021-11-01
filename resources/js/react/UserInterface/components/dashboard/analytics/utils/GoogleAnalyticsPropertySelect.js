@@ -1,70 +1,70 @@
 import React, { Component } from 'react'
 
-import HttpClient from './HttpClient'
+import HttpClient from '../../../../utils/HttpClient'
 
 import Select from 'react-select';
 
-export default class GoogleSearchConsoleSiteSelect extends Component {
+export default class GoogleAnalyticsPropertySelect extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            cSites: [{ value: "", label: "All Sites" }],
-            allSites: []
+            aProperties: [{ value: "", label: "All Properties" }],
+            allProperties: [],
         };
-        this.searchGoogleSearchConsoleSites = this.searchGoogleSearchConsoleSites.bind(this);
+        this.searchGoogleAnalyticsProperties = this.searchGoogleAnalyticsProperties.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
     }
 
     componentDidMount() {
         if (this.props.autoSelectFirst) {
-            this.searchGoogleSearchConsoleSites(' ', (options) => {
+            this.searchGoogleAnalyticsProperties(' ', (options) => {
                 if (options.length) this.onChangeHandler(options[0]);
-                this.setState({ allSites: options });
+                this.setState({ allProperties: options });
             });
         }
     }
     componentDidUpdate(prevProps) {
         if (this.props != prevProps) {
-            if (this.props.cSites) {
-                this.setState({ cSites: this.props.cSites });
+            if (this.props.aProperties) {
+                this.setState({ aProperties: this.props.aProperties });
             }
         }
     }
 
-    searchGoogleSearchConsoleSites(keyword, callback) {
-        HttpClient.get('settings/google-search-console-site?keyword=' + keyword)
+    searchGoogleAnalyticsProperties(keyword, callback) {
+        HttpClient.get('settings/google-analytics-property?keyword=' + keyword)
             .then((response) => {
-                let gscss = response.data.google_search_console_sites;
-                let options = gscss.map(gscs => { return { value: gscs.id, label: gscs.site_url + ' ' + gscs.google_account.name }; });
+                let gaps = response.data.google_analytics_properties;
+                let options = gaps.map(gap => { return { value: gap.id, label: gap.name + ' ' + gap.google_analytics_account.name }; });
                 callback(options);
             });
     }
 
     onChangeHandler(sOption) {
         if (sOption == null) {
-            this.setState({ cSites: [{ value: "", label: "All Sites" }] });
+            this.setState({ aProperties: [{ value: "", label: "All Properties" }] });
             if (this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: [""] } });
             if (!this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: "" } });
-            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Sites" }]);
+            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Properties" }]);
         } else {
-            // cSites.push(sOption);
-            let cSites = null;
+            // aProperties.push(sOption);
+            let aProperties = null;
             if (this.props.multiple) {
-                cSites = sOption.filter(sO => sO.value !== "");
+                aProperties = sOption.filter(sO => sO.value !== "");
             } else {
-                cSites = sOption;
+                aProperties = sOption;
             }
-            this.setState({ cSites: cSites });
+            this.setState({ aProperties: aProperties });
             if (this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.filter(sO => sO.value !== "").map(sO => sO.value) } });
             if (!this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.value } });
-            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)(cSites);
+            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)(aProperties);
         }
     }
 
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
-        let cSites = this.state.cSites;
+        let aProperties = this.state.aProperties;
 
         // let selectedOptions;
         // if (this.props.multiple) {
@@ -75,17 +75,17 @@ export default class GoogleSearchConsoleSiteSelect extends Component {
 
         return (
             <Select
-                loadOptions={this.searchGoogleSearchConsoleSites}
+                loadOptions={this.searchGoogleAnalyticsProperties}
                 noOptionsMessage={() => { return "Enter chars to search" }}
                 className={this.props.className}
                 name={this.props.name}
                 disabled={this.props.disabled}
-                value={this.state.cSites}
+                value={this.state.aProperties}
                 id={this.props.id}
                 isMulti={this.props.multiple}
                 isClearable={this.props.isClearable}
                 onChange={this.onChangeHandler}
-                options={this.state.allSites}
+                options={this.state.allProperties}
                 isSearchable={true}
                 placeholder={this.props.placeholder}
                 components={this.props.components}

@@ -5,7 +5,7 @@ import UsersDaysGraph from './graphs/usersDaysGraph';
 import HttpClient from '../../../utils/HttpClient';
 import AnnotationsTable from './tables/annotationsTable';
 import MediaGraph from './graphs/mediaGraph';
-import GoogleAnalyticsPropertySelect from '../../../utils/GoogleAnalyticsPropertySelect';
+import GoogleAnalyticsPropertySelect from './utils/GoogleAnalyticsPropertySelect';
 import ErrorAlert from '../../../utils/ErrorAlert';
 import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
 import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGraph';
