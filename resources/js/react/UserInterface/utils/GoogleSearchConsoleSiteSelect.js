@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import HttpClient from './HttpClient'
 
-import Select from 'react-select/async';
+import Select from 'react-select';
 
 export default class GoogleSearchConsoleSiteSelect extends Component {
 
@@ -10,6 +10,7 @@ export default class GoogleSearchConsoleSiteSelect extends Component {
         super(props)
         this.state = {
             cSites: [{ value: "", label: "All Sites" }],
+            allSites: []
         };
         this.searchGoogleSearchConsoleSites = this.searchGoogleSearchConsoleSites.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -19,6 +20,7 @@ export default class GoogleSearchConsoleSiteSelect extends Component {
         if (this.props.autoSelectFirst) {
             this.searchGoogleSearchConsoleSites(' ', (options) => {
                 if (options.length) this.onChangeHandler(options[0]);
+                this.setState({ allSites: options });
             });
         }
     }
@@ -83,8 +85,7 @@ export default class GoogleSearchConsoleSiteSelect extends Component {
                 isMulti={this.props.multiple}
                 isClearable={this.props.isClearable}
                 onChange={this.onChangeHandler}
-                // options={allOptions}
-                isSearchable={true}
+                options={this.state.allSites}
                 placeholder={this.props.placeholder}
                 components={this.props.components}
                 onFocus={this.props.onFocus}
