@@ -71,10 +71,11 @@ class FetchGoogleAnalyticsMetricsAndDimensions extends Command
                     $row['ga_property_id'] = $googleAnalyticsProperty->id;
                     $row['ga_account_id'] = $googleAnalyticsProperty->google_analytics_account_id;
                     $row['google_account_id'] = $googleAnalyticsProperty->googleAccount->id;
+                    $row['user_id'] = $googleAnalyticsProperty->user_id;
                     $rows[] = $row;
 
                     if (count($rows) > 5000) {
-                        // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (11)
+                        // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (12)
                         // I obviously rounded it to something human readable
                         GoogleAnalyticsMetricDimension::insert($rows);
                         $rows = [];

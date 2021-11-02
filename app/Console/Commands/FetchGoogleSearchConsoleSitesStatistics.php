@@ -72,10 +72,11 @@ class FetchGoogleSearchConsoleSitesStatistics extends Command
 
                     $row['google_search_console_site_id'] = $googleSearchConsoleSite->id;
                     $row['google_account_id'] = $googleSearchConsoleSite->googleAccount->id;
+                    $row['user_id'] = $googleSearchConsoleSite->user_id;
                     $rows[] = $row;
 
                     if (count($rows) > 5000) {
-                        // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (11)
+                        // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (12)
                         // I obviously rounded it to something human readable
                         GoogleSearchConsoleStatistics::insert($rows);
                         $rows = [];

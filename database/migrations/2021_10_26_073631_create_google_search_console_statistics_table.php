@@ -21,7 +21,7 @@ class CreateGoogleSearchConsoleStatisticsTable extends Migration
             $table->mediumText('page')->nullable()->default(null);
             $table->string('country')->nullable()->default(null);
             $table->string('device')->nullable()->default(null);
-            $table->string('search_appearance')->nullable()->default(null);
+            $table->mediumText('search_appearance')->nullable()->default(null);
 
             $table->integer('clicks_count')->unsigned()->nullable()->default(null);
             $table->integer('impressions_count')->unsigned()->nullable()->default(null);
@@ -33,6 +33,9 @@ class CreateGoogleSearchConsoleStatisticsTable extends Migration
 
             $table->unsignedBigInteger('google_account_id')->required();
             $table->foreign('google_account_id')->references('id')->on('google_accounts')->onDelete('CASCADE');
+
+            $table->unsignedBigInteger('user_id')->required();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
 
             $table->timestamps();
         });

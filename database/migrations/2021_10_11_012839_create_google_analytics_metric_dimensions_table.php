@@ -17,8 +17,8 @@ class CreateGoogleAnalyticsMetricDimensionsTable extends Migration
             $table->id();
 
             $table->date('statistics_date')->required();
-            $table->string('source_name')->nullable()->default(null);
-            $table->string('medium_name')->nullable()->default(null);
+            $table->mediumText('source_name')->nullable()->default(null);
+            $table->mediumText('medium_name')->nullable()->default(null);
             $table->string('device_category')->nullable()->default(null);
 
             $table->integer('users_count')->unsigned()->nullable()->default(null);
@@ -34,6 +34,9 @@ class CreateGoogleAnalyticsMetricDimensionsTable extends Migration
 
             $table->unsignedBigInteger('google_account_id')->required();
             $table->foreign('google_account_id')->references('id')->on('google_accounts')->onDelete('CASCADE');
+
+            $table->unsignedBigInteger('user_id')->required();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
 
             $table->timestamps();
         });
