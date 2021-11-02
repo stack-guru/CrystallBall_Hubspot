@@ -43,8 +43,8 @@ class FetchGoogleAnalyticsMetricsAndDimensions extends Command
     {
         $gAS = new GoogleAnalyticsService;
         if ($this->option('from-past')) {
-            // Don't reduce startDate any further as it will result in an error. "Date <your reduced date> precedes Google Analytics launch date 2005-01-01"
-            $startDate = '2005-01-01';
+            // Don't reduce startDate below 2005-01-01 as it will result in an error. "Date <your reduced date> precedes Google Analytics launch date 2005-01-01"
+            $startDate = '2021-01-01';
             $endDate = Carbon::yesterday()->format('Y-m-d');
         } else {
             $startDate = $endDate = Carbon::yesterday()->format('Y-m-d');
@@ -57,20 +57,31 @@ class FetchGoogleAnalyticsMetricsAndDimensions extends Command
             if ($dataRows !== false) {
                 $this->info(count($dataRows) . " rows fetched.");
                 GoogleAnalyticsMetricDimension::where('ga_property_id', $googleAnalyticsProperty->id)->whereBetween('statistics_date', [$startDate, $endDate])->delete();
+                $rows = [];
                 foreach ($dataRows as  $dataRow) {
-                    $gAMD = new GoogleAnalyticsMetricDimension;
-                    $gAMD->statistics_date = $dataRow['dimensions'][0];
-                    $gAMD->source_name = $dataRow['dimensions'][1];
-                    $gAMD->medium_name = $dataRow['dimensions'][2];
-                    $gAMD->device_category = $dataRow['dimensions'][3];
-                    $gAMD->users_count = $dataRow['metrics'][0];
-                    $gAMD->sessions_count = $dataRow['metrics'][1];
-                    $gAMD->events_count = $dataRow['metrics'][2];
-                    $gAMD->conversions_count = array_key_exists('3', $dataRow['metrics']) ? $dataRow['metrics'][3] : 0;
-                    $gAMD->ga_property_id = $googleAnalyticsProperty->id;
-                    $gAMD->ga_account_id = $googleAnalyticsProperty->google_analytics_account_id;
-                    $gAMD->google_account_id = $googleAnalyticsProperty->googleAccount->id;
-                    $gAMD->save();
+                    $row = [];
+                    $row['statistics_date'] = $dataRow['dimensions'][0];
+                    $row['source_name'] = $dataRow['dimensions'][1];
+                    $row['medium_name'] = $dataRow['dimensions'][2];
+                    $row['device_category'] = $dataRow['dimensions'][3];
+                    $row['users_count'] = $dataRow['metrics'][0];
+                    $row['sessions_count'] = $dataRow['metrics'][1];
+                    $row['events_count'] = $dataRow['metrics'][2];
+                    $row['conversions_count'] = array_key_exists('3', $dataRow['metrics']) ? $dataRow['metrics'][3] : 0;
+                    $row['ga_property_id'] = $googleAnalyticsProperty->id;
+                    $row['ga_account_id'] = $googleAnalyticsProperty->google_analytics_account_id;
+                    $row['google_account_id'] = $googleAnalyticsProperty->googleAccount->id;
+                    $rows[] = $row;
+
+                    if (count($rows) > 5000) {
+                        // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (11)
+                        // I obviously rounded it to something human readable
+                        GoogleAnalyticsMetricDimension::insert($rows);
+                        $rows = [];
+                    }
+                }
+                if (count($rows)) {
+                    GoogleAnalyticsMetricDimension::insert($rows);
                 }
             }
         }

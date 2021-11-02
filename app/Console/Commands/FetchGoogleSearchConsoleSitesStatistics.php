@@ -75,15 +75,13 @@ class FetchGoogleSearchConsoleSitesStatistics extends Command
                     $rows[] = $row;
 
                     if (count($rows) > 5000) {
-                        // formula for ^ number is max no. of placeholders (65535) / no. of columns you have in insert statement (11)
+                        // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (11)
                         // I obviously rounded it to something human readable
                         GoogleSearchConsoleStatistics::insert($rows);
                         $rows = [];
                     }
                 }
                 if (count($rows)) {
-                    // formula for ^ number is max no. of placeholders (65535) / no. of columns (11)
-                    // I obviously rounded it to something human readable
                     GoogleSearchConsoleStatistics::insert($rows);
                 }
             }
