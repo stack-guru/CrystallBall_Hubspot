@@ -4,8 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\GoogleSearchConsoleSite;
-use App\Models\GoogleSearchConsoleStatistics;
-use App\Services\GoogleSearchConsoleService;
 use App\Jobs\FetchGSCSStatisticsJob;
 use Carbon\Carbon;
 

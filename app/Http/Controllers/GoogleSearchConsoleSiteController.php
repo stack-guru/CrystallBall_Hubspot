@@ -7,6 +7,8 @@ use App\Models\GoogleAccount;
 use Illuminate\Support\Facades\Auth;
 use App\Models\GoogleSearchConsoleSite;
 use App\Services\GoogleSearchConsoleService;
+use App\Jobs\FetchGSCSStatisticsJob;
+use Carbon\Carbon;
 
 class GoogleSearchConsoleSiteController extends Controller
 {
@@ -44,6 +46,7 @@ class GoogleSearchConsoleSiteController extends Controller
                 $nGSCS->google_account_id = $googleAccount->id;
                 $nGSCS->user_id = $user->id;
                 $nGSCS->save();
+                FetchGSCSStatisticsJob::dispatch($nGSCS, '2021-01-01', Carbon::yesterday()->format('Y-m-d'));
             }
         }
 

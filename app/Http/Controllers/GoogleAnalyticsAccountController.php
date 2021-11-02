@@ -7,6 +7,8 @@ use App\Models\GoogleAnalyticsAccount;
 use App\Models\GoogleAnalyticsProperty;
 use App\Services\GoogleAnalyticsService;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use App\Jobs\FetchGAMetricsAndDimensionsJob;
 
 class GoogleAnalyticsAccountController extends Controller
 {
@@ -54,7 +56,8 @@ class GoogleAnalyticsAccountController extends Controller
             if ($googleAnalyticsProperties != false) {
                 foreach ($googleAnalyticsProperties as $index => $googleAnalyticsProperty) {
                     if (!in_array($googleAnalyticsProperty['id'], $savedGoogleAnalyticPropertyIds)) {
-                        $this->saveGoogleAnalyticsUAPropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user);
+                        $gAP = $this->saveGoogleAnalyticsUAPropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user);
+                        FetchGAMetricsAndDimensionsJob::dispatch($gAP, '2021-01-01', Carbon::yesterday()->format('Y-m-d'));
                     }
                 }
             }
@@ -63,8 +66,9 @@ class GoogleAnalyticsAccountController extends Controller
             $savedGoogleAnalyticPropertyIds = GoogleAnalyticsProperty::select('property_id')->ofCurrentUser()->orderBy('property_id')->get()->pluck('property_id')->toArray();
             if ($googleAnalyticsProperties != false) {
                 foreach ($googleAnalyticsProperties as $index => $googleAnalyticsProperty) {
-                    if (!in_array(explode( '/', $googleAnalyticsProperty['name'])[1], $savedGoogleAnalyticPropertyIds)) {
-                        $this->saveGoogleAnalyticsGA4PropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user);
+                    if (!in_array(explode('/', $googleAnalyticsProperty['name'])[1], $savedGoogleAnalyticPropertyIds)) {
+                        $gAP = $this->saveGoogleAnalyticsGA4PropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user);
+                        FetchGAMetricsAndDimensionsJob::dispatch($gAP, '2021-01-01', Carbon::yesterday()->format('Y-m-d'));
                     }
                 }
             }
@@ -83,7 +87,8 @@ class GoogleAnalyticsAccountController extends Controller
         return ['success' => true];
     }
 
-    private function saveGoogleAnalyticsUAPropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user){
+    private function saveGoogleAnalyticsUAPropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user)
+    {
         $nGAP = new GoogleAnalyticsProperty;
         $nGAP->property_id = $googleAnalyticsProperty['id'];
         $nGAP->kind = $googleAnalyticsProperty['kind'];
@@ -108,15 +113,18 @@ class GoogleAnalyticsAccountController extends Controller
         $nGAP->google_account_id = $googleAccount->id;
         $nGAP->user_id = $user->id;
         $nGAP->save();
+
+        return $nGAP;
     }
 
-    private function saveGoogleAnalyticsGA4PropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user){
+    private function saveGoogleAnalyticsGA4PropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user)
+    {
         $nGAP = new GoogleAnalyticsProperty;
-        $nGAP->property_id = explode( '/', $googleAnalyticsProperty['name'])[1];
+        $nGAP->property_id = explode('/', $googleAnalyticsProperty['name'])[1];
         $nGAP->kind = "analytics#ga4property";
         $nGAP->self_link = @$googleAnalyticsProperty['selfLink'];
         $nGAP->account_id = explode('/', $googleAnalyticsProperty['parent'])[1];
-        $nGAP->internal_property_id = explode( '/', $googleAnalyticsProperty['name'])[1];
+        $nGAP->internal_property_id = explode('/', $googleAnalyticsProperty['name'])[1];
         $nGAP->name = $googleAnalyticsProperty['displayName'];
         $nGAP->website_url = @$googleAnalyticsProperty['websiteUrl'];
         $nGAP->level = @$googleAnalyticsProperty['level'];
@@ -135,5 +143,7 @@ class GoogleAnalyticsAccountController extends Controller
         $nGAP->google_account_id = $googleAccount->id;
         $nGAP->user_id = $user->id;
         $nGAP->save();
+
+        return $nGAP;
     }
 }
