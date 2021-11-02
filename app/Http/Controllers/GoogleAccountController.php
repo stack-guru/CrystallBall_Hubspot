@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GoogleAccount;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Requests\GoogleAccountRequest;
 use App\Services\GoogleAPIService;
@@ -35,7 +36,7 @@ class GoogleAccountController extends Controller
         // }
 
         // if (config('app.env') == 'development' || config('app.env') == 'local') {
-            array_push($scopes, 'https://www.googleapis.com/auth/webmasters.readonly', 'https://www.googleapis.com/auth/webmasters');
+        array_push($scopes, 'https://www.googleapis.com/auth/webmasters.readonly', 'https://www.googleapis.com/auth/webmasters');
         // }
 
         return Socialite::driver('google')
@@ -44,15 +45,15 @@ class GoogleAccountController extends Controller
             ->redirect();
     }
 
-    public function store()
+    public function store(Request $request)
     {
         $user = Socialite::driver('google')->stateless()->user();
         $googleAccountId = $user->getId();
-        if (GoogleAccount::where('account_id', $googleAccountId)->where('user_id', \Auth::id())->first()) {
-            return redirect()->route('google-account.index', ['success' => 'false', 'message' => 'Account already linked']);
-        }
 
-        $googleAccount = new GoogleAccount;
+        $googleAccount = GoogleAccount::where('account_id', $googleAccountId)->where('user_id', Auth::id())->first();
+        if (!$googleAccount) {
+            $googleAccount = new GoogleAccount;
+        }
 
         $googleAccount->token = $user->token;
         $googleAccount->refresh_token = $user->refreshToken;
@@ -63,6 +64,8 @@ class GoogleAccountController extends Controller
         $googleAccount->email = $user->getEmail();
         $googleAccount->avatar = $user->getAvatar();
         $googleAccount->user_id = Auth::id();
+        $googleAccount->scopes = json_encode(explode(" ", $request->query('scope')));
+        $googleAccount->state = $request->query('state');
 
         $googleAccount->save();
 
