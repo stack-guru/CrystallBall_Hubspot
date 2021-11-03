@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\OpenWeatherMapAlert;
 use App\Models\User;
+use App\Models\UserDataSource;
 use App\Notifications\OpenWeatherMapAlert as OpenWeatherMapAlertNotification;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -46,21 +47,22 @@ class GenerateWeatherUpdateNotificationCommand extends Command
         if (count($openWeatherMapAlerts)) {
             print "Sending open weather map alert notification of " . count($openWeatherMapAlerts) . " event(s).\n";
             foreach ($openWeatherMapAlerts as $index => $openWeatherMapAlert) {
-                $users = User::select('users.*')
-                    ->distinct()
-                    ->join('user_data_sources', 'user_data_sources.user_id', 'users.id')
-                    ->join('open_weather_map_cities', 'open_weather_map_cities.id', 'user_data_sources.open_weather_map_city_id')
-                    ->join('open_weather_map_alerts', 'open_weather_map_cities.id', 'open_weather_map_alerts.open_weather_map_city_id')
-                    ->where('open_weather_map_alerts.id', $openWeatherMapAlert->id)
+                $users = User::whereIn(
+                    'id',
+                    UserDataSource::select('user_data_sources.user_id')
+                        ->distinct()
+                        ->join('open_weather_map_alerts', 'open_weather_map_alerts.event', 'user_data_sources.open_weather_map_event')
+                        ->join('open_weather_map_cities', 'open_weather_map_cities.id', 'open_weather_map_alerts.open_weather_map_city_id')
+                        ->join('user_data_sources as uds2', 'uds2.open_weather_map_city_id', 'open_weather_map_cities.id')
+                        ->join('users', 'users.id', 'uds2.user_id')
+                        ->join('notification_settings', 'users.id', 'notification_settings.user_id')
 
-                    ->join('user_data_sources as uds2', 'open_weather_map_alerts.event', 'uds2.open_weather_map_event')
-                    ->where('uds2.ds_code', 'open_weather_map_events')
+                        ->where('open_weather_map_alerts.id', $openWeatherMapAlert->id)
+                        ->where('notification_settings.name', 'weather_alerts')
+                        ->where('notification_settings.is_enabled', true)
 
-                    ->join('notification_settings', 'users.id', 'notification_settings.user_id')
-                    ->where('notification_settings.name', 'weather_alerts')
-                    ->where('notification_settings.is_enabled', true)
-
-                    ->get();
+                        ->get()->pluck('user_id')->toArray()
+                )->get();
 
                 print "Sending notification to " . count($users) . " users.\n";
                 Notification::send($users, new OpenWeatherMapAlertNotification($openWeatherMapAlert));
