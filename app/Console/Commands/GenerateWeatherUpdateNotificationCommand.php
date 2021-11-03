@@ -47,10 +47,14 @@ class GenerateWeatherUpdateNotificationCommand extends Command
             print "Sending open weather map alert notification of " . count($openWeatherMapAlerts) . " event(s).\n";
             foreach ($openWeatherMapAlerts as $index => $openWeatherMapAlert) {
                 $users = User::select('users.*')
+                    ->distinct()
                     ->join('user_data_sources', 'user_data_sources.user_id', 'users.id')
                     ->join('open_weather_map_cities', 'open_weather_map_cities.id', 'user_data_sources.open_weather_map_city_id')
                     ->join('open_weather_map_alerts', 'open_weather_map_cities.id', 'open_weather_map_alerts.open_weather_map_city_id')
                     ->where('open_weather_map_alerts.id', $openWeatherMapAlert->id)
+
+                    ->join('user_data_sources as uds2', 'open_weather_map_alerts.event', 'uds2.open_weather_map_event')
+                    ->where('uds2.ds_code', 'open_weather_map_events')
 
                     ->join('notification_settings', 'users.id', 'notification_settings.user_id')
                     ->where('notification_settings.name', 'weather_alerts')
