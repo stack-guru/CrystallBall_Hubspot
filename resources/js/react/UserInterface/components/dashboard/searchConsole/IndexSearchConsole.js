@@ -41,6 +41,7 @@ export default class IndexSearchConsole extends Component {
     render() {
 
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
+        if (!this.state.queriesStatistics.length) return <NoGoogleAccountConnectedPage />
 
         return <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
             <section className="ftco-section" id="inputs">
