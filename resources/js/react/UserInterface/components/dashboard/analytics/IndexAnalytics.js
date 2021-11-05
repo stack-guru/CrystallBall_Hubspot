@@ -9,6 +9,7 @@ import GoogleAnalyticsPropertySelect from './utils/GoogleAnalyticsPropertySelect
 import ErrorAlert from '../../../utils/ErrorAlert';
 import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
 import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGraph';
+import NoDataFoundPage from './subPages/NoDataFoundPage';
 
 export default class IndexAnalytics extends Component {
     constructor(props) {
@@ -39,7 +40,6 @@ export default class IndexAnalytics extends Component {
     render() {
 
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
-        if (!this.state.usersDaysStatistics.length) return <NoGoogleAccountConnectedPage />
 
         return <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
             <section className="ftco-section" id="inputs">
@@ -100,43 +100,50 @@ export default class IndexAnalytics extends Component {
                                 />
                             </div>
                         </div>
-                        {/* <UsersDaysGraph statistics={this.state.usersDaysStatistics} /> */}
-                        <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
-                        <AnnotationsTable user={this.props.user} annotations={this.state.annotations} />
-                        <MediaGraph statistics={this.state.mediaStatistics} />
-                        <div className="row">
-                            <div className="col-6">
-                                <table className="table table-bordered table-hover">
-                                    <thead><tr><th></th><th></th><th>Users</th><th>Conversion Rate</th></tr></thead>
-                                    <tbody>
-                                        {
-                                            this.state.sourcesStatistics.map(sS => {
-                                                const conversionRate = sS.sum_conversions_count && sS.sum_users_count ? ((sS.sum_conversions_count / sS.sum_users_count) * 100).toFixed(2) : 0;
-                                                return <tr>
-                                                    <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} /></td>
-                                                    <td>{sS.source_name}</td>
-                                                    <td>{sS.sum_users_count}</td>
-                                                    <td>{conversionRate}</td>
-                                                </tr>
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="col-6">
-                                <table className="table table-bordered table-hover">
-                                    <thead><tr><th></th><th>Users</th><th>Conversion Rate</th></tr></thead>
-                                    <tbody>
-                                        {
-                                            this.state.deviceCategoriesStatistics.map(dS => {
-                                                const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0;
-                                                return <tr><td>{dS.device_category}</td><td>{dS.sum_users_count}</td><td>{conversionRate}</td></tr>
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        {
+                            this.state.usersDaysStatistics.length ?
+                                <React.Fragment>
+                                    {/* <UsersDaysGraph statistics={this.state.usersDaysStatistics} /> */}
+                                    <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
+                                    <AnnotationsTable user={this.props.user} annotations={this.state.annotations} />
+                                    <MediaGraph statistics={this.state.mediaStatistics} />
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <table className="table table-bordered table-hover">
+                                                <thead><tr><th></th><th></th><th>Users</th><th>Conversion Rate</th></tr></thead>
+                                                <tbody>
+                                                    {
+                                                        this.state.sourcesStatistics.map(sS => {
+                                                            const conversionRate = sS.sum_conversions_count && sS.sum_users_count ? ((sS.sum_conversions_count / sS.sum_users_count) * 100).toFixed(2) : 0;
+                                                            return <tr>
+                                                                <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} /></td>
+                                                                <td>{sS.source_name}</td>
+                                                                <td>{sS.sum_users_count}</td>
+                                                                <td>{conversionRate}</td>
+                                                            </tr>
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div className="col-6">
+                                            <table className="table table-bordered table-hover">
+                                                <thead><tr><th></th><th>Users</th><th>Conversion Rate</th></tr></thead>
+                                                <tbody>
+                                                    {
+                                                        this.state.deviceCategoriesStatistics.map(dS => {
+                                                            const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0;
+                                                            return <tr><td>{dS.device_category}</td><td>{dS.sum_users_count}</td><td>{conversionRate}</td></tr>
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </React.Fragment>
+                                :
+                                <NoDataFoundPage />
+                        }
                     </div>
                 </div>
 

@@ -10,6 +10,7 @@ import ErrorAlert from '../../../utils/ErrorAlert';
 import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
 import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGraph';
 import GoogleSearchConsoleSiteSelect from '../../../utils/GoogleSearchConsoleSiteSelect';
+import NoDataFoundPage from './subPages/NoDataFoundPage';
 
 export default class IndexSearchConsole extends Component {
     constructor(props) {
@@ -41,7 +42,6 @@ export default class IndexSearchConsole extends Component {
     render() {
 
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
-        if (!this.state.queriesStatistics.length) return <NoGoogleAccountConnectedPage />
 
         return <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
             <section className="ftco-section" id="inputs">
@@ -102,96 +102,103 @@ export default class IndexSearchConsole extends Component {
                                 />
                             </div>
                         </div>
-                        {/* <UsersDaysGraph statistics={this.state.usersDaysStatistics} /> */}
-                        {/* <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} /> */}
-                        <AnnotationsTable user={this.props.user} annotations={this.state.annotations} />
-                        {/* <MediaGraph statistics={this.state.mediaStatistics} /> */}
-                        <div className="row">
-                            <div className="col-6">
-                                <table className="table table-bordered table-hover">
-                                    <thead><tr><th>Query</th><th>Clicks</th><th>Impressions</th></tr></thead>
-                                    <tbody>
-                                        {
-                                            this.state.queriesStatistics.map(qS => {
-                                                return <tr>
-                                                    <td>{qS.query}</td>
-                                                    <td>{qS.sum_clicks_count}</td>
-                                                    <td>{qS.sum_impressions_count}</td>
-                                                </tr>
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="col-6">
-                                <table className="table table-bordered table-hover">
-                                    <thead><tr><th>Page</th><th>Clicks</th><th>Impressions</th></tr></thead>
-                                    <tbody>
-                                        {
-                                            this.state.pagesStatistics.map(pS => {
-                                                return <tr>
-                                                    <td>{pS.page}</td>
-                                                    <td>{pS.sum_clicks_count}</td>
-                                                    <td>{pS.sum_impressions_count}</td>
-                                                </tr>
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-6">
-                                <table className="table table-bordered table-hover">
-                                    <thead><tr><th>Country</th><th>Clicks</th><th>Impressions</th></tr></thead>
-                                    <tbody>
-                                        {
-                                            this.state.countriesStatistics.map(cS => {
-                                                return <tr>
-                                                    <td>{cS.country}</td>
-                                                    <td>{cS.sum_clicks_count}</td>
-                                                    <td>{cS.sum_impressions_count}</td>
-                                                </tr>
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="col-6">
-                                <table className="table table-bordered table-hover">
-                                    <thead><tr><th>Device</th><th>Clicks</th><th>Impressions</th></tr></thead>
-                                    <tbody>
-                                        {
-                                            this.state.devicesStatistics.map(dS => {
-                                                return <tr>
-                                                    <td>{dS.device}</td>
-                                                    <td>{dS.sum_clicks_count}</td>
-                                                    <td>{dS.sum_impressions_count}</td>
-                                                </tr>
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-6">
-                                <table className="table table-bordered table-hover">
-                                    <thead><tr><th>Search Appearance</th><th>Clicks</th><th>Impressions</th></tr></thead>
-                                    <tbody>
-                                        {
-                                            this.state.searchApearancesStatistics.map(sAS => {
-                                                return <tr>
-                                                    <td>{sAS.search_appearance}</td>
-                                                    <td>{sAS.sum_clicks_count}</td>
-                                                    <td>{sAS.sum_impressions_count}</td>
-                                                </tr>
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        {
+                            this.state.queriesStatistics.length ?
+                                <React.Fragment>
+                                    {/* <UsersDaysGraph statistics={this.state.usersDaysStatistics} /> */}
+                                    {/* <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} /> */}
+                                    <AnnotationsTable user={this.props.user} annotations={this.state.annotations} />
+                                    {/* <MediaGraph statistics={this.state.mediaStatistics} /> */}
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <table className="table table-bordered table-hover">
+                                                <thead><tr><th>Query</th><th>Clicks</th><th>Impressions</th></tr></thead>
+                                                <tbody>
+                                                    {
+                                                        this.state.queriesStatistics.map(qS => {
+                                                            return <tr>
+                                                                <td>{qS.query}</td>
+                                                                <td>{qS.sum_clicks_count}</td>
+                                                                <td>{qS.sum_impressions_count}</td>
+                                                            </tr>
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div className="col-6">
+                                            <table className="table table-bordered table-hover">
+                                                <thead><tr><th>Page</th><th>Clicks</th><th>Impressions</th></tr></thead>
+                                                <tbody>
+                                                    {
+                                                        this.state.pagesStatistics.map(pS => {
+                                                            return <tr>
+                                                                <td>{pS.page}</td>
+                                                                <td>{pS.sum_clicks_count}</td>
+                                                                <td>{pS.sum_impressions_count}</td>
+                                                            </tr>
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <table className="table table-bordered table-hover">
+                                                <thead><tr><th>Country</th><th>Clicks</th><th>Impressions</th></tr></thead>
+                                                <tbody>
+                                                    {
+                                                        this.state.countriesStatistics.map(cS => {
+                                                            return <tr>
+                                                                <td>{cS.country}</td>
+                                                                <td>{cS.sum_clicks_count}</td>
+                                                                <td>{cS.sum_impressions_count}</td>
+                                                            </tr>
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div className="col-6">
+                                            <table className="table table-bordered table-hover">
+                                                <thead><tr><th>Device</th><th>Clicks</th><th>Impressions</th></tr></thead>
+                                                <tbody>
+                                                    {
+                                                        this.state.devicesStatistics.map(dS => {
+                                                            return <tr>
+                                                                <td>{dS.device}</td>
+                                                                <td>{dS.sum_clicks_count}</td>
+                                                                <td>{dS.sum_impressions_count}</td>
+                                                            </tr>
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <table className="table table-bordered table-hover">
+                                                <thead><tr><th>Search Appearance</th><th>Clicks</th><th>Impressions</th></tr></thead>
+                                                <tbody>
+                                                    {
+                                                        this.state.searchApearancesStatistics.map(sAS => {
+                                                            return <tr>
+                                                                <td>{sAS.search_appearance}</td>
+                                                                <td>{sAS.sum_clicks_count}</td>
+                                                                <td>{sAS.sum_impressions_count}</td>
+                                                            </tr>
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </React.Fragment>
+                                :
+                                <NoDataFoundPage />
+                        }
                     </div>
                 </div>
 
