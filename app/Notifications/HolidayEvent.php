@@ -67,7 +67,7 @@ class HolidayEvent extends Notification
             ->greeting('Hi ' . $notifiable->name . ',')
             ->line('Today is ' . $this->holiday->event_name . '.')
             ->line('We hope you did the proper adaptations on your site and are ready to release a great email.')
-            ->line('Check out our email templates <a href="https://www.gaannotations.com/email-templates-retail-marketing-dates">HERE</a>, feel free to use them ;)');
+            ->line('Check out our email templates <a href="https://www.gaannotations.com/blog/categories/holidays-templates">HERE</a>, feel free to use them ;)');
 
         if ($this->holiday->url) {
             $mailMessage->line('Learn more about this Holiday <a href="' . $this->holiday->url . '">HERE</a>.');
