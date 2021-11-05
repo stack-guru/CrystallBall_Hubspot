@@ -67,7 +67,7 @@ class RetailMarketingEvent extends Notification
             ->greeting('Hi ' . $notifiable->name . ',')
             ->line('Today is ' . $this->retailMarketing->event_name . '.')
             ->line('We hope you did the proper adaptations on your site and are ready to release a great email.')
-            ->line('Check out our email templates <a href="' . $this->retailMarketing->url . '">HERE</a>, feel free to use them ;)');
+            ->line('Check out our email templates <a href="https://www.gaannotations.com/blog/categories/retail-marketing-dates">HERE</a>, feel free to use them ;)');
     }
 
     public function toPushNotification($notifiable)
