@@ -6,7 +6,7 @@ export default function AnnotationsTable(props) {
         <div className="row ml-0 mr-0">
             <div className="col-12">
                 <div id="annotation-table-container" className="table-responsive">
-                    <table className="table table-hover table-borderless table-striped">
+                    <table className="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Event Name</th>

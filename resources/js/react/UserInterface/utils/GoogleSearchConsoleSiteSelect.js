@@ -36,7 +36,7 @@ export default class GoogleSearchConsoleSiteSelect extends Component {
         HttpClient.get('settings/google-search-console-site?keyword=' + keyword)
             .then((response) => {
                 let gscss = response.data.google_search_console_sites;
-                let options = gscss.map(gscs => { return { value: gscs.id, label: gscs.site_url + ' ' + gscs.google_account.name }; });
+                let options = gscss.map(gscs => { return { value: gscs.id, label: gscs.site_url.replace('sc-domain:', '') + ' ' + gscs.google_account.name }; });
                 callback(options);
             });
     }

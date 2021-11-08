@@ -58,9 +58,8 @@ export default class IndexSearchConsole extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-2">
-                            </div>
-                            <div className="col-4 text-right">
+                            <div className="col-8"></div>
+                            <div className="col-3 text-right">
                                 {
                                     this.state.showDateRangeSelect ?
                                         <DateRange
@@ -85,13 +84,19 @@ export default class IndexSearchConsole extends Component {
                                             }}
                                         />
                                         :
-                                        <p>{this.state.startDate}-{this.state.endDate}</p>
+                                        <React.Fragment>
+                                            <p>From: {this.state.startDate}</p>
+                                            <p>To: {this.state.endDate}</p>
+                                        </React.Fragment>
                                 }
                             </div>
-                            <div className="col-2">
-                                <button className="btn btn-secondary" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>Select Date</button>
+                            <div className="col-1">
+                                <button className="btn btn-secondary" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>{this.state.showDateRangeSelect ? 'Close' : 'Select Dates'}</button>
                             </div>
-                            <div className="col-2">
+                        </div>
+                        <div className="row">
+                            <div className="col-9"></div>
+                            <div className="col-3">
                                 <GoogleSearchConsoleSiteSelect
                                     name="google_search_console_site_id"
                                     id="google_search_console_site_id"
