@@ -28,6 +28,15 @@ export default function UsersDaysWithAnnotationsGraph(props) {
     ];
 
     const optionsArray = {
+        // chartArea: {
+        //     left: 20,
+        //     right: 5, // !!! works !!!
+        //     bottom: 40,  // !!! works !!!
+        //     top: 10,
+        //     width: "100%",
+        //     // height: "100%"
+        // },
+        'chartArea': { 'width': '100%', 'height': '70%', left: 20 },
         pointSize: 5,
         hAxis: {
             scaleType: 'linear',
@@ -92,7 +101,8 @@ export default function UsersDaysWithAnnotationsGraph(props) {
 
     return <Chart
         width={'100%'}
-        height={'50'}
+        style={{ paddingLeft: '10px' }}
+        // height={'50'}
         chartType="AreaChart"
         loader={<div>Loading Chart</div>}
         data={dataArray}

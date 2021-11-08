@@ -56,9 +56,8 @@ export default class IndexAnalytics extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-2">
-                            </div>
-                            <div className="col-4 text-right">
+                            <div className="col-8"></div>
+                            <div className="col-3 text-right">
                                 {
                                     this.state.showDateRangeSelect ?
                                         <DateRange
@@ -83,13 +82,19 @@ export default class IndexAnalytics extends Component {
                                             }}
                                         />
                                         :
-                                        <p>{this.state.startDate}-{this.state.endDate}</p>
+                                        <React.Fragment>
+                                            <p>From: {this.state.startDate}</p>
+                                            <p>To: {this.state.endDate}</p>
+                                        </React.Fragment>
                                 }
                             </div>
-                            <div className="col-2">
-                                <button className="btn btn-secondary" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>Select Date</button>
+                            <div className="col-1">
+                                <button className="btn btn-secondary" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>{this.state.showDateRangeSelect ? 'Close' : 'Select Dates'}</button>
                             </div>
-                            <div className="col-2">
+                        </div>
+                        <div className="row">
+                            <div className="col-9"></div>
+                            <div className="col-3">
                                 <GoogleAnalyticsPropertySelect
                                     name="ga_property_id"
                                     id="ga_property_id"
@@ -110,13 +115,13 @@ export default class IndexAnalytics extends Component {
                                     <div className="row">
                                         <div className="col-6">
                                             <table className="table table-bordered table-hover">
-                                                <thead><tr><th></th><th></th><th>Users</th><th>Conversion Rate</th></tr></thead>
+                                                <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversion Rate</th></tr></thead>
                                                 <tbody>
                                                     {
                                                         this.state.sourcesStatistics.map(sS => {
                                                             const conversionRate = sS.sum_conversions_count && sS.sum_users_count ? ((sS.sum_conversions_count / sS.sum_users_count) * 100).toFixed(2) : 0;
                                                             return <tr>
-                                                                <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} /></td>
+                                                                <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} onError={(e) => { e.target.remove(); }} /></td>
                                                                 <td>{sS.source_name}</td>
                                                                 <td>{sS.sum_users_count}</td>
                                                                 <td>{conversionRate}</td>
@@ -128,7 +133,7 @@ export default class IndexAnalytics extends Component {
                                         </div>
                                         <div className="col-6">
                                             <table className="table table-bordered table-hover">
-                                                <thead><tr><th></th><th>Users</th><th>Conversion Rate</th></tr></thead>
+                                                <thead><tr><th>Device</th><th>Users</th><th>Conversion Rate</th></tr></thead>
                                                 <tbody>
                                                     {
                                                         this.state.deviceCategoriesStatistics.map(dS => {
