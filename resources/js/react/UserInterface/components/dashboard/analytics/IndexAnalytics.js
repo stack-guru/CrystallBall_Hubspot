@@ -10,6 +10,7 @@ import ErrorAlert from '../../../utils/ErrorAlert';
 import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
 import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGraph';
 import NoDataFoundPage from './subPages/NoDataFoundPage';
+import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
 
 export default class IndexAnalytics extends Component {
     constructor(props) {
@@ -83,8 +84,8 @@ export default class IndexAnalytics extends Component {
                                         />
                                         :
                                         <React.Fragment>
-                                            <p>From: {this.state.startDate}</p>
-                                            <p>To: {this.state.endDate}</p>
+                                            <p>From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}</p>
+                                            <p>To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}</p>
                                         </React.Fragment>
                                 }
                             </div>

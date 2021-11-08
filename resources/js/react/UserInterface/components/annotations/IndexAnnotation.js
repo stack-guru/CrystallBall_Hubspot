@@ -4,7 +4,6 @@ import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 import { timezoneToDateFormat } from '../../utils/TimezoneTodateFormat';
-import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
 
 class IndexAnnotations extends React.Component {
 
