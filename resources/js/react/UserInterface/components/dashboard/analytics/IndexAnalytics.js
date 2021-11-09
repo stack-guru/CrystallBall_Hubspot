@@ -94,14 +94,14 @@ export default class IndexAnalytics extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-9"></div>
+                            <div className="col-9 text-right">Property:</div>
                             <div className="col-3">
                                 <GoogleAnalyticsPropertySelect
                                     name="ga_property_id"
                                     id="ga_property_id"
                                     value={this.state.ga_property_id}
                                     onChangeCallback={(event) => { this.setState({ ga_property_id: event.target.value }); this.fetchStatistics(event.target.value); }} placeholder="Select GA Properties"
-                                    components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
+                                    components={{ IndicatorSeparator: () => null }}
                                     autoSelectFirst
                                 />
                             </div>

@@ -96,14 +96,14 @@ export default class IndexSearchConsole extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-9"></div>
+                            <div className="col-9 text-right">Site:</div>
                             <div className="col-3">
                                 <GoogleSearchConsoleSiteSelect
                                     name="google_search_console_site_id"
                                     id="google_search_console_site_id"
                                     value={this.state.google_search_console_site_id}
                                     onChangeCallback={(event) => { this.setState({ google_search_console_site_id: event.target.value }); this.fetchStatistics(event.target.value); }} placeholder="Select Site"
-                                    components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
+                                    components={{ IndicatorSeparator: () => null }}
                                     autoSelectFirst
                                 />
                             </div>
