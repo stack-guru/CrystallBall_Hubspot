@@ -91,6 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::get('devices', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'devicesIndex']);
                 Route::get('search-appearances', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'searchAppearancesIndex']);
                 Route::get('annotations-dates', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'annotationsDatesIndex']);
+                Route::get('clicks-impressions-days-annotations', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'clicksImpressionsDaysAnnotationsIndex']);
             });
         });
 

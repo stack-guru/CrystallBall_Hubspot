@@ -1,17 +1,14 @@
 import React from 'react';
 import { Chart } from "react-google-charts";
 
-export default function UsersDaysWithAnnotationsGraph(props) {
+export default function ClicksImpressionsDaysGraph(props) {
 
-    // const dates = props.statistics.map(s => moment(s.statistics_date).format("DD MMM"));
-    // const months = props.statistics.map(s => moment(s.statistics_date).format("MMM"));
-    // const noOfUsers = props.statistics.map(s => s.sum_users_count);
     const combinedArray = props.statistics.map(s => {
         const momentDate = moment(s.statistics_date);
         return [
             new Date(momentDate.format('YYYY'), momentDate.format('MM') - 1, momentDate.format('DD')),
-            // momentDate.format("DD") + "\n" + momentDate.format("MMM"),
-            Number.parseInt(s.sum_users_count),
+            Number.parseInt(s.sum_clicks_count),
+            Number.parseInt(s.sum_impressions_count),
             s.event_name ? s.event_name.toUpperCase().split(' ').map(a => a.substr(0, 1)).join('') : null,
             s.description ? s.description : null,
         ];
@@ -20,7 +17,8 @@ export default function UsersDaysWithAnnotationsGraph(props) {
     const dataArray = [
         [
             { type: 'date', label: 'Day' },
-            { type: 'number', label: 'Users' },
+            { type: 'number', label: 'Clicks' },
+            { type: 'number', label: 'Impressions' },
             { type: 'string', role: 'annotation' },
             { type: 'string', role: 'annotationText' }
         ],
@@ -28,6 +26,15 @@ export default function UsersDaysWithAnnotationsGraph(props) {
     ];
 
     const optionsArray = {
+        // chartArea: {
+        //     left: 20,
+        //     right: 5, // !!! works !!!
+        //     bottom: 40,  // !!! works !!!
+        //     top: 10,
+        //     width: "100%",
+        //     // height: "100%"
+        // },
+        'chartArea': { 'width': '100%', 'height': '70%', left: 40 },
         pointSize: 5,
         hAxis: {
             scaleType: 'linear',
@@ -92,7 +99,8 @@ export default function UsersDaysWithAnnotationsGraph(props) {
 
     return <Chart
         width={'100%'}
-        height={'50'}
+        style={{ paddingLeft: '10px' }}
+        // height={'50'}
         chartType="AreaChart"
         loader={<div>Loading Chart</div>}
         data={dataArray}

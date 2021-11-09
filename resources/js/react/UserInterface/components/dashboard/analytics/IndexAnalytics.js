@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { DateRange } from 'react-date-range';
 
-import UsersDaysGraph from './graphs/usersDaysGraph';
 import HttpClient from '../../../utils/HttpClient';
 import AnnotationsTable from './tables/annotationsTable';
 import MediaGraph from './graphs/mediaGraph';

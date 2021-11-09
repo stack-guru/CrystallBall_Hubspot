@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { DateRange } from 'react-date-range';
 
-import UsersDaysGraph from './graphs/usersDaysGraph';
 import HttpClient from '../../../utils/HttpClient';
 import AnnotationsTable from './tables/annotationsTable';
-import MediaGraph from './graphs/mediaGraph';
-import GoogleAnalyticsPropertySelect from '../../../utils/GoogleAnalyticsPropertySelect';
 import ErrorAlert from '../../../utils/ErrorAlert';
 import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
-import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGraph';
 import GoogleSearchConsoleSiteSelect from '../../../utils/GoogleSearchConsoleSiteSelect';
 import NoDataFoundPage from './subPages/NoDataFoundPage';
 import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
+import ClicksImpressionsDaysGraph from './graphs/clicksImpressionsDaysGraph';
 
 export default class IndexSearchConsole extends Component {
     constructor(props) {
@@ -25,6 +22,7 @@ export default class IndexSearchConsole extends Component {
             countriesStatistics: [],
             devicesStatistics: [],
             searchApearancesStatistics: [],
+            clicksImpressionsDaysStatistics: [],
             annotations: [],
             startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
             endDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
@@ -111,10 +109,8 @@ export default class IndexSearchConsole extends Component {
                         {
                             this.state.queriesStatistics.length ?
                                 <React.Fragment>
-                                    {/* <UsersDaysGraph statistics={this.state.usersDaysStatistics} /> */}
-                                    {/* <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} /> */}
+                                    <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
                                     <AnnotationsTable user={this.props.user} annotations={this.state.annotations} />
-                                    {/* <MediaGraph statistics={this.state.mediaStatistics} /> */}
                                     <div className="row">
                                         <div className="col-6">
                                             <table className="table table-bordered table-hover">
@@ -215,6 +211,14 @@ export default class IndexSearchConsole extends Component {
     fetchStatistics(gaPropertyId) {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
+            HttpClient.get(`/dashboard/search-console/clicks-impressions-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}`)
+                .then(response => {
+                    this.setState({ isBusy: false, clicksImpressionsDaysStatistics: response.data.statistics });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
             HttpClient.get(`/dashboard/search-console/queries?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}`)
                 .then(response => {
                     this.setState({ isBusy: false, queriesStatistics: response.data.statistics });
