@@ -25,7 +25,7 @@ export default class IndexAnalytics extends Component {
             sourcesStatistics: [],
             deviceCategoriesStatistics: [],
             startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
-            endDate: moment().format('YYYY-MM-DD'),
+            endDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
             ga_property_id: '*',
             errors: undefined
         };

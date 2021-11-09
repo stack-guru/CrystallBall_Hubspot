@@ -27,7 +27,7 @@ export default class IndexSearchConsole extends Component {
             searchApearancesStatistics: [],
             annotations: [],
             startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
-            endDate: moment().format('YYYY-MM-DD'),
+            endDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
             google_search_console_site_id: '*',
             errors: undefined
         };
