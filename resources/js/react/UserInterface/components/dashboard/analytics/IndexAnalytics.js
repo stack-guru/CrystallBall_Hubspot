@@ -56,8 +56,16 @@ export default class IndexAnalytics extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-8"></div>
-                            <div className="col-3 text-right">
+                            <div className="col-12" >
+                                Date range:
+                                &nbsp;&nbsp;&nbsp;
+                                <button className="btn btn-light" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
+                                    From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}
+                                    &nbsp;&nbsp;&nbsp;
+                                    To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}
+                                    &nbsp;
+                                    <i className="fa fa-chevron-down"></i>
+                                </button>
                                 {
                                     this.state.showDateRangeSelect ?
                                         <DateRange
@@ -82,19 +90,15 @@ export default class IndexAnalytics extends Component {
                                             }}
                                         />
                                         :
-                                        <React.Fragment>
-                                            <p>From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}</p>
-                                            <p>To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}</p>
-                                        </React.Fragment>
+                                        null
                                 }
                             </div>
-                            <div className="col-1">
-                                <button className="btn btn-secondary" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>{this.state.showDateRangeSelect ? 'Close' : 'Select Dates'}</button>
-                            </div>
                         </div>
-                        <div className="row">
-                            <div className="col-9 text-right">Property:</div>
-                            <div className="col-3">
+                        <div className="row mt-3">
+                            <div className="col-1" >
+                                Property:
+                            </div>
+                            <div className="col-3" >
                                 <GoogleAnalyticsPropertySelect
                                     name="ga_property_id"
                                     id="ga_property_id"

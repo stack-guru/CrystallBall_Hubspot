@@ -90,6 +90,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 placeholder={this.props.placeholder}
                 components={this.props.components}
                 onFocus={this.props.onFocus}
+                style={this.props.style}
             />
         )
     }
