@@ -99,14 +99,18 @@ export default function UsersDaysWithAnnotationsGraph(props) {
         }
     };
 
-    return <Chart
-        width={'100%'}
-        style={{ paddingLeft: '10px' }}
-        // height={'50'}
-        chartType="AreaChart"
-        loader={<div>Loading Chart</div>}
-        data={dataArray}
-        options={optionsArray}
-    />
+    return <div className="row ml-0 mr-0 mt-4">
+        <div className="col-12">
+            <Chart
+                width={'100%'}
+                // style={{ paddingLeft: '10px' }}
+                // height={'50'}
+                chartType="AreaChart"
+                loader={<div>Loading Chart</div>}
+                data={dataArray}
+                options={optionsArray}
+            />
+        </div>
+    </div>
 };
 
