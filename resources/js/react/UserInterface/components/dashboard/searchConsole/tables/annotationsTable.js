@@ -7,7 +7,7 @@ export default function AnnotationsTable(props) {
             <div className="col-12">
                 <div id="annotation-table-container" className="table-responsive">
                     <table className="table table-bordered table-hover blue-hover">
-                        <thead style={{ border: 'solid #0962ff' }}>
+                        <thead style={{ border: '3px solid #35a1ea' }}>
                             <tr>
                                 <th>Event Name</th>
                                 <th>Category</th>
@@ -16,7 +16,7 @@ export default function AnnotationsTable(props) {
                                 <th>Impressions</th>
                             </tr>
                         </thead>
-                        <tbody id="annotation-table-body">
+                        <tbody id="annotation-table-body" >
                             {
                                 props.annotations.map(anno => {
                                     return (
