@@ -60,7 +60,7 @@ export default class IndexSearchConsole extends Component {
                             <div className="col-12" >
                                 Date range:
                                 &nbsp;&nbsp;&nbsp;
-                                <button className="btn btn-light" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
+                                <button className="btn thin-light-gray-border text-black" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
                                     From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}
                                     &nbsp;&nbsp;&nbsp;
                                     To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}
