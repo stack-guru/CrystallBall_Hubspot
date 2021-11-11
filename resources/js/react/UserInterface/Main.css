@@ -608,3 +608,8 @@ table.table-striped  th{
 .thin-border {
     border-width: 0.75pt !important;
 }
+
+.table-hover.blue-hover tbody tr:hover {
+    color: #212529;
+    background-color: #dbf3f3;
+}

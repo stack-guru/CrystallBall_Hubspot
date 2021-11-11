@@ -6,7 +6,7 @@ export default function AnnotationsTable(props) {
         <div className="row ml-0 mr-0 mt-4">
             <div className="col-12">
                 <div id="annotation-table-container" className="table-responsive">
-                    <table className="table table-bordered table-hover">
+                    <table className="table table-bordered table-hover blue-hover">
                         <thead style={{ border: 'solid #0962ff' }}>
                             <tr>
                                 <th>Event Name</th>
