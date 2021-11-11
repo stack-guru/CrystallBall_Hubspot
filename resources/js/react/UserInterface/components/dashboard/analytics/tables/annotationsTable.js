@@ -12,16 +12,9 @@ export default function AnnotationsTable(props) {
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th colSpan="3">{props.statisticsPaddingDays} days after the event</th>
-                            </tr>
-                            <tr style={{ border: '3px solid #35a1ea' }}>
-                                <th>Event Name</th>
-                                <th>Category</th>
-                                <th>Date</th>
-                                <th>Website Visits</th>
-                                <th>
+                                <th colSpan="3">
                                     <div className="dropdown">
-                                        Conversions
+                                        {props.statisticsPaddingDays} days after the event
                                         <button className="btn btn-link btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a className="dropdown-item" onClick={() => { props.satisticsPaddingDaysCallback(0); }}>Event date</a>
@@ -30,6 +23,13 @@ export default function AnnotationsTable(props) {
                                         </div>
                                     </div>
                                 </th>
+                            </tr>
+                            <tr style={{ border: '3px solid #35a1ea' }}>
+                                <th>Event Name</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Website Visits</th>
+                                <th>Conversions</th>
                                 <th>Conversion Rate</th>
                             </tr>
                         </thead>
