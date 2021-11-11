@@ -115,8 +115,8 @@ export default class IndexSearchConsole extends Component {
                                 <React.Fragment>
                                     <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
                                     <AnnotationsTable user={this.props.user} annotations={this.state.annotations} />
-                                    <div className="row">
-                                        <div className="col-6">
+                                    <div className="row mt-4">
+                                        <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                                             <table className="table table-bordered table-hover">
                                                 <thead><tr><th>Query</th><th>Clicks</th><th>Impressions</th></tr></thead>
                                                 <tbody>
@@ -132,7 +132,7 @@ export default class IndexSearchConsole extends Component {
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div className="col-6">
+                                        <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                                             <table className="table table-bordered table-hover">
                                                 <thead><tr><th>Page</th><th>Clicks</th><th>Impressions</th></tr></thead>
                                                 <tbody>
@@ -149,8 +149,8 @@ export default class IndexSearchConsole extends Component {
                                             </table>
                                         </div>
                                     </div>
-                                    <div className="row">
-                                        <div className="col-6">
+                                    <div className="row mt-4">
+                                        <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                                             <table className="table table-bordered table-hover">
                                                 <thead><tr><th>Country</th><th>Clicks</th><th>Impressions</th></tr></thead>
                                                 <tbody>
@@ -166,7 +166,7 @@ export default class IndexSearchConsole extends Component {
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div className="col-6">
+                                        <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                                             <table className="table table-bordered table-hover">
                                                 <thead><tr><th>Device</th><th>Clicks</th><th>Impressions</th></tr></thead>
                                                 <tbody>
@@ -183,8 +183,8 @@ export default class IndexSearchConsole extends Component {
                                             </table>
                                         </div>
                                     </div>
-                                    <div className="row">
-                                        <div className="col-6">
+                                    <div className="row mt-4">
+                                        <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                                             <table className="table table-bordered table-hover">
                                                 <thead><tr><th>Search Appearance</th><th>Clicks</th><th>Impressions</th></tr></thead>
                                                 <tbody>
