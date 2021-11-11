@@ -111,12 +111,14 @@ class AnalyticsController extends Controller
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
             'end_date' => 'required|date|after:2005-01-01|after:start_date|before:tomorrow',
+            'statistics_padding_days' => 'required|numeric|between:0,7',
             'ga_property_id' => 'required'
         ]);
 
         $this->authorize('viewAny', Annotation::class);
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
+        $statisticsPaddingDays = $request->query('statistics_padding_days');
 
         $userIdsArray = $this->getAllGroupUserIdsArray();
 
@@ -133,7 +135,7 @@ class AnalyticsController extends Controller
         $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
 
         $statistics = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.* FROM ($annotationsQuery) AS T2 RIGHT JOIN (
-                    SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL 7 DAY) as seven_day_old_date, SUM(users_count) as sum_users_count FROM google_analytics_metric_dimensions
+                    SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL $statisticsPaddingDays DAY) as seven_day_old_date, SUM(users_count) as sum_users_count FROM google_analytics_metric_dimensions
                     WHERE ga_property_id = $gAProperty->id
                     GROUP BY statistics_date
                 ) AS T3 ON T2.show_at = T3.seven_day_old_date

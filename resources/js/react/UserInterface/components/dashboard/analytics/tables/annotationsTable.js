@@ -7,13 +7,29 @@ export default function AnnotationsTable(props) {
             <div className="col-12" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                 <div id="annotation-table-container" className="table-responsive">
                     <table className="table table-bordered table-hover blue-hover">
-                        <thead style={{ border: '3px solid #35a1ea' }}>
+                        <thead>
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th colSpan="3">{props.statisticsPaddingDays} days after the event</th>
+                            </tr>
+                            <tr style={{ border: '3px solid #35a1ea' }}>
                                 <th>Event Name</th>
                                 <th>Category</th>
                                 <th>Date</th>
                                 <th>Website Visits</th>
-                                <th>Conversions</th>
+                                <th>
+                                    <div className="dropdown">
+                                        Conversions
+                                        <button className="btn btn-link btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a className="dropdown-item" onClick={() => { props.satisticsPaddingDaysCallback(0); }}>Event date</a>
+                                            <a className="dropdown-item" onClick={() => { props.satisticsPaddingDaysCallback(3); }}>3 days after the event (this count the event day too)</a>
+                                            <a className="dropdown-item" onClick={() => { props.satisticsPaddingDaysCallback(7); }}>7 days after the event (this count the event day too)</a>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th>Conversion Rate</th>
                             </tr>
                         </thead>

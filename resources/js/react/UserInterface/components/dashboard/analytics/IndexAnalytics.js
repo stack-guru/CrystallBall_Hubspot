@@ -26,10 +26,13 @@ export default class IndexAnalytics extends Component {
             startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
             endDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
             ga_property_id: '*',
+            statisticsPaddingDays: 7,
             errors: undefined
         };
 
         this.fetchStatistics = this.fetchStatistics.bind(this);
+        this.fetchUsersDaysAnnotations = this.fetchUsersDaysAnnotations.bind(this);
+        this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
     }
 
     componentDidMount() {
@@ -114,7 +117,7 @@ export default class IndexAnalytics extends Component {
                                 <React.Fragment>
                                     {/* <UsersDaysGraph statistics={this.state.usersDaysStatistics} /> */}
                                     <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
-                                    <AnnotationsTable user={this.props.user} annotations={this.state.annotations} />
+                                    <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
                                     <MediaGraph statistics={this.state.mediaStatistics} />
                                     <div className="row mt-4">
                                         <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
@@ -163,14 +166,7 @@ export default class IndexAnalytics extends Component {
     fetchStatistics(gaPropertyId) {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
-            HttpClient.get(`/dashboard/analytics/users-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
-                .then(response => {
-                    this.setState({ isBusy: false, usersDaysStatistics: response.data.statistics });
-                }, (err) => {
-                    this.setState({ isBusy: false, errors: (err.response).data });
-                }).catch(err => {
-                    this.setState({ isBusy: false, errors: err });
-                });
+            this.fetchUsersDaysAnnotations(gaPropertyId);
             HttpClient.get(`/dashboard/analytics/annotations-metrics-dimensions?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
                     this.setState({ isBusy: false, annotations: response.data.annotations });
@@ -204,5 +200,20 @@ export default class IndexAnalytics extends Component {
                     this.setState({ isBusy: false, errors: err });
                 });
         }
+    }
+
+    fetchUsersDaysAnnotations(gaPropertyId) {
+        HttpClient.get(`/dashboard/analytics/users-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
+            .then(response => {
+                this.setState({ isBusy: false, usersDaysStatistics: response.data.statistics });
+            }, (err) => {
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isBusy: false, errors: err });
+            });
+    }
+
+    changeStatisticsPaddingDays(statisticsPaddingDays) {
+        this.setState({ statisticsPaddingDays: statisticsPaddingDays }, () => this.fetchUsersDaysAnnotations(this.state.ga_property_id));
     }
 }
