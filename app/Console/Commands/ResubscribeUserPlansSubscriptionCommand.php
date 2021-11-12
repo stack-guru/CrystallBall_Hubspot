@@ -104,7 +104,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
                 $isCouponApplied = false;
                 if ($lastPricePlanSubscription->coupon && $lastPricePlanSubscription->left_coupon_recurring > 0) {
-                    $couponApplied = true;
+                    $isCouponApplied = true;
                     $coupon = $lastPricePlanSubscription->coupon;
                     $pricePlanPrice = $pricePlanPrice - (($coupon->discount_percent / 100) * $pricePlanPrice);
                 }
