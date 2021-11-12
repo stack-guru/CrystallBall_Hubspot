@@ -251,4 +251,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return (string) $this->getKey();
     }
+
+    public function routeNotificationForTwilio()
+    {
+        return $this->hasVerifiedPhone() ? (string) $this->phone_number : null;
+    }
 }
