@@ -27,6 +27,7 @@ export default function AnnotationsTable(props) {
                             <tr style={{ border: '3px solid #35a1ea' }}>
                                 <th>Event Name</th>
                                 <th>Category</th>
+                                <th>Description</th>
                                 <th>Date</th>
                                 <th>Website Visits</th>
                                 <th>Conversions</th>
@@ -41,6 +42,7 @@ export default function AnnotationsTable(props) {
                                         <tr key={anno.id}>
                                             <td>{anno.event_name}</td>
                                             <td>{anno.category}</td>
+                                            <td>{anno.description}</td>
                                             <td>{moment(anno.show_at).format(timezoneToDateFormat(props.user.timezone))}</td>
                                             <td>{anno.sum_users_count}</td>
                                             <td>{anno.sum_conversions_count}</td>
