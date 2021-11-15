@@ -87,20 +87,25 @@
 
     <link href="{{asset('style.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" defer></script>
 </head>
 
 <body class="app is-collapsed">
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ config('services.google.tag_manager.code')}}"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ config('services.google.tag_manager.code')}}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div id="loader">
         <div class="spinner"></div>
     </div>
-    <script>window.addEventListener('load', function load() {
+    <script>
+        window.addEventListener('load', function load() {
             const loader = document.getElementById('loader');
-            setTimeout(function () {
+            setTimeout(function() {
                 loader.classList.add('fadeOut');
             }, 300);
-        });</script>
+        });
+    </script>
 
     <div id="ui"></div>
 
@@ -108,18 +113,10 @@
     <script type="text/javascript" src="{{asset('vendor.js')}}"></script>
     <script type="text/javascript" src="{{asset('bundle.js')}}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
-        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
-        crossorigin="anonymous"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.js"
-        integrity="sha512-Zy6GmgJpPiVngCfEP3NZcAH5CdPuHg2RtF1w3jUln677wOsQPmZEVbdI9x6SraTrawfNFeE98YfFA/jAcJ1kVg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"
-        integrity="sha512-hDWGyh+Iy4Mr9AHOzUP2+Y0iVPn/BwxxaoSleEjH/i1o4EVTF/sh0/A1Syii8PWOae+uPr+T/KHwynoebSuAhw=="
-        crossorigin="anonymous"></script>
-    <script type="text/javascript"
-        src="{{ config('services.bluesnap.environment') == 'sandbox' ? 'https://sandbox.bluesnap.com' : 'https://ws.bluesnap.com' }}/web-sdk/4/bluesnap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.js" integrity="sha512-Zy6GmgJpPiVngCfEP3NZcAH5CdPuHg2RtF1w3jUln677wOsQPmZEVbdI9x6SraTrawfNFeE98YfFA/jAcJ1kVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha512-hDWGyh+Iy4Mr9AHOzUP2+Y0iVPn/BwxxaoSleEjH/i1o4EVTF/sh0/A1Syii8PWOae+uPr+T/KHwynoebSuAhw==" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ config('services.bluesnap.environment') == 'sandbox' ? 'https://sandbox.bluesnap.com' : 'https://ws.bluesnap.com' }}/web-sdk/4/bluesnap.js"></script>
     <script type="text/javascript" src="{{asset('js/bs.js')}}"></script>
 
     <script type="text/javascript" src="{{asset('js/UI.js')}}"></script>

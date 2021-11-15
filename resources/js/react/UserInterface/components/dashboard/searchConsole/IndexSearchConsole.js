@@ -33,11 +33,6 @@ export default class IndexSearchConsole extends Component {
         this.fetchStatistics = this.fetchStatistics.bind(this);
     }
 
-    componentDidMount() {
-    }
-
-
-
     render() {
 
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
@@ -265,7 +260,14 @@ export default class IndexSearchConsole extends Component {
                 });
             HttpClient.get(`/dashboard/search-console/annotations-dates?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}`)
                 .then(response => {
-                    this.setState({ isBusy: false, annotations: response.data.annotations });
+                    this.setState({ isBusy: false, annotations: response.data.annotations }, () => {
+                        $('.data-table').DataTable({
+                            "searching": false,
+                            "lengthChange": false,
+                            "ordering": false,
+                            "pageLength": 10
+                        });
+                    });
                 }, (err) => {
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
