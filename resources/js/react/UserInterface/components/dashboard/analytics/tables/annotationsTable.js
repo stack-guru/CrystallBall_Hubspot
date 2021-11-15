@@ -12,7 +12,7 @@ export default function AnnotationsTable(props) {
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th colSpan="3">
+                                <th colSpan="4">
                                     <div className="dropdown">
                                         {props.statisticsPaddingDays} days after the event
                                         <button className="btn btn-link btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>

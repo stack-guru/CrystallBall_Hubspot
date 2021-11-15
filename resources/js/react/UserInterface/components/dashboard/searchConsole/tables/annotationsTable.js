@@ -4,9 +4,9 @@ import { timezoneToDateFormat } from '../../../../utils/TimezoneTodateFormat';
 export default function AnnotationsTable(props) {
     return <div id="annotation-table-container">
         <div className="row ml-0 mr-0 mt-4">
-            <div className="col-12">
+            <div className="col-12" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                 <div id="annotation-table-container" className="table-responsive">
-                    <table className="table table-bordered table-hover blue-hover data-table">
+                    <table className="table table-bordered table-hover blue-hover">
                         <thead style={{ border: '3px solid #35a1ea' }}>
                             <tr>
                                 <th>Event Name</th>

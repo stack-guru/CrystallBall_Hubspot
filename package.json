@@ -25,10 +25,10 @@
     "dependencies": {
         "@pusher/push-notifications-web": "^1.1.0",
         "chart.js": "^3.5.1",
-        "datatables.net": "^1.11.3",
         "react": "^16.14.0",
         "react-chartjs-2": "^3.0.5",
         "react-color": "^2.19.3",
+        "react-data-table-component": "^7.4.5",
         "react-date-range": "^1.4.0",
         "react-dom": "^16.14.0",
         "react-google-charts": "^3.0.15",
