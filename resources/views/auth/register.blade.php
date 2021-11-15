@@ -1,14 +1,14 @@
 @extends('layouts/auth')
 
 @section('page-title', 'Register')
-@section('meta-description', 'Signup to GAannotations and automate Google Analytics Annotations')
+@section('meta-description', 'Signup to ' . config('app.name') . ' and automate Google Analytics Annotations')
 
 @section('content')
 <form class="form-signin" method="POST" action="{{ route('register') }}">
   @csrf
   <div class="text-center mb-4">
     <img class="mb-4" src="{{asset('images/company_logo.png')}}" alt="" width="72" height="72">
-    <h1 class="h3 mb-3 font-weight-normal">GAannotations</h1>
+    <h1 class="h3 mb-3 font-weight-normal">{{config('app.name')}}</h1>
     {{--        <p>Google Analytics Annotations Amplified</p>--}}
   </div>
 
@@ -58,7 +58,7 @@
     <div class="form-check">
       <input type="checkbox" class="form-check-input @error('read_confirmation') is-invalid @enderror"
         name="read_confirmation" id="read_confirmation" />
-      <label class="form-check-label" for="read_confirmation">Do you agree to our <a href="https://gaannotations.com/privacy-policy" target="_blank">Privacy Policy</a>?</label>
+      <label class="form-check-label" for="read_confirmation">Do you agree to our <a href="https://crystalballinsight.com/privacy-policy" target="_blank">Privacy Policy</a>?</label>
       @error('read_confirmation')
       <span class="invalid-feedback" role="alert">
         <strong>{{ $message }}</strong>

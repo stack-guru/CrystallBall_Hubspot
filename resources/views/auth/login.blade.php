@@ -1,7 +1,7 @@
 @extends('layouts/auth')
 
 @section('page-title', 'Login')
-@section('meta-description', 'Sign in to GAannotations')
+@section('meta-description', 'Sign in to ' . config('app.name'))
 
 @section('content')
 <form class="form-signin" method="POST" action="{{ route('login') }}">

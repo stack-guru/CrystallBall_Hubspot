@@ -53,7 +53,7 @@
     {{url("/")}}
                  </pre>
                 <p>
-                    GAannotations provide API for all actions over annotations
+                    {{config('app.name')}} provide API for all actions over annotations
                 </p>
                 <p>
                     To use this API, you need an <strong>API key</strong>. Please <a
@@ -124,7 +124,7 @@
                 "eventSource": {
                     "name": "Black Friday"
                 },
-                "url": "https://gaannotations.com/",
+                "url": "{{config('app.url')}}",
                 "description": "Black Friday Deals 2020",
                 "highlighted": false,
                 "publishDate": "2020-11-27UTC00:00:000",
@@ -153,7 +153,7 @@
         --data category=Sales Event \
         --data event_name=Black Friday \
         --data google_analytics_property_id[]=3 \
-        --data url=https://gaannotations.com/ \
+        --data url={{config('app.url')}} \
         --data 'description=Black Friday Deals 2020' \
         --data show_at=2020-11-27 \
                  </code></pre>
@@ -171,7 +171,7 @@
         "annotation": {
           "category": "Sales Event",
           "event_name": "Black Friday",
-          "url": "https://gaannotations.com/",
+          "url": "{{config('app.url')}}",
           "description": "Black Friday Deals 2020",
           "show_at": "2020-11-27",
           "user_id": 1,
@@ -248,7 +248,7 @@
         --data category=Sales Event \
         --data event_name=Black Friday \
         --data google_analytics_property_id[]=4 \
-        --data url=https://gaannotations.com/ \
+        --data url={{config('app.url')}} \
         --data 'description=Black Friday Deals 2020' \
         --data show_at=2020-11-27 \
                  </code></pre>
@@ -268,7 +268,7 @@
           "user_id": 1,
           "category": "Sales Event",
           "event_name": "Black Friday",
-          "url": "https://gaannotations.com/",
+          "url": "{{config('app.url')}}",
           "description": "Black Friday Deals 2020",
           "show_at": "2020-11-27",
           "created_at": "2020-10-29T10:11:19.000000Z",

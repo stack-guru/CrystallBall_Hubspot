@@ -1,7 +1,7 @@
 @extends('layouts/auth')
 
 @section('page-title', 'Reset Password')
-@section('meta-description', 'Reset your password to GAannotations')
+@section('meta-description', 'Reset your password to ' . config('app.name'))
 
 @section('content')
 <form class="form-signin" method="POST" action="{{ route('password.email') }}">

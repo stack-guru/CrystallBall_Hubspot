@@ -31,18 +31,22 @@ class AppServiceProvider extends ServiceProvider
         switch (request()->getHost()) {
             case 'app.gaannotations.com':
                 config(['app.name' => 'GAannotations', 'app.url' => 'https://app.gaannotations.com']);
+                config(['app.icon' => asset('/favicon-gaa.ico')]);
                 break;
 
             case 'app.crystalballinsight.com':
                 config(['app.name' => 'CrystalBallInsight', 'app.url' => 'https://app.crystalballinsight.com']);
+                config(['app.icon' => asset('/favicon-cbi.ico')]);
                 break;
 
             case 'localhost':
                 config(['app.name' => 'GALocal', 'app.url' => 'http://localhost']);
+                config(['app.icon' => asset('/favicon-gaa.ico')]);
                 break;
 
             case '127.0.0.1':
                 config(['app.name' => 'GAIP', 'app.url' => 'http://127.0.0.1']);
+                config(['app.icon' => asset('/favicon-cbi.ico')]);
                 break;
         }
     }

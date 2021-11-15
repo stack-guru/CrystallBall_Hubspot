@@ -11,7 +11,7 @@
   <meta name="description" content="@yield('meta-description')">
   <meta name="author" content="">
 
-  <title>@yield('page-title') | GAannotations</title>
+  <title>@yield('page-title') | {{config('app.name')}}</title>
 
   {{--
   <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/floating-labels/"> --}}
