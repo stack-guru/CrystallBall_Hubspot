@@ -7,7 +7,7 @@
 
     <meta charset="utf-8">
     <title>API - Documentation</title>
-    <meta name="description" content="GAannotations APIs allow you to integrate complex services with Google Analytics Annotations.">
+    <meta name="description" content="{{ config('app.name') }} APIs allow you to integrate complex services with Google Analytics Annotations.">
 
 
     <meta http-equiv="cleartype" content="on">

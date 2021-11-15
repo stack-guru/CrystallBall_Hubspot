@@ -8,7 +8,7 @@
   @csrf
   <div class="text-center mb-4">
     <img class="mb-4" src="{{asset('images/company_logo.png')}}" alt="" width="72" height="72">
-    <h1 class="h3 mb-3 font-weight-normal">GAannotations</h1>
+    <h1 class="h3 mb-3 font-weight-normal">{{config('app.name')}}</h1>
     {{--        <p>Google Analytics Annotations Amplified</p>--}}
   </div>
 
