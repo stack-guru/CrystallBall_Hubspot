@@ -55,6 +55,7 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'icon' => env('APP_ICON', '/favicon.ico'),
+    'logo' => env('APP_LOGO', '/images/company_logo.png'),
 
     'asset_url' => env('ASSET_URL', null),
 

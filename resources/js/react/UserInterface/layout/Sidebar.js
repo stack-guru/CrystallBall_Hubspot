@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as $ from 'jquery';
+import CompanyLogo from '../utils/CompanyLogo';
 
 class sidebar extends React.Component {
 
@@ -45,7 +46,7 @@ class sidebar extends React.Component {
                             <div className="peers ai-c fxw-nw">
                                 <div className="peer">
                                     <div className="logo d-flex justify-content-center align-items-center" style={{ minHeight: 65 }}>
-                                        <img src="/images/company_logo.png" width="40px" height="40px" alt="" />
+                                        <CompanyLogo width="40px" height="40px" alt="" />
                                     </div>
                                 </div>
                                 <div className="peer peer-greed "><h5 className="lh-1 logo-text m-0">GAannotations</h5>

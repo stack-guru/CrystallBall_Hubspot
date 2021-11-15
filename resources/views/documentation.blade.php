@@ -27,7 +27,7 @@
 <body>
     <div class="left-menu">
         <div class="content-logo">
-            <img alt="" title="" src="{{ asset('/images/company_logo.png') }}" height="32" />
+            <img alt="" title="" src="{{ config('app.logo') }}" height="32" />
             <span>API Documentation</span>
         </div>
         <div class="content-menu">
