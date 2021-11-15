@@ -10,6 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <link rel="shortcut icon" type="image/ico" href="{{config('app.icon')}}" />
     <title>@yield('page-title')</title>
 
     <!-- Scripts -->

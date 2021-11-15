@@ -6,6 +6,7 @@
     @include('helpers/trackingCodes')
 
     <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/ico" href="{{config('app.icon')}}" />
     <title>API - Documentation</title>
     <meta name="description" content="{{ config('app.name') }} APIs allow you to integrate complex services with Google Analytics Annotations.">
 

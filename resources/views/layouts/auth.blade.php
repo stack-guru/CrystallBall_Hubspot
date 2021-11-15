@@ -11,6 +11,7 @@
   <meta name="description" content="@yield('meta-description')">
   <meta name="author" content="">
 
+  <link rel="shortcut icon" type="image/ico" href="{{config('app.icon')}}" />
   <title>@yield('page-title') | {{config('app.name')}}</title>
 
   {{--
