@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import * as $ from 'jquery';
 import CompanyLogo from '../utils/CompanyLogo';
+import CompanyHeading from '../utils/CompanyHeading';
 
 class sidebar extends React.Component {
 
@@ -42,17 +43,20 @@ class sidebar extends React.Component {
             <div className="sidebar-inner">
                 <div className="sidebar-logo bg-white">
                     <div className="peers ai-c fxw-nw">
-                        <div className="peer peer-greed"><a className="sidebar-link td-n" href="/">
-                            <div className="peers ai-c fxw-nw">
-                                <div className="peer">
-                                    <div className="logo d-flex justify-content-center align-items-center" style={{ minHeight: 65 }}>
-                                        <CompanyLogo width="40px" height="40px" alt="" />
+                        <div className="peer peer-greed">
+                            <a className="sidebar-link td-n" href="/">
+                                <div className="peers ai-c fxw-nw">
+                                    <div className="peer">
+                                        <div className="logo d-flex justify-content-center align-items-center" style={{ minHeight: 65 }}>
+                                            <CompanyLogo width="40px" height="40px" alt="" />
+                                        </div>
+                                    </div>
+                                    <div className="peer peer-greed ">
+                                        <CompanyHeading className="lh-1 logo-text m-0" />
                                     </div>
                                 </div>
-                                <div className="peer peer-greed "><h5 className="lh-1 logo-text m-0">GAannotations</h5>
-                                </div>
-                            </div>
-                        </a></div>
+                            </a>
+                        </div>
                         <div className="peer">
                             <div className="mobile-toggle sidebar-toggle">
                                 <a href={null} className="td-n" type="button"><i
