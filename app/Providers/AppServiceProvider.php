@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
                 break;
 
             case 'app.crystalballinsight.com':
-                config(['app.name' => 'CrystalBallInsight', 'app.url' => 'https://app.crystalballinsight.com']);
+                config(['app.name' => 'Crystal Ball', 'app.url' => 'https://app.crystalballinsight.com']);
                 config(['app.icon' => asset('/favicon-cbi.ico'), 'app.logo' => asset('/images/company_logo_cbi.png')]);
                 break;
 
