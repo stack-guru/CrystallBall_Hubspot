@@ -89,8 +89,7 @@ class LoginController extends Controller
 
             return response(['token' => $token], 200);
         } else {
-            return response(["message" => "The Email used in this browser isn't registered yet. Log in to Chrome with the same Email you registered to GAannotations and try again."], 422);
+            return response(["message" => "The Email used in this browser isn't registered yet. Log in to Chrome with the same Email you registered to " . config('app.name') . " and try again."], 422);
         }
     }
-
 }

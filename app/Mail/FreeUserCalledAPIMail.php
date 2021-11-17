@@ -32,7 +32,7 @@ class FreeUserCalledAPIMail extends Mailable
             ->html(
                 (new MailMessage)
                     ->line("Apologies! Your current plan doesn't support API.")
-                    ->line('Ask the admin of this account to upgrade and continue enjoying the GAannotations API feature.')
+                    ->line('Ask the admin of this account to upgrade and continue enjoying the ' . config('app.name') . ' API feature.')
                     ->render()
             );
     }

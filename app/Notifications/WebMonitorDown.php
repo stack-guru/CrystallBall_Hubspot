@@ -75,7 +75,7 @@ class WebMonitorDown extends Notification
             ->line('The monitor ' . $this->webMonitor->name . ' (' . $this->webMonitor->url . ')  is currently DOWN. ')
             ->line('You should check the issue right away! [ERROR]')
             ->line('Event timestamp: ' . Carbon::now() . '')
-            ->line('GAannotations will alert you when it is back up. ');
+            ->line(config('app.name') . ' will alert you when it is back up. ');
     }
 
     public function toPushNotification($notifiable)

@@ -48,7 +48,7 @@ class VerifyPhone extends Notification
     protected function buildPhoneMessage($verificationCode)
     {
         return (new TwilioSmsMessage())
-            ->content("$verificationCode is your GAannotations verification code. It is only valid for " . self::verificationCodeExipireMinutes . " minutes.");
+            ->content("$verificationCode is your " . config('app.name') . " verification code. It is only valid for " . self::verificationCodeExipireMinutes . " minutes.");
     }
 
     /**

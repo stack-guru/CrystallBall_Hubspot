@@ -32,7 +32,7 @@ class TrialPricePlanEndedMail extends Mailable
             ->html(
                 (new MailMessage)
                     ->line("Apologies! Your current plan doesn't support properties on API.")
-                    ->line('Ask the admin of this account to upgrade and continue enjoying the GAannotations properties feature.')
+                    ->line('Ask the admin of this account to upgrade and continue enjoying the ' . config('app.name') . ' properties feature.')
                     ->render()
             );
     }

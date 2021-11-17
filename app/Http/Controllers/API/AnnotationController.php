@@ -85,7 +85,7 @@ class AnnotationController extends Controller
         if ($request->has('google_analytics_property_id')) {
             if ($pricePlan->ga_account_count == 1) {
                 Mail::to($user)->send(new BasicUserUsedGAPropertyMail);
-                return response()->json(['message' => "Apologies! Your current plan doesn't support properties on API.\nAsk the admin of this account to upgrade and continue enjoying the GAannotations properties feature."], 402);
+                return response()->json(['message' => "Apologies! Your current plan doesn't support properties on API.\nAsk the admin of this account to upgrade and continue enjoying the " . config('app.name') . " properties feature."], 402);
             }
         }
 
@@ -125,7 +125,6 @@ class AnnotationController extends Controller
         event(new UserUsedAPI);
 
         return response()->json(['annotation' => $annotation], 201);
-
     }
 
     /**
@@ -151,7 +150,7 @@ class AnnotationController extends Controller
         if ($request->has('google_analytics_property_id')) {
             if ($pricePlan->ga_account_count == 1) {
                 Mail::to($user)->send(new BasicUserUsedGAPropertyMail);
-                return response()->json(['message' => "Apologies! Your current plan doesn't support properties on API.\nAsk the admin of this account to upgrade and continue enjoying the GAannotations properties feature."], 402);
+                return response()->json(['message' => "Apologies! Your current plan doesn't support properties on API.\nAsk the admin of this account to upgrade and continue enjoying the " . config('app.name') . " properties feature."], 402);
             }
         }
 
@@ -200,7 +199,6 @@ class AnnotationController extends Controller
         event(new UserUsedAPI);
 
         return response()->json(['annotation' => $annotation], 200);
-
     }
 
     /**
@@ -237,5 +235,4 @@ class AnnotationController extends Controller
 
         return response()->json([], 204);
     }
-
 }
