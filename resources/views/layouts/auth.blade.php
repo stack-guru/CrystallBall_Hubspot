@@ -12,7 +12,7 @@
   <meta name="author" content="">
 
   <link rel="shortcut icon" type="image/ico" href="{{config('app.icon')}}" />
-  <title>@yield('page-title') | {{config('app.name')}}</title>
+  <title>@yield('page-title')</title>
 
   {{--
   <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/floating-labels/"> --}}
