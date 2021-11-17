@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AnnotationController extends Controller
 {
@@ -22,6 +23,9 @@ class AnnotationController extends Controller
         }
 
         $user = Auth::user();
+        if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-01')) {
+            abort(402);
+        }
         $userIdsArray = $this->getAllGroupUserIdsArray();
 
         $startDate = Carbon::parse($request->query('startDate'));
@@ -228,6 +232,9 @@ class AnnotationController extends Controller
         }
 
         $user = Auth::user();
+        if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-01')) {
+            abort(402);
+        }
         $userIdsArray = $this->getAllGroupUserIdsArray();
 
         $startDate = Carbon::parse($request->query('startDate'));
@@ -331,6 +338,9 @@ class AnnotationController extends Controller
         $this->authorize('create', Annotation::class);
 
         $user = Auth::user();
+        if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-01')) {
+            abort(402);
+        }
         $userId = $user->id;
 
         $annotation = new Annotation;

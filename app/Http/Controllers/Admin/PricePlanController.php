@@ -47,6 +47,7 @@ class PricePlanController extends Controller
         $pricePlan->has_integrations = $request->has_integrations == 'on';
         $pricePlan->has_data_sources = $request->has_data_sources == 'on';
         $pricePlan->has_notifications = $request->has_notifications == 'on';
+        $pricePlan->has_chrome_extension = $request->has_chrome_extension == 'on';
         $pricePlan->has_google_data_studio = $request->has_google_data_studio == 'on';
         $pricePlan->has_microsoft_power_bi = $request->has_microsoft_power_bi == 'on';
         $pricePlan->save();
@@ -94,6 +95,7 @@ class PricePlanController extends Controller
         $pricePlan->has_integrations = $request->has_integrations == 'on';
         $pricePlan->has_data_sources = $request->has_data_sources == 'on';
         $pricePlan->has_notifications = $request->has_notifications == 'on';
+        $pricePlan->has_chrome_extension = $request->has_chrome_extension == 'on';
         $pricePlan->has_google_data_studio = $request->has_google_data_studio == 'on';
         $pricePlan->has_microsoft_power_bi = $request->has_microsoft_power_bi == 'on';
         $pricePlan->save();

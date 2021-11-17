@@ -33,6 +33,7 @@ class PricePlanRequest extends FormRequest
             'has_csv_upload' => "nullable",
             'has_api' => "nullable",
             'has_notifications' => "nullable",
+            'has_chrome_extension' => "nullable",
             'has_google_data_studio' => "nullable",
             'has_microsoft_power_bi' => "nullable",
             'is_enabled' => "nullable",
