@@ -242,6 +242,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(UserStartupConfiguration::class);
     }
 
+    public function userChecklistItems()
+    {
+        return $this->hasMany(UserChecklistItem::class);
+    }
+
     public function notificationSettingFor($settingName)
     {
         return NotificationSetting::where('name', $settingName)->where('user_id', $this->getKey())->first();

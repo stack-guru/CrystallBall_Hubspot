@@ -29,8 +29,8 @@ class ChecklistItemRequest extends FormRequest
                 return [
                     'name' => 'required|string|unique:checklist_items,name',
                     'label' => 'required|string',
-                    'description' => 'required|string',
-                    'url' => 'required|string|url',
+                    'description' => ' nullable|string',
+                    'url' => 'required|string',
 
                     'sort_rank' => 'required|numeric',
                 ];
@@ -39,12 +39,12 @@ class ChecklistItemRequest extends FormRequest
             case 'PUT':
             case 'PATCH':
                 return [
-                    'name' => 'required|string',
-                    'label' => 'required|string',
-                    'description' => 'required|string',
-                    'url' => 'required|string|url',
+                    'name' => 'nullable|string',
+                    'label' => 'nullable|string',
+                    'description' => 'nullable|string',
+                    'url' => 'nullable|string|url',
 
-                    'sort_rank' => 'required|numeric',
+                    'sort_rank' => 'nullable|numeric',
                 ];
                 break;
         }

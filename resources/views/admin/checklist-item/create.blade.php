@@ -9,7 +9,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" name="name" id="name" class="form-control">
+                        <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" >
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -18,7 +18,7 @@
                     </div>
                     <div class="form-group">
                         <label for="label">Label</label>
-                        <input type="text" name="label" id="label" class="form-control">
+                        <input type="text" name="label" id="label" class="form-control" value="{{ old('label') }}" >
                         @error('label')
                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea type="text" name="description" id="description" class="form-control"></textarea>
+                        <textarea type="text" name="description" id="description" class="form-control" >{{ old('description') }}</textarea>
                         @error('description')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <label for="url">URL</label>
-                        <input type="text" name="url" id="url" class="form-control">
+                        <input type="text" name="url" id="url" class="form-control" value="{{ old('url') }}" >
                         @error('url')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="form-group">
                         <label for="sort_rank">Sort Rank</label>
-                        <input type="text" name="sort_rank" id="sort_rank" class="form-control">
+                        <input type="text" name="sort_rank" id="sort_rank" class="form-control" value="{{ old('sort_rank') }}" >
                         @error('sort_rank')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

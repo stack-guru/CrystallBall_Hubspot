@@ -9,7 +9,12 @@ class UserChecklistItem extends Model
 {
     use HasFactory;
 
-    public function checklistItem(){
+    protected $fillable = [
+        'checklist_item_id', 'user_id'
+    ];
+
+    public function checklistItem()
+    {
         return $this->belongsTo(ChecklistItem::class);
     }
 }
