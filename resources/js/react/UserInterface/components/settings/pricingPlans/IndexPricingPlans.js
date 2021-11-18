@@ -112,7 +112,11 @@ export default class IndexPricingPlans extends React.Component {
                                             <hr />
                                             <ul className="fa-ul">
 
-                                                <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Chrome extension</li>
+                                                {
+                                                    pricePlan.has_chrome_extension == 1 ?
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Chrome extension</li>
+                                                        : null
+                                                }
                                                 {
                                                     pricePlan.has_google_data_studio == 1 ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Data Studio Connector</li>
