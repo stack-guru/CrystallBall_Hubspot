@@ -22,9 +22,6 @@ class AnnotationController extends Controller
         }
 
         $user = Auth::user();
-        if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04')) {
-            abort(402);
-        }
         $userIdsArray = $this->getAllGroupUserIdsArray();
 
         $startDate = Carbon::parse($request->query('startDate'));
@@ -142,17 +139,31 @@ class AnnotationController extends Controller
             if ($i != count($annotations) - 1) {
                 // If current and next annotation is of same date
                 if ($annotations[$i]->show_at == $annotations[$i + 1]->show_at) {
-                    array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate));
+                    // Add only 1 annotation to a date if user is not allowed to use chrome extension api
+                    if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04') && count($combineAnnotations)) {
+                    } else {
+                        array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate));
+                    }
                     // keep adding annotations in combinedAnnotations array if next annotation
                     // is of same date
                     continue;
                 } else {
                     // If current and next annotation is of different date
-                    array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate));
+
+                    // Add only 1 annotation to a date if user is not allowed to use chrome extension api
+                    if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04') && count($combineAnnotations)) {
+                    } else {
+                        array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate));
+                    }
                 }
             } else {
                 // If current annotation is last annotation
-                array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate));
+
+                // Add only 1 annotation to a date if user is not allowed to use chrome extension api
+                if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04') && count($combineAnnotations)) {
+                } else {
+                    array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate));
+                }
             }
             array_push($fAnnotations, [$combineAnnotations]);
             $combineAnnotations = [];
@@ -335,19 +346,39 @@ class AnnotationController extends Controller
 
     private function formatAnnotation($annotation, $publishDate): array
     {
-        return [
-            "_id" => $annotation->id,
-            "category" => $annotation->category,
-            "eventSource" => [
-                "type" => "annotation",
-                "name" => $annotation->event_name,
-            ],
-            "url" => $annotation->url,
-            "description" => $annotation->description,
-            "title" => "NA",
-            "highlighted" => false,
-            "publishDate" => $publishDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
-            "type" => "private",
-        ];
+        $user = Auth::user();
+
+        // Hiding annotations if user is not allowed to use chrome extension
+        if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04')) {
+            return [
+                "_id" => $annotation->id,
+                "category" => 'Forbidden',
+                "eventSource" => [
+                    "type" => "annotation",
+                    "name" => 'Payment Required',
+                ],
+                "url" => '#',
+                "description" => 'Chrome extension is not available in your plan',
+                "title" => "Upgrade your plan",
+                "highlighted" => false,
+                "publishDate" => $publishDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
+                "type" => "private",
+            ];
+        } else {
+            return [
+                "_id" => $annotation->id,
+                "category" => $annotation->category,
+                "eventSource" => [
+                    "type" => "annotation",
+                    "name" => $annotation->event_name,
+                ],
+                "url" => $annotation->url,
+                "description" => $annotation->description,
+                "title" => "NA",
+                "highlighted" => false,
+                "publishDate" => $publishDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
+                "type" => "private",
+            ];
+        }
     }
 }
