@@ -55,12 +55,6 @@ class AnnotationController extends Controller
             $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
         }
 
-        if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
-            $gaPropertyId = $request->query('google_analytics_property_id');
-            $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
-            $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
-        }
-
         if ($user->is_ds_web_monitors_enabled && $request->query('show_website_monitoring') == 'false') {
             $annotationsQuery .= " AND annotations.category <> 'Website Monitoring'";
         }
@@ -140,57 +134,25 @@ class AnnotationController extends Controller
         }
 
         $combineAnnotations = [];
+        // Iterating through all annotations and generate an array
         for ($i = 0; $i < count($annotations); $i++) {
             $showDate = Carbon::parse($annotations[$i]->show_at);
 
+            // If current annotation is not last annotation
             if ($i != count($annotations) - 1) {
+                // If current and next annotation is of same date
                 if ($annotations[$i]->show_at == $annotations[$i + 1]->show_at) {
-                    array_push($combineAnnotations, [
-                        "_id" => $annotations[$i]->id,
-                        "category" => $annotations[$i]->category,
-                        "eventSource" => [
-                            "type" => 'annotation',
-                            "name" => $annotations[$i]->event_name,
-                        ],
-                        "url" => $annotations[$i]->url,
-                        "description" => $annotations[$i]->description,
-                        "title" => "NA",
-                        "highlighted" => false,
-                        "publishDate" => $showDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
-                        "type" => "private",
-                    ]);
+                    array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate));
+                    // keep adding annotations in combinedAnnotations array if next annotation
+                    // is of same date
                     continue;
                 } else {
-                    array_push($combineAnnotations, [
-                        "_id" => $annotations[$i]->id,
-                        "category" => $annotations[$i]->category,
-                        "eventSource" => [
-                            "type" => "annotation",
-                            "name" => $annotations[$i]->event_name,
-                        ],
-                        "url" => $annotations[$i]->url,
-                        "description" => $annotations[$i]->description,
-                        "title" => "NA",
-                        "highlighted" => false,
-                        "publishDate" => $showDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
-                        "type" => "private",
-                    ]);
+                    // If current and next annotation is of different date
+                    array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate));
                 }
             } else {
-                array_push($combineAnnotations, [
-                    "_id" => $annotations[$i]->id,
-                    "category" => $annotations[$i]->category,
-                    "eventSource" => [
-                        "type" => 'annotation',
-                        "name" => $annotations[$i]->event_name,
-                    ],
-                    "url" => $annotations[$i]->url,
-                    "description" => $annotations[$i]->description,
-                    "title" => "NA",
-                    "highlighted" => false,
-                    "publishDate" => $showDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
-                    "type" => "private",
-                ]);
+                // If current annotation is last annotation
+                array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate));
             }
             array_push($fAnnotations, [$combineAnnotations]);
             $combineAnnotations = [];
@@ -208,6 +170,8 @@ class AnnotationController extends Controller
         }
 
         $showDate = Carbon::parse($annotations[count($annotations) - 1]->show_at);
+        // If annotations are not ending on the request end date then add blank records for 
+        // each date till end date
         if ($showDate !== $endDate) {
             $nextShowDate = $endDate;
             $blankCount = $showDate->diffInDays($nextShowDate);
@@ -367,5 +331,23 @@ class AnnotationController extends Controller
         }
 
         return ['annotation' => $annotation];
+    }
+
+    private function formatAnnotation($annotation, $publishDate): array
+    {
+        return [
+            "_id" => $annotation->id,
+            "category" => $annotation->category,
+            "eventSource" => [
+                "type" => "annotation",
+                "name" => $annotation->event_name,
+            ],
+            "url" => $annotation->url,
+            "description" => $annotation->description,
+            "title" => "NA",
+            "highlighted" => false,
+            "publishDate" => $publishDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
+            "type" => "private",
+        ];
     }
 }
