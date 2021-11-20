@@ -142,7 +142,7 @@ class AnnotationController extends Controller
                     // Add only 1 annotation to a date if user is not allowed to use chrome extension api
                     if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04') && count($combineAnnotations)) {
                     } else {
-                        array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate));
+                        array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate, $user));
                     }
                     // keep adding annotations in combinedAnnotations array if next annotation
                     // is of same date
@@ -153,7 +153,7 @@ class AnnotationController extends Controller
                     // Add only 1 annotation to a date if user is not allowed to use chrome extension api
                     if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04') && count($combineAnnotations)) {
                     } else {
-                        array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate));
+                        array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate, $user));
                     }
                 }
             } else {
@@ -162,7 +162,7 @@ class AnnotationController extends Controller
                 // Add only 1 annotation to a date if user is not allowed to use chrome extension api
                 if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04') && count($combineAnnotations)) {
                 } else {
-                    array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate));
+                    array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate, $user));
                 }
             }
             array_push($fAnnotations, [$combineAnnotations]);
@@ -344,21 +344,20 @@ class AnnotationController extends Controller
         return ['annotation' => $annotation];
     }
 
-    private function formatAnnotation($annotation, $publishDate): array
+    private function formatAnnotation($annotation, $publishDate, $user): array
     {
-        $user = Auth::user();
 
         // Hiding annotations if user is not allowed to use chrome extension
         if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04')) {
             return [
                 "_id" => $annotation->id,
-                "category" => 'Forbidden',
+                "category" => '',
                 "eventSource" => [
                     "type" => "annotation",
-                    "name" => 'Payment Required',
+                    "name" => 'Upgrade your plan',
                 ],
                 "url" => '#',
-                "description" => 'Chrome extension is not available in your plan',
+                "description" => 'The Chrome extension is not available in ' . $user->pricePlan->name . ' plan',
                 "title" => "Upgrade your plan",
                 "highlighted" => false,
                 "publishDate" => $publishDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
