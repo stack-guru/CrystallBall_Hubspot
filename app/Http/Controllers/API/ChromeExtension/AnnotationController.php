@@ -356,7 +356,7 @@ class AnnotationController extends Controller
                     "type" => "annotation",
                     "name" => 'Upgrade your plan',
                 ],
-                "url" => '#',
+                "url" => route('settings.price-plans'),
                 "description" => 'The Chrome extension is not available in ' . $user->pricePlan->name . ' plan',
                 "title" => "Upgrade your plan",
                 "highlighted" => false,
