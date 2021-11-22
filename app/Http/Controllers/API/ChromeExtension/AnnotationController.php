@@ -351,10 +351,10 @@ class AnnotationController extends Controller
         if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04')) {
             return [
                 "_id" => $annotation->id,
-                "category" => '',
+                "category" => 'Upgrade your plan',
                 "eventSource" => [
                     "type" => "annotation",
-                    "name" => 'Upgrade your plan',
+                    "name" => 'To see the annotation',
                 ],
                 "url" => route('settings.price-plans'),
                 "description" => 'The Chrome extension is not available in ' . $user->pricePlan->name . ' plan',
