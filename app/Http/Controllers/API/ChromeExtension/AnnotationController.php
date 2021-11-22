@@ -207,7 +207,16 @@ class AnnotationController extends Controller
 
         $user = Auth::user();
         if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04')) {
-            abort(402);
+            return [
+                'annotations' => [
+                    [
+                        "category" => "Upgrade your plan",
+                        "event_name" => "To see the annotations",
+                        "show_at" => Carbon::now()->format('Y-m-d')
+                    ]
+                ],
+                'user_annotation_color' => $user->userAnnotationColor,
+            ];
         }
         $userIdsArray = $this->getAllGroupUserIdsArray();
 
