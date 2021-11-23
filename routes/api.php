@@ -52,7 +52,10 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
 
                 Route::post('log', 'ChromeExtension\ChromeExtensionLogController@store');
             });
+
+            Route::group(['prefix' => 'zapier', 'as' => 'zapier'], function () {
+                Route::post('annotations', 'Zapier\AnnotationController@store');
+            });
         });
-        // End Chrome Extension
     });
 });
