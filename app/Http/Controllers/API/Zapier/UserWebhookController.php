@@ -14,6 +14,7 @@ class UserWebhookController extends Controller
         $userWebhook = new UserWebhook;
         $userWebhook->fill($request->validated());
         $userWebhook->user_id = Auth::id();
+        $userWebhook->endpoint_name = 'ZAPIER';
         $userWebhook->save();
 
         return ['user_webhook' => $userWebhook];
@@ -21,7 +22,7 @@ class UserWebhookController extends Controller
 
     public function destroy(UserWebhook $userWebhook)
     {
-        if ($userWebhook->user_id !== Auth::id()) {
+        if ($userWebhook->user_id !== Auth::id() && $userWebhook->endpoint_name !== 'ZAPIER') {
             abort(404);
         }
 

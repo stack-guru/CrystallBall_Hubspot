@@ -17,6 +17,7 @@ class CreateUserWebhooksTable extends Migration
             $table->id();
 
             $table->string('request_method', 20)->required();
+            $table->string('endpoint_name', 100)->required();
             $table->mediumText('endpoint_uri')->required();
 
             $table->integer('executions_count')->unsigned()->nullable()->default(null);
