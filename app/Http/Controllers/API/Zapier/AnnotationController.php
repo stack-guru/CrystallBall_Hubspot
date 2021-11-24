@@ -27,7 +27,7 @@ class AnnotationController extends Controller
         $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
         $annotation->user_id = $userId;
         $annotation->is_enabled = true;
-        $annotation->added_by = 'manual';
+        $annotation->added_by = 'zapier';
         $annotation->save();
 
         if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
@@ -55,7 +55,7 @@ class AnnotationController extends Controller
         $user = Auth::user();
         $userIdsArray = $this->getAllGroupUserIdsArray();
 
-        $annotationsQuery = "SELECT TempTable.category, TempTable.event_name, TempTable.show_at FROM (";
+        $annotationsQuery = "SELECT TempTable.* FROM (";
 
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= "SELECT DISTINCT DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` FROM `annotations`";
