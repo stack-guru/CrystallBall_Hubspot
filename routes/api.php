@@ -53,9 +53,11 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
                 Route::post('log', 'ChromeExtension\ChromeExtensionLogController@store');
             });
 
-            Route::group(['prefix' => 'zapier', 'as' => 'zapier'], function () {
+            Route::group(['prefix' => 'zapier', 'as' => 'zapier.'], function () {
                 Route::post('annotations', 'Zapier\AnnotationController@store');
                 Route::get('annotations', 'Zapier\AnnotationController@index');
+
+                Route::resource('user-webhooks', 'Zapier\UserWebhookController')->only(['store', 'delete']);
             });
         });
     });
