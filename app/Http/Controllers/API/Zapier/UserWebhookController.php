@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\Zapier;
 
 use App\Http\Requests\UserWebhookRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserWebhook;
+use App\Http\Controllers\Controller;
 
 class UserWebhookController extends Controller
 {
