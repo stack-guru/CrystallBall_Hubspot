@@ -31,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\MarkChecklistItemCompleted::class
         ],
 
+        \App\Events\AnnotationCreated::class => [\App\Listeners\TriggerZapierWebHooks::class],
         \App\Events\UserAddedAnAnnotationViaAPI::class => [\App\Listeners\AddAPIUsageToApiLog::class],
 
         \App\Events\NewCSVFileUploaded::class => [

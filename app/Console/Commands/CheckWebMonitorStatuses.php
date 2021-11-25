@@ -118,6 +118,7 @@ class CheckWebMonitorStatuses extends Command
                             $annotation->description = $description;
                             $annotation->show_at = $rightNowDateTime;
                             $annotation->save();
+                            event(new \App\Events\AnnotationCreated($annotation));
                         }
                     }
                     WebMonitor::where('uptime_robot_id', $uptimeMonitor['id'])->update([

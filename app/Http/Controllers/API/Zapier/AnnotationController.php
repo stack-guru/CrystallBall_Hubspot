@@ -29,6 +29,7 @@ class AnnotationController extends Controller
         $annotation->is_enabled = true;
         $annotation->added_by = 'zapier';
         $annotation->save();
+        event(new \App\Events\AnnotationCreated($annotation));
 
         if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
             foreach ($request->google_analytics_property_id as $gAPId) {
