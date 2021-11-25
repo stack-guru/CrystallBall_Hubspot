@@ -57,7 +57,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
                 Route::post('annotations', 'Zapier\AnnotationController@store');
                 Route::get('annotations', 'Zapier\AnnotationController@index');
 
-                Route::resource('user-webhooks', 'Zapier\UserWebhookController')->only(['store', 'delete']);
+                Route::resource('user-webhooks', 'Zapier\UserWebhookController')->only(['store', 'destroy']);
             });
         });
     });
