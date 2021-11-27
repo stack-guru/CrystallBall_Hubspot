@@ -37,7 +37,17 @@ class RunZapierHookForCreatedAnnotation implements ShouldQueue
     public function handle()
     {
 
-        $response = Http::{$this->userWebhook->request_method}($this->userWebhook->endpoint_uri, $this->annotation->toArray());
+        $response = Http::{$this->userWebhook->request_method}($this->userWebhook->endpoint_uri, [
+            "category" => $this->annotation->category,
+            "event_name" => $this->annotation->event_name,
+            "show_at" => Carbon::parse($this->annotation->show_at)->toIso8601String(),
+            "user_id" => $this->annotation->user_id,
+            "is_enabled" => $this->annotation->is_enabled,
+            "added_by" => $this->annotation->added_by,
+            "updated_at" => Carbon::parse($this->annotation->updated_at)->toIso8601String(),
+            "created_at" => Carbon::parse($this->annotation->created_at)->toIso8601String(),
+            "id" => $this->annotation->id
+        ]);
 
         if ($response->successful()) {
             $this->userWebhook->last_executed_at = Carbon::now();
