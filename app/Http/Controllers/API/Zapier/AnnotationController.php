@@ -147,8 +147,6 @@ class AnnotationController extends Controller
 
         $annotations = array_map(function ($a) {
             $a->show_at = Carbon::parse($a->show_at)->toIso8601String();
-            $a->created_at = Carbon::parse($a->created_at)->toIso8601String();
-            $a->updated_at = Carbon::parse($a->updated_at)->toIso8601String();
             return $a;
         }, $annotations);
 
