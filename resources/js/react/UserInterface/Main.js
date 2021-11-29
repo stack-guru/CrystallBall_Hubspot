@@ -65,7 +65,7 @@ class Main extends React.Component {
                     <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={this.toggleStartupConfiguration} />
                     <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} />
 
-                    <Sidebar user={this.state.user} reloadUser={this.loadUser} />
+                    <Sidebar user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
                 </div>
 
                 <div className="page-container">

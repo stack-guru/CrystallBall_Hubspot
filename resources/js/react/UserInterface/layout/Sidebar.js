@@ -4,7 +4,7 @@ import * as $ from 'jquery';
 import CompanyLogo from '../utils/CompanyLogo';
 import CompanyHeading from '../utils/CompanyHeading';
 
-class sidebar extends React.Component {
+class Sidebar extends React.Component {
 
     constructor(props) {
         super(props);
