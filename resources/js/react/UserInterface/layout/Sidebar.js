@@ -210,7 +210,7 @@ class Sidebar extends React.Component {
                                 <li className="nav-item dropdown">
 
                                     <div className="sidebar-link nav-link">
-                                        <a href="#" onClick={(e) => { e.preventDefault(); this.props.toggleInterfaceTour(); }}>Take a Tour</a>
+                                        <a href="#" onClick={(e) => { e.preventDefault(); this.props.toggleInterfaceTour(true); }}>Take a Tour</a>
                                     </div>
                                 </li>
                                 <li className="nav-item dropdown">

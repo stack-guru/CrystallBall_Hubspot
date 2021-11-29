@@ -99,7 +99,7 @@ export default class InterfaceTour extends Component {
                     getCurrentStep={cS => { if (this.state.currentStep !== cS) this.setState({ currentStep: cS, redirectTo: steps[cS].redirectRoute }) }}
                     steps={steps}
                     isOpen={this.props.isOpen}
-                    onRequestClose={this.props.toggleShowTour}
+                    onRequestClose={() => this.props.toggleShowTour(false)}
                     closeWithMask={false}
                     lastStepNextButton={<button className="btn btn-primary" onClick={(e) => { this.setState({ redirectTo: '/annotation' }); (this.props.toggleShowTour)(e); }}>Finish</button>}
                 />

@@ -53,8 +53,8 @@ class Main extends React.Component {
     }
 
     toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
-    toggleInterfaceTour() { this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(); }
-    toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(); }
+    toggleInterfaceTour(keepInterfaceTour = false) { this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, keepInterfaceTour, false); }
+    toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, false, false); }
 
     render() {
         if (this.state.user == undefined) return null;
@@ -175,14 +175,14 @@ class Main extends React.Component {
         });
     }
 
-    loadUser() {
+    loadUser(keepStartupConfiguration = false, keepInterfaceTour = false, keepDataSourceTour = false) {
         HttpClient.get('/user')
             .then(response => {
                 this.setState({
                     user: response.data.user,
-                    showStartupConfiguration: response.data.user.startup_configuration_showed_at == null,
-                    showInterfaceTour: response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at == null,
-                    showDataSourceTour: response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at !== null && response.data.user.data_source_tour_showed_at == null,
+                    showStartupConfiguration: keepStartupConfiguration ? true : (response.data.user.startup_configuration_showed_at == null),
+                    showInterfaceTour: keepInterfaceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at == null),
+                    showDataSourceTour: keepDataSourceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at !== null && response.data.user.data_source_tour_showed_at == null),
                 });
                 loader.classList.add("fadeOut")
 
