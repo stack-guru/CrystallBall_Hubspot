@@ -48,6 +48,7 @@ class AnnotationController extends Controller
         }
 
         $annotation->created_at = Carbon::parse($annotation->created_at)->toIso8601String();
+        $annotation->updated_at = Carbon::parse($annotation->updated_at)->toIso8601String();
         $annotation->show_at = Carbon::parse($annotation->show_at)->toIso8601String();
         return ['annotation' => $annotation];
     }
@@ -146,9 +147,11 @@ class AnnotationController extends Controller
 
         $annotations = array_map(function ($a) {
             $a->show_at = Carbon::parse($a->show_at)->toIso8601String();
+            $a->created_at = Carbon::parse($a->created_at)->toIso8601String();
+            $a->updated_at = Carbon::parse($a->updated_at)->toIso8601String();
             return $a;
         }, $annotations);
-        
+
         return $annotations;
     }
 }
