@@ -56,7 +56,7 @@ class AnnotationController extends Controller
             $annotationsQuery .= " AND annotations.category <> 'Website Monitoring'";
         }
 
-        $addedByArray = [];
+        $addedByArray = ['zapier'];
         if ($request->query('show_manual_annotations') && $request->query('show_manual_annotations') == 'true') {
             array_push($addedByArray, 'manual');
         }
@@ -251,7 +251,7 @@ class AnnotationController extends Controller
             $annotationsQuery .= " AND annotations.category <> 'Website Monitoring'";
         }
 
-        $addedByArray = [];
+        $addedByArray = ['zapier'];
         if ($request->query('show_manual_annotations') && $request->query('show_manual_annotations') == 'true') {
             array_push($addedByArray, 'manual');
         }
