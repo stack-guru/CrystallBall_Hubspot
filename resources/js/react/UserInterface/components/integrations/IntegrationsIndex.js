@@ -22,12 +22,11 @@ export default class integrationsIndex extends React.Component {
                 <div className="row ml-0 mr-0 mt-5" id="integration-page-container">
                     <div className="col-12">
                         <div id="integration-page-top-options">
-                            <zapier-app-directory
-                                app="crystal-ball"
-                                link-target="new-tab"
+                            <zapier-zap-manager
+                                client-id="Afj7oxkfgUD0tiOualhZVEFlTeh8RujUytQZ8OYq"
+                                link-target="same-tab"
                                 theme="light"
-                                introcopy="hide"
-                            />
+                            ></zapier-zap-manager>
                         </div>
                     </div>
                 </div>

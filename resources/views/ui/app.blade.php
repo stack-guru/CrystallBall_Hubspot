@@ -93,7 +93,7 @@
     <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" defer></script>
 
     <script type="module" src="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js"></script>
-    <link rel="stylesheet" href="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css" />
+    <link rel="stylesheet" href="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css"/>
 </head>
 
 <body class="app is-collapsed">
