@@ -366,7 +366,17 @@ class AnnotationController extends Controller
     public function getCategories()
     {
 
-        $categories = Annotation::select('category')->distinct()->ofCurrentUser()->orderBy('category')->get();
+        $this->authorize('viewAny', Annotation::class);
+
+        $user = Auth::user();
+        $userIdsArray = $this->getAllGroupUserIdsArray();
+
+        $annotationsQuery = "SELECT `TempTable`.`category` FROM (";
+        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, '*', $userIdsArray);
+        $annotationsQuery .= ") AS TempTable";
+        $annotationsQuery .= " ORDER BY category";
+
+        $categories = DB::select($annotationsQuery);
         return ['categories' => $categories];
     }
 }
