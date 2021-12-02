@@ -25,6 +25,7 @@
     "dependencies": {
         "@pusher/push-notifications-web": "^1.1.0",
         "chart.js": "^3.5.1",
+        "moment": "^2.29.1",
         "react": "^16.14.0",
         "react-chartjs-2": "^3.0.5",
         "react-color": "^2.19.3",
