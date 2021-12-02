@@ -33,7 +33,7 @@ import UserStartupConfigurationModal from './helpers/UserStartupConfigurationMod
 import InterfaceTour from './helpers/InterfaceTour';
 import IndexAnalytics from './components/dashboard/analytics/IndexAnalytics';
 import IndexSearchConsole from './components/dashboard/searchConsole/IndexSearchConsole';
-import DiscountTopNotice from './utils/DiscountTopNotice';
+import SiteRenamedTopNotice from './utils/SiteRenamedTopNotice';
 
 class Main extends React.Component {
 
@@ -70,7 +70,7 @@ class Main extends React.Component {
                 </div>
 
                 <div className="page-container">
-                    <DiscountTopNotice />
+                    <SiteRenamedTopNotice />
                     <div className="header navbar">
                         <Header user={this.state.user} />
                     </div>
