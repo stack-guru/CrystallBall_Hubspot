@@ -20,7 +20,8 @@ class IndexAnnotations extends React.Component {
             category: '',
             searchText: '',
             error: '',
-            isBusy: false
+            isBusy: false,
+            isLoading: false,
         }
         this.deleteAnnotation = this.deleteAnnotation.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
@@ -31,36 +32,34 @@ class IndexAnnotations extends React.Component {
         this.handleChange = this.handleChange.bind(this)
         this.checkSearchText = this.checkSearchText.bind(this)
 
-        this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
-
-
     }
     componentDidMount() {
         document.title = 'Annotation';
 
-        this.setState({ isBusy: true });
-        this.loadUserAnnotationColors();
-        HttpClient.get(`/annotation`)
-            .then(response => {
-                this.setState({ annotations: response.data.annotations });
-            }, (err) => {
-
-                this.setState({ errors: (err.response).data });
-            }).catch(err => {
-
-                this.setState({ errors: err });
-            });
-        //////////////////////////////////////////////////////////////////////////////////////
-        HttpClient.get(`/annotation-categories`)
-            .then(response => {
-                this.setState({ isBusy: false, annotationCategories: response.data.categories });
-            }, (err) => {
-
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-
-                this.setState({ isBusy: false, errors: err });
-            });
+        this.setState({ isBusy: true, isLoading: true });
+        HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
+            this.setState({ userAnnotationColors: resp.data.user_annotation_color });
+            HttpClient.get(`/annotation`)
+                .then(response => {
+                    this.setState({ annotations: response.data.annotations, isLoading: false });
+                }, (err) => {
+                    this.setState({ errors: (err.response).data, isLoading: false });
+                }).catch(err => {
+                    this.setState({ errors: err, isLoading: false });
+                });
+            HttpClient.get(`/annotation-categories`)
+                .then(response => {
+                    this.setState({ isBusy: false, annotationCategories: response.data.categories });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+        }, (err) => {
+            this.setState({ errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ errors: err });
+        })
 
         setTimeout(() => {
             const scrollableAnnotation = document.getElementById("scrollable-annotation");
@@ -69,19 +68,6 @@ class IndexAnnotations extends React.Component {
                 annotationTableBody.scrollTo(0, scrollableAnnotation.offsetTop);
             }
         }, 5000);
-    }
-
-    loadUserAnnotationColors() {
-        if (!this.state.isLoading) {
-            this.setState({ isLoading: true });
-            HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
-                this.setState({ isLoading: false, userAnnotationColors: resp.data.user_annotation_color });
-            }, (err) => {
-                this.setState({ isLoading: false, errors: (err.response).data });
-            }).catch(err => {
-                this.setState({ isLoading: false, errors: err });
-            })
-        }
     }
 
     deleteAnnotation(id) {
@@ -119,63 +105,6 @@ class IndexAnnotations extends React.Component {
                 this.setState({ isBusy: false, errors: err });
             });
         }
-    }
-
-    sort(e) {
-        this.setState({ sortBy: e.target.value });
-        if (e.target.value !== 'ga-account') {
-            this.setState({ isBusy: true });
-            HttpClient.get(`/annotation?sortBy=${e.target.value}`)
-                .then(response => {
-                    this.setState({ isBusy: false, annotations: response.data.annotations });
-                }, (err) => {
-
-                    this.setState({ isBusy: false, errors: (err.response).data });
-                }).catch(err => {
-
-                    this.setState({ isBusy: false, errors: err });
-                });
-        }
-
-    }
-    sortByProperty(gaPropertyId) {
-        this.setState({ googleAnalyticsProperty: gaPropertyId });
-        if (gaPropertyId !== 'select-ga-property') {
-            this.setState({ isBusy: true });
-            HttpClient.get(`/annotation?annotation_ga_property_id=${gaPropertyId}`)
-                .then(response => {
-                    this.setState({ isBusy: false, annotations: response.data.annotations });
-                }, (err) => {
-
-                    this.setState({ isBusy: false, errors: (err.response).data });
-                }).catch(err => {
-
-                    this.setState({ isBusy: false, errors: err });
-                });
-        }
-
-    }
-    sortByCategory(catName) {
-        this.setState({ category: catName });
-        let url = "";
-        if (catName !== 'select-category') {
-            url = `/annotation?category=${catName}`;
-        } else {
-            url = `/annotation?sortBy=category`;
-        }
-        this.setState({ isBusy: true });
-        HttpClient.get(url)
-            .then(response => {
-                this.setState({ annotations: [] });
-                this.setState({ isBusy: false, annotations: response.data.annotations });
-            }, (err) => {
-
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-
-                this.setState({ isBusy: false, errors: err });
-            });
-
     }
 
     handleChange(e) {
@@ -271,75 +200,82 @@ class IndexAnnotations extends React.Component {
                                             </thead>
                                             <tbody id="annotation-table-body">
                                                 {
+                                                    this.state.isLoading ?
+                                                        <tr>
+                                                            <td colSpan="8" className="text-center">
+                                                                <i className="fa fa-spinner fa-spin fa-pulse fa-3x"></i>
+                                                            </td>
+                                                        </tr>
+                                                        :
 
-                                                    this.state.annotations.filter(this.checkSearchText).map(anno => {
-                                                        let borderLeftColor = "rgba(0,0,0,.0625)";
-                                                        switch (anno.category) {
-                                                            case "Google Updates": borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates; break;
-                                                            case "Retail Marketing Dates": borderLeftColor = this.state.userAnnotationColors.retail_marketings; break;
-                                                            case "Weather Alert": borderLeftColor = this.state.userAnnotationColors.weather_alerts; break;
-                                                            case "Website Monitoring": borderLeftColor = this.state.userAnnotationColors.web_monitors; break;
-                                                            case "WordPress Updates": borderLeftColor = this.state.userAnnotationColors.wordpress_updates; break;
-                                                            case "News Alert": borderLeftColor = this.state.userAnnotationColors.google_alerts; break;
-                                                        }
-                                                        switch (anno.added_by) {
-                                                            case "manual": borderLeftColor = "#002e60"; break;
-                                                            case "csv-upload": borderLeftColor = this.state.userAnnotationColors.csv; break;
-                                                            case "api": borderLeftColor = this.state.userAnnotationColors.api; break;
-                                                        }
-                                                        if (anno.category.indexOf("Holiday") !== -1) borderLeftColor = this.state.userAnnotationColors.holidays;
+                                                        this.state.annotations.filter(this.checkSearchText).map(anno => {
+                                                            let borderLeftColor = "rgba(0,0,0,.0625)";
+                                                            switch (anno.category) {
+                                                                case "Google Updates": borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates; break;
+                                                                case "Retail Marketing Dates": borderLeftColor = this.state.userAnnotationColors.retail_marketings; break;
+                                                                case "Weather Alert": borderLeftColor = this.state.userAnnotationColors.weather_alerts; break;
+                                                                case "Website Monitoring": borderLeftColor = this.state.userAnnotationColors.web_monitors; break;
+                                                                case "WordPress Updates": borderLeftColor = this.state.userAnnotationColors.wordpress_updates; break;
+                                                                case "News Alert": borderLeftColor = this.state.userAnnotationColors.google_alerts; break;
+                                                            }
+                                                            switch (anno.added_by) {
+                                                                case "manual": borderLeftColor = "#002e60"; break;
+                                                                case "csv-upload": borderLeftColor = this.state.userAnnotationColors.csv; break;
+                                                                case "api": borderLeftColor = this.state.userAnnotationColors.api; break;
+                                                            }
+                                                            if (anno.category.indexOf("Holiday") !== -1) borderLeftColor = this.state.userAnnotationColors.holidays;
 
-                                                        const currentDateTime = new Date; const annotationDateTime = new Date(anno.show_at);
-                                                        const diffTime = annotationDateTime - currentDateTime;
-                                                        let rowId = null;
-                                                        if (diffTime < 0 && wasLastAnnotationInFuture == true) rowId = 'scrollable-annotation';
-                                                        if (diffTime > 0) { wasLastAnnotationInFuture = true; } else { wasLastAnnotationInFuture = false; }
+                                                            const currentDateTime = new Date; const annotationDateTime = new Date(anno.show_at);
+                                                            const diffTime = annotationDateTime - currentDateTime;
+                                                            let rowId = null;
+                                                            if (diffTime < 0 && wasLastAnnotationInFuture == true) rowId = 'scrollable-annotation';
+                                                            if (diffTime > 0) { wasLastAnnotationInFuture = true; } else { wasLastAnnotationInFuture = false; }
 
-                                                        return (
-                                                            <tr data-diff-in-milliseconds={diffTime} id={rowId}>
-                                                                <td style={{ borderLeft: `${borderLeftColor} solid 20px` }}>{anno.category}</td>
-                                                                <td>{anno.event_name}</td>
-                                                                <td>
-                                                                    <div className="desc-wrap">
-                                                                        <div className="desc-td">
-                                                                            <p>
-                                                                                {anno.description}
-                                                                                {anno.url ? <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a> : null}
-                                                                            </p>
+                                                            return (
+                                                                <tr data-diff-in-milliseconds={diffTime} id={rowId}>
+                                                                    <td style={{ borderLeft: `${borderLeftColor} solid 20px` }}>{anno.category}</td>
+                                                                    <td>{anno.event_name}</td>
+                                                                    <td>
+                                                                        <div className="desc-wrap">
+                                                                            <div className="desc-td">
+                                                                                <p>
+                                                                                    {anno.description}
+                                                                                    {anno.url ? <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a> : null}
+                                                                                </p>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {anno.google_analytics_property_name ? anno.google_analytics_property_name : 'All Properties'}
-                                                                </td>
-                                                                <td className="text-center">
-                                                                    {anno.id ?
-                                                                        <button className={"btn btn-sm" + (anno.is_enabled ? " btn-success" : " btn-danger") + (this.state.isBusy ? " disabled" : "")} onClick={() => this.toggleStatus(anno.id)}>
-                                                                            {anno.is_enabled ? "On" : "Off"}
-                                                                        </button>
-                                                                        : null}
-                                                                </td>
-                                                                <td>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</td>
-                                                                <td>{anno.event_name == 'Sample Annotation' ? 'GAannotations' : anno.user_name}</td>
-                                                                <td className="text-center">
-                                                                    {anno.id ?
-                                                                        <React.Fragment>
-                                                                            <button type="button" onClick={() => {
-                                                                                this.deleteAnnotation(anno.id)
-
-                                                                            }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white m-1">
-                                                                                <i className="fa fa-trash"></i>
+                                                                    </td>
+                                                                    <td>
+                                                                        {anno.google_analytics_property_name ? anno.google_analytics_property_name : 'All Properties'}
+                                                                    </td>
+                                                                    <td className="text-center">
+                                                                        {anno.id ?
+                                                                            <button className={"btn btn-sm" + (anno.is_enabled ? " btn-success" : " btn-danger") + (this.state.isBusy ? " disabled" : "")} onClick={() => this.toggleStatus(anno.id)}>
+                                                                                {anno.is_enabled ? "On" : "Off"}
                                                                             </button>
-                                                                            <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-btn-primary text-white m-1" style={{ width: '28.3667px' }}>
-                                                                                <i className="fa fa-edit"></i>
-                                                                            </Link>
+                                                                            : null}
+                                                                    </td>
+                                                                    <td>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</td>
+                                                                    <td>{anno.event_name == 'Sample Annotation' ? 'GAannotations' : anno.user_name}</td>
+                                                                    <td className="text-center">
+                                                                        {anno.id ?
+                                                                            <React.Fragment>
+                                                                                <button type="button" onClick={() => {
+                                                                                    this.deleteAnnotation(anno.id)
 
-                                                                        </React.Fragment>
-                                                                        : null}
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    })
+                                                                                }} className="btn btn-sm gaa-btn-danger anno-action-btn text-white m-1">
+                                                                                    <i className="fa fa-trash"></i>
+                                                                                </button>
+                                                                                <Link to={`/annotation/${anno.id}/edit`} className="btn anno-action-btn btn-sm gaa-btn-primary text-white m-1" style={{ width: '28.3667px' }}>
+                                                                                    <i className="fa fa-edit"></i>
+                                                                                </Link>
+
+                                                                            </React.Fragment>
+                                                                            : null}
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
                                                 }
 
 
@@ -358,6 +294,60 @@ class IndexAnnotations extends React.Component {
                 </section>
             </div >
         );
+    }
+
+    sort(e) {
+        this.setState({ sortBy: e.target.value });
+        if (e.target.value !== 'ga-account') {
+            this.setState({ isLoading: true });
+            HttpClient.get(`/annotation?sortBy=${e.target.value}`)
+                .then(response => {
+                    this.setState({ isLoading: false, annotations: response.data.annotations });
+                }, (err) => {
+
+                    this.setState({ isLoading: false, errors: (err.response).data });
+                }).catch(err => {
+
+                    this.setState({ isLoading: false, errors: err });
+                });
+        }
+
+    }
+    sortByProperty(gaPropertyId) {
+        this.setState({ googleAnalyticsProperty: gaPropertyId });
+        if (gaPropertyId !== 'select-ga-property') {
+            this.setState({ isLoading: true });
+            HttpClient.get(`/annotation?annotation_ga_property_id=${gaPropertyId}`)
+                .then(response => {
+                    this.setState({ isLoading: false, annotations: response.data.annotations });
+                }, (err) => {
+
+                    this.setState({ isLoading: false, errors: (err.response).data });
+                }).catch(err => {
+
+                    this.setState({ isLoading: false, errors: err });
+                });
+        }
+
+    }
+    sortByCategory(catName) {
+        this.setState({ category: catName });
+        let url = "";
+        if (catName !== 'select-category') {
+            url = `/annotation?category=${catName}`;
+        } else {
+            url = `/annotation?sortBy=category`;
+        }
+        this.setState({ isLoading: true });
+        HttpClient.get(url)
+            .then(response => {
+                this.setState({ isLoading: false, annotations: response.data.annotations });
+            }, (err) => {
+                this.setState({ isLoading: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isLoading: false, errors: err });
+            });
+
     }
 
 }
