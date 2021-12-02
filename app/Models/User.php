@@ -145,6 +145,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\GoogleAnalyticsAccount');
     }
 
+    public function googleAnalyticsProperties()
+    {
+        return $this->hasMany('App\Models\GoogleAnalyticsProperty');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
