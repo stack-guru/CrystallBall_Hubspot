@@ -16,7 +16,7 @@ export default class DiscountTopNotice extends Component {
     componentDidMount() {
         setInterval(() => {
             this.setState({
-                offerExpiringTime: moment(this.state.offerExpiringTime).subtract(1, 'seconds').format("YYYY-MM-DDTHH:mm:ss")
+                offerExpiringTime: moment(this.state.offerExpiringTime).format("YYYY-MM-DDTHH:mm:ss")
             });
         }, 1 * 1000);
     }
