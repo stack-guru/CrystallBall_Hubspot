@@ -115,7 +115,7 @@ class Sidebar extends React.Component {
                         </Link>
                     </li>
                     <li className="nav-item gaa-menu-item">
-                        <Link to="/integrations" onClick={e => { e.preventDefault(); swal('Under Construction!', 'This feature is under construction.', 'info'); }}>
+                        <Link to="/integrations" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
                                     <img src="/images/svg/integration-icon.svg" width="25px" height="25px" />
