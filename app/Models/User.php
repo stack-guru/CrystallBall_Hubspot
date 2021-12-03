@@ -140,6 +140,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\Annotation')->where('added_by', 'manual');
     }
 
+    public function annotationGaProperties()
+    {
+        return $this->hasMany('App\Models\AnnotationGaProperty')->whereNotNull('google_analytics_property_id');
+    }
+
     public function googleAccounts()
     {
         return $this->hasMany('App\Models\GoogleAccount');

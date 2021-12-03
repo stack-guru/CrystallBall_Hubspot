@@ -36,7 +36,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->google_analytics_properties_count }}</td>
-                                    <td>Working on it</td>
+                                    <td>{{ $user->annotation_ga_properties_count }}</td>
                                     <td>
                                         @foreach($user->googleAccounts as $googleAccount)
                                         {{ $googleAccount->name}}
@@ -47,7 +47,7 @@
                                     </td>
                                     <td>@if(is_null($user->last_data_studio_used_at))No @else Yes @endif</td>
                                     <td>{{ $user->manual_annotations_count }}</td>
-                                    <td>Working on it</td>
+                                    <td>{{ $user->total_annotations_count }}</td>
                                     <td>{{ @$user->last_annotation->created_at }}</td>
                                     <td>
                                         @if($user->is_ds_holidays_enabled) Holiday<br /> @endif

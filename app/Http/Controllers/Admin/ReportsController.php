@@ -28,6 +28,7 @@ class ReportsController extends Controller
         $users = User::orderBy('created_at', 'DESC')
             ->with('googleAccounts')
             ->with('lastAnnotation')
+            ->withCount('annotationGaProperties')
             ->withCount('googleAnalyticsProperties')
             ->withCount('manualAnnotations')
             ->withCount('loginLogs')
