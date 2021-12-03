@@ -5,10 +5,10 @@ namespace App\Http\Controllers\API\GoogleDataStudio;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\UserDataSource;
 use App\Models\Annotation;
+use Illuminate\Support\Carbon;
 
 class AnnotationController extends Controller
 {
@@ -18,6 +18,8 @@ class AnnotationController extends Controller
         if (!$user->pricePlan->has_google_data_studio) {
             abort(402);
         }
+        $user->last_data_studio_used_at = Carbon::now();
+        $user->save();
 
         if (!$request->has('startDate') && !$request->has('endDate')) {
             return ['annotations' => []];

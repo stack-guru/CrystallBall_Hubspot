@@ -24,6 +24,7 @@ class ReportsController extends Controller
     public function showUserActivityReport(Request $request)
     {
         $users = User::orderBy('created_at', 'DESC')
+            ->with('googleAccounts')
             ->withCount('googleAnalyticsProperties')
             ->withCount('last30DaysApiAnnotationCreatedLogs')
             ->withCount('last30DaysPopupOpenedChromeExtensionLogs')
