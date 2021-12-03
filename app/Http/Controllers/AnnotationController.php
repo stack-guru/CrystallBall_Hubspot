@@ -371,7 +371,7 @@ class AnnotationController extends Controller
         $user = Auth::user();
         $userIdsArray = $this->getAllGroupUserIdsArray();
 
-        $annotationsQuery = "SELECT `TempTable`.`category` FROM (";
+        $annotationsQuery = "SELECT DISTINCT `TempTable`.`category` FROM (";
         $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, '*', $userIdsArray);
         $annotationsQuery .= ") AS TempTable";
         $annotationsQuery .= " ORDER BY category";
