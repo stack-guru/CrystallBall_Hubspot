@@ -34,6 +34,7 @@ import InterfaceTour from './helpers/InterfaceTour';
 import IndexAnalytics from './components/dashboard/analytics/IndexAnalytics';
 import IndexSearchConsole from './components/dashboard/searchConsole/IndexSearchConsole';
 import SiteRenamedTopNotice from './utils/SiteRenamedTopNotice';
+import { IsDomain } from './helpers/CommonFunctions';
 
 class Main extends React.Component {
 
@@ -70,7 +71,7 @@ class Main extends React.Component {
                 </div>
 
                 <div className="page-container">
-                    <SiteRenamedTopNotice />
+                    <SiteRenamedTopNotice show={IsDomain('app.gaannotations.com') || IsDomain('localhost')} />
                     <div className="header navbar">
                         <Header user={this.state.user} />
                     </div>
