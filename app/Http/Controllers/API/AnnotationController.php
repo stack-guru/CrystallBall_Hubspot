@@ -13,7 +13,7 @@ use App\Models\Annotation;
 use App\Models\AnnotationGaProperty;
 use App\Notifications\AnnotationCreatedThroughAPI;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 

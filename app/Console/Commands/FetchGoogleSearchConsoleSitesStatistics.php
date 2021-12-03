@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\GoogleSearchConsoleSite;
 use App\Jobs\FetchGSCSStatisticsJob;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 class FetchGoogleSearchConsoleSitesStatistics extends Command
 {

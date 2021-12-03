@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\GoogleAlert;
 use App\Models\User;
 use App\Notifications\GoogleAlert as GoogleAlertNotification;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Notification;
 

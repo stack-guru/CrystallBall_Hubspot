@@ -5,7 +5,7 @@ namespace App\Traits;
 use App\Exceptions\ExpiredPhoneCodeException;
 use App\Exceptions\InvalidPhoneCodeException;
 // use Illuminate\Auth\Events\VerifiedPhone;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

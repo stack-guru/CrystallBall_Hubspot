@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\ChromeExtension;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ChromeExtensionLog;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use App\Http\Requests\ChromeExtensionLogRequest;
 use Illuminate\Support\Facades\Auth;
 

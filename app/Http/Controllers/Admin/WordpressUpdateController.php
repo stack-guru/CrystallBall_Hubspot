@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WordpressUpdateRequest;
 use App\Models\WordpressUpdate;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 
 class WordpressUpdateController extends Controller

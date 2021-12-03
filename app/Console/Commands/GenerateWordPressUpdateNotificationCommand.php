@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\User;
 use App\Models\WordpressUpdate;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\WordpressUpdate as WordpressUpdateNotification;
 

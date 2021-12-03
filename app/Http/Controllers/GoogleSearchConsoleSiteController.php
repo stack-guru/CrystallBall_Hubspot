@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\GoogleSearchConsoleSite;
 use App\Services\GoogleSearchConsoleService;
 use App\Jobs\FetchGSCSStatisticsJob;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 class GoogleSearchConsoleSiteController extends Controller
 {

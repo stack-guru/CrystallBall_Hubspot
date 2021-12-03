@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\GoogleAnalyticsProperty;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use App\Jobs\FetchGAMetricsAndDimensionsJob;
 
 class FetchGoogleAnalyticsMetricsAndDimensions extends Command

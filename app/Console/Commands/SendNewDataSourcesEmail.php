@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\UserDataSource;
 use App\Models\WebMonitor;
 use App\Services\SendGridService;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
 
 class SendNewDataSourcesEmail extends Command

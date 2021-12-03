@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\Auth;
-use Carbon\carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;

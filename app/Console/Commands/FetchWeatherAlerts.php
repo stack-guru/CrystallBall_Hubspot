@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\OpenWeatherMapAlert;
 use App\Models\OpenWeatherMapCity;
 use App\Services\OpenWeatherMapService;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
 
 class FetchWeatherAlerts extends Command

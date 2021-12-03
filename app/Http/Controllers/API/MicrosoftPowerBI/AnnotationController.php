@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\MicrosoftPowerBI;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\UserDataSource;
 use App\Models\Annotation;

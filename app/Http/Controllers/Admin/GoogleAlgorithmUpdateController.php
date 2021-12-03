@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GoogleAlgorithmUpdateRequest;
 use App\Models\GoogleAlgorithmUpdate;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 
 class GoogleAlgorithmUpdateController extends Controller

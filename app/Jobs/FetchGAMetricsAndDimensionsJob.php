@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Services\GoogleAnalyticsService;
 use App\Models\GoogleAnalyticsProperty;
 use App\Models\GoogleAnalyticsMetricDimension;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 class FetchGAMetricsAndDimensionsJob implements ShouldQueue, ShouldBeUnique
 {

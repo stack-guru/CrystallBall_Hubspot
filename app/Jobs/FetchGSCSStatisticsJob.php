@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\GoogleSearchConsoleSite;
 use App\Models\GoogleSearchConsoleStatistics;
 use App\Services\GoogleSearchConsoleService;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 class FetchGSCSStatisticsJob implements ShouldQueue, ShouldBeUnique
 {

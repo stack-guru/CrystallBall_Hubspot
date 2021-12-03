@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 class annotation extends JsonResource
 {

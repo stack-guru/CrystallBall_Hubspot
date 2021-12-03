@@ -6,7 +6,7 @@ use App\Models\OpenWeatherMapAlert;
 use App\Models\User;
 use App\Models\UserDataSource;
 use App\Notifications\OpenWeatherMapAlert as OpenWeatherMapAlertNotification;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Notification;
 

@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Notifications\RetailMarketingEvent as RetailMarketingEventNotification;
 use App\Notifications\RetailMarketingTomorrow as RetailMarketingTomorrowNotification;
 use App\Notifications\RetailMarketingWeek as RetailMarketingWeekNotification;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Notification;
 

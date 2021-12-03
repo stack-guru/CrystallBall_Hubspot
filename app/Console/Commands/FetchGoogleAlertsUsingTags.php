@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\GoogleAlert;
 use App\Models\UserDataSource;
 use App\Services\GoogleAlertService;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
 
 class FetchGoogleAlertsUsingTags extends Command

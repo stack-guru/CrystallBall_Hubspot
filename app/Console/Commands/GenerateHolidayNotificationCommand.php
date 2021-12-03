@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Notifications\HolidayEvent as HolidayEventNotification;
 use App\Notifications\HolidayTomorrow as HolidayTomorrowNotification;
 use App\Notifications\HolidayWeek as HolidayWeekNotification;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Notification;
 

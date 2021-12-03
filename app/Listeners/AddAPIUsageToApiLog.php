@@ -5,7 +5,7 @@ namespace App\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Models\ApiLog;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 class AddAPIUsageToApiLog
 {

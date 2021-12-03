@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\User;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use App\Models\PricePlan;
 use App\Services\SendGridService;
 

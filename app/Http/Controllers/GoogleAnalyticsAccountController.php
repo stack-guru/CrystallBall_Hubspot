@@ -7,7 +7,7 @@ use App\Models\GoogleAnalyticsAccount;
 use App\Models\GoogleAnalyticsProperty;
 use App\Services\GoogleAnalyticsService;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use App\Jobs\FetchGAMetricsAndDimensionsJob;
 
 class GoogleAnalyticsAccountController extends Controller

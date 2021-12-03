@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\AdwordsKeywordPerformance;
 use App\Models\GoogleAccount;
 use App\Services\GoogleAdwordsService;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
 
 class FetchAdwordsKeywordsClicks extends Command

@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;

@@ -8,7 +8,7 @@ use App\Models\WebMonitor;
 use App\Notifications\WebMonitorDown;
 use App\Notifications\WebMonitorUp;
 use App\Services\UptimeRobotService;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Log;
