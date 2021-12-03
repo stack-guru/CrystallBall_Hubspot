@@ -50,4 +50,14 @@ class GoogleAccount extends Model
     {
         return $this->hasMany(GoogleAnalyticsAccount::class);
     }
+
+    public function hasSearchConsoleScope(): bool
+    {
+        return strpos($this->scopes, "https://www.googleapis.com/auth/webmasters.readonly") && strpos($this->scopes, "https://www.googleapis.com/auth/webmasters");
+    }
+
+    public function hasGoogleAnalyticsScope(): bool
+    {
+        return strpos($this->scopes, "https://www.googleapis.com/auth/analytics.readonly");
+    }
 }

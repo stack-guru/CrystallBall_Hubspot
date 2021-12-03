@@ -135,6 +135,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\Annotation');
     }
 
+    public function manualAnnotations()
+    {
+        return $this->hasMany('App\Models\Annotation')->where('added_by', 'manual');
+    }
+
     public function googleAccounts()
     {
         return $this->hasMany('App\Models\GoogleAccount');

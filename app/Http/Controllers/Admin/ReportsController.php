@@ -25,12 +25,12 @@ class ReportsController extends Controller
     {
         $users = User::orderBy('created_at', 'DESC')
             ->with('googleAccounts')
+            ->with('lastAnnotation')
             ->withCount('googleAnalyticsProperties')
-            ->withCount('last30DaysApiAnnotationCreatedLogs')
-            ->withCount('last30DaysPopupOpenedChromeExtensionLogs')
-            ->withCount('AnnotationButtonClickedChromeExtensionLogs')
+            ->withCount('manualAnnotations')
+            ->withCount('loginLogs')
             ->get();
 
-        return view('admin/reports/user-active-report')->with('users', $users);
+        return view('admin/reports/user-activity-report')->with('users', $users);
     }
 }
