@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Annotation;
+use Illuminate\Support\Facades\DB;
 
 class ReportsController extends Controller
 {
@@ -30,6 +32,15 @@ class ReportsController extends Controller
             ->withCount('manualAnnotations')
             ->withCount('loginLogs')
             ->get();
+
+        foreach ($users as $user) {
+            $userIdsArray = $this->getAllGroupUserIdsArray($user);
+            $annotationsQuery = "SELECT COUNT(*) AS total_annotations_count FROM (";
+            $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, '*', $userIdsArray);
+            $annotationsQuery .= ") AS TempTable";
+
+            $user->total_annotations_count = DB::select($annotationsQuery)[0]->total_annotations_count;
+        }
 
         return view('admin/reports/user-activity-report')->with('users', $users);
     }

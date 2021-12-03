@@ -25,7 +25,7 @@ class SearchConsoleController extends Controller
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -58,7 +58,7 @@ class SearchConsoleController extends Controller
             'google_search_console_site_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -82,7 +82,7 @@ class SearchConsoleController extends Controller
             'google_search_console_site_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -105,7 +105,7 @@ class SearchConsoleController extends Controller
             'google_search_console_site_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -128,7 +128,7 @@ class SearchConsoleController extends Controller
             'google_search_console_site_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -151,7 +151,7 @@ class SearchConsoleController extends Controller
             'google_search_console_site_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -179,8 +179,7 @@ class SearchConsoleController extends Controller
         $endDate = $request->query('end_date');
 
         $user = Auth::user();
-
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray($user);
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {

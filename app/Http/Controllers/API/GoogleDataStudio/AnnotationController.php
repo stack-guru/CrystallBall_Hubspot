@@ -27,7 +27,7 @@ class AnnotationController extends Controller
 
         $this->authorize('viewAny', Annotation::class);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray($user);
 
         $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_properties`.`google_analytics_property_id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
         $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('annotation_ga_property_id'), $userIdsArray);

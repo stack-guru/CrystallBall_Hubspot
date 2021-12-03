@@ -57,7 +57,7 @@ class AnnotationController extends Controller
     {
 
         $user = Auth::user();
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray($user);
 
         $annotationsQuery = "SELECT TempTable.* FROM (";
 

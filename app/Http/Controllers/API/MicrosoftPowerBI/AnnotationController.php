@@ -23,7 +23,7 @@ class AnnotationController extends Controller
             return ['annotations' => []];
         }
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray($user);
 
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));

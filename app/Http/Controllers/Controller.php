@@ -12,9 +12,8 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function getAllGroupUserIdsArray()
+    public function getAllGroupUserIdsArray($user): array
     {
-        $user = Auth::user();
         $userIdsArray = [];
 
         if (!$user->user_id) {

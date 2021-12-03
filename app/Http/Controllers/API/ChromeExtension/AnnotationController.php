@@ -22,7 +22,7 @@ class AnnotationController extends Controller
         }
 
         $user = Auth::user();
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray($user);
 
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));
@@ -218,7 +218,7 @@ class AnnotationController extends Controller
                 'user_annotation_color' => $user->userAnnotationColor,
             ];
         }
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray($user);
 
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));

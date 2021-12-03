@@ -21,7 +21,7 @@ class AnalyticsController extends Controller
             'ga_property_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
@@ -44,7 +44,7 @@ class AnalyticsController extends Controller
             'ga_property_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
@@ -67,7 +67,7 @@ class AnalyticsController extends Controller
             'ga_property_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
@@ -90,7 +90,7 @@ class AnalyticsController extends Controller
             'ga_property_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
@@ -120,7 +120,7 @@ class AnalyticsController extends Controller
         $endDate = $request->query('end_date');
         $statisticsPaddingDays = $request->query('statistics_padding_days');
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
@@ -158,8 +158,7 @@ class AnalyticsController extends Controller
         $endDate = $request->query('end_date');
 
         $user = Auth::user();
-
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray($user);
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {

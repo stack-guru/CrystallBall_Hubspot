@@ -100,7 +100,7 @@ class AnnotationController extends Controller
         $this->authorize('update', $annotation);
 
         $user = Auth::user();
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray($user);
 
         if (!in_array($annotation->user_id, $userIdsArray)) {
             abort(404);
@@ -158,7 +158,7 @@ class AnnotationController extends Controller
     {
         $this->authorize('delete', $annotation);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         if (!in_array($annotation->user_id, $userIdsArray)) {
             abort(404);
@@ -174,7 +174,7 @@ class AnnotationController extends Controller
         $this->authorize('viewAny', Annotation::class);
 
         $user = Auth::user();
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray($user);
 
         $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_properties`.`google_analytics_property_id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
         $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('annotation_ga_property_id'), $userIdsArray);
@@ -208,7 +208,7 @@ class AnnotationController extends Controller
     {
         $this->authorize('view', $annotation);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
 
         if (!in_array($annotation->user_id, $userIdsArray)) {
             abort(403);
@@ -369,7 +369,7 @@ class AnnotationController extends Controller
         $this->authorize('viewAny', Annotation::class);
 
         $user = Auth::user();
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray = $this->getAllGroupUserIdsArray($user);
 
         $annotationsQuery = "SELECT DISTINCT `TempTable`.`category` FROM (";
         $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, '*', $userIdsArray);
