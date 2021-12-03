@@ -13,13 +13,13 @@ export default class integrationsIndex extends React.Component {
 
     render() {
         return (
-            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper data-source-container">
+            <div className="container-xl bg-white d-flex flex-column justify-content-center component-wrapper data-source-container pt-0">
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
                         <h2 className="heading-section gaa-title">Integrations</h2>
                     </div>
                 </div>
-                <div className="row ml-0 mr-0 mt-5" id="integration-page-container">
+                <div className="row ml-0 mr-0 mt-0" id="integration-page-container">
                     <div className="col-12">
                         <div id="integration-page-top-options">
                             <zapier-zap-manager
