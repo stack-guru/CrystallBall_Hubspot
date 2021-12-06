@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import VideoModalBox from '../../utils/VideoModalBox';
 
 export default class IntegrationsIndex extends React.Component {
@@ -18,7 +19,7 @@ export default class IntegrationsIndex extends React.Component {
                     <div className="col-12">
                         <h2 className="heading-section gaa-title">
                             Integrations
-                            <a href="/my-integrations" className="btn gaa-btn-primary float-right">My Integrations</a>
+                            <Link to="/my-integrations" className="btn gaa-btn-primary float-right">My Integrations</Link>
                         </h2>
                     </div>
                 </div>
