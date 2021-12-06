@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::view('data-source', 'ui/app');
     Route::view('integrations', 'ui/app');
+    Route::view('my-integrations', 'ui/app');
     Route::view('api-key', 'ui/app');
     Route::view('notifications', 'ui/app');
     Route::view('analytics-and-business-intelligence', 'ui/app');

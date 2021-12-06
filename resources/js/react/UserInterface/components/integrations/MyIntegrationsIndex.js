@@ -1,14 +1,14 @@
 import React from 'react';
 import VideoModalBox from '../../utils/VideoModalBox';
 
-export default class IntegrationsIndex extends React.Component {
+export default class MyIntegrationsIndex extends React.Component {
 
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
-        document.title = "Integrations";
+        document.title = "My Integrations";
     }
 
     render() {
@@ -16,21 +16,17 @@ export default class IntegrationsIndex extends React.Component {
             <div className="container-xl bg-white d-flex flex-column justify-content-center component-wrapper data-source-container pt-0">
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
-                        <h2 className="heading-section gaa-title">
-                            Integrations
-                            <a href="/my-integrations" className="btn gaa-btn-primary float-right">My Integrations</a>
-                        </h2>
+                        <h2 className="heading-section gaa-title">My Integrations</h2>
                     </div>
                 </div>
-                <div className="row ml-0 mr-0 mt-0" id="integration-page-container">
+                <div className="row ml-0 mr-0 mt-0" id="my-integration-page-container">
                     <div className="col-12">
                         <div id="integration-page-top-options">
-                            <zapier-app-directory
-                                app="crystal-ball"
+                            <zapier-zap-manager
+                                client-id="Afj7oxkfgUD0tiOualhZVEFlTeh8RujUytQZ8OYq"
                                 link-target="same-tab"
                                 theme="light"
-                                introcopy="hide"
-                            />
+                            ></zapier-zap-manager>
                         </div>
                     </div>
                 </div>

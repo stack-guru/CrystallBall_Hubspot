@@ -21,6 +21,7 @@ import DataSourceIndex from "./components/DataSource/DataSourceIndex";
 import IndexAPIKey from './components/apiKey/IndexAPIKey';
 import CreatePayment from './components/settings/pricingPlans/CreatePayment';
 import IntegrationsIndex from "./components/integrations/IntegrationsIndex";
+import MyIntegrationsIndex from "./components/integrations/MyIntegrationsIndex";
 import SupportIndex from './components/support/supportIndex';
 import IndexUsers from './components/settings/user/IndexUsers';
 import CreateUser from './components/settings/user/CreateUser';
@@ -105,6 +106,9 @@ class Main extends React.Component {
                             </Route>
                             <Route exact path="/integrations" refresh={true}>
                                 <IntegrationsIndex user={this.state.user} />
+                            </Route>
+                            <Route exact path="/my-integrations" refresh={true}>
+                                <MyIntegrationsIndex user={this.state.user} />
                             </Route>
                             <Route exact path="/analytics-and-business-intelligence" refresh={true}>
                                 <AnalyticsAndBusinessIntelligenceIndex user={this.state.user} />
