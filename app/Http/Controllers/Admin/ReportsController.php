@@ -12,26 +12,21 @@ class ReportsController extends Controller
 {
     public function showUserActiveReport(Request $request)
     {
-        $users = User::with(['pricePlan', 'lastAnnotation', 'lastAnnotationButtonClickedChromeExtensionLog', 'lastPopupOpenedChromeExtensionLog'])
-            ->orderBy('created_at', 'DESC')
-            ->withCount('loginLogs')
-            ->withCount('last30DaysApiAnnotationCreatedLogs')
-            ->withCount('last30DaysPopupOpenedChromeExtensionLogs')
-            ->withCount('AnnotationButtonClickedChromeExtensionLogs')
-            ->get();
-
-        return view('admin/reports/user-active-report')->with('users', $users);
-    }
-
-    public function showUserActivityReport(Request $request)
-    {
         $users = User::orderBy('created_at', 'DESC')
-            ->with('googleAccounts')
-            ->with('lastAnnotation')
+            ->with([
+                'pricePlan',
+                'googleAccounts',
+                'lastAnnotation',
+                'lastPopupOpenedChromeExtensionLog',
+                'lastAnnotationButtonClickedChromeExtensionLog',
+            ])
             ->withCount('annotationGaProperties')
             ->withCount('googleAnalyticsProperties')
             ->withCount('manualAnnotations')
             ->withCount('loginLogs')
+            ->withCount('last30DaysApiAnnotationCreatedLogs')
+            ->withCount('last30DaysPopupOpenedChromeExtensionLogs')
+            ->withCount('AnnotationButtonClickedChromeExtensionLogs')
             ->get();
 
         foreach ($users as $user) {
@@ -43,6 +38,6 @@ class ReportsController extends Controller
             $user->total_annotations_count = DB::select($annotationsQuery)[0]->total_annotations_count;
         }
 
-        return view('admin/reports/user-activity-report')->with('users', $users);
+        return view('admin/reports/user-active-report')->with('users', $users);
     }
 }

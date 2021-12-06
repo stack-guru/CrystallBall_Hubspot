@@ -78,9 +78,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.reports.user-active-report.show') }}">Active User Report</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.reports.user-activity-report.show') }}">User Activity Report</a>
-                        </li>
                         @endguest
                     </ul>
 
