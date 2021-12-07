@@ -20,7 +20,6 @@ class GoogleAPIService
         $this->adwordsDeveloperToken = config('services.google.adwords.developer_token');
     }
 
-
     public function refreshToken(GoogleAccount $googleAccount)
     {
         if (!$googleAccount->refresh_token) {
@@ -80,7 +79,7 @@ class GoogleAPIService
             return $response;
         } else {
             $this->timestampToken($googleAccount, true);
-            return false;
+            return $response;
         }
     }
 
@@ -131,9 +130,9 @@ class GoogleAPIService
         curl_close($ch);
     }
 
-    public function timestampToken($googleAccount, $didErrorOccured = false, $response = ''): bool
+    public function timestampToken($googleAccount, $didErrorOccur = false, $response = ''): bool
     {
-        if ($didErrorOccured) {
+        if ($didErrorOccur) {
             $googleAccount->last_unsuccessful_use_at = Carbon::now();
             return $googleAccount->save();
         } else {
