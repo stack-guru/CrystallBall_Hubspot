@@ -19,6 +19,7 @@
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "sentry/sentry-laravel": "^2.10",
         "ventepos/bluesnap-php": "^0.3.5"
     },
     "require-dev": {
