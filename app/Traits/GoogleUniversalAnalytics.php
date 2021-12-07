@@ -25,25 +25,12 @@ trait GoogleUniversalAnalytics
         $url = "https://www.googleapis.com/analytics/v3/management/accounts/" . $googleAnalyticsAccount->ga_id . "/webproperties";
 
         Log::channel('google')->info("Getting UA Account Properties: ", ['GoogleAccount' => $googleAnalyticsAccount->ga_id]);
-        $response = Http::get($url, [
+        $response = $this->executeRequestWithRefresh($googleAccount, 'get', $url, [
             'access_token' => $googleAccount->token,
         ]);
 
-        if ($response->status() == 401 && !$repeatCall) {
-            // This code block only checks if google accounts can be fetched after refreshing access token
-            if ($this->refreshToken($googleAccount) == false) {
-                return false;
-            } else {
-                $gCA = $this->getAccountUAProperties($googleAccount, $googleAnalyticsAccount, true);
-                // On success it returns google analytics accounts else false
-                if ($gCA !== false) {
-                    return $gCA;
-                } else {
-                    return false;
-                }
-            }
-        } else if ($response->status() == 401 && $repeatCall) {
-            Log::channel('google')->error("Unable to refresh access token while accessing UA Property.",  ['GoogleAccount' => $googleAnalyticsAccount->ga_id]);
+        if ($response == false) {
+            Log::channel('google')->error("Error fetching UA Properties: ", ['GoogleAnalyticsAccount' => $googleAnalyticsAccount->ga_id]);
             return false;
         }
 
@@ -87,23 +74,10 @@ trait GoogleUniversalAnalytics
             ]
         ];
         Log::channel('google')->info("Fetching UA Account Metrics and Dimensions: ", ['GoogleAccount' => $googleAnalyticsProperty->internal_property_id]);
-        $response = Http::withToken($googleAccount->token)->post($url, $jsonBody);
+        $response = $this->executeRequestWithRefresh($googleAccount, 'post', $url, $jsonBody, $googleAccount->token);
 
-        if ($response->status() == 401 && !$repeatCall) {
-            // This code block only checks if google accounts can be fetched after refreshing access token
-            if ($this->refreshToken($googleAccount) == false) {
-                return false;
-            } else {
-                $gCA = $this->getUAMetricsAndDimensions($googleAccount, $googleAnalyticsProperty, $startDate, $endDate, true);
-                // On success it returns google analytics accounts else false
-                if ($gCA !== false) {
-                    return $gCA;
-                } else {
-                    return false;
-                }
-            }
-        } else if ($response->status() == 401 && $repeatCall) {
-            Log::channel('google')->error("Unable to refresh access token while accessing UA Property.",  ['GoogleAccount' => $googleAnalyticsAccount->ga_id]);
+        if ($response == false) {
+            Log::channel('google')->error("Error fetching UA Metrics and Dimensions: ", ['GoogleAnalyticsProperty' => $googleAnalyticsProperty->internal_property_id]);
             return false;
         }
 

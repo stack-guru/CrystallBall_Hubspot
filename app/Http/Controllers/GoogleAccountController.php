@@ -81,7 +81,7 @@ class GoogleAccountController extends Controller
 
     public function destroy(GoogleAccount $googleAccount)
     {
-        (new GoogleAPIService)->revokeAccess($googleAccount->token);
+        (new GoogleAPIService)->revokeAccess($googleAccount);
 
         return ['success' => $googleAccount->delete()];
     }

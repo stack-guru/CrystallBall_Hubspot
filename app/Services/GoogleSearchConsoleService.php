@@ -14,23 +14,10 @@ class GoogleSearchConsoleService extends GoogleAPIService
         $url = "https://www.googleapis.com/webmasters/v3/sites";
 
         Log::channel('google')->info("Fetching Sites: ", ['GoogleAccount' => $googleAccount->name]);
-        $response = Http::withToken($googleAccount->token)->get($url);
+        $response = $this->executeRequestWithRefresh($googleAccount, 'get', $url, [], $googleAccount->token);
 
-        if ($response->status() == 401 && !$repeatCall) {
-            // This code block only checks if google accounts can be fetched after refreshing access token
-            if ($this->refreshToken($googleAccount) == false) {
-                return false;
-            } else {
-                $gCA = $this->getSites($googleAccount, true);
-                // On success it returns google analytics accounts else false
-                if ($gCA !== false) {
-                    return $gCA;
-                } else {
-                    Log::channel('google')->error("Unable to refresh access token while accessing Search Console Sites.",  ['GoogleAccount' => $googleAccount->name]);
-                    return false;
-                }
-            }
-        } else if ($response->status() == 401 && $repeatCall) {
+        if ($response == false) {
+            Log::channel('google')->error("Unable to refresh access token while accessing Search Console Sites.",  ['GoogleAccount' => $googleAccount->name]);
             return false;
         }
 
@@ -63,23 +50,10 @@ class GoogleSearchConsoleService extends GoogleAPIService
             ],
         ];
         Log::channel('google')->info("Fetching Statistics for Site: ", ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url]);
-        $response = Http::withToken($googleAccount->token)->post($url, $jsonBody);
+        $response = $this->executeRequestWithRefresh($googleAccount, 'post', $url, $jsonBody, $googleAccount->token);
 
-        if ($response->status() == 401 && !$repeatCall) {
-            // This code block only checks if google accounts can be fetched after refreshing access token
-            if ($this->refreshToken($googleAccount) == false) {
-                return false;
-            } else {
-                $gCA = $this->getGSCStatistics($googleAccount, $googleSearchConsoleSite, $startDate, $endDate, true);
-                // On success it returns google analytics accounts else false
-                if ($gCA !== false) {
-                    return $gCA;
-                } else {
-                    Log::channel('google')->error("Unable to refresh access token while accessing Google Search Console Site.",  ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url]);
-                    return false;
-                }
-            }
-        } else if ($response->status() == 401 && $repeatCall) {
+        if ($response == false) {
+            Log::channel('google')->error("Unable to access Google Search Console Site.",  ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url]);
             return false;
         }
 
@@ -115,23 +89,10 @@ class GoogleSearchConsoleService extends GoogleAPIService
             ],
         ];
         Log::channel('google')->info("Fetching Statistics for Site: ", ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url]);
-        $response = Http::withToken($googleAccount->token)->post($url, $jsonBody);
+        $response = $this->executeRequestWithRefresh($googleAccount, 'post', $url, $jsonBody, $googleAccount->token);
 
-        if ($response->status() == 401 && !$repeatCall) {
-            // This code block only checks if google accounts can be fetched after refreshing access token
-            if ($this->refreshToken($googleAccount) == false) {
-                return false;
-            } else {
-                $gCA = $this->getGSCStatistics($googleAccount, $googleSearchConsoleSite, $startDate, $endDate, true);
-                // On success it returns google analytics accounts else false
-                if ($gCA !== false) {
-                    return $gCA;
-                } else {
-                    Log::channel('google')->error("Unable to refresh access token while accessing Google Search Console Site.",  ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url]);
-                    return false;
-                }
-            }
-        } else if ($response->status() == 401 && $repeatCall) {
+        if ($response == false) {
+            Log::channel('google')->error("Unable to access Google Search Console Site.",  ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url]);
             return false;
         }
 

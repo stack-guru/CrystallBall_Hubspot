@@ -25,26 +25,13 @@ trait GoogleAnalyticsFour
         $url = "https://analyticsadmin.googleapis.com/v1alpha/properties";
 
         Log::channel('google')->info("Getting GA4 Account Properties: ", ['GoogleAccount' => $googleAnalyticsAccount->ga_id]);
-        $response = Http::get($url, [
+        $response = $this->executeRequestWithRefresh($googleAccount, 'get', $url, [
             'access_token' => $googleAccount->token,
             'filter' => "parent:accounts/" . $googleAnalyticsAccount->ga_id
         ]);
 
-        if ($response->status() == 401 && !$repeatCall) {
-            // This code block only checks if google accounts can be fetched after refreshing access token
-            if ($this->refreshToken($googleAccount) == false) {
-                return false;
-            } else {
-                $gCA = $this->getAccountGA4Properties($googleAccount, $googleAnalyticsAccount, true);
-                // On success it returns google analytics accounts else false
-                if ($gCA !== false) {
-                    return $gCA;
-                } else {
-                    return false;
-                }
-            }
-        } else if ($response->status() == 401 && $repeatCall) {
-            Log::channel('google')->error("Unable to refresh access token while accessing GA4 Property.",  ['GoogleAccount' => $googleAnalyticsAccount->ga_id]);
+        if ($response == false) {
+            Log::channel('google')->error("Error fetching GA4 Properties: ", ['GoogleAnalyticsAccount' => $googleAnalyticsAccount->ga_id]);
             return false;
         }
 
@@ -87,23 +74,10 @@ trait GoogleAnalyticsFour
             ]
         ];
         Log::channel('google')->info("Fetching GA4 Account Metrics and Dimensions: ", ['GoogleAccount' => $googleAnalyticsProperty->internal_property_id]);
-        $response = Http::withToken($googleAccount->token)->post($url, $jsonBody);
+        $response = $this->executeRequestWithRefresh($googleAccount, 'post', $url, $jsonBody, $googleAccount->token);
 
-        if ($response->status() == 401 && !$repeatCall) {
-            // This code block only checks if google accounts can be fetched after refreshing access token
-            if ($this->refreshToken($googleAccount) == false) {
-                return false;
-            } else {
-                $gCA = $this->getGA4MetricsAndDimensions($googleAccount, $googleAnalyticsProperty, $startDate, $endDate, true);
-                // On success it returns google analytics accounts else false
-                if ($gCA !== false) {
-                    return $gCA;
-                } else {
-                    Log::channel('google')->error("Unable to refresh access token while accessing GA4 Property.",  ['GoogleAccount' => $googleAnalyticsAccount->ga_id]);
-                    return false;
-                }
-            }
-        } else if ($response->status() == 401 && $repeatCall) {
+        if ($response == false) {
+            Log::channel('google')->error("Error fetching GA4 Metrics and Dimensions: ", ['message' => $googleAnalyticsProperty->internal_property_id]);
             return false;
         }
 

@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\GoogleAccount;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Carbon;
 
 class GoogleAPIService
 {
@@ -50,6 +52,38 @@ class GoogleAPIService
         return $googleAccount;
     }
 
+    public function executeRequestWithRefresh($googleAccount, $method, $url, $payload = [], $token = null)
+    {
+        if ($token) {
+            $response = Http::withToken($token)->{$method}($url, $payload);
+        } else {
+            $response = Http::{$method}($url, $payload);
+        }
+
+        if ($response->status() == 401) {
+            // This code block only checks if google accounts can be fetched after refreshing access token
+            if ($this->refreshToken($googleAccount) == false) {
+                Log::channel('google')->error("Unable to refresh access token for google account.",  ['GoogleAccount' => $googleAccount->email]);
+                $this->timestampToken($googleAccount, true);
+                return false;
+            } else {
+                $response = Http::{$method}($url, $payload);
+                if ($response->successful()) {
+                    $this->timestampToken($googleAccount, false);
+                } else {
+                    $this->timestampToken($googleAccount, true);
+                }
+                return $response;
+            }
+        } else if ($response->successful()) {
+            $this->timestampToken($googleAccount, false);
+            return $response;
+        } else {
+            $this->timestampToken($googleAccount, true);
+            return false;
+        }
+    }
+
     /**
      * Get Google Accounts from Google Analytics connected Account. Refresh access token if necessary
      *
@@ -61,24 +95,11 @@ class GoogleAPIService
     {
         $url = "https://www.googleapis.com/analytics/v3/management/accounts";
 
-        $response = Http::get($url, [
+        $response = $this->executeRequestWithRefresh($googleAccount, 'get', $url, [
             'access_token' => $googleAccount->token,
         ]);
 
-        if ($response->status() == 401 && !$repeatCall) {
-            // This code block only checks if google accounts can be fetched after refreshing access token
-            if ($this->refreshToken($googleAccount) == false) {
-                return false;
-            } else {
-                $gCA = $this->getConnectedAccounts($googleAccount, true);
-                // On success it returns google analytics accounts else false
-                if ($gCA !== false) {
-                    return $gCA;
-                } else {
-                    return false;
-                }
-            }
-        } else if ($response->status() == 401 && $repeatCall) {
+        if ($response == false) {
             return false;
         }
 
@@ -90,11 +111,11 @@ class GoogleAPIService
         return $respJson['items'];
     }
 
-    public function revokeAccess($token)
+    public function revokeAccess($googleAccount)
     {
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, 'https://oauth2.googleapis.com/revoke?token=' . $token);
+        curl_setopt($ch, CURLOPT_URL, 'https://oauth2.googleapis.com/revoke?token=' . $googleAccount->token);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, "-X");
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -108,5 +129,16 @@ class GoogleAPIService
             return false;
         }
         curl_close($ch);
+    }
+
+    public function timestampToken($googleAccount, $didErrorOccured = false, $response = ''): bool
+    {
+        if ($didErrorOccured) {
+            $googleAccount->last_unsuccessful_use_at = Carbon::now();
+            return $googleAccount->save();
+        } else {
+            $googleAccount->last_successful_use_at = Carbon::now();
+            return $googleAccount->save();
+        }
     }
 }
