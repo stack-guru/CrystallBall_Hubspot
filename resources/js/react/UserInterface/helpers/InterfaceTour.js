@@ -101,7 +101,7 @@ export default class InterfaceTour extends Component {
                     isOpen={this.props.isOpen}
                     onRequestClose={() => this.props.toggleShowTour(false)}
                     closeWithMask={false}
-                    lastStepNextButton={<button className="btn btn-primary" onClick={(e) => { this.setState({ redirectTo: '/annotation' }); (this.props.toggleShowTour)(false); }}>Finish</button>}
+                    lastStepNextButton={<button className="btn gaa-btn-primary" onClick={(e) => { this.setState({ redirectTo: '/annotation' }); (this.props.toggleShowTour)(false); }}>Finish</button>}
                 />
             </>
         )

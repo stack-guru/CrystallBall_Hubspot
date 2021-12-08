@@ -57,7 +57,7 @@ export default class ChangePhoneModal extends Component {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button className="btn btn-primary">Verify Phone Number Now</button>
+                                <button className="btn gaa-btn-primary">Verify Phone Number Now</button>
                             </div>
                         </form>
                     </div>

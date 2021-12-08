@@ -170,7 +170,7 @@ class header extends React.Component {
                         {this.props.user.price_plan.price == 0 ?
                             <li className="notifications">
                                 <div className="no-after">
-                                    <Link to="/settings/price-plans" className="btn btn-primary">Upgrade Now</Link>
+                                    <Link to="/settings/price-plans" className="btn gaa-btn-primary">Upgrade Now</Link>
                                 </div>
                             </li>
                             : null}

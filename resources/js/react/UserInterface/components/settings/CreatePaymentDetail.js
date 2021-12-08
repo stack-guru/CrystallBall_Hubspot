@@ -127,7 +127,7 @@ export default class CreatePaymentDetail extends Component {
                             </div>
                             <div className="row">
                                 <div className="col-6 text-right mt-4">
-                                    <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">
+                                    <button type="submit" className="btn gaa-btn-primary btn-fab btn-round" title="submit">
                                         <i className="fa fa-plus mr-1"></i>Save
                                     </button>
                                 </div>

@@ -29,7 +29,7 @@ export default function AdwordsClientCustomerIdSaverModal(props) {
                     <button type="button" className="btn btn-secondary"
                         onClick={props.dismissCallback}
                     >Close</button>
-                    <button type="submit" className="btn btn-primary" onClick={() => {
+                    <button type="submit" className="btn gaa-btn-primary" onClick={() => {
                         HttpClient.put('settings/google-account/' + searchParams.get('google_account_id'), {
                             'adwords_client_customer_id': document.getElementById("adwordsClientCustomerId").value
                         })

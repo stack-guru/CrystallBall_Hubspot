@@ -290,7 +290,7 @@ setting-menu-item.dropdown {
 
 .gaa-btn-primary {
     color: #fff;
-    background-color: #456287;
+    background-color: #1c98f0;
     border-color: #456287;
 }
 
@@ -301,6 +301,7 @@ setting-menu-item.dropdown {
 
 .logo-text {
     font-size: 1rem;
+    color: #056DB5;
 }
 .img-col-wrap {
     /*height: 115px;*/
@@ -565,9 +566,6 @@ tbody td {
     margin-top: auto;
     margin-bottom: auto;
     vertical-align: middle !important;
-}
-.gaa-btn-primary {
-    background: #1c79d0;
 }
 
 .table tbody td {

@@ -124,7 +124,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                             />
                         </div>
                         <div className="input-group search-input-box mb-3">
-                            <button className="btn btn-primary" type="submit">Create</button>
+                            <button className="btn gaa-btn-primary" type="submit">Create</button>
                         </div>
                     </form>
                     <div className="checkbox-box mt-4">

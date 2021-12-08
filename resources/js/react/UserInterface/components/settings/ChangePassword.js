@@ -174,7 +174,7 @@ export default class ChangePassword extends React.Component {
                             </div>
                             <div className="row ml-0 mr-0 my-3">
                                 <div className="col-12 text-right p-0">
-                                    <button className="btn btn-primary">Reset</button>
+                                    <button className="btn gaa-btn-primary">Reset</button>
                                 </div>
                             </div>
                         </form>
@@ -190,7 +190,7 @@ export default class ChangePassword extends React.Component {
                             </div>
                             <div className="row ml-0 mr-0 my-3">
                                 <div className="col-12 text-right p-0">
-                                    <button className="btn btn-primary">Save</button>
+                                    <button className="btn gaa-btn-primary">Save</button>
                                 </div>
                             </div>
                         </form>
@@ -209,7 +209,7 @@ export default class ChangePassword extends React.Component {
 
                             <div className="row ml-0 mr-0 my-3">
                                 <div className="col-12 text-right p-0">
-                                    <button className="btn btn-primary">Change</button>
+                                    <button className="btn gaa-btn-primary">Change</button>
                                 </div>
                             </div>
                         </form>

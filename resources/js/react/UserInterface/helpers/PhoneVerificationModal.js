@@ -106,7 +106,7 @@ export default class PhoneVerificationModal extends Component {
                                             <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
                                             <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
                                             <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                            <button className="btn btn-primary btn-embossed" type="submit">Verify</button>
+                                            <button className="btn gaa-btn-primary btn-embossed" type="submit">Verify</button>
                                         </form>
                                     }
                                     <div>

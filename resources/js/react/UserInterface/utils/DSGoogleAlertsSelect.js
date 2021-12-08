@@ -50,7 +50,7 @@ export default class DSGoogleAlertsSelect extends React.Component {
                         {
                             this.props.ds_data.map(gAK => {
                                 return (
-                                    <button type="button" className="btn btn-primary m-2" key={gAK.id}
+                                    <button type="button" className="btn gaa-btn-primary m-2" key={gAK.id}
                                         user_data_source_id={gAK.id}
                                         onClick={this.deleteKeyword}
                                     >

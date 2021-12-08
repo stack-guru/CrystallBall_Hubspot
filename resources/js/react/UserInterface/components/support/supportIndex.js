@@ -93,7 +93,7 @@ export default class SupportIndex extends Component {
                             </div>
                             <div className="row ml-0 mr-0  mt-3">
                                 <div className="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <button type="submit" className="btn btn-primary btn-fab btn-round">
+                                    <button type="submit" className="btn gaa-btn-primary btn-fab btn-round">
                                         {!this.state.isBusy ?
                                             <i className="fa fa-upload mr-1"></i>
                                             :

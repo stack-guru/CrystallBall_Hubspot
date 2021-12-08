@@ -152,7 +152,7 @@ export default class UploadAnnotation extends React.Component {
                                     <a href="/csv/upload_sample.csv" target="_blank" download>Download sample CSV file</a>
                                 </div>
                                 <div className="col-12 col-sm-12 col-md-8 col-lg-8 text-right">
-                                    <button type="submit" className="btn btn-primary btn-fab btn-round">
+                                    <button type="submit" className="btn gaa-btn-primary btn-fab btn-round">
                                         <i className="fa fa-upload mr-3"></i>
                                         Upload
                                     </button>

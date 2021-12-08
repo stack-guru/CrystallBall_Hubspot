@@ -143,7 +143,7 @@ export default class EditUser extends Component {
                             </div>
                             <div className="row ml-0 mr-0 mt-3">
                                 <div className="col-12 text-right pr-0">
-                                    <button type="submit" className="btn btn-primary btn-fab btn-round" title="submit">Save</button>
+                                    <button type="submit" className="btn gaa-btn-primary btn-fab btn-round" title="submit">Save</button>
                                 </div>
                             </div>
                         </form>
