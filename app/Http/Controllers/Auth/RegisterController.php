@@ -11,7 +11,7 @@ use App\Rules\HasLettersNumbers;
 use App\Rules\HasSymbol;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
-use Cookie;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -99,7 +99,6 @@ class RegisterController extends Controller
         $user->save();
 
         return $user;
-
     }
 
     public function registerLoginGoogle()
@@ -109,6 +108,11 @@ class RegisterController extends Controller
             ->scopes([
                 'https://www.googleapis.com/auth/userinfo.profile',
                 'https://www.googleapis.com/auth/userinfo.email',
+
+                'https://www.googleapis.com/auth/analytics.readonly',
+
+                'https://www.googleapis.com/auth/webmasters',
+                'https://www.googleapis.com/auth/webmasters.readonly',
             ])
             ->redirectUrl(route('socialite.google.redirect'))
             ->redirect();
@@ -139,13 +143,11 @@ class RegisterController extends Controller
                 $user->save();
 
                 event(new \Illuminate\Auth\Events\Registered($user));
-
             }
         }
 
         Auth::login($user);
         return redirect()->route('annotation.index');
-
     }
 
     /**
@@ -163,5 +165,4 @@ class RegisterController extends Controller
         }
         return view('auth.register');
     }
-
 }

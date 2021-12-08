@@ -28,15 +28,15 @@ class GoogleAccountController extends Controller
         $scopes = [
             'https://www.googleapis.com/auth/userinfo.profile',
             'https://www.googleapis.com/auth/userinfo.email',
+
             'https://www.googleapis.com/auth/analytics.readonly',
+
+            'https://www.googleapis.com/auth/webmasters',
+            'https://www.googleapis.com/auth/webmasters.readonly',
         ];
 
         // if (config('app.env') == 'development' || config('app.env') == 'local') {
         //     array_push($scopes, 'https://www.googleapis.com/auth/adwords');
-        // }
-
-        // if (config('app.env') == 'development' || config('app.env') == 'local') {
-        array_push($scopes, 'https://www.googleapis.com/auth/webmasters.readonly', 'https://www.googleapis.com/auth/webmasters');
         // }
 
         return Socialite::driver('google')
