@@ -61,7 +61,7 @@ class HolidayWeek extends Notification
             ->greeting('Hi ' . $notifiable->name . ',')
             ->line('In seven days, it is ' . $this->holiday->event_name . '.')
             ->line('Get the most of it by doing the proper adaptations on your site or sending an email.')
-            ->line('Check out our email templates <a href="https://www.gaannotations.com/blog/categories/holidays-templates">HERE</a>, feel free to use them ;)');
+            ->line('Check out our email templates <a href="https://www.crystalballinsight.com/email-templates-holidays">HERE</a>, feel free to use them ;)');
 
         if ($this->holiday->url) {
             $mailMessage->line('Learn more about this Holiday <a href="' . $this->holiday->url . '">HERE</a>.');
