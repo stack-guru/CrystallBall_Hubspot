@@ -622,3 +622,11 @@ table.table-striped  th{
 .text-black {
     color: black;
 }
+
+#annotation-table-head tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.0625);
+}
+
+#annotation-table-body tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.0625);
+}
