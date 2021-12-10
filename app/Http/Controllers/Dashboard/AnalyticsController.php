@@ -142,7 +142,7 @@ class AnalyticsController extends Controller
                 WHERE T3.statistics_date BETWEEN '$startDate' AND '$endDate'
                 ORDER BY T3.statistics_date;");
 
-        return ['statistics' => $statistics];
+        return ['statistics' => $statistics, 'google_account' => $gAProperty->googleAccount()->first()];
     }
 
     public function annotationsMetricsDimensionsIndex(Request $request)

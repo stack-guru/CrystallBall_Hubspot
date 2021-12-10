@@ -71,7 +71,7 @@ class SearchConsoleController extends Controller
             ->orderBy('query')
             ->get();
 
-        return ['statistics' => $statistics];
+        return ['statistics' => $statistics, 'google_account' => $gSCSite->googleAccount()->first()];
     }
 
     public function pagesIndex(Request $request)

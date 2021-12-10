@@ -18,6 +18,7 @@ export default class IndexAnalytics extends Component {
         this.state = {
             isBusy: false,
             showDateRangeSelect: false,
+            googleAccount: undefined,
             usersDaysStatistics: [],
             annotations: [],
             mediaStatistics: [],
@@ -154,7 +155,7 @@ export default class IndexAnalytics extends Component {
                                     </div>
                                 </React.Fragment>
                                 :
-                                <NoDataFoundPage />
+                                <NoDataFoundPage googleAccount={this.state.googleAccount} />
                         }
                     </div>
                 </div>
@@ -205,7 +206,7 @@ export default class IndexAnalytics extends Component {
     fetchUsersDaysAnnotations(gaPropertyId) {
         HttpClient.get(`/dashboard/analytics/users-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
             .then(response => {
-                this.setState({ isBusy: false, usersDaysStatistics: response.data.statistics });
+                this.setState({ isBusy: false, usersDaysStatistics: response.data.statistics, googleAccount: response.data.google_account });
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {

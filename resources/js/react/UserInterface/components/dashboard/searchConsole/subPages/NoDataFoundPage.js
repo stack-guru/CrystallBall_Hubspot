@@ -1,7 +1,10 @@
+import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function NoDataFoundPage(props) {
+    if (!props.googleAccount) return null;
+
     return <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
         <section className="ftco-section" id="inputs">
             <div className="container-xl pt-4">
@@ -12,9 +15,28 @@ export default function NoDataFoundPage(props) {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-12 text-center">
-                            <p>Please make sure that Search Console sites are properly fetched</p>
-                        </div>
+                        {
+                            props.googleAccount.last_successful_use_at == null && props.googleAccount.last_unsuccessful_use_at ?
+                                <div className="col-12 text-center">
+                                    <p>Please wait, while we fetch data from your google accounts.</p>
+                                </div>
+                                : null
+                        }
+                        {
+                            moment(props.googleAccount.last_successful_use_at) < moment(props.googleAccount.last_unsuccessful_use_at) ?
+                                <div className="col-12 text-center">
+                                    <p>System is unable to connect with Google to fetch Google Search Console statistics.</p>
+                                </div>
+                                : null
+                        }
+                        {
+                            props.googleAccount.scopes.indexOf('https://www.googleapis.com/auth/webmasters.readonly') == -1
+                                || props.googleAccount.scopes.indexOf('https://www.googleapis.com/auth/webmasters') == -1 ?
+                                <div className="col-12 text-center">
+                                    <p>Please provide necessary permissions while giving access to your Google Account.</p>
+                                </div>
+                                : null
+                        }
                     </div>
                     {/* <div className="row">
                         <div className="col-12 text-center">

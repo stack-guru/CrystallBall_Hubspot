@@ -17,6 +17,7 @@ export default class IndexSearchConsole extends Component {
         this.state = {
             isBusy: false,
             showDateRangeSelect: false,
+            googleAccount: undefined,
             queriesStatistics: [],
             pagesStatistics: [],
             countriesStatistics: [],
@@ -198,7 +199,7 @@ export default class IndexSearchConsole extends Component {
                                     </div>
                                 </React.Fragment>
                                 :
-                                <NoDataFoundPage />
+                                <NoDataFoundPage googleAccount={this.state.googleAccount} />
                         }
                     </div>
                 </div>
@@ -220,7 +221,7 @@ export default class IndexSearchConsole extends Component {
                 });
             HttpClient.get(`/dashboard/search-console/queries?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}`)
                 .then(response => {
-                    this.setState({ isBusy: false, queriesStatistics: response.data.statistics });
+                    this.setState({ isBusy: false, queriesStatistics: response.data.statistics, googleAccount: response.data.google_account });
                 }, (err) => {
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
