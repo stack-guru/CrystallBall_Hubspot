@@ -291,7 +291,7 @@ setting-menu-item.dropdown {
 .gaa-btn-primary {
     color: #fff;
     background-color: #1c98f0;
-    border-color: #456287;
+    border-color: transparent;
 }
 
 .logo-margin {
