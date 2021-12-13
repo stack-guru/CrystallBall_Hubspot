@@ -623,10 +623,10 @@ table.table-striped  th{
     color: black;
 }
 
-#annotation-table-head tr {
+table.table-bordered thead tr {
     border-bottom: 1px solid rgba(0, 0, 0, 0.0625);
 }
 
-#annotation-table-body tr {
+table.table-bordered tbody tr {
     border-bottom: 1px solid rgba(0, 0, 0, 0.0625);
 }
