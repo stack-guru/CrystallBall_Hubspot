@@ -185,7 +185,7 @@ class IndexAnnotations extends React.Component {
                             <div className="row ml-0 mr-0">
                                 <div className="col-12">
                                     <div id="annotation-table-container" className="table-responsive">
-                                        <table className="table table-hover table-bordered">
+                                        <table className="table table-hover blue-hover table-bordered">
                                             <thead id="annotation-table-head">
                                                 <tr>
                                                     <th>Category</th>

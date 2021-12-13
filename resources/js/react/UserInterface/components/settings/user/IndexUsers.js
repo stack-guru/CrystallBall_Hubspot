@@ -91,7 +91,7 @@ export default class IndexUsers extends Component {
                             <div className="row ml-0 mr-0">
                                 <div className="col-12">
                                     <div className="table-responsive">
-                                        <table className="table table-hover table-bordered table-striped">
+                                        <table className="table table-hover blue-hover table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>Email</th>
