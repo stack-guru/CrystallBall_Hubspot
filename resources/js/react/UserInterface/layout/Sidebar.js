@@ -130,7 +130,7 @@ class Sidebar extends React.Component {
                                 <span className="icon-holder">
                                     <img src="/images/svg/analytics-and-business-intelligence-icon.svg" width="25px" height="25px" />
                                 </span>
-                                <span className="title">Analytics &amp; BI</span>
+                                <span className="title">Analytics &amp; BI tools</span>
                             </span>
                         </Link>
                     </li>
