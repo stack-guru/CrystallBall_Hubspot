@@ -145,7 +145,7 @@ class IndexAPIKey extends React.Component {
                                 <br />
                                 <br />
                                 <button className="btn btn-success" onClick={() => { this.generateAPIKey() }}>Generate</button>
-                                <button className="ml-3 btn btn-info" onClick={() => { this.copyAccessToken() }}>Copy</button>
+                                <button className="ml-3 btn gaa-btn-primary" onClick={() => { this.copyAccessToken() }}>Copy</button>
                             </div>
                         </div>
 
