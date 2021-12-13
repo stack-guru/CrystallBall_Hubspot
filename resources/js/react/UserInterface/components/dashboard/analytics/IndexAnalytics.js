@@ -10,6 +10,7 @@ import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPag
 import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGraph';
 import NoDataFoundPage from './subPages/NoDataFoundPage';
 import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
+import html2canvas from 'html2canvas';
 
 export default class IndexAnalytics extends Component {
     constructor(props) {
@@ -36,11 +37,6 @@ export default class IndexAnalytics extends Component {
         this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
     }
 
-    componentDidMount() {
-    }
-
-
-
     render() {
 
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
@@ -49,8 +45,20 @@ export default class IndexAnalytics extends Component {
             <section className="ftco-section" id="inputs">
                 <div className="container-xl p-0">
                     <div className="row ml-0 mr-0 mb-1">
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                             <h2 className="heading-section gaa-title">Dashboard</h2>
+                        </div>
+                        <div className="col-md-6 text-right">
+                            <button className="btn btn-secondary btn-sm" onClick={() => {
+                                html2canvas(document.getElementById("dashboard-index-container")).then(function (canvas) {
+                                    const link = document.createElement("a");
+                                    link.download = "dashboard_analytics.png";
+                                    canvas.toBlob(function (blob) {
+                                        link.href = URL.createObjectURL(blob);
+                                        link.click();
+                                    });
+                                });
+                            }}><i className="fa fa-download"></i> Download</button>
                         </div>
                     </div>
                     <div id="dashboard-index-container">

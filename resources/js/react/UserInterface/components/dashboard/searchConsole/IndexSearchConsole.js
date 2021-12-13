@@ -9,6 +9,7 @@ import GoogleSearchConsoleSiteSelect from '../../../utils/GoogleSearchConsoleSit
 import NoDataFoundPage from './subPages/NoDataFoundPage';
 import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
 import ClicksImpressionsDaysGraph from './graphs/clicksImpressionsDaysGraph';
+import html2canvas from 'html2canvas';
 
 export default class IndexSearchConsole extends Component {
     constructor(props) {
@@ -42,8 +43,20 @@ export default class IndexSearchConsole extends Component {
             <section className="ftco-section" id="inputs">
                 <div className="container-xl p-0">
                     <div className="row ml-0 mr-0 mb-1">
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                             <h2 className="heading-section gaa-title">Dashboard</h2>
+                        </div>
+                        <div className="col-md-6 text-right">
+                            <button className="btn btn-secondary btn-sm" onClick={() => {
+                                html2canvas(document.getElementById("dashboard-index-container")).then(function (canvas) {
+                                    const link = document.createElement("a");
+                                    link.download = "dashboard_search_console.png";
+                                    canvas.toBlob(function (blob) {
+                                        link.href = URL.createObjectURL(blob);
+                                        link.click();
+                                    });
+                                });
+                            }}><i className="fa fa-download"></i> Download</button>
                         </div>
                     </div>
                     <div id="dashboard-index-container">
