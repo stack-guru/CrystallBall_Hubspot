@@ -630,3 +630,9 @@ table.table-striped  th{
 #annotation-table-body tr {
     border-bottom: 1px solid rgba(0, 0, 0, 0.0625);
 }
+
+.table-hover tbody tr:hover {
+    color: #212529;
+    /* background-color: rgba(215, 236, 251, .075); */
+    background-color: #D7ECFB;
+}
