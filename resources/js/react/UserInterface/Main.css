@@ -609,7 +609,7 @@ table.table-striped  th{
 
 .table-hover.blue-hover tbody tr:hover {
     color: #212529;
-    background-color: #FAFAFA;
+    background-color: #FCFCFC;
 }
 
 .thin-light-gray-border {
