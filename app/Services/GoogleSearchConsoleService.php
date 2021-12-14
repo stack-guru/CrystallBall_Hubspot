@@ -58,6 +58,7 @@ class GoogleSearchConsoleService extends GoogleAPIService
         }
 
         $respJson = $response->json();
+        if ($respJson == null) return false;
         if (!array_key_exists('rows', $respJson)) {
             if (array_key_exists('error', $respJson)) Log::channel('google')->error("Error fetching Google Search Console Site: ", ['message' => $response->json()['error']['message']]);
             return false;
