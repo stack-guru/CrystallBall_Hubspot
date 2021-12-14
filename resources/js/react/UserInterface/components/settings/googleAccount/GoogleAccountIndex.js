@@ -41,34 +41,28 @@ export default class GoogleAccountIndex extends React.Component {
     componentDidMount() {
         document.title = 'Google Accounts';
 
-        this.getGoogleAccounts();
-        this.getGAAccounts();
-        this.getGAProperties();
-        this.getGSCSites();
-
         let searchParams = new URLSearchParams(document.location.search);
-        this.setState({ showACCISModal: searchParams && searchParams.has('do-refresh') && searchParams.has('google_account_id') })
+        if (searchParams.has('do-refresh') && searchParams.has('google_account_id')) {
+            if (searchParams.get('do-refresh') == "1") {
+                const redirectTo = localStorage.getItem('frontend_redirect_to');
+                if (redirectTo) {
+                    localStorage.removeItem('frontend_redirect_to');
+                    window.location = redirectTo;
+                }
+            }
+        }
 
         if (searchParams.has('message') && searchParams.has('success')) {
             let success = searchParams.get('success');
             let message = searchParams.get('message');
             swal("Error", message, success == "false" ? "error" : "success");
         }
+        this.setState({ showACCISModal: searchParams && searchParams.has('do-refresh') && searchParams.has('google_account_id') })
 
-        if (searchParams.has('do-refresh') && searchParams.has('google_account_id')) {
-            if (searchParams.get('do-refresh') == "1") {
-                if (
-                    this.fetchGSCSites(searchParams.get('google_account_id'))
-                    && this.fetchGAAccounts(searchParams.get('google_account_id'))
-                ) {
-                    const redirectTo = localStorage.getItem('frontend_redirect_to');
-                    if (redirectTo) {
-                        localStorage.removeItem('frontend_redirect_to');
-                        window.location = redirectTo;
-                    }
-                }
-            }
-        }
+        this.getGoogleAccounts();
+        this.getGAAccounts();
+        this.getGAProperties();
+        this.getGSCSites();
 
         if (this.props.user.google_accounts_tour_showed_at == null && this.props.user.last_login_at !== null) {
             setTimeout(function () { document.getElementById("properties-video-modal-button").click(); }, 3000)

@@ -69,6 +69,11 @@ class GoogleAccountController extends Controller
 
         $googleAccount->save();
 
+        $googleAnalyticsAccountController = new GoogleAnalyticsAccountController;
+        $googleAnalyticsAccountController->fetch($googleAccount);
+        $googleSearchConsoleSiteController = new GoogleSearchConsoleSiteController;
+        $googleSearchConsoleSiteController->fetch($googleAccount);
+
         return redirect()->route('google-account.index', ['google_account_id' => $googleAccount->id, 'do-refresh' => true]);
     }
 
