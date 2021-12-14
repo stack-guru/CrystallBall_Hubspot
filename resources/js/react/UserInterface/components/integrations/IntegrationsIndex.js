@@ -25,7 +25,7 @@ export default class IntegrationsIndex extends React.Component {
                 </div>
                 <div className="row ml-0 mr-0 mt-0" id="integration-page-container">
                     <div className="col-12">
-                        <div id="integration-page-top-options" >
+                        <div id="integration-page-top-options" style={{ minHeight: '80vh' }}>
                             <zapier-app-directory
                                 app="crystal-ball"
                                 link-target="same-tab"
