@@ -74,168 +74,6 @@ export default class GoogleAccountIndex extends React.Component {
 
     }
 
-    getGoogleAccounts() {
-        this.setState({ isBusy: true })
-        HttpClient.get('/settings/google-account').then(resp => {
-            this.setState({ googleAccounts: resp.data.google_accounts, isBusy: false });
-        }, (err) => {
-
-            this.setState({ isBusy: false, errors: (err.response).data });
-        }).catch(err => {
-
-            this.setState({ isBusy: false, errors: err });
-        });
-    }
-
-    handleDelete(id) {
-        this.setState({ isBusy: true });
-        HttpClient.delete(`/settings/google-account/${id}`).then(resp => {
-            toast.success("Account removed.");
-            let googleAccounts = this.state.googleAccounts;
-            googleAccounts = googleAccounts.filter(ga => ga.id != id);
-            this.setState({ isBusy: false, googleAccounts: googleAccounts })
-        }, (err) => {
-
-            this.setState({ isBusy: false, errors: (err.response).data });
-        }).catch(err => {
-
-            this.setState({ isBusy: false, errors: err });
-        });
-    }
-
-    fetchGAAccounts(id) {
-        this.setState({ isBusy: true });
-        HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
-            toast.success("Accounts fetched.");
-            this.setState({ isBusy: false })
-            this.getGAAccounts();
-            this.getGAProperties();
-        }, (err) => {
-
-            this.setState({ isBusy: false, errors: (err.response).data });
-        }).catch(err => {
-
-            this.setState({ isBusy: false, errors: err });
-        });
-    }
-
-    fetchGSCSites(id) {
-        this.setState({ isBusy: true });
-        HttpClient.post(`/settings/google-search-console-site/google-account/${id}`).then(resp => {
-            toast.success("Sites fetched.");
-            this.setState({ isBusy: false })
-            this.getGSCSites();
-        }, (err) => {
-
-            this.setState({ isBusy: false, errors: (err.response).data });
-        }).catch(err => {
-
-            this.setState({ isBusy: false, errors: err });
-        });
-    }
-
-    getGAAccounts() {
-        this.setState({ isBusy: true });
-        HttpClient.get(`/settings/google-analytics-account`).then(response => {
-            this.setState({ isBusy: false, googleAnalyticsAccounts: response.data.google_analytics_accounts })
-        }, (err) => {
-
-            this.setState({ isBusy: false, errors: (err.response).data });
-        }).catch(err => {
-
-            this.setState({ isBusy: false, errors: err });
-        });
-    }
-
-    getGSCSites() {
-        this.setState({ isBusy: true });
-        HttpClient.get(`/settings/google-search-console-site`).then(response => {
-            this.setState({ isBusy: false, googleSearchConsoleSites: response.data.google_search_console_sites })
-        }, (err) => {
-
-            this.setState({ isBusy: false, errors: (err.response).data });
-        }).catch(err => {
-
-            this.setState({ isBusy: false, errors: err });
-        });
-    }
-
-    restrictionHandler(e) {
-        e.preventDefault();
-        if (this.props.user.price_plan.ga_account_count > this.state.googleAccounts.length || this.props.user.price_plan.ga_account_count == 0) {
-            window.location = "/settings/google-account/create";
-        } else {
-            swal("Upgrade to Pro Plan!", "Google account feature is not available in this plan.", "warning").then(value => {
-                this.setState({ redirectTo: '/settings/price-plans' });
-            })
-        }
-    }
-
-    handleGAADelete(gAAId) {
-        if (!this.state.isBusy) {
-            this.setState({ isBusy: true })
-            HttpClient.delete(`/settings/google-analytics-account/${gAAId}`).then(response => {
-                this.setState({ isBusy: false, googleAnalyticsAccounts: this.state.googleAnalyticsAccounts.filter(g => g.id !== gAAId) })
-                toast.success("Account removed.");
-            }, (err) => {
-
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-
-                this.setState({ isBusy: false, errors: err });
-            });
-        }
-    }
-
-    handleGAPDelete(gAPId) {
-        if (!this.state.isBusy) {
-            this.setState({ isBusy: true })
-            HttpClient.delete(`/settings/google-analytics-property/${gAPId}`).then(response => {
-                this.setState({ isBusy: false, googleAnalyticsProperties: this.state.googleAnalyticsProperties.filter(g => g.id !== gAPId) })
-                toast.success("Property removed.");
-            }, (err) => {
-
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-
-                this.setState({ isBusy: false, errors: err });
-            });
-        }
-    }
-
-    handleGSCSDelete(gSCS) {
-        if (!this.state.isBusy) {
-            this.setState({ isBusy: true })
-            HttpClient.delete(`/settings/google-search-console-site/${gSCS}`).then(response => {
-                this.setState({ isBusy: false, googleSearchConsoleSites: this.state.googleSearchConsoleSites.filter(g => g.id !== gSCS) })
-                toast.success("Site removed.");
-            }, (err) => {
-
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-
-                this.setState({ isBusy: false, errors: err });
-            });
-        }
-    }
-
-    closeACCISModal() {
-        this.setState({ showACCISModal: false })
-    }
-
-    getGAProperties() {
-        this.setState({ isBusy: true });
-        HttpClient.get(`/settings/google-analytics-property`).then(response => {
-            this.setState({ isBusy: false, googleAnalyticsProperties: response.data.google_analytics_properties })
-        }, (err) => {
-
-            this.setState({ isBusy: false, errors: (err.response).data });
-        }).catch(err => {
-
-            this.setState({ isBusy: false, errors: err });
-        });
-    }
-
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
@@ -399,6 +237,154 @@ export default class GoogleAccountIndex extends React.Component {
 
             </div>
         );
+    }
+
+    getGoogleAccounts() {
+        this.setState({ isBusy: true })
+        HttpClient.get('/settings/google-account').then(resp => {
+            this.setState({ googleAccounts: resp.data.google_accounts, isBusy: false });
+        }, (err) => {
+
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
+    handleDelete(id) {
+        this.setState({ isBusy: true });
+        HttpClient.delete(`/settings/google-account/${id}`).then(resp => {
+            toast.success("Account removed.");
+            let googleAccounts = this.state.googleAccounts;
+            googleAccounts = googleAccounts.filter(ga => ga.id != id);
+            this.setState({ isBusy: false, googleAccounts: googleAccounts })
+        }, (err) => {
+
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
+    fetchGAAccounts(id) {
+        this.setState({ isBusy: true });
+        HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
+            toast.success("Accounts fetched.");
+            this.setState({ isBusy: false })
+            this.getGAAccounts();
+            this.getGAProperties();
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
+    fetchGSCSites(id) {
+        this.setState({ isBusy: true });
+        HttpClient.post(`/settings/google-search-console-site/google-account/${id}`).then(resp => {
+            toast.success("Sites fetched.");
+            this.setState({ isBusy: false })
+            this.getGSCSites();
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
+    getGAAccounts() {
+        this.setState({ isBusy: true });
+        HttpClient.get(`/settings/google-analytics-account`).then(response => {
+            this.setState({ isBusy: false, googleAnalyticsAccounts: response.data.google_analytics_accounts })
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
+    getGSCSites() {
+        this.setState({ isBusy: true });
+        HttpClient.get(`/settings/google-search-console-site`).then(response => {
+            this.setState({ isBusy: false, googleSearchConsoleSites: response.data.google_search_console_sites })
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
+    restrictionHandler(e) {
+        e.preventDefault();
+        if (this.props.user.price_plan.ga_account_count > this.state.googleAccounts.length || this.props.user.price_plan.ga_account_count == 0) {
+            window.location = "/settings/google-account/create";
+        } else {
+            swal("Upgrade to Pro Plan!", "Google account feature is not available in this plan.", "warning").then(value => {
+                this.setState({ redirectTo: '/settings/price-plans' });
+            })
+        }
+    }
+
+    handleGAADelete(gAAId) {
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true })
+            HttpClient.delete(`/settings/google-analytics-account/${gAAId}`).then(response => {
+                this.setState({ isBusy: false, googleAnalyticsAccounts: this.state.googleAnalyticsAccounts.filter(g => g.id !== gAAId) })
+                toast.success("Account removed.");
+            }, (err) => {
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isBusy: false, errors: err });
+            });
+        }
+    }
+
+    handleGAPDelete(gAPId) {
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true })
+            HttpClient.delete(`/settings/google-analytics-property/${gAPId}`).then(response => {
+                this.setState({ isBusy: false, googleAnalyticsProperties: this.state.googleAnalyticsProperties.filter(g => g.id !== gAPId) })
+                toast.success("Property removed.");
+            }, (err) => {
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isBusy: false, errors: err });
+            });
+        }
+    }
+
+    handleGSCSDelete(gSCS) {
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true })
+            HttpClient.delete(`/settings/google-search-console-site/${gSCS}`).then(response => {
+                this.setState({ isBusy: false, googleSearchConsoleSites: this.state.googleSearchConsoleSites.filter(g => g.id !== gSCS) })
+                toast.success("Site removed.");
+            }, (err) => {
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isBusy: false, errors: err });
+            });
+        }
+    }
+
+    closeACCISModal() {
+        this.setState({ showACCISModal: false })
+    }
+
+    getGAProperties() {
+        this.setState({ isBusy: true });
+        HttpClient.get(`/settings/google-analytics-property`).then(response => {
+            this.setState({ isBusy: false, googleAnalyticsProperties: response.data.google_analytics_properties })
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+        });
     }
 
 }
