@@ -57,8 +57,16 @@ export default class GoogleAccountIndex extends React.Component {
 
         if (searchParams.has('do-refresh') && searchParams.has('google_account_id')) {
             if (searchParams.get('do-refresh') == "1") {
-                this.fetchGAAccounts(searchParams.get('google_account_id'));
-                this.fetchGSCSites(searchParams.get('google_account_id'));
+                if (
+                    this.fetchGSCSites(searchParams.get('google_account_id'))
+                    && this.fetchGAAccounts(searchParams.get('google_account_id'))
+                ) {
+                    const redirectTo = localStorage.getItem('frontend_redirect_to');
+                    if (redirectTo) {
+                        localStorage.removeItem('frontend_redirect_to');
+                        window.location = redirectTo;
+                    }
+                }
             }
         }
 
@@ -260,62 +268,67 @@ export default class GoogleAccountIndex extends React.Component {
             googleAccounts = googleAccounts.filter(ga => ga.id != id);
             this.setState({ isBusy: false, googleAccounts: googleAccounts })
         }, (err) => {
-
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-
             this.setState({ isBusy: false, errors: err });
         });
     }
 
     fetchGAAccounts(id) {
         this.setState({ isBusy: true });
-        HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
+        return HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
             toast.success("Accounts fetched.");
             this.setState({ isBusy: false })
-            this.getGAAccounts();
-            this.getGAProperties();
+            return this.getGAAccounts() && this.getGAProperties();
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
+            return false;
         }).catch(err => {
-
             this.setState({ isBusy: false, errors: err });
+            return false;
         });
     }
 
     fetchGSCSites(id) {
         this.setState({ isBusy: true });
-        HttpClient.post(`/settings/google-search-console-site/google-account/${id}`).then(resp => {
+        return HttpClient.post(`/settings/google-search-console-site/google-account/${id}`).then(resp => {
             toast.success("Sites fetched.");
             this.setState({ isBusy: false })
-            this.getGSCSites();
+            return this.getGSCSites();
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
+            return false;
         }).catch(err => {
-
             this.setState({ isBusy: false, errors: err });
+            return false;
         });
     }
 
     getGAAccounts() {
         this.setState({ isBusy: true });
-        HttpClient.get(`/settings/google-analytics-account`).then(response => {
+        return HttpClient.get(`/settings/google-analytics-account`).then(response => {
             this.setState({ isBusy: false, googleAnalyticsAccounts: response.data.google_analytics_accounts })
+            return true;
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
+            return false;
         }).catch(err => {
             this.setState({ isBusy: false, errors: err });
+            return false;
         });
     }
 
     getGSCSites() {
         this.setState({ isBusy: true });
-        HttpClient.get(`/settings/google-search-console-site`).then(response => {
+        return HttpClient.get(`/settings/google-search-console-site`).then(response => {
             this.setState({ isBusy: false, googleSearchConsoleSites: response.data.google_search_console_sites })
+            return true;
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
+            return false;
         }).catch(err => {
             this.setState({ isBusy: false, errors: err });
+            return false;
         });
     }
 
@@ -378,12 +391,15 @@ export default class GoogleAccountIndex extends React.Component {
 
     getGAProperties() {
         this.setState({ isBusy: true });
-        HttpClient.get(`/settings/google-analytics-property`).then(response => {
+        return HttpClient.get(`/settings/google-analytics-property`).then(response => {
             this.setState({ isBusy: false, googleAnalyticsProperties: response.data.google_analytics_properties })
+            return true;
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
+            return false;
         }).catch(err => {
             this.setState({ isBusy: false, errors: err });
+            return false;
         });
     }
 

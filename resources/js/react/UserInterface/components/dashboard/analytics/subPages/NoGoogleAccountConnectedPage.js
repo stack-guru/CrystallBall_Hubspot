@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { callmiddle } from '../../../../helpers/CommonFunctions';
 
 export default function NoGoogleAccountConnectedPage(props) {
     return <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
@@ -18,7 +19,12 @@ export default function NoGoogleAccountConnectedPage(props) {
                     </div>
                     <div className="row">
                         <div className="col-12 text-center">
-                            <a href="/settings/google-account/create"><img src="/images/connect-google-analytics.png" width="400" height="auto" /></a>
+                            <a onClick={(e) => {
+                                e.persist();
+                                callmiddle(e, (e) => {
+                                    localStorage.setItem("frontend_redirect_to", "/dashboard/analytics");
+                                });
+                            }} href="/settings/google-account/create"><img src="/images/connect-google-analytics.png" href="/settings/google-account/create" width="400" height="auto" /></a>
                         </div>
                     </div>
                 </div>

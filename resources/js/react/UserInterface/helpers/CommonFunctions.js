@@ -45,3 +45,9 @@ export function getCompanyName() {
 export function IsDomain(domain) {
     return window.location.hostname == domain;
 }
+
+export function callmiddle(e, callback) {
+    e.preventDefault();
+    (callback)(e);
+    window.location = e.target.getAttribute("href");
+}
