@@ -276,7 +276,7 @@ export default class GoogleAccountIndex extends React.Component {
                     <div className="row ml-0 mr-0">
                         <div className="col-12">
                             <div className="table-responsive">
-                                <table className="table table-hover blue-hover table-bordered">
+                                <table className="table table-hover gaa-hover table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Profile Image</th>
@@ -314,7 +314,7 @@ export default class GoogleAccountIndex extends React.Component {
                     <div className="row ml-0 mr-0 mt-5">
                         <div className="col-12">
                             <div className="table-responsive">
-                                <table className="table table-hover blue-hover table-bordered">
+                                <table className="table table-hover gaa-hover table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Google Analytics Name</th>
@@ -344,7 +344,7 @@ export default class GoogleAccountIndex extends React.Component {
                     <div className="row ml-0 mr-0 mt-5">
                         <div className="col-12">
                             <div className="table-responsive">
-                                <table className="table table-hover blue-hover table-bordered">
+                                <table className="table table-hover gaa-hover table-bordered">
                                     <thead>
                                         <tr>
                                             <th>ID for API</th>
@@ -372,7 +372,7 @@ export default class GoogleAccountIndex extends React.Component {
                     <div className="row ml-0 mr-0 mt-5">
                         <div className="col-12">
                             <div className="table-responsive">
-                                <table className="table table-hover blue-hover table-bordered">
+                                <table className="table table-hover gaa-hover table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Site URL</th>

@@ -130,7 +130,7 @@ export default class IndexAnalytics extends Component {
                                     <MediaGraph statistics={this.state.mediaStatistics} />
                                     <div className="row mt-4">
                                         <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
-                                            <table className="table table-bordered table-hover blue-hover">
+                                            <table className="table table-bordered table-hover gaa-hover">
                                                 <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversion Rate</th></tr></thead>
                                                 <tbody>
                                                     {
@@ -148,7 +148,7 @@ export default class IndexAnalytics extends Component {
                                             </table>
                                         </div>
                                         <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
-                                            <table className="table table-bordered table-hover blue-hover">
+                                            <table className="table table-bordered table-hover gaa-hover">
                                                 <thead><tr><th>Device</th><th>Users</th><th>Conversion Rate</th></tr></thead>
                                                 <tbody>
                                                     {

@@ -151,7 +151,7 @@ class IndexAPIKey extends React.Component {
 
                         <div className="row mt-5">
                             <div className="col-12">
-                                <table className="table table-hover blue-hover table-bordered">
+                                <table className="table table-hover gaa-hover table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Token Name</th>

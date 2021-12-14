@@ -47,7 +47,7 @@ export default class PaymentHistory extends React.Component {
                 </div>
                 <div className="table-responsive">
 
-                    <table className="table table-hover blue-hover table-bordered mt-4">
+                    <table className="table table-hover gaa-hover table-bordered mt-4">
                         <thead>
                             <tr>
                                 <th>S#</th>

@@ -108,7 +108,7 @@ export default class IndexNotificationSettings extends Component {
                             <div className="row ml-0 mr-0">
                                 <div className="col-12">
                                     <div className="table-responsive">
-                                        <table className="table table-hover blue-hover table-borderless text-center">
+                                        <table className="table table-hover gaa-hover table-borderless text-center">
                                             <thead>
                                                 <tr>
                                                     <th></th>
