@@ -301,7 +301,7 @@ setting-menu-item.dropdown {
 
 .logo-text {
     font-size: 1rem;
-    color: #056DB5;
+    color: #056db5;
 }
 .img-col-wrap {
     /*height: 115px;*/
@@ -587,11 +587,11 @@ tbody td {
     background: none;
 }
 
-table.table-striped  th{
+table.table-striped th {
     text-align: left;
 }
 
-.table-striped thead{
+.table-striped thead {
     background-color: #e9e9e9;
 }
 
@@ -609,7 +609,7 @@ table.table-striped  th{
 
 .table-hover.gaa-hover tbody tr:hover {
     color: #212529;
-    background-color: #FCFCFC;
+    background-color: #fcfcfc;
 }
 
 .thin-light-gray-border {
@@ -629,4 +629,17 @@ table.table-bordered thead tr {
 
 table.table-bordered tbody tr {
     border-bottom: 1px solid rgba(0, 0, 0, 0.0625);
+}
+
+.header .header-container .nav-left .dropdown-menu,
+.header .header-container .nav-right .dropdown-menu {
+    min-width: 250px;
+}
+
+#acronym-holder {
+    width: 32px;
+    height: 32px;
+    background-color: #00897b;
+    color: white;
+    font-size: 16px;
 }
