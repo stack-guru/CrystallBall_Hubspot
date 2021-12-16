@@ -111,6 +111,12 @@ class AnnotationController extends Controller
         }
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
+
+        // Add limit for annotations if the price plan is limited in annotations count
+        if ($user->pricePlan->number_of_annotations > 0) {
+            $annotationsQuery .= " LIMIT " . $user->pricePlan->number_of_annotations;
+        }
+
         $annotations = DB::select($annotationsQuery);
 
         if (!count($annotations)) {
@@ -307,6 +313,11 @@ class AnnotationController extends Controller
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at DESC";
 
+        // Add limit for annotations if the price plan is limited in annotations count
+        if ($user->pricePlan->number_of_annotations > 0) {
+            $annotationsQuery .= " LIMIT " . $user->pricePlan->number_of_annotations;
+        }
+        
         $annotations = DB::select($annotationsQuery);
 
         return [

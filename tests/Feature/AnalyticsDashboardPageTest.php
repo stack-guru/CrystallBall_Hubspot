@@ -2,13 +2,11 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-class DashboardPageTest extends TestCase
+class AnalyticsDashboardPageTest extends TestCase
 {
     // use RefreshDatabase;
     // public $seed = true;
@@ -16,7 +14,7 @@ class DashboardPageTest extends TestCase
     public function testUserViewsAnnotationsPage()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first(), 'web')->get('/dashboard');
+        $response = $this->actingAs(User::inRandomOrder()->first(), 'web')->get('/dashboard/analytics');
 
         $response->assertStatus(200);
     }
@@ -24,7 +22,10 @@ class DashboardPageTest extends TestCase
     public function testAnnotationMetricsDimensionsAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/annotations-metrics-dimensions?start_date=2005-01-02&end_date=2021-01-01');
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/analytics/annotations-metrics-dimensions', [
+            'start_date' => '2005-01-02',
+            'end_date' => '2021-01-01',
+        ]);
 
         $response->assertStatus(200)
             ->assertJson(
@@ -49,7 +50,10 @@ class DashboardPageTest extends TestCase
     public function testUsersDaysAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/users-days?start_date=2005-01-02&end_date=2021-01-01');
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/analytics/users-days', [
+            'start_date' => '2005-01-02',
+            'end_date' => '2021-01-01',
+        ]);
 
         $response->assertStatus(200)
             ->assertJson(
@@ -67,7 +71,10 @@ class DashboardPageTest extends TestCase
     public function testUsersDaysAnnotationsAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/users-days-annotations?start_date=2005-01-02&end_date=2021-01-01');
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/analytics/users-days-annotations', [
+            'start_date' => '2005-01-02',
+            'end_date' => '2021-01-01',
+        ]);
 
         $response->assertStatus(200)
             ->assertJson(
@@ -90,7 +97,10 @@ class DashboardPageTest extends TestCase
     public function testMediaAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/media?start_date=2005-01-02&end_date=2021-01-01');
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/analytics/media', [
+            'start_date' => '2005-01-02',
+            'end_date' => '2021-01-01',
+        ]);
 
         $response->assertStatus(200)
             ->assertJson(
@@ -108,7 +118,10 @@ class DashboardPageTest extends TestCase
     public function testSourcesAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/sources?start_date=2005-01-02&end_date=2021-01-01');
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/analytics/sources', [
+            'start_date' => '2005-01-02',
+            'end_date' => '2021-01-01',
+        ]);
 
         $response->assertStatus(200)
             ->assertJson(
@@ -128,7 +141,10 @@ class DashboardPageTest extends TestCase
     public function testDevicesAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/device-categories?start_date=2005-01-02&end_date=2021-01-01');
+        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/analytics/device-categories', [
+            'start_date' => '2005-01-02',
+            'end_date' => '2021-01-01',
+        ]);
 
         $response->assertStatus(200)
             ->assertJson(

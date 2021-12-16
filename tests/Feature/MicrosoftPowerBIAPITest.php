@@ -2,13 +2,11 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\PricePlan;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Passport\Passport;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class MicrosoftPowerBIAPITest extends TestCase
 {
@@ -19,16 +17,13 @@ class MicrosoftPowerBIAPITest extends TestCase
     {
         Passport::actingAs(User::where('price_plan_id', PricePlan::where('has_google_data_studio', true)->first()->id)->inRandomOrder()->first());
 
-        $response = $this->getJson(implode([
-            'https://app.gaannotations.com',
-            '/api/v1/microsoft-power-bi/annotations',
-            '?',
-            'startDate=2001-01-01',
-            '&endDate=2030-01-01',
-            '&show_manual_annotations=true',
-            '&show_csv_annotations=true',
-            '&show_api_annotations=true',
-          ]));
+        $response = $this->getJson('/api/v1/microsoft-power-bi/annotations', [
+            'startDate' => '2001-01-01',
+            'endDate' => '2030-01-01',
+            'show_manual_annotations' => 'true',
+            'show_csv_annotations' => 'true',
+            'show_api_annotations' => 'true',
+        ]);
 
         $response->assertStatus(200)
             ->assertJson(
@@ -45,8 +40,8 @@ class MicrosoftPowerBIAPITest extends TestCase
                                 ->has("url")
                                 ->has("description")
                                 ->has("user_name")
-                                // ->has("annotation_ga_property_id")
-                                // ->has("google_analytics_property_name")
+                            // ->has("annotation_ga_property_id")
+                            // ->has("google_analytics_property_name")
                                 ->etc();
                         });
                 }
