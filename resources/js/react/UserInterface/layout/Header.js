@@ -221,7 +221,12 @@ class header extends React.Component {
                                 <li role="separator" className="divider pt-3"></li>
                                 <li >
                                     <div className="header-profile-info pt-3">
-                                        <p className="gaa-text-primary"><b>{this.props.user.name}</b></p>
+                                        <p className="gaa-text-primary">
+                                            <Link to="/settings">
+                                                <b>{this.props.user.name}</b>
+                                                <span className="float-right"><i className="fa fa-chevron-right"></i></span>
+                                            </Link>
+                                        </p>
                                         {/* <h6 className="gaa-text-primary"><b>Email: {this.props.user.email}</b></h6> */}
                                         {/* <h6 className="gaa-text-primary"><b>Team: {this.props.user.team_name}</b></h6> */}
                                     </div>
