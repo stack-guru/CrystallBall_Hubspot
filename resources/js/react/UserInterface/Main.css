@@ -643,3 +643,7 @@ table.table-bordered tbody tr {
     color: white;
     font-size: 16px;
 }
+
+.progressbar-container {
+    border: 2px solid #1c98f0;
+}

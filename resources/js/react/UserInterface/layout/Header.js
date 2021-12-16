@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Progress from 'react-progressbar';
+import ProgressBar from 'react-progressbar';
 
 class header extends React.Component {
 
@@ -194,13 +194,21 @@ class header extends React.Component {
                                 <li >
                                     <div className="header-profile-info">
                                         <p className="">Credits:
-                                            <span className="float-right gaa-text-primary">{this.props.user.annotations_count}/{this.props.user.price_plan.annotations_count}</span>
+                                            <span className="float-right gaa-text-primary">{this.props.user.annotations_count}/{this.props.user.price_plan.annotations_count ?? "&infin;"}</span>
                                         </p>
                                     </div>
                                 </li>
                                 <li >
                                     <div className="header-profile-info">
-                                        <Progress completed={75} color="#456287" />
+                                        <ProgressBar completed={
+                                            this.props.user.price_plan.annotations_count ?
+                                                (((this.props.user.annotations_count / this.props.user.price_plan.annotations_count) * 100) ?
+                                                    ((this.props.user.annotations_count / this.props.user.price_plan.annotations_count) * 100)
+                                                    : 10)
+                                                : 10
+                                        }
+                                            color="#1c98f0"
+                                        />
                                     </div>
                                 </li>
                                 {this.props.user.price_plan.price == 0 ?
