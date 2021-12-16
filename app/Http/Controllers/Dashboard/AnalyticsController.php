@@ -135,8 +135,8 @@ class AnalyticsController extends Controller
         $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
 
         // Add limit for annotations if the price plan is limited in annotations count
-        if ($user->pricePlan->number_of_annotations > 0) {
-            $annotationsQuery .= " LIMIT " . $user->pricePlan->number_of_annotations;
+        if ($user->pricePlan->annotations_count > 0) {
+            $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
         }
 
         $statistics = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.* FROM ($annotationsQuery) AS T2 RIGHT JOIN (
@@ -175,8 +175,8 @@ class AnalyticsController extends Controller
         $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
 
         // Add limit for annotations if the price plan is limited in annotations count
-        if ($user->pricePlan->number_of_annotations > 0) {
-            $annotationsQuery .= " LIMIT " . $user->pricePlan->number_of_annotations;
+        if ($user->pricePlan->annotations_count > 0) {
+            $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
         }
         
         $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.* FROM ($annotationsQuery) AS T2 INNER JOIN (
