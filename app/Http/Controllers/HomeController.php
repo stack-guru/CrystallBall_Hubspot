@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\GoogleAlertActivated;
 use App\Events\GoogleAlertDeactivatedManually;
 use App\Events\GoogleUpdatesActivated;
 use App\Events\GoogleUpdatesDeactivatedManually;
+use App\Events\HolidaysActivated;
 use App\Events\HolidaysDeactivatedManually;
 use App\Events\RetailMarketingDatesActivated;
 use App\Events\RetailMarketingDatesDeactivated;
+use App\Events\WeatherActivated;
 use App\Events\WeatherForCitiesDeactivatedManually;
+use App\Events\WebsiteMonitoringActivated;
 use App\Events\WebsiteMonitoringDeactivated;
 use App\Events\WordPressActivated;
 use App\Events\WordPressDeactivatedManually;
-use App\Events\GoogleAlertActivated;
-use App\Events\HolidaysActivated;
-use App\Events\WeatherActivated;
-use App\Events\WebsiteMonitoringActivated;
 use App\Mail\SupportRequestMail;
+use App\Models\Annotation;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
@@ -37,6 +39,19 @@ class HomeController extends Controller
                     'last_login_at' => new \DateTime,
                 ]);
         }
+
+        $userIdsArray = $this->getAllGroupUserIdsArray($user);
+        $annotationsQuery = "SELECT COUNT(*) AS total_annotations_count FROM (";
+        $annotationsQuery .= "SELECT TempTable.* FROM (";
+        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, '*', $userIdsArray);
+        $annotationsQuery .= ") AS TempTable";
+
+        if ($user->pricePlan->annotations_count > 0) {
+            $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
+        }
+        $annotationsQuery .= ") AS TempTable2";
+
+        $user->annotations_count = DB::select($annotationsQuery)[0]->total_annotations_count;
 
         return ['user' => $user];
     }

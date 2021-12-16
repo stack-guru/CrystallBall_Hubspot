@@ -188,7 +188,7 @@ class header extends React.Component {
                             <ul className="dropdown-menu pX-20">
                                 <li >
                                     <div className="header-profile-info">
-                                        <h4 className="gaa-text-primary"><b>{this.props.user.price_plan.name}</b></h4>
+                                        <h4 className="gaa-text-primary"><b>{this.props.user.price_plan.name} Plan</b></h4>
                                     </div>
                                 </li>
                                 <li >
@@ -202,9 +202,9 @@ class header extends React.Component {
                                     <div className="header-profile-info">
                                         <ProgressBar completed={
                                             this.props.user.price_plan.annotations_count ?
-                                                (((this.props.user.annotations_count / this.props.user.price_plan.annotations_count) * 100) ?
-                                                    ((this.props.user.annotations_count / this.props.user.price_plan.annotations_count) * 100)
-                                                    : 10)
+                                                (
+                                                    ((this.props.user.annotations_count / this.props.user.price_plan.annotations_count) * 100) || 10
+                                                )
                                                 : 10
                                         }
                                             color="#1c98f0"
@@ -239,7 +239,7 @@ class header extends React.Component {
                                     <a href="email.html" className="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
                                         className="ti-email mR-10"></i> <span>Messages</span></a></li> */}
                                 <li role="separator" className="divider"></li>
-                                <li>
+                                <li className="text-right">
                                     <a href={null} onClick={() => document.getElementById("header-logout-form").submit()} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                                         <i className="ti-power-off mR-10"></i><span>Log out</span>
                                     </a>
