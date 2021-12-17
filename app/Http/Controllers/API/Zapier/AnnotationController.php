@@ -57,7 +57,7 @@ class AnnotationController extends Controller
     {
 
         $user = Auth::user();
-        $userIdsArray = $this->getAllGroupUserIdsArray($user);
+        $userIdsArray = $user->getAllGroupUserIdsArray();
 
         $annotationsQuery = "SELECT TempTable.* FROM (";
 
@@ -147,7 +147,7 @@ class AnnotationController extends Controller
         if ($user->pricePlan->annotations_count > 0) {
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
         }
-        
+
         $annotations = DB::select($annotationsQuery);
 
         $annotations = array_map(function ($a) {

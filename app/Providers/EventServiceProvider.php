@@ -94,6 +94,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \App\Models\Annotation::observe(\App\Observers\AnnotationObserver::class);
     }
 }

@@ -30,12 +30,7 @@ class ReportsController extends Controller
             ->get();
 
         foreach ($users as $user) {
-            $userIdsArray = $this->getAllGroupUserIdsArray($user);
-            $annotationsQuery = "SELECT COUNT(*) AS total_annotations_count FROM (";
-            $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, '*', $userIdsArray);
-            $annotationsQuery .= ") AS TempTable";
-
-            $user->total_annotations_count = DB::select($annotationsQuery)[0]->total_annotations_count;
+            $user->total_annotations_count = $user->getTotalAnnotationsCount(false);
         }
 
         return view('admin/reports/user-active-report')->with('users', $users);

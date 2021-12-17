@@ -23,7 +23,7 @@ class AnnotationController extends Controller
             return ['annotations' => []];
         }
 
-        $userIdsArray = $this->getAllGroupUserIdsArray($user);
+        $userIdsArray = $user->getAllGroupUserIdsArray();
 
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));
@@ -37,7 +37,7 @@ class AnnotationController extends Controller
         if ($user->pricePlan->annotations_count > 0) {
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
         }
-        
+
         $annotations = DB::select($annotationsQuery);
 
         return ['annotations' => $annotations];

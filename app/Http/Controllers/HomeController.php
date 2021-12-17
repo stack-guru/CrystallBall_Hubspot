@@ -40,18 +40,8 @@ class HomeController extends Controller
                 ]);
         }
 
-        $userIdsArray = $this->getAllGroupUserIdsArray($user);
-        $annotationsQuery = "SELECT COUNT(*) AS total_annotations_count FROM (";
-        $annotationsQuery .= "SELECT TempTable.* FROM (";
-        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, '*', $userIdsArray);
-        $annotationsQuery .= ") AS TempTable";
 
-        if ($user->pricePlan->annotations_count > 0) {
-            $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
-        }
-        $annotationsQuery .= ") AS TempTable2";
-
-        $user->annotations_count = DB::select($annotationsQuery)[0]->total_annotations_count;
+        $user->annotations_count = $user->getTotalAnnotationsCount(true);
 
         return ['user' => $user];
     }
@@ -60,7 +50,7 @@ class HomeController extends Controller
     {
 
         $user = Auth::user();
-        if (!$user->pricePlan->has_data_sources) {
+        if (!$user->pricePlan->has_data_sources || $user->isPricePlanAnnotationLimitReached(true)) {
             abort(402);
         }
 

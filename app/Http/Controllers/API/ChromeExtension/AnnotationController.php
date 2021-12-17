@@ -22,7 +22,7 @@ class AnnotationController extends Controller
         }
 
         $user = Auth::user();
-        $userIdsArray = $this->getAllGroupUserIdsArray($user);
+        $userIdsArray = $user->getAllGroupUserIdsArray();
 
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));
@@ -224,7 +224,7 @@ class AnnotationController extends Controller
                 'user_annotation_color' => $user->userAnnotationColor,
             ];
         }
-        $userIdsArray = $this->getAllGroupUserIdsArray($user);
+        $userIdsArray = $user->getAllGroupUserIdsArray();
 
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));
@@ -317,7 +317,7 @@ class AnnotationController extends Controller
         if ($user->pricePlan->annotations_count > 0) {
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
         }
-        
+
         $annotations = DB::select($annotationsQuery);
 
         return [
@@ -332,7 +332,7 @@ class AnnotationController extends Controller
         $this->authorize('create', Annotation::class);
 
         $user = Auth::user();
-        if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04')) {
+        if ((!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04')) || $user->isPricePlanAnnotationLimitReached(true)) {
             abort(402);
         }
         $userId = $user->id;

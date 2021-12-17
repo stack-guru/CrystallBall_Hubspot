@@ -45,8 +45,11 @@ class AnnotationController extends Controller
     public function store(AnnotationRequest $request)
     {
         $this->authorize('create', Annotation::class);
-
         $user = Auth::user();
+
+        if ($user->isPricePlanAnnotationLimitReached(true)) {
+            abort(402);
+        }
         $userId = $user->id;
 
         $annotation = new Annotation;
@@ -99,7 +102,7 @@ class AnnotationController extends Controller
         $this->authorize('update', $annotation);
 
         $user = Auth::user();
-        $userIdsArray = $this->getAllGroupUserIdsArray($user);
+        $userIdsArray = $user->getAllGroupUserIdsArray();
 
         if (!in_array($annotation->user_id, $userIdsArray)) {
             abort(404);
@@ -157,7 +160,7 @@ class AnnotationController extends Controller
     {
         $this->authorize('delete', $annotation);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
         if (!in_array($annotation->user_id, $userIdsArray)) {
             abort(404);
@@ -173,7 +176,7 @@ class AnnotationController extends Controller
         $this->authorize('viewAny', Annotation::class);
 
         $user = Auth::user();
-        $userIdsArray = $this->getAllGroupUserIdsArray($user);
+        $userIdsArray = $user->getAllGroupUserIdsArray();
 
         $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_properties`.`google_analytics_property_id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
         $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('annotation_ga_property_id'), $userIdsArray);
@@ -216,7 +219,7 @@ class AnnotationController extends Controller
     {
         $this->authorize('view', $annotation);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
         if (!in_array($annotation->user_id, $userIdsArray)) {
             abort(403);
@@ -231,7 +234,7 @@ class AnnotationController extends Controller
         $this->authorize('create', Annotation::class);
 
         $user = Auth::user();
-        if (!$user->pricePlan->has_csv_upload) {
+        if (!$user->pricePlan->has_csv_upload || $user->isPricePlanAnnotationLimitReached(true)) {
             abort(402);
         }
 
@@ -281,7 +284,7 @@ class AnnotationController extends Controller
                                 try {
                                     $date = Carbon::createFromFormat($request->date_format, $values[$i]);
                                     $row['show_at'] = $date->format('Y-m-d');
-                                } catch (\Exception$e) {
+                                } catch (\Exception $e) {
                                     DB::rollBack();
                                     return response()->json(['message' => "Please select correct date format according to your CSV file from the list below."], 422);
                                 }
@@ -361,7 +364,7 @@ class AnnotationController extends Controller
                 }
             }
             DB::commit();
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e);
             abort(422, "Error occured while processing your CSV. Please contact support for more information.");
@@ -377,7 +380,7 @@ class AnnotationController extends Controller
         $this->authorize('viewAny', Annotation::class);
 
         $user = Auth::user();
-        $userIdsArray = $this->getAllGroupUserIdsArray($user);
+        $userIdsArray = $user->getAllGroupUserIdsArray();
 
         $annotationsQuery = "SELECT DISTINCT `TempTable`.`category` FROM (";
         $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, '*', $userIdsArray);

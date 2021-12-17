@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -275,5 +276,53 @@ class User extends Authenticatable implements MustVerifyEmail
     public function routeNotificationForTwilio()
     {
         return $this->hasVerifiedPhone() ? (string) $this->phone_number : null;
+    }
+
+    public function getAllGroupUserIdsArray($user = null): array
+    {
+        if ($user === null) $user = $this;
+        $userIdsArray = [];
+
+        if (!$user->user_id) {
+            // Current user is not child, grab all child users, pluck ids
+            $userIdsArray = $user->users->pluck('id')->toArray();
+            array_push($userIdsArray, $user->id);
+        } else {
+            // Current user is child, find admin, grab all child users, pluck ids
+            $userIdsArray = $user->user->users->pluck('id')->toArray();
+            array_push($userIdsArray, $user->user->id);
+            // Set Current User to Admin so that data source configuration which applies are that of admin
+            $user = $user->user;
+        }
+
+        return $userIdsArray;
+    }
+
+    public function getTotalAnnotationsCount($applyLimit)
+    {
+        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userPricePlan = $this->pricePlan;
+
+        $annotationsQuery = "SELECT COUNT(*) AS total_annotations_count FROM (";
+        $annotationsQuery .= "SELECT TempTable.* FROM (";
+        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($this, '*', $userIdsArray);
+        $annotationsQuery .= ") AS TempTable";
+
+        if ($userPricePlan->annotations_count > 0 && $applyLimit) {
+            $annotationsQuery .= " LIMIT " . $userPricePlan->annotations_count;
+        }
+        $annotationsQuery .= ") AS TempTable2";
+
+        $annotationsCount = DB::select($annotationsQuery)[0]->total_annotations_count;
+
+        return $annotationsCount;
+    }
+
+    public function isPricePlanAnnotationLimitReached($applyLimit = false): bool
+    {
+        $userPricePlan = $this->pricePlan;
+        $annotationsCount = $this->getTotalAnnotationsCount($applyLimit);
+
+        return $annotationsCount <= $userPricePlan->annotations_count;
     }
 }

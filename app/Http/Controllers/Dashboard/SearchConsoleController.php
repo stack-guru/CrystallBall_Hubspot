@@ -25,7 +25,7 @@ class SearchConsoleController extends Controller
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
 
-        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -63,7 +63,7 @@ class SearchConsoleController extends Controller
             'google_search_console_site_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -87,7 +87,7 @@ class SearchConsoleController extends Controller
             'google_search_console_site_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -110,7 +110,7 @@ class SearchConsoleController extends Controller
             'google_search_console_site_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -133,7 +133,7 @@ class SearchConsoleController extends Controller
             'google_search_console_site_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -156,7 +156,7 @@ class SearchConsoleController extends Controller
             'google_search_console_site_id' => 'required'
         ]);
 
-        $userIdsArray = $this->getAllGroupUserIdsArray(Auth::user());
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -184,7 +184,7 @@ class SearchConsoleController extends Controller
         $endDate = $request->query('end_date');
 
         $user = Auth::user();
-        $userIdsArray = $this->getAllGroupUserIdsArray($user);
+        $userIdsArray = $user->getAllGroupUserIdsArray();
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
@@ -199,7 +199,7 @@ class SearchConsoleController extends Controller
         if ($user->pricePlan->annotations_count > 0) {
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
         }
-        
+
         $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.* FROM ($annotationsQuery) AS T2 INNER JOIN (
                     SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL 7 DAY) as seven_day_old_date, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count FROM google_search_console_statistics
                     WHERE google_search_console_site_id = $gSCSite->id
