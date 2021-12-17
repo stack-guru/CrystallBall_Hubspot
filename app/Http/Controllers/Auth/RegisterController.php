@@ -92,7 +92,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'price_plan_id' => PricePlan::where('name', '=', 'Trial')->first()->id,
+            'price_plan_id' => PricePlan::where('name', PricePlan::FREE)->first()->id,
             'price_plan_expiry_date' => $planExpiryDate,
         ]);
         $user->is_billing_enabled = false;
@@ -136,7 +136,7 @@ class RegisterController extends Controller
                 $user->email = $newUserEmail;
                 $user->password = '.';
                 $user->name = $newUser->getName();
-                $user->price_plan_id = PricePlan::where('name', '=', 'Trial')->first()->id;
+                $user->price_plan_id = PricePlan::where('name', PricePlan::FREE)->first()->id;
                 $user->price_plan_expiry_date = new \DateTime("+14 days");
                 $user->is_billing_enabled = false;
                 $user->email_verified_at = Carbon::now();

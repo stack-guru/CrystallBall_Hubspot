@@ -41,7 +41,7 @@ class ProcessThirtyDaysOldFreeUsers extends Command
      */
     public function handle()
     {
-        $freePlanId = PricePlan::where('name', 'Free')->first()->id;
+        $freePlanId = PricePlan::where('name', PricePlan::FREE)->first()->id;
         print "Looking for users whos are on free plan but registered on " . Carbon::now()->subDays(30)->format("Y-m-d") . "\n";
 
         $users = User::whereRaw("DATE(created_at) = '" . Carbon::now()->subDays(30)->format("Y-m-d") . "'")

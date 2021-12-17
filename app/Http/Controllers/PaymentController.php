@@ -137,7 +137,7 @@ class PaymentController extends Controller
             $pricePlanSubscription->charged_price = $price;
             $pricePlanSubscription->save();
 
-            if ($user->pricePlan->name == "Pro" && $pricePlan->name == "Basic") {
+            if ($user->pricePlan->name == PricePlan::PRO && $pricePlan->name == PricePlan::BASIC) {
                 // User is downgrading to basic plan from pro plan
                 $sGS->addUserToMarketingList($user, "11 GAa Downgraded to Basic");
 
@@ -147,7 +147,7 @@ class PaymentController extends Controller
             $user->price_plan_expiry_date = new \DateTime("+1 month");
             $user->is_billing_enabled = true;
         } else {
-            if (($user->pricePlan->name == "Pro" && $pricePlan->name == "Free") || ($user->pricePlan->name == "Basic" && $pricePlan->name == "Free")) {
+            if (($user->pricePlan->name == PricePlan::PRO && $pricePlan->name == PricePlan::FREE) || ($user->pricePlan->name == PricePlan::BASIC && $pricePlan->name == PricePlan::FREE)) {
                 // User is downgrading to free plan
                 $sGS->addUserToMarketingList($user, "12 GAa Downgraded to FREE");
 
@@ -160,13 +160,13 @@ class PaymentController extends Controller
         $user->refresh();
 
         switch ($pricePlan->name) {
-            case "Basic":
+            case PricePlan::BASIC:
                 $sGS->addUserToMarketingList($user, "9 GAa Upgraded to Basic");
                 $this->addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
                 $admin = Admin::first();
                 Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
                 break;
-            case "Pro":
+            case PricePlan::PRO:
                 $sGS->addUserToMarketingList($user, "10 GAa Upgraded to PRO");
                 $this->addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
                 $admin = Admin::first();

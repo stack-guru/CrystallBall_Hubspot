@@ -41,7 +41,7 @@ class ProcessTrialExpiredUsers extends Command
      */
     public function handle()
     {
-        $trialPlanId = PricePlan::where('name', 'Trial')->first()->id;
+        $trialPlanId = PricePlan::where('name', PricePlan::TRIAL)->first()->id;
         print "Looking for users whos are on trial but registered on " . Carbon::now()->subDays(14)->format("Y-m-d") . "\n";
 
         $users = User::whereRaw("DATE(created_at) = '" . Carbon::now()->subDays(14)->format("Y-m-d") . "'")->where("price_plan_id", $trialPlanId)->get()->toArray();

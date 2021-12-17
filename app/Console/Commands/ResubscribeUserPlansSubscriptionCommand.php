@@ -57,7 +57,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
      */
     public function handle()
     {
-        $freePlan = PricePlan::where('price', 0)->where('name', '<>', 'Trial')->first();
+        $freePlan = PricePlan::where('price', 0)->where('name', '<>', PricePlan::TRIAL)->first();
         if ($freePlan) {
             $this->freePlanId = $freePlan->id;
             $this->freePlan = $freePlan;
@@ -160,7 +160,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $trialUsers = User::where('price_plan_expiry_date', '<', new \DateTime)
             ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
             ->where('price_plans.price', 0)
-            ->where('price_plans.name', 'Trial')
+            ->where('price_plans.name', PricePlan::TRIAL)
             ->get();
 
         foreach ($trialUsers as $trialUser) {

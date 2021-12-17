@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\PricePlan;
 
 class PricePlansSeeder extends Seeder
 {
@@ -17,7 +18,7 @@ class PricePlansSeeder extends Seeder
         DB::table('price_plans')->insert(
             [
                 [
-                    'name' => 'Free',
+                    'name' => PricePlan::FREE,
                     'annotations_count' => '100',
                     'price' => '0',
                     'has_manual_add' => '1',
@@ -39,7 +40,7 @@ class PricePlansSeeder extends Seeder
                     'has_microsoft_power_bi' => '1',
                 ],
                 [
-                    'name' => 'Basic',
+                    'name' => PricePlan::BASIC,
                     'annotations_count' => '0',
                     'price' => '19',
                     'has_manual_add' => '1',
@@ -61,7 +62,7 @@ class PricePlansSeeder extends Seeder
                     'has_microsoft_power_bi' => '0',
                 ],
                 [
-                    'name' => 'Pro',
+                    'name' => PricePlan::PRO,
                     'annotations_count' => '0',
                     'price' => '99',
                     'has_manual_add' => '1',
@@ -83,7 +84,7 @@ class PricePlansSeeder extends Seeder
                     'has_microsoft_power_bi' => '1',
                 ],
                 [
-                    'name' => 'Trial',
+                    'name' => PricePlan::TRIAL,
                     'annotations_count' => '0',
                     'price' => '0',
                     'has_manual_add' => '1',
