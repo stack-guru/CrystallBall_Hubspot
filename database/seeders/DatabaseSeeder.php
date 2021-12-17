@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Auth;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $users = \App\Models\User::factory(10)->create();
         foreach ($users as $user) {
+            Auth::loginUsingId($user->id);
             \App\Models\Annotation::factory(50)->create(['user_id' => $user->id]);
         }
 

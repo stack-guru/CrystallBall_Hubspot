@@ -22,10 +22,15 @@ class AnalyticsDashboardPageTest extends TestCase
     public function testAnnotationMetricsDimensionsAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/analytics/annotations-metrics-dimensions', [
-            'start_date' => '2005-01-02',
-            'end_date' => '2021-01-01',
-        ]);
+        do {
+            $user = User::inRandomOrder()->first();
+        } while (count($user->googleAnalyticsProperties) < 1 && count($user->annotations) < 1);
+
+        $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/annotations-metrics-dimensions?' . implode("&", [
+            'start_date=2005-01-02',
+            'end_date=2021-01-01',
+            'ga_property_id=' . $user->googleAnalyticsProperties[0]->id,
+        ]));
 
         $response->assertStatus(200)
             ->assertJson(
@@ -35,6 +40,7 @@ class AnalyticsDashboardPageTest extends TestCase
                             $json->has('event_name')
                                 ->has("category")
                                 ->has("show_at")
+                                ->has("description")
                                 ->has("seven_day_old_date")
                                 ->has("sum_users_count")
                                 ->has("sum_sessions_count")
@@ -50,10 +56,15 @@ class AnalyticsDashboardPageTest extends TestCase
     public function testUsersDaysAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/analytics/users-days', [
-            'start_date' => '2005-01-02',
-            'end_date' => '2021-01-01',
-        ]);
+        do {
+            $user = User::inRandomOrder()->first();
+        } while (count($user->googleAnalyticsProperties) < 1);
+
+        $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/users-days?' . implode("&", [
+            'start_date=2005-01-02',
+            'end_date=2021-01-01',
+            'ga_property_id=' . $user->googleAnalyticsProperties[0]->id,
+        ]));
 
         $response->assertStatus(200)
             ->assertJson(
@@ -71,10 +82,16 @@ class AnalyticsDashboardPageTest extends TestCase
     public function testUsersDaysAnnotationsAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/analytics/users-days-annotations', [
-            'start_date' => '2005-01-02',
-            'end_date' => '2021-01-01',
-        ]);
+        do {
+            $user = User::inRandomOrder()->first();
+        } while (count($user->googleAnalyticsProperties) < 1);
+
+        $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/users-days-annotations?' . implode("&", [
+            'start_date=2005-01-02',
+            'end_date=2021-01-01',
+            'ga_property_id=' . $user->googleAnalyticsProperties[0]->id,
+            'statistics_padding_days=' . 0
+        ]));
 
         $response->assertStatus(200)
             ->assertJson(
@@ -97,10 +114,15 @@ class AnalyticsDashboardPageTest extends TestCase
     public function testMediaAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/analytics/media', [
-            'start_date' => '2005-01-02',
-            'end_date' => '2021-01-01',
-        ]);
+        do {
+            $user = User::inRandomOrder()->first();
+        } while (count($user->googleAnalyticsProperties) < 1);
+
+        $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/media?' . implode("&", [
+            'start_date=2005-01-02',
+            'end_date=2021-01-01',
+            'ga_property_id=' . $user->googleAnalyticsProperties[0]->id,
+        ]));
 
         $response->assertStatus(200)
             ->assertJson(
@@ -117,11 +139,15 @@ class AnalyticsDashboardPageTest extends TestCase
 
     public function testSourcesAPITest()
     {
+        do {
+            $user = User::inRandomOrder()->first();
+        } while (count($user->googleAnalyticsProperties) < 1);
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/analytics/sources', [
-            'start_date' => '2005-01-02',
-            'end_date' => '2021-01-01',
-        ]);
+        $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/sources?' . implode("&", [
+            'start_date=2005-01-02',
+            'end_date=2021-01-01',
+            'ga_property_id=' . $user->googleAnalyticsProperties[0]->id,
+        ]));
 
         $response->assertStatus(200)
             ->assertJson(
@@ -141,10 +167,15 @@ class AnalyticsDashboardPageTest extends TestCase
     public function testDevicesAPITest()
     {
 
-        $response = $this->actingAs(User::inRandomOrder()->first())->getJson('/ui/dashboard/analytics/device-categories', [
-            'start_date' => '2005-01-02',
-            'end_date' => '2021-01-01',
-        ]);
+        do {
+            $user = User::inRandomOrder()->first();
+        } while (count($user->googleAnalyticsProperties) < 1);
+
+        $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/device-categories?' . implode("&", [
+            'start_date=2005-01-02',
+            'end_date=2021-01-01',
+            'ga_property_id=' . $user->googleAnalyticsProperties[0]->id,
+        ]));
 
         $response->assertStatus(200)
             ->assertJson(

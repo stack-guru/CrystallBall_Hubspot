@@ -17,13 +17,24 @@ class ChromeExtensionAPITest extends TestCase
     {
         Passport::actingAs(User::where('price_plan_id', PricePlan::where('has_chrome_extension', true)->first()->id)->inRandomOrder()->first());
 
-        $response = $this->getJson('/api/v1/chrome-extension/annotations/preview', [
-            'startDate' => '2001-01-01',
-            'endDate' => '2030-01-01',
-            'show_manual_annotations' => 'true',
-            'show_csv_annotations' => 'true',
-            'show_api_annotations' => 'true',
-        ]);
+        $response = $this->getJson('/api/v1/chrome-extension/annotations/preview?' . implode("&", [
+            'startDate=2001-01-01',
+            'endDate=2030-01-01',
+
+            'show_manual_annotations=true',
+            'show_csv_annotations=true',
+            'show_api_annotations=true',
+
+            'show_website_monitoring=true',
+            'show_google_algorithm_updates=true',
+            'show_holidays=true',
+            'show_retail_marketing_dates=true',
+            'show_weather_alerts=true',
+            'show_news_alerts=true',
+            'show_wordpress_updates=true',
+
+            'google_analytics_property_id=*',
+        ]));
 
         $response->assertStatus(200)
             ->assertJson(
@@ -34,6 +45,20 @@ class ChromeExtensionAPITest extends TestCase
                                 ->has("show_at")
                                 ->has("event_name")
                                 ->etc();
+                        })
+                        ->has('user_annotation_color')
+                        ->has('user_annotation_color', function ($json) {
+                            $json->has("manual")
+                                ->has("csv")
+                                ->has("api")
+                                ->has("holidays")
+                                ->has("google_algorithm_updates")
+                                ->has("retail_marketings")
+                                ->has("weather_alerts")
+                                ->has("web_monitors")
+                                ->has("wordpress_updates")
+                                ->has("google_alerts")
+                                ->etc();
                         });
                 }
             );
@@ -43,13 +68,23 @@ class ChromeExtensionAPITest extends TestCase
     {
         Passport::actingAs(User::where('price_plan_id', PricePlan::where('has_chrome_extension', true)->first()->id)->inRandomOrder()->first());
 
-        $response = $this->getJson('/api/v1/chrome-extension/annotations', [
-            'startDate' => '2001-01-01',
-            'endDate' => '2030-01-01',
-            'show_manual_annotations' => 'true',
-            'show_csv_annotations' => 'true',
-            'show_api_annotations' => 'true',
-        ]);
+        $response = $this->getJson('/api/v1/chrome-extension/annotations?' . implode("&", [
+            'startDate=2001-01-01',
+            'endDate=2030-01-01',
+            'show_manual_annotations=true',
+            'show_csv_annotations=true',
+            'show_api_annotations=true',
+
+            'show_website_monitoring=true',
+            'show_google_algorithm_updates=true',
+            'show_holidays=true',
+            'show_retail_marketing_dates=true',
+            'show_weather_alerts=true',
+            'show_news_alerts=true',
+            'show_wordpress_updates=true',
+
+            'google_analytics_property_id=*',
+        ]));
 
         $response->assertStatus(200)
             ->assertJson(
@@ -67,5 +102,4 @@ class ChromeExtensionAPITest extends TestCase
                 }
             );
     }
-
 }

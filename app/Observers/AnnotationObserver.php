@@ -16,7 +16,8 @@ class AnnotationObserver
     public function created(Annotation $annotation)
     {
         $user = Auth::user();
-        $user->annotations_count++;
+        if ($user->annotations_count) $user->annotations_count++;
+        else $user->annotations_count = 1;
         $user->save();
     }
 
@@ -40,7 +41,8 @@ class AnnotationObserver
     public function deleted(Annotation $annotation)
     {
         $user = Auth::user();
-        $user->annotations_count--;
+        if ($user->annotations_count) $user->annotations_count--;
+        else $user->annotations_count = 0;
         $user->save();
     }
 }
