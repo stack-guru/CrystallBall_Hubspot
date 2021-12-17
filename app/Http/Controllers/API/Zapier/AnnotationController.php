@@ -20,6 +20,9 @@ class AnnotationController extends Controller
         $this->authorize('create', Annotation::class);
 
         $user = Auth::user();
+        if ($user->isPricePlanAnnotationLimitReached(true)) {
+            abort(402);
+        }
         $userId = $user->id;
 
         $annotation = new Annotation;

@@ -75,6 +75,10 @@ class AnnotationController extends Controller
     public function store(AnnotationRequest $request)
     {
         $user = Auth::user();
+        if ($user->isPricePlanAnnotationLimitReached(true)) {
+            abort(402);
+        }
+
         $userId = $user->id;
         $pricePlan = $user->pricePlan;
         if (!$pricePlan->has_api) {
