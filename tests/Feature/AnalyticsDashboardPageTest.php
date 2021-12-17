@@ -24,7 +24,7 @@ class AnalyticsDashboardPageTest extends TestCase
 
         do {
             $user = User::inRandomOrder()->first();
-        } while (count($user->googleAnalyticsProperties) < 1 && count($user->annotations) < 1);
+        } while (count($user->googleAnalyticsProperties) < 1 || count($user->annotations) < 1);
 
         $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/annotations-metrics-dimensions?' . implode("&", [
             'start_date=2005-01-02',
