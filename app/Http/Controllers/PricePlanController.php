@@ -55,7 +55,7 @@ class PricePlanController extends Controller
      */
     public function show(PricePlan $pricePlan)
     {
-        if(Auth::user()->user_level !== 'admin') abort(403);
+        if(Auth::user()->user_level !== 'admin') abort(403, 'Only administrators are allowed to view price plan.');
         return ['price_plan' => $pricePlan];
     }
 

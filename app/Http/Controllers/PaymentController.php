@@ -23,7 +23,7 @@ class PaymentController extends Controller
     public function indexPaymentHistory()
     {
         if (Auth::user()->user_id) {
-            abort(403);
+            abort(403, 'Only Account Owners are allowed to view payment history.');
         }
 
         $pricePlanSubscriptions = PricePlanSubscription::with(['paymentDetail', 'pricePlan'])->orderBy('created_at', 'DESC')->where('user_id', Auth::id())->get();
@@ -36,7 +36,7 @@ class PaymentController extends Controller
 
         $user = Auth::user();
         if ($user->user_id) {
-            abort(403, "Only account owners are allowed to subscribe price plans");
+            abort(403, "Only account owners are allowed to subscribe price plans.");
         }
 
         if (!$request->query('_token')) {
@@ -53,7 +53,7 @@ class PaymentController extends Controller
     {
         $user = Auth::user();
         if ($user->user_id) {
-            abort(403);
+            abort(403, "Only account owners are allowed to subscribe price plans.");
         }
 
         $this->validate($request, [

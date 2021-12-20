@@ -50,8 +50,11 @@ class HomeController extends Controller
     {
 
         $user = Auth::user();
-        if (!$user->pricePlan->has_data_sources || $user->isPricePlanAnnotationLimitReached(true)) {
-            abort(402);
+        if ($user->isPricePlanAnnotationLimitReached(true)) {
+            abort(402, "Please upgrade your plan to add more annotations");
+        }
+        if (!$user->pricePlan->has_data_sources) {
+            abort(402, "Please upgrade your plan to use Data Sources feature.");
         }
 
         if ($request->has('is_ds_holidays_enabled')) {

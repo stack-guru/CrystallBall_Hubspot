@@ -85,6 +85,9 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\UserInvitedTeamMember::class => [
             \App\Listeners\MarkChecklistItemCompleted::class
         ],
+
+        \App\Events\AnnotationsLimitReached::class => [\App\Listeners\AddUserToSendGridList::class],
+
     ];
 
     /**

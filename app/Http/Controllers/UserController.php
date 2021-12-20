@@ -45,7 +45,7 @@ class UserController extends Controller
         $this->authorize('view', $user);
 
         if ($user->user_id !== Auth::id()) {
-            abort(404);
+            abort(404, "Unable to find user with the given id.");
         }
 
         $user->load('userGaAccounts');

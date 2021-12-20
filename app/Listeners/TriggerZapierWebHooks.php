@@ -8,6 +8,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Models\UserWebhook;
 
+// This listener triggers API to zapier and can be queued. But the underlying 
+// job is already queued that's why it is unnecessary to queue this listener
+// as well.
 class TriggerZapierWebHooks
 {
     /**

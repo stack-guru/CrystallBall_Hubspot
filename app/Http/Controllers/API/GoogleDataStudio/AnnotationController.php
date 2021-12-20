@@ -16,7 +16,7 @@ class AnnotationController extends Controller
     {
         $user = Auth::user();
         if (!$user->pricePlan->has_google_data_studio) {
-            abort(402);
+            abort(402, "Please upgrade your plan to use Google Data Studio.");
         }
         $user->last_data_studio_used_at = Carbon::now();
         $user->save();

@@ -24,7 +24,7 @@ class UserWebhookController extends Controller
     public function destroy(UserWebhook $userWebhook)
     {
         if ($userWebhook->user_id !== Auth::id() && $userWebhook->endpoint_name !== 'ZAPIER') {
-            abort(404);
+            abort(404, "Unable to find webhook with the given id.");
         }
 
         $userWebhook->delete();

@@ -21,7 +21,7 @@ class AnnotationController extends Controller
 
         $user = Auth::user();
         if ($user->isPricePlanAnnotationLimitReached(true)) {
-            abort(402);
+            abort(402, "Please upgrade your plan to add more annotations");
         }
         $userId = $user->id;
 

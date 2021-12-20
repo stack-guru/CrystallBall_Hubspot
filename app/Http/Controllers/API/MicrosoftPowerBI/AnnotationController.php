@@ -16,7 +16,7 @@ class AnnotationController extends Controller
     {
         $user = Auth::user();
         if (!$user->pricePlan->has_microsoft_power_bi) {
-            abort(402);
+            abort(402, "Please upgrade your plan to use Microsoft Power Bi.");
         }
 
         if (!$request->has('startDate') && !$request->has('endDate')) {

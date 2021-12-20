@@ -203,13 +203,14 @@ class AnnotationController extends Controller
         ];
     }
 
-    //another method used tp show annotations with selected date(same as method defined above)
+    //another method is used to show annotations with selected date(same as method defined above)
 
     public function extensionAnnotationPreview(Request $request)
     {
-        if (!$request->has('startDate') && !$request->has('endDate')) {
-            abort(422);
-        }
+        $this->validate($request, [
+            'startDate' => 'required',
+            'endDate' => 'required'
+        ]);
 
         $user = Auth::user();
         if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04')) {
@@ -332,9 +333,13 @@ class AnnotationController extends Controller
         $this->authorize('create', Annotation::class);
 
         $user = Auth::user();
-        if ((!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04')) || $user->isPricePlanAnnotationLimitReached(true)) {
-            abort(402);
+        if ((!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04'))) {
+            abort(402, "Please upgrade your plan to use Chrome Extension.");
         }
+        if ($user->isPricePlanAnnotationLimitReached(true)) {
+            abort(402, "Please upgrade your plan to add more annotations");
+        }
+
         $userId = $user->id;
 
         $annotation = new Annotation;

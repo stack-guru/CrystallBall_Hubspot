@@ -36,9 +36,7 @@ class NotificationSettingController extends Controller
 
             return ['notification_setting' => $notificationSetting];
         } else {
-            abort(403);
+            abort(404, 'Unable to find Notification Setting for the given id.');
         }
-
     }
-
 }

@@ -21,7 +21,7 @@ class GoogleAnalyticsAccountController extends Controller
     {
         $user = Auth::user();
         if ($googleAccount->user_id !== $user->id) {
-            abort(404);
+            abort(404, 'Unable to find Google Analytics account with the given id.');
         }
 
         $gAS = new GoogleAnalyticsService;
@@ -80,7 +80,7 @@ class GoogleAnalyticsAccountController extends Controller
     public function destroy(GoogleAnalyticsAccount $googleAnalyticsAccount)
     {
         if (Auth::id() !== $googleAnalyticsAccount->user_id) {
-            abort(404);
+            abort(404, 'Unable to find Google Analytics account with the given id.');
         }
 
         $googleAnalyticsAccount->delete();

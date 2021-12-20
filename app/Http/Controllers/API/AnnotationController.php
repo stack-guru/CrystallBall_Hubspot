@@ -28,7 +28,7 @@ class AnnotationController extends Controller
     {
         $user = Auth::user();
         if (!$user->pricePlan->has_api) {
-            abort(402);
+            abort(402, "Please upgrade your plan to use API feature.");
         }
 
         $annotations = Annotation::where('user_id', Auth::id())->get();
@@ -48,11 +48,11 @@ class AnnotationController extends Controller
     {
         $user = Auth::user();
         if (!$user->pricePlan->has_api) {
-            abort(402);
+            abort(402, "Please upgrade your plan to use API feature.");
         }
 
         if ($annotation->user_id != Auth::id()) {
-            abort(404);
+            abort(404, "Unable to find annotations with the given id.");
         }
 
         if ($user->last_api_called_at == null) {
@@ -76,7 +76,7 @@ class AnnotationController extends Controller
     {
         $user = Auth::user();
         if ($user->isPricePlanAnnotationLimitReached(true)) {
-            abort(402);
+            abort(402, "Please upgrade your plan to add more annotations");
         }
 
         $userId = $user->id;
@@ -143,7 +143,7 @@ class AnnotationController extends Controller
     {
         $user = Auth::user();
         if ($annotation->user_id != $user->id) {
-            abort(404);
+            abort(404, "Unable to find annotation with the given id.");
         }
 
         $pricePlan = $user->pricePlan;
@@ -216,11 +216,11 @@ class AnnotationController extends Controller
     {
         $user = Auth::user();
         if (!$user->pricePlan->has_api) {
-            abort(402);
+            abort(402, "Please upgrade your plan to use API feature.");
         }
 
         if ($annotation->user_id != Auth::id()) {
-            abort(404);
+            abort(404, "Unable to find annotation with the given id.");
         }
 
         // onDelete cascade was added during migration but still we have to do this

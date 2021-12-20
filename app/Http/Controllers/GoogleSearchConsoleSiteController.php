@@ -27,7 +27,7 @@ class GoogleSearchConsoleSiteController extends Controller
     {
         $user = Auth::user();
         if ($googleAccount->user_id !== $user->id) {
-            abort(404);
+            abort(404, 'Unable to find Google Analytics account with the given id.');
         }
 
         $gAS = new GoogleSearchConsoleService;
@@ -56,7 +56,7 @@ class GoogleSearchConsoleSiteController extends Controller
     public function destroy(GoogleSearchConsoleSite $googleSearchConsoleSite)
     {
         if (Auth::id() !== $googleSearchConsoleSite->user_id) {
-            abort(404);
+            abort(404, 'Unable to find Google Search Console Site with the given id.');
         }
 
         $googleSearchConsoleSite->delete();

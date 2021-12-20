@@ -15,13 +15,12 @@ class WeatherAlertController extends Controller
 
     public function uiCitiesIndex(Request $request)
     {
-        if (!$request->query('country_code')) {
-            return abort(422);
-        }
+        $this->validate($request, [
+            'country_code' => 'required'
+        ]);
 
         $cities = OpenWeatherMapCity::select('name', 'owmc_id', 'id')->where('country_code', $request->country_code)->orderBy('name')->get();
 
         return ['cities' => $cities];
-
     }
 }

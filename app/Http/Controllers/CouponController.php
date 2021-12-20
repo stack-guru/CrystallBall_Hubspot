@@ -10,9 +10,9 @@ class CouponController extends Controller
 {
     public function verify(Request $request)
     {
-        if (!$request->query('coupon_code')) {
-            abort(404);
-        }
+        $this->validate($request, [
+            'coupon_code' => 'required'  
+        ]);
 
         $coupon = Coupon::where('code', $request->query('coupon_code'))->first();
         if (!$coupon) {

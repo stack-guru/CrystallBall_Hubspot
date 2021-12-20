@@ -29,7 +29,7 @@ class SearchConsoleController extends Controller
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Search Console Site for the given id.");
         }
 
         $user = Auth::user();
@@ -67,7 +67,7 @@ class SearchConsoleController extends Controller
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Search Console Site for the given id.");
         }
         $statistics = GoogleSearchConsoleStatistics::selectRaw('query, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
             ->groupBy('query')
@@ -91,7 +91,7 @@ class SearchConsoleController extends Controller
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Search Console Site for the given id.");
         }
         $statistics = GoogleSearchConsoleStatistics::selectRaw('page, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
             ->groupBy('page')
@@ -114,7 +114,7 @@ class SearchConsoleController extends Controller
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Search Console Site for the given id.");
         }
         $statistics = GoogleSearchConsoleStatistics::selectRaw('country, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
             ->groupBy('country')
@@ -137,7 +137,7 @@ class SearchConsoleController extends Controller
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Search Console Site for the given id.");
         }
         $statistics = GoogleSearchConsoleStatistics::selectRaw('device, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
             ->groupBy('device')
@@ -160,7 +160,7 @@ class SearchConsoleController extends Controller
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Search Console Site for the given id.");
         }
         $statistics = GoogleSearchConsoleStatistics::selectRaw('search_appearance, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
             ->groupBy('search_appearance')
@@ -188,7 +188,7 @@ class SearchConsoleController extends Controller
 
         $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Search Console Site for the given id.");
         }
         $annotationsQuery = "SELECT `TempTable`.* FROM (";
         $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('google_search_console_site_id'), $userIdsArray);

@@ -25,7 +25,7 @@ class AnalyticsController extends Controller
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Analytics Property for the given id.");
         }
         $statistics = GoogleAnalyticsMetricDimension::selectRaw('device_category, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count')
             ->groupBy('device_category')
@@ -48,7 +48,7 @@ class AnalyticsController extends Controller
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Analytics Property for the given id.");
         }
         $statistics = GoogleAnalyticsMetricDimension::selectRaw('source_name, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count')
             ->groupBy('source_name')
@@ -71,7 +71,7 @@ class AnalyticsController extends Controller
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Analytics Property for the given id.");
         }
         $statistics = GoogleAnalyticsMetricDimension::selectRaw('medium_name, SUM(users_count) as sum_users_count')
             ->groupBy('medium_name')
@@ -94,7 +94,7 @@ class AnalyticsController extends Controller
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Analytics Property for the given id.");
         }
         $statistics = GoogleAnalyticsMetricDimension::selectRaw('statistics_date, SUM(users_count) as sum_users_count')
             ->groupBy('statistics_date')
@@ -124,7 +124,7 @@ class AnalyticsController extends Controller
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Analytics Property for the given id.");
         }
 
         $user = Auth::user();
@@ -167,7 +167,7 @@ class AnalyticsController extends Controller
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find Google Analytics Property for the given id.");
         }
         $annotationsQuery = "SELECT `TempTable`.* FROM (";
         $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('ga_property_id'), $userIdsArray);

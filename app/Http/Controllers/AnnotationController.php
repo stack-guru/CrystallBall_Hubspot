@@ -48,7 +48,7 @@ class AnnotationController extends Controller
         $user = Auth::user();
 
         if ($user->isPricePlanAnnotationLimitReached(true)) {
-            abort(402);
+            abort(402, "Please upgrade your plan to add more annotations");
         }
         $userId = $user->id;
 
@@ -105,7 +105,7 @@ class AnnotationController extends Controller
         $userIdsArray = $user->getAllGroupUserIdsArray();
 
         if (!in_array($annotation->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find annotation with the given id.");
         }
 
         $annotation->fill($request->validated());
@@ -163,7 +163,7 @@ class AnnotationController extends Controller
         $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
         if (!in_array($annotation->user_id, $userIdsArray)) {
-            abort(404);
+            abort(404, "Unable to find annotation with the given id.");
         }
 
         $annotation->delete();
@@ -222,7 +222,7 @@ class AnnotationController extends Controller
         $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
         if (!in_array($annotation->user_id, $userIdsArray)) {
-            abort(403);
+            abort(404, "Unable to find annotation with the given id.");
         }
 
         $annotation->load('annotationGaProperties.googleAnalyticsProperty');
@@ -234,8 +234,11 @@ class AnnotationController extends Controller
         $this->authorize('create', Annotation::class);
 
         $user = Auth::user();
-        if (!$user->pricePlan->has_csv_upload || $user->isPricePlanAnnotationLimitReached(true)) {
-            abort(402);
+        if ($user->isPricePlanAnnotationLimitReached(true)) {
+            abort(402, "Please upgrade your plan to add more annotations.");
+        }
+        if (!$user->pricePlan->has_csv_upload) {
+            abort(402, "Please upgrade your plan to use CSV upload feature.");
         }
 
         $this->validate($request, [

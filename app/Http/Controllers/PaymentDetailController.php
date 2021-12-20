@@ -23,7 +23,7 @@ class PaymentDetailController extends Controller
         $user = Auth::user();
         $lastPaymentDetail = $user->lastPaymentDetail;
         if (!$lastPaymentDetail) {
-            abort(400);
+            abort(400, 'Unable to find any previous payment details.');
             // $response = $blueSnapService->createVaultedShopper($request->only(['first_name', 'last_name']));
             // if ($response['success']) {
             //     $vaultedShopperId = $response['vaultedShopperId'];

@@ -92,7 +92,7 @@ class UserDataSourceController extends Controller
     {
 
         if ($userDataSource->user_id !== Auth::id()) {
-            abort(404);
+            abort(404, "Unable to find data source with the given id.");
         }
 
         $userDataSource->delete();
