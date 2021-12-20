@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Annotation;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class AnnotationObserver
@@ -15,7 +16,7 @@ class AnnotationObserver
      */
     public function created(Annotation $annotation)
     {
-        $user = Auth::user();
+        $user = User::find($annotation->user_id);
         if ($user->annotations_count) $user->annotations_count++;
         else $user->annotations_count = 1;
         $user->save();
@@ -40,7 +41,7 @@ class AnnotationObserver
      */
     public function deleted(Annotation $annotation)
     {
-        $user = Auth::user();
+        $user = User::find($annotation->user_id);
         if ($user->annotations_count) $user->annotations_count--;
         else $user->annotations_count = 0;
         $user->save();
