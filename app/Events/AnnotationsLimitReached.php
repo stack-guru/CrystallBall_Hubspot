@@ -9,26 +9,31 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Annotation;
+use App\Models\User;
 
-class AnnotationCreated
+class AnnotationsLimitReached
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $annotation;
+    public $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Annotation $annotation)
+    public function __construct(User $user)
     {
-        $this->annotation = $annotation;
+        $this->user = $user;
+    }
 
-        $user = $annotation->user;
-        if ($user->isPricePlanAnnotationLimitReached(true)) {
-            event(new AnnotationsLimitReached($user));
-        }
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return \Illuminate\Broadcasting\Channel|array
+     */
+    public function broadcastOn()
+    {
+        return new PrivateChannel('channel-name');
     }
 }

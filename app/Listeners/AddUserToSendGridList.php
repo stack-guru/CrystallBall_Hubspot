@@ -3,8 +3,9 @@
 namespace App\Listeners;
 
 use App\Services\SendGridService;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class AddUserToSendGridList
+class AddUserToSendGridList implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -27,14 +28,14 @@ class AddUserToSendGridList
         $sGS = new SendGridService;
 
         switch (get_class($event)) {
-            /////////////////////////////////////////////////////
-            // New Registration
+                /////////////////////////////////////////////////////
+                // New Registration
             case 'Illuminate\Auth\Events\Registered':
                 $sGS->addUserToMarketingList($event->user, "1 GAa New registrations");
                 break;
 
-            /////////////////////////////////////////////////////
-            // Data Source Events
+                /////////////////////////////////////////////////////
+                // Data Source Events
             case 'App\Events\NewCSVFileUploaded':
                 $sGS->addUserToContactList($event->user, "New CSV [file name] Uploaded", ['w13_T' => $event->fileName]);
                 break;
@@ -69,8 +70,8 @@ class AddUserToSendGridList
                 $sGS->addUserToContactList($event->user, "News Alerts for [keywords] Deactivated manually");
                 break;
 
-            /////////////////////////////////////////////////////
-            // Marketing Lists
+                /////////////////////////////////////////////////////
+                // Marketing Lists
             case 'App\Events\UserUsedApiForFirstTime':
                 $sGS->addUserToMarketingList($event->user, "14 GAa API users");
                 break;
@@ -83,6 +84,10 @@ class AddUserToSendGridList
                 $sGS->addUserToContactList($event->user, "Weather for [cities] Deactivated from Trial to Free");
                 $sGS->addUserToContactList($event->user, "WordPress Deactivated because from Trial to Free");
                 $sGS->addUserToContactList($event->user, "Website Monitoring Deactivated because Trial to Free");
+                break;
+
+            case 'App\Events\AnnotationsLimitReached':
+                $sGS->addUserToContactList($event->user, "Annotation limits reached");
                 break;
         }
     }
