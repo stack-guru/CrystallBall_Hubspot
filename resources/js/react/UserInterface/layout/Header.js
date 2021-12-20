@@ -181,7 +181,7 @@ class header extends React.Component {
                                 data-toggle="dropdown">
 
                                 <div className="peer mR-10">
-                                    <p className="w-2r bdrs-50p text-center mt-3" id="acronym-holder" alt="" >{this.props.user != undefined ? this.props.user.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}</p>
+                                    <p className="w-2r bdrs-50p text-center mt-3 gaa-bg-color" id="acronym-holder" alt="" >{this.props.user != undefined ? this.props.user.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}</p>
                                 </div>
                                 {/* <div className="peer"><span>{this.props.user != undefined ? this.props.user.name : null}</span></div> */}
                             </a>
@@ -194,7 +194,7 @@ class header extends React.Component {
                                 <li >
                                     <div className="header-profile-info">
                                         <p className="">Credits:
-                                            <span className="float-right gaa-text-primary">{this.props.user.annotations_count}/{this.props.user.price_plan.annotations_count ?? "&infin;"}</span>
+                                            <span className="float-right gaa-text-primary">{this.props.user.annotations_count}/{this.props.user.price_plan.annotations_count < 1 ? "∞" : this.props.user.price_plan.annotations_count}</span>
                                         </p>
                                     </div>
                                 </li>
@@ -222,7 +222,7 @@ class header extends React.Component {
                                 <li >
                                     <div className="header-profile-info pt-3">
                                         <p className="gaa-text-primary">
-                                            <Link to="/settings">
+                                            <Link to="/settings" style={{ color: "black", fontWeight: 'lighter' }}>
                                                 <b>{this.props.user.name}</b>
                                                 <span className="float-right"><i className="fa fa-chevron-right"></i></span>
                                             </Link>
@@ -239,7 +239,7 @@ class header extends React.Component {
                                     <a href="email.html" className="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
                                         className="ti-email mR-10"></i> <span>Messages</span></a></li> */}
                                 <li role="separator" className="divider"></li>
-                                <li className="text-right">
+                                <li className="text-center">
                                     <a href={null} onClick={() => document.getElementById("header-logout-form").submit()} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                                         <i className="ti-power-off mR-10"></i><span>Log out</span>
                                     </a>

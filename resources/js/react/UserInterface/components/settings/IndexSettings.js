@@ -17,7 +17,7 @@ export default class indexSettings extends React.Component {
             <div className="container-xl  component-wrapper">
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
-                        <div className="user-setting-head box-shadow gaa-bg-primary text-white  rounded">
+                        <div className="user-setting-head box-shadow gaa-text-color rounded">
                             <h1 className="mb-0 lh-100"><b>{this.props.user.name}</b></h1>
                             <small><b>Email: {this.props.user.email}</b></small><br />
                             <small><b>Price Plan: {this.props.user.price_plan.name}</b></small>
