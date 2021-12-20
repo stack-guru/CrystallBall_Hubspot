@@ -146,7 +146,7 @@ class AnnotationController extends Controller
                 // If current and next annotation is of same date
                 if ($annotations[$i]->show_at == $annotations[$i + 1]->show_at) {
                     // Add only 1 annotation to a date if user is not allowed to use chrome extension api
-                    if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04') && count($combineAnnotations)) {
+                    if (!$user->pricePlan->has_chrome_extension && count($combineAnnotations)) {
                     } else {
                         array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate, $user));
                     }
@@ -157,7 +157,7 @@ class AnnotationController extends Controller
                     // If current and next annotation is of different date
 
                     // Add only 1 annotation to a date if user is not allowed to use chrome extension api
-                    if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04') && count($combineAnnotations)) {
+                    if (!$user->pricePlan->has_chrome_extension && count($combineAnnotations)) {
                     } else {
                         array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate, $user));
                     }
@@ -166,7 +166,7 @@ class AnnotationController extends Controller
                 // If current annotation is last annotation
 
                 // Add only 1 annotation to a date if user is not allowed to use chrome extension api
-                if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04') && count($combineAnnotations)) {
+                if (!$user->pricePlan->has_chrome_extension && count($combineAnnotations)) {
                 } else {
                     array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate, $user));
                 }
@@ -213,7 +213,7 @@ class AnnotationController extends Controller
         ]);
 
         $user = Auth::user();
-        if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04')) {
+        if (!$user->pricePlan->has_chrome_extension) {
             return [
                 'annotations' => [
                     [
@@ -333,7 +333,7 @@ class AnnotationController extends Controller
         $this->authorize('create', Annotation::class);
 
         $user = Auth::user();
-        if ((!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04'))) {
+        if ((!$user->pricePlan->has_chrome_extension)) {
             abort(402, "Please upgrade your plan to use Chrome Extension.");
         }
         if ($user->isPricePlanAnnotationLimitReached(true)) {
@@ -374,7 +374,7 @@ class AnnotationController extends Controller
     {
 
         // Hiding annotations if user is not allowed to use chrome extension
-        if (!$user->pricePlan->has_chrome_extension && $user->created_at > Carbon::parse('2021-11-04')) {
+        if (!$user->pricePlan->has_chrome_extension) {
             return [
                 "_id" => $annotation->id,
                 "category" => 'Upgrade your plan',

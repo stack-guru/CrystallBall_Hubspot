@@ -111,7 +111,12 @@ export default class IndexPricingPlans extends React.Component {
                                             <h6 className="card-price text-center">${pricePlan.price}<span className="period">/per month</span></h6>
                                             <hr />
                                             <ul className="fa-ul">
-
+                                                {
+                                                    pricePlan.annotations_count > 0 ?
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> {pricePlan.annotations_count} Annotations</li>
+                                                        :
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Unlimited Annotations</li>
+                                                }
                                                 {
                                                     pricePlan.has_chrome_extension == 1 ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Chrome extension</li>
