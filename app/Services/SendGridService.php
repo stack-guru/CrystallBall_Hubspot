@@ -135,7 +135,9 @@ class SendGridService
 
     public function marketingListFinder($listName)
     {
-        $fArray = array_values(array_filter(self::MARKETING_LISTS, function ($ar) use ($listName) {return $listName == $ar['name'];}));
+        $fArray = array_values(array_filter(self::MARKETING_LISTS, function ($ar) use ($listName) {
+            return $listName == $ar['name'];
+        }));
         if (count($fArray)) {
             return $fArray[0];
         } else {
@@ -309,7 +311,9 @@ class SendGridService
 
     public function contactListFinder($listName)
     {
-        $fArray = array_values(array_filter(self::CONTACT_LISTS, function ($ar) use ($listName) {return $listName == $ar['name'];}));
+        $fArray = array_values(array_filter(self::CONTACT_LISTS, function ($ar) use ($listName) {
+            return $listName == $ar['name'];
+        }));
         if (count($fArray)) {
             return $fArray[0];
         } else {
@@ -470,6 +474,14 @@ class SendGridService
             "id" => "80c9fee6-efa1-4404-9c33-c72eca419ace",
             "_metadata" => [
                 "self" => "https://api.sendgrid.com/v3/marketing/lists/80c9fee6-efa1-4404-9c33-c72eca419ace",
+            ],
+        ],
+        [
+
+            "name" => "Annotation limits reached",
+            "id" => "c4a30fb9-6397-4031-9a3a-068626aaabeb",
+            "_metadata" => [
+                "self" => "https://api.sendgrid.com/v3/marketing/lists/c4a30fb9-6397-4031-9a3a-068626aaabeb"
             ],
         ],
     ];
