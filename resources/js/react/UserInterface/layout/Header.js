@@ -214,7 +214,7 @@ class header extends React.Component {
                                 {this.props.user.price_plan.price == 0 ?
                                     <li className="text-center">
                                         <div className="header-profile-info pt-3">
-                                            <Link to="/settings/price-plans" className="btn gaa-btn-primary">Update subscription</Link>
+                                            <Link to="/settings/price-plans" className="btn gaa-btn-primary w-100">Update subscription</Link>
                                         </div>
                                     </li>
                                     : null}
