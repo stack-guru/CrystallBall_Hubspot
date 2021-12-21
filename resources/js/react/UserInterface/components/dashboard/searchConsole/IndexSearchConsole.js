@@ -66,16 +66,19 @@ export default class IndexSearchConsole extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-12" >
+                            <div style={{ maxWidth: '10%', width: '10%' }} >
                                 Date range:
-                                &nbsp;&nbsp;&nbsp;
-                                <button className="btn thin-light-gray-border text-black" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
+                            </div>
+                            <div style={{ maxWidth: '25%', width: '25%' }} >
+                                <button className="btn thin-light-gray-border text-black w-100" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
                                     From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}
                                     &nbsp;&nbsp;&nbsp;
                                     To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}
                                     &nbsp;
                                     <i className="fa fa-chevron-down"></i>
                                 </button>
+                            </div>
+                            <div style={{ maxWidth: '50%', width: '50%' }} >
                                 {
                                     this.state.showDateRangeSelect ?
                                         <DateRange
@@ -105,10 +108,10 @@ export default class IndexSearchConsole extends Component {
                             </div>
                         </div>
                         <div className="row mt-3">
-                            <div className="col-1" >
+                            <div style={{ maxWidth: '10%', width: '10%' }} >
                                 Site:
                             </div>
-                            <div className="col-3" >
+                            <div style={{ maxWidth: '25%', width: '25%' }} >
                                 <GoogleSearchConsoleSiteSelect
                                     name="google_search_console_site_id"
                                     id="google_search_console_site_id"
