@@ -46,20 +46,24 @@ class HomeController extends Controller
         return ['user' => $user];
     }
 
-    public function userServices(Request $request)
+    private function checkPricePlanLimit($user)
     {
-
-        $user = Auth::user();
         if ($user->isPricePlanAnnotationLimitReached(true)) {
             abort(402, "Please upgrade your plan to add more annotations");
         }
         if (!$user->pricePlan->has_data_sources) {
             abort(402, "Please upgrade your plan to use Data Sources feature.");
         }
+    }
+
+    public function userServices(Request $request)
+    {
+        $user = Auth::user();
 
         if ($request->has('is_ds_holidays_enabled')) {
             $user->is_ds_holidays_enabled = $request->is_ds_holidays_enabled;
             if ($request->is_ds_holidays_enabled) {
+                $this->checkPricePlanLimit($user);
                 $user->last_activated_any_data_source_at = Carbon::now();
                 event(new HolidaysActivated($user));
             } else {
@@ -70,6 +74,7 @@ class HomeController extends Controller
         if ($request->has('is_ds_google_algorithm_updates_enabled')) {
             $user->is_ds_google_algorithm_updates_enabled = $request->is_ds_google_algorithm_updates_enabled;
             if ($request->is_ds_google_algorithm_updates_enabled) {
+                $this->checkPricePlanLimit($user);
                 $user->last_activated_any_data_source_at = Carbon::now();
                 event(new GoogleUpdatesActivated($user));
             } else {
@@ -80,6 +85,7 @@ class HomeController extends Controller
         if ($request->has('is_ds_retail_marketing_enabled')) {
             $user->is_ds_retail_marketing_enabled = $request->is_ds_retail_marketing_enabled;
             if ($request->is_ds_retail_marketing_enabled) {
+                $this->checkPricePlanLimit($user);
                 $user->last_activated_any_data_source_at = Carbon::now();
                 event(new RetailMarketingDatesActivated($user));
             } else {
@@ -90,6 +96,7 @@ class HomeController extends Controller
         if ($request->has('is_ds_weather_alerts_enabled')) {
             $user->is_ds_weather_alerts_enabled = $request->is_ds_weather_alerts_enabled;
             if ($request->is_ds_weather_alerts_enabled) {
+                $this->checkPricePlanLimit($user);
                 $user->last_activated_any_data_source_at = Carbon::now();
                 event(new WeatherActivated($user));
             } else {
@@ -100,6 +107,7 @@ class HomeController extends Controller
         if ($request->has('is_ds_google_alerts_enabled')) {
             $user->is_ds_google_alerts_enabled = $request->is_ds_google_alerts_enabled;
             if ($request->is_ds_google_alerts_enabled) {
+                $this->checkPricePlanLimit($user);
                 $user->last_activated_any_data_source_at = Carbon::now();
                 event(new GoogleAlertActivated($user));
             } else {
@@ -110,6 +118,7 @@ class HomeController extends Controller
         if ($request->has('is_ds_wordpress_updates_enabled')) {
             $user->is_ds_wordpress_updates_enabled = $request->is_ds_wordpress_updates_enabled;
             if ($request->is_ds_wordpress_updates_enabled) {
+                $this->checkPricePlanLimit($user);
                 $user->last_activated_any_data_source_at = Carbon::now();
                 event(new WordPressActivated($user));
             } else {
@@ -120,6 +129,7 @@ class HomeController extends Controller
         if ($request->has('is_ds_web_monitors_enabled')) {
             $user->is_ds_web_monitors_enabled = $request->is_ds_web_monitors_enabled;
             if ($request->is_ds_web_monitors_enabled) {
+                $this->checkPricePlanLimit($user);
                 $user->last_activated_any_data_source_at = Carbon::now();
                 event(new WebsiteMonitoringActivated($user));
             } else {
