@@ -323,6 +323,10 @@ class User extends Authenticatable implements MustVerifyEmail
         $userPricePlan = $this->pricePlan;
         $annotationsCount = $this->getTotalAnnotationsCount($applyLimit);
 
-        return $annotationsCount >= $userPricePlan->annotations_count;
+        if ($userPricePlan->annotations_count > 0) {
+            return $annotationsCount >= $userPricePlan->annotations_count;
+        } else {
+            return false;
+        }
     }
 }
