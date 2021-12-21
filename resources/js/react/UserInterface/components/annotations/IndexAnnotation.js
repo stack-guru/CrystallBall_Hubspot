@@ -4,6 +4,7 @@ import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 import { timezoneToDateFormat } from '../../utils/TimezoneTodateFormat';
+import { getCompanyName } from '../../helpers/CommonFunctions';
 
 class IndexAnnotations extends React.Component {
 
@@ -256,7 +257,7 @@ class IndexAnnotations extends React.Component {
                                                                             : null}
                                                                     </td>
                                                                     <td>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</td>
-                                                                    <td>{anno.event_name == 'Sample Annotation' ? 'GAannotations' : anno.user_name}</td>
+                                                                    <td>{anno.event_name == 'Sample Annotation' ? getCompanyName() : anno.user_name}</td>
                                                                     <td className="text-center">
                                                                         {anno.id ?
                                                                             <React.Fragment>
