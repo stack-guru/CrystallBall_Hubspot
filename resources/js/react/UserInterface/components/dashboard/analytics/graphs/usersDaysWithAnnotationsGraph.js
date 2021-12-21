@@ -9,8 +9,8 @@ export default function UsersDaysWithAnnotationsGraph(props) {
     const combinedArray = props.statistics.map(s => {
         const momentDate = moment(s.statistics_date);
         return [
-            new Date(momentDate.format('YYYY'), momentDate.format('MM') - 1, momentDate.format('DD')),
-            // momentDate.format("DD") + "\n" + momentDate.format("MMM"),
+            // new Date(momentDate.format('YYYY'), momentDate.format('MM') - 1, momentDate.format('DD')),
+            momentDate.format("DD") + "\n" + momentDate.format("MMM"),
             Number.parseInt(s.sum_users_count),
             s.event_name ? s.event_name.toUpperCase().split(' ').map(a => a.substr(0, 1)).join('') : null,
             s.description ? s.description : null,
@@ -19,7 +19,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
 
     const dataArray = [
         [
-            { type: 'date', label: 'Day' },
+            { type: 'string', label: 'Day' },
             { type: 'number', label: 'Users' },
             { type: 'string', role: 'annotation' },
             { type: 'string', role: 'annotationText' }

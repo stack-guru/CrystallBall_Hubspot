@@ -6,7 +6,8 @@ export default function ClicksImpressionsDaysGraph(props) {
     const combinedArray = props.statistics.map(s => {
         const momentDate = moment(s.statistics_date);
         return [
-            new Date(momentDate.format('YYYY'), momentDate.format('MM') - 1, momentDate.format('DD')),
+            // new Date(momentDate.format('YYYY'), momentDate.format('MM') - 1, momentDate.format('DD')),
+            momentDate.format("DD") + "\n" + momentDate.format("MMM"),
             Number.parseInt(s.sum_clicks_count),
             Number.parseInt(s.sum_impressions_count),
             s.event_name ? s.event_name.toUpperCase().split(' ').map(a => a.substr(0, 1)).join('') : null,
@@ -16,7 +17,7 @@ export default function ClicksImpressionsDaysGraph(props) {
 
     const dataArray = [
         [
-            { type: 'date', label: 'Day' },
+            { type: 'string', label: 'Day' },
             { type: 'number', label: 'Clicks' },
             { type: 'number', label: 'Impressions' },
             { type: 'string', role: 'annotation' },
