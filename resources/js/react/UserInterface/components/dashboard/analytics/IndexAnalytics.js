@@ -54,7 +54,7 @@ export default class IndexAnalytics extends Component {
                             <h2 className="heading-section gaa-title">Dashboard</h2>
                         </div>
                         <div className="col-md-6 text-right">
-                            <button className="btn btn-secondary btn-sm" onClick={() => {
+                            <button className="btn gaa-btn-primary btn-sm" onClick={() => {
                                 html2canvas(document.getElementById("dashboard-index-container")).then(function (canvas) {
                                     const link = document.createElement("a");
                                     link.download = "dashboard_analytics.png";
