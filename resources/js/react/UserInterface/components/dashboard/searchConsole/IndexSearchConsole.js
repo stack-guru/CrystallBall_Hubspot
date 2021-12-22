@@ -43,6 +43,11 @@ export default class IndexSearchConsole extends Component {
             <section className="ftco-section" id="inputs">
                 <div className="container-xl p-0">
                     <div className="row ml-0 mr-0 mb-1">
+                        <div className="col-md-12 text-right">
+                            <h4>This page is on Beta</h4>
+                        </div>
+                    </div>
+                    <div className="row ml-0 mr-0 mb-1">
                         <div className="col-md-6">
                             <h2 className="heading-section gaa-title">Dashboard</h2>
                         </div>
