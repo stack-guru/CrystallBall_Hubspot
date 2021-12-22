@@ -7,7 +7,7 @@ export default function AnnotationsTable(props) {
             <div className="col-12" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                 <div id="annotation-table-container" className="table-responsive">
                     <table className="table table-bordered table-hover gaa-hover">
-                        <thead style={{ border: '3px solid #35a1ea' }}>
+                        <thead>
                             <tr>
                                 <th>Event Name</th>
                                 <th>Category</th>

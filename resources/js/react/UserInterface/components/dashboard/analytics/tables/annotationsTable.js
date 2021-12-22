@@ -24,7 +24,7 @@ export default function AnnotationsTable(props) {
                                     </div>
                                 </th>
                             </tr>
-                            <tr style={{ border: '3px solid #35a1ea' }}>
+                            <tr>
                                 <th>Event Name</th>
                                 <th>Category</th>
                                 <th>Description</th>
