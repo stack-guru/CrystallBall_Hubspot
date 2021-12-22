@@ -55,7 +55,7 @@ class WebMonitorController extends Controller
         } else {
             $uRM = $uptimeRobotService->newMonitor($request->name, $request->url);
             if ($uRM == false) {
-                abort(500, "Expected response received from Monitor Server");
+                abort(500, "Unexpected response received from Monitor Server. Please contact support for more details.");
             }
             $webMonitor->uptime_robot_id = $uRM['monitor']['id'];
         }
