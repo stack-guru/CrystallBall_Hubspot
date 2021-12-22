@@ -51,3 +51,7 @@ export function callmiddle(e, callback) {
     (callback)(e);
     window.location = e.target.getAttribute("href");
 }
+
+export function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
