@@ -22,8 +22,14 @@ class PaymentDetailController extends Controller
         $blueSnapService = new BlueSnapService;
         $user = Auth::user();
         $lastPaymentDetail = $user->lastPaymentDetail;
+
+        // Every user must have subscribed to a plan from "Create Payment" page
+        // to create a record in payment details table.
+        // it is necessary to get first & last name and address details from user
+        // to complete payment data for future payments and recurring payments
+        // Hence is the below condition
         if (!$lastPaymentDetail) {
-            abort(400, 'Unable to find any previous payment details.');
+            abort(400, 'Unable to find any previous payment details. Please subscribe for a price plan from "Settings -> Plans" page in the left navigation page.');
             // $response = $blueSnapService->createVaultedShopper($request->only(['first_name', 'last_name']));
             // if ($response['success']) {
             //     $vaultedShopperId = $response['vaultedShopperId'];
