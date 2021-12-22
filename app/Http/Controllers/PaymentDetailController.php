@@ -21,8 +21,11 @@ class PaymentDetailController extends Controller
     {
         $blueSnapService = new BlueSnapService;
         $user = Auth::user();
-        $lastPaymentDetail = $user->lastPaymentDetail;
+        if ($user->user_id) {
+            abort(403, "Only account owner is allowed to add card details.");
+        }
 
+        $lastPaymentDetail = $user->lastPaymentDetail;
         // Every user must have subscribed to a plan from "Create Payment" page
         // to create a record in payment details table.
         // it is necessary to get first & last name and address details from user
