@@ -6,6 +6,7 @@ use App\Http\Requests\PricePlanRequest;
 use App\Models\PricePlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class PricePlanController extends Controller
 {
@@ -16,7 +17,6 @@ class PricePlanController extends Controller
      */
     public function index()
     {
-
     }
 
     public function uiIndex()
@@ -55,7 +55,7 @@ class PricePlanController extends Controller
      */
     public function show(PricePlan $pricePlan)
     {
-        if(Auth::user()->user_level !== 'admin') abort(403, 'Only administrators are allowed to view price plan.');
+        if (Auth::user()->user_level !== User::ADMIN) abort(403, 'Only administrators are allowed to view price plan.');
         return ['price_plan' => $pricePlan];
     }
 

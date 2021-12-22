@@ -20,6 +20,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public $pushNotificationType = 'users';
 
+    const ADMIN = 'admin';
+    const TEAM = 'team';
+    const VIEWER = 'viewer';
+
     /**
      * The attributes that are mass assignable.
      *

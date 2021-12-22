@@ -63,7 +63,7 @@ class UserFactory extends Factory
             'is_ds_wordpress_updates_enabled' => $this->faker->boolean(),
             'is_ds_web_monitors_enabled' => $this->faker->boolean(),
 
-            'user_level' => 'admin',
+            'user_level' => User::ADMIN,
             'department' => $this->faker->jobTitle(),
 
             'team_name' => $this->faker->jobTitle(),

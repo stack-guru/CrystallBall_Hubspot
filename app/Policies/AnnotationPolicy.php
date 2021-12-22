@@ -20,7 +20,7 @@ class AnnotationPolicy
     {
         //
     }
-    
+
     /**
      * Determine whether the user can view any models.
      *
@@ -54,7 +54,7 @@ class AnnotationPolicy
      */
     public function create(User $user)
     {
-        return ($user->user_level == 'admin' || $user->user_level == 'team');
+        return ($user->user_level == User::ADMIN || $user->user_level == User::TEAM);
     }
 
     /**
@@ -67,7 +67,7 @@ class AnnotationPolicy
     public function update(User $user, Annotation $annotation)
     {
         // Moved half of this logic to controller
-        return ($user->user_level == 'admin' || $user->user_level == 'team');
+        return ($user->user_level == User::ADMIN || $user->user_level == User::TEAM);
     }
 
     /**
@@ -80,7 +80,7 @@ class AnnotationPolicy
     public function delete(User $user, Annotation $annotation)
     {
         // Moved half of this logic to controller
-        return ($user->user_level == 'admin' || $user->user_level == 'team');
+        return ($user->user_level == User::ADMIN || $user->user_level == User::TEAM);
     }
 
     /**

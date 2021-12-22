@@ -18,7 +18,7 @@ class UserPolicy
     {
         //
     }
-    
+
     /**
      * Determine whether the user can view any models.
      *
@@ -27,7 +27,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->user_level == 'admin' || $user->user_level == 'team';
+        return $user->user_level == User::ADMIN || $user->user_level == User::TEAM;
     }
 
     /**
@@ -39,7 +39,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return $user->user_level == 'admin' && $user->id == $model->user_id;
+        return $user->user_level == User::ADMIN && $user->id == $model->user_id;
     }
 
     /**
@@ -50,7 +50,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->user_level == 'admin';
+        return $user->user_level == User::ADMIN;
     }
 
     /**
@@ -62,7 +62,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->user_level == 'admin' && $user->id == $model->user_id;
+        return $user->user_level == User::ADMIN && $user->id == $model->user_id;
     }
 
     /**
@@ -74,7 +74,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->user_level == 'admin' && $user->id == $model->user_id;
+        return $user->user_level == User::ADMIN && $user->id == $model->user_id;
     }
 
     /**
