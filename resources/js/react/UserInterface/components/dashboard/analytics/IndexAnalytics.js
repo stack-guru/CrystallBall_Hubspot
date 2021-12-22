@@ -181,14 +181,7 @@ export default class IndexAnalytics extends Component {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
             this.fetchUsersDaysAnnotations(gaPropertyId);
-            HttpClient.get(`/dashboard/analytics/annotations-metrics-dimensions?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
-                .then(response => {
-                    this.setState({ isBusy: false, annotations: response.data.annotations });
-                }, (err) => {
-                    this.setState({ isBusy: false, errors: (err.response).data });
-                }).catch(err => {
-                    this.setState({ isBusy: false, errors: err });
-                });
+            this.fetchAnnotationsMetricsDimensions(gaPropertyId);
             HttpClient.get(`/dashboard/analytics/media?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
                     this.setState({ isBusy: false, mediaStatistics: response.data.statistics });
@@ -227,7 +220,24 @@ export default class IndexAnalytics extends Component {
             });
     }
 
+    fetchAnnotationsMetricsDimensions(gaPropertyId) {
+        HttpClient.get(`/dashboard/analytics/annotations-metrics-dimensions?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+            .then(response => {
+                this.setState({ isBusy: false, annotations: response.data.annotations });
+            }, (err) => {
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isBusy: false, errors: err });
+            });
+    }
+
     changeStatisticsPaddingDays(statisticsPaddingDays) {
-        this.setState({ statisticsPaddingDays: statisticsPaddingDays }, () => this.fetchUsersDaysAnnotations(this.state.ga_property_id));
+        this.setState(
+            { statisticsPaddingDays: statisticsPaddingDays },
+            () => {
+                this.fetchUsersDaysAnnotations(this.state.ga_property_id);
+                this.fetchAnnotationsMetricsDimensions(this.state.ga_property_id);
+            }
+        );
     }
 }
