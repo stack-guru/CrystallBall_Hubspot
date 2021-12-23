@@ -132,7 +132,7 @@ export default class IndexSearchConsole extends Component {
                             </div>
                         </div>
                         {
-                            this.state.queriesStatistics.length ?
+                            this.state.clicksImpressionsDaysStatistics.length ?
                                 <React.Fragment>
                                     <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
                                     <AnnotationsTable user={this.props.user} annotations={this.state.annotations} />

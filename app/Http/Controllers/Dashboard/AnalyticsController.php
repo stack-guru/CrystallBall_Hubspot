@@ -9,6 +9,7 @@ use App\Models\GoogleAnalyticsMetricDimension;
 use App\Models\Annotation;
 use App\Models\GoogleAnalyticsProperty;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
 
 class AnalyticsController extends Controller
 {
@@ -147,7 +148,40 @@ class AnalyticsController extends Controller
                 WHERE T3.statistics_date BETWEEN '$startDate' AND '$endDate'
                 ORDER BY T3.statistics_date;");
 
-        return ['statistics' => $statistics, 'google_account' => $gAProperty->googleAccount()->first()];
+        // The code below is used to add 0 values for those days which have no data
+        // Google Services do not return rows for those days which have 0 value for all statistics
+        $dateIndexedStatistics = [];
+        foreach ($statistics as $statistic) {
+            $dateIndexedStatistics[Carbon::parse($statistic->statistics_date)->format('Ymd')] = $statistic;
+        }
+
+        $filledStatistics = [];
+        $daysDiffCount = Carbon::parse($startDate)->diffInDays(Carbon::parse($endDate)) + 1;
+        for ($i = 0; $i < $daysDiffCount; $i++) {
+            if (array_key_exists(Carbon::parse($startDate)->addDays($i)->format('Ymd'), $dateIndexedStatistics)) {
+                $filledStatistics[] = [
+                    "event_name" => $dateIndexedStatistics[Carbon::parse($startDate)->addDays($i)->format('Ymd')]->event_name,
+                    "category" => $dateIndexedStatistics[Carbon::parse($startDate)->addDays($i)->format('Ymd')]->category,
+                    "show_at" => $dateIndexedStatistics[Carbon::parse($startDate)->addDays($i)->format('Ymd')]->show_at,
+                    "description" => $dateIndexedStatistics[Carbon::parse($startDate)->addDays($i)->format('Ymd')]->description,
+                    "statistics_date" => $dateIndexedStatistics[Carbon::parse($startDate)->addDays($i)->format('Ymd')]->statistics_date,
+                    "seven_day_old_date" => $dateIndexedStatistics[Carbon::parse($startDate)->addDays($i)->format('Ymd')]->seven_day_old_date,
+                    "sum_users_count" => $dateIndexedStatistics[Carbon::parse($startDate)->addDays($i)->format('Ymd')]->sum_users_count,
+                ];
+            } else {
+                $filledStatistics[] = [
+                    "event_name" => null,
+                    "category" => null,
+                    "show_at" => null,
+                    "description" => null,
+                    "statistics_date" => Carbon::parse($startDate)->addDays($i)->format('Y-m-d'),
+                    "seven_day_old_date" => Carbon::parse($startDate)->addDays($i)->addDays($statisticsPaddingDays)->format('Y-m-d'),
+                    "sum_users_count" => "0"
+                ];
+            }
+        }
+
+        return ['statistics' => $filledStatistics, 'google_account' => $gAProperty->googleAccount()->first()];
     }
 
     public function annotationsMetricsDimensionsIndex(Request $request)
