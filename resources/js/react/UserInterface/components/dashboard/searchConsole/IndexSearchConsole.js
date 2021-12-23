@@ -42,7 +42,7 @@ export default class IndexSearchConsole extends Component {
         return <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
             <section className="ftco-section" id="inputs">
                 <div className="container-xl p-0">
-                    <div className="row ml-0 mr-0 mb-1">
+                    <div className="row ml-0 mr-0 mb-4">
                         <div className="col-md-12 text-right">
                             <h4>This page is on Beta</h4>
                         </div>
