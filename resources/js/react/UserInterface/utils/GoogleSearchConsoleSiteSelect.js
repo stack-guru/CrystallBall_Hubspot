@@ -19,7 +19,12 @@ export default class GoogleSearchConsoleSiteSelect extends Component {
     componentDidMount() {
         if (this.props.autoSelectFirst) {
             this.searchGoogleSearchConsoleSites(' ', (options) => {
-                if (options.length) this.onChangeHandler(options[0]);
+                if (options.length) {
+                    this.setState({ cSites: [{ value: "", label: "Loading..." }] });
+                    setTimeout(() => {
+                        this.onChangeHandler(options[0]);
+                    }, 5000);
+                }
                 this.setState({ allSites: options });
             });
         }
