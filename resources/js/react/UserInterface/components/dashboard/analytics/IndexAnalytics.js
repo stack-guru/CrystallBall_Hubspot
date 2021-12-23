@@ -72,17 +72,19 @@ export default class IndexAnalytics extends Component {
                                 <ErrorAlert errors={this.state.errors} />
                             </div>
                         </div>
-                        <div className="row">
+                        <div className="row ml-0 mr-0">
                             <div style={{ maxWidth: '10%', width: '10%' }} >
                                 Date range:
                             </div>
-                            <div style={{ maxWidth: '25%', width: '25%' }} >
-                                <button className="btn thin-light-gray-border text-black w-100" onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
+                            <div style={{ maxWidth: '30%', width: '30%' }} >
+                                <button className="btn thin-light-gray-border text-black w-100"
+                                    style={{ paddingRight: '8px' }}
+                                    onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
                                     From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}
                                     &nbsp;&nbsp;&nbsp;
                                     To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}
                                     &nbsp;
-                                    <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" class="css-19bqh2r" style={{ color: "rgb(204, 204, 204)" }}>
+                                    <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" class="css-19bqh2r float-right" style={{ color: "rgb(204, 204, 204)" }}>
                                         <path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path>
                                     </svg>
                                 </button>
@@ -116,11 +118,11 @@ export default class IndexAnalytics extends Component {
                                 }
                             </div>
                         </div>
-                        <div className="row mt-3">
+                        <div className="row ml-0 mr-0 mt-3">
                             <div style={{ maxWidth: '10%', width: '10%' }} >
                                 Property:
                             </div>
-                            <div style={{ maxWidth: '25%', width: '25%' }} >
+                            <div style={{ maxWidth: '30%', width: '30%' }} >
                                 <GoogleAnalyticsPropertySelect
                                     name="ga_property_id"
                                     id="ga_property_id"
