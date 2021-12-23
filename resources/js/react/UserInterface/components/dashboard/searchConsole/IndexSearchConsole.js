@@ -44,7 +44,7 @@ export default class IndexSearchConsole extends Component {
                 <div className="container-xl p-0">
                     <div className="row ml-0 mr-0 mb-4">
                         <div className="col-md-12 text-right">
-                            <h4>This page is on Beta</h4>
+                            <h6 className="gaa-text-color">This page is on Beta</h6>
                         </div>
                     </div>
                     <div className="row ml-0 mr-0 mb-1">
