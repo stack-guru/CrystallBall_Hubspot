@@ -9,9 +9,9 @@ export default function AnnotationsTable(props) {
                     <table className="table table-bordered table-hover gaa-hover">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <th style={{ border: 'none' }}></th>
+                                <th style={{ border: 'none' }}></th>
+                                <th style={{ border: 'none' }}></th>
                                 <th colSpan="4">
                                     <div className="dropdown">
                                         {props.statisticsPaddingDays} days after the event
