@@ -49,7 +49,7 @@ export default class IndexSearchConsole extends Component {
                     </div>
                     <div className="row ml-0 mr-0 mb-1">
                         <div className="col-md-6">
-                            <h2 className="heading-section gaa-title">Dashboard</h2>
+                            <h2 className="heading-section gaa-title">Search Console</h2>
                         </div>
                         <div className="col-md-6 text-right">
                             <button className="btn gaa-btn-primary btn-sm" onClick={() => {
