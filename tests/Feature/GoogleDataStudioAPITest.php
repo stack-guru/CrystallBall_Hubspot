@@ -15,15 +15,20 @@ class GoogleDataStudioAPITest extends TestCase
 
     public function testFetchAnnotationsAPITest()
     {
-        Passport::actingAs(User::where('price_plan_id', PricePlan::where('has_google_data_studio', true)->first()->id)->inRandomOrder()->first());
 
-        $response = $this->getJson('/api/v1/google-data-studio/annotations', [
-            'startDate' => '2001-01-01',
-            'endDate' => '2030-01-01',
-            'show_manual_annotations' => 'true',
-            'show_csv_annotations' => 'true',
-            'show_api_annotations' => 'true',
-        ]);
+        do {
+            $user = User::where('price_plan_id', PricePlan::where('has_google_data_studio', true)->first()->id)->inRandomOrder()->first();
+        } while (count($user->annotations) < 1);
+
+        Passport::actingAs($user);
+
+        $response = $this->getJson('/api/v1/google-data-studio/annotations?' . implode("&", [
+            'startDate=2001-01-01',
+            'endDate=2021-12-31',
+            'show_manual_annotations=true',
+            'show_csv_annotations=true',
+            'show_api_annotations=true',
+        ]));
 
         $response->assertStatus(200)
             ->assertJson(
@@ -47,5 +52,4 @@ class GoogleDataStudioAPITest extends TestCase
                 }
             );
     }
-
 }

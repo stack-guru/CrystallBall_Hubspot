@@ -14,7 +14,12 @@ class UserChecklistTest extends TestCase
 
     public function testFetchChecklistItemsTest()
     {
-        $response = $this->actingAs(User::inRandomOrder()->first(), 'web')->getJson('/ui/user-checklist-item');
+
+        do {
+            $user = User::inRandomOrder()->first();
+        } while (count($user->userChecklistItems) < 1);
+
+        $response = $this->actingAs($user, 'web')->getJson('/ui/user-checklist-item');
 
         $response->assertStatus(200)
             ->assertJson(
@@ -29,7 +34,7 @@ class UserChecklistTest extends TestCase
                                 ->has("created_at")
                                 ->has("updated_at")
                                 ->has("checklist_item")
-                                ->has('checklist_item.0', function ($json) {
+                                ->has('checklist_item', function ($json) {
                                     $json->has("id")
                                         ->has("name")
                                         ->has("label")

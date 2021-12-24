@@ -30,6 +30,7 @@ class AnalyticsDashboardPageTest extends TestCase
             'start_date=2005-01-02',
             'end_date=2021-01-01',
             'ga_property_id=' . $user->googleAnalyticsProperties[0]->id,
+            'statistics_padding_days=0'
         ]));
 
         $response->assertStatus(200)

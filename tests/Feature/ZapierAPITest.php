@@ -14,7 +14,11 @@ class ZapierAPITest extends TestCase
 
     public function testAnnotationsGETAPITest()
     {
-        Passport::actingAs(User::inRandomOrder()->first());
+        do {
+            $user = User::inRandomOrder()->first();
+        } while (count($user->annotations) < 1);
+
+        Passport::actingAs($user);
 
         $response = $this->getJson('/api/v1/zapier/annotations', [
             'startDate' => '2001-01-01',
@@ -42,7 +46,16 @@ class ZapierAPITest extends TestCase
 
     public function testAnnotationCreateAPITest()
     {
-        Passport::actingAs(User::inRandomOrder()->first());
+        $user = User::inRandomOrder()->first();
+        if ($user->isPricePlanAnnotationLimitReached(true)) {
+            $annotationsCount = $user->annotations()->count();
+            $user->annotations()->limit($annotationsCount - $user->pricePlan->annotations_count)->delete();
+            $annotationsCount = $user->annotations()->count();
+            if ($user->pricePlan->annotations_count == $annotationsCount) {
+                $user->annotations()->limit(round($annotationsCount / 2))->delete();
+            }
+        }
+        Passport::actingAs($user);
 
         $response = $this->postJson('/api/v1/zapier/annotations', [
             'category' => 'test annotation',
@@ -60,11 +73,11 @@ class ZapierAPITest extends TestCase
                             ->has("id")
                             ->has("category")
                             ->has("event_name")
-                        // ->has("url")
-                        // ->has("description")
-                        // ->has("user_name")
-                        // ->has("annotation_ga_property_id")
-                        // ->has("google_analytics_property_name")
+                            // ->has("url")
+                            // ->has("description")
+                            // ->has("user_name")
+                            // ->has("annotation_ga_property_id")
+                            // ->has("google_analytics_property_name")
                             ->etc();
                     });
                 }
