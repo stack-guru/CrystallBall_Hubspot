@@ -66,6 +66,11 @@ class Annotation extends Model
                 }
             }
         }
+        // Add web monitor annotations if it is enabled in user data source
+        if ($user->is_ds_web_monitors_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select null, 1, show_at, created_at, id, category, event_name, url, description, 'System' AS user_name from `web_monitor_annotations` WHERE `web_monitor_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        }
         // Add retail marketing date annotations if it is enabled in user data source
         if ($user->is_ds_retail_marketing_enabled) {
             $annotationsQuery .= " union ";

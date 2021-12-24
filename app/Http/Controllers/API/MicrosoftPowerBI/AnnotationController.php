@@ -19,9 +19,11 @@ class AnnotationController extends Controller
             abort(402, "Please upgrade your plan to use Microsoft Power Bi.");
         }
 
-        if (!$request->has('startDate') && !$request->has('endDate')) {
-            return ['annotations' => []];
-        }
+        $this->validate($request, [
+            'startDate' => 'required|date',
+            'endDate' => 'required|date',
+            'annotation_ga_property_id' => 'nullable|numeric|exists:ga_properties,id'
+        ]);
 
         $userIdsArray = $user->getAllGroupUserIdsArray();
 

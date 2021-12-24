@@ -16,6 +16,9 @@ class CreateWebMonitorAnnotationsTable extends Migration
         Schema::create('web_monitor_annotations', function (Blueprint $table) {
             $table->id();
 
+            $table->bigInteger('web_monitor_id')->nullable()->unsigned();
+            $table->foreign('web_monitor_id')->references('id')->on('web_monitors')->onDelete('CASCADE')->onUpdate('CASCADE');
+
             $table->bigInteger('user_id')->required()->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
 

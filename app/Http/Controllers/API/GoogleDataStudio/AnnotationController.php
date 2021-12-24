@@ -21,9 +21,11 @@ class AnnotationController extends Controller
         $user->last_data_studio_used_at = Carbon::now();
         $user->save();
 
-        if (!$request->has('startDate') && !$request->has('endDate')) {
-            return ['annotations' => []];
-        }
+        $this->validate($request, [
+            'startDate' => 'required|date',
+            'endDate' => 'required|date',
+            'annotation_ga_property_id' => 'nullable|numeric|exists:ga_properties,id'
+        ]);
 
         $this->authorize('viewAny', Annotation::class);
 
