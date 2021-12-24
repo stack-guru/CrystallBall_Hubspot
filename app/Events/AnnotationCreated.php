@@ -22,7 +22,7 @@ class AnnotationCreated
      *
      * @return void
      */
-    public function __construct(Annotation $annotation)
+    public function __construct($annotation)
     {
         $this->annotation = $annotation;
 

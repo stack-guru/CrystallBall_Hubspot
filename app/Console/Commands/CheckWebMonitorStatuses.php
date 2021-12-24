@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Annotation;
+use App\Models\WebMonitorAnnotation;
 use App\Models\User;
 use App\Models\WebMonitor;
 use App\Notifications\WebMonitorDown;
@@ -111,14 +112,15 @@ class CheckWebMonitorStatuses extends Command
                             ->toArray();
 
                         foreach ($userIds as $userId) {
-                            $annotation = new Annotation;
-                            $annotation->user_id = $userId;
-                            $annotation->category = "Website Monitoring";
-                            $annotation->event_name = $event;
-                            $annotation->description = $description;
-                            $annotation->show_at = $rightNowDateTime;
-                            $annotation->save();
-                            event(new \App\Events\AnnotationCreated($annotation));
+                            $webMonitorAnnotation = new WebMonitorAnnotation;
+                            $webMonitorAnnotation->web_monitor_id = $webMonitor->id;
+                            $webMonitorAnnotation->user_id = $userId;
+                            $webMonitorAnnotation->category = "Website Monitoring";
+                            $webMonitorAnnotation->event_name = $event;
+                            $webMonitorAnnotation->description = $description;
+                            $webMonitorAnnotation->show_at = $rightNowDateTime;
+                            $webMonitorAnnotation->save();
+                            event(new \App\Events\AnnotationCreated($webMonitorAnnotation));
                         }
                     }
                     WebMonitor::where('uptime_robot_id', $uptimeMonitor['id'])->update([
