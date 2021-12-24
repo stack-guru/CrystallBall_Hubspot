@@ -52,7 +52,7 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
 
-            'price_plan_id' => PricePlan::inRandomOrder()->first()->id,
+            'price_plan_id' => PricePlan::where('is_enabled', true)->inRandomOrder()->first()->id,
             'price_plan_expiry_date' => $this->faker->dateTimeBetween('now', '+4 week'),
 
             'is_ds_holidays_enabled' => $this->faker->boolean(),
