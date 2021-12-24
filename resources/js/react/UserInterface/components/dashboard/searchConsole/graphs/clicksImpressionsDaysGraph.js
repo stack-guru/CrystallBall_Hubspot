@@ -35,8 +35,13 @@ export default function ClicksImpressionsDaysGraph(props) {
         //     width: "100%",
         //     // height: "100%"
         // },
-        'chartArea': { 'width': '100%', 'height': '70%', left: 40 },
+        'chartArea': { 'width': '100%', 'height': '70%', left: 60 },
         pointSize: 5,
+        title: '',
+        vAxis: {
+            title: 'Clicks & Impressions',
+            minValue: 0
+        },
         hAxis: {
             scaleType: 'linear',
             side: 'top',
