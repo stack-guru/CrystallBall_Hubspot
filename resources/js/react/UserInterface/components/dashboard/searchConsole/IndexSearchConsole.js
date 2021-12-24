@@ -48,7 +48,7 @@ export default class IndexSearchConsole extends Component {
                         </div>
                     </div>
                     <div className="row ml-0 mr-0 mb-1">
-                        <div className="col-md-6">
+                        <div className="col-md-6 pl-0">
                             <h2 className="heading-section gaa-title">Search Console</h2>
                         </div>
                         <div className="col-md-6 text-right">
