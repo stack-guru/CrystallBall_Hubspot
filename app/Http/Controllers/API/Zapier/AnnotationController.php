@@ -116,9 +116,9 @@ class AnnotationController extends Controller
             }
         }
         ////////////////////////////////////////////////////////////////////
-        if ($user->is_ds_web_monitors_enabled && $request->query('show_web_monitor_annotations') == 'true') {
+        if ($user->is_ds_web_monitors_enabled && $request->query('show_website_monitoring') == 'true') {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select null, 1, show_at, created_at, id, category, event_name, url, description, 'System' AS user_name from `web_monitor_annotations` WHERE `web_monitor_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+            $annotationsQuery .= "select show_at, id, category, event_name, url, description from `web_monitor_annotations` WHERE `web_monitor_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
         }
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_holidays_enabled && $request->query('show_holidays') == 'true') {
