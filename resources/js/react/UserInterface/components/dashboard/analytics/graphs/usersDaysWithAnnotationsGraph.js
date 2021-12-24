@@ -37,7 +37,12 @@ export default function UsersDaysWithAnnotationsGraph(props) {
         //     // height: "100%"
         // },
         'chartArea': { 'width': '100%', 'height': '70%', left: 20 },
+        title: '',
         pointSize: 5,
+        vAxis: {
+            title: 'Users',
+            minValue: 0
+        },
         hAxis: {
             scaleType: 'linear',
             side: 'top',

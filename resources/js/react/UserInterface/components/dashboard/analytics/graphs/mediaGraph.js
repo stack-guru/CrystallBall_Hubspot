@@ -13,7 +13,7 @@ export default function MediaGraph(props) {
             labels: dataLabels,
             datasets: [
                 {
-                    label: '',
+                    label: '# of users',
                     data: noOfUsers,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -46,11 +46,12 @@ export default function MediaGraph(props) {
             responsive: true,
             plugins: {
                 legend: {
-                    display: false,
+                    display: true,
+                    position: 'bottom'
                 },
                 title: {
                     display: true,
-                    text: '',
+                    text: 'Media',
                 },
             },
         }} />;
