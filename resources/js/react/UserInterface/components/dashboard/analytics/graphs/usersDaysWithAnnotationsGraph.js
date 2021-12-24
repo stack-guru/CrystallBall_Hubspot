@@ -36,7 +36,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
         //     width: "100%",
         //     // height: "100%"
         // },
-        'chartArea': { 'width': '100%', 'height': '70%', left: 20 },
+        'chartArea': { 'width': '100%', 'height': '70%', left: 60 },
         title: '',
         pointSize: 5,
         vAxis: {
