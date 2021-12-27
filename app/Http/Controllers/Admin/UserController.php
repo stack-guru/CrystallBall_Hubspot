@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
 
-        $data['users'] = User::with(['pricePlan', 'lastAnnotation'])->orderBy('created_at', 'DESC')->withCount('loginLogs')->get();
+        $data['users'] = User::with('pricePlan')->orderBy('created_at', 'DESC')->get();
 
         return view('admin/user/index', $data);
     }
@@ -82,7 +82,8 @@ class UserController extends Controller
         return redirect()->route('admin.user.index')->with('success', true);
     }
 
-    public function login(User $user){
+    public function login(User $user)
+    {
         Auth::logout();
         Auth::guard('web')->loginUsingId($user->id);
         return redirect()->route('annotation.index');
