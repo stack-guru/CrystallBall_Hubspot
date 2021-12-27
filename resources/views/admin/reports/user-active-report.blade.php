@@ -51,11 +51,11 @@
                                     <td></td>
                                     <td>{{ @$user->pricePlan->name }}</td>
                                     <td>
-                                        @if($user->last30_days_popup_opened_chrome_extension_logs_count
-                                        || $user->annotation_button_clicked_chrome_extension_logs_count
-                                        || $user->last30_days_api_annotation_created_logs_count
+                                        @if($user->last90_days_popup_opened_chrome_extension_logs_count
+                                        || $user->last90_days_annotation_button_clicked_chrome_extension_logs_count
+                                        || $user->last90_days_api_annotation_created_logs_count
                                         || @$user->pricePlan->price
-                                        || $user->login_logs_count)
+                                        || $user->last90_days_login_logs_count)
                                         Yes
                                         @else
                                         @php

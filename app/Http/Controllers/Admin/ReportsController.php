@@ -23,10 +23,10 @@ class ReportsController extends Controller
             ->withCount('annotationGaProperties')
             ->withCount('googleAnalyticsProperties')
             ->withCount('manualAnnotations')
-            ->withCount('loginLogs')
-            ->withCount('last30DaysApiAnnotationCreatedLogs')
-            ->withCount('last30DaysPopupOpenedChromeExtensionLogs')
-            ->withCount('AnnotationButtonClickedChromeExtensionLogs')
+            ->withCount('last90DaysLoginLogs')
+            ->withCount('last90DaysApiAnnotationCreatedLogs')
+            ->withCount('last90DaysPopupOpenedChromeExtensionLogs')
+            ->withCount('last90DaysAnnotationButtonClickedChromeExtensionLogs')
             ->get();
 
         foreach ($users as $user) {
