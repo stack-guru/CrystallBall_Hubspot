@@ -24,7 +24,7 @@
                                     <th>Team</th>
                                     <th>Email</th>
                                     <th>Name</th>
-                                    <th>Price Plan</th>
+                                    <th>Plan</th>
                                     <th>Registration Date</th>
                                     <th>Actions</th>
                                 </tr>
