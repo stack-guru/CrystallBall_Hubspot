@@ -50,7 +50,11 @@ export default function MediaGraph(props) {
                     plugins: {
                         legend: {
                             display: true,
-                            position: 'bottom'
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 0,
+                                boxHeight: 0
+                            }
                         },
                         title: {
                             display: true,
