@@ -18,6 +18,8 @@ class Annotation extends Model
         'is_enabled', 'added_by',
     ];
 
+    const SAMPLE_ANNOTATION_EVENT_NAME = 'Sample Annotation';
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');

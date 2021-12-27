@@ -132,7 +132,7 @@ class User extends Authenticatable implements MustVerifyEmail
         // Have to exclude Sample Annotation from last added annotation SQL.
         // Better approach was to add any boolean value to check if the annotation is a sample annotation
         // But it's done this way
-        return $this->hasOne('App\Models\Annotation')->where('event_name', '<>', 'Sample Annotation')->orderBy('created_at', 'DESC');
+        return $this->hasOne('App\Models\Annotation')->where('event_name', '<>', Annotation::SAMPLE_ANNOTATION_EVENT_NAME)->orderBy('created_at', 'DESC');
     }
 
     public function annotations()
