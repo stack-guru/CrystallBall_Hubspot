@@ -5,7 +5,7 @@ namespace App\Notifications;
 use Illuminate\Support\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
+use App\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 use NotificationChannels\Twilio\TwilioChannel;
@@ -69,6 +69,8 @@ class WebMonitorDown extends Notification
      */
     public function toMail($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, $this->webMonitor->id, get_class(), 'Mail');
+
         return (new MailMessage)
             ->subject("Website Monitoring: " . $this->webMonitor->name . "  is currently DOWN. ")
             ->greeting('Hi ' . $notifiable->name . ',')
@@ -80,6 +82,8 @@ class WebMonitorDown extends Notification
 
     public function toPushNotification($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, $this->webMonitor->id, get_class(), 'PushNotification');
+
         return PusherMessage::create()
             ->platform('web')
             ->web()
@@ -91,6 +95,8 @@ class WebMonitorDown extends Notification
 
     public function toTwilio($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, $this->webMonitor->id, get_class(), 'Twilio');
+
         return (new TwilioSmsMessage())
             ->content("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is currently DOWN. You should check the issue right away! [ERROR]\nEvent timestamp: " . Carbon::now());
     }

@@ -4,7 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
+use App\Notifications\Notification;
 
 class HolidayTomorrow extends Notification
 {
@@ -67,7 +67,8 @@ class HolidayTomorrow extends Notification
             $mailMessage->line('Learn more about this Holiday <a href="' . $this->holiday->url . '">HERE</a>.');
         }
 
+        $this->logNotificationTrigger($notifiable->id, $this->holiday->id, get_class(), 'Mail');
+
         return $mailMessage;
     }
-
 }

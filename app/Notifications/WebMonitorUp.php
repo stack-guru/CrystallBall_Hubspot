@@ -6,7 +6,7 @@ use Illuminate\Support\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
+use App\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 use NotificationChannels\Twilio\TwilioChannel;
@@ -70,6 +70,8 @@ class WebMonitorUp extends Notification
      */
     public function toMail($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, $this->webMonitor->id, get_class(), 'Mail');
+
         return (new MailMessage)
             ->subject("Website Monitoring: " . $this->webMonitor->name . "  is back UP")
             ->greeting('Hi ' . $notifiable->name . ',')
@@ -79,6 +81,8 @@ class WebMonitorUp extends Notification
 
     public function toPushNotification($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, $this->webMonitor->id, get_class(), 'PushNotification');
+
         return PusherMessage::create()
             ->platform('web')
             ->web()
@@ -90,6 +94,8 @@ class WebMonitorUp extends Notification
 
     public function toTwilio($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, $this->webMonitor->id, get_class(), 'Twilio');
+
         return (new TwilioSmsMessage())
             ->content("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is back UP (It was down for " . Carbon::now()->diffForHumans($this->webMonitor->updated_at, CarbonInterface::DIFF_ABSOLUTE) . ").\nEvent timestamp: " . Carbon::now());
     }

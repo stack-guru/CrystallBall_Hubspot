@@ -4,7 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
+use App\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 
@@ -62,6 +62,8 @@ class OpenWeatherMapAlert extends Notification
      */
     public function toMail($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, $this->openWeatherMapAlert->id, get_class(), 'Mail');
+
         return (new MailMessage)
             ->subject("Weather Alert in: " . $this->openWeatherMapAlert->openWeatherMapCity->name)
             ->greeting('Hi ' . $notifiable->name . ',')
@@ -70,6 +72,8 @@ class OpenWeatherMapAlert extends Notification
 
     public function toPushNotification($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, $this->openWeatherMapAlert->id, get_class(), 'PushNotification');
+
         return PusherMessage::create()
             ->platform('web')
             ->web()
@@ -77,5 +81,4 @@ class OpenWeatherMapAlert extends Notification
             ->title("We detected a new Weather Alert: " . $this->openWeatherMapAlert->event . " in " . $this->openWeatherMapAlert->openWeatherMapCity->name . " at " . $this->openWeatherMapAlert->alert_date . ".")
             ->body("");
     }
-
 }

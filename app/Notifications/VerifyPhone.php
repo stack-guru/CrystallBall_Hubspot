@@ -69,5 +69,4 @@ class VerifyPhone extends Notification
         $notifiable->save();
         return $phoneVerificationCode;
     }
-
 }

@@ -4,7 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
+use App\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 
@@ -60,6 +60,8 @@ class AnnotationCreatedThroughAPI extends Notification
      */
     public function toMail($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, null, get_class(), 'Mail');
+
         return (new MailMessage)
             ->subject("New Annotation for [API_KEY_NAME]")
             ->greeting('Hi ' . $notifiable->name . ',')
@@ -68,6 +70,8 @@ class AnnotationCreatedThroughAPI extends Notification
 
     public function toPushNotification($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, null, get_class(), 'PushNotification');
+
         return PusherMessage::create()
             ->platform('web')
             ->web()
@@ -75,5 +79,4 @@ class AnnotationCreatedThroughAPI extends Notification
             ->title("A new annotation was received from the API KEY: [API_KEY_NAME]")
             ->body("");
     }
-
 }

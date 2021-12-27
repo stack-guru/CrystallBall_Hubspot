@@ -4,7 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
+use App\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 
@@ -73,11 +73,16 @@ class HolidayEvent extends Notification
             $mailMessage->line('Learn more about this Holiday <a href="' . $this->holiday->url . '">HERE</a>.');
         }
 
+        $this->logNotificationTrigger($notifiable->id, $this->holiday->id, get_class(), 'Mail');
+
         return $mailMessage;
     }
 
     public function toPushNotification($notifiable)
     {
+
+        $this->logNotificationTrigger($notifiable->id, $this->holiday->id, get_class(), 'PushNotification');
+
         return PusherMessage::create()
             ->platform('web')
             ->web()
@@ -85,5 +90,4 @@ class HolidayEvent extends Notification
             ->title("Holidays Notification.")
             ->body("Today is " . $this->holiday->event_name . ".");
     }
-
 }

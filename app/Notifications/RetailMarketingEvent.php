@@ -4,7 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
+use App\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 
@@ -62,6 +62,8 @@ class RetailMarketingEvent extends Notification
      */
     public function toMail($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, $this->retailMarketing->id, get_class(), 'Mail');
+
         return (new MailMessage)
             ->subject("Retail Marketing Day (Today): " . $this->retailMarketing->event_name)
             ->greeting('Hi ' . $notifiable->name . ',')
@@ -72,6 +74,8 @@ class RetailMarketingEvent extends Notification
 
     public function toPushNotification($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, $this->retailMarketing->id, get_class(), 'PushNotification');
+
         return PusherMessage::create()
             ->platform('web')
             ->web()
@@ -80,5 +84,4 @@ class RetailMarketingEvent extends Notification
             ->title("Retail Marketing Dates Notification.")
             ->body("Today is " . $this->retailMarketing->event_name . ".");
     }
-
 }

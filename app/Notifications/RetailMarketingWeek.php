@@ -4,9 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
-use NotificationChannels\PusherPushNotifications\PusherChannel;
-use NotificationChannels\PusherPushNotifications\PusherMessage;
+use App\Notifications\Notification;
 
 class RetailMarketingWeek extends Notification
 {
@@ -58,6 +56,8 @@ class RetailMarketingWeek extends Notification
      */
     public function toMail($notifiable)
     {
+        $this->logNotificationTrigger($notifiable->id, $this->retailMarketing->id, get_class(), 'Mail');
+
         return (new MailMessage)
             ->subject("Retail Marketing Day (in 7 days): " . $this->retailMarketing->event_name)
             ->greeting('Hi ' . $notifiable->name . ',')
@@ -65,6 +65,4 @@ class RetailMarketingWeek extends Notification
             ->line('Get the most of it by doing the proper adaptations on your site or sending an email.')
             ->line('Check out our email templates <a href="https://www.crystalballinsight.com/email-templates-retail-marketing-dates">HERE</a>, feel free to use them ;)');
     }
-
-
 }
