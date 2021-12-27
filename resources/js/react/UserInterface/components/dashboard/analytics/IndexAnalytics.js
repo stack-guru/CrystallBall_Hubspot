@@ -228,7 +228,7 @@ export default class IndexAnalytics extends Component {
     }
 
     fetchAnnotationsMetricsDimensions(gaPropertyId) {
-        HttpClient.get(`/dashboard/analytics/annotations-metrics-dimensions?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+        HttpClient.get(`/dashboard/analytics/annotations-metrics-dimensions?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
             .then(response => {
                 this.setState({ isBusy: false, annotations: response.data.annotations });
             }, (err) => {
