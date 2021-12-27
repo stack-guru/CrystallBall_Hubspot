@@ -3,6 +3,7 @@ import { Redirect } from 'react-router';
 import PhoneVerificationModal from '../../helpers/PhoneVerificationModal';
 import HttpClient from "../../utils/HttpClient";
 import ChangePhoneModal from '../../helpers/ChangePhoneModal';
+import { getCompanyName } from '../../helpers/CommonFunctions';
 
 export default class IndexNotificationSettings extends Component {
 
@@ -61,7 +62,7 @@ export default class IndexNotificationSettings extends Component {
                     .catch((e) => {
                         console.error(e);
                         if (e.name == "NotAllowedError") {
-                            swal("Browser Notifications", "You need to allow push notifications inorder to receive browser notifcations from GAannotations.", "warning");
+                            swal("Browser Notifications", "You need to allow push notifications inorder to receive browser notifcations from " + getCompanyName() + ".", "warning");
                         }
                     });
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Tour from 'reactour'
 import { Redirect } from "react-router-dom";
 import HttpClient from "../utils/HttpClient";
+import { getCompanyName } from './CommonFunctions';
 
 const steps = [
     {
@@ -18,7 +19,7 @@ const steps = [
     {
         position: 'right',
         selector: '#google-alerts-data-source-section',
-        content: <p><strong>News Alerts</strong> Is a content change detection on the web. GAannotations add annotations that match the user's search terms, such as web pages, newspaper articles, blogs, or scientific research. Add keywords like https://www.your-domain.com/, Company Name. The system will search for news once a day at midnight. Annotations for News Alerts will start showing after 48 hours the automation is activated.</p>,
+        content: <p><strong>News Alerts</strong> Is a content change detection on the web. { getCompanyName() } add annotations that match the user's search terms, such as web pages, newspaper articles, blogs, or scientific research. Add keywords like https://www.your-domain.com/, Company Name. The system will search for news once a day at midnight. Annotations for News Alerts will start showing after 48 hours the automation is activated.</p>,
         redirectRoute: null
     },
     {
