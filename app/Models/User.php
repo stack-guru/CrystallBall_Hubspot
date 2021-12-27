@@ -371,4 +371,14 @@ class User extends Authenticatable implements MustVerifyEmail
             ->where('created_at', '>=', Carbon::now()->subDays(90))
             ->orderBy('created_at', 'DESC');
     }
+
+    public function notificationLogs()
+    {
+        return $this->hasMany('App\Models\NotificationLog');
+    }
+
+    public function emailNotificationLogs()
+    {
+        return $this->hasMany('App\Models\NotificationLog')->where('notification_channel', 'Mail');
+    }
 }

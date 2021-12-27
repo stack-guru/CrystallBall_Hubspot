@@ -28,6 +28,7 @@ class ReportsController extends Controller
             ->withCount('last90DaysPopupOpenedChromeExtensionLogs')
             ->withCount('last90DaysAnnotationButtonClickedChromeExtensionLogs')
             ->withCount('last90DaysNotificationLogs')
+            ->withCount('emailNotificationLogs')
             ->get();
 
         foreach ($users as $user) {
