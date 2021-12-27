@@ -140,7 +140,7 @@ export default class IndexAnalytics extends Component {
                                     <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
                                     <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
                                     <MediaGraph statistics={this.state.mediaStatistics} />
-                                    <div className=" ml-0 mr-0 mt-4">
+                                    <div className="row ml-0 mr-0 mt-4">
                                         <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                                             <table className="table table-bordered table-hover gaa-hover">
                                                 <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversion Rate</th></tr></thead>
