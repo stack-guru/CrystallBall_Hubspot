@@ -24,7 +24,7 @@
                                     <th>click on a red dot on chart</th>
                                     <th>added an annotation via API</th>
                                     <th>gets an email from Notifications feature</th>
-                                    <th>is on Basic or Pro</th>
+                                    <th>Plan</th>
                                     <th>Active</th>
                                     <th>Added Properties</th>
                                     <th>Any Annotation by property</th>
