@@ -54,6 +54,7 @@ export default function MediaGraph(props) {
                         },
                         title: {
                             display: true,
+                            align: 'start',
                             text: 'Media',
                         },
                     },
