@@ -175,89 +175,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\User');
     }
 
-    public function loginLogs()
-    {
-        return $this->hasMany('App\Models\LoginLog');
-    }
-
-    public function last90DaysLoginLogs()
-    {
-        return $this->hasMany('App\Models\LoginLog')
-            ->where('created_at', '>=', Carbon::now()->subDays(90))
-            ->orderBy('created_at', 'DESC');
-    }
-
-    public function lastLoginLog()
-    {
-        return $this->hasOne('App\Models\LoginLog')->orderBy('created_at', 'DESC');
-    }
-
-    public function last30DaysApiAnnotationCreatedLogs()
-    {
-        return $this->hasMany('App\Models\ApiLog')
-            ->where('event_name', 'AnnotationCreated')
-            ->where('created_at', '>=', Carbon::now()->subDays(30))
-            ->orderBy('created_at', 'DESC');
-    }
-
-    public function last30DaysPopupOpenedChromeExtensionLogs()
-    {
-        return $this->hasMany('App\Models\ChromeExtensionLog')
-            ->where('event_name', 'PopupOpened')
-            ->where('created_at', '>=', Carbon::now()->subDays(30))
-            ->orderBy('created_at', 'DESC');
-    }
-
-    public function last90DaysApiAnnotationCreatedLogs()
-    {
-        return $this->hasMany('App\Models\ApiLog')
-            ->where('event_name', 'AnnotationCreated')
-            ->where('created_at', '>=', Carbon::now()->subDays(90))
-            ->orderBy('created_at', 'DESC');
-    }
-
-    public function last90DaysPopupOpenedChromeExtensionLogs()
-    {
-        return $this->hasMany('App\Models\ChromeExtensionLog')
-            ->where('event_name', 'PopupOpened')
-            ->where('created_at', '>=', Carbon::now()->subDays(90))
-            ->orderBy('created_at', 'DESC');
-    }
-
-    public function last90DaysAnnotationButtonClickedChromeExtensionLogs()
-    {
-        return $this->hasMany('App\Models\ChromeExtensionLog')
-            ->where('event_name', 'AnnotationButtonClicked')
-            ->where('created_at', '>=', Carbon::now()->subDays(90))
-            ->orderBy('created_at', 'DESC');
-    }
-
-    public function lastPopupOpenedChromeExtensionLog()
-    {
-        return $this->hasOne('App\Models\ChromeExtensionLog')
-            ->where('event_name', 'PopupOpened')
-            ->orderBy('created_at', 'DESC');
-    }
-
-    public function AnnotationButtonClickedChromeExtensionLogs()
-    {
-        return $this->hasMany('App\Models\ChromeExtensionLog')
-            ->where('event_name', 'AnnotationButtonClicked')
-            ->orderBy('created_at', 'DESC');
-    }
-
-    public function lastAnnotationButtonClickedChromeExtensionLog()
-    {
-        return $this->hasOne('App\Models\ChromeExtensionLog')
-            ->where('event_name', 'AnnotationButtonClicked')
-            ->orderBy('created_at', 'DESC');
-    }
-
-    public function lastApiLog()
-    {
-        return $this->hasOne('App\Models\ApiLog')->orderBy('created_at', 'DESC');
-    }
-
     public function userGaAccounts()
     {
         return $this->hasMany('App\Models\UserGaAccount');
@@ -363,5 +280,95 @@ class User extends Authenticatable implements MustVerifyEmail
         } else {
             return false;
         }
+    }
+
+    public function lastLoginLog()
+    {
+        return $this->hasOne('App\Models\LoginLog')->orderBy('created_at', 'DESC');
+    }
+
+    public function loginLogs()
+    {
+        return $this->hasMany('App\Models\LoginLog');
+    }
+
+    public function last90DaysLoginLogs()
+    {
+        return $this->hasMany('App\Models\LoginLog')
+            ->where('created_at', '>=', Carbon::now()->subDays(90))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function last30DaysApiAnnotationCreatedLogs()
+    {
+        return $this->hasMany('App\Models\ApiLog')
+            ->where('event_name', 'AnnotationCreated')
+            ->where('created_at', '>=', Carbon::now()->subDays(30))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function last90DaysApiAnnotationCreatedLogs()
+    {
+        return $this->hasMany('App\Models\ApiLog')
+            ->where('event_name', 'AnnotationCreated')
+            ->where('created_at', '>=', Carbon::now()->subDays(90))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function last30DaysPopupOpenedChromeExtensionLogs()
+    {
+        return $this->hasMany('App\Models\ChromeExtensionLog')
+            ->where('event_name', 'PopupOpened')
+            ->where('created_at', '>=', Carbon::now()->subDays(30))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function last90DaysPopupOpenedChromeExtensionLogs()
+    {
+        return $this->hasMany('App\Models\ChromeExtensionLog')
+            ->where('event_name', 'PopupOpened')
+            ->where('created_at', '>=', Carbon::now()->subDays(90))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function lastPopupOpenedChromeExtensionLog()
+    {
+        return $this->hasOne('App\Models\ChromeExtensionLog')
+            ->where('event_name', 'PopupOpened')
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function lastAnnotationButtonClickedChromeExtensionLog()
+    {
+        return $this->hasOne('App\Models\ChromeExtensionLog')
+            ->where('event_name', 'AnnotationButtonClicked')
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function AnnotationButtonClickedChromeExtensionLogs()
+    {
+        return $this->hasMany('App\Models\ChromeExtensionLog')
+            ->where('event_name', 'AnnotationButtonClicked')
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function last90DaysAnnotationButtonClickedChromeExtensionLogs()
+    {
+        return $this->hasMany('App\Models\ChromeExtensionLog')
+            ->where('event_name', 'AnnotationButtonClicked')
+            ->where('created_at', '>=', Carbon::now()->subDays(90))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function lastApiLog()
+    {
+        return $this->hasOne('App\Models\ApiLog')->orderBy('created_at', 'DESC');
+    }
+
+    public function last90DaysNotificationLogs()
+    {
+        return $this->hasMany('App\Models\NotificationLog')
+            ->where('created_at', '>=', Carbon::now()->subDays(90))
+            ->orderBy('created_at', 'DESC');
     }
 }
