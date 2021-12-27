@@ -18,8 +18,8 @@ export default function AnnotationsTable(props) {
                                         <button className="btn btn-link btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a className="dropdown-item" onClick={() => { props.satisticsPaddingDaysCallback(0); }}>Event date</a>
-                                            <a className="dropdown-item" onClick={() => { props.satisticsPaddingDaysCallback(3); }}>3 days after the event (this count the event day too)</a>
-                                            <a className="dropdown-item" onClick={() => { props.satisticsPaddingDaysCallback(7); }}>7 days after the event (this count the event day too)</a>
+                                            <a className="dropdown-item" onClick={() => { props.satisticsPaddingDaysCallback(3); }}>3 days after the event</a>
+                                            <a className="dropdown-item" onClick={() => { props.satisticsPaddingDaysCallback(7); }}>7 days after the event</a>
                                         </div>
                                     </div>
                                 </th>
