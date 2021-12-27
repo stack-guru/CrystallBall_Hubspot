@@ -78,7 +78,7 @@
                                     <td>@if(is_null($user->last_data_studio_used_at))No @else Yes @endif</td>
                                     <td>{{ $user->manual_annotations_count }}</td>
                                     <td>{{ $user->total_annotations_count }}</td>
-                                    <td>{{ @$user->last_annotation->created_at }}</td>
+                                    <td>{{ @$user->lastAnnotation->created_at }}</td>
                                     <td>
                                         @if($user->is_ds_holidays_enabled) Holiday<br /> @endif
                                         @if($user->is_ds_google_algorithm_updates_enabled) Google Algorithm Updates<br /> @endif
