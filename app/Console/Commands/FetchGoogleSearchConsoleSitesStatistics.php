@@ -42,9 +42,9 @@ class FetchGoogleSearchConsoleSitesStatistics extends Command
     {
         if ($this->option('from-past')) {
             $startDate = '2021-01-01';
-            $endDate = Carbon::yesterday()->format('Y-m-d');
+            $endDate = Carbon::now()->subDays(2)->format('Y-m-d');
         } else {
-            $startDate = $endDate = Carbon::yesterday()->format('Y-m-d');
+            $startDate = $endDate = Carbon::now()->subDays(2)->format('Y-m-d');
         }
 
         $googleSearchConsoleSites = GoogleSearchConsoleSite::with('googleAccount')->get();
