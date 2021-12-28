@@ -36,6 +36,22 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 let gaps = response.data.google_analytics_properties;
                 let options = gaps.map(gap => { return { value: gap.id, label: gap.name + ' ' + gap.google_analytics_account.name }; });
                 callback(options);
+            }, (err) => {
+                if (err.response.status == 400) {
+                    swal({
+                        title: "Google Account not connected",
+                        text: "To assign an annotation to a property, first, you need to connect your Google Analytics accounts.",
+                        icon: "info",
+                        buttons: ['Cancel', 'Connect'],
+                        dangerMode: false,
+                    }).then(value => {
+                        if (value) {
+                            window.location = "/settings/google-account/create";
+                        }
+                    })
+                }
+            }).catch(err => {
+                this.setState({ errors: err, isLoading: false });
             });
     }
 
