@@ -29,10 +29,12 @@ export default class IndexSearchConsole extends Component {
             startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
             endDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
             google_search_console_site_id: '*',
+            statisticsPaddingDays: 7,
             errors: undefined
         };
 
         this.fetchStatistics = this.fetchStatistics.bind(this);
+        this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
     }
 
     render() {
@@ -135,7 +137,7 @@ export default class IndexSearchConsole extends Component {
                             this.state.clicksImpressionsDaysStatistics.length ?
                                 <React.Fragment>
                                     <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
-                                    <AnnotationsTable user={this.props.user} annotations={this.state.annotations} />
+                                    <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
                                     <div className="row ml-0 mr-0 mt-4">
                                         <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                                             <table className="table table-bordered table-hover gaa-hover">
@@ -236,9 +238,17 @@ export default class IndexSearchConsole extends Component {
     fetchStatistics(gaPropertyId) {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
-            HttpClient.get(`/dashboard/search-console/clicks-impressions-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}`)
+            HttpClient.get(`/dashboard/search-console/clicks-impressions-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
                 .then(response => {
                     this.setState({ isBusy: false, clicksImpressionsDaysStatistics: response.data.statistics });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+            HttpClient.get(`/dashboard/search-console/annotations-dates?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
+                .then(response => {
+                    this.setState({ isBusy: false, annotations: response.data.annotations });
                 }, (err) => {
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
@@ -284,14 +294,15 @@ export default class IndexSearchConsole extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
-            HttpClient.get(`/dashboard/search-console/annotations-dates?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}`)
-                .then(response => {
-                    this.setState({ isBusy: false, annotations: response.data.annotations });
-                }, (err) => {
-                    this.setState({ isBusy: false, errors: (err.response).data });
-                }).catch(err => {
-                    this.setState({ isBusy: false, errors: err });
-                });
         }
+    }
+
+    changeStatisticsPaddingDays(statisticsPaddingDays) {
+        this.setState(
+            { statisticsPaddingDays: statisticsPaddingDays },
+            () => {
+                this.fetchStatistics(this.state.google_search_console_site_id);
+            }
+        );
     }
 }
