@@ -67,7 +67,7 @@ class Sidebar extends React.Component {
                 </div>
                 <ul className="sidebar-menu scrollable pos-r ">
                     <li className="nav-item gaa-menu-item">
-                        <Link to="/annotation" >
+                        <Link to="/dashboard/analytics" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
                                     <img src="/images/svg/google-analytics-icon.svg" width="25px" height="25px" />
@@ -77,7 +77,7 @@ class Sidebar extends React.Component {
                         </Link>
                     </li>
                     <li className="nav-item gaa-menu-item">
-                        <Link to="/annotation" >
+                        <Link to="/dashboard/search-console" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
                                     <img src="/images/svg/google-search-console-icon.svg" width="25px" height="25px" />
