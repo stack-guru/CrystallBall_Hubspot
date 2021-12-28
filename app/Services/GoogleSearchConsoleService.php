@@ -58,13 +58,22 @@ class GoogleSearchConsoleService extends GoogleAPIService
         }
 
         $respJson = $response->json();
-        if ($respJson == null) return false;
+        if ($respJson == null) {
+            Log::channel('google')->error("Received null json response from server.",  ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url, 'response' => $response]);
+            return false;
+        }
         if (!array_key_exists('rows', $respJson)) {
-            if (array_key_exists('error', $respJson)) Log::channel('google')->error("Error fetching Google Search Console Site: ", ['message' => $response->json()['error']['message']]);
+            if (array_key_exists('error', $respJson)) {
+                Log::channel('google')->error("Error fetching Google Search Console Site Statistics: ", ['message' => $response->json()['error']['message']]);
+            } else if (array_key_exists('message', $respJson)) {
+                Log::channel('google')->error("Error fetching Google Search Console Site Statistics: ", ['message' => $response->json()['message']]);
+            } else {
+                Log::channel('google')->error("Error fetching Google Search Console Site Statistics: ", ['message' => $response->json()]);
+            }
             return false;
         }
 
-        Log::channel('google')->info("Fetched Google Search Console Sites: ", ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url]);
+        Log::channel('google')->info("Fetched Google Search Console Site Statistics: ", ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url]);
         return array_map(function ($r) {
             return [
                 'values' => $r['keys'],
@@ -89,7 +98,7 @@ class GoogleSearchConsoleService extends GoogleAPIService
                 'searchAppearance',
             ],
         ];
-        Log::channel('google')->info("Fetching Statistics for Site: ", ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url]);
+        Log::channel('google')->info("Fetching Search Appearance for Site: ", ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url]);
         $response = $this->executeRequestWithRefresh($googleAccount, 'post', $url, $jsonBody, $googleAccount->token);
 
         if ($response == false) {
@@ -98,13 +107,22 @@ class GoogleSearchConsoleService extends GoogleAPIService
         }
 
         $respJson = $response->json();
-        if ($respJson == null) return false;
+        if ($respJson == null) {
+            Log::channel('google')->error("Received null json response from server.",  ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url, 'response' => $response]);
+            return false;
+        }
         if (!array_key_exists('rows', $respJson)) {
-            if (array_key_exists('error', $respJson)) Log::channel('google')->error("Error fetching Google Search Console Site: ", ['message' => $response->json()['error']['message']]);
+            if (array_key_exists('error', $respJson)) {
+                Log::channel('google')->error("Error fetching search appearance for Google Search Console Site: ", ['message' => $response->json()['error']['message']]);
+            } else if (array_key_exists('message', $respJson)) {
+                Log::channel('google')->error("Error fetching search appearance for Google Search Console Site: ", ['message' => $response->json()['message']]);
+            } else {
+                Log::channel('google')->error("Error fetching search appearance for Google Search Console Site: ", ['message' => $response->json()]);
+            }
             return false;
         }
 
-        Log::channel('google')->info("Fetched Google Search Console Sites: ", ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url]);
+        Log::channel('google')->info("Fetched Google Search Console Site Search Appearance: ", ['GoogleSearchConsoleSite' => $googleSearchConsoleSite->site_url]);
         return array_map(function ($r) {
             return [
                 'values' => $r['keys'],
