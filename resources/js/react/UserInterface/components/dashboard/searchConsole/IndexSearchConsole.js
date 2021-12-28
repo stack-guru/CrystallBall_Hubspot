@@ -44,16 +44,16 @@ export default class IndexSearchConsole extends Component {
         return <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
             <section className="ftco-section" id="inputs">
                 <div className="container-xl p-0">
-                    <div className="row ml-0 mr-0 mb-4">
-                        <div className="col-md-12 text-right">
-                            <h6 className="gaa-text-color">This page is on Beta</h6>
-                        </div>
-                    </div>
                     <div className="row ml-0 mr-0 mb-1">
                         <div className="col-md-6 pl-0">
                             <h2 className="heading-section gaa-title">Search Console</h2>
                         </div>
                         <div className="col-md-6 text-right">
+                            <h6 className="gaa-text-color">This page is on Beta</h6>
+                        </div>
+                    </div>
+                    <div className="row ml-0 mr-0 mb-4">
+                        <div className="col-md-12 text-right">
                             <button className="btn gaa-btn-primary btn-sm" onClick={() => {
                                 html2canvas(document.getElementById("dashboard-index-container")).then(function (canvas) {
                                     const link = document.createElement("a");
