@@ -10,8 +10,8 @@ export default function MediaGraph(props) {
     return <div className="row ml-0 mr-0 mt-4">
         <div className="col-12">
             <Bar
-                height={'100px'}
-                width={'100%'}
+                height='100px'
+                width='100%'
                 data={{
                     labels: dataLabels,
                     datasets: [
@@ -47,6 +47,8 @@ export default function MediaGraph(props) {
                         },
                     },
                     responsive: true,
+                    maintainAspectRatio: true,
+                    aspectRatio: 3,
                     plugins: {
                         legend: {
                             display: true,
