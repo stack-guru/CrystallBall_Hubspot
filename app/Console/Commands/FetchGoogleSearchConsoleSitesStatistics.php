@@ -48,9 +48,11 @@ class FetchGoogleSearchConsoleSitesStatistics extends Command
         }
 
         $googleSearchConsoleSites = GoogleSearchConsoleSite::with('googleAccount')->get();
+        $this->info(count($googleSearchConsoleSites) . " search console sites fetched for processing.");
         foreach ($googleSearchConsoleSites as $googleSearchConsoleSite) {
             FetchGSCSStatisticsJob::dispatch($googleSearchConsoleSite, $startDate, $endDate);
         }
+        $this->info("Job to fetch statistics queued.");
 
         return 0;
     }
