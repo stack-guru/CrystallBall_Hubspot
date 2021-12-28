@@ -70,6 +70,26 @@ class Sidebar extends React.Component {
                         <Link to="/annotation" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
+                                    <img src="/images/svg/google-analytics-icon.svg" width="25px" height="25px" />
+                                </span>
+                                <span className="title">Analytics</span>
+                            </span>
+                        </Link>
+                    </li>
+                    <li className="nav-item gaa-menu-item">
+                        <Link to="/annotation" >
+                            <span className="sidebar-link" >
+                                <span className="icon-holder">
+                                    <img src="/images/svg/google-search-console-icon.svg" width="25px" height="25px" />
+                                </span>
+                                <span className="title">Search Console</span>
+                            </span>
+                        </Link>
+                    </li>
+                    <li className="nav-item gaa-menu-item">
+                        <Link to="/annotation" >
+                            <span className="sidebar-link" >
+                                <span className="icon-holder">
                                     <img src="/images/svg/annotation-icon.svg" width="25px" height="25px" />
                                 </span>
                                 <span className="title">Annotations</span>
