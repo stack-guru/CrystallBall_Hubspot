@@ -42,11 +42,10 @@ class FetchGoogleSearchConsoleSitesStatistics extends Command
     {
         if ($this->option('from-past')) {
             $startDate = '2021-01-01';
-            $endDate = Carbon::now()->format('Y-m-d');
         } else {
             $startDate = Carbon::now()->subDays(3)->format('Y-m-d');
-            $endDate = Carbon::now()->format('Y-m-d');
         }
+        $endDate = Carbon::now()->format('Y-m-d');
 
         $googleSearchConsoleSites = GoogleSearchConsoleSite::with('googleAccount')->get();
         $this->info(count($googleSearchConsoleSites) . " search console sites fetched for processing.");

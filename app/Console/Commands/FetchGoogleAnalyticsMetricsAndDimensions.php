@@ -41,12 +41,13 @@ class FetchGoogleAnalyticsMetricsAndDimensions extends Command
     public function handle()
     {
         if ($this->option('from-past')) {
-            // Don't reduce startDate below 2005-01-01 as it will result in an error. "Date <your reduced date> precedes Google Analytics launch date 2005-01-01"
+            // Don't reduce startDate below 2005-01-01 as it will result in an error.
+            // "Date <your reduced date> precedes Google Analytics launch date 2005-01-01"
             $startDate = '2021-01-01';
-            $endDate = Carbon::yesterday()->format('Y-m-d');
         } else {
-            $startDate = $endDate = Carbon::yesterday()->format('Y-m-d');
+            $startDate = Carbon::now()->subDays(3)->format('Y-m-d');
         }
+        $endDate = Carbon::now()->format('Y-m-d');
 
         $googleAnalyticsProperties = GoogleAnalyticsProperty::with('googleAccount')->get();
         foreach ($googleAnalyticsProperties as $googleAnalyticsProperty) {
