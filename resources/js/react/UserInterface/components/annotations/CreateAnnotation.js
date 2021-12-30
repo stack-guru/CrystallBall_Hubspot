@@ -6,6 +6,7 @@ import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
 
 import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
+import { loadFormFromLocalStorage, saveFormToLocalStorage, removeFormFromLocalStorage } from '../../helpers/CommonFunctions';
 
 export default class CreateAnnotation extends React.Component {
 
@@ -31,6 +32,10 @@ export default class CreateAnnotation extends React.Component {
         this.setDefaultState = this.setDefaultState.bind(this)
     }
 
+    componentDidMount() {
+        setTimeout(() => { loadFormFromLocalStorage(document.getElementById("annotation-create-form")); }, 500);
+    }
+
     setDefaultState() {
         this.setState({
             annotation: {
@@ -51,7 +56,10 @@ export default class CreateAnnotation extends React.Component {
     }
 
     changeHandler(e) {
-        this.setState({ isDirty: true, annotation: { ...this.state.annotation, [e.target.name]: e.target.value } });
+        this.setState({ isDirty: true, annotation: { ...this.state.annotation, [e.target.name]: e.target.value } },
+            () => {
+                setTimeout(() => { saveFormToLocalStorage(document.getElementById("annotation-create-form")); }, 500);
+            });
     }
 
     submitHandler(e) {
@@ -67,6 +75,7 @@ export default class CreateAnnotation extends React.Component {
 
             HttpClient.post('/annotation', fd)
                 .then(response => {
+                    removeFormFromLocalStorage(document.getElementById("annotation-create-form"));
                     toast.success("Annotation added.");
                     this.setDefaultState();
                 }, (err) => {
@@ -141,7 +150,7 @@ export default class CreateAnnotation extends React.Component {
                             </div>
                         </div>
 
-                        <form onSubmit={this.submitHandler}>
+                        <form onSubmit={this.submitHandler} id="annotation-create-form">
                             <div className="row">
 
                                 <div className="col-lg-3 col-sm-4">
@@ -221,9 +230,9 @@ export default class CreateAnnotation extends React.Component {
                                             components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
                                             multiple
                                             onFocus={(e) => {
-                                                if(this.props.currentPricePlan.ga_account_count == 1)swal("Upgrade to Pro Plan!", "Google Analytics Properties are not available in this plan.", "warning");
+                                                if (this.props.currentPricePlan.ga_account_count == 1) swal("Upgrade to Pro Plan!", "Google Analytics Properties are not available in this plan.", "warning");
                                             }}
-                                            />
+                                        />
 
                                     </div>
                                 </div>
