@@ -33,7 +33,10 @@ export default class CreateAnnotation extends React.Component {
     }
 
     componentDidMount() {
-        setTimeout(() => { loadFormFromLocalStorage(document.getElementById("annotation-create-form")); }, 500);
+        document.title = 'Create Annotation'
+        setTimeout(() => {
+            console.log(loadFormFromLocalStorage(document.getElementById("annotation-create-form")));
+        }, 1000);
     }
 
     setDefaultState() {
@@ -121,10 +124,6 @@ export default class CreateAnnotation extends React.Component {
         });
 
         return isValid;
-    }
-
-    componentDidMount() {
-        document.title = 'Create Annotation'
     }
 
     render() {
