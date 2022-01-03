@@ -6,7 +6,7 @@ import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
 
 import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
-import { loadFormFromLocalStorage, saveFormToLocalStorage, removeFormFromLocalStorage } from '../../helpers/CommonFunctions';
+import { loadStateFromLocalStorage, saveStateToLocalStorage, removeStateFromLocalStorage } from '../../helpers/CommonFunctions';
 
 export default class CreateAnnotation extends React.Component {
 
@@ -35,7 +35,7 @@ export default class CreateAnnotation extends React.Component {
     componentDidMount() {
         document.title = 'Create Annotation'
         setTimeout(() => {
-            console.log(loadFormFromLocalStorage(document.getElementById("annotation-create-form")));
+            this.setState(loadStateFromLocalStorage("CreateAnnotation"));
         }, 1000);
     }
 
@@ -61,7 +61,9 @@ export default class CreateAnnotation extends React.Component {
     changeHandler(e) {
         this.setState({ isDirty: true, annotation: { ...this.state.annotation, [e.target.name]: e.target.value } },
             () => {
-                setTimeout(() => { saveFormToLocalStorage(document.getElementById("annotation-create-form")); }, 500);
+                setTimeout(() => {
+                    saveStateToLocalStorage("CreateAnnotation", { annotation: this.state.annotation });
+                }, 500);
             });
     }
 
@@ -78,7 +80,7 @@ export default class CreateAnnotation extends React.Component {
 
             HttpClient.post('/annotation', fd)
                 .then(response => {
-                    removeFormFromLocalStorage(document.getElementById("annotation-create-form"));
+                    removeStateFromLocalStorage("CreateAnnotation");
                     toast.success("Annotation added.");
                     this.setDefaultState();
                 }, (err) => {

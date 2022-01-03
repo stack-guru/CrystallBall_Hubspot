@@ -58,41 +58,32 @@ export function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export function saveFormToLocalStorage(form) {
-    if (form.getAttribute('id') == "") {
-        console.error("Please add a unique form id to the form before using draft function.");
+export function saveStateToLocalStorage(componentName, state) {
+    if (componentName == "") {
+        console.error("Please add parameter for component name before using draft function.");
         return false;
     }
 
-    let draftObject = {};
-    form.querySelectorAll('input').forEach(function (element) {
-        draftObject[element.name] = { name: element.name, type: element.type, value: element.value };
-    });
-
-    localStorage.setItem(md5(form.getAttribute('id')), JSON.stringify(draftObject));
+    localStorage.setItem(md5(componentName + "-state"), JSON.stringify(state));
     return true;
 }
 
-export function loadFormFromLocalStorage(form) {
-    if (form.getAttribute('id') == "") {
-        console.error("Please add a unique form id to the form before using draft function.");
+export function loadStateFromLocalStorage(componentName) {
+    if (componentName == "") {
+        console.error("Please add parameter for component name before using draft function.");
         return false;
     }
-    let draftObject = JSON.parse(localStorage.getItem(md5(form.getAttribute('id'))));
-    form.querySelectorAll('input').forEach(function (element) {
-        if (element.name in draftObject)
-            element.setAttribute("value", draftObject[element.name].value);
-    });
+    let state = JSON.parse(localStorage.getItem(md5(componentName + "-state")));
 
-    return true;
+    return state;
 }
 
-export function removeFormFromLocalStorage(form) {
-    if (form.getAttribute('id') == "") {
-        console.error("Please add a unique form id to the form before using draft function.");
+export function removeStateFromLocalStorage(componentName) {
+    if (componentName == "") {
+        console.error("Please add parameter for component name before using draft function.");
         return false;
     }
 
-    localStorage.removeItem(md5(form.getAttribute('id')));
+    localStorage.removeItem(md5(componentName + "-state"));
     return true;
 }
