@@ -7,6 +7,7 @@ use App\Models\PricePlan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class UserController extends Controller
 {
@@ -18,9 +19,17 @@ class UserController extends Controller
     public function index()
     {
 
-        $data['users'] = User::with('pricePlan')->orderBy('created_at', 'DESC')->get();
+        $data['users'] = User::with([
+            'pricePlan',
+            'lastPopupOpenedChromeExtensionLog',
+            'lastAnnotationButtonClickedChromeExtensionLog',
+        ])
+            ->withCount('last90DaysApiAnnotationCreatedLogs')
+            ->withCount('last90DaysNotificationLogs')
+            ->withCount('last90DaysLoginLogs')
+            ->orderBy('created_at', 'DESC')->get();
 
-        return view('admin/user/index', $data);
+        return view('admin/user/index', $data)->with('last6_months_registration_count', User::where('created_at', '>=', Carbon::now()->subMonths(6)->format('Y-m-d'))->count());
     }
 
     /**

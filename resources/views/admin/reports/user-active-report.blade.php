@@ -59,9 +59,6 @@
                                         || $user->last90_days_login_logs_count)
                                         Yes
                                         @else
-                                        @php
-
-                                        @endphp
                                         No
                                         @endif
                                     </td>
