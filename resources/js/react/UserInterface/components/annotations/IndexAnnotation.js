@@ -202,7 +202,7 @@ class IndexAnnotations extends React.Component {
                                             <tbody id="annotation-table-body">
                                                 {
                                                     this.state.isLoading ?
-                                                        <tr>
+                                                        <tr key={"blank-row"}>
                                                             <td colSpan="8" className="text-center">
                                                                 <i className="fa fa-spinner fa-spin fa-pulse fa-3x"></i>
                                                             </td>
@@ -233,7 +233,7 @@ class IndexAnnotations extends React.Component {
                                                             if (diffTime > 0) { wasLastAnnotationInFuture = true; } else { wasLastAnnotationInFuture = false; }
 
                                                             return (
-                                                                <tr data-diff-in-milliseconds={diffTime} id={rowId}>
+                                                                <tr data-diff-in-milliseconds={diffTime} id={rowId} key={anno.category + anno.event_name + anno.description + anno.url + anno.id}>
                                                                     <td style={{ borderLeft: `${borderLeftColor} solid 20px` }}>{anno.category}</td>
                                                                     <td>{anno.event_name}</td>
                                                                     <td>

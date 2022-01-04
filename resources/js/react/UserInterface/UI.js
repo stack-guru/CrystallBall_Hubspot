@@ -16,9 +16,11 @@ import Main from './Main';
 function UI() {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route component={Main} />
-      </Switch>
+      <React.StrictMode>
+        <Switch>
+          <Route component={Main} />
+        </Switch>
+      </React.StrictMode>
       <ToastContainer />
     </BrowserRouter>
   );

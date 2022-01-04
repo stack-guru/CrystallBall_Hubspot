@@ -76,7 +76,6 @@ class Main extends React.Component {
                     <div className="header navbar">
                         <Header user={this.state.user} />
                     </div>
-
                     <main className="main-content bgc-grey-100">
                         <Switch>
                             <Route exact path="/dashboard/analytics" refresh={true}>
@@ -150,11 +149,9 @@ class Main extends React.Component {
                                 render={(routeParams) => <EditUser routeParams={routeParams} />}
                             />
                         </Switch>
-
                     </main>
                     <Footer />
                 </div>
-
                 <StartupChecklist lastStartupConfigurationShowedAt={this.state.user.startup_configuration_showed_at} />
             </React.Fragment>
 
