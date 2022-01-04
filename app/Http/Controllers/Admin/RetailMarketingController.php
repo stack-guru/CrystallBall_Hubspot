@@ -7,6 +7,8 @@ use App\Http\Requests\RetailMarketingRequest;
 use App\Models\RetailMarketing;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class RetailMarketingController extends Controller
 {
@@ -18,8 +20,8 @@ class RetailMarketingController extends Controller
     public function index()
     {
         //
-        $data['rms']=RetailMarketing::orderBy('created_at','DESC')->get();
-        return view('admin.data-source.retail-marketing.index',$data);
+        $data['rms'] = RetailMarketing::orderBy('created_at', 'DESC')->get();
+        return view('admin.data-source.retail-marketing.index', $data);
     }
 
     /**
@@ -42,10 +44,10 @@ class RetailMarketingController extends Controller
     public function store(RetailMarketingRequest $request)
     {
 
-        $rm =new RetailMarketing;
+        $rm = new RetailMarketing;
         $rm->fill($request->validated());
         $rm->save();
-        return redirect()->route('admin.data-source.index')->with('success','Retail Marketing saved successfully');
+        return redirect()->route('admin.data-source.index')->with('success', 'Retail Marketing saved successfully');
     }
 
     /**
@@ -68,8 +70,8 @@ class RetailMarketingController extends Controller
     public function edit($id)
     {
         //
-        $data['RetailMarketing']=RetailMarketing::find($id);
-        return view('admin.data-source.retail-marketing.edit',$data);
+        $data['RetailMarketing'] = RetailMarketing::find($id);
+        return view('admin.data-source.retail-marketing.edit', $data);
     }
 
     /**
@@ -82,10 +84,10 @@ class RetailMarketingController extends Controller
     public function update(RetailMarketingRequest $request, $id)
     {
         //
-        $rm =RetailMarketing::find($id);
+        $rm = RetailMarketing::find($id);
         $rm->fill($request->validated());
         $rm->save();
-        return redirect()->route('admin.data-source.index')->with('success','Retail Marketing updated successfully');
+        return redirect()->route('admin.data-source.index')->with('success', 'Retail Marketing updated successfully');
     }
 
     /**
@@ -97,9 +99,9 @@ class RetailMarketingController extends Controller
     public function destroy($id)
     {
         //
-        $rm =RetailMarketing::find($id);
+        $rm = RetailMarketing::find($id);
         $rm->delete();
-        return redirect()->route('admin.data-source.index')->with('success','holiday deleted successfully');
+        return redirect()->route('admin.data-source.index')->with('success', 'holiday deleted successfully');
     }
 
 
@@ -109,6 +111,8 @@ class RetailMarketingController extends Controller
             'csv' => 'required|file|mimetypes:text/plain|mimes:txt',
         ]);
 
+        $insertedRowsCount = 0;
+        $foundRowsCount = 0;
         $filepath = $request->file('csv')->getRealPath();
 
         $filecontent = file($filepath);
@@ -128,52 +132,56 @@ class RetailMarketingController extends Controller
 
         $dateColIndex = array_search('show_at', $headers);
 
-        $rows = $row = array();
-        foreach ($filecontent as $ln => $line) {
-            if (strlen($line) < (6 + 7)) {
-                continue;
-            }
-
-            $row = array();
-            $values = str_getcsv($line);
-
-            if ($headers !== $values && count($values) == count($headers)) {
-                try{
-                    $date = Carbon::createFromFormat('Y-m-d', $values[$dateColIndex]);
-                }catch (\Exception $e){
+        try {
+            DB::beginTransaction();
+            $rows = $row = array();
+            foreach ($filecontent as $ln => $line) {
+                $foundRowsCount++;
+                if (strlen($line) < (6 + 7)) {
                     continue;
-                    // return ['message'=>"Please upload file with '2020-12-31' date format given is $values[$i] on line $ln column $i."];
                 }
-                for ($i = 0; $i < count($headers); $i++) {
-                    if ($headers[$i] == 'show_at') {
-                        $row['show_at'] = $values[$i];
-                    } else if ($headers[$i] == 'url') {
-                        $row['url'] = $values[$i];
-                    } else {
-                        $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+
+                $row = array();
+                $values = str_getcsv($line);
+
+                if ($headers !== $values && count($values) == count($headers)) {
+                    try {
+                        $date = Carbon::createFromFormat('Y-m-d', $values[$dateColIndex]);
+                    } catch (\Exception $e) {
+                        continue;
+                        // return ['message'=>"Please upload file with '2020-12-31' date format given is $values[$i] on line $ln column $i."];
                     }
+                    for ($i = 0; $i < count($headers); $i++) {
+                        if ($headers[$i] == 'show_at') {
+                            $row['show_at'] = $values[$i];
+                        } else if ($headers[$i] == 'url') {
+                            $row['url'] = $values[$i];
+                        } else {
+                            $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+                        }
+                    }
+
+                    array_push($rows, $row);
                 }
 
-                array_push($rows, $row);
-
+                if (count($rows) > 1000) {
+                    $insertedRowsCount += count($rows);
+                    RetailMarketing::insert($rows);
+                    $rows = array();
+                }
             }
 
-            if (count($rows) > 1000) {
+            if (count($rows)) {
+                $insertedRowsCount += count($rows);
                 RetailMarketing::insert($rows);
-                $rows = array();
             }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            abort(422, "Error occured while processing your CSV. Please see log for more information.");
         }
 
-        if (count($rows)) {
-            RetailMarketing::insert($rows);
-        }
-
-        return redirect()->back()->with('success', true);
+        return redirect()->back()->with('success', "Found $foundRowsCount row(s) in the CSV file. $insertedRowsCount row(s) added in database.");
     }
-
-
-
-
-
-
 }

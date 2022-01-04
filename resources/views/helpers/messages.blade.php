@@ -18,6 +18,7 @@
     <div class="col-12">
       <div class="alert alert-success">
         <h5><i class="fa fa-check"></i> Done!</h5>
+        <p>{{session('success')}}</p>
       </div>
     </div>
   </div>
