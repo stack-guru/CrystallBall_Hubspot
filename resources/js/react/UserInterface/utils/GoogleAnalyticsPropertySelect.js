@@ -46,6 +46,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                         dangerMode: false,
                     }).then(value => {
                         if (value) {
+                            // Save pathname in this storage without domain name
+                            localStorage.setItem("frontend_redirect_to", window.location.pathname);
                             window.location = "/settings/google-account/create";
                         }
                     })
