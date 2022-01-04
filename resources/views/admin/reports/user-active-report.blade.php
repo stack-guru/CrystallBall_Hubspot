@@ -34,7 +34,6 @@
                                     <th>Total Annotations</th>
                                     <th>Last Annotation added at</th>
                                     <th>Data Sources</th>
-                                    <th>API</th>
                                     <th>Total Logins</th>
                                 </tr>
                             </thead>
@@ -83,10 +82,6 @@
                                         @if($user->is_ds_weather_alerts_enabled) Weather Alerts enabled<br /> @endif
                                         @if($user->is_ds_google_alerts_enabled) Google Alerts enabled<br /> @endif
                                         @if($user->is_ds_web_monitors_enabled) Web Monitors enabled<br /> @endif
-                                    </td>
-                                    <td>
-                                        @if($user->last_generated_api_token_at) Token on:{{$user->last_generated_api_token_at->format('Y-m-d')}}<br /> @endif
-                                        @if($user->last_api_called_at) Call on:{{$user->last_api_called_at->format('Y-m-d')}}<br /> @endif
                                     </td>
                                     <td>{{ $user->login_logs_count }}</td>
                                 </tr>
