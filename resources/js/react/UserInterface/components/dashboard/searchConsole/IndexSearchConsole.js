@@ -10,6 +10,7 @@ import NoDataFoundPage from './subPages/NoDataFoundPage';
 import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
 import ClicksImpressionsDaysGraph from './graphs/clicksImpressionsDaysGraph';
 import html2canvas from 'html2canvas';
+import DeviceClicksImpressionsGraph from './graphs/deviceClicksImpressionsGraph';
 
 export default class IndexSearchConsole extends Component {
     constructor(props) {
@@ -189,21 +190,8 @@ export default class IndexSearchConsole extends Component {
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
-                                            <table className="table table-bordered table-hover gaa-hover">
-                                                <thead><tr><th>Device</th><th>Clicks</th><th>Impressions</th></tr></thead>
-                                                <tbody>
-                                                    {
-                                                        this.state.devicesStatistics.map(dS => {
-                                                            return <tr>
-                                                                <td>{dS.device}</td>
-                                                                <td>{dS.sum_clicks_count}</td>
-                                                                <td>{dS.sum_impressions_count}</td>
-                                                            </tr>
-                                                        })
-                                                    }
-                                                </tbody>
-                                            </table>
+                                        <div className="col-6">
+                                            <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
                                         </div>
                                     </div>
                                     <div className="row ml-0 mr-0 mt-4">

@@ -4,6 +4,7 @@ import { DateRange } from 'react-date-range';
 import HttpClient from '../../../utils/HttpClient';
 import AnnotationsTable from './tables/annotationsTable';
 import MediaGraph from './graphs/mediaGraph';
+import DeviceUsersGraph from './graphs/deviceUsersGraph';
 import GoogleAnalyticsPropertySelect from './utils/GoogleAnalyticsPropertySelect';
 import ErrorAlert from '../../../utils/ErrorAlert';
 import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
@@ -159,18 +160,8 @@ export default class IndexAnalytics extends Component {
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
-                                            <table className="table table-bordered table-hover gaa-hover">
-                                                <thead><tr><th>Device</th><th>Users</th><th>Conversion Rate</th></tr></thead>
-                                                <tbody>
-                                                    {
-                                                        this.state.deviceCategoriesStatistics.map(dS => {
-                                                            const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0;
-                                                            return <tr><td>{dS.device_category}</td><td>{dS.sum_users_count}</td><td>{conversionRate}</td></tr>
-                                                        })
-                                                    }
-                                                </tbody>
-                                            </table>
+                                        <div className="col-6">
+                                            <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
                                         </div>
                                     </div>
                                 </React.Fragment>
