@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DateRange } from 'react-date-range';
+import { DateRangePicker } from 'react-date-range';
 
 import HttpClient from '../../../utils/HttpClient';
 import AnnotationsTable from './tables/annotationsTable';
@@ -93,7 +93,7 @@ export default class IndexAnalytics extends Component {
                             <div style={{ maxWidth: '50%', width: '50%' }} >
                                 {
                                     this.state.showDateRangeSelect ?
-                                        <DateRange
+                                        <DateRangePicker
                                             style={{ 'position': 'absolute', backgroundColor: 'white', zIndex: 9999999999999 }}
                                             editableDateInputs={true}
                                             moveRangeOnFirstSelection={false}
