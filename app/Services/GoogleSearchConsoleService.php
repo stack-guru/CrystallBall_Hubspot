@@ -35,7 +35,7 @@ class GoogleSearchConsoleService extends GoogleAPIService
     public function getGSCStatistics(GoogleAccount $googleAccount, GoogleSearchConsoleSite $googleSearchConsoleSite, $startDate, $endDate = null, $repeatCall = false)
     {
 
-        $url = "https://www.googleapis.com/webmasters/v3/sites/$googleSearchConsoleSite->site_url/searchAnalytics/query";
+        $url = "https://www.googleapis.com/webmasters/v3/sites/" . urlencode($googleSearchConsoleSite->site_url) . "/searchAnalytics/query";
 
         $jsonBody = [
             'rowLimit' => 25000,
@@ -88,7 +88,7 @@ class GoogleSearchConsoleService extends GoogleAPIService
     public function getGSCSearchAppearance(GoogleAccount $googleAccount, GoogleSearchConsoleSite $googleSearchConsoleSite, $startDate, $endDate = null, $repeatCall = false)
     {
 
-        $url = "https://www.googleapis.com/webmasters/v3/sites/$googleSearchConsoleSite->site_url/searchAnalytics/query";
+        $url = "https://www.googleapis.com/webmasters/v3/sites/" . urlencode($googleSearchConsoleSite->site_url) . "/searchAnalytics/query";
 
         $jsonBody = [
             'rowLimit' => 25000,
