@@ -7,7 +7,7 @@ export default function DeviceUsersGraph(props) {
     const noOfUsers = props.deviceCategoriesStatistics.map(s => s.sum_users_count);
 
     return <div className="row ml-0 mr-0 mt-4">
-        <div className="col-12">
+        <div className="col-6">
             <Doughnut
                 // height='100px'
                 width='100%'
@@ -58,8 +58,8 @@ export default function DeviceUsersGraph(props) {
                     },
                 }} />
         </div>
-        {/* <div className="col-6">
-            <table className="table table-bordered table-hover gaa-hover">
+        <div className="col-6">
+            <table className="table table-borderless table-hover gaa-hover">
                 <thead><tr><th>Device</th><th>Users</th><th>Conversion Rate</th></tr></thead>
                 <tbody>
                     {
@@ -70,6 +70,6 @@ export default function DeviceUsersGraph(props) {
                     }
                 </tbody>
             </table>
-        </div> */}
+        </div>
     </div>;
 }
