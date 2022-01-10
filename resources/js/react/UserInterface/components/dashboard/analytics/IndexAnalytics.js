@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DateRangePicker } from 'react-date-range';
+import { addDays, endOfDay, startOfDay, startOfMonth, endOfMonth, addMonths, startOfWeek, endOfWeek, isSameDay, differenceInCalendarDays, } from 'date-fns';
 
 import HttpClient from '../../../utils/HttpClient';
 import AnnotationsTable from './tables/annotationsTable';
@@ -94,9 +95,23 @@ export default class IndexAnalytics extends Component {
                                 {
                                     this.state.showDateRangeSelect ?
                                         <DateRangePicker
-                                            style={{ 'position': 'absolute', backgroundColor: 'white', zIndex: 9999999999999 }}
+                                            style={{ 'position': 'absolute', backgroundColor: '#F7F7F7', zIndex: 9999999999999 }}
                                             editableDateInputs={true}
                                             moveRangeOnFirstSelection={false}
+                                            // staticRanges={[
+                                            //     [startOfWeek, startOfWeek(new Date())],
+                                            //     [endOfWeek, endOfWeek(new Date())],
+                                            //     [startOfLastWeek, startOfWeek(addDays(new Date(), -7))],
+                                            //     [endOfLastWeek, endOfWeek(addDays(new Date(), -7))],
+                                            //     [startOfToday, startOfDay(new Date())],
+                                            //     [endOfToday, endOfDay(new Date())],
+                                            //     [startOfYesterday, startOfDay(addDays(new Date(), -1))],
+                                            //     [endOfYesterday, endOfDay(addDays(new Date(), -1))],
+                                            //     [startOfMonth, startOfMonth(new Date())],
+                                            //     [endOfMonth, endOfMonth(new Date())],
+                                            //     [startOfLastMonth, startOfMonth(addMonths(new Date(), -1))],
+                                            //     [endOfLastMonth, endOfMonth(addMonths(new Date(), -1))],
+                                            // ]}
                                             ranges={[{
                                                 startDate: new Date(this.state.startDate),
                                                 endDate: new Date(this.state.endDate),
