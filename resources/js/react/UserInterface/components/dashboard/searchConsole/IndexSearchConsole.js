@@ -15,6 +15,7 @@ import DeviceClicksImpressionsGraph from './graphs/deviceClicksImpressionsGraph'
 
 import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
 import NoDataFoundPage from './subPages/NoDataFoundPage';
+import MapChart from './graphs/WorldMap';
 
 export default class IndexSearchConsole extends Component {
     constructor(props) {
@@ -181,20 +182,7 @@ export default class IndexSearchConsole extends Component {
                                     </div>
                                     <div className="row ml-0 mr-0 mt-4">
                                         <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
-                                            <table className="table table-bordered table-hover gaa-hover">
-                                                <thead><tr><th>Country</th><th>Clicks</th><th>Impressions</th></tr></thead>
-                                                <tbody>
-                                                    {
-                                                        this.state.countriesStatistics.map(cS => {
-                                                            return <tr>
-                                                                <td>{cS.country}</td>
-                                                                <td>{cS.sum_clicks_count}</td>
-                                                                <td>{cS.sum_impressions_count}</td>
-                                                            </tr>
-                                                        })
-                                                    }
-                                                </tbody>
-                                            </table>
+                                            <MapChart countriesStatistics={this.state.countriesStatistics} />
                                         </div>
                                         <div className="col-6">
                                             <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
