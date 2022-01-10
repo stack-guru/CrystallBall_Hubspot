@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import { DateRangePicker } from 'react-date-range';
-import { addDays, endOfDay, startOfDay, startOfMonth, endOfMonth, addMonths, startOfWeek, endOfWeek, isSameDay, differenceInCalendarDays, } from 'date-fns';
+import html2canvas from 'html2canvas';
 
 import HttpClient from '../../../utils/HttpClient';
+import { newStaticRanges } from '../../../utils/CustomDateRange';
+import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
+import ErrorAlert from '../../../utils/ErrorAlert';
+import GoogleAnalyticsPropertySelect from './utils/GoogleAnalyticsPropertySelect';
+
 import AnnotationsTable from './tables/annotationsTable';
+
 import MediaGraph from './graphs/mediaGraph';
 import DeviceUsersGraph from './graphs/deviceUsersGraph';
-import GoogleAnalyticsPropertySelect from './utils/GoogleAnalyticsPropertySelect';
-import ErrorAlert from '../../../utils/ErrorAlert';
-import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
 import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGraph';
+
+import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
 import NoDataFoundPage from './subPages/NoDataFoundPage';
-import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
-import html2canvas from 'html2canvas';
 
 export default class IndexAnalytics extends Component {
     constructor(props) {
@@ -98,20 +101,8 @@ export default class IndexAnalytics extends Component {
                                             style={{ 'position': 'absolute', backgroundColor: '#F7F7F7', zIndex: 9999999999999 }}
                                             editableDateInputs={true}
                                             moveRangeOnFirstSelection={false}
-                                            // staticRanges={[
-                                            //     [startOfWeek, startOfWeek(new Date())],
-                                            //     [endOfWeek, endOfWeek(new Date())],
-                                            //     [startOfLastWeek, startOfWeek(addDays(new Date(), -7))],
-                                            //     [endOfLastWeek, endOfWeek(addDays(new Date(), -7))],
-                                            //     [startOfToday, startOfDay(new Date())],
-                                            //     [endOfToday, endOfDay(new Date())],
-                                            //     [startOfYesterday, startOfDay(addDays(new Date(), -1))],
-                                            //     [endOfYesterday, endOfDay(addDays(new Date(), -1))],
-                                            //     [startOfMonth, startOfMonth(new Date())],
-                                            //     [endOfMonth, endOfMonth(new Date())],
-                                            //     [startOfLastMonth, startOfMonth(addMonths(new Date(), -1))],
-                                            //     [endOfLastMonth, endOfMonth(addMonths(new Date(), -1))],
-                                            // ]}
+                                            staticRanges={newStaticRanges}
+                                            inputRanges={[]}
                                             ranges={[{
                                                 startDate: new Date(this.state.startDate),
                                                 endDate: new Date(this.state.endDate),

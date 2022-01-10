@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-import { DateRange } from 'react-date-range';
+import { DateRangePicker } from 'react-date-range';
+import html2canvas from 'html2canvas';
 
 import HttpClient from '../../../utils/HttpClient';
-import AnnotationsTable from './tables/annotationsTable';
 import ErrorAlert from '../../../utils/ErrorAlert';
-import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
-import GoogleSearchConsoleSiteSelect from '../../../utils/GoogleSearchConsoleSiteSelect';
-import NoDataFoundPage from './subPages/NoDataFoundPage';
+import { newStaticRanges } from '../../../utils/CustomDateRange';
 import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
+import GoogleSearchConsoleSiteSelect from '../../../utils/GoogleSearchConsoleSiteSelect';
+
+import AnnotationsTable from './tables/annotationsTable';
+
 import ClicksImpressionsDaysGraph from './graphs/clicksImpressionsDaysGraph';
-import html2canvas from 'html2canvas';
 import DeviceClicksImpressionsGraph from './graphs/deviceClicksImpressionsGraph';
+
+import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
+import NoDataFoundPage from './subPages/NoDataFoundPage';
 
 export default class IndexSearchConsole extends Component {
     constructor(props) {
@@ -93,10 +97,12 @@ export default class IndexSearchConsole extends Component {
                             <div style={{ maxWidth: '50%', width: '50%' }} >
                                 {
                                     this.state.showDateRangeSelect ?
-                                        <DateRange
-                                            style={{ 'position': 'absolute', backgroundColor: 'white', zIndex: 9999999999999 }}
+                                        <DateRangePicker
+                                            style={{ 'position': 'absolute', backgroundColor: '#F7F7F7', zIndex: 9999999999999 }}
                                             editableDateInputs={true}
                                             moveRangeOnFirstSelection={false}
+                                            staticRanges={newStaticRanges}
+                                            inputRanges={[]}
                                             ranges={[{
                                                 startDate: new Date(this.state.startDate),
                                                 endDate: new Date(this.state.endDate),
