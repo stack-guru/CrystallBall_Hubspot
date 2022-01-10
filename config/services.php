@@ -103,4 +103,10 @@ return [
             'code' => env('HOTJAR_SITE_CODE'),
         ],
     ],
+
+    'heap_analytics' => [
+        'property' => [
+            'code' => env('HEAP_ANALYTICS_PROPERTY')
+        ]
+    ]
 ];
