@@ -60,7 +60,7 @@ export default function DeviceUsersGraph(props) {
         </div>
         <div className="col-6">
             <table className="table table-borderless table-hover gaa-hover">
-                <thead><tr><th>Device</th><th>Users</th><th>Conversion Rate</th></tr></thead>
+                <thead><tr><th>Device</th><th>Users</th><th>Conv. Rate</th></tr></thead>
                 <tbody>
                     {
                         props.deviceCategoriesStatistics.map(dS => {
