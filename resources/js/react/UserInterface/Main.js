@@ -65,7 +65,7 @@ class Main extends React.Component {
 
             <React.Fragment>
                 <div className="sidebar">
-                    <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={this.toggleStartupConfiguration} />
+                    {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={this.toggleStartupConfiguration} /> */}
                     <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} />
 
                     <Sidebar user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
@@ -152,7 +152,7 @@ class Main extends React.Component {
                     </main>
                     <Footer />
                 </div>
-                <StartupChecklist lastStartupConfigurationShowedAt={this.state.user.startup_configuration_showed_at} />
+                {/* <StartupChecklist lastStartupConfigurationShowedAt={this.state.user.startup_configuration_showed_at} /> */}
             </React.Fragment>
 
         )
