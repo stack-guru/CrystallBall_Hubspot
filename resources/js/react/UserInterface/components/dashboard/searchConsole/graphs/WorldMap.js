@@ -47,21 +47,21 @@ const MapChart = (props) => {
                     </Geographies>
                 )}
             </ComposableMap>
+            <table className="table table-bordered table-hover gaa-hover">
+                <thead><tr><th>Country</th><th>Clicks</th><th>Impressions</th></tr></thead>
+                <tbody>
+                    {
+                        props.countriesStatistics.map(cS => {
+                            return <tr>
+                                <td>{cS.country}</td>
+                                <td>{cS.sum_clicks_count}</td>
+                                <td>{cS.sum_impressions_count}</td>
+                            </tr>
+                        })
+                    }
+                </tbody>
+            </table>
         </React.Fragment>
-        //     <table className="table table-bordered table-hover gaa-hover">
-        //     <thead><tr><th>Country</th><th>Clicks</th><th>Impressions</th></tr></thead>
-        //     <tbody>
-        //         {
-        //             this.state.countriesStatistics.map(cS => {
-        //                 return <tr>
-        //                     <td>{cS.country}</td>
-        //                     <td>{cS.sum_clicks_count}</td>
-        //                     <td>{cS.sum_impressions_count}</td>
-        //                 </tr>
-        //             })
-        //         }
-        //     </tbody>
-        // </table>
     );
 };
 
