@@ -9,6 +9,22 @@ export default function DeviceClicksImpressionsGraph(props) {
 
     return <div className="row ml-0 mr-0 mt-4">
         <div className="col-6">
+            <table className="table table-borderless table-hover gaa-hover">
+                <thead><tr><th>Device</th><th>Clicks</th><th>Impressions</th></tr></thead>
+                <tbody>
+                    {
+                        props.devicesStatistics.map(dS => {
+                            return <tr>
+                                <td>{dS.device}</td>
+                                <td>{dS.sum_clicks_count}</td>
+                                <td>{dS.sum_impressions_count}</td>
+                            </tr>
+                        })
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div className="col-6">
             <Doughnut
                 // height='100px'
                 width='100%'
@@ -79,22 +95,6 @@ export default function DeviceClicksImpressionsGraph(props) {
                         },
                     },
                 }} />
-        </div>
-        <div className="col-6">
-            <table className="table table-borderless table-hover gaa-hover">
-                <thead><tr><th>Device</th><th>Clicks</th><th>Impressions</th></tr></thead>
-                <tbody>
-                    {
-                        props.devicesStatistics.map(dS => {
-                            return <tr>
-                                <td>{dS.device}</td>
-                                <td>{dS.sum_clicks_count}</td>
-                                <td>{dS.sum_impressions_count}</td>
-                            </tr>
-                        })
-                    }
-                </tbody>
-            </table>
         </div>
     </div>;
 }
