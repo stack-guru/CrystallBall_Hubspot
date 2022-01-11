@@ -23,10 +23,12 @@
   <!-- Custom styles for this template -->
   {{--
   <link href="{{asset('css/floating-labels.css')}}" rel="stylesheet"> --}}
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
   @yield('content')
+  @yield('javascript')
 </body>
 
 </html>

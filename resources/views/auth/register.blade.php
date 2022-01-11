@@ -67,9 +67,33 @@
     </div>
   </div>
 
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+  <div class="form-label-group">
+    <div class="form-check">
+      @error('g-recaptcha-response')
+      <span class="invalid-feedback" role="alert">
+        <strong>{{ $message }}</strong>
+      </span>
+      @enderror
+      
+      <div class="g-recaptcha" data-sitekey="{{config('services.recaptcha.client.key')}}" data-callback="gRecaptchaSuccessCallBack" data-expired-callback="gRecaptchaExpireCallBack"></div>
+    </div>
+  </div>
+
+  <button class="btn btn-lg btn-primary btn-block" type="submit" id="registerButton" disabled>Register</button>
   {{-- <a class="btn btn-lg btn-primary btn-block" href="{{ route('login') }}">Login</a> --}}
   <a class="minified-provider mt-3" href="{{ route('socialite.google') }}"><img class="oauth-logo" src="/images/google-logo.png"><span class="minified-provider-name">Sign up with Google</span></a>
   <p class="mt-2">Already have an account? <a href="{{ route('login') }}">Login</a></p>
 </form>
+@endsection
+
+@section('javascript')
+<script>
+  function gRecaptchaSuccessCallBack(responseToken) {
+      document.getElementById('registerButton').removeAttribute('disabled');
+  }
+
+  function gRecaptchaExpireCallBack() {
+      document.getElementById('registerButton').setAttribute('disabled', true);
+  }
+</script>
 @endsection

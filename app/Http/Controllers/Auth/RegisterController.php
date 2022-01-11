@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Rules\HasLettersNumbers;
 use App\Rules\HasSymbol;
+use App\Rules\ValidateCaptcha;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cookie;
@@ -63,6 +64,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['confirmed', 'required', 'string', 'min:8', new HasSymbol, new HasLettersNumbers],
             'read_confirmation' => ['required'],
+            'g-recaptcha-response' => [new ValidateCaptcha],
         ], [
             'read_confirmation.required' => 'Your confirmation is required.',
             'password.min' => 'Must be atleast 8 characters.',

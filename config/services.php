@@ -108,5 +108,14 @@ return [
         'property' => [
             'code' => env('HEAP_ANALYTICS_PROPERTY')
         ]
+    ],
+
+    'recaptcha' => [
+        'server' => [
+            'key' => env('RECAPTCHA_SERVER_KEY', '')
+        ],
+        'client' => [
+            'key' => env('RECAPTCHA_CLIENT_KEY', '')
+        ],
     ]
 ];
