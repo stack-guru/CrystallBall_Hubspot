@@ -44,9 +44,9 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->created_at }}</td>
                                     <td>{{ $user->last_login_at }} + {{ $user->login_logs_count }}</td>
-                                    <td>{{ $user->lastPopupOpenedChromeExtensionLog->created_at ?? '' }} + {{ $user->last30_days_popup_opened_chrome_extension_logs_count }}</td>
+                                    <td>{{ $user->lastPopupOpenedChromeExtensionLog->created_at ?? '' }} + {{ $user->last90_days_popup_opened_chrome_extension_logs_count }}</td>
                                     <td>{{ $user->lastAnnotationButtonClickedChromeExtensionLog->created_at ?? '' }} + {{ $user->annotation_button_clicked_chrome_extension_logs_count }}</td>
-                                    <td>{{ $user->last_api_called_at }} + {{ $user->last30_days_api_annotation_created_logs_count }}</td>
+                                    <td>{{ $user->last_api_called_at }} + {{ $user->last90_days_api_annotation_created_logs_count }}</td>
                                     <td>{{ $user->email_notification_logs_count }} time(s).</td>
                                     <td>{{ @$user->pricePlan->name }}</td>
                                     <td>

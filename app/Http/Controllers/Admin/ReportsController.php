@@ -18,6 +18,8 @@ class ReportsController extends Controller
                 'lastPopupOpenedChromeExtensionLog',
                 'lastAnnotationButtonClickedChromeExtensionLog',
             ])
+            ->withCount('loginLogs')
+            ->withCount('annotationButtonClickedChromeExtensionLogs')
             ->withCount('annotationGaProperties')
             ->withCount('googleAnalyticsProperties')
             ->withCount('manualAnnotations')
