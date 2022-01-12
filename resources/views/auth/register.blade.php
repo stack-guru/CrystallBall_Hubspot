@@ -67,16 +67,13 @@
     </div>
   </div>
 
-  <div class="form-label-group">
-    <div class="form-check">
+  <div class="form-label-group" style="padding-left: 12%;">
       @error('g-recaptcha-response')
       <span class="invalid-feedback" role="alert">
         <strong>{{ $message }}</strong>
       </span>
-      @enderror
-      
+      @enderror      
       <div class="g-recaptcha" data-sitekey="{{config('services.recaptcha.client.key')}}" data-callback="gRecaptchaSuccessCallBack" data-expired-callback="gRecaptchaExpireCallBack"></div>
-    </div>
   </div>
 
   <button class="btn btn-lg btn-primary btn-block" type="submit" id="registerButton" disabled>Register</button>
