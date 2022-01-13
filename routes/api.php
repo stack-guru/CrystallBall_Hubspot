@@ -24,8 +24,6 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
         Route::post('open-weather-map/alert', 'OWMPushNotificationController@store');
         Route::get('event-sources', 'EventSourceController@index')->name('event-sources.index');
 
-        // Chrome Extension
-        Route::get('chrome-extension/event-sources', 'EventSourceController@index');
         Route::group(['middleware' => ['auth:api']], function () {
 
             Route::get('user', function (Request $request) {
@@ -38,19 +36,6 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
             });
             Route::group(['prefix' => 'google-data-studio', 'as' => 'google-data-studio.'], function () {
                 Route::get('annotations', 'GoogleDataStudio\AnnotationController@index');
-            });
-            Route::group(['prefix' => 'chrome-extension', 'as' => 'chrome-extension'], function () {
-                Route::get('annotations', 'ChromeExtension\AnnotationController@index');
-                Route::post('annotations', 'ChromeExtension\AnnotationController@store');
-                Route::get('annotations/preview', 'ChromeExtension\AnnotationController@extensionAnnotationPreview');
-                Route::get('google-accounts', 'GoogleAccountController@extensionIndex');
-                Route::get('google-analytics-accounts', 'GoogleAnalyticsAccountController@extensionIndex');
-                Route::get('google-analytics-properties', 'ChromeExtension\GoogleAnalyticsPropertyController@index');
-                Route::get('google-annotation/{id}', 'ChromeExtension\GoogleAnalyticsPropertyController@getAnnotations');
-                Route::get('memberships', 'UserController@extensionShowMembership');
-                Route::get('users', 'ChromeExtension\UserController@index');
-
-                Route::post('log', 'ChromeExtension\ChromeExtensionLogController@store');
             });
 
             Route::group(['prefix' => 'zapier', 'as' => 'zapier.'], function () {
