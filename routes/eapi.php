@@ -19,12 +19,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'eapi.', 'middlewar
 
     Route::group(['prefix' => 'v1/chrome-extension', 'as' => 'v1.chrome-extension.'], function () {
 
-        Route::get('csrf-token', 'API\ChromeExtension\AuthController@revealCSRFToken');
-        Route::post('login', 'API\ChromeExtension\AuthController@login')->name('login')->middleware('cors');
-        Route::post('login/google', 'API\ChromeExtension\AuthController@loginWithGoogle')->name('login.google')->middleware('cors');
-
-        Route::group(['middleware' => ['auth']], function () {
-            Route::post('logout', 'API\ChromeExtension\AuthController@logout')->name('logout')->middleware('cors');
+        Route::group(['middleware' => ['auth:api']], function () {
 
             Route::get('user', function (Request $request) {
                 return $request->user();
