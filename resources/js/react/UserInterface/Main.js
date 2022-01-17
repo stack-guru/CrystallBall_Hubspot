@@ -50,12 +50,12 @@ class Main extends React.Component {
         }
         this.loadUser = this.loadUser.bind(this)
 
-        this.toggleStartupConfiguration = this.toggleStartupConfiguration.bind(this);
+        // this.toggleStartupConfiguration = this.toggleStartupConfiguration.bind(this);
         this.toggleInterfaceTour = this.toggleInterfaceTour.bind(this);
         this.toggleDataSourceTour = this.toggleDataSourceTour.bind(this);
     }
 
-    toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
+    // toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
     toggleInterfaceTour(keepInterfaceTour = false) { this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, keepInterfaceTour, false); }
     toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, false, false); }
 
@@ -183,9 +183,12 @@ class Main extends React.Component {
             .then(response => {
                 this.setState({
                     user: response.data.user,
-                    showStartupConfiguration: keepStartupConfiguration ? true : (response.data.user.startup_configuration_showed_at == null),
-                    showInterfaceTour: keepInterfaceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at == null),
-                    showDataSourceTour: keepDataSourceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at !== null && response.data.user.data_source_tour_showed_at == null),
+                    // These states were in use when user startup configuration wizard was enabled
+                    // showStartupConfiguration: keepStartupConfiguration ? true : (response.data.user.startup_configuration_showed_at == null),
+                    // showInterfaceTour: keepInterfaceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at == null),
+                    // showDataSourceTour: keepDataSourceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at !== null && response.data.user.data_source_tour_showed_at == null),
+                    showInterfaceTour: keepInterfaceTour ? true : (response.data.user.last_login_at == null),
+                    showDataSourceTour: keepDataSourceTour ? true : (response.data.user.last_login_at !== null && response.data.user.data_source_tour_showed_at == null),
                 });
                 loader.classList.add("fadeOut")
 
