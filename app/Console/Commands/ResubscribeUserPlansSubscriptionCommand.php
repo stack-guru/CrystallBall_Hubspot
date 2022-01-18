@@ -28,8 +28,8 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
      */
     protected $signature = 'gaa:resubscribe-user-plans';
 
-    private $freePlan;
-    private $freePlanId;
+    private $downgradePricePlan;
+    private $downgradePricePlanId;
     private $nextExpiryDate;
     private $currentDate;
     private $admin;
@@ -57,10 +57,10 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
      */
     public function handle()
     {
-        $freePlan = PricePlan::where('price', 0)->where('name', '<>', PricePlan::TRIAL)->first();
-        if ($freePlan) {
-            $this->freePlanId = $freePlan->id;
-            $this->freePlan = $freePlan;
+        $downgradePricePlan = PricePlan::where('price', 0)->where('name', PricePlan::TRIAL_ENDED)->first();
+        if ($downgradePricePlan) {
+            $this->downgradePricePlanId = $downgradePricePlan->id;
+            $this->downgradePricePlan = $downgradePricePlan;
         }
         $admin = Admin::first();
         if ($admin) {
@@ -69,6 +69,8 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $this->nextExpiryDate = new \DateTime("+1 month");
         $this->currentDate = new \DateTime();
 
+        // Order matters don't interchange lines
+        $this->downgradeTrialUsers();
         $this->resubscribeFreePlanUsers();
         $this->resubscribePaidPlanUsers();
 
@@ -118,8 +120,8 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                 if ($responseArr['success'] == false) {
                     // Downgrading user to free plan
                     $this->addTransactionToLog($user->id, $user->price_plan_id, null, $lastPaymentDetail->id, $lastPaymentDetail->card_number, $responseArr['message'], $pricePlanPrice, false);
-                    $this->subscribeUserToPlan($user, $this->freePlanId);
-                    $this->removeAdditionalWebMonitors($user, $this->freePlan->web_monitor_count);
+                    $this->subscribeUserToPlan($user, $this->downgradePricePlanId);
+                    $this->removeAdditionalWebMonitors($user, $this->downgradePricePlan->web_monitor_count);
                     $this->disableDataSources($user);
                     $this->disableNotifications($user);
                     Mail::to($this->admin)->send(new AdminFailedPaymentTransactionMail($lastPaymentDetail, $this->admin));
@@ -138,8 +140,8 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             } else {
                 // Downgrading user to free plan
                 if (!$user->user_id) {
-                    $this->subscribeUserToPlan($user, $this->freePlanId);
-                    $this->removeAdditionalWebMonitors($user, $this->freePlan->web_monitor_count);
+                    $this->subscribeUserToPlan($user, $this->downgradePricePlanId);
+                    $this->removeAdditionalWebMonitors($user, $this->downgradePricePlan->web_monitor_count);
                     $this->disableDataSources($user);
                     $this->disableNotifications($user);
                 }
@@ -152,10 +154,8 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         print count($users) . " Users have been resubscribed to their paid plans.\n";
     }
 
-    private function resubscribeFreePlanUsers()
+    private function  downgradeTrialUsers()
     {
-        $sGS = new SendGridService;
-
         // Trial users moving to free plan
         $trialUsers = User::where('price_plan_expiry_date', '<', new \DateTime)
             ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
@@ -165,9 +165,9 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
         foreach ($trialUsers as $trialUser) {
             $trialUser->price_plan_expiry_date = $this->nextExpiryDate;
-            $trialUser->price_plan_id = $this->freePlanId;
+            $trialUser->price_plan_id = $this->downgradePricePlanId;
 
-            $this->removeAdditionalWebMonitors($trialUser, $this->freePlan->web_monitor_count);
+            $this->removeAdditionalWebMonitors($trialUser, $this->downgradePricePlan->web_monitor_count);
             $this->disableDataSources($trialUser);
             $this->disableNotifications($trialUser);
 
@@ -178,6 +178,10 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             event(new UserTrialPricePlanEnded($trialUser));
         }
         print count($trialUsers) . " Users have been subscribed from trial to free plan.\n";
+    }
+
+    private function resubscribeFreePlanUsers()
+    {
 
         // Free plan users resubscribing to free plan with new expiry dates
         $updateCount = User::where('price_plan_expiry_date', '<', new \DateTime)
@@ -185,7 +189,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             ->where('price_plans.price', 0)
             ->update([
                 'users.price_plan_expiry_date' => $this->nextExpiryDate,
-                'users.price_plan_id' => $this->freePlanId,
+                // 'users.price_plan_id' => $this->freePlanId,
 
                 'users.is_ds_holidays_enabled' => false,
                 'users.is_ds_google_algorithm_updates_enabled' => false,

@@ -85,16 +85,16 @@ class RegisterController extends Controller
                 Cookie::queue(Cookie::forget('coupon_code'));
                 $planExpiryDate = new \DateTime("+" . $cookieCoupon->plan_extension_days . " days");
             } else {
-                $planExpiryDate = new \DateTime("+14 days");
+                $planExpiryDate = new \DateTime("+7 days");
             }
         } else {
-            $planExpiryDate = new \DateTime("+14 days");
+            $planExpiryDate = new \DateTime("+7 days");
         }
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'price_plan_id' => PricePlan::where('name', PricePlan::FREE)->first()->id,
+            'price_plan_id' => PricePlan::where('name', PricePlan::TRIAL)->first()->id,
             'price_plan_expiry_date' => $planExpiryDate,
         ]);
         $user->is_billing_enabled = false;
@@ -138,8 +138,8 @@ class RegisterController extends Controller
                 $user->email = $newUserEmail;
                 $user->password = '.';
                 $user->name = $newUser->getName();
-                $user->price_plan_id = PricePlan::where('name', PricePlan::FREE)->first()->id;
-                $user->price_plan_expiry_date = new \DateTime("+14 days");
+                $user->price_plan_id = PricePlan::where('name', PricePlan::TRIAL)->first()->id;
+                $user->price_plan_expiry_date = new \DateTime("+7 days");
                 $user->is_billing_enabled = false;
                 $user->email_verified_at = Carbon::now();
                 $user->save();

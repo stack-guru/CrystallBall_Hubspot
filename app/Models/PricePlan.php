@@ -10,9 +10,12 @@ class PricePlan extends Model
     use HasFactory;
 
     const TRIAL = 'Trial';
+    const TRIAL_ENDED = 'Trial Ended';
     const FREE = 'Free';
+    const INDIVIDUAL = 'Individual';
     const BASIC = 'Basic';
     const PRO = 'Pro';
+    const ENTERPRISE = 'Enterprise';
 
     protected $fillable = [
         'name', 'annotations_count', 'price', 'has_manual_add',
