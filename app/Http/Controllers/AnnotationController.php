@@ -70,11 +70,7 @@ class AnnotationController extends Controller
                 $aGAP->user_id = $userId;
                 $aGAP->save();
 
-                $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
-                if (!$googleAnalyticsProperty->is_in_use) {
-                    $googleAnalyticsProperty->is_in_use = true;
-                    $googleAnalyticsProperty->save();
-                }
+                GoogleAnalyticsProperty::markInUse($gAPId);
             }
         } else {
             $aGAP = new AnnotationGaProperty;
@@ -140,11 +136,7 @@ class AnnotationController extends Controller
                         $aGAP->user_id = $user->id;
                         $aGAP->save();
 
-                        $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
-                        if (!$googleAnalyticsProperty->is_in_use) {
-                            $googleAnalyticsProperty->is_in_use = true;
-                            $googleAnalyticsProperty->save();
-                        }
+                        GoogleAnalyticsProperty::markInUse($gAPId);
                     }
                 }
             } else {

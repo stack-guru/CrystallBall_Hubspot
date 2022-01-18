@@ -51,6 +51,8 @@ class AnnotationController extends Controller
             $gaPropertyId = $request->query('google_analytics_property_id');
             $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
             $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
+
+
         }
 
         if ($user->is_ds_web_monitors_enabled && $request->query('show_website_monitoring') == 'false') {
@@ -370,11 +372,7 @@ class AnnotationController extends Controller
                 $aGAP->user_id = $userId;
                 $aGAP->save();
 
-                $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
-                if (!$googleAnalyticsProperty->is_in_use) {
-                    $googleAnalyticsProperty->is_in_use = true;
-                    $googleAnalyticsProperty->save();
-                }
+                GoogleAnalyticsProperty::markInUse($gAPId);
             }
         } else {
             $aGAP = new AnnotationGaProperty;

@@ -59,4 +59,13 @@ class GoogleAnalyticsProperty extends Model
     {
         return $this->belongsTo(GoogleAnalyticsAccount::class);
     }
+
+    public static function markInUse($id)
+    {
+        $googleAnalyticsProperty = self::find($id);
+        if (!$googleAnalyticsProperty->is_in_use) {
+            $googleAnalyticsProperty->is_in_use = true;
+            $googleAnalyticsProperty->save();
+        }
+    }
 }
