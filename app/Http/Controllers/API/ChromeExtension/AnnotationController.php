@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
 use App\Models\AnnotationGaProperty;
+use App\Models\GoogleAnalyticsProperty;
 use App\Models\UserDataSource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -368,6 +369,12 @@ class AnnotationController extends Controller
                 $aGAP->google_analytics_property_id = $gAPId;
                 $aGAP->user_id = $userId;
                 $aGAP->save();
+
+                $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
+                if (!$googleAnalyticsProperty->is_in_use) {
+                    $googleAnalyticsProperty->is_in_use = true;
+                    $googleAnalyticsProperty->save();
+                }
             }
         } else {
             $aGAP = new AnnotationGaProperty;

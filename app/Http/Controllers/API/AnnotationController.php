@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Models\GoogleAnalyticsProperty;
 
 class AnnotationController extends Controller
 {
@@ -108,6 +109,12 @@ class AnnotationController extends Controller
                 $aGAP->google_analytics_property_id = $gAPId;
                 $aGAP->user_id = $userId;
                 $aGAP->save();
+
+                $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
+                if (!$googleAnalyticsProperty->is_in_use) {
+                    $googleAnalyticsProperty->is_in_use = true;
+                    $googleAnalyticsProperty->save();
+                }
             }
         } else {
             $aGAP = new AnnotationGaProperty;
@@ -182,6 +189,12 @@ class AnnotationController extends Controller
                         $aGAP->google_analytics_property_id = $gAPId;
                         $aGAP->user_id = $user->id;
                         $aGAP->save();
+
+                        $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
+                        if (!$googleAnalyticsProperty->is_in_use) {
+                            $googleAnalyticsProperty->is_in_use = true;
+                            $googleAnalyticsProperty->save();
+                        }
                     }
                 }
             } else {

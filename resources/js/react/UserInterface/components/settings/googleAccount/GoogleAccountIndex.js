@@ -199,7 +199,10 @@ export default class GoogleAccountIndex extends React.Component {
                                             return <tr key={gAP.id}>
                                                 <td>{gAP.id}</td>
                                                 <td>{gAP.google_analytics_account.name}</td>
-                                                <td>{gAP.name}</td>
+                                                <td>
+                                                    {gAP.name}
+                                                    {gAP.is_in_use ? <span class="badge badge-pill badge-success">In use</span> : null}
+                                                </td>
                                                 <td>{gAP.google_account.name}</td>
                                                 <td className="text-center"><button className="btn btn-danger" onClick={() => this.handleGAPDelete(gAP.id)}><i className="fa fa-trash-o"></i></button></td>
                                             </tr>
