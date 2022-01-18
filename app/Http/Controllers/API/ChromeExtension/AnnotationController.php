@@ -52,7 +52,7 @@ class AnnotationController extends Controller
             $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
             $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
 
-
+            GoogleAnalyticsProperty::markInUse($gaPropertyId);
         }
 
         if ($user->is_ds_web_monitors_enabled && $request->query('show_website_monitoring') == 'false') {
@@ -260,6 +260,8 @@ class AnnotationController extends Controller
             $gaPropertyId = $request->query('google_analytics_property_id');
             $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
             $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
+
+            GoogleAnalyticsProperty::markInUse($gaPropertyId);
         }
 
         if ($user->is_ds_web_monitors_enabled && $request->query('show_website_monitoring') == 'false') {
