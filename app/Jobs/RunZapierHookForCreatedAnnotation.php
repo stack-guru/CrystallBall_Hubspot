@@ -23,7 +23,7 @@ class RunZapierHookForCreatedAnnotation implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Annotation $annotation, UserWebhook $userWebhook)
+    public function __construct($annotation, UserWebhook $userWebhook)
     {
         $this->annotation = $annotation;
         $this->userWebhook = $userWebhook;
