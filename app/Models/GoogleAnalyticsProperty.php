@@ -60,12 +60,15 @@ class GoogleAnalyticsProperty extends Model
         return $this->belongsTo(GoogleAnalyticsAccount::class);
     }
 
-    public static function markInUse($id)
+    public static function markInUse($id): bool
     {
+        $isUpdated = false;
         $googleAnalyticsProperty = self::find($id);
         if (!$googleAnalyticsProperty->is_in_use) {
             $googleAnalyticsProperty->is_in_use = true;
             $googleAnalyticsProperty->save();
+            $isUpdated = true;
         }
+        return $isUpdated;
     }
 }
