@@ -23,7 +23,7 @@ class PricePlan extends Model
         'ga_account_count', 'user_per_ga_account_count', 'short_description',
         'web_monitor_count', 'owm_city_count', 'google_alert_keyword_count',
         'has_notifications', 'has_chrome_extension', 'has_google_data_studio',
-        'has_microsoft_power_bi'
+        'has_microsoft_power_bi', 'google_analytics_property_count'
     ];
 
     protected $hidden = [

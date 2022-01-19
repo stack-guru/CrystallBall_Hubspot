@@ -47,6 +47,10 @@
                             <input type="number" name="google_alert_keyword_count" id="google_alert_keyword_count" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label>Google Analytics Account count?</label>
+                            <input type="number" name="google_analytics_account_count" id="google_analytics_account_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label>Has manual add?</label>
                             <input type="checkbox" name="has_manual_add" id="hasManualAdd" class="form-control" />
                         </div>
