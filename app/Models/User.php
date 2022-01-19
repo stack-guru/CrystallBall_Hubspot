@@ -282,6 +282,23 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+    public function getInUseGoogleAnalyticsPropertyCount()
+    {
+        return $this->googleAnalyticsProperties()->where('is_in_use', true)->count();
+    }
+
+    public function isPricePlanGoogleAnalyticsPropertyLimitReached(): bool
+    {
+        $userPricePlan = $this->pricePlan;
+        $googleAnalyticsPropertyCount = $this->getInUseGoogleAnalyticsPropertyCount();
+
+        if ($userPricePlan->google_analytics_property_count > 0) {
+            return $googleAnalyticsPropertyCount >= $userPricePlan->google_analytics_property_count;
+        } else {
+            return false;
+        }
+    }
+
     public function lastLoginLog()
     {
         return $this->hasOne('App\Models\LoginLog')->orderBy('created_at', 'DESC');

@@ -53,6 +53,7 @@ class AnnotationController extends Controller
         }
         $userId = $user->id;
 
+        DB::beginTransaction();
         $annotation = new Annotation;
         $annotation->fill($request->validated());
         $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
@@ -60,17 +61,24 @@ class AnnotationController extends Controller
         $annotation->is_enabled = true;
         $annotation->added_by = 'manual';
         $annotation->save();
-        event(new \App\Events\AnnotationCreated($annotation));
 
         if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
             foreach ($request->google_analytics_property_id as $gAPId) {
+                $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
+                if (!$googleAnalyticsProperty->is_in_use) {
+                    if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
+                        DB::rollback();
+                        abort(400, 'You cannot use the selected google analytics property.');
+                    }
+                }
+                $googleAnalyticsProperty->is_in_use = true;
+                $googleAnalyticsProperty->save();
+
                 $aGAP = new AnnotationGaProperty;
                 $aGAP->annotation_id = $annotation->id;
                 $aGAP->google_analytics_property_id = $gAPId;
                 $aGAP->user_id = $userId;
                 $aGAP->save();
-
-                GoogleAnalyticsProperty::markInUse($gAPId);
             }
         } else {
             $aGAP = new AnnotationGaProperty;
@@ -79,7 +87,9 @@ class AnnotationController extends Controller
             $aGAP->user_id = $userId;
             $aGAP->save();
         }
+        DB::commit();
 
+        event(new \App\Events\AnnotationCreated($annotation));
         return ['annotation' => $annotation];
     }
 
@@ -111,6 +121,7 @@ class AnnotationController extends Controller
             abort(404, "Unable to find annotation with the given id.");
         }
 
+        DB::beginTransaction();
         $annotation->fill($request->validated());
         $annotation->save();
 
@@ -130,13 +141,21 @@ class AnnotationController extends Controller
             if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
                 foreach ($newGAPIds as $gAPId) {
                     if (!in_array($gAPId, $oldGAPIds)) {
+                        $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
+                        if (!$googleAnalyticsProperty->is_in_use) {
+                            if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
+                                DB::rollback();
+                                abort(400, 'You cannot use the selected google analytics property.');
+                            }
+                        }
+                        $googleAnalyticsProperty->is_in_use = true;
+                        $googleAnalyticsProperty->save();
+
                         $aGAP = new AnnotationGaProperty;
                         $aGAP->annotation_id = $annotation->id;
                         $aGAP->google_analytics_property_id = $gAPId;
                         $aGAP->user_id = $user->id;
                         $aGAP->save();
-
-                        GoogleAnalyticsProperty::markInUse($gAPId);
                     }
                 }
             } else {
@@ -149,6 +168,7 @@ class AnnotationController extends Controller
                 }
             }
         }
+        DB::commit();
 
         $annotation->load('annotationGaProperties');
 

@@ -60,19 +60,4 @@ class GoogleAnalyticsProperty extends Model
         return $this->belongsTo(GoogleAnalyticsAccount::class);
     }
 
-    public function isInUse(): bool
-    {
-        return $this->is_in_use;
-    }
-
-    public function markInUse(): bool
-    {
-        $isUpdated = false;
-        if (!$this->is_in_use) {
-            $this->is_in_use = true;
-            $this->save();
-            $isUpdated = true;
-        }
-        return $isUpdated;
-    }
 }
