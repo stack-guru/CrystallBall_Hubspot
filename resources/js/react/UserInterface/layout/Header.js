@@ -193,7 +193,7 @@ class header extends React.Component {
                                 </li>
                                 <li >
                                     <div className="header-profile-info">
-                                        <p className="">Credits:
+                                        <p className="">Annotations:
                                             <span className="float-right gaa-text-primary">{this.props.user.annotations_count}/{this.props.user.price_plan.annotations_count < 1 ? "∞" : this.props.user.price_plan.annotations_count}</span>
                                         </p>
                                     </div>
