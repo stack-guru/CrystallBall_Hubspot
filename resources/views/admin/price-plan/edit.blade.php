@@ -47,8 +47,8 @@
                             <input type="number" name="google_alert_keyword_count" id="google_alert_keyword_count" value="{{old('google_alert_keyword_count',$pricePlan->google_alert_keyword_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label>Google Analytics Account count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
-                            <input type="number" name="google_analytics_account_count" id="google_analytics_account_count" value="{{old('google_analytics_account_count',$pricePlan->google_analytics_account_count)}}" class="form-control" />
+                            <label>Google Analytics Property count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" name="google_analytics_property_count" id="google_analytics_property_count" value="{{old('google_analytics_property_count',$pricePlan->google_analytics_property_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Has manual add?</label>

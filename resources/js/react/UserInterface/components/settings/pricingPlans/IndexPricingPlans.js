@@ -112,6 +112,15 @@ export default class IndexPricingPlans extends React.Component {
                                             <hr />
                                             <ul className="fa-ul">
                                                 {
+                                                    pricePlan.google_analytics_property_count > 0 ?
+                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> {pricePlan.google_analytics_property_count} Property Filters</li>
+                                                        :
+                                                        (pricePlan.google_analytics_property_count == -1 ?
+                                                            <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> No Property Filters</li>
+                                                            :
+                                                            <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Unlimited Property Filters</li>)
+                                                }
+                                                {
                                                     pricePlan.annotations_count > 0 ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> {pricePlan.annotations_count} Annotations</li>
                                                         :

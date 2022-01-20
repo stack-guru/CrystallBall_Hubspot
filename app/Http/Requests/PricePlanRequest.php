@@ -43,6 +43,7 @@ class PricePlanRequest extends FormRequest
             'web_monitor_count' => 'nullable|numeric',
             'owm_city_count' => 'nullable|numeric',
             'google_alert_keyword_count' => 'nullable|numeric',
+            'google_analytics_property_count' => 'nullable|numeric',
         ];
     }
 }
