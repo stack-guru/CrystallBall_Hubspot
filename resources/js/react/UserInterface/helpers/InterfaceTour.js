@@ -16,7 +16,7 @@ const steps = [
     {
         position: 'top',
         selector: '#chrome-extension-download-button',
-        content: <div>Make sure to add the extension, pin it and to log in.<br />
+        content: <div>Make sure to <a href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom" target="_blank">add the extension</a>, pin it and to log in.<br />
             <img src="/images/walkthrough_step6.gif" width="100%" height="auto" />
         </div>,
         redirectRoute: null,
