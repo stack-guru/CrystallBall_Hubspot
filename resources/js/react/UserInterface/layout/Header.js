@@ -194,7 +194,11 @@ class header extends React.Component {
                                 <li >
                                     <div className="header-profile-info">
                                         <p className="">Properties in use:
-                                            <span className="float-right gaa-text-primary">{this.props.user.google_analytics_properties_in_use_count}/{this.props.user.price_plan.google_analytics_property_count < 1 ? "∞" : this.props.user.price_plan.google_analytics_property_count}</span>
+                                            <span className="float-right gaa-text-primary">
+                                                {this.props.user.google_analytics_properties_in_use_count}
+                                                /
+                                                {this.props.user.price_plan.google_analytics_property_count == -1 ? 0 : (this.props.user.price_plan.google_analytics_property_count == 0 ? "∞" : this.props.user.price_plan.google_analytics_property_count)}
+                                            </span>
                                         </p>
                                     </div>
                                 </li>
