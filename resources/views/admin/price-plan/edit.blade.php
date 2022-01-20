@@ -23,31 +23,31 @@
                             <input type="text" name="short_description" id="short_description" class="form-control" value="{{old('short_description',$pricePlan->short_description ) }}" />
                         </div>
                         <div class="form-group">
-                            <label>Number of annotations</label>
+                            <label>Number of annotations <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" name="annotations_count" id="annotationsCount" class="form-control" value="{{ old('annotation_count',$pricePlan->annotations_count) }}" />
                         </div>
                         <div class="form-group">
-                            <label>Ga Account Count</label>
+                            <label>Ga Account Count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" name="ga_account_count" id="ga_account_count" value="{{old('ga_account_count',$pricePlan->ga_account_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label>User per ga-account count?</label>
+                            <label>User per ga-account count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" name="user_per_ga_account_count" id="user_per_ga_account_count" value="{{old('user_per_ga_account_count',$pricePlan->user_per_ga_account_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label>Web monitor count?</label>
+                            <label>Web monitor count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" name="web_monitor_count" id="web_monitor_count" value="{{old('web_monitor_count',$pricePlan->web_monitor_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label>Open Weather Map City count?</label>
+                            <label>Open Weather Map City count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" name="owm_city_count" id="owm_city_count" value="{{old('owm_city_count',$pricePlan->owm_city_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label>Google Alerts Keyword count?</label>
+                            <label>Google Alerts Keyword count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" name="google_alert_keyword_count" id="google_alert_keyword_count" value="{{old('google_alert_keyword_count',$pricePlan->google_alert_keyword_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label>Google Analytics Account count?</label>
+                            <label>Google Analytics Account count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" name="google_analytics_account_count" id="google_analytics_account_count" value="{{old('google_analytics_account_count',$pricePlan->google_analytics_account_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
