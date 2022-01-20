@@ -160,19 +160,19 @@ class PaymentController extends Controller
         $user->refresh();
 
         switch ($pricePlan->name) {
+            case PricePlan::INDIVIDUAL:
+                $sGS->addUserToMarketingList($user, "Upgraded to Individual");
+                break;
             case PricePlan::BASIC:
                 $sGS->addUserToMarketingList($user, "9 GAa Upgraded to Basic");
-                $this->addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
-                $admin = Admin::first();
-                Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
                 break;
             case PricePlan::PRO:
                 $sGS->addUserToMarketingList($user, "10 GAa Upgraded to PRO");
-                $this->addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
-                $admin = Admin::first();
-                Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
                 break;
         }
+        $this->addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
+        $admin = Admin::first();
+        Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
 
         return ['success' => true, 'transaction_id' => $transactionId];
     }

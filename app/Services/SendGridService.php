@@ -263,6 +263,13 @@ class SendGridService
                 "self" => "https://api.sendgrid.com/v3/marketing/lists/e21a5566-fe57-43aa-82f2-484f6da6214a",
             ],
         ],
+        [
+            "name" => "Upgraded to Individual",
+            "id" => "b1f8dd63-bd56-4d7f-a80e-29e699727bc0",
+            "_metadata" => [
+                "self" => "https://api.sendgrid.com/v3/marketing/lists/b1f8dd63-bd56-4d7f-a80e-29e699727bc0"
+            ]
+        ],
     ];
 
     public function addUserToContactList(User $user, $listName, $customFields = [])
