@@ -282,6 +282,11 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+    public function googleAnalyticsPropertiesInUse()
+    {
+        return $this->hasMany(GoogleAnalyticsProperty::class)->where('is_in_use', true);
+    }
+
     public function getInUseGoogleAnalyticsPropertyCount()
     {
         return $this->googleAnalyticsProperties()->where('is_in_use', true)->count();

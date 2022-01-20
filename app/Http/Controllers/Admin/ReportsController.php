@@ -22,6 +22,7 @@ class ReportsController extends Controller
             ->withCount('annotationButtonClickedChromeExtensionLogs')
             ->withCount('annotationGaProperties')
             ->withCount('googleAnalyticsProperties')
+            ->withCount('googleAnalyticsPropertiesInUse')
             ->withCount('manualAnnotations')
             ->withCount('last90DaysLoginLogs')
             ->withCount('last90DaysApiAnnotationCreatedLogs')

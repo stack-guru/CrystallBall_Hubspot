@@ -28,6 +28,7 @@
                                     <th>Active</th>
                                     <th>Added Properties</th>
                                     <th>Any Annotation by property</th>
+                                    <th>In Use Properties</th>
                                     <th>Is Google Analytics/Search Console Connected</th>
                                     <th>Has Data Studio connected?</th>
                                     <th>Manual Annotations Count</th>
@@ -63,6 +64,7 @@
                                     </td>
                                     <td>{{ $user->google_analytics_properties_count }}</td>
                                     <td>{{ $user->annotation_ga_properties_count }}</td>
+                                    <td>{{ $user->google_analytics_properties_in_use_count }}</td>
                                     <td>
                                         @foreach($user->googleAccounts as $googleAccount)
                                         {{ $googleAccount->name}}
