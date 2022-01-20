@@ -299,6 +299,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
         if ($userPricePlan->google_analytics_property_count > 0) {
             return $googleAnalyticsPropertyCount >= $userPricePlan->google_analytics_property_count;
+        } else if ($userPricePlan->google_analytics_property_count == -1) {
+            return true;
         } else {
             return false;
         }
