@@ -232,6 +232,7 @@ export default class CreateAnnotation extends React.Component {
                                             multiple
                                             onFocus={(e) => {
                                                 if (this.props.currentPricePlan.ga_account_count == 1) swal("Upgrade to Pro Plan!", "Google Analytics Properties are not available in this plan.", "warning");
+                                                if (this.props.currentPricePlan.google_analytics_property_count == -1) swal("Upgrade your Plan!", "Google Analytics Properties are not available in this plan.", "warning");
                                             }}
                                         />
 
