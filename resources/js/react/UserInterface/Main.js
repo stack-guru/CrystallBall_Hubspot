@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
 import HttpClient from "./utils/HttpClient";
@@ -61,6 +61,11 @@ class Main extends React.Component {
 
     render() {
         if (this.state.user == undefined) return null;
+
+        if (["/settings/price-plans", "/settings/price-plans/payment"].indexOf(this.props.location.pathname) == -1 && this.state.user.price_plan.name == "Trial Ended") {
+            return <Redirect to={"/settings/price-plans"} />
+        }
+
         return (
 
             <React.Fragment>
