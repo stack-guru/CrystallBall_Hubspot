@@ -148,11 +148,11 @@ export default class IndexPricingPlans extends React.Component {
                                                             :
                                                             <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>{pricePlan.ga_account_count} GA accounts</li>
                                                 }
-                                                {
+                                                {/* {
                                                     pricePlan.ga_account_count == 0 ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations Properties Filtering</li>
                                                         : null
-                                                }
+                                                } */}
                                                 {
                                                     pricePlan.has_manual_add ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Manual Annotations</li>
