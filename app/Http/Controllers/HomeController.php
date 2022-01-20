@@ -41,7 +41,8 @@ class HomeController extends Controller
         }
 
 
-        $user->annotations_count = $user->getTotalAnnotationsCount(true);
+        // $user->annotations_count = $user->getTotalAnnotationsCount(true);
+        $user->google_analytics_properties_in_use_count = $user->googleAnalyticsPropertiesInUse()->count();
 
         return ['user' => $user];
     }

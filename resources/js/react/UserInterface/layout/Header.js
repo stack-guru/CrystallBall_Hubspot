@@ -193,17 +193,17 @@ class header extends React.Component {
                                 </li>
                                 <li >
                                     <div className="header-profile-info">
-                                        <p className="">Annotations:
-                                            <span className="float-right gaa-text-primary">{this.props.user.annotations_count}/{this.props.user.price_plan.annotations_count < 1 ? "∞" : this.props.user.price_plan.annotations_count}</span>
+                                        <p className="">Properties in use:
+                                            <span className="float-right gaa-text-primary">{this.props.user.google_analytics_properties_in_use_count}/{this.props.user.price_plan.google_analytics_property_count < 1 ? "∞" : this.props.user.price_plan.google_analytics_property_count}</span>
                                         </p>
                                     </div>
                                 </li>
                                 <li >
                                     <div className="header-profile-info">
                                         <ProgressBar completed={
-                                            this.props.user.price_plan.annotations_count ?
+                                            this.props.user.price_plan.google_analytics_property_count ?
                                                 (
-                                                    ((this.props.user.annotations_count / this.props.user.price_plan.annotations_count) * 100) || 10
+                                                    ((this.props.user.google_analytics_properties_in_use_count / this.props.user.price_plan.google_analytics_property_count) * 100) || 10
                                                 )
                                                 : 10
                                         }
