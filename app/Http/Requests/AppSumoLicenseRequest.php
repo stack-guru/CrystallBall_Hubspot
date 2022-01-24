@@ -24,11 +24,11 @@ class AppSumoLicenseRequest extends FormRequest
     public function rules()
     {
         return [
-            'action' => 'required|string|in:activate,enhance_tier',
+            'action' => 'required|string|in:activate,enhance_tier,reduce_tier,refund',
             'plan_id' => 'required|string|exists:price_plans,id',
             'uuid' => 'required|string',
-            'activation_email' => 'required|email|unique:users,email',
-            'invoice_item_uuid' => 'required|string'
+            'activation_email' => 'required|email',
+            'invoice_item_uuid' => 'required_if:action,activate|string'
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\AppSumoApiUser;
 use League\OAuth2\Server\Exception\OAuthServerException;
 
 class AppSumoAuthenticate
@@ -19,14 +19,15 @@ class AppSumoAuthenticate
     public function handle(Request $request, Closure $next)
     {
 
-        if ($request->hasHeader('authorization') === false) {
-            throw OAuthServerException::accessDenied('Missing "Authorization" header');
-        }
+        // if ($request->hasHeader('authorization') === false) {
+        //     throw OAuthServerException::accessDenied('Missing "Authorization" header');
+        // }
 
-        $header = $request->getHeader('authorization');
-        $token = \trim((string) \preg_replace('/^\s*Bearer\s/', '', $header[0]));
+        // $header = $request->getHeader('authorization');
+        // $token = \trim((string) \preg_replace('/^\s*Bearer\s/', '', $header[0]));
+        $token = $request->bearerToken();
 
-        if (!User::where('token', $token)->first()) {
+        if (!AppSumoApiUser::where('access_token', $token)->first()) {
             throw OAuthServerException::accessDenied('Access token could not be verified');
         }
 

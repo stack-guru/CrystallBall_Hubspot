@@ -30,7 +30,9 @@ class LicenseController extends Controller
 
         switch ($request->action) {
             case 'activate':
-
+                if(User::where('email', $request->activation_email)->first()){
+                    abort(400, 'User already exists with this email.');
+                }
                 $user = new User;
                 $user->name = 'Sumo-ling';
                 $user->email = $request->activation_email;
@@ -43,7 +45,7 @@ class LicenseController extends Controller
                 event(new \Illuminate\Auth\Events\Registered($user));
 
                 return response([
-                    "message" => "Your created with the given price plan.",
+                    "message" => "User created with the given price plan.",
                     "redirect_url" => route('app-sumo.set-password', ['registration-key' => 'new-registration-key'])
                 ], 201);
                 break;

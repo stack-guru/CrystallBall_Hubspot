@@ -9,7 +9,7 @@ class AppSumoRequest extends Model
 {
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         'action',
         'plan_id',
         'uuid',
