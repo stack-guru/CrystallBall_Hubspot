@@ -48,7 +48,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
     });
 
     // AppSumo APIs
-    Route::group(['prefix' => 'v1/app-sumo', 'namespace' => 'API/AppSumo', 'as' => 'v1.app-sumo.'], function () {
+    Route::group(['prefix' => 'v1/app-sumo', 'namespace' => 'API\AppSumo', 'as' => 'v1.app-sumo.'], function () {
         Route::post('token/generate', 'AuthController@generateToken');
 
         Route::post('license', 'LicenseController@handler')->middleware('app-sumo.auth');

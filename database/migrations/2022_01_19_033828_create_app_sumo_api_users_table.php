@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAppSumoUsersTable extends Migration
+class CreateAppSumoApiUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAppSumoUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('app_sumo_users', function (Blueprint $table) {
+        Schema::create('app_sumo_api_users', function (Blueprint $table) {
             $table->id();
 
             $table->string('username', 100)->required();
@@ -31,6 +31,6 @@ class CreateAppSumoUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('app_sumo_users');
+        Schema::dropIfExists('app_sumo_api_users');
     }
 }

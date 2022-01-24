@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\AppSumo;
 
 use App\Events\UserTrialPricePlanEnded;
 use App\Http\Controllers\Controller;
-use App\Models\AppSumoUser;
+use App\Models\AppSumoApiUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Requests\AppSumoLicenseRequest;
