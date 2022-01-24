@@ -12,9 +12,9 @@ class NotificationSetting extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        
+
         'is_enabled',
-        
+
         // 'name',
         // 'label',
 
@@ -28,4 +28,12 @@ class NotificationSetting extends Model
 
         // 'user_id'
     ];
+
+
+    static public function disableNotifications($user)
+    {
+        NotificationSetting::where('user_id', $user->id)->update([
+            'is_enabled' => false,
+        ]);
+    }
 }

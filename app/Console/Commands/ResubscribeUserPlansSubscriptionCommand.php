@@ -11,6 +11,7 @@ use App\Models\NotificationSetting;
 use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
 use App\Models\User;
+use App\Models\UserDataSource;
 use App\Models\WebMonitor;
 use App\Services\BlueSnapService;
 use App\Services\SendGridService;
@@ -121,9 +122,9 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     // Downgrading user to free plan
                     $this->addTransactionToLog($user->id, $user->price_plan_id, null, $lastPaymentDetail->id, $lastPaymentDetail->card_number, $responseArr['message'], $pricePlanPrice, false);
                     $this->subscribeUserToPlan($user, $this->downgradePricePlanId);
-                    $this->removeAdditionalWebMonitors($user, $this->downgradePricePlan->web_monitor_count);
-                    $this->disableDataSources($user);
-                    $this->disableNotifications($user);
+                    WebMonitor::removeAdditionalWebMonitors($user, $this->downgradePricePlan->web_monitor_count);
+                    UserDataSource::disableDataSources($user);
+                    NotificationSetting::disableNotifications($user);
                     Mail::to($this->admin)->send(new AdminFailedPaymentTransactionMail($lastPaymentDetail, $this->admin));
                     Mail::to($user)->send(new UserFailedPaymentTransactionMail($lastPaymentDetail));
                 } else {
@@ -141,9 +142,9 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                 // Downgrading user to free plan
                 if (!$user->user_id) {
                     $this->subscribeUserToPlan($user, $this->downgradePricePlanId);
-                    $this->removeAdditionalWebMonitors($user, $this->downgradePricePlan->web_monitor_count);
-                    $this->disableDataSources($user);
-                    $this->disableNotifications($user);
+                    WebMonitor::removeAdditionalWebMonitors($user, $this->downgradePricePlan->web_monitor_count);
+                    UserDataSource::disableDataSources($user);
+                    NotificationSetting::disableNotifications($user);
                 }
             }
         }
@@ -167,9 +168,9 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             $trialUser->price_plan_expiry_date = $this->nextExpiryDate;
             $trialUser->price_plan_id = $this->downgradePricePlanId;
 
-            $this->removeAdditionalWebMonitors($trialUser, $this->downgradePricePlan->web_monitor_count);
-            $this->disableDataSources($trialUser);
-            $this->disableNotifications($trialUser);
+            WebMonitor::removeAdditionalWebMonitors($trialUser, $this->downgradePricePlan->web_monitor_count);
+            UserDataSource::disableDataSources($trialUser);
+            NotificationSetting::disableNotifications($trialUser);
 
             $trialUser->trial_ended_at = $this->currentDate;
 
@@ -239,41 +240,5 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $user->save();
 
         DB::table('users')->where('user_id', $user->id)->update(['price_plan_id' => $planId, 'price_plan_expiry_date' => $this->nextExpiryDate]);
-    }
-
-    private function removeAdditionalWebMonitors($user, $maxAllowedWebMonitors)
-    {
-        $webMonitors = $user->webMonitors()->whereNotNull('uptime_robot_id')->orderBy('name', 'DESC')->get();
-
-        $uptimeRobotService = new UptimeRobotService;
-        foreach ($webMonitors as $index => $webMonitor) {
-            if ($index >= $maxAllowedWebMonitors) {
-                $anyOldMonitor = WebMonitor::where('uptime_robot_id', $webMonitor->uptime_robot_id)->where('id', '<>', $webMonitor->id)->first();
-                if (!$anyOldMonitor) {
-                    $uptimeRobotService->deleteMonitor($webMonitor->uptime_robot_id);
-                }
-                $webMonitor->uptime_robot_id = null;
-                $webMonitor->save();
-            }
-        }
-    }
-
-    private function disableDataSources($user)
-    {
-        $user->is_ds_holidays_enabled = false;
-        $user->is_ds_google_algorithm_updates_enabled = false;
-        $user->is_ds_retail_marketing_enabled = false;
-        $user->is_ds_google_alerts_enabled = false;
-        $user->is_ds_weather_alerts_enabled = false;
-        $user->is_ds_wordpress_updates_enabled = false;
-        $user->is_ds_web_monitors_enabled = false;
-        $user->save();
-    }
-
-    private function disableNotifications($user)
-    {
-        NotificationSetting::where('user_id', $user->id)->update([
-            'is_enabled' => false,
-        ]);
     }
 }
