@@ -7,10 +7,10 @@ use App\Models\Admin;
 use App\Models\Coupon;
 use App\Models\PaymentDetail;
 use App\Models\PricePlan;
+use App\Models\WebMonitor;
 use App\Models\PricePlanSubscription;
 use App\Services\BlueSnapService;
 use App\Services\SendGridService;
-use App\Services\UptimeRobotService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -141,7 +141,7 @@ class PaymentController extends Controller
                 // User is downgrading to basic plan from pro plan
                 $sGS->addUserToMarketingList($user, "11 GAa Downgraded to Basic");
 
-                $this->removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
+                WebMonitor::removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
             }
             $user->price_plan_id = $pricePlan->id;
             $user->price_plan_expiry_date = new \DateTime("+1 month");
@@ -151,7 +151,7 @@ class PaymentController extends Controller
                 // User is downgrading to free plan
                 $sGS->addUserToMarketingList($user, "12 GAa Downgraded to FREE");
 
-                $this->removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
+                WebMonitor::removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
             }
             $user->is_billing_enabled = false;
         }
@@ -170,51 +170,10 @@ class PaymentController extends Controller
                 $sGS->addUserToMarketingList($user, "10 GAa Upgraded to PRO");
                 break;
         }
-        $this->addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
+        WebMonitor::addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
         $admin = Admin::first();
         Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
 
         return ['success' => true, 'transaction_id' => $transactionId];
-    }
-
-    private function removeAdditionalWebMonitors($user, $maxAllowedWebMonitors)
-    {
-        $webMonitors = $user->webMonitors()->whereNotNull('uptime_robot_id')->orderBy('name', 'ASC')->get();
-
-        $uptimeRobotService = new UptimeRobotService;
-        foreach ($webMonitors as $index => $webMonitor) {
-            if ($index >= $maxAllowedWebMonitors) {
-                $anyOldMonitor = WebMonitor::where('uptime_robot_id', $webMonitor->uptime_robot_id)->where('id', '<>', $webMonitor->id)->first();
-                if (!$anyOldMonitor) {
-                    $uptimeRobotService->deleteMonitor($webMonitor->uptime_robot_id);
-                }
-                $webMonitor->uptime_robot_id = null;
-                $webMonitor->save();
-            }
-        }
-    }
-
-    private function addAllowedWebMonitors($user, $maxAllowedWebMonitors)
-    {
-        $webMonitors = $user->webMonitors()->orderBy('uptime_robot_id', 'DESC')->orderBy('name', 'ASC')->get();
-
-        $uptimeRobotService = new UptimeRobotService;
-        foreach ($webMonitors as $index => $webMonitor) {
-            if ($webMonitor->uptime_robot_id == null) {
-                if ($index < $maxAllowedWebMonitors) {
-                    $anyOldMonitor = WebMonitor::where('url', $webMonitor->url)->whereNotNull('uptime_robot_id')->first();
-                    if ($anyOldMonitor) {
-                        $webMonitor->uptime_robot_id = $anyOldMonitor->uptime_robot_id;
-                        $webMonitor->save();
-                    } else {
-                        $newMonitor = $uptimeRobotService->newMonitor($webMonitor->name, $webMonitor->url);
-                        if ($newMonitor) {
-                            $webMonitor->uptime_robot_id = $newMonitor['monitor']['id'];
-                            $webMonitor->save();
-                        }
-                    }
-                }
-            }
-        }
     }
 }

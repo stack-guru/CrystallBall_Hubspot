@@ -47,4 +47,16 @@ class UserDataSource extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    static public function disableDataSources($user)
+    {
+        $user->is_ds_holidays_enabled = false;
+        $user->is_ds_google_algorithm_updates_enabled = false;
+        $user->is_ds_retail_marketing_enabled = false;
+        $user->is_ds_google_alerts_enabled = false;
+        $user->is_ds_weather_alerts_enabled = false;
+        $user->is_ds_wordpress_updates_enabled = false;
+        $user->is_ds_web_monitors_enabled = false;
+        $user->save();
+    }
 }

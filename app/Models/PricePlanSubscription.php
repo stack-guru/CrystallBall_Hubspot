@@ -13,6 +13,8 @@ class PricePlanSubscription extends Model
         'expires_at', 'coupon_id',
         'transaction_id', 'charged_price',
         'left_coupon_recurring'
+
+        // app_sumo_invoice_item_uuid
     ];
 
     public function paymentDetail(){

@@ -18,7 +18,7 @@ Route::redirect('/', '/login', 301);
 
 Auth::routes(['verify' => true]);
 Route::get('register_chrome', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm']);
-
+Route::get('app-sumo/settings/change-password', [App\Http\Controllers\AppSumo\SettingsController::class, 'changePasswordShow'])->name('app-sumo.set-password');
 Route::group(['middleware' => ['auth']], function () {
     Route::post('phone/resend', [App\Http\Controllers\Auth\VerificationController::class, 'resendPhone']);
     Route::post('phone/verify', [App\Http\Controllers\Auth\VerificationController::class, 'verifyPhone']);

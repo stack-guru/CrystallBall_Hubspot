@@ -52,6 +52,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'data_source_tour_showed_at',
         'google_accounts_tour_showed_at',
         'startup_configuration_showed_at'
+
+        // app_sumo_uuid
     ];
 
     /**
@@ -69,8 +71,10 @@ class User extends Authenticatable implements MustVerifyEmail
         "last_api_called_at",
 
         "phone_verification_code",
-        "phone_verification_expiry"
+        "phone_verification_expiry",
 
+        'app_sumo_uuid',
+        'identification_code'
     ];
 
     /**
