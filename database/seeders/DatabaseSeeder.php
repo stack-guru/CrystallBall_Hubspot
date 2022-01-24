@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PricePlansSeeder::class);
         $this->call(ChecklistItemsTableSeeder::class);
         $this->call(AdminTableSeeder::class);
+        $this->call(AppSumoApiUsersTableSeeder::class);
 
         $this->call(UsersTableSeeder::class);
         $users = \App\Models\User::factory(10)->create();

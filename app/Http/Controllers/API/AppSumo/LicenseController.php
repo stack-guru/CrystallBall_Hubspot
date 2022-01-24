@@ -57,7 +57,7 @@ class LicenseController extends Controller
                 $pricePlan = PricePlan::find($request->plan_id);
 
                 $user->price_plan_id = $request->plan_id;
-                $user->price_plan_expiry_date = new \DateTime("+1 month");
+                $user->price_plan_expiry_date = new \DateTime("+60 day");
                 $user->is_billing_enabled = false;
                 $user->save();
                 $user->refresh();
@@ -90,7 +90,7 @@ class LicenseController extends Controller
                 $pricePlan = PricePlan::find($request->plan_id);
 
                 $user->price_plan_id = $request->plan_id;
-                $user->price_plan_expiry_date = new \DateTime("+1 month");
+                $user->price_plan_expiry_date = new \DateTime("+60 day");
                 $user->is_billing_enabled = false;
                 $user->save();
                 $user->refresh();
@@ -107,7 +107,7 @@ class LicenseController extends Controller
                 $pricePlan = PricePlan::find($request->plan_id);
                 $downgradePricePlan = PricePlan::where('price', 0)->where('name', PricePlan::TRIAL_ENDED)->first();
 
-                $user->price_plan_expiry_date = new \DateTime("+1 month");
+                $user->price_plan_expiry_date = new \DateTime("+60 day");
                 $user->price_plan_id = $downgradePricePlan->id;
 
                 WebMonitor::removeAdditionalWebMonitors($user, $downgradePricePlan->web_monitor_count);
