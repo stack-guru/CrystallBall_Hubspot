@@ -136,7 +136,7 @@ class RegisterController extends Controller
 
                 $user = new User;
                 $user->email = $newUserEmail;
-                $user->password = '.';
+                $user->password = User::EMPTY_PASSWORD;
                 $user->name = $newUser->getName();
                 $user->price_plan_id = PricePlan::where('name', PricePlan::TRIAL)->first()->id;
                 $user->price_plan_expiry_date = new \DateTime("+7 days");

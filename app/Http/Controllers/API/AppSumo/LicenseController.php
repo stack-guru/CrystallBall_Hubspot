@@ -35,7 +35,7 @@ class LicenseController extends Controller
                 $user = new User;
                 $user->name = 'Sumo-ling';
                 $user->email = $request->activation_email;
-                $user->password = '.';
+                $user->password = User::EMPTY_PASSWORD;
                 $user->price_plan_id = $request->plan_id;
                 $user->price_plan_expiry_date = new \DateTime("+60 day");
                 $user->is_billing_enabled = false;

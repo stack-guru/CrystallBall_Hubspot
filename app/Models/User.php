@@ -24,6 +24,8 @@ class User extends Authenticatable implements MustVerifyEmail
     const TEAM = 'team';
     const VIEWER = 'viewer';
 
+    const EMPTY_PASSWORD = '.';
+
     /**
      * The attributes that are mass assignable.
      *
