@@ -49,7 +49,7 @@ class LicenseController extends Controller
 
                 return response([
                     "message" => "User created with the given price plan.",
-                    "redirect_url" => route('app-sumo.set-password', ['identification-code' => $user->identification_code])
+                    "redirect_url" => route('settings.change-password.index', ['identification-code' => $user->identification_code])
                 ], 201);
                 break;
             case 'enhance_tier':

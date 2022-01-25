@@ -18,7 +18,6 @@ class AppSumoAuthenticate
      */
     public function handle(Request $request, Closure $next)
     {
-
         // if ($request->hasHeader('authorization') === false) {
         //     throw OAuthServerException::accessDenied('Missing "Authorization" header');
         // }

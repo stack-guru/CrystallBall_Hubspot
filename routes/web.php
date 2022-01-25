@@ -18,7 +18,7 @@ Route::redirect('/', '/login', 301);
 
 Auth::routes(['verify' => true]);
 Route::get('register_chrome', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm']);
-Route::get('app-sumo/settings/change-password', [App\Http\Controllers\AppSumo\SettingsController::class, 'changePasswordShow'])->name('app-sumo.set-password');
+
 Route::group(['middleware' => ['auth']], function () {
     Route::post('phone/resend', [App\Http\Controllers\Auth\VerificationController::class, 'resendPhone']);
     Route::post('phone/verify', [App\Http\Controllers\Auth\VerificationController::class, 'verifyPhone']);
@@ -36,7 +36,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 Route::view('documentation', 'documentation');
 Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth.identification', 'only.non.empty.password', 'auth']], function () {
 
     Route::view('dashboard/analytics', 'ui/app');
     Route::view('dashboard/search-console', 'ui/app');
@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store']);
 
-        Route::view('change-password', 'ui/app');
+        Route::view('change-password', 'ui/app')->name('settings.change-password.index');
         Route::view('payment-detail/create', 'ui/app');
         Route::view('price-plans', 'ui/app')->name('settings.price-plans');
         Route::get('price-plans/payment', [App\Http\Controllers\PaymentController::class, 'show'])->name('settings.price-plan.payment');
@@ -101,7 +101,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('user-startup-configuration', [App\Http\Controllers\UserStartupConfigurationController::class, 'store']);
         Route::resource('user-checklist-item', App\Http\Controllers\UserChecklistItemController::class)->only(['index', 'update']);
 
-        Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow']);
+        Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow'])->withoutMiddleware('only.non.empty.password');
         Route::get('coupon', [App\Http\Controllers\CouponController::class, 'verify']);
         Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
 
@@ -141,7 +141,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
             Route::put('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'update']);
             Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
-            Route::post('change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
+            Route::post('change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword'])->withoutMiddleware('only.non.empty.password');
             Route::put('change-timezone', [App\Http\Controllers\HomeController::class, 'updateTimezone']);
             Route::put('change-phone', [App\Http\Controllers\HomeController::class, 'updatePhone']);
 
