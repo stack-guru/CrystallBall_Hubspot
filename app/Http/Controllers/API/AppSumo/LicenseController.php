@@ -37,7 +37,7 @@ class LicenseController extends Controller
                 $user->email = $request->activation_email;
                 $user->password = User::EMPTY_PASSWORD;
                 $user->price_plan_id = $request->plan_id;
-                $user->price_plan_expiry_date = new \DateTime("+60 day");
+                $user->price_plan_expiry_date = new \DateTime("+100 years");
                 $user->is_billing_enabled = false;
                 $user->app_sumo_uuid = $request->uuid;
                 $user->identification_code = Str::random(100);
@@ -57,7 +57,7 @@ class LicenseController extends Controller
                 $pricePlan = PricePlan::find($request->plan_id);
 
                 $user->price_plan_id = $request->plan_id;
-                $user->price_plan_expiry_date = new \DateTime("+60 day");
+                $user->price_plan_expiry_date = new \DateTime("+100 years");
                 $user->is_billing_enabled = false;
                 $user->save();
                 $user->refresh();
@@ -90,7 +90,7 @@ class LicenseController extends Controller
                 $pricePlan = PricePlan::find($request->plan_id);
 
                 $user->price_plan_id = $request->plan_id;
-                $user->price_plan_expiry_date = new \DateTime("+60 day");
+                $user->price_plan_expiry_date = new \DateTime("+100 years");
                 $user->is_billing_enabled = false;
                 $user->save();
                 $user->refresh();
@@ -107,7 +107,7 @@ class LicenseController extends Controller
                 $pricePlan = PricePlan::find($request->plan_id);
                 $downgradePricePlan = PricePlan::where('price', 0)->where('name', PricePlan::TRIAL_ENDED)->first();
 
-                $user->price_plan_expiry_date = new \DateTime("+60 day");
+                $user->price_plan_expiry_date = new \DateTime("+100 years");
                 $user->price_plan_id = $downgradePricePlan->id;
 
                 WebMonitor::removeAdditionalWebMonitors($user, $downgradePricePlan->web_monitor_count);
@@ -128,7 +128,7 @@ class LicenseController extends Controller
     {
         $pricePlanSubscription = new PricePlanSubscription;
         $pricePlanSubscription->transaction_id = $transactionId;
-        $pricePlanSubscription->expires_at = new \DateTime("+60 day");
+        $pricePlanSubscription->expires_at = new \DateTime("+100 years");
         $pricePlanSubscription->user_id = $userId;
         $pricePlanSubscription->payment_detail_id = $paymentDetailId;
         $pricePlanSubscription->price_plan_id = $pricePlanId;
