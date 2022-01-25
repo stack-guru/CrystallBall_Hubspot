@@ -43,6 +43,7 @@ class HomeController extends Controller
 
         // $user->annotations_count = $user->getTotalAnnotationsCount(true);
         $user->google_analytics_properties_in_use_count = $user->googleAnalyticsPropertiesInUse()->count();
+        $user->do_require_password_change = ($user->password == User::EMPTY_PASSWORD);
 
         return ['user' => $user];
     }

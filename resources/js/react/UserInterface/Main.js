@@ -66,6 +66,10 @@ class Main extends React.Component {
             return <Redirect to={"/settings/price-plans"} />
         }
 
+        if (["/settings/change-password"].indexOf(this.props.location.pathname) == -1 && this.state.user.do_require_password_change == true) {
+            return <Redirect to={"/settings/change-password"} />
+        }
+
         return (
 
             <React.Fragment>
