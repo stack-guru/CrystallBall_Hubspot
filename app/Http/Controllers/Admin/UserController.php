@@ -97,4 +97,29 @@ class UserController extends Controller
         Auth::guard('web')->loginUsingId($user->id);
         return redirect()->route('annotation.index');
     }
+
+    public function makeOwner(User $user)
+    {
+        $currentOwnerId = $user->user_id;
+        $newOwnerId = $user->id;
+        $newOwner = $user;
+
+        if (is_null($currentOwnerId)) {
+            return redirect()->route('admin.user.index')->with('error', "User is already an account owner.");
+        }
+
+        $currentOwner = User::find($currentOwnerId);
+        $currentOwner->user_id = $newOwnerId;
+        $currentOwner->save();
+
+        $newOwner->user_id = null;
+        $newOwner->user_level = User::ADMIN;
+        $newOwner->save();
+
+        User::where('user_id', $currentOwnerId)->update([
+            'user_id' => $newOwnerId
+        ]);
+
+        return redirect()->route('admin.user.index')->with('success', true);
+    }
 }

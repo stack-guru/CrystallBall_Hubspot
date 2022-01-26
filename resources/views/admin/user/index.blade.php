@@ -58,6 +58,11 @@
                                             </form>
                                             <button type="button" onclick="document.getElementById('loginUserForm{{$user->id}}').submit()" class="btn btn-secondary m-2">Impersonate</button>
                                             
+                                            <form id="makeOwnerUserForm{{$user->id}}" method="POST" action="{{ route('admin.user.make-owner', $user->id) }}">
+                                                @csrf @method("PUT")
+                                            </form>
+                                            <button type="button" onclick="document.getElementById('makeOwnerUserForm{{$user->id}}').submit()" class="btn btn-secondary m-2">Make Owner</button>
+
                                             </div>
                                         </td>
                                     </tr>

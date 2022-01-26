@@ -3,6 +3,7 @@ Route::view('/dashboard', 'admin/dashboard')->name('dashboard');
 Route::resource('price-plan', App\Http\Controllers\Admin\PricePlanController::class);
 Route::resource('user', App\Http\Controllers\Admin\UserController::class)->except(['create', 'store']);
 Route::post('/user/{user}/login', [App\Http\Controllers\Admin\UserController::class, 'login'])->name('user.login');
+Route::put('/user/{user}/make-owner', [App\Http\Controllers\Admin\UserController::class, 'makeOwner'])->name('user.make-owner');
 
 Route::group(['prefix' => 'data-source', 'as' => 'data-source.'], function () {
 
