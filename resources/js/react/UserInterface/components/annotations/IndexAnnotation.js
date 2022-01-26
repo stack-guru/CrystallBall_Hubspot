@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 import { timezoneToDateFormat } from '../../utils/TimezoneTodateFormat';
 import { getCompanyName } from '../../helpers/CommonFunctions';
+import ErrorAlert from '../../utils/ErrorAlert';
 
 class IndexAnnotations extends React.Component {
 
@@ -185,6 +186,7 @@ class IndexAnnotations extends React.Component {
                             </div>
                             <div className="row ml-0 mr-0">
                                 <div className="col-12">
+                                    <ErrorAlert errors={this.state.errors} />
                                     <div id="annotation-table-container" className="table-responsive">
                                         <table className="table table-hover gaa-hover table-bordered">
                                             <thead id="annotation-table-head">

@@ -19,9 +19,16 @@ class AllowOnlyNonEmptyPassword
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->password == User::EMPTY_PASSWORD && $request->route()->getName() !== RouteServiceProvider::CHANGE_PASSWORD_ROUTE) {
-            if (!$request->expectsJson()) return redirect(route(RouteServiceProvider::CHANGE_PASSWORD_ROUTE, ['identification-code' => $request->query('identification-code')]));
-            if ($request->expectsJson()) abort(400, 'You need to set password before taking any action.');
+        if (Auth::check()) {
+            $user = Auth::user();
+            if (
+                $user->password == User::EMPTY_PASSWORD
+                && $request->route()->getName() !== RouteServiceProvider::CHANGE_PASSWORD_ROUTE
+                && !is_null($user->app_sumo_uuid)
+            ) {
+                if (!$request->expectsJson()) return redirect(route(RouteServiceProvider::CHANGE_PASSWORD_ROUTE, ['identification-code' => $request->query('identification-code')]));
+                if ($request->expectsJson()) abort(400, 'You need to set password before taking any action.');
+            }
         }
 
         return $next($request);
