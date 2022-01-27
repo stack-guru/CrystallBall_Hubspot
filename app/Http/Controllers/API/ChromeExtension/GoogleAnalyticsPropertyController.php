@@ -17,25 +17,22 @@ class GoogleAnalyticsPropertyController extends Controller
     {
         return ['google_analytics_properties' => array_merge(
             [
-                ['id' => '*', 'name' => 'No Filter',  "google_account"=>[
-                    "id"=> null,
-                    "name"=> null
+                ['id' => '*', 'name' => 'No Filter',  "google_account" => [
+                    "id" => null,
+                    "name" => null
                 ]],
             ],
-            GoogleAnalyticsProperty::where('user_id',Auth::id())->orderBy('name')->with('googleAccount:id,name')->get(['id', 'name', 'google_account_id'])->toArray()
+            GoogleAnalyticsProperty::where('user_id', Auth::id())->orderBy('name')->with('googleAccount:id,name')->get(['id', 'name', 'google_account_id'])->toArray()
         )];
-
     }
-    
+
     public function getAnnotations($id)
     {
-        $annotations=AnnotationGaProperty::where([['user_id',Auth::id()],['google_analytics_property_id',$id]])->get();
-        $allAnnotaions=[];
-        foreach($annotations as $annotation)
-        {
-            array_push($allAnnotaions,$annotation->annotation);
+        $annotations = AnnotationGaProperty::where([['user_id', Auth::id()], ['google_analytics_property_id', $id]])->get();
+        $allAnnotaions = [];
+        foreach ($annotations as $annotation) {
+            array_push($allAnnotaions, $annotation->annotation);
         }
         return $allAnnotaions;
     }
-    
 }
