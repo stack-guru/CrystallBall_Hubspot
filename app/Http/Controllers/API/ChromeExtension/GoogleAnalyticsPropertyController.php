@@ -15,6 +15,19 @@ class GoogleAnalyticsPropertyController extends Controller
 {
     public function index(Request $request)
     {
+        if ($request->has('keyword')) {
+            $keyword = $request->query('keyword');
+            return [
+                'google_analytics_properties' => GoogleAnalyticsProperty::where('user_id', Auth::id())
+                    ->where(function ($query) use ($keyword) {
+                        $query->where('property_id', 'LIKE', "%$keyword%")
+                            ->orWhere('internal_property_id', 'LIKE', "%$keyword%")
+                            ->orWhere('default_profile_id', 'LIKE', "%$keyword%");
+                    })
+                    ->get(['id'])
+            ];
+        }
+
         return ['google_analytics_properties' => array_merge(
             [
                 ['id' => '*', 'name' => 'No Filter',  "google_account" => [
