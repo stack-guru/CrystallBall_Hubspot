@@ -68,7 +68,7 @@ class AnnotationController extends Controller
                 if (!$googleAnalyticsProperty->is_in_use) {
                     if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
                         DB::rollback();
-                        abort(400, 'You cannot use the selected google analytics property.');
+                        abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
                     }
                 }
                 $googleAnalyticsProperty->is_in_use = true;
@@ -145,7 +145,7 @@ class AnnotationController extends Controller
                         if (!$googleAnalyticsProperty->is_in_use) {
                             if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
                                 DB::rollback();
-                                abort(400, 'You cannot use the selected google analytics property.');
+                                abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
                             }
                         }
                         $googleAnalyticsProperty->is_in_use = true;

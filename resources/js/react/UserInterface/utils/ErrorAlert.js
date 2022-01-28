@@ -36,7 +36,7 @@ export default function ErrorAlert(props) {
         } else {
             return (
                 <div className="alert alert-danger" role="alert">
-                    <p className="alert-heading"> {props.errors.message}</p>
+                    <p className="alert-heading" dangerouslySetInnerHTML={{ __html: props.errors.message }}></p>
                 </div>
             );
         }
