@@ -38,7 +38,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 callback(options);
             }, (err) => {
                 if (err.response.status == 400) {
-                    swal({
+                    swal.fire({
                         title: "Your Google Analytics Account is not linked yet",
                         text: "To assign an annotation to a property, first, you need to connect your Google Analytics accounts.",
                         icon: "info",

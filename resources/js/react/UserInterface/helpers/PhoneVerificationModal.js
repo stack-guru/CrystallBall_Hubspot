@@ -73,7 +73,7 @@ export default class PhoneVerificationModal extends Component {
         HttpClient({ method: 'POST', url: '/phone/verify', baseURL: "/", data: { verification_code: verificationCode } })
             .then(response => {
                 this.setState({ isBusy: false });
-                swal('Phone Verified', 'Your phone number has been verified.', 'success').then(b => {
+                swal.fire('Phone Verified', 'Your phone number has been verified.', 'success').then(b => {
                     (this.props.toggleCallback)();
                 });
             }, (err) => {

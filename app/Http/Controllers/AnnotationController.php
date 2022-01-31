@@ -70,7 +70,9 @@ class AnnotationController extends Controller
                 if (!$googleAnalyticsProperty->is_in_use) {
                     if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
                         DB::rollback();
-                        abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
+                        // There are 2 different messages to send for different price plan users.
+                        if ($user->pricePlan->name == PricePlan::PRO) abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . RouteServiceProvider::PRODUCT_WEBSITE_PRICE_PLAN_PAGE . '" target="_blank" >Contact sales to upgrade your plan.</a>');
+                        abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '" target="_blank" >Upgrade your plan.</a>');
                     }
                 }
                 $googleAnalyticsProperty->is_in_use = true;
@@ -148,8 +150,8 @@ class AnnotationController extends Controller
                             if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
                                 DB::rollback();
                                 // There are 2 different messages to send for different price plan users.
-                                if ($user->pricePlan->name == PricePlan::PRO) abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . RouteServiceProvider::PRODUCT_WEBSITE_PRICE_PLAN_PAGE . '">Contact sales to upgrade your plan.</a>');
-                                abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
+                                if ($user->pricePlan->name == PricePlan::PRO) abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . RouteServiceProvider::PRODUCT_WEBSITE_PRICE_PLAN_PAGE . '" target="_blank" >Contact sales to upgrade your plan.</a>');
+                                abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '" target="_blank" >Upgrade your plan.</a>');
                             }
                         }
                         $googleAnalyticsProperty->is_in_use = true;

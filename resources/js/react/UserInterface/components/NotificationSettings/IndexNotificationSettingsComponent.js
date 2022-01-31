@@ -35,7 +35,7 @@ export default class IndexNotificationSettings extends Component {
             });
 
         if (!this.props.user.price_plan.has_notifications) {
-            swal("Upgrade Your Plan!", "Notifications feature is not available in this plan.", "warning").then((b) => {
+            swal.fire("Upgrade Your Plan!", "Notifications feature is not available in this plan.", "warning").then((b) => {
                 this.setState({ redirectTo: '/settings/price-plans' });
             });
         }
@@ -47,12 +47,12 @@ export default class IndexNotificationSettings extends Component {
             switch (e.target.getAttribute('notification-setting-name')) {
                 case 'web_monitors':
                     if (!this.props.user.is_ds_web_monitors_enabled) {
-                        swal("Activate the Automation", "To receive notifications, you need to activate and configure Website Monitoring on the automation page.", "info");
+                        swal.fire("Activate the Automation", "To receive notifications, you need to activate and configure Website Monitoring on the automation page.", "info");
                     }
                     break;
                 case 'google_alerts':
                     if (!this.props.user.is_ds_google_alerts_enabled) {
-                        swal("Activate the Automation", "To receive notifications, you need to activate and configure News Alerts on the automation page.", "info");
+                        swal.fire("Activate the Automation", "To receive notifications, you need to activate and configure News Alerts on the automation page.", "info");
                     }
                     break;
             }
@@ -62,7 +62,7 @@ export default class IndexNotificationSettings extends Component {
                     .catch((e) => {
                         console.error(e);
                         if (e.name == "NotAllowedError") {
-                            swal("Browser Notifications", "You need to allow push notifications inorder to receive browser notifcations from " + getCompanyName() + ".", "warning");
+                            swal.fire("Browser Notifications", "You need to allow push notifications inorder to receive browser notifcations from " + getCompanyName() + ".", "warning");
                         }
                     });
 
@@ -83,7 +83,7 @@ export default class IndexNotificationSettings extends Component {
     sendVerificationEmail() {
         HttpClient({ method: 'POST', url: '/email/resend', baseURL: "/", data: { email: this.props.user.email } })
             .then(response => {
-                swal('Verify Email', 'An email has been sent to your email address for verification.', 'info');
+                swal.fire('Verify Email', 'An email has been sent to your email address for verification.', 'info');
             }, (err) => {
                 this.setState({ errors: (err.response).data });
             }).catch(err => {

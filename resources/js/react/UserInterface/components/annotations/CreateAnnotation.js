@@ -85,11 +85,10 @@ export default class CreateAnnotation extends React.Component {
                     this.setDefaultState();
                 }, (err) => {
                     if (err.response.status == 402) {
-                        swal({
+                        swal.fire({
                             icon: "warning",
                             title: "Limit Reached",
-                            text: err.response.data.message,
-                            html: true,
+                            html: err.response.data.message,
                         });
                     }
                     this.setState({ isBusy: false, errors: (err.response).data });
@@ -238,8 +237,8 @@ export default class CreateAnnotation extends React.Component {
                                             components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
                                             multiple
                                             onFocus={(e) => {
-                                                if (this.props.currentPricePlan.ga_account_count == 1) swal("Upgrade to Pro Plan!", "Google Analytics Properties are not available in this plan.", "warning");
-                                                if (this.props.currentPricePlan.google_analytics_property_count == -1) swal("Upgrade your Plan!", "Google Analytics Properties are not available in this plan.", "warning");
+                                                if (this.props.currentPricePlan.ga_account_count == 1) swal.fire("Upgrade to Pro Plan!", "Google Analytics Properties are not available in this plan.", "warning");
+                                                if (this.props.currentPricePlan.google_analytics_property_count == -1) swal.fire("Upgrade your Plan!", "Google Analytics Properties are not available in this plan.", "warning");
                                             }}
                                         />
 

@@ -34,7 +34,7 @@ export default class IndexPricingPlans extends React.Component {
 
     changePricePlan(pricePlan) {
         if (this.props.user.user_id) {
-            swal("Unauthorized", "Only the Admin of your team can change the plan", "error");
+            swal.fire("Unauthorized", "Only the Admin of your team can change the plan", "error");
         } else {
             if (pricePlan.price == 0) {
                 this.freeSubscribe(pricePlan.id)
@@ -49,7 +49,7 @@ export default class IndexPricingPlans extends React.Component {
 
     freeSubscribe(id) {
         this.setState({ isBusy: true });
-        swal({
+        swal.fire({
             title: "Downgrade!",
             text: "Do you really want to downgrade your current plan after current billing cycle?",
             icon: "warning",
@@ -59,7 +59,7 @@ export default class IndexPricingPlans extends React.Component {
             if (value) {
                 HttpClient.post('/settings/price-plan/payment', { 'price_plan_id': id })
                     .then(response => {
-                        swal("Plan downgraded", "Your account will be automatically downgraded to $0 plan on next billing cycle.", "success").then(value => {
+                        swal.fire("Plan downgraded", "Your account will be automatically downgraded to $0 plan on next billing cycle.", "success").then(value => {
                             window.location = "/annotation"
                         })
                     }, (err) => {

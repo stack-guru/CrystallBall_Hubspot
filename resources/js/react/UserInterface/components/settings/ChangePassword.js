@@ -33,7 +33,7 @@ export default class ChangePassword extends React.Component {
 
         var searchParams = new URLSearchParams(window.location.search);
         if (searchParams.has('identification-code') || this.props.user.do_require_password_change == true) {
-            swal("Set Password", "You need to set a password for your account inorder to use full functionality.", "info");
+            swal.fire("Set Password", "You need to set a password for your account inorder to use full functionality.", "info");
         }
 
     }

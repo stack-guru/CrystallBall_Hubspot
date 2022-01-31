@@ -55,7 +55,7 @@ export default class GoogleAccountIndex extends React.Component {
         if (searchParams.has('message') && searchParams.has('success')) {
             let success = searchParams.get('success');
             let message = searchParams.get('message');
-            swal("Error", message, success == "false" ? "error" : "success");
+            swal.fire("Error", message, success == "false" ? "error" : "success");
         }
         this.setState({ showACCISModal: searchParams && searchParams.has('do-refresh') && searchParams.has('google_account_id') })
 
@@ -334,7 +334,7 @@ export default class GoogleAccountIndex extends React.Component {
         if (this.props.user.price_plan.ga_account_count > this.state.googleAccounts.length || this.props.user.price_plan.ga_account_count == 0) {
             window.location = "/settings/google-account/create";
         } else {
-            swal("Upgrade to Pro Plan!", "Google account feature is not available in this plan.", "warning").then(value => {
+            swal.fire("Upgrade to Pro Plan!", "Google account feature is not available in this plan.", "warning").then(value => {
                 this.setState({ redirectTo: '/settings/price-plans' });
             })
         }

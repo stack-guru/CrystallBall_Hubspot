@@ -74,7 +74,7 @@ export default class AnalyticsAndBusinessIntelligenceIndex extends React.Compone
                                 <a target="_blank" href="https://youtu.be/rIOB3Pc3N5E">See how it works</a>
                             </div>
                             <div className="col-lg-3 col-sm-4 text-center">
-                                <a className="disabled" href="#" onClick={e => { e.preventDefault(); swal('Coming Soon!', '', 'info'); }}>
+                                <a className="disabled" href="#" onClick={e => { e.preventDefault(); swal.fire('Coming Soon!', '', 'info'); }}>
                                     <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/microsoft-power-business-intelligence-cs.png" />
                                 </a>
                                 <br />

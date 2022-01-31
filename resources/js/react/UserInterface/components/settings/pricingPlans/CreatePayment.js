@@ -122,7 +122,7 @@ export default class CreatePayment extends Component {
                 //     eventValue: this.state.pricePlan.price
                 // });
 
-                swal(`${this.state.pricePlan.name} Plan purchased!`, "You can now enjoy extended functionalities.", "success").then(value => {
+                swal.fire(`${this.state.pricePlan.name} Plan purchased!`, "You can now enjoy extended functionalities.", "success").then(value => {
                     window.location = "/annotation"
                 });
             }, (err) => {
@@ -228,7 +228,7 @@ export default class CreatePayment extends Component {
 
     cancelSubscription() {
 
-        swal({
+        swal.fire({
             title: "Cancel Purchase?",
             text: "Do you really want to cancel this subscription purchase?",
             icon: "warning",
