@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Models\GoogleAnalyticsProperty;
+use App\Models\PricePlan;
+use App\Providers\RouteServiceProvider;
 
 class AnnotationController extends Controller
 {
@@ -145,6 +147,8 @@ class AnnotationController extends Controller
                         if (!$googleAnalyticsProperty->is_in_use) {
                             if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
                                 DB::rollback();
+                                // There are 2 different messages to send for different price plan users.
+                                if ($user->pricePlan->name == PricePlan::PRO) abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . RouteServiceProvider::PRODUCT_WEBSITE_PRICE_PLAN_PAGE . '">Contact sales to upgrade your plan.</a>');
                                 abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
                             }
                         }

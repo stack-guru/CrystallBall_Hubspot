@@ -84,7 +84,14 @@ export default class CreateAnnotation extends React.Component {
                     toast.success("Annotation added.");
                     this.setDefaultState();
                 }, (err) => {
-
+                    if (err.response.status == 402) {
+                        swal({
+                            icon: "warning",
+                            title: "Limit Reached",
+                            text: err.response.data.message,
+                            html: true,
+                        });
+                    }
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
 

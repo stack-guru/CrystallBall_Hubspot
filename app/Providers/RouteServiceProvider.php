@@ -19,6 +19,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/annotation';
     public const CHANGE_PASSWORD_ROUTE = 'settings.change-password.index';
+    public const PRODUCT_WEBSITE_PRICE_PLAN_PAGE = 'https://www.crystalballinsight.com/pricing';
 
     /**
      * The controller namespace for the application.
