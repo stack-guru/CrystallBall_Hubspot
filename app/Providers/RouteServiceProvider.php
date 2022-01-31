@@ -18,7 +18,21 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/annotation';
-    public const CHANGE_PASSWORD_ROUTE = 'settings.change-password.index';
+    /**
+     * The name of the route which will render set password page for AppSumo users.
+     *
+     * 
+     *
+     * @var string
+     */
+    public const APP_SUMO_CHANGE_PASSWORD_ROUTE = 'app-sumo.password.index';
+    /**
+     * The path to the product own website's pricing page.
+     *
+     * It has to be absolute path.
+     *
+     * @var string
+     */
     public const PRODUCT_WEBSITE_PRICE_PLAN_PAGE = 'https://www.crystalballinsight.com/pricing';
 
     /**

@@ -36,6 +36,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 Route::view('documentation', 'documentation');
 Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
 
+// AppSumo Routes
+Route::group(['prefix' => 'app-sumo', 'as' => 'app-sumo.', 'middleware' => ['auth']], function () {
+    Route::get('password', [App\Http\Controllers\AppSumo\AuthController::class, 'showPasswordForm'])->name('password.index');
+    Route::put('password', [App\Http\Controllers\AppSumo\AuthController::class, 'updatePassword'])->name('password.update');
+});
+
 Route::group(['middleware' => ['auth.identification', 'only.non.empty.password', 'auth']], function () {
 
     Route::view('dashboard/analytics', 'ui/app');
