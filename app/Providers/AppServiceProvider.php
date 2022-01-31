@@ -53,5 +53,8 @@ class AppServiceProvider extends ServiceProvider
                 config(['mail.from' => ['address' => 'contact@crystalballinsight.com', 'name' => 'Crystal Ball']]);
                 break;
         }
+
+        // Setting Google Sign-On Redirect URL to support both domain logins
+        \Illuminate\Support\Env::getRepository()->set('GOOGLE_CLIENT_REDIRECT_URI', url('/settings/google-account/redirect'));
     }
 }

@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth.identification', 'only.non.empty.password',
         Route::view('support', 'ui/app');
 
         Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
-        Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store']);
+        Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store'])->name('settings.google-account.redirect.store');
 
         Route::view('change-password', 'ui/app')->name('settings.change-password.index');
         Route::view('payment-detail/create', 'ui/app');
