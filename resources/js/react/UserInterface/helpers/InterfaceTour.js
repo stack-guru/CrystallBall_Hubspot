@@ -15,20 +15,20 @@ const steps = [
     // 2
     {
         position: 'top',
-        selector: '#chrome-extension-download-button',
+        // selector: '#chrome-extension-download-button',
         content: <div>Make sure to <a href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom" target="_blank">add the extension</a>, pin it and to log in.<br />
-            <img src="/images/walkthrough_step6.gif" width="100%" height="auto" />
+            <img src="/images/walkthrough_step6.gif" width="600px" height="338px" />
         </div>,
         redirectRoute: null,
         style: {
-            width: '75%', height: 'auto', maxWidth: '677px', top: '25px'
+            width: '75%', height: 'auto', maxWidth: '677px'
         }
     },
     // 3
     {
         position: 'top',
         content: <div>We added a Sample Annotation to show you how it looks like, once you go to <a href="https://analytics.google.com/analytics/web/#/" target="_blank">Google Analytics</a>
-            <img src="/images/walkthrough_step7.gif" width="100%" height="auto" />
+            <img src="/images/walkthrough_step7.gif" width="600px" height="338px" />
         </div>,
         redirectRoute: null,
         style: {
