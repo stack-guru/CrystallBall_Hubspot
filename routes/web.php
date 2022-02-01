@@ -37,12 +37,13 @@ Route::view('documentation', 'documentation');
 Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
 
 // AppSumo Routes
-Route::group(['prefix' => 'app-sumo', 'as' => 'app-sumo.', 'middleware' => ['auth']], function () {
+// In middleware auth.identification only identifies user through GET query parameter `identification_code` and logs it in
+Route::group(['prefix' => 'app-sumo', 'as' => 'app-sumo.', 'middleware' => ['auth.identification', 'auth']], function () {
     Route::get('password', [App\Http\Controllers\AppSumo\AuthController::class, 'showPasswordForm'])->name('password.index');
     Route::put('password', [App\Http\Controllers\AppSumo\AuthController::class, 'updatePassword'])->name('password.update');
 });
 
-Route::group(['middleware' => ['auth.identification', 'only.non.empty.password', 'auth']], function () {
+Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () {
 
     Route::view('dashboard/analytics', 'ui/app');
     Route::view('dashboard/search-console', 'ui/app');
