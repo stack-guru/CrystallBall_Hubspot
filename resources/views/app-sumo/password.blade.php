@@ -1,69 +1,47 @@
 @extends('layouts/auth')
 
-@section('page-title', 'Set Password')
-@section('meta-description', 'Set your password to ' . config('app.name'))
+@section('page-title', 'Configure Account')
+@section('meta-description', 'Configure your account for ' . config('app.name'))
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h1>{{ __('Set Password') }}</h1>
-                </div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('app-sumo.password.update', ['identification-code' => request()->query('identification-code') ]) }}">
-                        @csrf
-                        @method('PUT')
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $name ?? old('name') }}" required autofocus>
-
-                                @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Setup Account') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+<form class="form-signin" method="POST" action="{{ route('app-sumo.password.update', ['identification-code' => request()->query('identification-code') ]) }}">
+    @csrf
+    @method('PUT')
+    <div class="text-center mb-4">
+        <img class="mb-1" src="{{ config('app.logo') }}" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Configure your {{config('app.name')}} Account</h1>
+        {{-- <p>Google Analytics Annotations Amplified</p>--}}
     </div>
-</div>
+
+    <div class="form-label-group">
+        <input type="name" id="inputName" class="form-control @error('name') is-invalid @enderror" placeholder="Sumo-ling" required="" autofocus="" name="name" value="{{ old('name') }}">
+        <label for="inputName">Name</label>
+        @error('name')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+
+    <div class="form-label-group">
+        <input type="password" id="inputPassword" class="form-control @error('password') is-invalid @enderror" placeholder="Password" required="" name="password" value="{{ old('password') }}">
+        <label for="inputPassword">Password</label>
+        @error('password')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+
+    <div class="form-label-group">
+        <input type="password" id="inputPasswordConfirmation" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="password_confirmation" required="" name="password_confirmation" value="{{ old('password_confirmation') }}">
+        <label for="inputPasswordConfirmation">Password Confirmation</label>
+        @error('password_confirmation')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Setup Account</button>
+</form>
 @endsection
