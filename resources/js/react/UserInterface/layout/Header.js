@@ -188,7 +188,7 @@ class header extends React.Component {
                             <ul className="dropdown-menu pX-20">
                                 <li >
                                     <div className="header-profile-info">
-                                        <h4 className="gaa-text-primary"><b>{this.props.user.price_plan.name} Plan</b></h4>
+                                        <h4 className="gaa-text-primary"><b>{this.props.user.price_plan.name}</b></h4>
                                     </div>
                                 </li>
                                 <li >
