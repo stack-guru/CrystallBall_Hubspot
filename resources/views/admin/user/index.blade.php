@@ -28,7 +28,7 @@
                                     <th>Team</th>
                                     <th>Email</th>
                                     <th>Name</th>
-                                    <th>Plan</th>
+                                    <th>Plan (Ending)</th>
                                     <th>Registration Date</th>
                                     <th>Actions</th>
                                 </tr>
@@ -43,7 +43,7 @@
                                         <td>{{ $user->team_name }}{{ $user->department ? ", " . $user->department : ''}}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->name }}</td>
-                                        <td>{{ $user->pricePlan->name }}</td>
+                                        <td>{{ $user->pricePlan->name }} ({{ $user->price_plan_expiry_date }})</td>
                                         <td>@if($user->created_at){{ $user->created_at->format('Y-m-d') }}@endif</td>
                                         <td>
                                             <div class="row ml-0 mr-0 d-flex flex-row ">
