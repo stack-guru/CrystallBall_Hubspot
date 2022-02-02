@@ -21,15 +21,10 @@ class UserController extends Controller
 
         $data['users'] = User::with([
             'pricePlan',
-            'lastPopupOpenedChromeExtensionLog',
-            'lastAnnotationButtonClickedChromeExtensionLog',
         ])
-            ->withCount('last90DaysApiAnnotationCreatedLogs')
-            ->withCount('last90DaysNotificationLogs')
-            ->withCount('last90DaysLoginLogs')
             ->orderBy('created_at', 'DESC')->get();
 
-        return view('admin/user/index', $data)->with('last6_months_registration_count', User::where('created_at', '>=', Carbon::now()->subMonths(6)->format('Y-m-d'))->count());
+        return view('admin/user/index', $data);
     }
 
     /**
