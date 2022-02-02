@@ -82,14 +82,71 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         //return count($users);
     }
 
+    private function  downgradeTrialUsers()
+    {
+        // Trial users moving to free plan
+        $trialUsers = User::select('users.*')
+            ->where('price_plan_expiry_date', '<', new \DateTime)
+            ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
+            ->where('price_plans.price', 0)
+            ->where('price_plans.name', PricePlan::TRIAL)
+            ->get();
+        $this->comment(count($trialUsers) . " users are currently on " . PricePlan::TRIAL . " plan and will be downgraded.");
+
+        foreach ($trialUsers as $trialUser) {
+            $trialUser->price_plan_expiry_date = $this->nextExpiryDate;
+            $trialUser->price_plan_id = $this->downgradePricePlanId;
+
+            WebMonitor::removeAdditionalWebMonitors($trialUser, $this->downgradePricePlan->web_monitor_count);
+            UserDataSource::disableDataSources($trialUser);
+            NotificationSetting::disableNotifications($trialUser);
+
+            $trialUser->trial_ended_at = $this->currentDate;
+
+            $trialUser->save();
+
+            event(new UserTrialPricePlanEnded($trialUser));
+        }
+        $this->info(count($trialUsers) . " users have been subscribed from " . PricePlan::TRIAL . " plan to " . $this->downgradePricePlan->name . " plan.");
+    }
+
+    private function resubscribeFreePlanUsers()
+    {
+
+        // Free plan users resubscribing to free plan with new expiry dates
+        // There are multiple free plans in the system that's why the query
+        // below, does not change price_plan_id,  it only extends price_plan_expiry_date
+        $updateCount = User::where('price_plan_expiry_date', '<', new \DateTime)
+            ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
+            ->where('price_plans.price', 0)
+            ->update([
+                'users.price_plan_expiry_date' => $this->nextExpiryDate,
+                'users.is_ds_holidays_enabled' => false,
+                'users.is_ds_google_algorithm_updates_enabled' => false,
+                'users.is_ds_retail_marketing_enabled' => false,
+                'users.is_ds_google_alerts_enabled' => false,
+                'users.is_ds_weather_alerts_enabled' => false,
+                'users.is_ds_wordpress_updates_enabled' => false,
+                'users.is_ds_web_monitors_enabled' => false,
+            ]);
+
+        $this->info("$updateCount users have been resubscribed to their free plans.");
+    }
+
+    // There are multiple paid plans in the system that's why the query
+    // below, does not change price_plan_id,  it only extends price_plan_expiry_date
+    // after attempting payment deduction and downgrades to trial ended
+    // plan if the payment fails
     private function resubscribePaidPlanUsers()
     {
+
         $users = User::select('users.*')->where('price_plan_expiry_date', '<', new \DateTime)
             ->where('price_plans.price', '<>', 0)
             ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
             ->with('pricePlan')
             ->with('lastPaymentDetail')
             ->get();
+        $this->comment(count($users) . " users are currently on paid plans and will be charged.");
 
         $blueSnapService = new BlueSnapService;
         foreach ($users as $user) {
@@ -152,56 +209,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         //     'users.price_plan_expiry_date' => new \DateTime("+1 month"),
         // ]);
 
-        print count($users) . " Users have been resubscribed to their paid plans.\n";
-    }
-
-    private function  downgradeTrialUsers()
-    {
-        // Trial users moving to free plan
-        $trialUsers = User::where('price_plan_expiry_date', '<', new \DateTime)
-            ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
-            ->where('price_plans.price', 0)
-            ->where('price_plans.name', PricePlan::TRIAL)
-            ->get();
-
-        foreach ($trialUsers as $trialUser) {
-            $trialUser->price_plan_expiry_date = $this->nextExpiryDate;
-            $trialUser->price_plan_id = $this->downgradePricePlanId;
-
-            WebMonitor::removeAdditionalWebMonitors($trialUser, $this->downgradePricePlan->web_monitor_count);
-            UserDataSource::disableDataSources($trialUser);
-            NotificationSetting::disableNotifications($trialUser);
-
-            $trialUser->trial_ended_at = $this->currentDate;
-
-            $trialUser->save();
-
-            event(new UserTrialPricePlanEnded($trialUser));
-        }
-        print count($trialUsers) . " Users have been subscribed from trial to free plan.\n";
-    }
-
-    private function resubscribeFreePlanUsers()
-    {
-
-        // Free plan users resubscribing to free plan with new expiry dates
-        $updateCount = User::where('price_plan_expiry_date', '<', new \DateTime)
-            ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
-            ->where('price_plans.price', 0)
-            ->update([
-                'users.price_plan_expiry_date' => $this->nextExpiryDate,
-                // 'users.price_plan_id' => $this->freePlanId,
-
-                'users.is_ds_holidays_enabled' => false,
-                'users.is_ds_google_algorithm_updates_enabled' => false,
-                'users.is_ds_retail_marketing_enabled' => false,
-                'users.is_ds_google_alerts_enabled' => false,
-                'users.is_ds_weather_alerts_enabled' => false,
-                'users.is_ds_wordpress_updates_enabled' => false,
-                'users.is_ds_web_monitors_enabled' => false,
-            ]);
-
-        print "$updateCount Users have been resubscribed to their free plans.\n";
+        $this->info(count($users) . " users have been resubscribed to their paid plans.");
     }
 
     private function addPricePlanSubscription($transactionId, $userId, $paymentDetailId, $pricePlanId, $chargedPrice, $couponId = null, $couponLeftRecurringCount = 0)
