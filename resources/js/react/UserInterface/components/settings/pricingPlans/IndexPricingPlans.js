@@ -174,63 +174,63 @@ export default class IndexPricingPlans extends React.Component {
                                             <ul className="fa-ul">
                                                 {
                                                     pricePlan.annotations_count > 0 ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> {pricePlan.annotations_count} Annotations</li>
+                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span> {pricePlan.annotations_count} Annotations</li>
                                                         :
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Unlimited Annotations</li>
+                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span> Unlimited Annotations</li>
                                                 }
                                                 {
                                                     pricePlan.has_chrome_extension == 1 ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Chrome extension</li>
+                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span> Chrome extension</li>
                                                         : null
                                                 }
                                                 {
                                                     pricePlan.has_google_data_studio == 1 ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Data Studio Connector</li>
+                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Data Studio Connector</li>
                                                         : null
                                                 }
                                                 {
                                                     pricePlan.user_per_ga_account_count == 0 ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Unlimited Users</li>
+                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited Users</li>
                                                         : null
                                                 }
                                                 {
-                                                    pricePlan.ga_account_count == 0 ? <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Unlimited GA accounts</li>
+                                                    pricePlan.ga_account_count == 0 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited GA accounts</li>
                                                         :
-                                                        pricePlan.ga_account_count == 1 ? <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Single User</li>
+                                                        pricePlan.ga_account_count == 1 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Single User</li>
                                                             :
-                                                            <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>{pricePlan.ga_account_count} GA accounts</li>
+                                                            <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>{pricePlan.ga_account_count} GA accounts</li>
                                                 }
                                                 {/* {
                                                     pricePlan.ga_account_count == 0 ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations Properties Filtering</li>
+                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Annotations Properties Filtering</li>
                                                         : null
                                                 } */}
                                                 {
                                                     pricePlan.has_manual_add ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Manual Annotations</li>
+                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Manual Annotations</li>
                                                         : null
                                                 }
 
                                                 {
                                                     pricePlan.has_csv_upload ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>CSV Upload</li>
+                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>CSV Upload</li>
                                                         : null
                                                 }
 
                                                 {
                                                     pricePlan.has_api ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Annotations API</li>
+                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Annotations API</li>
                                                         : null
                                                 }
                                                 {
                                                     pricePlan.has_integrations ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span>Integrations</li>
+                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Integrations</li>
                                                         : null
                                                 }
                                                 {
                                                     pricePlan.has_data_sources ?
                                                         <li>
-                                                            <span className="fa-li"><i className="fa fa-asterisk"></i></span>
+                                                            <span className="fa-li"><i className="fa fa-check-circle-o"></i></span>
                                                             Automations
                                                             <img id={"automation-feature-hint-" + pricePlan.id} className="hint-button" src="/images/info-logo-grey.png" onClick={() => { this.setState({ showHintFor: 'automation-hint-' + pricePlan.id }) }} />
                                                             <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'automation-hint-' + pricePlan.id} target={"automation-feature-hint-" + pricePlan.id} toggle={() => { this.setState({ showHintFor: null }) }} onClick={() => { this.changeShownHint(null) }}>
@@ -251,7 +251,7 @@ export default class IndexPricingPlans extends React.Component {
                                                 {
                                                     pricePlan.has_notifications ?
                                                         <li>
-                                                            <span className="fa-li"><i className="fa fa-asterisk"></i></span>
+                                                            <span className="fa-li"><i className="fa fa-check-circle-o"></i></span>
                                                             Notifications
                                                             {/* <img id={"automation-feature-hint-" + pricePlan.id} className="hint-button" src="/images/info-logo-grey.png" onClick={() => { this.setState({ showHintFor: 'automation-hint-' + pricePlan.id }) }} />
                                                             <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'automation-hint-' + pricePlan.id} target={"automation-feature-hint-" + pricePlan.id} toggle={() => { this.setState({ showHintFor: null }) }} onClick={() => { this.changeShownHint(null) }}>
