@@ -72,7 +72,7 @@ class PaymentController extends Controller
 
         // Putting values in variable for use
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
-        $pricePlanExipryDuration = $request->query('plan_duration') == PricePlan::MONTHLY ? "+1 month" : '+1 year';
+        $pricePlanExipryDuration = $request->plan_duration == PricePlan::MONTHLY ? "+1 month" : '+1 year';
         $pricePlanExpiryDate = new \DateTime($pricePlanExipryDuration);
 
         $transactionId = 0;
@@ -105,9 +105,10 @@ class PaymentController extends Controller
             $price = $pricePlan->price;
 
             // Applying annual discount if applicable
-            if ($request->query('plan_duration') == PricePlan::ANNUALLY) {
+            if ($request->plan_duration == PricePlan::ANNUALLY) {
                 if ($pricePlan->yearly_discount_percent > 0) {
-                    $price = round((float)($pricePlan->price * ($pricePlan->yearly_discount_percent / 100)), 0) * 12;
+                    // price = 12*price - discount*12
+                    $price = ($pricePlan->price * 12) - (round((float)($pricePlan->price * ($pricePlan->yearly_discount_percent / 100)), 0) * 12);
                 }
             }
 
