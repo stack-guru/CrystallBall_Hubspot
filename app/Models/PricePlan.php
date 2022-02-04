@@ -9,6 +9,9 @@ class PricePlan extends Model
 {
     use HasFactory;
 
+
+    // There are multiple price plans with same name in the system.
+    // Don't confuse yourself with their names, focus on id only.
     const TRIAL = 'Trial';
     const TRIAL_ENDED = 'Trial Ended';
     const FREE = 'Free';
@@ -17,13 +20,17 @@ class PricePlan extends Model
     const PRO = 'Pro';
     const ENTERPRISE = 'Enterprise';
 
+    const APPSUMO_TIER_1 = 'AppSumo Tier 1';
+    const APPSUMO_TIER_2 = 'AppSumo Tier 2';
+
     protected $fillable = [
         'name', 'annotations_count', 'price', 'has_manual_add',
         'has_csv_upload', 'has_api', 'is_enabled', 'has_integrations', "has_data_sources",
         'ga_account_count', 'user_per_ga_account_count', 'short_description',
         'web_monitor_count', 'owm_city_count', 'google_alert_keyword_count',
         'has_notifications', 'has_chrome_extension', 'has_google_data_studio',
-        'has_microsoft_power_bi', 'google_analytics_property_count'
+        'has_microsoft_power_bi', 'google_analytics_property_count',
+        'yearly_discount_percent'
     ];
 
     protected $hidden = [

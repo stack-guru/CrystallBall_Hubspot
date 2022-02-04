@@ -10,11 +10,13 @@ export default class IndexPricingPlans extends React.Component {
         super(props);
         this.state = {
             pricePlans: [],
-            redirectTo: null
+            redirectTo: null,
+            priceMode: 'Monthly',
         };
 
         this.freeSubscribe = this.freeSubscribe.bind(this);
         this.changePricePlan = this.changePricePlan.bind(this);
+        this.togglePricingMode = this.togglePricingMode.bind(this);
     }
 
     componentDidMount() {
@@ -41,7 +43,7 @@ export default class IndexPricingPlans extends React.Component {
             } else if (pricePlan.is_available == false) {
 
             } else {
-                window.location.href = `/settings/price-plans/payment?price_plan_id=${pricePlan.id}`;
+                window.location.href = `/settings/price-plans/payment?price_plan_id=${pricePlan.id}&price_mode=${this.state.priceMode}`;
             }
         }
 
@@ -75,12 +77,35 @@ export default class IndexPricingPlans extends React.Component {
 
     }
 
+    togglePricingMode() {
+        if (this.state.priceMode == 'Monthly') {
+            this.setState({ priceMode: 'Annually' });
+        } else if (this.state.priceMode == 'Annually') {
+            this.setState({ priceMode: 'Monthly' });
+        }
+    }
+
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
             <div className=" bg-white component-wrapper">
                 <section className="pricing bg-white ">
                     <div className="container">
+                        <div className="row ml-0 mr-0 p-2">
+                            <div className="col-10"></div>
+                            <div className="col-2">
+                                Save 30% YEARLY
+                                <label className="trigger switch">
+                                    <input
+                                        type="checkbox"
+                                        onChange={this.togglePricingMode}
+                                        checked={this.state.priceMode == 'Annually'}
+                                    />
+                                    <span className="slider round" />
+                                </label>
+                            </div>
+                        </div>
+
                         <div className="row ml-0 mr-0 p-2">
                             <div className="col-12 text-center">
                                 <h2 className="gaa-title">Choose Your Plan</h2>
@@ -108,21 +133,39 @@ export default class IndexPricingPlans extends React.Component {
                                                     pricePlan.short_description.length == 0 ? <p className="mb-0 card-text">&nbsp;<br />&nbsp;</p> :
                                                         <p className="mb-0 card-text">{pricePlan.short_description}<br />&nbsp;</p>
                                             }
-                                            <h6 className="card-price text-center">${pricePlan.price}<span className="period">/per month</span></h6>
+                                            {/* Constants for Monthly and Annual values should have been used. But 
+                                                it might have caused some compilation errors that's why I avvoided
+                                                them. If you can do it without any errors feel free to do it. */}
+                                            {this.state.priceMode == 'Monthly' ?
+                                                <h6 className="card-price text-center">${pricePlan.price}<span className="period">/per month</span></h6>
+                                                : (this.state.priceMode == 'Annually' ?
+                                                    <React.Fragment>
+                                                        {pricePlan.yearly_discount_percent > 0 ?
+                                                            <h6 className="card-price text-center">
+                                                                {/* <span className="discounted-price">${pricePlan.price}</span> */}
+                                                                ${parseFloat((pricePlan.price) - (pricePlan.yearly_discount_percent / 100 * pricePlan.price)).toFixed(0)}
+                                                                <span className="period">/per month</span>
+                                                            </h6>
+                                                            :
+                                                            <h6 className="card-price text-center">${pricePlan.price}<span className="period">/per month</span></h6>
+                                                        }
+                                                        <p>Billed Annually</p>
+                                                    </React.Fragment>
+                                                    : null)}
+                                            {
+                                                pricePlan.google_analytics_property_count == 1 ?
+                                                    <h5 className="mt-4">One Property/Website</h5>
+                                                    :
+                                                    pricePlan.google_analytics_property_count > 0 ?
+                                                        <h5 className="mt-4">Up to {pricePlan.google_analytics_property_count} Properties</h5>
+                                                        :
+                                                        (pricePlan.google_analytics_property_count == -1 ?
+                                                            <h5 className="mt-4">No Property Filters</h5>
+                                                            :
+                                                            <h5 className="mt-4">Unlimited Property Filters</h5>)
+                                            }
                                             <hr />
                                             <ul className="fa-ul">
-                                                {
-                                                    pricePlan.google_analytics_property_count == 1 ?
-                                                        <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> One Property/Website</li>
-                                                        :
-                                                        pricePlan.google_analytics_property_count > 0 ?
-                                                            <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Up to {pricePlan.google_analytics_property_count} Properties</li>
-                                                            :
-                                                            (pricePlan.google_analytics_property_count == -1 ?
-                                                                <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> No Property Filters</li>
-                                                                :
-                                                                <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> Unlimited Property Filters</li>)
-                                                }
                                                 {
                                                     pricePlan.annotations_count > 0 ?
                                                         <li><span className="fa-li"><i className="fa fa-asterisk"></i></span> {pricePlan.annotations_count} Annotations</li>

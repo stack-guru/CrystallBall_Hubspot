@@ -240,6 +240,12 @@ setting-menu-item.dropdown {
 .pricing .card-price .period {
     font-size: 0.8rem;
 }
+
+.pricing .card-price .discounted-price {
+    font-size: 1.5rem;
+    text-decoration: line-through;
+}
+
 .pricing .card .card-body {
     align-items: start !important;
     justify-content: start !important;

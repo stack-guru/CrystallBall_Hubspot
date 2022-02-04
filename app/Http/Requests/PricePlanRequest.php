@@ -44,6 +44,7 @@ class PricePlanRequest extends FormRequest
             'owm_city_count' => 'nullable|numeric',
             'google_alert_keyword_count' => 'nullable|numeric',
             'google_analytics_property_count' => 'nullable|numeric',
+            'yearly_discount_percent' => 'nullable|numeric|min:0|max:100'
         ];
     }
 }

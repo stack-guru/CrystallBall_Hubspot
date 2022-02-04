@@ -51,6 +51,11 @@
                             <input type="number" name="google_analytics_property_count" id="google_analytics_property_count" value="{{old('google_analytics_property_count',$pricePlan->google_analytics_property_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label>Yearly discount percent? <sub>(minimum 0, maximum 100)</sub></label>
+                            <input type="number" name="yearly_discount_percent" id="yearly_discount_percent" value="{{old('yearly_discount_percent',$pricePlan->yearly_discount_percent)}}" class="form-control" step="0.01" />
+                        </div>
+
+                        <div class="form-group">
                             <label>Has manual add?</label>
                             <input type="checkbox" name="has_manual_add" id="hasManualAdd" class="form-control" @if($pricePlan->has_manual_add) checked @endif />
                         </div>
