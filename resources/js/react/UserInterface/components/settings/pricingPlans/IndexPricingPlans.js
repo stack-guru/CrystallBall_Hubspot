@@ -92,9 +92,10 @@ export default class IndexPricingPlans extends React.Component {
                 <section className="pricing bg-white ">
                     <div className="container">
                         <div className="row ml-0 mr-0 p-2">
-                            <div className="col-10"></div>
-                            <div className="col-2">
+                            <div className="col-10 text-right">
                                 Save 30% YEARLY
+                            </div>
+                            <div className="col-2">
                                 <label className="trigger switch">
                                     <input
                                         type="checkbox"
@@ -159,15 +160,15 @@ export default class IndexPricingPlans extends React.Component {
                                                     : null)}
                                             {
                                                 pricePlan.google_analytics_property_count == 1 ?
-                                                    <h5 className="mt-4 text-info"><i className="fa fa-check-circle-o"></i> One Property/Website</h5>
+                                                    <p className="mt-4 text-info"><i className="fa fa-check-circle-o"></i> One Property/Website</p>
                                                     :
                                                     pricePlan.google_analytics_property_count > 0 ?
-                                                        <h5 className="mt-4 text-info"><i className="fa fa-check-circle-o"></i> Up to {pricePlan.google_analytics_property_count} Properties</h5>
+                                                        <p className="mt-4 text-info"><i className="fa fa-check-circle-o"></i> Up to {pricePlan.google_analytics_property_count} Properties</p>
                                                         :
                                                         (pricePlan.google_analytics_property_count == -1 ?
-                                                            <h5 className="mt-4 text-danger"><i className="fa fa-times-circle-o"></i> No Property Filters</h5>
+                                                            <p className="mt-4 text-danger"><i className="fa fa-times-circle-o"></i> No Property Filters</p>
                                                             :
-                                                            <h5 className="mt-4 text-success"><i className="fa fa-check-circle-o"></i> Unlimited Property Filters</h5>)
+                                                            <p className="mt-4 text-success"><i className="fa fa-check-circle-o"></i> Unlimited Property Filters</p>)
                                             }
                                             <hr />
                                             <ul className="fa-ul">
