@@ -11,7 +11,7 @@ export default class IndexPricingPlans extends React.Component {
         this.state = {
             pricePlans: [],
             redirectTo: null,
-            priceMode: 'Monthly',
+            planDuration: 'Annually', // [Monthly, Annually]
         };
 
         this.freeSubscribe = this.freeSubscribe.bind(this);
@@ -43,7 +43,7 @@ export default class IndexPricingPlans extends React.Component {
             } else if (pricePlan.is_available == false) {
 
             } else {
-                window.location.href = `/settings/price-plans/payment?price_plan_id=${pricePlan.id}&price_mode=${this.state.priceMode}`;
+                window.location.href = `/settings/price-plans/payment?price_plan_id=${pricePlan.id}&plan_duration=${this.state.planDuration}`;
             }
         }
 
@@ -59,16 +59,14 @@ export default class IndexPricingPlans extends React.Component {
             dangerMode: true,
         }).then(value => {
             if (value) {
-                HttpClient.post('/settings/price-plan/payment', { 'price_plan_id': id })
+                HttpClient.post('/settings/price-plan/payment', { 'price_plan_id': id, plan_duration: this.state.planDuration })
                     .then(response => {
                         swal.fire("Plan downgraded", "Your account will be automatically downgraded to $0 plan on next billing cycle.", "success").then(value => {
                             window.location = "/annotation"
                         })
                     }, (err) => {
-
                         this.setState({ isBusy: false, errors: (err.response).data });
                     }).catch(err => {
-
                         this.setState({ isBusy: false, errors: err });
                     });
 
@@ -78,10 +76,10 @@ export default class IndexPricingPlans extends React.Component {
     }
 
     togglePricingMode() {
-        if (this.state.priceMode == 'Monthly') {
-            this.setState({ priceMode: 'Annually' });
-        } else if (this.state.priceMode == 'Annually') {
-            this.setState({ priceMode: 'Monthly' });
+        if (this.state.planDuration == 'Monthly') {
+            this.setState({ planDuration: 'Annually' });
+        } else if (this.state.planDuration == 'Annually') {
+            this.setState({ planDuration: 'Monthly' });
         }
     }
 
@@ -100,7 +98,7 @@ export default class IndexPricingPlans extends React.Component {
                                     <input
                                         type="checkbox"
                                         onChange={this.togglePricingMode}
-                                        checked={this.state.priceMode == 'Annually'}
+                                        checked={this.state.planDuration == 'Annually'}
                                     />
                                     <span className="slider round" />
                                 </label>
@@ -142,9 +140,9 @@ export default class IndexPricingPlans extends React.Component {
                                             {/* Constants for Monthly and Annual values should have been used. But 
                                                 it might have caused some compilation errors that's why I avvoided
                                                 them. If you can do it without any errors feel free to do it. */}
-                                            {this.state.priceMode == 'Monthly' ?
+                                            {this.state.planDuration == 'Monthly' ?
                                                 <h6 className="card-price text-center">${pricePlan.price}<span className="period">/per month</span></h6>
-                                                : (this.state.priceMode == 'Annually' ?
+                                                : (this.state.planDuration == 'Annually' ?
                                                     <React.Fragment>
                                                         {pricePlan.yearly_discount_percent > 0 ?
                                                             <h6 className="card-price text-center">
