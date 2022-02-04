@@ -26,8 +26,9 @@ export default class CreatePayment extends Component {
             errors: '',
             couponCode: '',
             taxPercent: 0,
-            cardType: 'Card'
+            cardType: 'Card',
 
+            planDuration: '1'
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
@@ -42,14 +43,17 @@ export default class CreatePayment extends Component {
         document.title = "Payment"
         this.setState({ isBusy: true });
         var urlSearchParams = new URLSearchParams(window.location.search);
+
+        // Set Plan Duration
+        this.setState({ planDuration: urlSearchParams.get('plan_duration') });
+
+        // Get price plan
         HttpClient.get('/price-plan/' + urlSearchParams.get('price_plan_id'))
             .then(response => {
                 this.setState({ pricePlan: response.data.price_plan, isBusy: false });
             }, (err) => {
-
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-
                 this.setState({ isBusy: false, errors: err });
             });
 
@@ -101,6 +105,7 @@ export default class CreatePayment extends Component {
             country: this.state.paymentDetails.country,
             zip_code: this.state.paymentDetails.zip_code,
             coupon_id: this.state.coupon ? this.state.coupon.id : null,
+            plan_duration: this.state.planDuration,
         })
             .then(response => {
                 this.setState({ isBusy: false, errors: undefined });
@@ -196,21 +201,6 @@ export default class CreatePayment extends Component {
         });
     }
 
-
-
-
-    expiration_years() {
-        let date = new Date();
-        let current_year = date.getFullYear();
-        let max_years = current_year + 20;
-        let expiration_years = [];
-        for (let i = current_year; i <= max_years; i++) {
-            expiration_years.push(i);
-        }
-        return expiration_years;
-    }
-
-
     applyCoupon() {
         this.setState({ isBusy: true });
         HttpClient.get('/coupon?coupon_code=' + this.state.couponCode)
@@ -253,11 +243,21 @@ export default class CreatePayment extends Component {
         if (!this.state.pricePlan) return <h5>Loading...</h5>;
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
-        const expYears = this.expiration_years();
         const validation = this.state.validation;
-        let totalPrice = 0.00, discountPrice = 0.00, taxAmount = 0.00;
+        let totalPrice = 0.00, discountPrice = 0.00, annualDiscountAmount = 0.00, taxAmount = 0.00, actualPrice = 0.00;
 
-        if (this.state.pricePlan) totalPrice += this.state.pricePlan.price
+        if (this.state.pricePlan) {
+            actualPrice = this.state.pricePlan.price;
+            totalPrice += this.state.pricePlan.price;
+        }
+
+        if (this.state.planDuration == 12) {
+            totalPrice = actualPrice = actualPrice * 12;
+
+            annualDiscountAmount = (this.state.pricePlan.price - parseFloat(this.state.pricePlan.price * (this.state.pricePlan.yearly_discount_percent / 100)).toFixed(0)) * 12;
+            totalPrice -= annualDiscountAmount;
+        }
+
         if (this.state.coupon) {
             discountPrice = parseFloat(((this.state.coupon.discount_percent / 100) * this.state.pricePlan.price)).toFixed(2);
             totalPrice -= discountPrice;
@@ -373,15 +373,18 @@ export default class CreatePayment extends Component {
                                                     <br />
                                                     <div className="row">
                                                         <div className="col-6">Price</div>
-                                                        <div className="col-6 text-right">${this.state.pricePlan.price}</div>
+                                                        <div className="col-6 text-right">${actualPrice}</div>
                                                     </div>
 
-                                                    <div className="row">
-                                                        <div className="col-6">Tax ({this.state.taxPercent}%)</div>
-                                                        <div className="col-6 text-right">${taxAmount}</div>
-                                                    </div>
-
-                                                    <hr />
+                                                    {this.state.planDuration == 12 ?
+                                                        <React.Fragment>
+                                                            <div className="row">
+                                                                <div className="col-6">Annual Discount ({this.state.pricePlan.yearly_discount_percent}%)</div>
+                                                                <div className="col-6 text-right">${annualDiscountAmount}</div>
+                                                            </div>
+                                                            <hr />
+                                                        </React.Fragment>
+                                                        : null}
                                                     {
                                                         this.state.coupon ?
                                                             <React.Fragment>
@@ -393,6 +396,12 @@ export default class CreatePayment extends Component {
                                                             </React.Fragment>
                                                             : null
                                                     }
+                                                    <div className="row">
+                                                        <div className="col-6">Tax ({this.state.taxPercent}%)</div>
+                                                        <div className="col-6 text-right">${taxAmount}</div>
+                                                    </div>
+
+                                                    <hr />
                                                     <div className="row">
                                                         <div className="col-6"> <b>Total</b></div>
                                                         <div className="col-6 text-right"><b>${totalPrice}</b></div>

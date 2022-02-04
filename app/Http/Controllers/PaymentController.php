@@ -42,7 +42,7 @@ class PaymentController extends Controller
         if (!$request->query('_token')) {
             $this->validate($request, [
                 'price_plan_id' => 'required|exists:price_plans,id',
-                'plan_duration' => 'required|in:Monthly,Annually',
+                'plan_duration' => 'required|in:1,12',
             ]);
 
             $blueSnapService = new BlueSnapService;
@@ -67,10 +67,13 @@ class PaymentController extends Controller
 
         $this->validate($request, [
             'price_plan_id' => 'required|exists:price_plans,id',
-            'plan_duration' => 'required|in:Monthly,Annually',
+            'plan_duration' => 'required|in:1,12',
         ]);
 
+        // Putting values in variable for use
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
+        $pricePlanExipryDuration = $request->query('plan_duration') == PricePlan::MONTHLY ? "+1 month" : '+1 year';
+        $pricePlanExpiryDate = new \DateTime($pricePlanExipryDuration);
 
         $transactionId = 0;
         $sGS = new SendGridService;
@@ -102,7 +105,11 @@ class PaymentController extends Controller
             $price = $pricePlan->price;
 
             // Applying annual discount if applicable
-            
+            if ($request->query('plan_duration') == PricePlan::ANNUALLY) {
+                if ($pricePlan->yearly_discount_percent > 0) {
+                    $price = round((float)($pricePlan->price * ($pricePlan->yearly_discount_percent / 100)), 0) * 12;
+                }
+            }
 
             // Coupon Code
             if ($request->has('coupon_id') && $request->coupon_id !== null && $request->coupon_id != "null") {
@@ -121,7 +128,7 @@ class PaymentController extends Controller
             }
 
             // General Sales Tax
-            if (array_search($request->country, ["PK", "IL"]) !== false) {
+            if (array_search($request->country, ["IL"]) !== false) {
                 $price = $price + ((17 / 100) * $price);
             }
             $price = round($price, 2);
@@ -159,7 +166,7 @@ class PaymentController extends Controller
             // Recording transaction subscription to database
             $pricePlanSubscription->price_plan_id = $pricePlan->id;
             $pricePlanSubscription->transaction_id = $transactionId;
-            $pricePlanSubscription->expires_at = new \DateTime("+1 month");
+            $pricePlanSubscription->expires_at = $pricePlanExpiryDate;
             $pricePlanSubscription->user_id = $user->id;
             $pricePlanSubscription->payment_detail_id = $paymentDetail->id;
             $pricePlanSubscription->charged_price = $price;
@@ -174,12 +181,12 @@ class PaymentController extends Controller
 
             // Reflecting price plan purhcase to user's account
             $user->price_plan_id = $pricePlan->id;
-            $user->price_plan_expiry_date = new \DateTime("+1 month");
+            $user->price_plan_expiry_date = $pricePlanExpiryDate;
             $user->is_billing_enabled = true;
         }
         $user->save();
         // Reflecting price plan purhcase to user's team accounts
-        DB::table('users')->where('user_id', $user->id)->update(['price_plan_id' => $pricePlan->id, 'price_plan_expiry_date' => new \DateTime("+1 month")]);
+        DB::table('users')->where('user_id', $user->id)->update(['price_plan_id' => $pricePlan->id, 'price_plan_expiry_date' => $pricePlanExpiryDate]);
         $user->refresh();
 
         // Sending email to user if upgraded

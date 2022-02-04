@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { calculateDiscountedPrice } from '../../../helpers/CommonFunctions';
 
 import HttpClient from "../../../utils/HttpClient";
 
@@ -11,7 +12,7 @@ export default class IndexPricingPlans extends React.Component {
         this.state = {
             pricePlans: [],
             redirectTo: null,
-            planDuration: 'Annually', // [Monthly, Annually]
+            planDuration: '12', // [1, 12]
         };
 
         this.freeSubscribe = this.freeSubscribe.bind(this);
@@ -76,10 +77,10 @@ export default class IndexPricingPlans extends React.Component {
     }
 
     togglePricingMode() {
-        if (this.state.planDuration == 'Monthly') {
-            this.setState({ planDuration: 'Annually' });
-        } else if (this.state.planDuration == 'Annually') {
-            this.setState({ planDuration: 'Monthly' });
+        if (this.state.planDuration == '1') {
+            this.setState({ planDuration: '12' });
+        } else if (this.state.planDuration == '12') {
+            this.setState({ planDuration: '1' });
         }
     }
 
@@ -98,7 +99,7 @@ export default class IndexPricingPlans extends React.Component {
                                     <input
                                         type="checkbox"
                                         onChange={this.togglePricingMode}
-                                        checked={this.state.planDuration == 'Annually'}
+                                        checked={this.state.planDuration == '12'}
                                     />
                                     <span className="slider round" />
                                 </label>
@@ -137,25 +138,14 @@ export default class IndexPricingPlans extends React.Component {
                                                     pricePlan.short_description.length == 0 ? <p className="mb-0 card-text">&nbsp;<br />&nbsp;</p> :
                                                         <p className="mb-0 card-text">{pricePlan.short_description}<br />&nbsp;</p>
                                             }
-                                            {/* Constants for Monthly and Annual values should have been used. But 
-                                                it might have caused some compilation errors that's why I avvoided
+                                            {/* Constants for 1 and Annual values should have been used. But 
+                                                it might have caused some compilation errors that's why I avoided
                                                 them. If you can do it without any errors feel free to do it. */}
-                                            {this.state.planDuration == 'Monthly' ?
-                                                <h6 className="card-price text-center">${pricePlan.price}<span className="period">/per month</span></h6>
-                                                : (this.state.planDuration == 'Annually' ?
-                                                    <React.Fragment>
-                                                        {pricePlan.yearly_discount_percent > 0 ?
-                                                            <h6 className="card-price text-center">
-                                                                {/* <span className="discounted-price">${pricePlan.price}</span> */}
-                                                                ${parseFloat((pricePlan.price) - (pricePlan.yearly_discount_percent / 100 * pricePlan.price)).toFixed(0)}
-                                                                <span className="period">/per month</span>
-                                                            </h6>
-                                                            :
-                                                            <h6 className="card-price text-center">${pricePlan.price}<span className="period">/per month</span></h6>
-                                                        }
-                                                        <p>Billed Annually</p>
-                                                    </React.Fragment>
-                                                    : null)}
+                                            <h6 className="card-price text-center">
+                                                ${this.state.planDuration == '12' ? calculateDiscountedPrice(pricePlan.price, pricePlan.yearly_discount_percent) : pricePlan.price}
+                                                <span className="period">/per month</span>
+                                            </h6>
+                                            {this.state.planDuration == '12' ? <p>Billed Annually</p> : null}
                                             {
                                                 pricePlan.google_analytics_property_count == 1 ?
                                                     <p className="mt-4 text-info"><i className="fa fa-check-circle-o"></i> One Property/Website</p>

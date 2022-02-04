@@ -87,3 +87,8 @@ export function removeStateFromLocalStorage(componentName) {
     localStorage.removeItem(md5(componentName + "-state"));
     return true;
 }
+
+export function calculateDiscountedPrice(price, yearlyDiscountPercent) {
+    if (yearlyDiscountPercent == 0) return price;
+    return parseFloat((price) - (yearlyDiscountPercent / 100 * price)).toFixed(0);
+}
