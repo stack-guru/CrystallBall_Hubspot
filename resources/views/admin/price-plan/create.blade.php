@@ -23,6 +23,10 @@
                             <input type="text" name="short_description" id="short_description" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label>Badge Text <sub>(it will appear in a badge after plan name)</sub></label>
+                            <input type="text" name="badge_text" id="badge_text" class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label>Number of annotations <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" name="annotations_count" id="annotationsCount" class="form-control" value="0" />
                         </div>

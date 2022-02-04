@@ -27,6 +27,7 @@ class PricePlanRequest extends FormRequest
         return [
             'name' => 'required|string',
             'short_description' => 'required|string',
+            'badge_text' => 'nullable|string',
             'annotations_count' => "required|numeric",
             'price' => "required|numeric",
             'has_manual_add' => "nullable",

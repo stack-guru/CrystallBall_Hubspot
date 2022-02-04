@@ -30,7 +30,7 @@ class PricePlan extends Model
         'web_monitor_count', 'owm_city_count', 'google_alert_keyword_count',
         'has_notifications', 'has_chrome_extension', 'has_google_data_studio',
         'has_microsoft_power_bi', 'google_analytics_property_count',
-        'yearly_discount_percent'
+        'yearly_discount_percent', 'badge_text'
     ];
 
     protected $hidden = [

@@ -122,7 +122,12 @@ export default class IndexPricingPlans extends React.Component {
 
                                     <div className="card mb-5 mb-lg-0">
                                         <div className="card-body">
-                                            <h5 className="card-title  text-uppercase text-center">{pricePlan.name}</h5>
+                                            <h5 className="card-title text-uppercase w-100">
+                                                {pricePlan.name}
+                                                {pricePlan.badge_text ?
+                                                    <span className="badge badge-warning float-right">{pricePlan.badge_text}</span>
+                                                    : null}
+                                            </h5>
 
                                             {/* This line break logic is completely rubbish but it works.
                                                 If you have some better approach for it, don't hesitate
@@ -154,15 +159,15 @@ export default class IndexPricingPlans extends React.Component {
                                                     : null)}
                                             {
                                                 pricePlan.google_analytics_property_count == 1 ?
-                                                    <h5 className="mt-4">One Property/Website</h5>
+                                                    <h5 className="mt-4 text-info"><i className="fa fa-check-circle-o"></i> One Property/Website</h5>
                                                     :
                                                     pricePlan.google_analytics_property_count > 0 ?
-                                                        <h5 className="mt-4">Up to {pricePlan.google_analytics_property_count} Properties</h5>
+                                                        <h5 className="mt-4 text-info"><i className="fa fa-check-circle-o"></i> Up to {pricePlan.google_analytics_property_count} Properties</h5>
                                                         :
                                                         (pricePlan.google_analytics_property_count == -1 ?
-                                                            <h5 className="mt-4">No Property Filters</h5>
+                                                            <h5 className="mt-4 text-danger"><i className="fa fa-times-circle-o"></i> No Property Filters</h5>
                                                             :
-                                                            <h5 className="mt-4">Unlimited Property Filters</h5>)
+                                                            <h5 className="mt-4 text-success"><i className="fa fa-check-circle-o"></i> Unlimited Property Filters</h5>)
                                             }
                                             <hr />
                                             <ul className="fa-ul">
