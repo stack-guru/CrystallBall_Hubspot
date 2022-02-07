@@ -208,6 +208,21 @@ setting-menu-item.dropdown {
     height: 100%;
 }
 
+.pricing .card.with-badge{
+    border: 1px solid #ec7373 !important;
+    border-top-color: rgba(0, 0, 0, 0.063);
+    border-right-color: rgba(0, 0, 0, 0.063);
+    border-bottom-color: rgba(0, 0, 0, 0.063);
+    border-left-color: rgba(0, 0, 0, 0.063);
+
+    border-color: #ec7373;
+}
+
+.pricing .card.with-badge .card-body span.badge{
+    color: #212529;
+    background-color: #ec7373;
+}
+
 .pricing hr {
     margin: 1rem 0;
     background-color: #ffffff;
@@ -216,7 +231,6 @@ setting-menu-item.dropdown {
 
 .pricing .card-title {
     margin: 1rem 0;
-    font-size: 1rem;
     letter-spacing: 0.1rem;
     font-weight: bold;
     color: #456287;
@@ -234,11 +248,11 @@ setting-menu-item.dropdown {
     font-size: 2rem;
     margin: 0;
     color: #456287;
-    letter-spacing: 3px;
 }
 
 .pricing .card-price .period {
-    font-size: 0.8rem;
+    font-size: 1rem;
+    font-weight: normal;
 }
 
 .pricing .card-price .discounted-price {

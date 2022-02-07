@@ -91,7 +91,12 @@ export default class IndexPricingPlans extends React.Component {
                 <section className="pricing bg-white ">
                     <div className="container">
                         <div className="row ml-0 mr-0 p-2">
-                            <div className="col-10 text-right">
+                            <div className="col-5">
+                            </div>
+                            <div className="col-3 text-center">
+                                <h2 className="gaa-title">Choose Your Plan</h2>
+                            </div>
+                            <div className="col-2 text-right">
                                 Yearly SAVE 30%
                             </div>
                             <div className="col-2">
@@ -105,12 +110,6 @@ export default class IndexPricingPlans extends React.Component {
                                 </label>
                             </div>
                         </div>
-
-                        <div className="row ml-0 mr-0 p-2">
-                            <div className="col-12 text-center">
-                                <h2 className="gaa-title">Choose Your Plan</h2>
-                            </div>
-                        </div>
                         <div className="row ml-0 mr-0 d-flex flex-row justify-content-center pt-3">
 
                             {this.state.pricePlans.map(pricePlan => {
@@ -120,14 +119,14 @@ export default class IndexPricingPlans extends React.Component {
                                     {/*<input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />*/}
                                     {/*<input type="hidden" name="price_plan_id" value={pricePlan.id} />*/}
 
-                                    <div className={"card mb-5 mb-lg-0 " + (pricePlan.badge_text ? 'border border-warning' : '')}>
+                                    <div className={"card mb-5 mb-lg-0 " + (pricePlan.badge_text ? 'with-badge' : '')}>
                                         <div className="card-body">
                                             {pricePlan.badge_text ?
-                                                <span className="badge badge-warning" style={{ position: 'absolute', right: '12px' }}>{pricePlan.badge_text}</span>
+                                                <span className="badge" style={{ position: 'absolute', right: '12px' }}>{pricePlan.badge_text}</span>
                                                 : null}
-                                            <h4 className="card-title text-uppercase w-100 text-center">
+                                            <h2 className="card-title w-100 text-center">
                                                 {pricePlan.name}
-                                            </h4>
+                                            </h2>
 
                                             {/* This line break logic is completely rubbish but it works.
                                                 If you have some better approach for it, don't hesitate
