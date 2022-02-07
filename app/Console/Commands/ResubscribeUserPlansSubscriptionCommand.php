@@ -84,14 +84,14 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
     private function  downgradeTrialUsers()
     {
-        // Trial users moving to free plan
+        // Trial user(s) moving to free plan
         $trialUsers = User::select('users.*')
             ->where('price_plan_expiry_date', '<', new \DateTime)
             ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
             ->where('price_plans.price', 0)
             ->where('price_plans.name', PricePlan::TRIAL)
             ->get();
-        $this->comment(count($trialUsers) . " users are currently on " . PricePlan::TRIAL . " plan and will be downgraded.");
+        $this->comment(count($trialUsers) . " user(s) are currently on " . PricePlan::TRIAL . " plan and will be downgraded.");
 
         foreach ($trialUsers as $trialUser) {
             $trialUser->price_plan_expiry_date = $this->nextExpiryDate;
@@ -107,13 +107,13 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
             event(new UserTrialPricePlanEnded($trialUser));
         }
-        $this->info(count($trialUsers) . " users have been subscribed from " . PricePlan::TRIAL . " plan to " . $this->downgradePricePlan->name . " plan.");
+        $this->info(count($trialUsers) . " user(s) have been subscribed from " . PricePlan::TRIAL . " plan to " . $this->downgradePricePlan->name . " plan.");
     }
 
     private function resubscribeFreePlanUsers()
     {
 
-        // Free plan users resubscribing to free plan with new expiry dates
+        // Free plan user(s) resubscribing to free plan with new expiry dates
         // There are multiple free plans in the system that's why the query
         // below, does not change price_plan_id,  it only extends price_plan_expiry_date
         $updateCount = User::where('price_plan_expiry_date', '<', new \DateTime)
@@ -130,7 +130,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                 'users.is_ds_web_monitors_enabled' => false,
             ]);
 
-        $this->info("$updateCount users have been resubscribed to their free plans.");
+        $this->info("$updateCount user(s) have been resubscribed to their free plans.");
     }
 
     // There are multiple paid plans in the system that's why the query
@@ -147,7 +147,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             ->with('lastPaymentDetail')
             ->with('lastPricePlanSubscription')
             ->get();
-        $this->comment(count($users) . " users are currently on paid plans and will be charged.");
+        $this->comment(count($users) . " user(s) are currently on paid plans and will be charged.");
 
         $blueSnapService = new BlueSnapService;
         foreach ($users as $user) {
@@ -222,7 +222,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         //     'users.price_plan_expiry_date' => new \DateTime("+1 month"),
         // ]);
 
-        $this->info(count($users) . " users have been resubscribed to their paid plans.");
+        $this->info(count($users) . " user(s) have been resubscribed to their paid plans.");
     }
 
     private function addPricePlanSubscription($transactionId, $userId, $paymentDetailId, $pricePlanId, $chargedPrice, $expiryDate, $couponId = null, $couponLeftRecurringCount = 0)
