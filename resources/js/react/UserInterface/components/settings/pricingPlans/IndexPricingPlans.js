@@ -144,13 +144,13 @@ export default class IndexPricingPlans extends React.Component {
                                                 ${this.state.planDuration == '12' ? calculateDiscountedPrice(pricePlan.price, pricePlan.yearly_discount_percent) : pricePlan.price}
                                                 <span className="period">/per month</span>
                                             </h6>
-                                            {this.state.planDuration == '12' ? <sub className="mt-2 w-100 text-center">Billed Annually</sub> : <sub className="mt-3 w-100 text-center">Billed Monthly</sub>}
+                                            {this.state.planDuration == '12' ? <sub className="mt-2 w-100 text-center">Billed Annually</sub> : <sub className="mt-2 w-100 text-center">Billed Monthly</sub>}
                                             {
                                                 pricePlan.google_analytics_property_count == 1 ?
-                                                    <p className="mt-3 text-info w-100 ml-2"><i className="fa fa-check-circle-o"></i> One Property/Website</p>
+                                                    <p className="mt-3 w-100 ml-2" style={{ color: '#1a98f0' }}><i className="fa fa-check-circle-o"></i> One Property/Website</p>
                                                     :
                                                     pricePlan.google_analytics_property_count > 0 ?
-                                                        <p className="mt-3 text-info w-100 ml-2"><i className="fa fa-check-circle-o"></i> Up to {pricePlan.google_analytics_property_count} Properties</p>
+                                                        <p className="mt-3 w-100 ml-2" style={{ color: '#1a98f0' }}><i className="fa fa-check-circle-o"></i> Up to {pricePlan.google_analytics_property_count} Properties</p>
                                                         :
                                                         (pricePlan.google_analytics_property_count == -1 ?
                                                             <p className="mt-3 text-danger w-100 ml-2"><i className="fa fa-times-circle-o"></i> No Property Filters</p>
