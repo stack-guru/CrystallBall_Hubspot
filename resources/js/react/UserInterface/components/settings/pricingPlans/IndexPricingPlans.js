@@ -91,15 +91,15 @@ export default class IndexPricingPlans extends React.Component {
                 <section className="pricing bg-white ">
                     <div className="container">
                         <div className="row ml-0 mr-0 p-2">
-                            <div className="col-5">
+                            <div className="col-3">
                             </div>
-                            <div className="col-3 text-center">
+                            <div className="col-6 text-center">
                                 <h2 className="gaa-title">Choose Your Plan</h2>
                             </div>
-                            <div className="col-2 text-right">
+                            <div className="col-2 text-right" style={{ color: '#1a98f0' }}>
                                 Yearly SAVE 30%
                             </div>
-                            <div className="col-2">
+                            <div className="col-1">
                                 <label className="trigger switch">
                                     <input
                                         type="checkbox"
