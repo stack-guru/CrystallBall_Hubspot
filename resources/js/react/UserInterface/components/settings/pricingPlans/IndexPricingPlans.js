@@ -96,10 +96,10 @@ export default class IndexPricingPlans extends React.Component {
                             <div className="col-6 text-center">
                                 <h2 className="gaa-title">Choose Your Plan</h2>
                             </div>
-                            <div className="col-2 text-right" style={{ color: '#1a98f0' }}>
+                            <div className="col-2 text-right" style={{ color: '#1a98f0', paddingTop: '12px' }}>
                                 Yearly SAVE 30%
                             </div>
-                            <div className="col-1">
+                            <div className="col-1" style={{ paddingTop: '10px' }}>
                                 <label className="trigger switch">
                                     <input
                                         type="checkbox"
@@ -146,15 +146,15 @@ export default class IndexPricingPlans extends React.Component {
                                             {this.state.planDuration == '12' ? <sub className="mt-2 w-100 text-center">Billed Annually</sub> : <sub className="mt-2 w-100 text-center">Billed Monthly</sub>}
                                             {
                                                 pricePlan.google_analytics_property_count == 1 ?
-                                                    <p className="mt-3 w-100 ml-2" style={{ color: '#1a98f0' }}><i className="fa fa-check-circle-o"></i> One Property/Website</p>
+                                                    <p className="mt-3 w-100 ml-2" style={{ color: '#1a98f0' }}><i className="fa fa-check-circle-o" style={{ marginRight: '5px' }}></i> One Property/Website</p>
                                                     :
                                                     pricePlan.google_analytics_property_count > 0 ?
-                                                        <p className="mt-3 w-100 ml-2" style={{ color: '#1a98f0' }}><i className="fa fa-check-circle-o"></i> Up to {pricePlan.google_analytics_property_count} Properties</p>
+                                                        <p className="mt-3 w-100 ml-2" style={{ color: '#1a98f0' }}><i className="fa fa-check-circle-o" style={{ marginRight: '5px' }}></i> Up to {pricePlan.google_analytics_property_count} Properties</p>
                                                         :
                                                         (pricePlan.google_analytics_property_count == -1 ?
-                                                            <p className="mt-3 text-danger w-100 ml-2"><i className="fa fa-times-circle-o"></i> No Property Filters</p>
+                                                            <p className="mt-3 text-danger w-100 ml-2"><i className="fa fa-times-circle-o" style={{ marginRight: '5px' }}></i> No Property Filters</p>
                                                             :
-                                                            <p className="mt-3 text-success w-100 ml-2"><i className="fa fa-check-circle-o"></i> Unlimited Property Filters</p>)
+                                                            <p className="mt-3 text-success w-100 ml-2"><i className="fa fa-check-circle-o" style={{ marginRight: '5px' }}></i> Unlimited Property Filters</p>)
                                             }
                                             <hr />
                                             <ul className="fa-ul">
