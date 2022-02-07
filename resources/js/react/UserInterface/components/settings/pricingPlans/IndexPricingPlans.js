@@ -92,7 +92,7 @@ export default class IndexPricingPlans extends React.Component {
                     <div className="container">
                         <div className="row ml-0 mr-0 p-2">
                             <div className="col-10 text-right">
-                                Save 30% YEARLY
+                                Yearly SAVE 30%
                             </div>
                             <div className="col-2">
                                 <label className="trigger switch">
@@ -120,43 +120,42 @@ export default class IndexPricingPlans extends React.Component {
                                     {/*<input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />*/}
                                     {/*<input type="hidden" name="price_plan_id" value={pricePlan.id} />*/}
 
-                                    <div className="card mb-5 mb-lg-0">
+                                    <div className={"card mb-5 mb-lg-0 " + (pricePlan.badge_text ? 'border border-warning' : '')}>
                                         <div className="card-body">
-                                            <h5 className="card-title text-uppercase w-100">
+                                            {pricePlan.badge_text ?
+                                                <span className="badge badge-warning" style={{ position: 'absolute', right: '12px' }}>{pricePlan.badge_text}</span>
+                                                : null}
+                                            <h4 className="card-title text-uppercase w-100 text-center">
                                                 {pricePlan.name}
-                                                {pricePlan.badge_text ?
-                                                    <span className="badge badge-warning float-right">{pricePlan.badge_text}</span>
-                                                    : null}
-                                            </h5>
+                                            </h4>
 
                                             {/* This line break logic is completely rubbish but it works.
                                                 If you have some better approach for it, don't hesitate
                                                 to comment this one and try yours. */}
                                             {
-                                                pricePlan.short_description.length > 35 ? <p className="mb-0 card-text">{pricePlan.short_description}</p> :
-
-                                                    pricePlan.short_description.length == 0 ? <p className="mb-0 card-text">&nbsp;<br />&nbsp;</p> :
-                                                        <p className="mb-0 card-text">{pricePlan.short_description}<br />&nbsp;</p>
+                                                pricePlan.short_description.length > 35 ? <p className="mb-0 card-text w-100 text-center">{pricePlan.short_description}</p> :
+                                                    pricePlan.short_description.length == 0 ? <p className="mb-0 card-text w-100 text-center">&nbsp;<br />&nbsp;</p> :
+                                                        <p className="mb-0 card-text w-100 text-center">{pricePlan.short_description}<br />&nbsp;</p>
                                             }
                                             {/* Constants for 1 and Annual values should have been used. But 
                                                 it might have caused some compilation errors that's why I avoided
                                                 them. If you can do it without any errors feel free to do it. */}
-                                            <h6 className="card-price text-center">
+                                            <h6 className="card-price text-center w-100">
                                                 ${this.state.planDuration == '12' ? calculateDiscountedPrice(pricePlan.price, pricePlan.yearly_discount_percent) : pricePlan.price}
                                                 <span className="period">/per month</span>
                                             </h6>
-                                            {this.state.planDuration == '12' ? <p>Billed Annually</p> : null}
+                                            {this.state.planDuration == '12' ? <sub className="mt-2 w-100 text-center">Billed Annually</sub> : <sub className="mt-3 w-100 text-center">Billed Monthly</sub>}
                                             {
                                                 pricePlan.google_analytics_property_count == 1 ?
-                                                    <p className="mt-4 text-info"><i className="fa fa-check-circle-o"></i> One Property/Website</p>
+                                                    <p className="mt-3 text-info w-100 ml-2"><i className="fa fa-check-circle-o"></i> One Property/Website</p>
                                                     :
                                                     pricePlan.google_analytics_property_count > 0 ?
-                                                        <p className="mt-4 text-info"><i className="fa fa-check-circle-o"></i> Up to {pricePlan.google_analytics_property_count} Properties</p>
+                                                        <p className="mt-3 text-info w-100 ml-2"><i className="fa fa-check-circle-o"></i> Up to {pricePlan.google_analytics_property_count} Properties</p>
                                                         :
                                                         (pricePlan.google_analytics_property_count == -1 ?
-                                                            <p className="mt-4 text-danger"><i className="fa fa-times-circle-o"></i> No Property Filters</p>
+                                                            <p className="mt-3 text-danger w-100 ml-2"><i className="fa fa-times-circle-o"></i> No Property Filters</p>
                                                             :
-                                                            <p className="mt-4 text-success"><i className="fa fa-check-circle-o"></i> Unlimited Property Filters</p>)
+                                                            <p className="mt-3 text-success w-100 ml-2"><i className="fa fa-check-circle-o"></i> Unlimited Property Filters</p>)
                                             }
                                             <hr />
                                             <ul className="fa-ul">
