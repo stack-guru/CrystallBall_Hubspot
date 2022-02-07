@@ -72,7 +72,7 @@ class PaymentController extends Controller
 
         // Putting values in variable for use
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
-        $pricePlanExipryDuration = $request->plan_duration == PricePlan::MONTHLY ? "+1 month" : '+1 year';
+        $pricePlanExipryDuration = "+" . $request->plan_duration . " month";
         $pricePlanExpiryDate = new \DateTime($pricePlanExipryDuration);
 
         $transactionId = 0;
@@ -165,6 +165,7 @@ class PaymentController extends Controller
             $paymentDetail->save();
 
             // Recording transaction subscription to database
+            $pricePlanSubscription->plan_duration = $request->plan_duration;
             $pricePlanSubscription->price_plan_id = $pricePlan->id;
             $pricePlanSubscription->transaction_id = $transactionId;
             $pricePlanSubscription->expires_at = $pricePlanExpiryDate;

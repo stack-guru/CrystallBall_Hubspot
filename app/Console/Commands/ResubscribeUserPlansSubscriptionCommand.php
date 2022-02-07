@@ -145,6 +145,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
             ->with('pricePlan')
             ->with('lastPaymentDetail')
+            ->with('lastPricePlanSubscription')
             ->get();
         $this->comment(count($users) . " users are currently on paid plans and will be charged.");
 
@@ -152,6 +153,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         foreach ($users as $user) {
             $lastPaymentDetail = $user->lastPaymentDetail;
             $lastPricePlanSubscription = $user->lastPricePlanSubscription;
+            $pricePlan = $user->pricePlan;
 
             if ($lastPaymentDetail && $user->is_billing_enabled) {
                 $card = [
@@ -160,8 +162,18 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     'expirationYear' => $lastPaymentDetail->expiry_year,
                     'securityCode' => $lastPaymentDetail->security_code,
                 ];
-                $pricePlanPrice = $user->pricePlan->price;
+                // Basic monthly price
+                $pricePlanPrice = $pricePlan->price;
 
+                // Applying annual discount if applicable
+                if ($lastPricePlanSubscription->plan_duration == PricePlan::ANNUALLY) {
+                    if ($pricePlan->yearly_discount_percent > 0) {
+                        // price = 12*price - discount*12
+                        $pricePlanPrice = ($pricePlan->price * 12) - (round((float)($pricePlan->price * ($pricePlan->yearly_discount_percent / 100)), 0) * 12);
+                    }
+                }
+
+                // Coupon Code
                 $isCouponApplied = false;
                 if ($lastPricePlanSubscription->coupon && $lastPricePlanSubscription->left_coupon_recurring > 0) {
                     $isCouponApplied = true;
@@ -169,7 +181,8 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     $pricePlanPrice = $pricePlanPrice - (($coupon->discount_percent / 100) * $pricePlanPrice);
                 }
 
-                if (array_search($lastPaymentDetail->country, ["PK", "IL"]) !== false) {
+                // General Sales Tax
+                if (array_search($lastPaymentDetail->country, ["IL"]) !== false) {
                     $pricePlanPrice = $pricePlanPrice + ((17 / 100) * $pricePlanPrice);
                 }
 
@@ -178,7 +191,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                 if ($responseArr['success'] == false) {
                     // Downgrading user to free plan
                     $this->addTransactionToLog($user->id, $user->price_plan_id, null, $lastPaymentDetail->id, $lastPaymentDetail->card_number, $responseArr['message'], $pricePlanPrice, false);
-                    $this->subscribeUserToPlan($user, $this->downgradePricePlanId);
+                    $this->subscribeUserToPlan($user, $this->downgradePricePlanId, $this->nextExpiryDate);
                     WebMonitor::removeAdditionalWebMonitors($user, $this->downgradePricePlan->web_monitor_count);
                     UserDataSource::disableDataSources($user);
                     NotificationSetting::disableNotifications($user);
@@ -188,17 +201,17 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     // Continuing user paid plan
                     // checking if recurring coupon applied
                     if ($isCouponApplied) {
-                        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice, $coupon->id, $coupon->recurring_discount_count - 1);
+                        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice, new \DateTime('+' . $lastPricePlanSubscription->plan_duration . ' month'), $coupon->id, $coupon->recurring_discount_count - 1);
                     } else {
-                        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice);
+                        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice, new \DateTime('+' . $lastPricePlanSubscription->plan_duration . ' month'));
                     }
                     $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $lastPaymentDetail->id, $lastPaymentDetail->card_number, null, $pricePlanPrice, true);
-                    $this->subscribeUserToPlan($user, $user->price_plan_id);
+                    $this->subscribeUserToPlan($user, $user->price_plan_id,  new \DateTime('+' . $lastPricePlanSubscription->plan_duration . ' month'));
                 }
             } else {
                 // Downgrading user to free plan
                 if (!$user->user_id) {
-                    $this->subscribeUserToPlan($user, $this->downgradePricePlanId);
+                    $this->subscribeUserToPlan($user, $this->downgradePricePlanId, $this->nextExpiryDate);
                     WebMonitor::removeAdditionalWebMonitors($user, $this->downgradePricePlan->web_monitor_count);
                     UserDataSource::disableDataSources($user);
                     NotificationSetting::disableNotifications($user);
@@ -212,11 +225,11 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $this->info(count($users) . " users have been resubscribed to their paid plans.");
     }
 
-    private function addPricePlanSubscription($transactionId, $userId, $paymentDetailId, $pricePlanId, $chargedPrice, $couponId = null, $couponLeftRecurringCount = 0)
+    private function addPricePlanSubscription($transactionId, $userId, $paymentDetailId, $pricePlanId, $chargedPrice, $expiryDate, $couponId = null, $couponLeftRecurringCount = 0)
     {
         $pricePlanSubscription = new PricePlanSubscription;
         $pricePlanSubscription->transaction_id = $transactionId;
-        $pricePlanSubscription->expires_at = new \DateTime("+1 month");
+        $pricePlanSubscription->expires_at = $expiryDate;
         $pricePlanSubscription->user_id = $userId;
         $pricePlanSubscription->payment_detail_id = $paymentDetailId;
         $pricePlanSubscription->price_plan_id = $pricePlanId;
@@ -241,12 +254,12 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $autoPaymentLog->save();
     }
 
-    private function subscribeUserToPlan($user, $planId)
+    private function subscribeUserToPlan($user, $planId, $nextExpiryDate)
     {
         $user->price_plan_id = $planId;
-        $user->price_plan_expiry_date = $this->nextExpiryDate;
+        $user->price_plan_expiry_date = $nextExpiryDate;
         $user->save();
 
-        DB::table('users')->where('user_id', $user->id)->update(['price_plan_id' => $planId, 'price_plan_expiry_date' => $this->nextExpiryDate]);
+        DB::table('users')->where('user_id', $user->id)->update(['price_plan_id' => $planId, 'price_plan_expiry_date' => $nextExpiryDate]);
     }
 }
