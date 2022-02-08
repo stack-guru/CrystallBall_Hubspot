@@ -243,6 +243,8 @@ setting-menu-item.dropdown {
 .pricing .card-text {
     font-size: 16px;
     font-weight: 400;
+    padding-left: 25px;
+    padding-right: 25px;
 }
 .pricing .card-price {
     font-size: 2rem;
