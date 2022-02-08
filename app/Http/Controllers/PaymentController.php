@@ -108,7 +108,7 @@ class PaymentController extends Controller
             if ($request->plan_duration == PricePlan::ANNUALLY) {
                 if ($pricePlan->yearly_discount_percent > 0) {
                     // price = 12*price - discount*12
-                    $price = ($pricePlan->price * 12) - (round((float)($pricePlan->price * ($pricePlan->yearly_discount_percent / 100)), 0) * 12);
+                    $price = ($pricePlan->price * 12) - (round((float)(($pricePlan->price * 12) * ($pricePlan->yearly_discount_percent / 100)), 2));
                 }
             }
 

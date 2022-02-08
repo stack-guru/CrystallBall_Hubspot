@@ -252,9 +252,9 @@ export default class CreatePayment extends Component {
         }
 
         if (this.state.planDuration == 12) {
-            totalPrice = actualPrice = actualPrice * 12;
+            totalPrice = actualPrice = parseFloat(actualPrice * 12).toFixed(2);
 
-            annualDiscountAmount = (parseFloat(this.state.pricePlan.price * (this.state.pricePlan.yearly_discount_percent / 100)).toFixed(0)) * 12;
+            annualDiscountAmount = (parseFloat((this.state.pricePlan.price * 12) * (this.state.pricePlan.yearly_discount_percent / 100)).toFixed(2));
             totalPrice -= annualDiscountAmount;
         }
 
