@@ -7,6 +7,7 @@ use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
 use App\Models\AnnotationGaProperty;
 use App\Models\GoogleAnalyticsProperty;
+use App\Models\PricePlan;
 use App\Models\UserDataSource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -425,7 +426,7 @@ class AnnotationController extends Controller
                     "name" => 'To see the annotation',
                 ],
                 "url" => route('settings.price-plans'),
-                "description" => 'The Chrome extension is not available in ' . $user->pricePlan->name . ' plan',
+                "description" => $user->pricePlan->name == PricePlan::TRIAL_ENDED ? 'The Chrome extension is not available after the Trial ends.' : 'The Chrome extension is not available in ' . $user->pricePlan->name . ' plan.',
                 "title" => "Upgrade your plan",
                 "highlighted" => false,
                 "publishDate" => $publishDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
