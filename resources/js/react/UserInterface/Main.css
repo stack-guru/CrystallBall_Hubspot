@@ -225,6 +225,7 @@ setting-menu-item.dropdown {
 
 .pricing hr {
     margin: 1rem 0;
+    margin-top: 0;
     background-color: #ffffff;
     width: 100%;
 }
@@ -265,6 +266,11 @@ setting-menu-item.dropdown {
 .pricing .card .card-body {
     align-items: start !important;
     justify-content: start !important;
+}
+
+.pricing .card .card-body sub {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .pricing ul li {
