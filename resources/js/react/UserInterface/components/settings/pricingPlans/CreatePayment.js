@@ -413,7 +413,7 @@ export default class CreatePayment extends Component {
                                                     </div>
                                                     <div className="row">
                                                         <div className="col-6">Next billing at</div>
-                                                        <div className="col-6 text-right">{moment().add(1, 'M').format("YYYY-MM-DD")}</div>
+                                                        <div className="col-6 text-right">{moment().add(this.state.planDuration, 'M').format("YYYY-MM-DD")}</div>
                                                     </div>
                                                     {/* <div className="form-check mt-3">
                                                         <input type="checkbox" className="form-check-input" name="remember_card"
