@@ -93,6 +93,47 @@ class SearchConsoleController extends Controller
         return ['statistics' => $filledStatistics];
     }
 
+    public function annotationsDatesIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'google_search_console_site_id' => 'required',
+            'statistics_padding_days' => 'required|numeric|between:0,7',
+        ]);
+
+        $this->authorize('viewAny', Annotation::class);
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
+        $statisticsPaddingDays = $request->query('statistics_padding_days');
+
+        $user = Auth::user();
+        $userIdsArray = $user->getAllGroupUserIdsArray();
+
+        $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
+        if (!in_array($gSCSite->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Search Console Site for the given id.");
+        }
+        $annotationsQuery = "SELECT `TempTable`.* FROM (";
+        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('google_search_console_site_id'), $userIdsArray);
+        $annotationsQuery .= ") AS TempTable";
+        $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
+
+        // Add limit for annotations if the price plan is limited in annotations count
+        if ($user->pricePlan->annotations_count > 0) {
+            $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
+        }
+
+        $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.* FROM ($annotationsQuery) AS T2 INNER JOIN (
+                    SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL $statisticsPaddingDays DAY) as seven_day_old_date, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count FROM google_search_console_statistics
+                    WHERE google_search_console_site_id = $gSCSite->id
+                    GROUP BY statistics_date
+                ) AS T3 ON T2.show_at = T3.seven_day_old_date
+                WHERE T3.statistics_date BETWEEN '$startDate' AND '$endDate';");
+
+        return ['annotations' => $annotations];
+    }
+    
     public function queriesIndex(Request $request)
     {
         $this->validate($request, [
@@ -209,44 +250,4 @@ class SearchConsoleController extends Controller
         return ['statistics' => $statistics];
     }
 
-    public function annotationsDatesIndex(Request $request)
-    {
-        $this->validate($request, [
-            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
-            'end_date' => 'required|date|after:2005-01-01|after:start_date',
-            'google_search_console_site_id' => 'required',
-            'statistics_padding_days' => 'required|numeric|between:0,7',
-        ]);
-
-        $this->authorize('viewAny', Annotation::class);
-        $startDate = $request->query('start_date');
-        $endDate = $request->query('end_date');
-        $statisticsPaddingDays = $request->query('statistics_padding_days');
-
-        $user = Auth::user();
-        $userIdsArray = $user->getAllGroupUserIdsArray();
-
-        $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
-        if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Search Console Site for the given id.");
-        }
-        $annotationsQuery = "SELECT `TempTable`.* FROM (";
-        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('google_search_console_site_id'), $userIdsArray);
-        $annotationsQuery .= ") AS TempTable";
-        $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
-
-        // Add limit for annotations if the price plan is limited in annotations count
-        if ($user->pricePlan->annotations_count > 0) {
-            $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
-        }
-
-        $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.* FROM ($annotationsQuery) AS T2 INNER JOIN (
-                    SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL $statisticsPaddingDays DAY) as seven_day_old_date, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count FROM google_search_console_statistics
-                    WHERE google_search_console_site_id = $gSCSite->id
-                    GROUP BY statistics_date
-                ) AS T3 ON T2.show_at = T3.seven_day_old_date
-                WHERE T3.statistics_date BETWEEN '$startDate' AND '$endDate';");
-
-        return ['annotations' => $annotations];
-    }
 }

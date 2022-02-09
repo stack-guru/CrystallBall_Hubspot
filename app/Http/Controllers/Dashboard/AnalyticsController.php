@@ -14,99 +14,6 @@ use Illuminate\Support\Carbon;
 class AnalyticsController extends Controller
 {
 
-    public function deviceCategoriesIndex(Request $request)
-    {
-        $this->validate($request, [
-            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
-            'end_date' => 'required|date|after:2005-01-01|after:start_date',
-            'ga_property_id' => 'required'
-        ]);
-
-        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
-
-        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
-        if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Analytics Property for the given id.");
-        }
-        $statistics = GoogleAnalyticsMetricDimension::selectRaw('device_category, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count')
-            ->groupBy('device_category')
-            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
-            ->where('ga_property_id', $gAProperty->id)
-            ->get();
-
-        return ['statistics' => $statistics];
-    }
-
-    public function sourcesIndex(Request $request)
-    {
-        $this->validate($request, [
-            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
-            'end_date' => 'required|date|after:2005-01-01|after:start_date',
-            'ga_property_id' => 'required'
-        ]);
-
-        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
-
-        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
-        if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Analytics Property for the given id.");
-        }
-        $statistics = GoogleAnalyticsMetricDimension::selectRaw('source_name, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count')
-            ->groupBy('source_name')
-            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
-            ->where('ga_property_id', $gAProperty->id)
-            ->get();
-
-        return ['statistics' => $statistics];
-    }
-
-    public function mediaIndex(Request $request)
-    {
-        $this->validate($request, [
-            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
-            'end_date' => 'required|date|after:2005-01-01|after:start_date',
-            'ga_property_id' => 'required'
-        ]);
-
-        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
-
-        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
-        if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Analytics Property for the given id.");
-        }
-        $statistics = GoogleAnalyticsMetricDimension::selectRaw('medium_name, SUM(users_count) as sum_users_count')
-            ->groupBy('medium_name')
-            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
-            ->where('ga_property_id', $gAProperty->id)
-            ->get();
-
-        return ['statistics' => $statistics];
-    }
-
-    public function usersDaysIndex(Request $request)
-    {
-        $this->validate($request, [
-            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
-            'end_date' => 'required|date|after:2005-01-01|after:start_date',
-            'ga_property_id' => 'required'
-        ]);
-
-        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
-
-        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
-        if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Analytics Property for the given id.");
-        }
-        $statistics = GoogleAnalyticsMetricDimension::selectRaw('statistics_date, SUM(users_count) as sum_users_count')
-            ->groupBy('statistics_date')
-            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
-            ->where('ga_property_id', $gAProperty->id)
-            ->orderBy('statistics_date')
-            ->get();
-
-        return ['statistics' => $statistics];
-    }
-
     public function usersDaysAnnotationsIndex(Request $request)
     {
         $this->validate($request, [
@@ -140,12 +47,12 @@ class AnalyticsController extends Controller
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
         }
 
-        $statistics = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.* FROM ($annotationsQuery) AS T2 RIGHT JOIN (
+        $statistics = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.* FROM ($annotationsQuery) AS T2 LEFT JOIN (
                     SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL $statisticsPaddingDays DAY) as seven_day_old_date, SUM(users_count) as sum_users_count FROM google_analytics_metric_dimensions
                     WHERE ga_property_id = $gAProperty->id
                     GROUP BY statistics_date
                 ) AS T3 ON T2.show_at = T3.seven_day_old_date
-                WHERE T3.statistics_date BETWEEN '$startDate' AND '$endDate'
+                WHERE T2.show_at BETWEEN '$startDate' AND '$endDate'
                 ORDER BY T3.statistics_date;");
 
         // The code below is used to add 0 values for those days which have no data
@@ -220,8 +127,102 @@ class AnalyticsController extends Controller
                     WHERE ga_property_id = $gAProperty->id
                     GROUP BY statistics_date
                 ) AS T3 ON T2.show_at = T3.seven_day_old_date
-                WHERE T3.statistics_date BETWEEN '$startDate' AND '$endDate';");
+                WHERE T2.show_at BETWEEN '$startDate' AND '$endDate';");
 
         return ['annotations' => $annotations];
     }
+
+    public function mediaIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'ga_property_id' => 'required'
+        ]);
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Analytics Property for the given id.");
+        }
+        $statistics = GoogleAnalyticsMetricDimension::selectRaw('medium_name, SUM(users_count) as sum_users_count')
+            ->groupBy('medium_name')
+            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
+            ->where('ga_property_id', $gAProperty->id)
+            ->get();
+
+        return ['statistics' => $statistics];
+    }
+
+    public function sourcesIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'ga_property_id' => 'required'
+        ]);
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Analytics Property for the given id.");
+        }
+        $statistics = GoogleAnalyticsMetricDimension::selectRaw('source_name, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count')
+            ->groupBy('source_name')
+            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
+            ->where('ga_property_id', $gAProperty->id)
+            ->get();
+
+        return ['statistics' => $statistics];
+    }
+
+    public function deviceCategoriesIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'ga_property_id' => 'required'
+        ]);
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Analytics Property for the given id.");
+        }
+        $statistics = GoogleAnalyticsMetricDimension::selectRaw('device_category, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count')
+            ->groupBy('device_category')
+            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
+            ->where('ga_property_id', $gAProperty->id)
+            ->get();
+
+        return ['statistics' => $statistics];
+    }
+
+    public function usersDaysIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'ga_property_id' => 'required'
+        ]);
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Analytics Property for the given id.");
+        }
+        $statistics = GoogleAnalyticsMetricDimension::selectRaw('statistics_date, SUM(users_count) as sum_users_count')
+            ->groupBy('statistics_date')
+            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
+            ->where('ga_property_id', $gAProperty->id)
+            ->orderBy('statistics_date')
+            ->get();
+
+        return ['statistics' => $statistics];
+    }
+
 }
