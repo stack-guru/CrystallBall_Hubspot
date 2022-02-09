@@ -32,7 +32,7 @@ export default class IndexSearchConsole extends Component {
             clicksImpressionsDaysStatistics: [],
             annotations: [],
             startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
-            endDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
+            endDate: moment().subtract(2, 'days').format('YYYY-MM-DD'),
             google_search_console_site_id: '*',
             statisticsPaddingDays: 7,
             errors: undefined
