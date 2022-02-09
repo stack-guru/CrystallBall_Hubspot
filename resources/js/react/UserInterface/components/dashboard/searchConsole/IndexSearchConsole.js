@@ -186,7 +186,7 @@ export default class IndexSearchConsole extends Component {
                                             <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
                                         </div>
                                     </div>
-                                    <div className="row ml-0 mr-0 mt-4">
+                                    {/* <div className="row ml-0 mr-0 mt-4">
                                         <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                                             <table className="table table-bordered table-hover gaa-hover">
                                                 <thead><tr><th>Search Appearance</th><th>Clicks</th><th>Impressions</th></tr></thead>
@@ -203,7 +203,7 @@ export default class IndexSearchConsole extends Component {
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </React.Fragment>
                                 :
                                 <NoDataFoundPage googleAccount={this.state.googleAccount} />
