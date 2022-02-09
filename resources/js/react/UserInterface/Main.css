@@ -680,16 +680,16 @@ table.table-bordered tbody tr {
     border: 2px solid #1c98f0;
 }
 
-#annotation-table-container tbody {
+tbody {
     display: block;
-    height: 300px;
+    max-height: 300px;
     overflow-y: scroll;
 }
-#annotation-table-container thead, thead tr, tbody tr {
+thead, thead tr, tbody tr {
     display: table;
     width: 100%;
     table-layout: fixed;/* even columns width , fix width of table too*/
 }
-#annotation-table-container thead {
+thead {
     width: calc( 100% - 0.85em )/* scrollbar is average 1em/16px width, remove it from thead width */
 }

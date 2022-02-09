@@ -145,7 +145,7 @@ export default class IndexSearchConsole extends Component {
                                     <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
                                     <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
                                     <div className="row ml-0 mr-0 mt-4">
-                                        <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
+                                        <div className="col-6">
                                             <table className="table table-bordered table-hover gaa-hover">
                                                 <thead><tr><th>Query</th><th>Clicks</th><th>Impressions</th></tr></thead>
                                                 <tbody>
@@ -161,7 +161,7 @@ export default class IndexSearchConsole extends Component {
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
+                                        <div className="col-6">
                                             <table className="table table-bordered table-hover gaa-hover">
                                                 <thead><tr><th>Page</th><th>Clicks</th><th>Impressions</th></tr></thead>
                                                 <tbody>
@@ -179,7 +179,7 @@ export default class IndexSearchConsole extends Component {
                                         </div>
                                     </div>
                                     <div className="row ml-0 mr-0 mt-4">
-                                        <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
+                                        <div className="col-6">
                                             <MapChart countriesStatistics={this.state.countriesStatistics} />
                                         </div>
                                         <div className="col-6">
@@ -187,7 +187,7 @@ export default class IndexSearchConsole extends Component {
                                         </div>
                                     </div>
                                     {/* <div className="row ml-0 mr-0 mt-4">
-                                        <div className="col-6" style={{ maxHeight: '300px', overflowY: 'scroll' }}>
+                                        <div className="col-6">
                                             <table className="table table-bordered table-hover gaa-hover">
                                                 <thead><tr><th>Search Appearance</th><th>Clicks</th><th>Impressions</th></tr></thead>
                                                 <tbody>

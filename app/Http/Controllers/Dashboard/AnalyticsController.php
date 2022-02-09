@@ -41,7 +41,7 @@ class AnalyticsController extends Controller
     {
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
-            'end_date' => 'required|date|after:2005-01-01|after:start_date|before:tomorrow',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
             'ga_property_id' => 'required'
         ]);
 
@@ -64,7 +64,7 @@ class AnalyticsController extends Controller
     {
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
-            'end_date' => 'required|date|after:2005-01-01|after:start_date|before:tomorrow',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
             'ga_property_id' => 'required'
         ]);
 
@@ -87,7 +87,7 @@ class AnalyticsController extends Controller
     {
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
-            'end_date' => 'required|date|after:2005-01-01|after:start_date|before:tomorrow',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
             'ga_property_id' => 'required'
         ]);
 
@@ -111,7 +111,7 @@ class AnalyticsController extends Controller
     {
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
-            'end_date' => 'required|date|after:2005-01-01|after:start_date|before:tomorrow',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
             'statistics_padding_days' => 'required|numeric|between:0,7',
             'ga_property_id' => 'required'
         ]);
@@ -188,7 +188,7 @@ class AnalyticsController extends Controller
     {
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
-            'end_date' => 'required|date|after:2005-01-01|after:start_date|before:tomorrow',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
             'statistics_padding_days' => 'required|numeric|between:0,7',
             'ga_property_id' => 'required'
         ]);
