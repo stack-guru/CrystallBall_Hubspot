@@ -236,17 +236,14 @@ class IndexAnnotations extends React.Component {
 
                                                             return (
                                                                 <tr data-diff-in-milliseconds={diffTime} id={rowId} key={anno.category + anno.event_name + anno.description + anno.url + anno.id}>
-                                                                    <td style={{ borderLeft: `${borderLeftColor} solid 20px` }}>{anno.category}</td>
+                                                                     {/* style={{ borderLeft: `${borderLeftColor} solid 20px` }} */}
+                                                                    <td>{anno.category}</td>
                                                                     <td>{anno.event_name}</td>
                                                                     <td>
-                                                                        <div className="desc-wrap">
-                                                                            <div className="desc-td">
-                                                                                <p>
-                                                                                    {anno.description}
-                                                                                    {anno.url ? <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a> : null}
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
+                                                                        <p>
+                                                                            {anno.description}
+                                                                            {anno.url ? <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a> : null}
+                                                                        </p>
                                                                     </td>
                                                                     <td>
                                                                         {anno.google_analytics_property_name ? anno.google_analytics_property_name : 'All Properties'}
