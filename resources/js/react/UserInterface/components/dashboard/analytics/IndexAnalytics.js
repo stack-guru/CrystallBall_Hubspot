@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { DateRangePicker } from 'react-date-range';
-import html2canvas from 'html2canvas';
 
 import HttpClient from '../../../utils/HttpClient';
 import { newStaticRanges } from '../../../utils/CustomDateRange';
@@ -58,7 +57,7 @@ export default class IndexAnalytics extends Component {
                         </div>
                     </div>
                     <div className="row ml-0 mr-0 mb-2">
-                        <div className="col-md-12 text-right">
+                        {/* <div className="col-md-12 text-right">
                             <button className="btn gaa-btn-primary btn-sm" onClick={() => {
                                 html2canvas(document.getElementById("dashboard-index-container")).then(function (canvas) {
                                     const link = document.createElement("a");
@@ -68,7 +67,18 @@ export default class IndexAnalytics extends Component {
                                         link.click();
                                     });
                                 });
-                            }}><i className="fa fa-download"></i> Download</button>
+                            }}><i className="fa fa-file-picture-o"></i> Download</button>
+                        </div> */}
+                        <div className="col-md-12 text-right">
+                            <button className="btn gaa-btn-primary btn-sm" onClick={() => {
+                                html2pdf(document.getElementById("dashboard-index-container"), {
+                                    margin: 0.5,
+                                    filename: 'dashboard_analytics.pdf',
+                                    image: { type: 'jpeg', quality: 1.0 },
+                                    html2canvas: { scale: 1 },
+                                    jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
+                                });
+                            }}><i className="fa fa-file-pdf-o"></i> Download</button>
                         </div>
                     </div>
                     <div id="dashboard-index-container">

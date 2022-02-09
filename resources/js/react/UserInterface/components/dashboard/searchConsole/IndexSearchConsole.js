@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { DateRangePicker } from 'react-date-range';
-import html2canvas from 'html2canvas';
 
 import HttpClient from '../../../utils/HttpClient';
 import ErrorAlert from '../../../utils/ErrorAlert';
@@ -61,15 +60,14 @@ export default class IndexSearchConsole extends Component {
                     <div className="row ml-0 mr-0 mb-4">
                         <div className="col-md-12 text-right">
                             <button className="btn gaa-btn-primary btn-sm" onClick={() => {
-                                html2canvas(document.getElementById("dashboard-index-container")).then(function (canvas) {
-                                    const link = document.createElement("a");
-                                    link.download = "dashboard_search_console.png";
-                                    canvas.toBlob(function (blob) {
-                                        link.href = URL.createObjectURL(blob);
-                                        link.click();
-                                    });
+                                html2pdf(document.getElementById("dashboard-index-container"), {
+                                    margin: 0.5,
+                                    filename: 'dashboard_search_console.pdf',
+                                    image: { type: 'jpeg', quality: 1.0 },
+                                    html2canvas: { scale: 1 },
+                                    jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
                                 });
-                            }}><i className="fa fa-download"></i> Download</button>
+                            }}><i className="fa fa-file-pdf-o"></i> Download</button>
                         </div>
                     </div>
                     <div id="dashboard-index-container">
