@@ -47,12 +47,12 @@ class AnalyticsController extends Controller
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
         }
 
-        $statistics = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.* FROM ($annotationsQuery) AS T2 LEFT JOIN (
+        $statistics = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.* FROM ($annotationsQuery) AS T2 RIGHT JOIN (
                     SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL $statisticsPaddingDays DAY) as seven_day_old_date, SUM(users_count) as sum_users_count FROM google_analytics_metric_dimensions
                     WHERE ga_property_id = $gAProperty->id
                     GROUP BY statistics_date
                 ) AS T3 ON T2.show_at = T3.seven_day_old_date
-                WHERE T2.show_at BETWEEN '$startDate' AND '$endDate'
+                WHERE T3.statistics_date BETWEEN '$startDate' AND '$endDate'
                 ORDER BY T3.statistics_date;");
 
         // The code below is used to add 0 values for those days which have no data
