@@ -182,7 +182,7 @@ export default class IndexSearchConsole extends Component {
                                             </div>
                                         </div>
                                         <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6">
+                                            <div className="col-6 border">
                                                 <MapChart countriesStatistics={this.state.countriesStatistics} />
                                             </div>
                                             <div className="col-6">
