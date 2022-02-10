@@ -124,16 +124,38 @@ class SearchConsoleController extends Controller
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
         }
 
-        $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.* FROM ($annotationsQuery) AS T2 INNER JOIN (
-                    SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL $statisticsPaddingDays DAY) as seven_day_old_date, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count FROM google_search_console_statistics
-                    WHERE google_search_console_site_id = $gSCSite->id
-                    GROUP BY statistics_date
-                ) AS T3 ON T2.show_at = T3.seven_day_old_date
+        // This code block query records from google_analytics_metric dimensions table multiple times.
+        // It queries records from the table and substracts number of days from the statistics_date col
+        // to move data from different days on same date.
+        // If the user say selected 3 padding days then, for example, this code will read records of date 8 feb as 8 feb,
+        // 9 feb as 8 feb  and 10 feb as 8 feb. After that it groups all the values using SUM function
+        // THIS LOGIC IS BULKY AND PUT QUITE MUCH LOAD ON THE SYSTEM. SOMEONE HAS TO ACHIEVE IT IN THE FISRT PLACE
+        // I HAVE ACHIEVED IT. IF YOU WANT TO IMRPOVE IT. FEEL FREE TO CHANGE THE CODE AND TRY YOUR LOGIC HERE
+        $statisticsQuery = "SELECT statistics_date,  SUM(sum_clicks_count) as sum_clicks_count, SUM(sum_impressions_count) as sum_impressions_count FROM (";
+        // This loop is used to read records multiple times based on user selected padding days
+        // This loop should run atleast once to keep the SQL syntax correct
+        for ($i = 0; ($i < $statisticsPaddingDays) || ($i == 0); $i++) {
+            if ($i > 0) $statisticsQuery .= " UNION ALL ";
+            $statisticsQuery .= "SELECT statistics_date,  SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count FROM google_search_console_statistics
+                WHERE google_search_console_site_id = $gSCSite->id
+                GROUP BY statistics_date";
+        }
+        $statisticsQuery .= ") AS T4
+        GROUP BY statistics_date";
+
+        // If you are here to diagnose an error in this SQL then a better way to diagnose this SQL
+        // is to extract the actual executing SQL statement in a separate place and run trial there
+        // once you are done with it, you can make changes here.
+        $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.*
+                FROM ($annotationsQuery) AS T2
+                INNER JOIN (
+                    $statisticsQuery
+                ) AS T3 ON T2.show_at = T3.statistics_date
                 WHERE T3.statistics_date BETWEEN '$startDate' AND '$endDate';");
 
         return ['annotations' => $annotations];
     }
-    
+
     public function queriesIndex(Request $request)
     {
         $this->validate($request, [
@@ -249,5 +271,4 @@ class SearchConsoleController extends Controller
 
         return ['statistics' => $statistics];
     }
-
 }
