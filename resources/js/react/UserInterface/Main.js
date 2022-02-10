@@ -199,10 +199,9 @@ class Main extends React.Component {
                     showInterfaceTour: keepInterfaceTour ? true : (response.data.user.last_login_at == null),
                     showDataSourceTour: keepDataSourceTour ? true : (response.data.user.last_login_at !== null && response.data.user.data_source_tour_showed_at == null),
                 });
-                loader.classList.add("fadeOut")
+                loader.classList.add("fadeOut");
 
                 if (response.data.user.last_login_at == null) {
-                    fbq('track', 'CompleteRegistration');
                     gtag('event', 'conversion', { 'send_to': 'AW-645973826/wQD3CJnzvugBEMKOg7QC' });
                     ga('send', {
                         hitType: 'event',
@@ -210,6 +209,7 @@ class Main extends React.Component {
                         eventAction: 'SignUp',
                         eventLabel: 'SignUp'
                     });
+                    fbq('track', 'CompleteRegistration');
                 }
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
