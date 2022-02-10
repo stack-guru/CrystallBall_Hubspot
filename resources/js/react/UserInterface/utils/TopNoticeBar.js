@@ -8,6 +8,7 @@ export default function TopNoticeBar(props) {
             style={{
                 width: '100%', backgroundImage: props.backgroundColor, textAlign: 'center', padding: '5px',
                 top: '0px', left: '0px', position: 'sticky',
+                zIndex: 800
             }}
         >{props.content}</div>
     )
