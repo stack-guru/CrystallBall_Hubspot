@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.spectator')
 @section('page-title','Dashboard')
 @section('content')
 <div class="container">

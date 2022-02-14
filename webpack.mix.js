@@ -31,3 +31,10 @@ mix.react('resources/js/react/UserInterface/UI.js', 'public/js');
 // mix.scripts([
 //     'resources/js/bootstrap.js',
 // ], 'public/js/admin.js');
+
+// mix.styles([
+//     'resources/css/bootstrap.css',
+// ], 'public/css/spectator.css');
+// mix.scripts([
+//     'resources/js/bootstrap.js',
+// ], 'public/js/spectator.js');

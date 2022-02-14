@@ -3,11 +3,11 @@
 @section('page-title', 'Login')
 
 @section('content')
-    <form class="form-signin"method="POST" action="{{ route('admin.login') }}">
+    <form class="form-signin"method="POST" action="{{ route('spectator.login') }}">
         @csrf
       <div class="text-center mb-4">
         <img class="mb-4" src="{{ config('app.logo') }}" alt="" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Admin Area</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Spectator Area</h1>
 {{--        <p>Google Analytics Annotations Amplified</p>--}}
       </div>
 

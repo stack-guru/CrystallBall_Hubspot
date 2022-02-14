@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
+    Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('logout');
+});
+
+Route::group(['prefix' => 'spectator', 'as' => 'spectator.'], function () {
+    Route::get('/login', [App\Http\Controllers\Spectator\LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Spectator\LoginController::class, 'login']);
+    Route::post('/logout', [App\Http\Controllers\Spectator\LoginController::class, 'logout'])->name('logout');
+});
+
 Route::redirect('/', '/login', 301);
 
 Auth::routes(['verify' => true]);
@@ -26,12 +38,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('socialite/google', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogle'])->name('socialite.google');
 Route::get('socialite/google/redirect', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogleRedirect'])->name('socialite.google.redirect');
-
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::get('/login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
-    Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('logout');
-});
 
 Route::view('documentation', 'documentation');
 Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
