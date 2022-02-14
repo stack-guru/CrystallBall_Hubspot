@@ -73,6 +73,12 @@ class RouteServiceProvider extends ServiceProvider
                 ->as("admin.")
                 ->namespace($this->namespace)
                 ->group(base_path('routes/admin.php'));
+
+            Route::middleware(['web', 'auth:spectator'])
+                ->prefix("spectator")
+                ->as("spectator.")
+                ->namespace($this->namespace)
+                ->group(base_path('routes/spectator.php'));
         });
     }
 

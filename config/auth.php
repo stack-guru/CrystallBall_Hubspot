@@ -50,6 +50,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'spectator' => [
+            'driver' => 'session',
+            'provider' => 'spectators',
+        ],
     ],
 
     /*
@@ -84,6 +88,11 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+        ],
+
+        'spectators' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Spectator::class,
         ],
     ],
 

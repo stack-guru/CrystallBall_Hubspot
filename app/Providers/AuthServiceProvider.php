@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
+use App\Models\Spectator;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Auth::viaRequest('admin', function ($request) {
             return Admin::where('token', $request->token)->first();
+        });
+
+        Auth::viaRequest('spectator', function ($request) {
+            return Spectator::where('token', $request->token)->first();
         });
     }
 }
