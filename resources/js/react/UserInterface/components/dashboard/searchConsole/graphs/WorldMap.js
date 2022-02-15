@@ -18,7 +18,8 @@ const MapChart = (props) => {
 
     const colorScale = scaleLinear()
         .domain([0, maxImpressionCount])
-        .range(["#c1d0cb", "#15997e"]);
+        .range(["#3366cc", "#dc3912"]);
+    // .range(["#c1d0cb", "#15997e"]);
 
     return (
         <ComposableMap
