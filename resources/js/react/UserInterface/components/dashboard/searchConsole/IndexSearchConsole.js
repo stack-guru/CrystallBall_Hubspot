@@ -8,6 +8,9 @@ import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
 import GoogleSearchConsoleSiteSelect from '../../../utils/GoogleSearchConsoleSiteSelect';
 
 import AnnotationsTable from './tables/annotationsTable';
+import PagesTable from './tables/pagesTable'
+import QueriesTable from './tables/queriesTable'
+import CountriesTable from './tables/countriesTable'
 
 import ClicksImpressionsDaysGraph from './graphs/clicksImpressionsDaysGraph';
 import DeviceClicksImpressionsGraph from './graphs/deviceClicksImpressionsGraph';
@@ -149,36 +152,10 @@ export default class IndexSearchConsole extends Component {
                                         <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-6">
-                                                <table className="table table-bordered table-hover gaa-hover">
-                                                    <thead><tr><th>Query</th><th>Clicks</th><th>Impressions</th></tr></thead>
-                                                    <tbody>
-                                                        {
-                                                            this.state.queriesStatistics.map(qS => {
-                                                                return <tr>
-                                                                    <td>{qS.query}</td>
-                                                                    <td>{qS.sum_clicks_count}</td>
-                                                                    <td>{qS.sum_impressions_count}</td>
-                                                                </tr>
-                                                            })
-                                                        }
-                                                    </tbody>
-                                                </table>
+                                                <QueriesTable queriesStatistics={this.state.queriesStatistics} />
                                             </div>
                                             <div className="col-6">
-                                                <table className="table table-bordered table-hover gaa-hover">
-                                                    <thead><tr><th>Page</th><th>Clicks</th><th>Impressions</th></tr></thead>
-                                                    <tbody>
-                                                        {
-                                                            this.state.pagesStatistics.map(pS => {
-                                                                return <tr>
-                                                                    <td>{pS.page}</td>
-                                                                    <td>{pS.sum_clicks_count}</td>
-                                                                    <td>{pS.sum_impressions_count}</td>
-                                                                </tr>
-                                                            })
-                                                        }
-                                                    </tbody>
-                                                </table>
+                                                <PagesTable pagesStatistics={this.state.pagesStatistics} />
                                             </div>
                                         </div>
                                         <div className="row ml-0 mr-0 mt-4">
@@ -187,6 +164,7 @@ export default class IndexSearchConsole extends Component {
                                             </div>
                                             <div className="col-6">
                                                 <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
+                                                <CountriesTable countriesStatistics={this.state.countriesStatistics} />
                                             </div>
                                         </div>
                                         {/* <div className="row ml-0 mr-0 mt-4">
