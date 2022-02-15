@@ -8,17 +8,24 @@ const geoUrl =
 const MapChart = (props) => {
 
     let maxImpressionCount = 0;
+    let minImpressionCount = 0;
     let data = {};
     props.countriesStatistics.forEach(cS => {
         data[cS.country] = cS;
         if (cS.sum_impressions_count > maxImpressionCount) {
             maxImpressionCount = cS.sum_impressions_count
         }
+        if (cS.sum_impressions_count < minImpressionCount) {
+            minImpressionCount = cS.sum_impressions_count
+        }
     });
 
+    // Substracting 10 from least impression value to prevent showing #c1d0cb color for countries with least impressions
+    // Adding 1 to max impression value to prevent showing black color for countries with max impressions
     const colorScale = scaleLinear()
-        .domain([0, maxImpressionCount])
-        .range(["#3366cc", "#dc3912"]);
+        .domain([minImpressionCount - 10, maxImpressionCount + 1])
+        .range(["#c1d0cb", "#164ea5"]);
+    // .range(["#8bb4f7", "#164ea5"]);
     // .range(["#c1d0cb", "#15997e"]);
 
     return (
