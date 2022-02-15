@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Spectator;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\SpectatorRequest;
 
 class SpectatorController extends Controller
 {
@@ -14,7 +16,7 @@ class SpectatorController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin/spectator/index')->with('spectators', Spectator::all());
     }
 
     /**
@@ -24,7 +26,7 @@ class SpectatorController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin/spectator/create');
     }
 
     /**
@@ -33,20 +35,13 @@ class SpectatorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SpectatorRequest $request)
     {
-        //
-    }
+        $spectator = new Spectator;
+        $spectator->fill($request->validated());
+        $spectator->save();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Spectator  $spectator
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Spectator $spectator)
-    {
-        //
+        return redirect()->route('admin.spectator.index')->with('success', true);
     }
 
     /**
@@ -57,7 +52,7 @@ class SpectatorController extends Controller
      */
     public function edit(Spectator $spectator)
     {
-        //
+        return view('admin/spectator/edit')->with('spectator', $spectator);
     }
 
     /**
@@ -67,9 +62,18 @@ class SpectatorController extends Controller
      * @param  \App\Models\Spectator  $spectator
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Spectator $spectator)
+    public function update(SpectatorRequest $request, Spectator $spectator)
     {
-        //
+        $spectator->fill($request->validated());
+        if ($request->has('password') && !empty($request->password)) {
+            $this->validate($request, [
+                'password' => ['confirmed', 'nullable', 'string', 'min:8'],
+            ]);
+            $spectator->password = bcrypt($request->password);
+        }
+        $spectator->save();
+
+        return redirect()->route('admin.spectator.index')->with('success', true);
     }
 
     /**
@@ -80,6 +84,8 @@ class SpectatorController extends Controller
      */
     public function destroy(Spectator $spectator)
     {
-        //
+        $spectator->delete();
+
+        return redirect()->route('admin.spectator.index')->with('success', true);
     }
 }

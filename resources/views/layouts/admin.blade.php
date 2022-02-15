@@ -61,6 +61,9 @@
                             <a class="nav-link" href="{{ route('admin.user.index') }}">Users</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.spectator.index') }}">Spectators</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.web-monitor.index') }}">Web Monitors</a>
                         </li>
                         <li class="nav-item">
