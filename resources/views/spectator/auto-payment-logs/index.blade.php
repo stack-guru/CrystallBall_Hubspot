@@ -21,7 +21,6 @@
                                 <th>Charged Price</th>
                                 <th>Was Successful</th>
                                 <th>Created At</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,9 +36,6 @@
                                 <td>{{$autoPaymentLog->charged_price}}</td>
                                 <td>{{$autoPaymentLog->was_successful}}</td>
                                 <td>{{$autoPaymentLog->created_at}}</td>
-                                <td>
-                                    <a href="{{ route('admin.deduct-payment.create', ['user_id' => $autoPaymentLog->user_id, 'payment_detail_id' => $autoPaymentLog->paymentDetail->id, 'amount' => $autoPaymentLog->charged_price]) }}" class="btn btn-primary">Charge</a>
-                                </td>
                             </tr>
                             @empty
                             <tr>

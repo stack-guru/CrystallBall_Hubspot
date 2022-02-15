@@ -39,7 +39,7 @@
                                 <td>{{$pricePlanSubscription->created_at->addMonths(1)->todateString()}}</td>
                                 <td>${{@$pricePlanSubscription->pricePlan->price}}</td>
                                 <td>
-                                    <a href="{{ route('admin.price-plan-subscription.show', $pricePlanSubscription->id) }}" class="btn btn-sm btn-primary">Show</a>
+                                    <a href="{{ route('spectator.price-plan-subscription.show', $pricePlanSubscription->id) }}" class="btn btn-sm btn-primary">Show</a>
                                 </td>
                             </tr>
                             @empty
