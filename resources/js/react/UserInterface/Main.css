@@ -679,3 +679,8 @@ table.table-bordered tbody tr {
 .progressbar-container {
     border: 2px solid #1c98f0;
 }
+
+div.scrollable {
+    max-height: 70vh;
+    overflow-y: auto;
+}
