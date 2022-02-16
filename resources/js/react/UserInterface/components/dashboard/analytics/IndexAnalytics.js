@@ -167,7 +167,7 @@ export default class IndexAnalytics extends Component {
                                         <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
                                         <MediaGraph statistics={this.state.mediaStatistics} />
                                         <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6">
+                                            <div className="col-6 scrollable">
                                                 <table className="table table-bordered table-hover gaa-hover">
                                                     <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversion Rate</th></tr></thead>
                                                     <tbody>
