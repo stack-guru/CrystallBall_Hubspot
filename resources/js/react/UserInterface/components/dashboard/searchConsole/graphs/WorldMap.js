@@ -24,7 +24,7 @@ const MapChart = (props) => {
     // Adding 1 to max impression value to prevent showing black color for countries with max impressions
     const colorScale = scaleLinear()
         .domain([minImpressionCount - 10, maxImpressionCount + 1])
-        .range(["#c1d0cb", "#164ea5"]);
+        .range(["#d7ecfb", "#59afff"]);
     // .range(["#8bb4f7", "#164ea5"]);
     // .range(["#c1d0cb", "#15997e"]);
 

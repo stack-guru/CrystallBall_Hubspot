@@ -25,6 +25,12 @@ export default class IndexAnalytics extends Component {
             isBusy: false,
             showDateRangeSelect: false,
             googleAccount: undefined,
+            topStatistics: {
+                "sum_users_count": "∞",
+                "sum_sessions_count": "∞",
+                "sum_events_count": "∞",
+                "sum_conversions_count": "∞"
+            },
             usersDaysStatistics: [],
             annotations: [],
             mediaStatistics: [],
@@ -47,7 +53,7 @@ export default class IndexAnalytics extends Component {
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
 
         return <React.Fragment>
-            <TopStatistics />
+            <TopStatistics topStatistics={this.state.topStatistics} />
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
                     <div className="container-xl p-0">
@@ -199,6 +205,14 @@ export default class IndexAnalytics extends Component {
             this.setState({ isBusy: true });
             this.fetchUsersDaysAnnotations(gaPropertyId);
             this.fetchAnnotationsMetricsDimensions(gaPropertyId);
+            HttpClient.get(`/dashboard/analytics/top-statistics?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+                .then(response => {
+                    this.setState({ isBusy: false, topStatistics: response.data.statistics });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
             HttpClient.get(`/dashboard/analytics/media?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
                     this.setState({ isBusy: false, mediaStatistics: response.data.statistics });

@@ -14,6 +14,29 @@ use Illuminate\Support\Carbon;
 class AnalyticsController extends Controller
 {
 
+    public function topStatisticsIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'ga_property_id' => 'required'
+        ]);
+        $gaPropertyId = $request->ga_property_id;
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+
+        return ['statistics' => DB::select("SELECT 
+                SUM(users_count) AS sum_users_count,
+                SUM(sessions_count) AS sum_sessions_count,
+                SUM(events_count) AS sum_events_count,
+                SUM(conversions_count) AS sum_conversions_count
+            FROM google_analytics_metric_dimensions
+            WHERE ga_property_id = $gaPropertyId
+                AND statistics_date BETWEEN '$startDate' AND '$endDate'
+            ;
+            ")[0]];
+    }
+
     public function usersDaysAnnotationsIndex(Request $request)
     {
         $this->validate($request, [

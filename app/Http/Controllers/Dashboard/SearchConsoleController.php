@@ -14,6 +14,15 @@ use Illuminate\Support\Carbon;
 class SearchConsoleController extends Controller
 {
 
+    public function topStatisticsIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'google_search_console_site_id' => 'required',
+        ]);
+    }
+
     public function clicksImpressionsDaysAnnotationsIndex(Request $request)
     {
         $this->validate($request, [

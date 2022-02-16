@@ -28,12 +28,18 @@ export default class IndexSearchConsole extends Component {
             isBusy: false,
             showDateRangeSelect: false,
             googleAccount: undefined,
+            topStatistics: {
+                "sum_users_count": "∞",
+                "sum_sessions_count": "∞",
+                "sum_events_count": "∞",
+                "sum_conversions_count": "∞"
+            },
+            clicksImpressionsDaysStatistics: [],
             queriesStatistics: [],
             pagesStatistics: [],
             countriesStatistics: [],
             devicesStatistics: [],
             searchApearancesStatistics: [],
-            clicksImpressionsDaysStatistics: [],
             annotations: [],
             startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
             endDate: moment().subtract(2, 'days').format('YYYY-MM-DD'),
@@ -51,7 +57,7 @@ export default class IndexSearchConsole extends Component {
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
 
         return <React.Fragment>
-            <TopStatistics />
+            <TopStatistics topStatistics={this.state.topStatistics} />
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
                     <div className="container-xl p-0">
@@ -196,10 +202,18 @@ export default class IndexSearchConsole extends Component {
         </React.Fragment>;
     }
 
-    fetchStatistics(gaPropertyId) {
+    fetchStatistics(gSCSiteId) {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
-            HttpClient.get(`/dashboard/search-console/clicks-impressions-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
+            HttpClient.get(`/dashboard/search-console/top-statistics?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
+                .then(response => {
+                    this.setState({ isBusy: false, topStatistics: response.data.statistics });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+            HttpClient.get(`/dashboard/search-console/clicks-impressions-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
                 .then(response => {
                     this.setState({ isBusy: false, clicksImpressionsDaysStatistics: response.data.statistics });
                 }, (err) => {
@@ -207,7 +221,7 @@ export default class IndexSearchConsole extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
-            HttpClient.get(`/dashboard/search-console/annotations-dates?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
+            HttpClient.get(`/dashboard/search-console/annotations-dates?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
                 .then(response => {
                     this.setState({ isBusy: false, annotations: response.data.annotations });
                 }, (err) => {
@@ -215,7 +229,7 @@ export default class IndexSearchConsole extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
-            HttpClient.get(`/dashboard/search-console/queries?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}`)
+            HttpClient.get(`/dashboard/search-console/queries?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
                 .then(response => {
                     this.setState({ isBusy: false, queriesStatistics: response.data.statistics, googleAccount: response.data.google_account });
                 }, (err) => {
@@ -223,7 +237,7 @@ export default class IndexSearchConsole extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
-            HttpClient.get(`/dashboard/search-console/pages?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}`)
+            HttpClient.get(`/dashboard/search-console/pages?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
                 .then(response => {
                     this.setState({ isBusy: false, pagesStatistics: response.data.statistics });
                 }, (err) => {
@@ -231,7 +245,7 @@ export default class IndexSearchConsole extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
-            HttpClient.get(`/dashboard/search-console/countries?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}`)
+            HttpClient.get(`/dashboard/search-console/countries?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
                 .then(response => {
                     this.setState({ isBusy: false, countriesStatistics: response.data.statistics });
                 }, (err) => {
@@ -239,7 +253,7 @@ export default class IndexSearchConsole extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
-            HttpClient.get(`/dashboard/search-console/devices?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}`)
+            HttpClient.get(`/dashboard/search-console/devices?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
                 .then(response => {
                     this.setState({ isBusy: false, devicesStatistics: response.data.statistics });
                 }, (err) => {
@@ -247,7 +261,7 @@ export default class IndexSearchConsole extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
-            HttpClient.get(`/dashboard/search-console/search-appearances?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gaPropertyId}`)
+            HttpClient.get(`/dashboard/search-console/search-appearances?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
                 .then(response => {
                     this.setState({ isBusy: false, searchApearancesStatistics: response.data.statistics });
                 }, (err) => {

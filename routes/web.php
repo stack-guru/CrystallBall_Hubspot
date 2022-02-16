@@ -91,6 +91,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
 
         Route::group(['prefix' => 'dashboard'], function () {
             Route::group(['prefix' => 'analytics'], function () {
+                Route::get('top-statistics', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'topStatisticsIndex']);
                 Route::get('annotations-metrics-dimensions', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'annotationsMetricsDimensionsIndex']);
                 Route::get('users-days', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'usersDaysIndex']);
                 Route::get('users-days', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'usersDaysIndex']);
@@ -101,6 +102,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
             });
 
             Route::group(['prefix' => 'search-console'], function () {
+                Route::get('top-statistics', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'topStatisticsIndex']);
                 Route::get('queries', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'queriesIndex']);
                 Route::get('pages', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'pagesIndex']);
                 Route::get('countries', [App\Http\Controllers\Dashboard\SearchConsoleController::class, 'countriesIndex']);
