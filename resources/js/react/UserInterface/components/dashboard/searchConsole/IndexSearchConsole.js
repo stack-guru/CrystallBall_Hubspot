@@ -164,13 +164,17 @@ export default class IndexSearchConsole extends Component {
                                                 <PagesTable pagesStatistics={this.state.pagesStatistics} />
                                             </div>
                                         </div>
-                                        <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6 border">
+                                        <div className="row ml-0 mr-0 mt-4 border">
+                                            <div className="col-6">
                                                 <MapChart countriesStatistics={this.state.countriesStatistics} />
                                             </div>
-                                            <div className="col-6">
-                                                <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
+                                            <div className="col-6 scrollable">
                                                 <CountriesTable countriesStatistics={this.state.countriesStatistics} />
+                                            </div>
+                                        </div>
+                                        <div className="row ml-0 mr-0 mt-4">
+                                            <div className="col-6 border">
+                                                <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
                                             </div>
                                         </div>
                                         {/* <div className="row ml-0 mr-0 mt-4">
