@@ -3,8 +3,8 @@ import React from 'react';
 export default function TopStatistics(props) {
     return <div id="mainContent">
         <div className="row gap-20 masonry pos-r" style={{ position: 'relative', height: '115px' }}>
-            <div className="masonry-item w-100" style={{ position: 'absolute', paddingLeft: '5%', paddingRight: '5%' }}>
-                <div className="row gap-20" style={{ paddingLeft: '5%', paddingRight: '5%' }}>
+            <div className="masonry-item w-100" style={{ position: 'absolute' }}>
+                <div className="row gap-20" style={{ paddingLeft: '12%', paddingRight: '12%' }}>
                     <div className="col-md-3">
                         <div className="layers bd bgc-white p-20">
                             <div className="layer w-100 mB-10"><h6 className="lh-1">Total Clicks</h6></div>
