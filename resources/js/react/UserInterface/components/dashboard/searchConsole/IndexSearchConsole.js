@@ -29,10 +29,10 @@ export default class IndexSearchConsole extends Component {
             showDateRangeSelect: false,
             googleAccount: undefined,
             topStatistics: {
-                "sum_users_count": "∞",
-                "sum_sessions_count": "∞",
-                "sum_events_count": "∞",
-                "sum_conversions_count": "∞"
+                "sum_clicks_count": "∞",
+                "sum_impressions_count": "∞",
+                "max_ctr_count": "∞",
+                "min_position_rank": "∞"
             },
             clicksImpressionsDaysStatistics: [],
             queriesStatistics: [],

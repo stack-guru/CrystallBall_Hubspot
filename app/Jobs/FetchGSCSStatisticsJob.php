@@ -60,7 +60,12 @@ class FetchGSCSStatisticsJob implements ShouldQueue, ShouldBeUnique
 
                 $row['clicks_count'] = $dataRow['clicks'];
                 $row['impressions_count'] = $dataRow['impressions'];
+
+                // CTR - Click-through rate: the click count divided by the impression count.
+                // If a row of data has no impressions, the CTR will be shown as a dash (-) 
+                // because CTR would be division by zero.
                 $row['ctr_count'] = $dataRow['ctr'];
+                
                 $row['position_rank'] = $dataRow['position'];
 
                 $row['google_search_console_site_id'] = $this->googleSearchConsoleSite->id;
@@ -90,7 +95,12 @@ class FetchGSCSStatisticsJob implements ShouldQueue, ShouldBeUnique
 
                 $gSCStatistics->clicks_count = $dataRow['clicks'];
                 $gSCStatistics->impressions_count = $dataRow['impressions'];
+
+                // CTR - Click-through rate: the click count divided by the impression count.
+                // If a row of data has no impressions, the CTR will be shown as a dash (-) 
+                // because CTR would be division by zero.
                 $gSCStatistics->ctr_count = $dataRow['ctr'];
+                
                 $gSCStatistics->position_rank = $dataRow['position'];
 
                 $gSCStatistics->google_search_console_site_id = $this->googleSearchConsoleSite->id;

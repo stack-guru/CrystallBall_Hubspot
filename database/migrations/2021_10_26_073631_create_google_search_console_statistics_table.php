@@ -25,7 +25,7 @@ class CreateGoogleSearchConsoleStatisticsTable extends Migration
 
             $table->integer('clicks_count')->unsigned()->nullable()->default(null);
             $table->integer('impressions_count')->unsigned()->nullable()->default(null);
-            $table->integer('ctr_count')->unsigned()->nullable()->default(null);
+            $table->integer('ctr_count')->unsigned()->nullable()->default(null); // Click-through rate
             $table->integer('position_rank')->unsigned()->nullable()->default(null);
 
             $table->unsignedBigInteger('google_search_console_site_id')->required();

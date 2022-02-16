@@ -21,6 +21,20 @@ class SearchConsoleController extends Controller
             'end_date' => 'required|date|after:2005-01-01|after:start_date',
             'google_search_console_site_id' => 'required',
         ]);
+        $gSCSiteId = $request->google_search_console_site_id;
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+
+        return ['statistics' => DB::select("SELECT 
+                SUM(clicks_count) AS sum_clicks_count,
+                SUM(impressions_count) AS sum_impressions_count,
+                MAX(ctr_count) AS max_ctr_count,
+                MIN(position_rank) AS min_position_rank
+            FROM google_search_console_statistics
+            WHERE google_search_console_site_id = $gSCSiteId
+                AND statistics_date BETWEEN '$startDate' AND '$endDate'
+            ;
+            ")[0]];
     }
 
     public function clicksImpressionsDaysAnnotationsIndex(Request $request)
