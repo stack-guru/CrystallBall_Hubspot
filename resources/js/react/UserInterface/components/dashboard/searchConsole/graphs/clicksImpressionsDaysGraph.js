@@ -35,6 +35,7 @@ export default function ClicksImpressionsDaysGraph(props) {
         //     width: "100%",
         //     // height: "100%"
         // },
+        animation: { "startup": true, duration: 500 },
         'chartArea': { 'width': '100%', 'height': '70%', left: 60 },
         pointSize: 5,
         title: '',
