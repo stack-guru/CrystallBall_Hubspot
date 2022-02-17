@@ -157,18 +157,18 @@ export default class IndexSearchConsole extends Component {
                                         <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
                                         <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
                                         <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6 scrollable">
+                                            <div className="col-6 p-0 scrollable border">
                                                 <QueriesTable queriesStatistics={this.state.queriesStatistics} />
                                             </div>
-                                            <div className="col-6 scrollable">
+                                            <div className="col-6 p-0 scrollable border-bottom">
                                                 <PagesTable pagesStatistics={this.state.pagesStatistics} />
                                             </div>
                                         </div>
                                         <div className="row ml-0 mr-0 mt-4 border">
-                                            <div className="col-6">
+                                            <div className="col-6 p-0">
                                                 <MapChart countriesStatistics={this.state.countriesStatistics} />
                                             </div>
-                                            <div className="col-6 scrollable">
+                                            <div className="col-6 p-0 scrollable">
                                                 <CountriesTable countriesStatistics={this.state.countriesStatistics} />
                                             </div>
                                         </div>
