@@ -45,3 +45,5 @@ Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
 });
 
 Route::get('chrome-extension-log', [App\Http\Controllers\Admin\ChromeExtensionLogController::class, 'index'])->name('chrome-extension-log.index');
+Route::get('login-log', [App\Http\Controllers\Admin\LoginLogController::class, 'index'])->name('login-log.index');
+Route::get('api-log', [App\Http\Controllers\Admin\ApiLogController::class, 'index'])->name('api-log.index');
