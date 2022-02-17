@@ -36,12 +36,21 @@ export default function ClicksImpressionsDaysGraph(props) {
         //     // height: "100%"
         // },
         animation: { "startup": true, duration: 500 },
-        'chartArea': { 'width': '100%', 'height': '70%', left: 60 },
+        // 'chartArea': { 'width': '100%', 'height': '70%', left: 60 },
         pointSize: 5,
         title: '',
+        vAxes: {
+            0: { logScale: false },
+            1: { logScale: false, minValue: 0, title: 'Impressions' }
+        },
+        series: {
+            0: { targetAxisIndex: 0 },
+            1: { targetAxisIndex: 1 },
+            2: { targetAxisIndex: 1 }
+        },
         vAxis: {
-            title: 'Clicks & Impressions',
-            minValue: 0
+            title: 'Clicks',
+            minValue: 0,
         },
         hAxis: {
             scaleType: 'linear',
