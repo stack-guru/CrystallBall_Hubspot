@@ -72,12 +72,25 @@ export default class IndexSearchConsole extends Component {
                         <div className="row ml-0 mr-0 mb-4">
                             <div className="col-md-12 text-right">
                                 <button className="btn gaa-btn-primary btn-sm" onClick={() => {
+                                    const scrollClassName = "scrollable";
+                                    const tempScrollClassName = "removed-scrollable";
+                                    // Remove scrollable class from table containers to show all data in PDF file
+                                    document.getElementById("dashboard-index-container").querySelectorAll('.' + scrollClassName).forEach(scrollableElement => {
+                                        scrollableElement.classList.remove(scrollClassName);
+                                        scrollableElement.classList.add(tempScrollClassName);
+                                    });
                                     html2pdf(document.getElementById("dashboard-index-container"), {
                                         margin: 0.5,
                                         filename: 'dashboard_search_console.pdf',
                                         image: { type: 'jpeg', quality: 1.0 },
                                         html2canvas: { scale: 1 },
                                         jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
+                                    }).then(() => {
+                                        // Add scrollable class from table containers to keep display proper
+                                        document.getElementById("dashboard-index-container").querySelectorAll('.' + tempScrollClassName).forEach(scrollableElement => {
+                                            scrollableElement.classList.remove(tempScrollClassName);
+                                            scrollableElement.classList.add(scrollClassName);
+                                        });
                                     });
                                 }}><i className="fa fa-file-pdf-o"></i> Download</button>
                             </div>
