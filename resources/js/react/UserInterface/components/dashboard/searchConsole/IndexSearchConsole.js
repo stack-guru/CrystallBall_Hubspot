@@ -177,7 +177,7 @@ export default class IndexSearchConsole extends Component {
                                                 <PagesTable pagesStatistics={this.state.pagesStatistics} />
                                             </div>
                                         </div>
-                                        <div className="row ml-0 mr-0 mt-4 border">
+                                        <div className="row ml-0 mr-0 mt-4 border-top border-bottom border-left">
                                             <div className="col-6 p-0">
                                                 <MapChart countriesStatistics={this.state.countriesStatistics} />
                                             </div>
