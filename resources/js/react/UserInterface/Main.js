@@ -32,6 +32,7 @@ import CreatePaymentDetail from './components/settings/CreatePaymentDetail';
 import StartupChecklist from './helpers/StartupChecklist';
 import UserStartupConfigurationModal from './helpers/UserStartupConfigurationModal';
 import InterfaceTour from './helpers/InterfaceTour';
+import IndexDashboard from './components/dashboard/IndexDashboard';
 import IndexAnalytics from './components/dashboard/analytics/IndexAnalytics';
 import IndexSearchConsole from './components/dashboard/searchConsole/IndexSearchConsole';
 import SiteRenamedTopNotice from './utils/SiteRenamedTopNotice';
@@ -93,6 +94,10 @@ class Main extends React.Component {
                             <Route exact path="/dashboard/search-console" refresh={true}>
                                 <IndexSearchConsole user={this.state.user} />
                             </Route>
+                            <Route exact path="/dashboard" refresh={true}>
+                                <IndexDashboard user={this.state.user} />
+                            </Route>
+
                             <Route exact path="/annotation" refresh={true}>
                                 <IndexAnnotations user={this.state.user} />
                             </Route>

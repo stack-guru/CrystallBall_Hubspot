@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { callmiddle } from '../../../../helpers/CommonFunctions';
+import { callmiddle } from '../../../helpers/CommonFunctions';
 
 export default function NoGoogleAccountConnectedPage(props) {
     return <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >

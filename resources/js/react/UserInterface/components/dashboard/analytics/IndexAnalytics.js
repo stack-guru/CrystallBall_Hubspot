@@ -13,8 +13,8 @@ import MediaGraph from './graphs/mediaGraph';
 import DeviceUsersGraph from './graphs/deviceUsersGraph';
 import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGraph';
 
-import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
-import NoDataFoundPage from './subPages/NoDataFoundPage';
+import NoGoogleAccountConnectedPage from '../subPages/NoGoogleAccountConnectedPage';
+import NoDataFoundPage from '../subPages/NoDataFoundPage';
 import TopStatistics from './utils/TopStatistics';
 
 export default class IndexAnalytics extends Component {

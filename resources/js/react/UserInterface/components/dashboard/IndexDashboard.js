@@ -1,26 +1,33 @@
 import React, { Component } from 'react';
 import { DateRangePicker } from 'react-date-range';
 
-import HttpClient from '../../../utils/HttpClient';
-import ErrorAlert from '../../../utils/ErrorAlert';
-import { newStaticRanges } from '../../../utils/CustomDateRange';
-import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
-import GoogleSearchConsoleSiteSelect from '../../../utils/GoogleSearchConsoleSiteSelect';
+import HttpClient from '../../utils/HttpClient';
+import ErrorAlert from '../../utils/ErrorAlert';
+import { newStaticRanges } from '../../utils/CustomDateRange';
+import { timezoneToDateFormat } from '../../utils/TimezoneTodateFormat';
+import GoogleSearchConsoleSiteSelect from '../../utils/GoogleSearchConsoleSiteSelect';
+import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 
-import AnnotationsTable from './tables/annotationsTable';
-import PagesTable from './tables/pagesTable'
-import QueriesTable from './tables/queriesTable'
-import CountriesTable from './tables/countriesTable'
+import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
+import NoDataFoundPage from './subPages/NoDataFoundPage';
 
-import ClicksImpressionsDaysGraph from './graphs/clicksImpressionsDaysGraph';
-import DeviceClicksImpressionsGraph from './graphs/deviceClicksImpressionsGraph';
+import SearchConsoleAnnotationsTable from './searchConsole/tables/annotationsTable';
+import SearchConsoleTopStatistics from './searchConsole/utils/TopStatistics';
+import PagesTable from './searchConsole/tables/pagesTable'
+import QueriesTable from './searchConsole/tables/queriesTable'
+import CountriesTable from './searchConsole/tables/countriesTable'
+import ClicksImpressionsDaysGraph from './searchConsole/graphs/clicksImpressionsDaysGraph';
+import DeviceClicksImpressionsGraph from './searchConsole/graphs/deviceClicksImpressionsGraph';
+import MapChart from './searchConsole/graphs/WorldMap';
 
-import NoGoogleAccountConnectedPage from '../subPages/NoGoogleAccountConnectedPage';
-import NoDataFoundPage from '../subPages/NoDataFoundPage';
-import MapChart from './graphs/WorldMap';
-import TopStatistics from './utils/TopStatistics';
+import AnalyticsAnnotationsTable from './analytics/tables/annotationsTable';
+import AnalyticsTopStatistics from './analytics/utils/TopStatistics';
+import MediaGraph from './analytics/graphs/mediaGraph';
+import DeviceUsersGraph from './analytics/graphs/deviceUsersGraph';
+import UsersDaysWithAnnotationsGraph from './analytics/graphs/usersDaysWithAnnotationsGraph';
 
-export default class IndexSearchConsole extends Component {
+
+export default class IndexDashboard extends Component {
     constructor(props) {
         super(props);
 
@@ -28,28 +35,48 @@ export default class IndexSearchConsole extends Component {
             isBusy: false,
             showDateRangeSelect: false,
             googleAccount: undefined,
-            topStatistics: {
+            analyticsTopStatistics: {
+                "sum_users_count": "∞",
+                "sum_sessions_count": "∞",
+                "sum_events_count": "∞",
+                "sum_conversions_count": "∞"
+            },
+            searchConsoleTopStatistics: {
                 "sum_clicks_count": "∞",
                 "sum_impressions_count": "∞",
                 "max_ctr_count": "∞",
                 "min_position_rank": "∞"
             },
+            // Search Console
             clicksImpressionsDaysStatistics: [],
             queriesStatistics: [],
             pagesStatistics: [],
             countriesStatistics: [],
             devicesStatistics: [],
             searchApearancesStatistics: [],
-            annotations: [],
+            searchConsoleAnnotations: [],
+            google_search_console_site_id: '*',
+            // Analytics
+            usersDaysStatistics: [],
+            mediaStatistics: [],
+            sourcesStatistics: [],
+            deviceCategoriesStatistics: [],
+            analyticsAnnotations: [],
+            ga_property_id: '*',
+
             startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
             endDate: moment().subtract(2, 'days').format('YYYY-MM-DD'),
-            google_search_console_site_id: '*',
+
             statisticsPaddingDays: 7,
             errors: undefined
         };
 
-        this.fetchStatistics = this.fetchStatistics.bind(this);
-        this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
+        this.searchConsoleFetchStatistics = this.searchConsoleFetchStatistics.bind(this);
+        this.searchConsoleChangeStatisticsPaddingDays = this.searchConsoleChangeStatisticsPaddingDays.bind(this);
+
+        this.analyticsFetchStatistics = this.analyticsFetchStatistics.bind(this);
+        this.analyticsFetchUsersDaysAnnotations = this.analyticsFetchUsersDaysAnnotations.bind(this);
+        this.analyticsChangeStatisticsPaddingDays = this.analyticsChangeStatisticsPaddingDays.bind(this);
     }
 
     render() {
@@ -57,13 +84,13 @@ export default class IndexSearchConsole extends Component {
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
 
         return <React.Fragment>
-            <TopStatistics topStatistics={this.state.topStatistics} />
+            <SearchConsoleTopStatistics topStatistics={this.state.searchConsoleTopStatistics} />
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
                     <div className="container-xl p-0">
                         <div className="row ml-0 mr-0 mb-1">
                             <div className="col-md-6 pl-0">
-                                <h2 className="heading-section gaa-title">Search Console</h2>
+                                <h2 className="heading-section gaa-title">Dashboard</h2>
                             </div>
                             <div className="col-md-6 text-right">
                                 <h6 className="gaa-text-color">This page is on Beta</h6>
@@ -99,6 +126,31 @@ export default class IndexSearchConsole extends Component {
                             <div className="row ml-0 mr-0">
                                 <div className="col-md-12">
                                     <ErrorAlert errors={this.state.errors} />
+                                </div>
+                            </div>
+                            <div className="row ml-0 mr-0 mt-3">
+                                <div style={{ maxWidth: '10%', width: '10%' }} >
+                                    Site:
+                                </div>
+                                <div style={{ maxWidth: '30%', width: '30%' }} >
+                                    <GoogleSearchConsoleSiteSelect
+                                        name="google_search_console_site_id"
+                                        id="google_search_console_site_id"
+                                        value={this.state.google_search_console_site_id}
+                                        onChangeCallback={(event) => { this.setState({ google_search_console_site_id: event.target.value }); this.searchConsoleFetchStatistics(event.target.value); }} placeholder="Select Site"
+                                        components={{ IndicatorSeparator: () => null }}
+                                        autoSelectFirst
+                                    />
+                                </div>
+                                <div style={{ maxWidth: '30%', width: '30%' }} >
+                                    <GoogleAnalyticsPropertySelect
+                                        name="ga_property_id"
+                                        id="ga_property_id"
+                                        value={this.state.ga_property_id}
+                                        onChangeCallback={(event) => { this.setState({ ga_property_id: event.target.value }); this.analyticsFetchStatistics(event.target.value); }} placeholder="Select GA Properties"
+                                        components={{ IndicatorSeparator: () => null }}
+                                        autoSelectFirst
+                                    />
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0">
@@ -139,7 +191,8 @@ export default class IndexSearchConsole extends Component {
                                                         showDateRangeSelect: moment(ranges.selection.startDate).format("YYYY-MM-DD") == moment(ranges.selection.endDate).format("YYYY-MM-DD")
                                                     }, () => {
                                                         if (moment(ranges.selection.startDate).format("YYYY-MM-DD") !== moment(ranges.selection.endDate).format("YYYY-MM-DD")) {
-                                                            this.fetchStatistics(this.state.google_search_console_site_id);
+                                                            this.searchConsoleFetchStatistics(this.state.google_search_console_site_id);
+                                                            this.analyticsFetchStatistics(this.state.ga_property_id);
                                                         }
                                                     });
                                                 }}
@@ -149,26 +202,12 @@ export default class IndexSearchConsole extends Component {
                                     }
                                 </div>
                             </div>
-                            <div className="row ml-0 mr-0 mt-3">
-                                <div style={{ maxWidth: '10%', width: '10%' }} >
-                                    Site:
-                                </div>
-                                <div style={{ maxWidth: '30%', width: '30%' }} >
-                                    <GoogleSearchConsoleSiteSelect
-                                        name="google_search_console_site_id"
-                                        id="google_search_console_site_id"
-                                        value={this.state.google_search_console_site_id}
-                                        onChangeCallback={(event) => { this.setState({ google_search_console_site_id: event.target.value }); this.fetchStatistics(event.target.value); }} placeholder="Select Site"
-                                        components={{ IndicatorSeparator: () => null }}
-                                        autoSelectFirst
-                                    />
-                                </div>
-                            </div>
+
                             {
                                 this.state.clicksImpressionsDaysStatistics.length ?
                                     <React.Fragment>
                                         <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
-                                        <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
+                                        <SearchConsoleAnnotationsTable user={this.props.user} annotations={this.state.searchConsoleAnnotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-6 p-0 scrollable border">
                                                 <QueriesTable queriesStatistics={this.state.queriesStatistics} />
@@ -216,15 +255,68 @@ export default class IndexSearchConsole extends Component {
                     </div>
                 </section>
             </div >
+            <AnalyticsTopStatistics topStatistics={this.state.analyticsTopStatistics} />
+            <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
+                <section className="ftco-section" id="inputs">
+                    <div className="container-xl p-0">
+                        <div className="row ml-0 mr-0 mb-1">
+                            <div className="col-md-6 pl-0">
+                                <h2 className="heading-section gaa-title">Analytics</h2>
+                            </div>
+                        </div>
+                        <div id="dashboard-index-container">
+                            <div className="row ml-0 mr-0">
+                                <div className="col-md-12">
+                                    <ErrorAlert errors={this.state.errors} />
+                                </div>
+                            </div>
+                            {
+                                this.state.usersDaysStatistics.length ?
+                                    <React.Fragment>
+                                        {/* <UsersDaysGraph statistics={this.state.usersDaysStatistics} /> */}
+                                        <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
+                                        <AnalyticsAnnotationsTable user={this.props.user} annotations={this.state.analyticsAnnotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
+                                        <MediaGraph statistics={this.state.mediaStatistics} />
+                                        <div className="row ml-0 mr-0 mt-4">
+                                            <div className="col-6 scrollable">
+                                                <table className="table table-bordered table-hover gaa-hover">
+                                                    <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversion Rate</th></tr></thead>
+                                                    <tbody>
+                                                        {
+                                                            this.state.sourcesStatistics.map(sS => {
+                                                                const conversionRate = sS.sum_conversions_count && sS.sum_users_count ? ((sS.sum_conversions_count / sS.sum_users_count) * 100).toFixed(2) : 0;
+                                                                return <tr>
+                                                                    <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} onError={(e) => { e.target.remove(); }} /></td>
+                                                                    <td>{sS.source_name}</td>
+                                                                    <td>{sS.sum_users_count}</td>
+                                                                    <td>{conversionRate}</td>
+                                                                </tr>
+                                                            })
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div className="col-6">
+                                                <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
+                                            </div>
+                                        </div>
+                                    </React.Fragment>
+                                    :
+                                    <NoDataFoundPage googleAccount={this.state.googleAccount} />
+                            }
+                        </div>
+                    </div>
+                </section>
+            </div >
         </React.Fragment>;
     }
 
-    fetchStatistics(gSCSiteId) {
+    searchConsoleFetchStatistics(gSCSiteId) {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
             HttpClient.get(`/dashboard/search-console/top-statistics?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
                 .then(response => {
-                    this.setState({ isBusy: false, topStatistics: response.data.statistics });
+                    this.setState({ isBusy: false, searchConsoleTopStatistics: response.data.statistics });
                 }, (err) => {
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
@@ -240,7 +332,7 @@ export default class IndexSearchConsole extends Component {
                 });
             HttpClient.get(`/dashboard/search-console/annotations-dates?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
                 .then(response => {
-                    this.setState({ isBusy: false, annotations: response.data.annotations });
+                    this.setState({ isBusy: false, searchConsoleAnnotations: response.data.annotations });
                 }, (err) => {
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
@@ -289,11 +381,83 @@ export default class IndexSearchConsole extends Component {
         }
     }
 
-    changeStatisticsPaddingDays(statisticsPaddingDays) {
+    searchConsoleChangeStatisticsPaddingDays(statisticsPaddingDays) {
         this.setState(
             { statisticsPaddingDays: statisticsPaddingDays },
             () => {
-                this.fetchStatistics(this.state.google_search_console_site_id);
+                this.searchConsoleFetchStatistics(this.state.google_search_console_site_id);
+            }
+        );
+    }
+
+    analyticsFetchStatistics(gaPropertyId) {
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true });
+            this.analyticsFetchUsersDaysAnnotations(gaPropertyId);
+            this.analyticsFetchAnnotationsMetricsDimensions(gaPropertyId);
+            HttpClient.get(`/dashboard/analytics/top-statistics?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+                .then(response => {
+                    this.setState({ isBusy: false, analyticsTopStatistics: response.data.statistics });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+            HttpClient.get(`/dashboard/analytics/media?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+                .then(response => {
+                    this.setState({ isBusy: false, mediaStatistics: response.data.statistics });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+            HttpClient.get(`/dashboard/analytics/sources?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+                .then(response => {
+                    this.setState({ isBusy: false, sourcesStatistics: response.data.statistics });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+            HttpClient.get(`/dashboard/analytics/device-categories?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+                .then(response => {
+                    this.setState({ isBusy: false, deviceCategoriesStatistics: response.data.statistics });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+        }
+    }
+
+    analyticsFetchUsersDaysAnnotations(gaPropertyId) {
+        HttpClient.get(`/dashboard/analytics/users-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
+            .then(response => {
+                this.setState({ isBusy: false, usersDaysStatistics: response.data.statistics, googleAccount: response.data.google_account });
+            }, (err) => {
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isBusy: false, errors: err });
+            });
+    }
+
+    analyticsFetchAnnotationsMetricsDimensions(gaPropertyId) {
+        HttpClient.get(`/dashboard/analytics/annotations-metrics-dimensions?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
+            .then(response => {
+                this.setState({ isBusy: false, analyticsAnnotations: response.data.annotations });
+            }, (err) => {
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isBusy: false, errors: err });
+            });
+    }
+
+    analyticsChangeStatisticsPaddingDays(statisticsPaddingDays) {
+        this.setState(
+            { statisticsPaddingDays: statisticsPaddingDays },
+            () => {
+                this.fetchUsersDaysAnnotations(this.state.ga_property_id);
+                this.fetchAnnotationsMetricsDimensions(this.state.ga_property_id);
             }
         );
     }
