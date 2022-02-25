@@ -90,7 +90,7 @@ export default class IndexDashboard extends Component {
                     <div className="container-xl p-0">
                         <div className="row ml-0 mr-0 mb-1">
                             <div className="col-md-6 pl-0">
-                                <h2 className="heading-section gaa-title">Dashboard</h2>
+                                <h2 className="heading-section gaa-title"></h2>
                             </div>
                             <div className="col-md-6 text-right">
                                 <h6 className="gaa-text-color">This page is on Beta</h6>
@@ -129,10 +129,8 @@ export default class IndexDashboard extends Component {
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0 mt-3">
-                                <div style={{ maxWidth: '10%', width: '10%' }} >
-                                    Site:
-                                </div>
-                                <div style={{ maxWidth: '30%', width: '30%' }} >
+                                <div className="col-1 pt-1">Site:</div>
+                                <div className="col-2" >
                                     <GoogleSearchConsoleSiteSelect
                                         name="google_search_console_site_id"
                                         id="google_search_console_site_id"
@@ -142,7 +140,8 @@ export default class IndexDashboard extends Component {
                                         autoSelectFirst
                                     />
                                 </div>
-                                <div style={{ maxWidth: '30%', width: '30%' }} >
+                                <div className="col-1 pt-1">Property:</div>
+                                <div className="col-2" >
                                     <GoogleAnalyticsPropertySelect
                                         name="ga_property_id"
                                         id="ga_property_id"
@@ -153,11 +152,11 @@ export default class IndexDashboard extends Component {
                                     />
                                 </div>
                             </div>
-                            <div className="row ml-0 mr-0">
-                                <div style={{ maxWidth: '10%', width: '10%' }} >
+                            <div className="row ml-0 mr-0 mt-2">
+                                <div className="col-1" >
                                     Date range:
                                 </div>
-                                <div style={{ maxWidth: '30%', width: '30%' }} >
+                                <div className="col-5" >
                                     <button className="btn thin-light-gray-border text-black w-100"
                                         style={{ paddingRight: '8px' }}
                                         onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
@@ -224,11 +223,6 @@ export default class IndexDashboard extends Component {
                                                 <CountriesTable countriesStatistics={this.state.countriesStatistics} />
                                             </div>
                                         </div>
-                                        <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6 border">
-                                                <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
-                                            </div>
-                                        </div>
                                         {/* <div className="row ml-0 mr-0 mt-4">
                                         <div className="col-6">
                                             <table className="table table-bordered table-hover gaa-hover">
@@ -261,15 +255,10 @@ export default class IndexDashboard extends Component {
                     <div className="container-xl p-0">
                         <div className="row ml-0 mr-0 mb-1">
                             <div className="col-md-6 pl-0">
-                                <h2 className="heading-section gaa-title">Analytics</h2>
+                                <h2 className="heading-section gaa-title"></h2>
                             </div>
                         </div>
                         <div id="dashboard-index-container">
-                            <div className="row ml-0 mr-0">
-                                <div className="col-md-12">
-                                    <ErrorAlert errors={this.state.errors} />
-                                </div>
-                            </div>
                             {
                                 this.state.usersDaysStatistics.length ?
                                     <React.Fragment>
@@ -277,6 +266,14 @@ export default class IndexDashboard extends Component {
                                         <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
                                         <AnalyticsAnnotationsTable user={this.props.user} annotations={this.state.analyticsAnnotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
                                         <MediaGraph statistics={this.state.mediaStatistics} />
+                                        <div className="row ml-0 mr-0 mt-4">
+                                            <div className="col-6 border">
+                                                <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
+                                            </div>
+                                            <div className="col-6 border">
+                                                <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
+                                            </div>
+                                        </div>
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-6 scrollable">
                                                 <table className="table table-bordered table-hover gaa-hover">
@@ -296,10 +293,8 @@ export default class IndexDashboard extends Component {
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div className="col-6">
-                                                <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
-                                            </div>
                                         </div>
+
                                     </React.Fragment>
                                     :
                                     <NoDataFoundPage googleAccount={this.state.googleAccount} />

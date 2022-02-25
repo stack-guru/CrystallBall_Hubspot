@@ -88,14 +88,14 @@ class Main extends React.Component {
                     </div>
                     <main className="main-content bgc-grey-100">
                         <Switch>
+                            <Route exact path="/analytics" refresh={true}>
+                                <IndexDashboard user={this.state.user} />
+                            </Route>
                             <Route exact path="/dashboard/analytics" refresh={true}>
                                 <IndexAnalytics user={this.state.user} />
                             </Route>
                             <Route exact path="/dashboard/search-console" refresh={true}>
                                 <IndexSearchConsole user={this.state.user} />
-                            </Route>
-                            <Route exact path="/dashboard" refresh={true}>
-                                <IndexDashboard user={this.state.user} />
                             </Route>
 
                             <Route exact path="/annotation" refresh={true}>
