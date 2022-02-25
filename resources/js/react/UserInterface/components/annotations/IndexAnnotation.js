@@ -236,11 +236,11 @@ class IndexAnnotations extends React.Component {
 
                                                             return (
                                                                 <tr data-diff-in-milliseconds={diffTime} id={rowId} key={anno.category + anno.event_name + anno.description + anno.url + anno.id}>
-                                                                     {/* style={{ borderLeft: `${borderLeftColor} solid 20px` }} */}
+                                                                    {/* style={{ borderLeft: `${borderLeftColor} solid 20px` }} */}
                                                                     <td>{anno.category}</td>
                                                                     <td>{anno.event_name}</td>
                                                                     <td>
-                                                                        <p>
+                                                                        <p style={{ overflowWrap: "anywhere" }}>
                                                                             {anno.description}
                                                                             {anno.url ? <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a> : null}
                                                                         </p>
