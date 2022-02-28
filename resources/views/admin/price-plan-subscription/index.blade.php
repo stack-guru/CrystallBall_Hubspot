@@ -36,7 +36,7 @@
                                 <td>{{$pricePlanSubscription->created_at->todateString()}}</td>
                                 <td>{{@$pricePlanSubscription->paymentDetail->card_number}}</td>
 
-                                <td>{{$pricePlanSubscription->created_at->addMonths(1)->todateString()}}</td>
+                                <td>{{$pricePlanSubscription->expires_at}}</td>
                                 <td>${{@$pricePlanSubscription->pricePlan->price}}</td>
                                 <td>
                                     <a href="{{ route('admin.price-plan-subscription.show', $pricePlanSubscription->id) }}" class="btn btn-sm btn-primary">Show</a>
