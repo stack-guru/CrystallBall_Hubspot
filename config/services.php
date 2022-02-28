@@ -117,5 +117,9 @@ return [
         'client' => [
             'key' => env('RECAPTCHA_CLIENT_KEY', '')
         ],
+    ],
+
+    'user_back' => [
+        'access_token' => env('USER_BACK_ACCESS_TOKEN', '')
     ]
 ];

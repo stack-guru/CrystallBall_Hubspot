@@ -66,3 +66,10 @@
         heap.load("{{ config('services.heap_analytics.property.code') }}");
     </script>
 @endif
+@if(config('services.user_back.access_token'))
+    <script>
+        window.Userback = window.Userback || {};Userback.access_token = '{{ config('services.user_back.access_token') }}';
+        (function(d) {var s = d.createElement('script');s.async = true;s.src = 'https://static.userback.io/widget/v1.js';
+        (d.head || d.body).appendChild(s);})(document);
+    </script>
+@endif
