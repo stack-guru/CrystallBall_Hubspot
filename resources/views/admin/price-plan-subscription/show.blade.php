@@ -30,7 +30,7 @@
                                 <td>${{$pricePlanSubscription->charged_price}}</td>
                                 <td>{{$pricePlanSubscription->created_at->todateString()}}</td>
 
-                                <td>{{$pricePlanSubscription->expires_at}} ($pricePlanSubscription->plan_duration)</td>
+                                <td>{{$pricePlanSubscription->expires_at}} ({{$pricePlanSubscription->plan_duration}})</td>
                                 <td>${{@$pricePlanSubscription->pricePlan->price}}</td>
                             </tr>
                         </tbody>
