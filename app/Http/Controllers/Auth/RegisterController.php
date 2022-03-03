@@ -165,6 +165,7 @@ class RegisterController extends Controller
                 Cookie::queue('coupon_code', $request->query('coupon_code'));
             }
         }
-        return view('auth.register');
+        if ($request->has('email')) return view('auth.register-email');
+        return view('auth.register-google');
     }
 }
