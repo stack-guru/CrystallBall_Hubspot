@@ -27,7 +27,6 @@ Route::group(['prefix' => 'spectator', 'as' => 'spectator.'], function () {
 });
 
 Route::redirect('/', '/login', 301);
-Route::post('ui/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 
 Auth::routes(['verify' => true]);
 Route::get('register_chrome', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm']);
@@ -50,7 +49,7 @@ Route::group(['prefix' => 'app-sumo', 'as' => 'app-sumo.', 'middleware' => ['aut
     Route::put('password', [App\Http\Controllers\AppSumo\AuthController::class, 'updatePassword'])->name('password.update');
 });
 
-Route::group(['middleware' => ['only.non.empty.password', 'auth:api']], function () {
+Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () {
 
     Route::view('dashboard', 'ui/app'); // obsolete
     Route::view('analytics', 'ui/app');
