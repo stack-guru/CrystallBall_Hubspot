@@ -57,13 +57,15 @@ class LoginController extends Controller
                 return true;
             } else {
                 return $this->guard()->attempt(
-                    $this->credentials($request), $request->filled('remember')
+                    $this->credentials($request),
+                    $request->filled('remember')
                 );
             }
         }
 
         return $this->guard()->attempt(
-            $this->credentials($request), $request->filled('remember')
+            $this->credentials($request),
+            $request->filled('remember')
         );
     }
 
@@ -91,5 +93,33 @@ class LoginController extends Controller
         if ($user->price_plan_expiry_date == $todayDate) {
             return redirect()->route('settings.price-plans');
         }
+    }
+
+    /**
+     * Send the response after the user was authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendLoginResponse(\Illuminate\Http\Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        if ($request->is('ui/*')) {
+            $user = Auth::user();
+            return response()->json(['token' => $user->createToken(
+                    explode(":", env("APP_KEY", ":" . \Illuminate\Support\Str::random(60)))[1]
+                )->accessToken], 200);
+        }
+
+        if ($response = $this->authenticated($request, $this->guard()->user())) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new \Illuminate\Http\JsonResponse([], 204)
+            : redirect()->intended($this->redirectPath());
     }
 }
