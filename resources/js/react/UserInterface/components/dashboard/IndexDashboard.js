@@ -84,9 +84,83 @@ export default class IndexDashboard extends Component {
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
 
         return <React.Fragment>
-            <SearchConsoleTopStatistics topStatistics={this.state.searchConsoleTopStatistics} />
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
+                <div className="row ml-0 mr-0 mt-3">
+                    <div className="col-1 pt-1">Site:</div>
+                    <div className="col-4" >
+                        <GoogleSearchConsoleSiteSelect
+                            name="google_search_console_site_id"
+                            id="google_search_console_site_id"
+                            value={this.state.google_search_console_site_id}
+                            onChangeCallback={(event) => { this.setState({ google_search_console_site_id: event.target.value }); this.searchConsoleFetchStatistics(event.target.value); }} placeholder="Select Site"
+                            components={{ IndicatorSeparator: () => null }}
+                            autoSelectFirst
+                        />
+                    </div>
+                </div>
+                <div className="row ml-0 mr-0 mt-2">
+                    <div className="col-1 pt-1">Property:</div>
+                    <div className="col-4" >
+                        <GoogleAnalyticsPropertySelect
+                            name="ga_property_id"
+                            id="ga_property_id"
+                            value={this.state.ga_property_id}
+                            onChangeCallback={(event) => { this.setState({ ga_property_id: event.target.value }); this.analyticsFetchStatistics(event.target.value); }} placeholder="Select GA Properties"
+                            components={{ IndicatorSeparator: () => null }}
+                            autoSelectFirst
+                        />
+                    </div>
+                </div>
+                <div className="row ml-0 mr-0 mt-2">
+                    <div className="col-1" >
+                        Date range:
+                    </div>
+                    <div className="col-4" >
+                        <button className="btn thin-light-gray-border w-100 text-left date-range-dropdown-arrow-container"
+                            onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
+                            From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}
+                            &nbsp;&nbsp;&nbsp;
+                            To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}
+                            &nbsp;
+                            <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" className="date-range-dropdown-arrow float-right">
+                                <path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div style={{ maxWidth: '50%', width: '50%' }} >
+                        {
+                            this.state.showDateRangeSelect ?
+                                <DateRangePicker
+                                    style={{ 'position': 'absolute', backgroundColor: '#F7F7F7', zIndex: 9999999999999 }}
+                                    editableDateInputs={true}
+                                    moveRangeOnFirstSelection={false}
+                                    staticRanges={newStaticRanges}
+                                    inputRanges={[]}
+                                    ranges={[{
+                                        startDate: new Date(this.state.startDate),
+                                        endDate: new Date(this.state.endDate),
+                                        key: 'selection',
+                                    }]}
+                                    onChange={(ranges) => {
+                                        this.setState({
+                                            startDate: moment(ranges.selection.startDate).format("YYYY-MM-DD"),
+                                            endDate: moment(ranges.selection.endDate).format("YYYY-MM-DD"),
+                                            showDateRangeSelect: moment(ranges.selection.startDate).format("YYYY-MM-DD") == moment(ranges.selection.endDate).format("YYYY-MM-DD")
+                                        }, () => {
+                                            if (moment(ranges.selection.startDate).format("YYYY-MM-DD") !== moment(ranges.selection.endDate).format("YYYY-MM-DD")) {
+                                                this.searchConsoleFetchStatistics(this.state.google_search_console_site_id);
+                                                this.analyticsFetchStatistics(this.state.ga_property_id);
+                                            }
+                                        });
+                                    }}
+                                />
+                                :
+                                null
+                        }
+                    </div>
+                </div>
                 <section className="ftco-section" id="inputs">
+                    <SearchConsoleTopStatistics topStatistics={this.state.searchConsoleTopStatistics} />
                     <div className="container-xl p-0">
                         <div className="row ml-0 mr-0 mb-1">
                             <div className="col-md-6 pl-0">
@@ -128,81 +202,6 @@ export default class IndexDashboard extends Component {
                                     <ErrorAlert errors={this.state.errors} />
                                 </div>
                             </div>
-                            <div className="row ml-0 mr-0 mt-3">
-                                <div className="col-1 pt-1">Site:</div>
-                                <div className="col-4" >
-                                    <GoogleSearchConsoleSiteSelect
-                                        name="google_search_console_site_id"
-                                        id="google_search_console_site_id"
-                                        value={this.state.google_search_console_site_id}
-                                        onChangeCallback={(event) => { this.setState({ google_search_console_site_id: event.target.value }); this.searchConsoleFetchStatistics(event.target.value); }} placeholder="Select Site"
-                                        components={{ IndicatorSeparator: () => null }}
-                                        autoSelectFirst
-                                    />
-                                </div>
-                            </div>
-                            <div className="row ml-0 mr-0 mt-2">
-                                <div className="col-1 pt-1">Property:</div>
-                                <div className="col-4" >
-                                    <GoogleAnalyticsPropertySelect
-                                        name="ga_property_id"
-                                        id="ga_property_id"
-                                        value={this.state.ga_property_id}
-                                        onChangeCallback={(event) => { this.setState({ ga_property_id: event.target.value }); this.analyticsFetchStatistics(event.target.value); }} placeholder="Select GA Properties"
-                                        components={{ IndicatorSeparator: () => null }}
-                                        autoSelectFirst
-                                    />
-                                </div>
-                            </div>
-                            <div className="row ml-0 mr-0 mt-2">
-                                <div className="col-1" >
-                                    Date range:
-                                </div>
-                                <div className="col-4" >
-                                    <button className="btn thin-light-gray-border w-100 text-left date-range-dropdown-arrow-container"
-                                        onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
-                                        From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}
-                                        &nbsp;&nbsp;&nbsp;
-                                        To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}
-                                        &nbsp;
-                                        <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" className="date-range-dropdown-arrow float-right">
-                                            <path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div style={{ maxWidth: '50%', width: '50%' }} >
-                                    {
-                                        this.state.showDateRangeSelect ?
-                                            <DateRangePicker
-                                                style={{ 'position': 'absolute', backgroundColor: '#F7F7F7', zIndex: 9999999999999 }}
-                                                editableDateInputs={true}
-                                                moveRangeOnFirstSelection={false}
-                                                staticRanges={newStaticRanges}
-                                                inputRanges={[]}
-                                                ranges={[{
-                                                    startDate: new Date(this.state.startDate),
-                                                    endDate: new Date(this.state.endDate),
-                                                    key: 'selection',
-                                                }]}
-                                                onChange={(ranges) => {
-                                                    this.setState({
-                                                        startDate: moment(ranges.selection.startDate).format("YYYY-MM-DD"),
-                                                        endDate: moment(ranges.selection.endDate).format("YYYY-MM-DD"),
-                                                        showDateRangeSelect: moment(ranges.selection.startDate).format("YYYY-MM-DD") == moment(ranges.selection.endDate).format("YYYY-MM-DD")
-                                                    }, () => {
-                                                        if (moment(ranges.selection.startDate).format("YYYY-MM-DD") !== moment(ranges.selection.endDate).format("YYYY-MM-DD")) {
-                                                            this.searchConsoleFetchStatistics(this.state.google_search_console_site_id);
-                                                            this.analyticsFetchStatistics(this.state.ga_property_id);
-                                                        }
-                                                    });
-                                                }}
-                                            />
-                                            :
-                                            null
-                                    }
-                                </div>
-                            </div>
-
                             {
                                 this.state.clicksImpressionsDaysStatistics.length ?
                                     <React.Fragment>

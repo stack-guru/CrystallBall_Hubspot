@@ -16,7 +16,7 @@
     <a class="minified-provider mt-3" href="{{ route('socialite.google') }}"><img class="oauth-logo" src="/images/google-logo.png"><span class="minified-provider-name">Sign up with Google</span></a>
   </div>
 
-  <a class="btn btn-primary btn-block" href="{{ route('register', ['email' => true]) }}" id="registerButton">Register with Company Email</a>
+  <p class="mt-2"><a href="{{ route('register', ['email' => true]) }}">Register</a> with Company Email</p>
   {{-- <a class="btn btn-lg btn-primary btn-block" href="{{ route('login') }}">Login</a> --}}
   <p class="mt-2">Already have an account? <a href="{{ route('login') }}">Login</a></p>
 </form>
