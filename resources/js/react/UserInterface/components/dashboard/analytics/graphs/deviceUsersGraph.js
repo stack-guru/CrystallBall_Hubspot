@@ -8,6 +8,19 @@ export default function DeviceUsersGraph(props) {
 
     return <div className="row ml-0 mr-0 mt-4">
         <div className="col-6">
+            <table className="table table-borderless table-hover gaa-hover">
+                <thead><tr><th>Device</th><th>Users</th><th>Conv. Rate</th></tr></thead>
+                <tbody>
+                    {
+                        props.deviceCategoriesStatistics.map(dS => {
+                            const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0;
+                            return <tr><td className="text-uppercase">{dS.device_category}</td><td>{dS.sum_users_count}</td><td>{conversionRate}</td></tr>
+                        })
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div className="col-6">
             <Doughnut
                 // height='100px'
                 width='100%'
@@ -57,19 +70,6 @@ export default function DeviceUsersGraph(props) {
                         },
                     },
                 }} />
-        </div>
-        <div className="col-6">
-            <table className="table table-borderless table-hover gaa-hover">
-                <thead><tr><th>Device</th><th>Users</th><th>Conv. Rate</th></tr></thead>
-                <tbody>
-                    {
-                        props.deviceCategoriesStatistics.map(dS => {
-                            const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0;
-                            return <tr><td>{dS.device_category}</td><td>{dS.sum_users_count}</td><td>{conversionRate}</td></tr>
-                        })
-                    }
-                </tbody>
-            </table>
         </div>
     </div>;
 }

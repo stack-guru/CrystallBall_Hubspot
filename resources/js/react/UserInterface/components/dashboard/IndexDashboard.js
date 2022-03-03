@@ -130,7 +130,7 @@ export default class IndexDashboard extends Component {
                             </div>
                             <div className="row ml-0 mr-0 mt-3">
                                 <div className="col-1 pt-1">Site:</div>
-                                <div className="col-2" >
+                                <div className="col-4" >
                                     <GoogleSearchConsoleSiteSelect
                                         name="google_search_console_site_id"
                                         id="google_search_console_site_id"
@@ -140,8 +140,10 @@ export default class IndexDashboard extends Component {
                                         autoSelectFirst
                                     />
                                 </div>
+                            </div>
+                            <div className="row ml-0 mr-0 mt-2">
                                 <div className="col-1 pt-1">Property:</div>
-                                <div className="col-2" >
+                                <div className="col-4" >
                                     <GoogleAnalyticsPropertySelect
                                         name="ga_property_id"
                                         id="ga_property_id"
@@ -156,15 +158,14 @@ export default class IndexDashboard extends Component {
                                 <div className="col-1" >
                                     Date range:
                                 </div>
-                                <div className="col-5" >
-                                    <button className="btn thin-light-gray-border text-black w-100"
-                                        style={{ paddingRight: '8px' }}
+                                <div className="col-4" >
+                                    <button className="btn thin-light-gray-border w-100 text-left date-range-dropdown-arrow-container"
                                         onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
                                         From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}
                                         &nbsp;&nbsp;&nbsp;
                                         To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}
                                         &nbsp;
-                                        <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" className="css-19bqh2r float-right" style={{ color: "rgb(204, 204, 204)" }}>
+                                        <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" className="date-range-dropdown-arrow float-right">
                                             <path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path>
                                         </svg>
                                     </button>

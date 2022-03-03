@@ -684,3 +684,13 @@ div.scrollable {
     max-height: 70vh;
     overflow-y: auto;
 }
+
+.date-range-dropdown-arrow-container {
+    fill: #cccccc;
+    padding-right: 8px;
+    color: hsl(0,0%,20%);
+}
+
+.date-range-dropdown-arrow:hover {
+    color: hsl(0,0%,60%);
+}

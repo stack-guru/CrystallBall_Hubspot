@@ -14,8 +14,8 @@ export default function DeviceClicksImpressionsGraph(props) {
                 <tbody>
                     {
                         props.devicesStatistics.map(dS => {
-                            return <tr>
-                                <td>{dS.device}</td>
+                            return <tr key={dS.device}>
+                                <td className="text-uppercase">{dS.device}</td>
                                 <td>{dS.sum_clicks_count}</td>
                                 <td>{dS.sum_impressions_count}</td>
                             </tr>
