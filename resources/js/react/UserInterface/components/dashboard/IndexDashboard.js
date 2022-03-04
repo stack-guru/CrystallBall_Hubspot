@@ -92,8 +92,17 @@ export default class IndexDashboard extends Component {
 
         return <React.Fragment>
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
+                <section className="ftco-section" id="inputs">
+                    <div className="container-xl p-0">
+                        <div className="row ml-0 mr-0 mb-1">
+                            <div className="col-md-6 pl-0">
+                                <h2 className="heading-section gaa-title">Dashboard</h2>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <div className="row ml-0 mr-0 mt-3">
-                    <div className="col-1 pt-1">Site:</div>
+                    <div className="col-1 pt-1 text-black">Website:</div>
                     <div className="col-4" >
                         <GoogleSearchConsoleSiteSelect
                             name="google_search_console_site_id"
@@ -106,7 +115,7 @@ export default class IndexDashboard extends Component {
                     </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-2">
-                    <div className="col-1 pt-1">Property:</div>
+                    <div className="col-1 pt-1 text-black">Property:</div>
                     <div className="col-4" >
                         <GoogleAnalyticsPropertySelect
                             name="ga_property_id"
@@ -119,9 +128,7 @@ export default class IndexDashboard extends Component {
                     </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-2">
-                    <div className="col-1" >
-                        Date range:
-                    </div>
+                    <div className="col-1 pt-1 text-black" >Date:</div>
                     <div className="col-4" >
                         <button className="btn thin-light-gray-border w-100 text-left date-range-dropdown-arrow-container"
                             onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
