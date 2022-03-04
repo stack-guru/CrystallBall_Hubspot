@@ -10,7 +10,7 @@ export default function DeviceClicksImpressionsGraph(props) {
     return <div className="row ml-0 mr-0 mt-4">
         <div className="col-6">
             <table className="table table-borderless table-hover gaa-hover">
-                <thead><tr><th>Device</th><th>Clicks</th><th>Impressions</th></tr></thead>
+                <thead><tr><th className="text-left">Device</th><th>Clicks</th><th>Impressions</th></tr></thead>
                 <tbody>
                     {
                         props.devicesStatistics.map(dS => {

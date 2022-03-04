@@ -4,15 +4,12 @@ import { timezoneToDateFormat } from '../../utils/TimezoneTodateFormat';
 export default function AnnotationsTable(props) {
     return <div id="annotation-table-container">
         <div className="row ml-0 mr-0 mt-4">
-            <div className="col-12">
+            <div className="col-12 pl-0 pr-0">
                 <div id="annotation-table-container" className="table-responsive">
                     <table className="table table-bordered table-hover gaa-hover">
                         <thead>
                             <tr>
-                                <th style={{ border: 'none' }}></th>
-                                <th style={{ border: 'none' }}></th>
-                                <th style={{ border: 'none' }}></th>
-                                <th style={{ border: 'none' }}></th>
+                                <th colSpan="4">Annotations</th>
                                 <th colSpan="5">
                                     <div className="dropdown">
                                         {props.statisticsPaddingDays} days after the event

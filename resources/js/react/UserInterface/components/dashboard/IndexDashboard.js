@@ -96,7 +96,7 @@ export default class IndexDashboard extends Component {
                     <div className="container-xl p-0">
                         <div className="row ml-0 mr-0 mb-1">
                             <div className="col-md-6 pl-0">
-                                <h2 className="heading-section gaa-title">Dashboard</h2>
+                                <h2 className="heading-section gaa-title">Analytics</h2>
                             </div>
                             <div className="col-md-6 text-right">
                                 <h6 className="gaa-text-color">This page is on Beta</h6>
@@ -156,7 +156,7 @@ export default class IndexDashboard extends Component {
                         />
                     </div>
                 </div>
-                <div className="row ml-0 mr-0 mt-2">
+                <div className="row ml-0 mr-0 mt-2 mb-4">
                     <div className="col-1 pt-1 text-black" >Date:</div>
                     <div className="col-4" >
                         <button className="btn thin-light-gray-border w-100 text-left date-range-dropdown-arrow-container"
@@ -216,6 +216,7 @@ export default class IndexDashboard extends Component {
                                 this.state.clicksImpressionsDaysStatistics.length ?
                                     <React.Fragment>
                                         <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
+                                        <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
                                         <AnnotationsTable
                                             allDates={allDates}
                                             analyticsData={analyticsData}
@@ -240,24 +241,6 @@ export default class IndexDashboard extends Component {
                                                 <CountriesTable countriesStatistics={this.state.countriesStatistics} />
                                             </div>
                                         </div>
-                                        {/* <div className="row ml-0 mr-0 mt-4">
-                                        <div className="col-6">
-                                            <table className="table table-bordered table-hover gaa-hover">
-                                                <thead><tr><th>Search Appearance</th><th>Clicks</th><th>Impressions</th></tr></thead>
-                                                <tbody>
-                                                    {
-                                                        this.state.searchApearancesStatistics.map(sAS => {
-                                                            return <tr>
-                                                                <td>{sAS.search_appearance}</td>
-                                                                <td>{sAS.sum_clicks_count}</td>
-                                                                <td>{sAS.sum_impressions_count}</td>
-                                                            </tr>
-                                                        })
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div> */}
                                     </React.Fragment>
                                     :
                                     <NoDataFoundPage googleAccount={this.state.googleAccount} />
@@ -278,8 +261,6 @@ export default class IndexDashboard extends Component {
                             {
                                 this.state.usersDaysStatistics.length ?
                                     <React.Fragment>
-                                        {/* <UsersDaysGraph statistics={this.state.usersDaysStatistics} /> */}
-                                        <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
                                         <MediaGraph statistics={this.state.mediaStatistics} />
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-6 border">

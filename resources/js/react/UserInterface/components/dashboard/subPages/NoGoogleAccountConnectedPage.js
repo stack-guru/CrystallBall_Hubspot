@@ -23,9 +23,14 @@ export default function NoGoogleAccountConnectedPage(props) {
                                 e.persist();
                                 callmiddle(e, (e) => {
                                     // Save pathname in this storage without domain name
-                                    localStorage.setItem("frontend_redirect_to", "/dashboard/search-console");
+                                    localStorage.setItem("frontend_redirect_to", window.location.pathname);
                                 });
                             }} href="/settings/google-account/create"><img src="/images/connect-google-analytics.png" href="/settings/google-account/create" width="400" height="auto" /></a>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12">
+                            <p className="text-center gaa-text-primary">This page is on Beta</p>
                         </div>
                     </div>
                 </div>
