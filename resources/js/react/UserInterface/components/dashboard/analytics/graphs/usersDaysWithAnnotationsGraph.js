@@ -40,8 +40,9 @@ export default function UsersDaysWithAnnotationsGraph(props) {
         title: '',
         pointSize: 5,
         vAxis: {
+            minValue: 0,
             title: 'Users',
-            minValue: 0
+            titleTextStyle: { color: '#3366cc' }
         },
         hAxis: {
             scaleType: 'linear',

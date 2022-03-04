@@ -288,7 +288,7 @@ export default class IndexDashboard extends Component {
                                             </div>
                                         </div>
                                         <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6 scrollable">
+                                            <div className="col-6 scrollable pl-0">
                                                 <table className="table table-bordered table-hover gaa-hover">
                                                     <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversion Rate</th></tr></thead>
                                                     <tbody>

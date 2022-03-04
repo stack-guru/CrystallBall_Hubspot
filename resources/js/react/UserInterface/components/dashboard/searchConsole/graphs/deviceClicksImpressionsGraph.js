@@ -3,7 +3,7 @@ import { Doughnut } from 'react-chartjs-2';
 
 export default function DeviceClicksImpressionsGraph(props) {
 
-    const dataLabels = props.devicesStatistics.map(s => s.device);
+    const dataLabels = props.devicesStatistics.map(s => s.device.toUpperCase());
     const noOfClicks = props.devicesStatistics.map(s => s.sum_clicks_count);
     const noOfImpressions = props.devicesStatistics.map(s => s.sum_impressions_count);
 
