@@ -71,11 +71,11 @@ export default class IndexDashboard extends Component {
         };
 
         this.searchConsoleFetchStatistics = this.searchConsoleFetchStatistics.bind(this);
-        this.searchConsoleChangeStatisticsPaddingDays = this.searchConsoleChangeStatisticsPaddingDays.bind(this);
+        this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
 
         this.analyticsFetchStatistics = this.analyticsFetchStatistics.bind(this);
         this.analyticsFetchUsersDaysAnnotations = this.analyticsFetchUsersDaysAnnotations.bind(this);
-        this.analyticsChangeStatisticsPaddingDays = this.analyticsChangeStatisticsPaddingDays.bind(this);
+        this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
     }
 
     render() {
@@ -214,7 +214,14 @@ export default class IndexDashboard extends Component {
                                 this.state.clicksImpressionsDaysStatistics.length ?
                                     <React.Fragment>
                                         <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
-                                        <AnnotationsTable allDates={allDates} analyticsData={analyticsData} searchConsoleData={searchConsoleData} user={this.props.user} />
+                                        <AnnotationsTable
+                                            allDates={allDates}
+                                            analyticsData={analyticsData}
+                                            searchConsoleData={searchConsoleData}
+                                            user={this.props.user}
+                                            statisticsPaddingDays={this.state.statisticsPaddingDays}
+                                            satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays}
+                                        />
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-6 p-0 scrollable border">
                                                 <QueriesTable queriesStatistics={this.state.queriesStatistics} />
@@ -382,11 +389,13 @@ export default class IndexDashboard extends Component {
         }
     }
 
-    searchConsoleChangeStatisticsPaddingDays(statisticsPaddingDays) {
+    changeStatisticsPaddingDays(statisticsPaddingDays) {
         this.setState(
             { statisticsPaddingDays: statisticsPaddingDays },
             () => {
                 this.searchConsoleFetchStatistics(this.state.google_search_console_site_id);
+                this.analyticsFetchUsersDaysAnnotations(this.state.ga_property_id);
+                this.analyticsFetchAnnotationsMetricsDimensions(this.state.ga_property_id);
             }
         );
     }
@@ -453,13 +462,4 @@ export default class IndexDashboard extends Component {
             });
     }
 
-    analyticsChangeStatisticsPaddingDays(statisticsPaddingDays) {
-        this.setState(
-            { statisticsPaddingDays: statisticsPaddingDays },
-            () => {
-                this.fetchUsersDaysAnnotations(this.state.ga_property_id);
-                this.fetchAnnotationsMetricsDimensions(this.state.ga_property_id);
-            }
-        );
-    }
 }
