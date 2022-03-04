@@ -218,6 +218,7 @@ class AnalyticsController extends Controller
             ->groupBy('source_name')
             ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
             ->where('ga_property_id', $gAProperty->id)
+            ->orderBy('sum_users_count', 'DESC')
             ->get();
 
         return ['statistics' => $statistics];

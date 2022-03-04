@@ -197,7 +197,7 @@ class SearchConsoleController extends Controller
             ->groupBy('query')
             ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
             ->where('google_search_console_site_id', $gSCSite->id)
-            ->orderBy('query')
+            ->orderBy('sum_clicks_count', 'DESC')
             ->get();
 
         return ['statistics' => $statistics, 'google_account' => $gSCSite->googleAccount()->first()];
@@ -221,6 +221,7 @@ class SearchConsoleController extends Controller
             ->groupBy('page')
             ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
             ->where('google_search_console_site_id', $gSCSite->id)
+            ->orderBy('sum_clicks_count', 'DESC')
             ->get();
 
         return ['statistics' => $statistics];
@@ -244,6 +245,7 @@ class SearchConsoleController extends Controller
             ->groupBy('country')
             ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
             ->where('google_search_console_site_id', $gSCSite->id)
+            ->orderBy('sum_clicks_count', 'DESC')
             ->get();
 
         return ['statistics' => $statistics];
