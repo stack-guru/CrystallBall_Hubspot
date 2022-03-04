@@ -6,7 +6,7 @@ const CountriesTable = props => <table className="table table-bordered table-hov
     <tbody>
         {
             props.countriesStatistics.map(cS => {
-                return <tr>
+                return <tr key={cS.country}>
                     <td>{findCountry(cS.country)}</td>
                     <td>{cS.sum_clicks_count}</td>
                     <td>{cS.sum_impressions_count}</td>

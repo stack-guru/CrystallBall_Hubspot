@@ -5,7 +5,7 @@ const QueriesTable = (props) => <table className="table table-bordered table-hov
     <tbody>
         {
             props.queriesStatistics.map(qS => {
-                return <tr>
+                return <tr key={qS.query}>
                     <td>{qS.query}</td>
                     <td>{qS.sum_clicks_count}</td>
                     <td>{qS.sum_impressions_count}</td>

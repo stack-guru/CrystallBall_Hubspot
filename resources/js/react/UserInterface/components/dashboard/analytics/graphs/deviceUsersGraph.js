@@ -14,7 +14,7 @@ export default function DeviceUsersGraph(props) {
                     {
                         props.deviceCategoriesStatistics.map(dS => {
                             const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0;
-                            return <tr><td className="text-uppercase">{dS.device_category}</td><td>{dS.sum_users_count}</td><td>{conversionRate}</td></tr>
+                            return <tr key={dS.device_category}><td className="text-uppercase">{dS.device_category}</td><td>{dS.sum_users_count}</td><td>{conversionRate}</td></tr>
                         })
                     }
                 </tbody>

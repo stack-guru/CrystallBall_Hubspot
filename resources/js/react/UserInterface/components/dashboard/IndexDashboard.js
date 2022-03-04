@@ -11,7 +11,6 @@ import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySe
 import NoGoogleAccountConnectedPage from './subPages/NoGoogleAccountConnectedPage';
 import NoDataFoundPage from './subPages/NoDataFoundPage';
 
-import SearchConsoleAnnotationsTable from './searchConsole/tables/annotationsTable';
 import SearchConsoleTopStatistics from './searchConsole/utils/TopStatistics';
 import PagesTable from './searchConsole/tables/pagesTable'
 import QueriesTable from './searchConsole/tables/queriesTable'
@@ -20,11 +19,11 @@ import ClicksImpressionsDaysGraph from './searchConsole/graphs/clicksImpressions
 import DeviceClicksImpressionsGraph from './searchConsole/graphs/deviceClicksImpressionsGraph';
 import MapChart from './searchConsole/graphs/WorldMap';
 
-import AnalyticsAnnotationsTable from './analytics/tables/annotationsTable';
 import AnalyticsTopStatistics from './analytics/utils/TopStatistics';
 import MediaGraph from './analytics/graphs/mediaGraph';
 import DeviceUsersGraph from './analytics/graphs/deviceUsersGraph';
 import UsersDaysWithAnnotationsGraph from './analytics/graphs/usersDaysWithAnnotationsGraph';
+import AnnotationsTable from './annotationsTable';
 
 
 export default class IndexDashboard extends Component {
@@ -82,6 +81,14 @@ export default class IndexDashboard extends Component {
     render() {
 
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
+
+        let searchConsoleData = {};
+        this.state.searchConsoleAnnotations.forEach(a => { searchConsoleData[a.show_at] = a; });
+
+        let analyticsData = {};
+        this.state.analyticsAnnotations.forEach(a => { analyticsData[a.show_at] = a; });
+
+        const allDates = [...new Set(Object.keys(searchConsoleData).concat(Object.keys(analyticsData)))];
 
         return <React.Fragment>
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
@@ -207,7 +214,7 @@ export default class IndexDashboard extends Component {
                                 this.state.clicksImpressionsDaysStatistics.length ?
                                     <React.Fragment>
                                         <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
-                                        <SearchConsoleAnnotationsTable user={this.props.user} annotations={this.state.searchConsoleAnnotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
+                                        <AnnotationsTable allDates={allDates} analyticsData={analyticsData} searchConsoleData={searchConsoleData} user={this.props.user} />
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-6 p-0 scrollable border">
                                                 <QueriesTable queriesStatistics={this.state.queriesStatistics} />
@@ -264,7 +271,6 @@ export default class IndexDashboard extends Component {
                                     <React.Fragment>
                                         {/* <UsersDaysGraph statistics={this.state.usersDaysStatistics} /> */}
                                         <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
-                                        <AnalyticsAnnotationsTable user={this.props.user} annotations={this.state.analyticsAnnotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
                                         <MediaGraph statistics={this.state.mediaStatistics} />
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-6 border">
@@ -282,7 +288,7 @@ export default class IndexDashboard extends Component {
                                                         {
                                                             this.state.sourcesStatistics.map(sS => {
                                                                 const conversionRate = sS.sum_conversions_count && sS.sum_users_count ? ((sS.sum_conversions_count / sS.sum_users_count) * 100).toFixed(2) : 0;
-                                                                return <tr>
+                                                                return <tr key={sS.source_name}>
                                                                     <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} onError={(e) => { e.target.remove(); }} /></td>
                                                                     <td>{sS.source_name}</td>
                                                                     <td>{sS.sum_users_count}</td>

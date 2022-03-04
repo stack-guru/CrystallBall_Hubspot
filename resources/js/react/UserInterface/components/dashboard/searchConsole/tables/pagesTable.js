@@ -5,7 +5,7 @@ const PagesTable = props => <table className="table table-bordered table-hover g
     <tbody>
         {
             props.pagesStatistics.map(pS => {
-                return <tr>
+                return <tr key={pS.page}>
                     <td>{pS.page}</td>
                     <td>{pS.sum_clicks_count}</td>
                     <td>{pS.sum_impressions_count}</td>

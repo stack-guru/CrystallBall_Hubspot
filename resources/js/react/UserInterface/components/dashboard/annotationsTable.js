@@ -26,25 +26,36 @@ export default function AnnotationsTable(props) {
                                 </th>
                             </tr>
                             <tr>
+                                <th>Date</th>
                                 <th>Event Name</th>
                                 <th>Category</th>
                                 <th>Description</th>
-                                <th>Date</th>
                                 <th>Clicks</th>
                                 <th>Impressions</th>
+                                <th>Website Visits</th>
+                                <th>Conversions</th>
+                                <th>Conversion Rate</th>
                             </tr>
                         </thead>
                         <tbody id="annotation-table-body" >
                             {
-                                props.annotations.map(anno => {
+                                props.allDates.map(d => {
+                                    const sCAnno = props.searchConsoleData[d];
+                                    const aAnno = props.analyticsData[d];
+
+                                    const conversionRate = aAnno ? (aAnno.sum_conversions_count && aAnno.sum_users_count ? ((aAnno.sum_conversions_count / aAnno.sum_users_count) * 100).toFixed(2) : 0) : 0;
+
                                     return (
-                                        <tr key={anno.id}>
-                                            <td>{anno.event_name}</td>
-                                            <td>{anno.category}</td>
-                                            <td>{anno.description}</td>
-                                            <td>{moment(anno.show_at).format(timezoneToDateFormat(props.user.timezone))}</td>
-                                            <td>{anno.sum_clicks_count}</td>
-                                            <td>{anno.sum_impressions_count}</td>
+                                        <tr key={d}>
+                                            <td>{moment(d).format(timezoneToDateFormat(props.user.timezone))}</td>
+                                            <td>{sCAnno ? sCAnno.event_name : (aAnno ? aAnno.event_name : '')}</td>
+                                            <td>{sCAnno ? sCAnno.category : (aAnno ? aAnno.category : '')}</td>
+                                            <td>{sCAnno ? sCAnno.description : (aAnno ? aAnno.description : '')}</td>
+                                            <td>{sCAnno ? sCAnno.sum_clicks_count : 0}</td>
+                                            <td>{sCAnno ? sCAnno.sum_impressions_count : 0}</td>
+                                            <td>{aAnno ? aAnno.sum_users_count : 0}</td>
+                                            <td>{aAnno ? aAnno.sum_conversions_count : 0}</td>
+                                            <td>{conversionRate}%</td>
                                         </tr>
                                     )
                                 })
