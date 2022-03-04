@@ -41,7 +41,12 @@ export default function ClicksImpressionsDaysGraph(props) {
         title: '',
         vAxes: {
             0: { logScale: false },
-            1: { logScale: false, minValue: 0, title: 'Impressions' }
+            1: {
+                logScale: false,
+                minValue: 0,
+                title: 'Impressions',
+                titleTextStyle: { color: '#dc3912' }
+            }
         },
         series: {
             0: { targetAxisIndex: 0 },
@@ -49,8 +54,9 @@ export default function ClicksImpressionsDaysGraph(props) {
             2: { targetAxisIndex: 1 }
         },
         vAxis: {
-            title: 'Clicks',
             minValue: 0,
+            title: 'Clicks',
+            titleTextStyle: { color: '#3366cc' }
         },
         hAxis: {
             scaleType: 'linear',
@@ -94,23 +100,6 @@ export default function ClicksImpressionsDaysGraph(props) {
             }
         },
         legend: 'none',
-    };
-
-    const optionsArray2 = {
-        annotations: {
-            textStyle: {
-                fontName: 'Times-Roman',
-                fontSize: 18,
-                bold: true,
-                italic: true,
-                // The color of the text.
-                color: '#871b47',
-                // The color of the text outline.
-                auraColor: '#d799ae',
-                // The transparency of the text.
-                opacity: 0.8
-            }
-        }
     };
 
     return <div className="row ml-0 mr-0 mt-4">
