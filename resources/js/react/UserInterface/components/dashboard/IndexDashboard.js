@@ -161,6 +161,7 @@ export default class IndexDashboard extends Component {
                 </div>
                 <section className="ftco-section" id="inputs">
                     <SearchConsoleTopStatistics topStatistics={this.state.searchConsoleTopStatistics} />
+                    <AnalyticsTopStatistics topStatistics={this.state.analyticsTopStatistics} />
                     <div className="container-xl p-0">
                         <div className="row ml-0 mr-0 mb-1">
                             <div className="col-md-6 pl-0">
@@ -249,7 +250,6 @@ export default class IndexDashboard extends Component {
                     </div>
                 </section>
             </div >
-            <AnalyticsTopStatistics topStatistics={this.state.analyticsTopStatistics} />
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
                     <div className="container-xl p-0">

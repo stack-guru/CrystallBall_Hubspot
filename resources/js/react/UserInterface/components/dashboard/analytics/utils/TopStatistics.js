@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function TopStatistics(props) {
-    return <div id="mainContent">
+    return <div id="mainContent" style={{ marginTop: '10px', marginBottom: '10px' }}>
         <div className="row gap-20 masonry pos-r" style={{ position: 'relative', height: '115px' }}>
             <div className="masonry-item w-100" style={{ position: 'absolute' }}>
                 <div className="row gap-20" style={{ paddingLeft: '12%', paddingRight: '12%' }}>
