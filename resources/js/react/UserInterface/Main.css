@@ -699,11 +699,12 @@ div.scrollable {
     padding: 0px 0px 0px 5px;
 }
 
-.simple-masonary h3 {
+.simple-masonary p {
     margin-bottom: 0px;
+    font-size: 1.5rem;
 }
 
-.simple-masonary h3 span.badge {
+.simple-masonary p span.badge {
     right: 25px;
     top: 5px;
     position: absolute;
@@ -712,7 +713,7 @@ div.scrollable {
 .simple-masonary.simple-masonary-green {
     border: 2px solid #e0ede3;
 }
-.simple-masonary.simple-masonary-green h3 span.badge {
+.simple-masonary.simple-masonary-green p span.badge {
     color: #49aa53;
     background-color: #e0ede3;
 }
@@ -720,7 +721,7 @@ div.scrollable {
 .simple-masonary.simple-masonary-purple {
     border: 2px solid #eddeed;
 }
-.simple-masonary.simple-masonary-purple h3 span.badge {
+.simple-masonary.simple-masonary-purple p span.badge {
     color: #9b27aa;
     background-color: #eddeed;
 }
@@ -728,7 +729,7 @@ div.scrollable {
 .simple-masonary.simple-masonary-pink {
     border: 2px solid #f2dfe2;
 }
-.simple-masonary.simple-masonary-pink h3 span.badge {
+.simple-masonary.simple-masonary-pink p span.badge {
     color: #e63f33;
     background-color: #f2dfe2;
 }
@@ -736,7 +737,7 @@ div.scrollable {
 .simple-masonary.simple-masonary-blue {
     border: 2px solid #e3f2fd;
 }
-.simple-masonary.simple-masonary-blue h3 span.badge {
+.simple-masonary.simple-masonary-blue p span.badge {
     color: #1c92ed;
     background-color: #e3f2fd;
 }

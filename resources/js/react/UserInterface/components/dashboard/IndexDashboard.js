@@ -144,12 +144,12 @@ export default class IndexDashboard extends Component {
                     </div>
                     <div className="col-3">
                         <div className="simple-masonary simple-masonary-green">
-                            <h3>Clicks <span className="badge badge-pill">{this.state.searchConsoleTopStatistics.sum_clicks_count}</span></h3>
+                            <p>Clicks <span className="badge badge-pill">{this.state.searchConsoleTopStatistics.sum_clicks_count}</span></p>
                         </div>
                     </div>
                     <div className="col-3">
                         <div className="simple-masonary simple-masonary-purple">
-                            <h3>Impressions <span className="badge badge-pill">{this.state.searchConsoleTopStatistics.sum_impressions_count}</span></h3>
+                            <p>Impressions <span className="badge badge-pill">{this.state.searchConsoleTopStatistics.sum_impressions_count}</span></p>
                         </div>
                     </div>
                 </div>
@@ -167,12 +167,12 @@ export default class IndexDashboard extends Component {
                     </div>
                     <div className="col-3">
                         <div className="simple-masonary simple-masonary-pink">
-                            <h3>Users <span className="badge badge-pill">{this.state.analyticsTopStatistics.sum_users_count}</span></h3>
+                            <p>Users <span className="badge badge-pill">{this.state.analyticsTopStatistics.sum_users_count}</span></p>
                         </div>
                     </div>
                     <div className="col-3">
                         <div className="simple-masonary simple-masonary-blue">
-                            <h3>Conversions <span className="badge badge-pill">{this.state.analyticsTopStatistics.sum_conversions_count}</span></h3>
+                            <p>Conversions <span className="badge badge-pill">{this.state.analyticsTopStatistics.sum_conversions_count}</span></p>
                         </div>
                     </div>
                 </div>
