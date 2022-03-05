@@ -694,3 +694,49 @@ div.scrollable {
 .date-range-dropdown-arrow:hover {
     color: hsl(0,0%,60%);
 }
+
+.simple-masonary {
+    padding: 0px 0px 0px 5px;
+}
+
+.simple-masonary h3 {
+    margin-bottom: 0px;
+}
+
+.simple-masonary h3 span.badge {
+    right: 25px;
+    top: 5px;
+    position: absolute;
+}
+
+.simple-masonary.simple-masonary-green {
+    border: 2px solid #e0ede3;
+}
+.simple-masonary.simple-masonary-green h3 span.badge {
+    color: #49aa53;
+    background-color: #e0ede3;
+}
+
+.simple-masonary.simple-masonary-purple {
+    border: 2px solid #eddeed;
+}
+.simple-masonary.simple-masonary-purple h3 span.badge {
+    color: #9b27aa;
+    background-color: #eddeed;
+}
+
+.simple-masonary.simple-masonary-pink {
+    border: 2px solid #f2dfe2;
+}
+.simple-masonary.simple-masonary-pink h3 span.badge {
+    color: #e63f33;
+    background-color: #f2dfe2;
+}
+
+.simple-masonary.simple-masonary-blue {
+    border: 2px solid #e3f2fd;
+}
+.simple-masonary.simple-masonary-blue h3 span.badge {
+    color: #1c92ed;
+    background-color: #e3f2fd;
+}

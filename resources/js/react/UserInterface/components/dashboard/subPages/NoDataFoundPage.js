@@ -11,7 +11,7 @@ export default function NoDataFoundPage(props) {
                 <div id="dashboard-index-container">
                     <div className="row">
                         <div className="col-12 text-center">
-                            <h3>No data found</h3>
+                            <h3>Loading</h3>
                         </div>
                     </div>
                     <div className="row">

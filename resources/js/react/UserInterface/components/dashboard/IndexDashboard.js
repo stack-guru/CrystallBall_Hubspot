@@ -142,6 +142,16 @@ export default class IndexDashboard extends Component {
                             autoSelectFirst
                         />
                     </div>
+                    <div className="col-3">
+                        <div className="simple-masonary simple-masonary-green">
+                            <h3>Clicks <span className="badge badge-pill">{this.state.searchConsoleTopStatistics.sum_clicks_count}</span></h3>
+                        </div>
+                    </div>
+                    <div className="col-3">
+                        <div className="simple-masonary simple-masonary-purple">
+                            <h3>Impressions <span className="badge badge-pill">{this.state.searchConsoleTopStatistics.sum_impressions_count}</span></h3>
+                        </div>
+                    </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-2">
                     <div className="col-1 pt-1 text-black">Property:</div>
@@ -154,6 +164,16 @@ export default class IndexDashboard extends Component {
                             components={{ IndicatorSeparator: () => null }}
                             autoSelectFirst
                         />
+                    </div>
+                    <div className="col-3">
+                        <div className="simple-masonary simple-masonary-pink">
+                            <h3>Users <span className="badge badge-pill">{this.state.analyticsTopStatistics.sum_users_count}</span></h3>
+                        </div>
+                    </div>
+                    <div className="col-3">
+                        <div className="simple-masonary simple-masonary-blue">
+                            <h3>Conversions <span className="badge badge-pill">{this.state.analyticsTopStatistics.sum_conversions_count}</span></h3>
+                        </div>
                     </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-2 mb-4">
@@ -203,8 +223,8 @@ export default class IndexDashboard extends Component {
                     </div>
                 </div>
                 <section className="ftco-section" id="inputs">
-                    <SearchConsoleTopStatistics topStatistics={this.state.searchConsoleTopStatistics} />
-                    <AnalyticsTopStatistics topStatistics={this.state.analyticsTopStatistics} />
+                    {/* <SearchConsoleTopStatistics topStatistics={this.state.searchConsoleTopStatistics} />
+                    <AnalyticsTopStatistics topStatistics={this.state.analyticsTopStatistics} /> */}
                     <div className="container-xl p-0">
                         <div id="dashboard-index-container">
                             <div className="row ml-0 mr-0">
@@ -273,7 +293,7 @@ export default class IndexDashboard extends Component {
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-6 scrollable pl-0">
                                                 <table className="table table-bordered table-hover gaa-hover">
-                                                    <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversion Rate</th></tr></thead>
+                                                    <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversions</th><th>Conversion Rate</th></tr></thead>
                                                     <tbody>
                                                         {
                                                             this.state.sourcesStatistics.map(sS => {
@@ -282,7 +302,8 @@ export default class IndexDashboard extends Component {
                                                                     <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} onError={(e) => { e.target.remove(); }} /></td>
                                                                     <td>{sS.source_name}</td>
                                                                     <td>{sS.sum_users_count}</td>
-                                                                    <td>{conversionRate}</td>
+                                                                    <td>{sS.sum_conversions_count}</td>
+                                                                    <td>{conversionRate}%</td>
                                                                 </tr>
                                                             })
                                                         }
@@ -299,7 +320,7 @@ export default class IndexDashboard extends Component {
                     </div>
                 </section>
             </div >
-        </React.Fragment>;
+        </React.Fragment >;
     }
 
     searchConsoleFetchStatistics(gSCSiteId) {
