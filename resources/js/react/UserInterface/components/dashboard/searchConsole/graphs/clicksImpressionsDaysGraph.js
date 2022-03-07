@@ -10,7 +10,7 @@ export default function ClicksImpressionsDaysGraph(props) {
             momentDate.format("DD") + "\n" + momentDate.format("MMM"),
             Number.parseInt(s.sum_clicks_count),
             Number.parseInt(s.sum_impressions_count),
-            s.event_name ? s.event_name.toUpperCase().split(' ').map(a => a.substr(0, 1)).join('') : null,
+            s.event_name ? s.event_name.split(' ').map(a => a.substr(0, 1)).join('').toUpperCase() : null,
             s.event_name ? s.event_name : null,
         ];
     });

@@ -239,11 +239,9 @@ class IndexAnnotations extends React.Component {
                                                                     {/* style={{ borderLeft: `${borderLeftColor} solid 20px` }} */}
                                                                     <td>{anno.category}</td>
                                                                     <td>{anno.event_name}</td>
-                                                                    <td>
-                                                                        <p style={{ overflowWrap: "anywhere" }}>
-                                                                            {anno.description}
-                                                                            {anno.url ? <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a> : null}
-                                                                        </p>
+                                                                    <td style={{ overflowWrap: "anywhere" }}>
+                                                                        {anno.description}
+                                                                        {anno.url ? <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a> : null}
                                                                     </td>
                                                                     <td>
                                                                         {anno.google_analytics_property_name ? anno.google_analytics_property_name : 'All Properties'}
