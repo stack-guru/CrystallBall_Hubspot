@@ -25,6 +25,11 @@ import DeviceUsersGraph from './analytics/graphs/deviceUsersGraph';
 import UsersDaysWithAnnotationsGraph from './analytics/graphs/usersDaysWithAnnotationsGraph';
 import AnnotationsTable from './annotationsTable';
 
+const SimpleMasonry = (props) => {
+    return <div className={"simple-masonary " + (props.className ?? "")}>
+        <p>{props.label} <span className="badge badge-pill">{props.value}</span></p>
+    </div>
+}
 
 export default class IndexDashboard extends Component {
     constructor(props) {
@@ -142,15 +147,11 @@ export default class IndexDashboard extends Component {
                             autoSelectFirst
                         />
                     </div>
-                    <div className="col-3">
-                        <div className="simple-masonary simple-masonary-green">
-                            <p>Clicks <span className="badge badge-pill">{this.state.searchConsoleTopStatistics.sum_clicks_count}</span></p>
-                        </div>
+                    <div className="col-2">
+                        <SimpleMasonry label="Clicks" value={this.state.searchConsoleTopStatistics.sum_clicks_count} className="simple-masonary-green" />
                     </div>
-                    <div className="col-3">
-                        <div className="simple-masonary simple-masonary-purple">
-                            <p>Impressions <span className="badge badge-pill">{this.state.searchConsoleTopStatistics.sum_impressions_count}</span></p>
-                        </div>
+                    <div className="col-2">
+                        <SimpleMasonry label="Impressions" value={this.state.searchConsoleTopStatistics.sum_impressions_count} className="simple-masonary-purple" />
                     </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-2">
@@ -165,15 +166,11 @@ export default class IndexDashboard extends Component {
                             autoSelectFirst
                         />
                     </div>
-                    <div className="col-3">
-                        <div className="simple-masonary simple-masonary-pink">
-                            <p>Users <span className="badge badge-pill">{this.state.analyticsTopStatistics.sum_users_count}</span></p>
-                        </div>
+                    <div className="col-2">
+                        <SimpleMasonry label="Users" value={this.state.analyticsTopStatistics.sum_users_count} className="simple-masonary-pink" />
                     </div>
-                    <div className="col-3">
-                        <div className="simple-masonary simple-masonary-blue">
-                            <p>Conversions <span className="badge badge-pill">{this.state.analyticsTopStatistics.sum_conversions_count}</span></p>
-                        </div>
+                    <div className="col-2">
+                        <SimpleMasonry label="Conversions" value={this.state.analyticsTopStatistics.sum_conversions_count} className="simple-masonary-blue" />
                     </div>
                 </div>
                 <div className="row ml-0 mr-0 mt-2 mb-4">
@@ -235,8 +232,8 @@ export default class IndexDashboard extends Component {
                             {
                                 this.state.clicksImpressionsDaysStatistics.length ?
                                     <React.Fragment>
-                                        <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
                                         <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
+                                        <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
                                         <AnnotationsTable
                                             allDates={allDates}
                                             analyticsData={analyticsData}
@@ -246,52 +243,10 @@ export default class IndexDashboard extends Component {
                                             satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays}
                                         />
                                         <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6 p-0 scrollable border">
-                                                <QueriesTable queriesStatistics={this.state.queriesStatistics} />
+                                            <div className="col-5">
+                                                <MediaGraph statistics={this.state.mediaStatistics} />
                                             </div>
-                                            <div className="col-6 p-0 scrollable border-bottom">
-                                                <PagesTable pagesStatistics={this.state.pagesStatistics} />
-                                            </div>
-                                        </div>
-                                        <div className="row ml-0 mr-0 mt-4 border-top border-bottom border-left">
-                                            <div className="col-6 p-0">
-                                                <MapChart countriesStatistics={this.state.countriesStatistics} />
-                                            </div>
-                                            <div className="col-6 p-0 scrollable">
-                                                <CountriesTable countriesStatistics={this.state.countriesStatistics} />
-                                            </div>
-                                        </div>
-                                    </React.Fragment>
-                                    :
-                                    <NoDataFoundPage googleAccount={this.state.googleAccount} />
-                            }
-                        </div>
-                    </div>
-                </section>
-            </div >
-            <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
-                <section className="ftco-section" id="inputs">
-                    <div className="container-xl p-0">
-                        <div className="row ml-0 mr-0 mb-1">
-                            <div className="col-md-6 pl-0">
-                                <h2 className="heading-section gaa-title"></h2>
-                            </div>
-                        </div>
-                        <div id="dashboard-index-container">
-                            {
-                                this.state.usersDaysStatistics.length ?
-                                    <React.Fragment>
-                                        <MediaGraph statistics={this.state.mediaStatistics} />
-                                        <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6 border">
-                                                <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
-                                            </div>
-                                            <div className="col-6 border">
-                                                <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
-                                            </div>
-                                        </div>
-                                        <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6 scrollable pl-0">
+                                            <div className="col-7 scrollable pl-0">
                                                 <table className="table table-bordered table-hover gaa-hover">
                                                     <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversions</th><th>Conversion Rate</th></tr></thead>
                                                     <tbody>
@@ -311,7 +266,30 @@ export default class IndexDashboard extends Component {
                                                 </table>
                                             </div>
                                         </div>
-
+                                        <div className="row ml-0 mr-0 mt-4">
+                                            <div className="col-6 p-0 scrollable border">
+                                                <QueriesTable queriesStatistics={this.state.queriesStatistics} />
+                                            </div>
+                                            <div className="col-6 p-0 scrollable border-bottom">
+                                                <PagesTable pagesStatistics={this.state.pagesStatistics} />
+                                            </div>
+                                        </div>
+                                        <div className="row ml-0 mr-0 mt-4">
+                                            <div className="col-6 border">
+                                                <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
+                                            </div>
+                                            <div className="col-6 border">
+                                                <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
+                                            </div>
+                                        </div>
+                                        <div className="row ml-0 mr-0 mt-4 border-top border-bottom border-left">
+                                            <div className="col-6 p-0">
+                                                <MapChart countriesStatistics={this.state.countriesStatistics} />
+                                            </div>
+                                            <div className="col-6 p-0 scrollable">
+                                                <CountriesTable countriesStatistics={this.state.countriesStatistics} />
+                                            </div>
+                                        </div>
                                     </React.Fragment>
                                     :
                                     <NoDataFoundPage googleAccount={this.state.googleAccount} />

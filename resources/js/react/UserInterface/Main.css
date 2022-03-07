@@ -701,12 +701,12 @@ div.scrollable {
 
 .simple-masonary p {
     margin-bottom: 0px;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
 }
 
 .simple-masonary p span.badge {
     right: 25px;
-    top: 5px;
+    top: 8px;
     position: absolute;
 }
 
