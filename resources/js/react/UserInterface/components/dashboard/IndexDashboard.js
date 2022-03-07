@@ -147,10 +147,10 @@ export default class IndexDashboard extends Component {
                             autoSelectFirst
                         />
                     </div>
-                    <div className="col-2">
+                    <div className="col-3">
                         <SimpleMasonry label="Clicks" value={this.state.searchConsoleTopStatistics.sum_clicks_count} className="simple-masonary-green" />
                     </div>
-                    <div className="col-2">
+                    <div className="col-3">
                         <SimpleMasonry label="Impressions" value={this.state.searchConsoleTopStatistics.sum_impressions_count} className="simple-masonary-purple" />
                     </div>
                 </div>
@@ -166,10 +166,10 @@ export default class IndexDashboard extends Component {
                             autoSelectFirst
                         />
                     </div>
-                    <div className="col-2">
+                    <div className="col-3">
                         <SimpleMasonry label="Users" value={this.state.analyticsTopStatistics.sum_users_count} className="simple-masonary-pink" />
                     </div>
-                    <div className="col-2">
+                    <div className="col-3">
                         <SimpleMasonry label="Conversions" value={this.state.analyticsTopStatistics.sum_conversions_count} className="simple-masonary-blue" />
                     </div>
                 </div>

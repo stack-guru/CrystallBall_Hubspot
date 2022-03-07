@@ -8,8 +8,8 @@ export default function MediaGraph(props) {
     const noOfUsers = props.statistics.map(s => s.sum_users_count);
 
     return <Bar
-        height='100px'
-        width='100%'
+        height='200px'
+        // width='100%'
         data={{
             labels: dataLabels,
             datasets: [
@@ -35,7 +35,8 @@ export default function MediaGraph(props) {
                     borderWidth: 1,
                 },
             ],
-        }} options={{
+        }}
+        options={{
             indexAxis: 'y',
             // Elements options apply to all of the options unless overridden in a dataset
             // In this case, we are setting the border of each horizontal bar to be 2px wide
@@ -45,8 +46,8 @@ export default function MediaGraph(props) {
                 },
             },
             responsive: true,
-            maintainAspectRatio: true,
-            aspectRatio: 3,
+            // maintainAspectRatio: true,
+            // aspectRatio: 3,
             plugins: {
                 legend: {
                     display: true,
