@@ -83,6 +83,10 @@ export default class IndexDashboard extends Component {
         this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
     }
 
+    componentDidMount() {
+        document.title = 'Analytics';
+    }
+
     render() {
 
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
@@ -246,7 +250,7 @@ export default class IndexDashboard extends Component {
                                             <div className="col-5">
                                                 <MediaGraph statistics={this.state.mediaStatistics} />
                                             </div>
-                                            <div className="col-7 scrollable pl-0">
+                                            <div className="col-7 scrollable p-0">
                                                 <table className="table table-bordered table-hover gaa-hover">
                                                     <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversions</th><th>Conversion Rate</th></tr></thead>
                                                     <tbody>
