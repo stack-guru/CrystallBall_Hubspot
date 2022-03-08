@@ -146,6 +146,7 @@ class RegisterController extends Controller
 
                 event(new \Illuminate\Auth\Events\Registered($user));
 
+                Auth::login($user);
                 $googleAccount = new GoogleAccount;
                 $this->addGoogleAccount($newUser, $googleAccount, $user);
             }

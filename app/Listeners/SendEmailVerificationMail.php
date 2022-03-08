@@ -28,10 +28,8 @@ class SendEmailVerificationMail
      */
     public function handle($event)
     {
-        $user = $event->user;
-
         try {
-            Mail::to($user)->send(new EmailVerificationMail($user));
+            if (!$event->user->hasVerifiedEmail()) Mail::to($event->user)->send(new EmailVerificationMail($event->user));
         } catch (\Exception $e) {
             Log::error($e);
         }
