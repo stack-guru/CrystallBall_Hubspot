@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
+use App\Models\GoogleAccount;
 
 class RegisterController extends Controller
 {
@@ -128,7 +129,6 @@ class RegisterController extends Controller
         $user = User::where('email', $newUserEmail)->first();
 
         if (!$user) {
-
             if (!$newUserEmail) {
                 return redirect()->back()->with('error', 'Users without email addresses are not allowed to login!');
             } else {
@@ -145,10 +145,14 @@ class RegisterController extends Controller
                 $user->save();
 
                 event(new \Illuminate\Auth\Events\Registered($user));
+
+                $googleAccount = new GoogleAccount;
+                $this->addGoogleAccount($newUser, $googleAccount, $user);
             }
         }
 
         Auth::login($user);
+
         return redirect()->route('annotation.index');
     }
 

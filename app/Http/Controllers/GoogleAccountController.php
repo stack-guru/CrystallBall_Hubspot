@@ -55,24 +55,7 @@ class GoogleAccountController extends Controller
             $googleAccount = new GoogleAccount;
         }
 
-        $googleAccount->token = $user->token;
-        $googleAccount->refresh_token = $user->refreshToken;
-        $googleAccount->expires_in = \Carbon\Carbon::now()->addSeconds($user->expiresIn);
-        $googleAccount->account_id = $googleAccountId;
-        $googleAccount->nick_name = $user->getNickname();
-        $googleAccount->name = $user->getName();
-        $googleAccount->email = $user->getEmail();
-        $googleAccount->avatar = $user->getAvatar();
-        $googleAccount->user_id = Auth::id();
-        $googleAccount->scopes = json_encode(explode(" ", $request->query('scope')));
-        $googleAccount->state = $request->query('state');
-
-        $googleAccount->save();
-
-        $googleAnalyticsAccountController = new GoogleAnalyticsAccountController;
-        $googleAnalyticsAccountController->fetch($googleAccount);
-        $googleSearchConsoleSiteController = new GoogleSearchConsoleSiteController;
-        $googleSearchConsoleSiteController->fetch($googleAccount);
+        $this->addGoogleAccount($user, $googleAccount, Auth::user());
 
         return redirect()->route('google-account.index', ['google_account_id' => $googleAccount->id, 'do-refresh' => true]);
     }
