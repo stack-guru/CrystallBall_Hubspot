@@ -19,7 +19,7 @@ class MarkUsedGoogleAnalyticsPropertiesInUseCommand extends Command
      *
      * @var string
      */
-    protected $description = 'This command will fetch used google analytics property ids from annotations ga properties table and will mark them as in use in google analytics properties table.';
+    protected $description = 'Fetch used google analytics property ids from annotations ga properties table and will mark them as in use in google analytics properties table.';
 
     /**
      * Create a new command instance.

@@ -22,7 +22,7 @@ class ProcessNonInstalledExtensionUsers extends Command
      *
      * @var string
      */
-    protected $description = 'This command will add users to a sendgrid list who have not logged into chrome extension aftering registering an hour before.';
+    protected $description = 'Add users to a sendgrid list who have not logged into chrome extension aftering registering an hour before.';
 
     /**
      * Create a new command instance.

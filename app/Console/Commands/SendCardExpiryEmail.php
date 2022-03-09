@@ -22,7 +22,7 @@ class SendCardExpiryEmail extends Command
      *
      * @var string
      */
-    protected $description = 'This command will send emails to users regarding their card expiry prior to a month.';
+    protected $description = 'Send emails to users regarding their card expiry prior to a month.';
 
     /**
      * Create a new command instance.

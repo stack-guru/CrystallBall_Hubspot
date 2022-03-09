@@ -21,7 +21,7 @@ class FetchGoogleAnalyticsMetricsAndDimensions extends Command
      *
      * @var string
      */
-    protected $description = 'This command will fetch yesterday\'s metrics and dimensions of all saved google properties.';
+    protected $description = 'Fetch yesterday\'s metrics and dimensions of all saved google properties.';
 
     /**
      * Create a new command instance.

@@ -28,7 +28,7 @@ class CheckWebMonitorStatuses extends Command
      *
      * @var string
      */
-    protected $description = 'This command will fetch monitor statuses using web monitors';
+    protected $description = 'Fetch monitor statuses using web monitors';
 
     /**
      * Create a new command instance.

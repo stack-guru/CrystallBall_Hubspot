@@ -23,7 +23,7 @@ class GenerateGoogleAlgorithmUpdateNotificationCommand extends Command
      *
      * @var string
      */
-    protected $description = 'This command will generate events if there is any google algorithm update for users.';
+    protected $description = 'Generate events if there is any google algorithm update for users.';
 
     /**
      * Create a new command instance.

@@ -25,7 +25,7 @@ class GenerateHolidayNotificationCommand extends Command
      *
      * @var string
      */
-    protected $description = 'This command will generate events if there is any holiday added for users.';
+    protected $description = 'Generate events if there is any holiday added for users.';
 
     /**
      * Create a new command instance.

@@ -21,7 +21,7 @@ class FetchGoogleSearchConsoleSitesStatistics extends Command
      *
      * @var string
      */
-    protected $description = 'This command will fetch yesterday\'s statistics of all saved google search console properties.';
+    protected $description = 'Fetch yesterday\'s statistics of all saved google search console properties.';
 
     /**
      * Create a new command instance.

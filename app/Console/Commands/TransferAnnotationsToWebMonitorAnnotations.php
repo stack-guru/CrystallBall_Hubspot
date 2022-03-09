@@ -20,7 +20,7 @@ class TransferAnnotationsToWebMonitorAnnotations extends Command
      *
      * @var string
      */
-    protected $description = 'This command will move all annotations with value Website Monitoring from annotations table to web_monitor_annotations table.';
+    protected $description = 'Move all annotations with value Website Monitoring from annotations table to web_monitor_annotations table.';
 
     /**
      * Create a new command instance.

@@ -39,7 +39,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
      *
      * @var string
      */
-    protected $description = 'This command will gather all expired plans and try to resubscribe them. It will also renew free plans.';
+    protected $description = 'Gather all expired plans and try to resubscribe them. It will also renew free plans.';
 
     /**
      * Create a new command instance.

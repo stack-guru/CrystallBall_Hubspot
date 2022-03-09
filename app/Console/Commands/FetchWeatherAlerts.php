@@ -22,7 +22,7 @@ class FetchWeatherAlerts extends Command
      *
      * @var string
      */
-    protected $description = 'This command will take all enabled cities and fetch their weather alerts from Open Weather Map One Call API';
+    protected $description = 'Take all enabled cities and fetch their weather alerts from Open Weather Map One Call API';
 
     /**
      * Create a new command instance.

@@ -22,7 +22,7 @@ class FetchAdwordsKeywordsClicks extends Command
      *
      * @var string
      */
-    protected $description = 'This command will fetch Google AdWords Keywords along with their clicks to show annotations if there is any drastic change.';
+    protected $description = 'Fetch Google AdWords Keywords along with their clicks to show annotations if there is any drastic change.';
 
     /**
      * Create a new command instance.
