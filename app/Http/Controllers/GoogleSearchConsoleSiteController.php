@@ -17,7 +17,6 @@ class GoogleSearchConsoleSiteController extends Controller
         $googleSearchConsoleSitesQuery = GoogleSearchConsoleSite::ofCurrentUser()->with('googleAccount')->orderBy('site_url');
         if ($request->has('keyword')) {
             $googleSearchConsoleSitesQuery->where('site_url', 'LIKE', '%' . $request->query('keyword') . '%');
-            $googleSearchConsoleSitesQuery->take(10);
         }
 
         return ['google_search_console_sites' => $googleSearchConsoleSitesQuery->get()];

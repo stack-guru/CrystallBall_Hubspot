@@ -17,7 +17,6 @@ class GoogleAnalyticsPropertyController extends Controller
         $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::ofCurrentUser()->with(['googleAccount', 'GoogleAnalyticsAccount'])->orderBy('name');
         if ($request->has('keyword')) {
             $googleAnalyticsPropertiesQuery->where('name', 'LIKE', '%' . $request->query('keyword') . '%');
-            $googleAnalyticsPropertiesQuery->take(10);
         }
 
         return ['google_analytics_properties' => $googleAnalyticsPropertiesQuery->get()];
