@@ -30,11 +30,13 @@ export default function NoDataFoundPage(props) {
                                 : null
                         }
                         {
-                            props.googleAccount.scopes.indexOf('https://www.googleapis.com/auth/webmasters.readonly') == -1
-                                || props.googleAccount.scopes.indexOf('https://www.googleapis.com/auth/webmasters') == -1 ?
-                                <div className="col-12 text-center">
-                                    <p>Please provide necessary permissions while giving access to your Google Account.</p>
-                                </div>
+                            props.googleAccount.scopes ?
+                                props.googleAccount.scopes.indexOf('https://www.googleapis.com/auth/webmasters.readonly') == -1
+                                    || props.googleAccount.scopes.indexOf('https://www.googleapis.com/auth/webmasters') == -1 ?
+                                    <div className="col-12 text-center">
+                                        <p>Please provide necessary permissions while giving access to your Google Account.</p>
+                                    </div>
+                                    : null
                                 : null
                         }
                     </div>
