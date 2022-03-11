@@ -65,7 +65,7 @@ class WordpressUpdate extends Notification
         $this->logNotificationTrigger($notifiable->id, $this->wordPressUpdate->id, get_class(), 'Mail');
 
         return (new MailMessage)
-            ->subject("New Google Algorithm Update.")
+            ->subject("New WordPress Update.")
             ->greeting('Hi ' . $notifiable->name . ',')
             ->line('There is a new WordPress Update.')
             ->line('We added an annotation for you. Check out what’s new ' . $this->wordPressUpdate->url);
