@@ -134,8 +134,19 @@ class PaymentController extends Controller
             }
             $price = round($price, 2);
 
+            // Create this user in BlueSnap as Vaulted Shopper
+            $vaultedShopper = $blueSnapService->createVaultedShopper([
+                'email' => $user->email,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'country' => $request->country,
+                'city' => $request->city,
+                'billing_address' => $request->billing_address,
+                'zip_code' => $request->zip_code,
+            ]);
+
             // Attempting BlueSnap transaction
-            $obj = $blueSnapService->createTransaction($price, null, null, $request->pfToken);
+            $obj = $blueSnapService->createTransaction($price, null, $vaultedShopper['vaultedShopperId'], $request->pfToken);
             if ($obj['success'] == false) {
                 return response()->json(['success' => false, 'message' => $obj['message']], 422);
             }

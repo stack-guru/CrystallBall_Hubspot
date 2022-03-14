@@ -113,13 +113,25 @@ class BlueSnapService
     public function createVaultedShopper($data)
     {
         Log::channel('bluesnap')->info("Creating Vaulted Shopper: ", ['firstName' => $data['first_name'], 'lastName' => $data['last_name']]);
-        $response = \Bluesnap\VaultedShopper::create(['firstName' => $data['first_name'], 'lastName' => $data['last_name']]);
+        $response = \Bluesnap\VaultedShopper::create([
+            'email' => $data['email'],
+            'firstName' => $data['first_name'],
+            'lastName' => $data['last_name'],
+            'country' => strtolower($data['country']),
+            'city' => $data['city'],
+            'address' => $data['billing_address'],
+            'zip' => $data['zip_code'],
+        ]);
         Log::channel('bluesnap')->info("New Shopper Id: " . $response->data->id);
 
         if ($response->failed()) {
             $error = $response->data;
 
-            return ['success' => false, 'message' => $error];
+            return [
+                'success' => false,
+                'message' => $error,
+                'vaultedShopperId' => null,
+            ];
         }
 
         $vaulted_shopper = $response->data;
