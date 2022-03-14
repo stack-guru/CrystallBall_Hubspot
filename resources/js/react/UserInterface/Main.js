@@ -214,7 +214,6 @@ class Main extends React.Component {
                         eventAction: 'SignUp',
                         eventLabel: 'SignUp'
                     });
-                    fbq('track', 'CompleteRegistration');
                 }
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });

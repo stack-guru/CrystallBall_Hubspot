@@ -110,9 +110,6 @@ export default class CreatePayment extends Component {
             .then(response => {
                 this.setState({ isBusy: false, errors: undefined });
 
-                fbq('track', 'Purchase', { value: 0.00, currency: 'USD' });
-
-
                 // gtag('event', 'conversion', {
                 //     'send_to': 'AW-645973826/pJ_PCIrI0egBEMKOg7QC',
                 //     'value': 1.0,
@@ -226,7 +223,6 @@ export default class CreatePayment extends Component {
             dangerMode: true,
         }).then(value => {
             if (value) {
-                fbq('track', 'Cancellation');
                 ga('send', {
                     hitType: 'event',
                     eventCategory: 'Cancellation',
