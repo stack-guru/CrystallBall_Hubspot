@@ -2,7 +2,8 @@
 @section('page-title','Users')
 
 @section('css')
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" />
 @endsection
 
 @section('content')
@@ -28,14 +29,14 @@
                             </thead>
                             <tbody>
                                 @foreach($users as $user)
-                                    <tr>
-                                        <td>{{ $user->team_name }}{{ $user->department ? ", " . $user->department : ''}}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->pricePlan->name }} ({{ $user->price_plan_expiry_date }})</td>
-                                        <td>@if($user->created_at){{ $user->created_at->format('Y-m-d') }}@endif</td>
-                                        <td>
-                                            <div class="row ml-0 mr-0 d-flex flex-row ">
+                                <tr>
+                                    <td>{{ $user->team_name }}{{ $user->department ? ", " . $user->department : ''}}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->pricePlan->name }} ({{ $user->price_plan_expiry_date }})</td>
+                                    <td>@if($user->created_at){{ $user->created_at->format('Y-m-d') }}@endif</td>
+                                    <td>
+                                        <div class="row ml-0 mr-0 d-flex flex-row ">
                                             <a class="btn btn-primary m-2" href="{{ route('admin.user.edit', $user->id) }}">Edit</a>
                                             <form id="deleteUserForm{{$user->id}}" method="POST" action="{{ route('admin.user.destroy', $user->id) }}">
                                                 @csrf @method("DELETE")
@@ -46,15 +47,15 @@
                                                 @csrf
                                             </form>
                                             <button type="button" onclick="document.getElementById('loginUserForm{{$user->id}}').submit()" class="btn btn-secondary m-2">Impersonate</button>
-                                            
+
                                             <form id="makeOwnerUserForm{{$user->id}}" method="POST" action="{{ route('admin.user.make-owner', $user->id) }}">
                                                 @csrf @method("PUT")
                                             </form>
                                             <button type="button" onclick="document.getElementById('makeOwnerUserForm{{$user->id}}').submit()" class="btn btn-secondary m-2">Make Owner</button>
 
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -67,10 +68,18 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
 <script>
-    $(document).ready( function () {
-        $('#myTable').DataTable();
-    } );
-</script>   
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'csv'
+            ],
+            "paging": true
+        });
+    });
+</script>
 @endsection
