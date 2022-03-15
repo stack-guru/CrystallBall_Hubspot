@@ -270,6 +270,14 @@ class SendGridService
                 "self" => "https://api.sendgrid.com/v3/marketing/lists/b1f8dd63-bd56-4d7f-a80e-29e699727bc0"
             ]
         ],
+        [
+            "name" => "2 days after trial ended - appsumo coupon",
+            "id" => "59c621fe-58a0-4ffe-8236-5b152f8eb0b3",
+            "contact_count" => 0,
+            "_metadata" => [
+                "self" => "https://api.sendgrid.com/v3/marketing/lists/59c621fe-58a0-4ffe-8236-5b152f8eb0b3"
+            ]
+        ],
     ];
 
     public function addUserToContactList(User $user, $listName, $customFields = [])
