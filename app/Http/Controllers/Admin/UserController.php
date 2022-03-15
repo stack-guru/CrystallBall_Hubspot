@@ -70,7 +70,7 @@ class UserController extends Controller
             'price_plan_expiry_date' => 'nullable|date',
         ]);
         $user->fill($request->all());
-        $user->has_microsoft_power_bi = $request->is_billing_enabled == 'on';
+        $user->is_billing_enabled = $request->is_billing_enabled == 'on';
         $user->save();
         return redirect()->route('admin.user.index')->with('success', true);
     }
