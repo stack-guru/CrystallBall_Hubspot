@@ -34,6 +34,14 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\AnnotationCreated::class => [\App\Listeners\TriggerZapierWebHooks::class],
         \App\Events\UserAddedAnAnnotationViaAPI::class => [\App\Listeners\AddAPIUsageToApiLog::class],
 
+        \App\Events\ChromeExtensionFirstAnnotationCreated::class => [
+            \App\Listeners\AddUserToSendGridList::class,
+        ],
+
+        \App\Events\UserClickedAnnotationButtonInBrowser::class => [
+            \App\Listeners\AddUserToSendGridList::class,
+        ],
+
         \App\Events\NewCSVFileUploaded::class => [
             \App\Listeners\AddUserToSendGridList::class,
             \App\Listeners\MarkChecklistItemCompleted::class

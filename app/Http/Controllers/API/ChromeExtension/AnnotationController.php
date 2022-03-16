@@ -11,6 +11,7 @@ use App\Models\PricePlan;
 use App\Models\UserDataSource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use App\Models\ChromeExtensionLog;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -409,6 +410,20 @@ class AnnotationController extends Controller
         }
         DB::commit();
 
+        $chromeExtensionOldLogsCount = ChromeExtensionLog::where('user_id', Auth::id())
+            ->where('event_name', ChromeExtensionLog::ANNOTATION_CREATED)
+            ->count();
+        $chromeExtensionLog = new ChromeExtensionLog;
+        $chromeExtensionLog->event_name = ChromeExtensionLog::ANNOTATION_CREATED;
+
+        $chromeExtensionLog->created_at = Carbon::now();
+        $chromeExtensionLog->user_id = Auth::id();
+        $chromeExtensionLog->ip_address = $request->ip();
+        $chromeExtensionLog->bearer_token = $request->bearerToken();
+
+        $chromeExtensionLog->save();
+
+        if (!$chromeExtensionOldLogsCount) event(new \App\Events\ChromeExtensionFirstAnnotationCreated($user, $annotation));
         event(new \App\Events\AnnotationCreated($annotation));
         return ['annotation' => $annotation];
     }

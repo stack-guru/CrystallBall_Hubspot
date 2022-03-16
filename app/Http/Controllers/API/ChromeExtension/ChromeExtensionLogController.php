@@ -11,7 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ChromeExtensionLogController extends Controller
 {
-    public function store (ChromeExtensionLogRequest $request){
+    public function store(ChromeExtensionLogRequest $request)
+    {
+        $chromeExtensionOldLogsCount = ChromeExtensionLog::where('user_id', Auth::id())
+            ->where('event_name', ChromeExtensionLog::ANNOTATION_BUTTON_CLICKED)
+            ->count();
+
         $chromeExtensionLog = new ChromeExtensionLog;
         $chromeExtensionLog->fill($request->validated());
 
@@ -21,7 +26,16 @@ class ChromeExtensionLogController extends Controller
         $chromeExtensionLog->bearer_token = $request->bearerToken();
 
         $chromeExtensionLog->save();
-        
+
+        switch ($chromeExtensionLog->event_name) {
+            case ChromeExtensionLog::ANNOTATION_BUTTON_CLICKED:
+                if (!$chromeExtensionOldLogsCount) event(new \App\Events\UserClickedAnnotationButtonInBrowser(Auth::user()));
+                break;
+
+            case ChromeExtensionLog::ANNOTATION_CREATED:
+
+                break;
+        }
         return ['success' => true];
     }
 }

@@ -348,7 +348,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function last30DaysPopupOpenedChromeExtensionLogs()
     {
         return $this->hasMany('App\Models\ChromeExtensionLog')
-            ->where('event_name', 'PopupOpened')
+            ->where('event_name', ChromeExtensionLog::POPUP_OPENED)
             ->where('created_at', '>=', Carbon::now()->subDays(30))
             ->orderBy('created_at', 'DESC');
     }
@@ -356,7 +356,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function last90DaysPopupOpenedChromeExtensionLogs()
     {
         return $this->hasMany('App\Models\ChromeExtensionLog')
-            ->where('event_name', 'PopupOpened')
+            ->where('event_name', ChromeExtensionLog::POPUP_OPENED)
             ->where('created_at', '>=', Carbon::now()->subDays(90))
             ->orderBy('created_at', 'DESC');
     }
@@ -364,28 +364,28 @@ class User extends Authenticatable implements MustVerifyEmail
     public function lastPopupOpenedChromeExtensionLog()
     {
         return $this->hasOne('App\Models\ChromeExtensionLog')
-            ->where('event_name', 'PopupOpened')
+            ->where('event_name', ChromeExtensionLog::POPUP_OPENED)
             ->orderBy('created_at', 'DESC');
     }
 
     public function lastAnnotationButtonClickedChromeExtensionLog()
     {
         return $this->hasOne('App\Models\ChromeExtensionLog')
-            ->where('event_name', 'AnnotationButtonClicked')
+            ->where('event_name', ChromeExtensionLog::ANNOTATION_BUTTON_CLICKED)
             ->orderBy('created_at', 'DESC');
     }
 
     public function AnnotationButtonClickedChromeExtensionLogs()
     {
         return $this->hasMany('App\Models\ChromeExtensionLog')
-            ->where('event_name', 'AnnotationButtonClicked')
+            ->where('event_name', ChromeExtensionLog::ANNOTATION_BUTTON_CLICKED)
             ->orderBy('created_at', 'DESC');
     }
 
     public function last90DaysAnnotationButtonClickedChromeExtensionLogs()
     {
         return $this->hasMany('App\Models\ChromeExtensionLog')
-            ->where('event_name', 'AnnotationButtonClicked')
+            ->where('event_name', ChromeExtensionLog::ANNOTATION_BUTTON_CLICKED)
             ->where('created_at', '>=', Carbon::now()->subDays(90))
             ->orderBy('created_at', 'DESC');
     }

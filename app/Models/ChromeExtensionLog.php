@@ -11,6 +11,10 @@ class ChromeExtensionLog extends Model
 
     public $timestamps = false;
 
+    const ANNOTATION_CREATED = 'AnnotationCreated';
+    const POPUP_OPENED = 'PopupOpened';
+    const ANNOTATION_BUTTON_CLICKED = 'AnnotationButtonClicked';
+
     protected $fillable = [
 
         'event_name',

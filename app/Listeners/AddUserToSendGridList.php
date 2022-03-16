@@ -89,6 +89,14 @@ class AddUserToSendGridList implements ShouldQueue
             case 'App\Events\AnnotationsLimitReached':
                 $sGS->addUserToContactList($event->user, "Annotation limits reached");
                 break;
+
+            case 'App\Events\UserClickedAnnotationButtonInBrowser':
+                $sGS->addUserToMarketingList($event->user, "13 GAa submit your feedback to GA");
+                break;
+
+            case 'App\Events\ChromeExtensionFirstAnnotationCreated':
+                $sGS->addUserToMarketingList($event->user, "13 GAa submit your feedback to GA");
+                break;
         }
     }
 }
