@@ -34,7 +34,7 @@ class AddAPIUsageToApiLog
 
         switch(get_class($event)){
             case 'App\Events\UserAddedAnAnnotationViaAPI':
-                $apiLog->event_name  = "AnnotationCreated";
+                $apiLog->event_name  = ApiLog::ANNOTATION_CREATED;
                 break;
         }
 

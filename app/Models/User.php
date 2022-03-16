@@ -332,7 +332,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function last30DaysApiAnnotationCreatedLogs()
     {
         return $this->hasMany('App\Models\ApiLog')
-            ->where('event_name', 'AnnotationCreated')
+            ->where('event_name', ApiLog::ANNOTATION_CREATED)
             ->where('created_at', '>=', Carbon::now()->subDays(30))
             ->orderBy('created_at', 'DESC');
     }
@@ -340,7 +340,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function last90DaysApiAnnotationCreatedLogs()
     {
         return $this->hasMany('App\Models\ApiLog')
-            ->where('event_name', 'AnnotationCreated')
+            ->where('event_name', ApiLog::ANNOTATION_CREATED)
             ->where('created_at', '>=', Carbon::now()->subDays(90))
             ->orderBy('created_at', 'DESC');
     }
