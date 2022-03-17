@@ -29,13 +29,18 @@ class LicenseController extends Controller
 
         switch ($request->action) {
             case 'activate':
-                if (User::where('email', $request->activation_email)->first()) {
-                    abort(400, 'User already exists with this email.');
+                $user = User::where('email', $request->activation_email)->first();
+                if (!$user) {
+                    // If the user is purchasing license from AppSumo
+                    // for the first time
+                    $user = new User;
+                    $user->name = 'Sumo-ling';
+                    $user->email = $request->activation_email;
+                    $user->password = User::EMPTY_PASSWORD;
+                } else {
+                    // If the user is an old user but now purchasing
+                    // a license from AppSumo
                 }
-                $user = new User;
-                $user->name = 'Sumo-ling';
-                $user->email = $request->activation_email;
-                $user->password = User::EMPTY_PASSWORD;
                 $user->price_plan_id = $request->plan_id;
                 $user->price_plan_expiry_date = new \DateTime("+100 years");
                 $user->is_billing_enabled = false;
