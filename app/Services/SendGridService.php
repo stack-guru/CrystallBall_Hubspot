@@ -324,6 +324,48 @@ class SendGridService
         return true;
     }
 
+    public function addUsersToContactList($users, $listName)
+    {
+        $list = $this->contactListFinder($listName);
+        if ($list === false) {
+            // print "Invalid list name";
+            return false;
+        }
+
+        $contacts = array_map(function ($user) {
+            $nameChunks = explode(' ', trim($user['name']));
+            $firstName = $nameChunks[0];
+            $lastName = $nameChunks[count($nameChunks) - 1] != $firstName ? $nameChunks[count($nameChunks) - 1] : '';
+
+            return [
+                'email' => $user['email'],
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+            ];
+        }, $users);
+
+        $bodyData = [
+            "list_ids" => [$list['id']],
+            "contacts" => [$contacts],
+        ];
+
+        $response = Http::withToken($this->key)
+            ->withHeaders([
+                "Content-Type: application/json",
+            ])
+            ->withBody(json_encode($bodyData), 'application/json')
+            ->put("https://api.sendgrid.com/v3/marketing/contacts");
+
+        Log::channel('sendgrid')->info('Adding user to a list:' . $listName, $bodyData);
+        Log::channel('sendgrid')->debug($response->body());
+
+        if ($response->status() != 202) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function contactListFinder($listName)
     {
         $fArray = array_values(array_filter(self::CONTACT_LISTS, function ($ar) use ($listName) {

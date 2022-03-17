@@ -83,7 +83,6 @@ class AddUserToSendGridList implements ShouldQueue
                 $sGS->addUserToContactList($event->user, "News Alerts for [keywords] Deactivated because from Trial to Free");
                 $sGS->addUserToContactList($event->user, "Weather for [cities] Deactivated from Trial to Free");
                 $sGS->addUserToContactList($event->user, "WordPress Deactivated because from Trial to Free");
-                $sGS->addUserToContactList($event->user, "Website Monitoring Deactivated because Trial to Free");
                 break;
 
             case 'App\Events\AnnotationsLimitReached':
