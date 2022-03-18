@@ -37,7 +37,7 @@
                                             <form id="deleteUserForm{{$spectator->id}}" method="POST" action="{{ route('admin.spectator.destroy', $spectator->id) }}">
                                                 @csrf @method("DELETE")
                                             </form>
-                                            <button type="button" onclick="document.getElementById('deleteUserForm{{$spectator->id}}').submit()" class="btn btn-danger m-2">Delete</button>
+                                            <button type="button" onclick="if(confirm('Do you really want to delete this entity?')) document.getElementById('deleteUserForm{{$spectator->id}}').submit();" class="btn btn-danger m-2">Delete</button>
 
                                             </div>
                                         </td>

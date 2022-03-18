@@ -23,7 +23,7 @@
                                         <form id="deletePricePlanForm{{$pricePlan->id}}" method="POST" action="{{ route('admin.price-plan.destroy', $pricePlan->id) }}">
                                             @csrf @method("DELETE")
                                         </form>
-                                        <button type="button" onclick="document.getElementById('deletePricePlanForm{{$pricePlan->id}}').submit()" class="btn btn-danger">Delete</button>
+                                        <button type="button" onclick="if(confirm('Do you really want to delete this entity?')) document.getElementById('deletePricePlanForm{{$pricePlan->id}}').submit();" class="btn btn-danger">Delete</button>
                                     </td>
                                 </tr>
                             @endforeach

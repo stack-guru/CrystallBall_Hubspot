@@ -41,7 +41,7 @@
                              <td>
                                  <div class="d-flex flex-row text-center">
                                      <a href="{{route('admin.data-source.wordpress-update.edit',$wordpressUpdate->id)}}" class="btn btn-primary mx-2 btn-sm ">Edit</a>
-                                     <form action="{{route('admin.data-source.wordpress-update.destroy',$wordpressUpdate->id)}}" method="post">
+                                     <form action="{{route('admin.data-source.wordpress-update.destroy',$wordpressUpdate->id)}}" method="post" onsubmit="event.preventDefault(); if(confirm('Do you really want to delete this entity?')) this.submit();">
                                          @csrf
                                          @method('DELETE')
                                          <button class="btn btn-primary btn-sm mx-2">Delete</button>

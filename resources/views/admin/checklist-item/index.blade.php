@@ -35,7 +35,7 @@
                                     <td>{{$checklistItem->sort_rank}}</td>
                                     <td class="d-flex flex-row">
                                         <a href="{{route('admin.checklist-item.edit',$checklistItem->id)}}" class="btn btn-primary m-2">Edit</a>
-                                        <form action="{{route('admin.checklist-item.destroy',$checklistItem->id)}}" method="post">
+                                        <form action="{{route('admin.checklist-item.destroy',$checklistItem->id)}}" method="post" onsubmit="event.preventDefault(); if(confirm('Do you really want to delete this entity?')) this.submit();">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"  class="btn btn-danger m-2">Delete</button>

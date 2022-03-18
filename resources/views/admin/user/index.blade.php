@@ -41,7 +41,7 @@
                                             <form id="deleteUserForm{{$user->id}}" method="POST" action="{{ route('admin.user.destroy', $user->id) }}">
                                                 @csrf @method("DELETE")
                                             </form>
-                                            <button type="button" onclick="document.getElementById('deleteUserForm{{$user->id}}').submit()" class="btn btn-danger m-2">Delete</button>
+                                            <button type="button" onclick="if(confirm('Do you really want to delete this entity?')) document.getElementById('deleteUserForm{{$user->id}}').submit();" class="btn btn-danger m-2">Delete</button>
 
                                             <form id="loginUserForm{{$user->id}}" method="POST" action="{{ route('admin.user.login', $user->id) }}">
                                                 @csrf

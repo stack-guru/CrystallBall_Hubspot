@@ -35,7 +35,7 @@
                                     <td>{{$coupon->expires_at->todateString()}}</td>
                                     <td class="d-flex flex-row">
                                         <a href="{{route('admin.coupon.edit',$coupon->id)}}" class="btn btn-primary m-2">Edit</a>
-                                        <form action="{{route('admin.coupon.destroy',$coupon->id)}}" method="post">
+                                        <form action="{{route('admin.coupon.destroy',$coupon->id)}}" method="post" onsubmit="event.preventDefault(); if(confirm('Do you really want to delete this entity?')) this.submit();">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"  class="btn btn-danger m-2">Delete</button>

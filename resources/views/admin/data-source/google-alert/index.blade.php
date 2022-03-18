@@ -53,7 +53,7 @@
                             </td>
                              <td>
                                  <div class="d-flex flex-row text-center">
-                                     <form action="{{route('admin.data-source.google-alert.destroy',$googleAlert->id)}}" method="post">
+                                     <form action="{{route('admin.data-source.google-alert.destroy',$googleAlert->id)}}" method="post" onsubmit="event.preventDefault(); if(confirm('Do you really want to delete this entity?')) this.submit();">
                                          @csrf
                                          @method('DELETE')
                                          <button class="btn btn-primary btn-sm mx-2">Delete</button>
