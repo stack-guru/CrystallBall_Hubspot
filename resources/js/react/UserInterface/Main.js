@@ -37,6 +37,7 @@ import IndexAnalytics from './components/dashboard/analytics/IndexAnalytics';
 import IndexSearchConsole from './components/dashboard/searchConsole/IndexSearchConsole';
 import SiteRenamedTopNotice from './utils/SiteRenamedTopNotice';
 import { IsDomain } from './helpers/CommonFunctions';
+import PromotionPopup from './utils/PromotionPopup';
 
 class Main extends React.Component {
 
@@ -47,18 +48,21 @@ class Main extends React.Component {
             user: undefined,
             showStartupConfiguration: false,
             showInterfaceTour: false,
-            showDataSourceTour: false
+            showDataSourceTour: false,
+            showPromotion: false
         }
         this.loadUser = this.loadUser.bind(this)
 
         // this.toggleStartupConfiguration = this.toggleStartupConfiguration.bind(this);
         this.toggleInterfaceTour = this.toggleInterfaceTour.bind(this);
         this.toggleDataSourceTour = this.toggleDataSourceTour.bind(this);
+        this.togglePromotionPopup = this.togglePromotionPopup.bind(this);
     }
 
     // toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
     toggleInterfaceTour(keepInterfaceTour = false) { this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, keepInterfaceTour, false); }
     toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, false, false); }
+    togglePromotionPopup() { this.setState({ showPromotionPopup: !this.state.showDataSourceTour }); }
 
     render() {
         if (this.state.user == undefined) return null;
@@ -80,7 +84,7 @@ class Main extends React.Component {
 
                     <Sidebar user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
                 </div>
-
+                <PromotionPopup show={this.state.showPromotion} togglePopupCallback={this.togglePopupCallback} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" />
                 <div className="page-container">
                     <SiteRenamedTopNotice show={IsDomain('app.gaannotations.com') || IsDomain('localhost')} />
                     <div className="header navbar">
@@ -214,6 +218,10 @@ class Main extends React.Component {
                         eventAction: 'SignUp',
                         eventLabel: 'SignUp'
                     });
+                }
+
+                if (response.data.user.price_plan.name == 'Free') {
+                    setTimeout(() => { this.setState({ showPromotion: true }); }, 5000);
                 }
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
