@@ -49,18 +49,16 @@ class GenerateWeatherUpdateNotificationCommand extends Command
             foreach ($openWeatherMapAlerts as $index => $openWeatherMapAlert) {
                 $users = User::whereIn(
                     'id',
-                    UserDataSource::select('user_data_sources.user_id')
+                    OpenWeatherMapAlert::select('user_data_sources.user_id')
                         ->distinct()
-                        ->join('open_weather_map_alerts', 'open_weather_map_alerts.event', 'user_data_sources.open_weather_map_event')
-                        ->join('open_weather_map_cities', 'open_weather_map_cities.id', 'open_weather_map_alerts.open_weather_map_city_id')
-                        ->join('user_data_sources as uds2', 'uds2.open_weather_map_city_id', 'open_weather_map_cities.id')
-                        ->join('users', 'users.id', 'uds2.user_id')
-                        ->join('notification_settings', 'users.id', 'notification_settings.user_id')
+                        ->join('user_data_sources', 'user_data_sources.open_weather_map_city_id', 'open_weather_map_alerts.open_weather_map_city_id')
+                        ->join('user_data_sources as uds2', 'uds2.open_weather_map_event', 'open_weather_map_alerts.event')
+                        ->join('notification_settings', 'user_data_sources.user_id', 'notification_settings.user_id')
 
+                        ->whereRaw('user_data_sources.user_id = uds2.user_id')
                         ->where('open_weather_map_alerts.id', $openWeatherMapAlert->id)
                         ->where('notification_settings.name', 'weather_alerts')
                         ->where('notification_settings.is_enabled', true)
-
                         ->get()->pluck('user_id')->toArray()
                 )->get();
 
