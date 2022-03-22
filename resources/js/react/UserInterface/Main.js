@@ -49,7 +49,7 @@ class Main extends React.Component {
             showStartupConfiguration: false,
             showInterfaceTour: false,
             showDataSourceTour: false,
-            showPromotion: false
+            showPromotionPopup: false
         }
         this.loadUser = this.loadUser.bind(this)
 
@@ -62,7 +62,7 @@ class Main extends React.Component {
     // toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
     toggleInterfaceTour(keepInterfaceTour = false) { this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, keepInterfaceTour, false); }
     toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, false, false); }
-    togglePromotionPopup() { this.setState({ showPromotionPopup: !this.state.showDataSourceTour }); }
+    togglePromotionPopup() { this.setState({ showPromotionPopup: !this.state.showPromotionPopup }); }
 
     render() {
         if (this.state.user == undefined) return null;
@@ -84,7 +84,7 @@ class Main extends React.Component {
 
                     <Sidebar user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
                 </div>
-                <PromotionPopup show={this.state.showPromotion} togglePopupCallback={this.togglePopupCallback} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" />
+                <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" />
                 <div className="page-container">
                     <SiteRenamedTopNotice show={IsDomain('app.gaannotations.com') || IsDomain('localhost')} />
                     <div className="header navbar">
@@ -221,7 +221,7 @@ class Main extends React.Component {
                 }
 
                 if (response.data.user.price_plan.name == 'Free') {
-                    setTimeout(() => { this.setState({ showPromotion: true }); }, 5000);
+                    setTimeout(() => { this.setState({ showPromotionPopup: true }); }, 5000);
                 }
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
