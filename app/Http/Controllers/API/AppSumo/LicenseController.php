@@ -121,7 +121,7 @@ class LicenseController extends Controller
 
                 $user->save();
 
-                $this->addPricePlanSubscription(null, $user->id, null, $request->plan_id, 0, null, 0, $request->invoice_item_uuid);
+                $this->addPricePlanSubscription(null, $user->id, null, $downgradePricePlan->id, 0, null, 0, $request->invoice_item_uuid);
 
                 event(new UserTrialPricePlanEnded($user));
                 return ['message' => 'User downgraded to most restricted price plan.'];
