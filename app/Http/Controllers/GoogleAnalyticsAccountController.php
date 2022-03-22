@@ -96,7 +96,7 @@ class GoogleAnalyticsAccountController extends Controller
         $nGAP->account_id = $googleAnalyticsProperty['accountId'];
         $nGAP->internal_property_id = $googleAnalyticsProperty['internalWebPropertyId'];
         $nGAP->name = $googleAnalyticsProperty['name'];
-        $nGAP->website_url = $googleAnalyticsProperty['websiteUrl'];
+        $nGAP->website_url = key_exists('websiteUrl', $googleAnalyticsProperty) ? $googleAnalyticsProperty['websiteUrl'] : null;
         $nGAP->level = $googleAnalyticsProperty['level'];
         $nGAP->profile_count = $googleAnalyticsProperty['profileCount'];
         $nGAP->industry_vertical = @$googleAnalyticsProperty['industryVertical'];
