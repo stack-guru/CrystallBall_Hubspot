@@ -35,7 +35,7 @@
                                         This logic is not much appreciated and should be 
                                         replaced with something proper  in future
                                     -->
-                                    @if(!@$pricePlanSubscription->pricePlan->price && $$pricePlanSubscription->app_sumo_invoice_item_uuid)
+                                    @if(!@$pricePlanSubscription->pricePlan->price && $pricePlanSubscription->app_sumo_invoice_item_uuid)
                                         <span class="badge badge-danger">REFUND</span>
                                     @endif
                                 </td>
