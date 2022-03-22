@@ -28,7 +28,17 @@
                             @forelse($pricePlanSubscriptions as $pricePlanSubscription)
                             <tr>
                                 <td>{{$pricePlanSubscription->id}}</td>
-                                <td>{{$pricePlanSubscription->user->name}}</td>
+                                <td>
+                                    {{$pricePlanSubscription->user->name}}
+                                    <!-- 
+                                        The logic below is used to track AppSumo refunds.
+                                        This logic is not much appreciated and should be 
+                                        replaced with something proper  in future
+                                    -->
+                                    @if(!@$pricePlanSubscription->pricePlan->price && $pricePlanSubscription->app_sumo_invoice_item_uuid)
+                                        <span class="badge badge-danger">REFUND</span>
+                                    @endif
+                                </td>
                                 <td>{{$pricePlanSubscription->user->email}}</td>
                                 <td>{{@$pricePlanSubscription->paymentDetail->bluesnap_vaulted_shopper_id}}</td>
                                 <td>@if($pricePlanSubscription->coupon){{$pricePlanSubscription->coupon->code}} / {{$pricePlanSubscription->coupon->discount_percent}}%@endif</td>
