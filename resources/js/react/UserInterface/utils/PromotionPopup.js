@@ -7,7 +7,7 @@ export default function PromotionPopup(props) {
         <div className="promo-pop-image-holder" >
             <div >
                 <a href={props.promotionLink} target="_blank">
-                    <img className="promo-pop-image" src={props.promotionImage} />
+                    <img className="promo-pop-image animate__animated animate__tada" src={props.promotionImage} />
                 </a>
             </div>
         </div>
