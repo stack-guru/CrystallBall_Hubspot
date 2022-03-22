@@ -28,7 +28,10 @@ Route::group(['prefix' => 'spectator', 'as' => 'spectator.'], function () {
 
 Route::redirect('/', '/login', 301);
 
-Auth::routes(['verify' => true]);
+Route::group(['middleware' => ['prevent.cache']], function () {
+    Auth::routes(['verify' => true]);
+});
+
 Route::get('register_chrome', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm']);
 
 Route::group(['middleware' => ['auth']], function () {
