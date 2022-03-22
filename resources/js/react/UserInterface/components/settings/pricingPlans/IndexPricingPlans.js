@@ -177,7 +177,7 @@ export default class IndexPricingPlans extends React.Component {
                                                 {
                                                     pricePlan.user_per_ga_account_count == 0 ?
                                                         <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited Users</li>
-                                                        : null
+                                                        : <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Upto {pricePlan.user_per_ga_account_count} User(s)</li>
                                                 }
                                                 {
                                                     pricePlan.ga_account_count == 0 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited GA accounts</li>
