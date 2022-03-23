@@ -49,7 +49,7 @@ trait GoogleUniversalAnalytics
         $url = "https://content-analyticsreporting.googleapis.com/v4/reports:batchGet?alt=json";
 
         $jsonBody = [
-            'limit' => 100000,
+            // 'limit' => 100000, // This parameter is not supported
             'reportRequests' => [
                 [
                     'viewId' => (string) $googleAnalyticsProperty->internal_property_id,
