@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import HttpClient from './HttpClient'
 
-import Select from 'react-select/async';
+import Select from 'react-select';
 
 export default class GoogleAnalyticsPropertySelect extends Component {
 
@@ -10,17 +10,24 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         super(props)
         this.state = {
             aProperties: [{ value: "", label: "All Properties" }],
+            allProperties: []
         };
         this.searchGoogleAnalyticsProperties = this.searchGoogleAnalyticsProperties.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
     }
 
     componentDidMount() {
-        if (this.props.autoSelectFirst) {
-            this.searchGoogleAnalyticsProperties(' ', (options) => {
-                if (options.length) this.onChangeHandler(options[0]);
-            });
-        }
+        this.searchGoogleAnalyticsProperties(' ', (options) => {
+            if (options.length) {
+                if (this.props.autoSelectFirst) {
+                    this.setState({ aProperties: [{ value: "", label: "Loading..." }] });
+                    setTimeout(() => {
+                        this.onChangeHandler(options[0]);
+                    }, 5000);
+                }
+            }
+            this.setState({ allProperties: options });
+        });
     }
     componentDidUpdate(prevProps) {
         if (this.props != prevProps) {
@@ -107,7 +114,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 isMulti={this.props.multiple}
                 isClearable={this.props.isClearable}
                 onChange={this.onChangeHandler}
-                // options={allOptions}
+                options={this.state.allProperties}
                 isSearchable={true}
                 placeholder={this.props.placeholder}
                 components={this.props.components}
