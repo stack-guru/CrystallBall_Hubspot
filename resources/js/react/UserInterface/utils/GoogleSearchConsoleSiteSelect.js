@@ -41,7 +41,13 @@ export default class GoogleSearchConsoleSiteSelect extends Component {
         HttpClient.get('settings/google-search-console-site?keyword=' + keyword)
             .then((response) => {
                 let gscss = response.data.google_search_console_sites;
-                let options = gscss.map(gscs => { return { value: gscs.id, label: gscs.site_url.replace('sc-domain:', '') + ' ' + gscs.google_account.name }; });
+                let options = gscss.map(gscs => {
+                    return {
+                        value: gscs.id,
+                        label: gscs.site_url.replace('sc-domain:', '') + ' ' + gscs.google_account.name,
+                        wasLastDataFetchingSuccessful: gscs.was_last_data_fetching_successful
+                    };
+                });
                 callback(options);
             });
     }
@@ -49,8 +55,8 @@ export default class GoogleSearchConsoleSiteSelect extends Component {
     onChangeHandler(sOption) {
         if (sOption == null) {
             this.setState({ cSites: [{ value: "", label: "All Sites" }] });
-            if (this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: [""] } });
-            if (!this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: "" } });
+            if (this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: [""], wasLastDataFetchingSuccessful: sOption.was_last_data_fetching_successful } });
+            if (!this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: "", wasLastDataFetchingSuccessful: sOption.was_last_data_fetching_successful } });
             if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Sites" }]);
         } else {
             // cSites.push(sOption);
@@ -61,8 +67,8 @@ export default class GoogleSearchConsoleSiteSelect extends Component {
                 cSites = sOption;
             }
             this.setState({ cSites: cSites });
-            if (this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.filter(sO => sO.value !== "").map(sO => sO.value) } });
-            if (!this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.value } });
+            if (this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.filter(sO => sO.value !== "").map(sO => sO.value), wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful } });
+            if (!this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.value, wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful } });
             if (this.props.onChangeCallback2) (this.props.onChangeCallback2)(cSites);
         }
     }

@@ -44,10 +44,10 @@ class FetchGAMetricsAndDimensionsJob implements ShouldQueue, ShouldBeUnique
     {
         $gAS = new GoogleAnalyticsService;
 
-        print("Fetching metrics and dimensions for " . $this->googleAnalyticsProperty->internal_property_id . " property of kind " . $this->googleAnalyticsProperty->kind . " under account " . $this->googleAnalyticsProperty->googleAccount->account_id) . "\n";
+        print ("Fetching metrics and dimensions for " . $this->googleAnalyticsProperty->internal_property_id . " property of kind " . $this->googleAnalyticsProperty->kind . " under account " . $this->googleAnalyticsProperty->googleAccount->account_id) . "\n";
         $dataRows = $gAS->getMetricsAndDimensions($this->googleAnalyticsProperty->googleAccount, $this->googleAnalyticsProperty, $this->startDate, $this->endDate);
         if ($dataRows !== false) {
-            print(count($dataRows) . " rows fetched.") . "\n";
+            print (count($dataRows) . " rows fetched.") . "\n";
             GoogleAnalyticsMetricDimension::where('ga_property_id', $this->googleAnalyticsProperty->id)->whereBetween('statistics_date', [$this->startDate, $this->endDate])->delete();
             $rows = [];
             foreach ($dataRows as  $dataRow) {
@@ -76,6 +76,10 @@ class FetchGAMetricsAndDimensionsJob implements ShouldQueue, ShouldBeUnique
             if (count($rows)) {
                 GoogleAnalyticsMetricDimension::insert($rows);
             }
+            $this->googleAnalyticsProperty->was_last_data_fetching_successful = true;
+        } else {
+            $this->googleAnalyticsProperty->was_last_data_fetching_successful = false;
         }
+        $this->googleAnalyticsProperty->save();
     }
 }

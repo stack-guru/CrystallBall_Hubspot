@@ -146,7 +146,13 @@ export default class IndexDashboard extends Component {
                             name="google_search_console_site_id"
                             id="google_search_console_site_id"
                             value={this.state.google_search_console_site_id}
-                            onChangeCallback={(event) => { this.setState({ google_search_console_site_id: event.target.value }); this.searchConsoleFetchStatistics(event.target.value); }} placeholder="Select Site"
+                            onChangeCallback={(event) => {
+                                this.setState({ google_search_console_site_id: event.target.value });
+                                this.searchConsoleFetchStatistics(event.target.value);
+                                if (!event.target.wasLastDataFetchingSuccessful) {
+                                    swal.fire('Error', "We encountered an error last time, when we were trying to fetch data from this source.", 'error');
+                                }
+                            }} placeholder="Select Site"
                             components={{ IndicatorSeparator: () => null }}
                             autoSelectFirst
                         />
@@ -165,7 +171,13 @@ export default class IndexDashboard extends Component {
                             name="ga_property_id"
                             id="ga_property_id"
                             value={this.state.ga_property_id}
-                            onChangeCallback={(event) => { this.setState({ ga_property_id: event.target.value }); this.analyticsFetchStatistics(event.target.value); }} placeholder="Select GA Properties"
+                            onChangeCallback={(event) => {
+                                this.setState({ ga_property_id: event.target.value });
+                                this.analyticsFetchStatistics(event.target.value);
+                                if (!event.target.wasLastDataFetchingSuccessful) {
+                                    swal.fire('Error', "We encountered an error last time, when we were trying to fetch data from this source.", 'error');
+                                }
+                            }} placeholder="Select GA Properties"
                             components={{ IndicatorSeparator: () => null }}
                             autoSelectFirst
                         />

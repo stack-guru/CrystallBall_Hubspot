@@ -65,7 +65,7 @@ class FetchGSCSStatisticsJob implements ShouldQueue, ShouldBeUnique
                 // If a row of data has no impressions, the CTR will be shown as a dash (-) 
                 // because CTR would be division by zero.
                 $row['ctr_count'] = $dataRow['ctr'];
-                
+
                 $row['position_rank'] = $dataRow['position'];
 
                 $row['google_search_console_site_id'] = $this->googleSearchConsoleSite->id;
@@ -83,7 +83,11 @@ class FetchGSCSStatisticsJob implements ShouldQueue, ShouldBeUnique
             if (count($rows)) {
                 GoogleSearchConsoleStatistics::insert($rows);
             }
+            $this->googleSearchConsoleSite->was_last_data_fetching_successful = true;
+        } else {
+            $this->googleSearchConsoleSite->was_last_data_fetching_successful = false;
         }
+        $this->googleSearchConsoleSite->save();
 
         $dataRows = $gSCS->getGSCSearchAppearance($this->googleSearchConsoleSite->googleAccount, $this->googleSearchConsoleSite, $this->endDate);
         if ($dataRows !== false) {
@@ -100,7 +104,7 @@ class FetchGSCSStatisticsJob implements ShouldQueue, ShouldBeUnique
                 // If a row of data has no impressions, the CTR will be shown as a dash (-) 
                 // because CTR would be division by zero.
                 $gSCStatistics->ctr_count = $dataRow['ctr'];
-                
+
                 $gSCStatistics->position_rank = $dataRow['position'];
 
                 $gSCStatistics->google_search_console_site_id = $this->googleSearchConsoleSite->id;

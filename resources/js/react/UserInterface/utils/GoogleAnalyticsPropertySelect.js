@@ -34,7 +34,13 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         HttpClient.get('settings/google-analytics-property?keyword=' + keyword)
             .then((response) => {
                 let gaps = response.data.google_analytics_properties;
-                let options = gaps.map(gap => { return { value: gap.id, label: gap.name + ' ' + gap.google_analytics_account.name }; });
+                let options = gaps.map(gap => {
+                    return {
+                        value: gap.id,
+                        label: gap.name + ' ' + gap.google_analytics_account.name,
+                        wasLastDataFetchingSuccessful: gap.was_last_data_fetching_successful
+                    };
+                });
                 callback(options);
             }, (err) => {
                 if (err.response.status == 400) {
@@ -60,8 +66,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     onChangeHandler(sOption) {
         if (sOption == null) {
             this.setState({ aProperties: [{ value: "", label: "All Properties" }] });
-            if (this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: [""] } });
-            if (!this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: "" } });
+            if (this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: [""], wasLastDataFetchingSuccessful: sOption.was_last_data_fetching_successful } });
+            if (!this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: "" }, wasLastDataFetchingSuccessful: sOption.was_last_data_fetching_successful });
             if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Properties" }]);
         } else {
             // aProperties.push(sOption);
@@ -72,8 +78,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 aProperties = sOption;
             }
             this.setState({ aProperties: aProperties });
-            if (this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.filter(sO => sO.value !== "").map(sO => sO.value) } });
-            if (!this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.value } });
+            if (this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.filter(sO => sO.value !== "").map(sO => sO.value), wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful } });
+            if (!this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.value, wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful } });
             if (this.props.onChangeCallback2) (this.props.onChangeCallback2)(aProperties);
         }
     }
