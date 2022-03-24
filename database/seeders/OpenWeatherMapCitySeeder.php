@@ -30,15 +30,17 @@ class OpenWeatherMapCitySeeder extends Seeder
             $row['name'] = $city->name;
             $row['state_name'] = $city->state;
             $row['country_code'] = $city->country;
-            
+
             $country = $this->findCountry($city->country);
             $row['country_name'] = $country !== false ? $country[0] : null;
-            
+
             $row['longitude'] = $city->coord->lon;
             $row['latitude'] = $city->coord->lat;
 
             array_push($rows, $row);
-            if (count($rows) > 1000) {
+            if (count($rows) > 9000) {
+                // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (7)
+                // I obviously rounded it to something human readable
                 OpenWeatherMapCity::insert($rows);
                 $rows = array();
             }
@@ -51,7 +53,9 @@ class OpenWeatherMapCitySeeder extends Seeder
 
     protected function findCountry($countryAlpha2Code)
     {
-        $countries = array_values(array_filter(self::COUNTRYLIST, function ($c) use ($countryAlpha2Code) {return $c[1] == $countryAlpha2Code;}));
+        $countries = array_values(array_filter(self::COUNTRYLIST, function ($c) use ($countryAlpha2Code) {
+            return $c[1] == $countryAlpha2Code;
+        }));
         if (count($countries)) {
             return $countries[0];
         } else {

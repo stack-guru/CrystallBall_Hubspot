@@ -133,10 +133,11 @@ class GoogleAlgorithmUpdateController extends Controller
                 }
 
                 array_push($rows, $row);
-
             }
 
-            if (count($rows) > 1000) {
+            if (count($rows) > 13000) {
+                // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (5)
+                // I obviously rounded it to something human readable
                 GoogleAlgorithmUpdate::insert($rows);
                 $rows = array();
             }
