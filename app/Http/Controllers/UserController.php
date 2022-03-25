@@ -64,6 +64,15 @@ class UserController extends Controller
 
         $parentUser = Auth::user();
 
+        if ($parentUser->pricePlan->user_per_ga_account_count == -1) {
+            abort(402);
+        } else if ($parentUser->pricePlan->user_per_ga_account_count == 0) {
+            // unlimited users allowed
+            // do nothing
+        } else if (count($parentUser->users) >= $parentUser->pricePlan->user_per_ga_account_count) {
+            abort(402);
+        }
+
         $user = new User;
         $user->fill($request->validated());
         $user->password = Hash::make($request->password);
@@ -90,7 +99,6 @@ class UserController extends Controller
 
         event(new \App\Events\UserInvitedTeamMember($parentUser));
         return ['user' => $user];
-
     }
 
     /**
@@ -147,7 +155,6 @@ class UserController extends Controller
         }
 
         return ['user' => $user];
-
     }
 
     /**
