@@ -4,8 +4,9 @@ import { Redirect } from "react-router-dom";
 
 import ErrorAlert from "../../utils/ErrorAlert";
 import HttpClient from "../../utils/HttpClient";
-import GoogleAnalyticsAccountSelect from "../../utils/GoogleAnalyticsAccountSelect";
+
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
+import AnnotationCategorySelect from '../../utils/AnnotationCategorySelect';
 
 export default class EditAnnotation extends React.Component {
 
@@ -185,14 +186,7 @@ export default class EditAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="category" className="form-control-placeholder">Category</label>
-                                        <input type="text" className="form-control" id="category" name="category"
-                                            value={this.state.annotation.category} onChange={this.changeHandler} />
-                                        {
-                                            validation.category ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : null
-                                        }
-
-
+                                        <AnnotationCategorySelect name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
                                     </div>
                                 </div>
                                 <div className="col-lg-3 col-sm-4">

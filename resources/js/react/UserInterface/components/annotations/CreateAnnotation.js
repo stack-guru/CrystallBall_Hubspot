@@ -7,6 +7,7 @@ import ErrorAlert from '../../utils/ErrorAlert';
 
 import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
 import { loadStateFromLocalStorage, saveStateToLocalStorage, removeStateFromLocalStorage } from '../../helpers/CommonFunctions';
+import AnnotationCategorySelect from '../../utils/AnnotationCategorySelect';
 
 export default class CreateAnnotation extends React.Component {
 
@@ -176,14 +177,7 @@ export default class CreateAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="category" className="form-control-placeholder">Category</label>
-                                        <input type="text" className="form-control" id="category" name="category"
-                                            value={this.state.annotation.category} onChange={this.changeHandler} placeholder="Assign a Category" />
-                                        {
-                                            validation.category ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : ''
-                                        }
-
-
+                                        <AnnotationCategorySelect name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
                                     </div>
                                 </div>
 
