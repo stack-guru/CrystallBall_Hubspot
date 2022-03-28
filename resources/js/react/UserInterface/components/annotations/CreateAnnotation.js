@@ -17,7 +17,7 @@ export default class CreateAnnotation extends React.Component {
             annotation: {
                 category: '',
                 event_name: '',
-                url: '',
+                url: 'http://',
                 description: '',
                 show_at: '',
                 google_analytics_property_id: [""]
