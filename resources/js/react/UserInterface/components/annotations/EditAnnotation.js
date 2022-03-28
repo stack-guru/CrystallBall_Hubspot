@@ -173,7 +173,7 @@ export default class EditAnnotation extends React.Component {
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
-                                        <label htmlFor="event_name" className="form-control-placeholder">Event Name</label>
+                                        <label htmlFor="event_name" className="form-control-placeholder">Event Name *</label>
                                         <input type="text" className="form-control" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" />
 
                                         {
@@ -185,7 +185,7 @@ export default class EditAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <label htmlFor="category" className="form-control-placeholder">Category</label>
+                                        <label htmlFor="category" className="form-control-placeholder">Category *</label>
                                         <AnnotationCategorySelect name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
                                     </div>
                                 </div>
