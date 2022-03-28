@@ -62,8 +62,7 @@ class AnnotationController extends Controller
         $annotation->updated_at = Carbon::parse($annotation->updated_at)->toIso8601String();
         $annotation->show_at = Carbon::parse($annotation->show_at)->toIso8601String();
 
-        $annotation->unsetRelation('user');
-        return ['annotation' => $annotation, 'actual_request' => $request];
+        return ['annotation' => $annotation];
     }
 
     public function index(Request $request)

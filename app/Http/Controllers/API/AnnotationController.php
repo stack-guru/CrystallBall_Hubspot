@@ -151,7 +151,8 @@ class AnnotationController extends Controller
         event(new \App\Events\AnnotationCreated($annotation));
         event(new UserUsedAPI);
 
-        return response()->json(['annotation' => $annotation], 201);
+        $annotation->unsetRelation('user');
+        return response()->json(['annotation' => $annotation, 'actual_request' => $request], 201);
     }
 
     /**
