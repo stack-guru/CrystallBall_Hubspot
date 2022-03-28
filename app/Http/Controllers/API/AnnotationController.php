@@ -152,7 +152,7 @@ class AnnotationController extends Controller
         event(new UserUsedAPI);
 
         $annotation->unsetRelation('user');
-        return response()->json(['annotation' => $annotation, 'actual_request' => $request], 201);
+        return response()->json(['annotation' => $annotation, 'actual_request' => $request->validated()], 201);
     }
 
     /**
