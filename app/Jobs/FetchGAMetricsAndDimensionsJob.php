@@ -48,7 +48,15 @@ class FetchGAMetricsAndDimensionsJob implements ShouldQueue, ShouldBeUnique
         $dataRows = $gAS->getMetricsAndDimensions($this->googleAnalyticsProperty->googleAccount, $this->googleAnalyticsProperty, $this->startDate, $this->endDate);
         if ($dataRows !== false) {
             print (count($dataRows) . " rows fetched.") . "\n";
-            GoogleAnalyticsMetricDimension::where('ga_property_id', $this->googleAnalyticsProperty->id)->whereBetween('statistics_date', [$this->startDate, $this->endDate])->delete();
+
+            // As we are dealing with table with +10000000 records, we need to delete data in chunks on 5000
+            do {
+                $deleteCount = GoogleAnalyticsMetricDimension::where('ga_property_id', $this->googleAnalyticsProperty->id)
+                    ->whereBetween('statistics_date', [$this->startDate, $this->endDate])
+                    ->limit(5000)
+                    ->delete();
+            } while ($deleteCount > 0);
+
             $rows = [];
             foreach ($dataRows as  $dataRow) {
                 $row = [];

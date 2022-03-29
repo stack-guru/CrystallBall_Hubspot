@@ -48,7 +48,15 @@ class FetchGSCSStatisticsJob implements ShouldQueue, ShouldBeUnique
         $dataRows = $gSCS->getGSCStatistics($this->googleSearchConsoleSite->googleAccount, $this->googleSearchConsoleSite, $this->startDate, $this->endDate);
         if ($dataRows !== false) {
             print (count($dataRows) . " rows fetched.") . "\n";
-            GoogleSearchConsoleStatistics::where('google_search_console_site_id', $this->googleSearchConsoleSite->id)->whereBetween('statistics_date', [$this->startDate, $this->endDate])->delete();
+
+            // As we are dealing with table with +10000000 records, we need to delete data in chunks on 5000
+            do {
+                $deleteCount = GoogleSearchConsoleStatistics::where('google_search_console_site_id', $this->googleSearchConsoleSite->id)
+                    ->whereBetween('statistics_date', [$this->startDate, $this->endDate])
+                    ->limit(5000)
+                    ->delete();
+            } while ($deleteCount > 0);
+
             $rows = [];
             foreach ($dataRows as  $dataRow) {
                 $row = [];
