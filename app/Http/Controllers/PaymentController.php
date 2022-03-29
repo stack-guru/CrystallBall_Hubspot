@@ -75,6 +75,11 @@ class PaymentController extends Controller
         $pricePlanExipryDuration = "+" . $request->plan_duration . " month";
         $pricePlanExpiryDate = new \DateTime($pricePlanExipryDuration);
 
+        // Checking if price plan is disabled from purchase
+        if (!$pricePlan->is_enabled) {
+            return response()->json(['success' => false, 'message' => 'Selected price plan is not available for purchase.'], 422);
+        }
+
         $transactionId = 0;
         $sGS = new SendGridService;
         if ($pricePlan->price == 0) {
