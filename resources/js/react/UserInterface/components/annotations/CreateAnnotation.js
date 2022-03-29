@@ -7,6 +7,7 @@ import ErrorAlert from '../../utils/ErrorAlert';
 
 import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
 import { loadStateFromLocalStorage, saveStateToLocalStorage, removeStateFromLocalStorage } from '../../helpers/CommonFunctions';
+import AnnotationCategorySelect from '../../utils/AnnotationCategorySelect';
 
 export default class CreateAnnotation extends React.Component {
 
@@ -16,7 +17,7 @@ export default class CreateAnnotation extends React.Component {
             annotation: {
                 category: '',
                 event_name: '',
-                url: '',
+                url: 'http://',
                 description: '',
                 show_at: '',
                 google_analytics_property_id: [""]
@@ -162,8 +163,8 @@ export default class CreateAnnotation extends React.Component {
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
-                                        <label htmlFor="event_name" className="form-control-placeholder">Event Name</label>
-                                        <input type="text" className="form-control" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" />
+                                        <label htmlFor="event_name" className="form-control-placeholder">Event Name *</label>
+                                        <input type="text" className="form-control" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" placeholder='Name the Annotation' />
 
                                         {
                                             validation.event_name ?
@@ -175,22 +176,15 @@ export default class CreateAnnotation extends React.Component {
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <label htmlFor="category" className="form-control-placeholder">Category</label>
-                                        <input type="text" className="form-control" id="category" name="category"
-                                            value={this.state.annotation.category} onChange={this.changeHandler} />
-                                        {
-                                            validation.category ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : ''
-                                        }
-
-
+                                        <label htmlFor="category" className="form-control-placeholder">Category *</label>
+                                        <AnnotationCategorySelect name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
                                     </div>
                                 </div>
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group  has-danger ">
                                         <label htmlFor="description" className="form-control-placeholder">Description</label>
-                                        <textarea type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control" id="description" name="description"></textarea>
+                                        <textarea type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control" id="description" name="description" placeholder='Add descriptive info'></textarea>
                                         {
                                             validation.description ?
                                                 <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : ''
@@ -201,7 +195,7 @@ export default class CreateAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
                                         <label htmlFor="url" className="form-control-placeholder">Link</label>
-                                        <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control" id="url" name="url" />
+                                        <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control" id="url" name="url" placeholder='https://example.com' />
 
                                         {
                                             validation.url ?
@@ -214,7 +208,7 @@ export default class CreateAnnotation extends React.Component {
 
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder">Show at</label>
+                                        <label htmlFor="show_at" className="form-control-placeholder">Show on this date</label>
                                         <input type="date" onChange={this.changeHandler} value={this.state.annotation.show_at} className="form-control" id="show_at" name="show_at" />
 
                                         {
@@ -226,8 +220,10 @@ export default class CreateAnnotation extends React.Component {
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder">Google Properties <a id="google-properties-video-modal-button" className="float-right" href="#" target="_blank" data-toggle="modal" data-target="#google-properties-video-modal"><img className="hint-button-3" src="/images/info-logo.png" /></a></label>
-                                        <VideoModalBox id="google-properties-video-modal" src="https://www.youtube.com/embed/4tRGhuK7ZWQ" />
+                                        <label htmlFor="show_at" className="form-control-placeholder">Assign Annotation to:
+                                            {/* <a id="google-properties-video-modal-button" className="float-right" href="#" target="_blank" data-toggle="modal" data-target="#google-properties-video-modal"><img className="hint-button-3" src="/images/info-logo.png" /></a> */}
+                                        </label>
+                                        {/* <VideoModalBox id="google-properties-video-modal" src="https://www.youtube.com/embed/4tRGhuK7ZWQ" /> */}
 
                                         <GoogleAnalyticsPropertySelect
                                             name="google_analytics_property_id"

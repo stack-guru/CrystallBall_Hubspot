@@ -50,9 +50,11 @@ class FetchGoogleAnalyticsMetricsAndDimensions extends Command
         $endDate = Carbon::now()->format('Y-m-d');
 
         $googleAnalyticsProperties = GoogleAnalyticsProperty::with('googleAccount')->get();
+        $this->info(count($googleAnalyticsProperties) . " google analytics properties fetched for processing.");
         foreach ($googleAnalyticsProperties as $googleAnalyticsProperty) {
             FetchGAMetricsAndDimensionsJob::dispatch($googleAnalyticsProperty, $startDate, $endDate);
         }
+        $this->info("Job to fetch statistics queued.");
 
         return 0;
     }

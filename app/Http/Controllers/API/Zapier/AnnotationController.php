@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
 use App\Models\AnnotationGaProperty;
+use App\Models\GoogleAnalyticsProperty;
 use App\Models\UserDataSource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -34,13 +35,20 @@ class AnnotationController extends Controller
         $annotation->save();
         event(new \App\Events\AnnotationCreated($annotation));
 
+        // Check if google analytics property ids are provided in the request
         if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
+            // Fetch current user google analytics property ids in an array for validation
+            $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::ofCurrentUser()->get()->pluck('id')->toArray();
+
             foreach ($request->google_analytics_property_id as $gAPId) {
-                $aGAP = new AnnotationGaProperty;
-                $aGAP->annotation_id = $annotation->id;
-                $aGAP->google_analytics_property_id = $gAPId;
-                $aGAP->user_id = $userId;
-                $aGAP->save();
+                // Add record only if the mentioned google analytics property id belongs to current user
+                if (in_array($gAPId, $googleAnalyticsPropertyIds)) {
+                    $aGAP = new AnnotationGaProperty;
+                    $aGAP->annotation_id = $annotation->id;
+                    $aGAP->google_analytics_property_id = $gAPId;
+                    $aGAP->user_id = $userId;
+                    $aGAP->save();
+                }
             }
         } else {
             $aGAP = new AnnotationGaProperty;
@@ -53,6 +61,7 @@ class AnnotationController extends Controller
         $annotation->created_at = Carbon::parse($annotation->created_at)->toIso8601String();
         $annotation->updated_at = Carbon::parse($annotation->updated_at)->toIso8601String();
         $annotation->show_at = Carbon::parse($annotation->show_at)->toIso8601String();
+
         return ['annotation' => $annotation];
     }
 

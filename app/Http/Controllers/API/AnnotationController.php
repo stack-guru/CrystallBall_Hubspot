@@ -103,23 +103,31 @@ class AnnotationController extends Controller
         $annotation->added_by = 'api';
         $annotation->save();
 
+        // Check if google analytics property ids are provided in the request
         if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
-            foreach ($request->google_analytics_property_id as $gAPId) {
-                $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
-                if (!$googleAnalyticsProperty->is_in_use) {
-                    if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
-                        DB::rollback();
-                        abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
-                    }
-                }
-                $googleAnalyticsProperty->is_in_use = true;
-                $googleAnalyticsProperty->save();
+            // Fetch current user google analytics property ids in an array for validation
+            $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::ofCurrentUser()->get()->pluck('id')->toArray();
 
-                $aGAP = new AnnotationGaProperty;
-                $aGAP->annotation_id = $annotation->id;
-                $aGAP->google_analytics_property_id = $gAPId;
-                $aGAP->user_id = $userId;
-                $aGAP->save();
+            foreach ($request->google_analytics_property_id as $gAPId) {
+                // Add record only if the mentioned google analytics property id belongs to current user
+                if (in_array($gAPId, $googleAnalyticsPropertyIds)) {
+
+                    $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
+                    if (!$googleAnalyticsProperty->is_in_use) {
+                        if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
+                            DB::rollback();
+                            abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
+                        }
+                    }
+                    $googleAnalyticsProperty->is_in_use = true;
+                    $googleAnalyticsProperty->save();
+
+                    $aGAP = new AnnotationGaProperty;
+                    $aGAP->annotation_id = $annotation->id;
+                    $aGAP->google_analytics_property_id = $gAPId;
+                    $aGAP->user_id = $userId;
+                    $aGAP->save();
+                }
             }
         } else {
             $aGAP = new AnnotationGaProperty;
@@ -143,7 +151,8 @@ class AnnotationController extends Controller
         event(new \App\Events\AnnotationCreated($annotation));
         event(new UserUsedAPI);
 
-        return response()->json(['annotation' => $annotation], 201);
+        $annotation->unsetRelation('user');
+        return response()->json(['annotation' => $annotation, 'actual_request' => $request->validated()], 201);
     }
 
     /**
@@ -189,24 +198,32 @@ class AnnotationController extends Controller
                 }
             }
 
+            // Check if google analytics property ids are provided in the request
             if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
-                foreach ($newGAPIds as $gAPId) {
-                    if (!in_array($gAPId, $oldGAPIds)) {
-                        $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
-                        if (!$googleAnalyticsProperty->is_in_use) {
-                            if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
-                                DB::rollback();
-                                abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
-                            }
-                        }
-                        $googleAnalyticsProperty->is_in_use = true;
-                        $googleAnalyticsProperty->save();
+                // Fetch current user google analytics property ids in an array for validation
+                $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::ofCurrentUser()->get()->pluck('id')->toArray();
 
-                        $aGAP = new AnnotationGaProperty;
-                        $aGAP->annotation_id = $annotation->id;
-                        $aGAP->google_analytics_property_id = $gAPId;
-                        $aGAP->user_id = $user->id;
-                        $aGAP->save();
+                foreach ($newGAPIds as $gAPId) {
+                    // Add record only if the mentioned google analytics property id belongs to current user
+                    if (in_array($gAPId, $googleAnalyticsPropertyIds)) {
+
+                        if (!in_array($gAPId, $oldGAPIds)) {
+                            $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
+                            if (!$googleAnalyticsProperty->is_in_use) {
+                                if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
+                                    DB::rollback();
+                                    abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
+                                }
+                            }
+                            $googleAnalyticsProperty->is_in_use = true;
+                            $googleAnalyticsProperty->save();
+
+                            $aGAP = new AnnotationGaProperty;
+                            $aGAP->annotation_id = $annotation->id;
+                            $aGAP->google_analytics_property_id = $gAPId;
+                            $aGAP->user_id = $user->id;
+                            $aGAP->save();
+                        }
                     }
                 }
             } else {

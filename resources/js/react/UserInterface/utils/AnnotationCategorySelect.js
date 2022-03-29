@@ -4,14 +4,14 @@ import CreatableSelect from 'react-select/creatable';
 
 import HttpClient from "./HttpClient";
 
-export default class UserTeamNameSelect extends React.Component {
+export default class AnnotationCategorySelect extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isBusy: false,
             errors: '',
-            teamNames: [],
+            categories: [],
         }
 
         this.onChangeHandler = this.onChangeHandler.bind(this)
@@ -20,9 +20,9 @@ export default class UserTeamNameSelect extends React.Component {
 
     componentDidMount() {
         this.setState({ isBusy: true })
-        HttpClient.get(`/team-name`)
+        HttpClient.get(`/annotation-categories`)
             .then(response => {
-                this.setState({ isBusy: false, teamNames: response.data.team_names.map(tN => { return { label: tN.team_name, value: tN.team_name } }) });
+                this.setState({ isBusy: false, teamNames: response.data.categories.map(c => { return { label: c.category, value: c.category } }) });
             }, (err) => {
                 
                 this.setState({ isBusy: false, errors: (err.response).data });
