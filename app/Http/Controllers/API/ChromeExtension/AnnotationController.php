@@ -24,6 +24,10 @@ class AnnotationController extends Controller
             return ['annotations' => [[[]]]];
         }
 
+        // $this->validate($request, [
+        //     'google_analytics_property_id' => 'bail|nullable|numeric|exists:google_analytics_properties,id'
+        // ]);
+
         $user = Auth::user();
         $userIdsArray = $user->getAllGroupUserIdsArray();
 
