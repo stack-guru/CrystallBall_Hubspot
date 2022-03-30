@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use DOMDocument;
+use Exception;
 
 class GoogleAlertService
 {
@@ -32,10 +33,15 @@ class GoogleAlertService
             return false;
         }
 
-        $doc = new DOMDocument;
-        $doc->loadHTML($response);
-        $doc->normalize();
-        $lis = $doc->getElementsByTagName('li');
+        try {
+            $doc = new DOMDocument;
+            $doc->loadHTML($response);
+            $doc->normalize();
+            $lis = $doc->getElementsByTagName('li');
+        } catch (Exception $exception) {
+            log(print_r($exception->getMessage(), 1));
+            return false;
+        }
 
         $parsedAlerts = [];
         foreach ($lis as $li) {
@@ -70,5 +76,4 @@ class GoogleAlertService
 
         return $parsedAlerts;
     }
-
 }

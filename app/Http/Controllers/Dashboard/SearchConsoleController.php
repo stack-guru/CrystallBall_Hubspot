@@ -19,7 +19,7 @@ class SearchConsoleController extends Controller
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
             'end_date' => 'required|date|after:2005-01-01|after:start_date',
-            'google_search_console_site_id' => 'required',
+            'google_search_console_site_id' => 'bail|required|numeric|exists:google_search_console_sites,id',
         ]);
         $gSCSiteId = $request->google_search_console_site_id;
         $startDate = $request->start_date;
