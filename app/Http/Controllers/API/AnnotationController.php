@@ -154,8 +154,8 @@ class AnnotationController extends Controller
         $annotation->unsetRelation('user');
         return response()->json([
             'annotation' => $annotation,
-            'validated_request' => $request->validated(),
-            'raw_request' => $request->getContent()
+            // 'validated_request' => $request->validated(),
+            // 'raw_request' => $request->getContent()
         ], 201);
     }
 
