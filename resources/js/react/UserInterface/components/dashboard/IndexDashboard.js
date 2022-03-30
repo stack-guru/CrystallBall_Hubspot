@@ -150,7 +150,7 @@ export default class IndexDashboard extends Component {
                                 this.setState({ google_search_console_site_id: event.target.value });
                                 this.searchConsoleFetchStatistics(event.target.value);
                                 if (!event.target.wasLastDataFetchingSuccessful) {
-                                    swal.fire('Upps...', "We got an error trying fetching this account's data from Google. ", 'info');
+                                    swal.fire('Oops...', "There was an error when fetching data from Google. ", 'info');
                                 }
                             }} placeholder="Select Site"
                             components={{ IndicatorSeparator: () => null }}
@@ -175,7 +175,7 @@ export default class IndexDashboard extends Component {
                                 this.setState({ ga_property_id: event.target.value });
                                 this.analyticsFetchStatistics(event.target.value);
                                 if (!event.target.wasLastDataFetchingSuccessful) {
-                                    swal.fire('Oops...', "We got an error trying fetching this account's data from Google. ", 'info');
+                                    swal.fire('Oops...', "There was an error when fetching data from Google. ", 'info');
                                 }
                             }} placeholder="Select GA Properties"
                             components={{ IndicatorSeparator: () => null }}
