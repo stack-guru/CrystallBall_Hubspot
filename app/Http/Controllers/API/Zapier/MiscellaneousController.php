@@ -25,8 +25,7 @@ class MiscellaneousController extends Controller
         $resp = [];
         foreach ($googleAnalyticsProperties as $gAP) {
             array_push($resp, [
-                'value' => $gAP->id,
-                'label' => $gAP->name . " - " . $gAP->GoogleAnalyticsAccount->name . " - " . $gAP->GoogleAccount->name
+                $gAP->id => $gAP->name . " - " . $gAP->GoogleAnalyticsAccount->name . " - " . $gAP->GoogleAccount->name
             ]);
         }
 
