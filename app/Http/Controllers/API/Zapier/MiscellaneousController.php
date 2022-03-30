@@ -20,16 +20,16 @@ class MiscellaneousController extends Controller
 
         $googleAnalyticsProperties =  $googleAnalyticsPropertiesQuery->get(['id', 'name', 'google_analytics_account_id', 'google_account_id']);
 
-        return ['google_analytics_properties' => $googleAnalyticsProperties];
+        // return ['google_analytics_properties' => $googleAnalyticsProperties];
 
-        // $resp = [];
-        // foreach ($googleAnalyticsProperties as $gAP) {
-        //     array_push($resp, [
-        //         'key' => $gAP->id,
-        //         'label' => $gAP->name . " - " . $gAP->GoogleAnalyticsAccount->name . " - " . $gAP->GoogleAccount->name
-        //     ]);
-        // }
+        $resp = [];
+        foreach ($googleAnalyticsProperties as $gAP) {
+            array_push($resp, [
+                'value' => $gAP->id,
+                'label' => $gAP->name . " - " . $gAP->GoogleAnalyticsAccount->name . " - " . $gAP->GoogleAccount->name
+            ]);
+        }
 
-        // return $resp;
+        return $resp;
     }
 }
