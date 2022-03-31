@@ -97,7 +97,8 @@ class AnalyticsDashboardPageTest extends TestCase
         $response->assertStatus(200)
             ->assertJson(
                 function (AssertableJson $json) {
-                    $json->has('statistics')
+                    $json->has('google_account')
+                        ->has('statistics')
                         ->has('statistics.0', function ($json) {
                             $json->has('statistics_date')
                                 ->has("sum_users_count")

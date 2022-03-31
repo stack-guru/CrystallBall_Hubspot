@@ -15,9 +15,11 @@ class MicrosoftPowerBIAPITest extends TestCase
 
     public function testFetchAnnotationsAPITest()
     {
+        $pricePlanId = PricePlan::where('has_microsoft_power_bi', true)->first()->id;
         do {
-            $user = User::where('price_plan_id', PricePlan::where('has_microsoft_power_bi', true)->first()->id)->inRandomOrder()->first();
+            $user = User::inRandomOrder()->firstOrFail();
         } while (count($user->annotations) < 1);
+        $user->price_plan_id = $pricePlanId;
 
         Passport::actingAs($user);
 
