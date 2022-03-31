@@ -45,6 +45,7 @@ export default class AnnotationCategorySelect extends React.Component {
                 id={this.props.id}
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}
+                className="gray_clr"
                 options={this.state.teamNames}
                 placeholder={this.props.placeholder}
             >

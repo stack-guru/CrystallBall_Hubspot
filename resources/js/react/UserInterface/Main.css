@@ -596,7 +596,11 @@ setting-menu-item.dropdown {
 }
 
 .gray_clr{
-    color: #72777a;
+    color: #72777a !important;
+}
+
+.css-1uccc91-singleValue {
+    color: #72777a !important;
 }
 
 thead th {

@@ -16,7 +16,7 @@ export default class EditAnnotation extends React.Component {
             annotation: {
                 category: '',
                 event_name: '',
-                url: '',
+                url: 'https://',
                 description: '',
                 show_at: '',
                 google_analytics_property_id: [""]
@@ -174,7 +174,7 @@ export default class EditAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
                                         <label htmlFor="event_name" className="form-control-placeholder">Event Name *</label>
-                                        <input type="text" className="form-control" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" placeholder='Name the Annotation' />
+                                        <input type="text" className="form-control gray_clr" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" placeholder='Name the Annotation' />
 
                                         {
                                             validation.event_name ?
@@ -186,13 +186,13 @@ export default class EditAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="category" className="form-control-placeholder">Category *</label>
-                                        <AnnotationCategorySelect name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
+                                        <AnnotationCategorySelect className="gray_clr" name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
                                     </div>
                                 </div>
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group  has-danger ">
                                         <label htmlFor="description" className="form-control-placeholder">Description</label>
-                                        <textarea type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control" id="description" name="description" placeholder='Add descriptive info'></textarea>
+                                        <textarea type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control gray_clr" id="description" name="description" placeholder='Add descriptive info'></textarea>
                                         {
                                             validation.description ?
                                                 <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : null
@@ -202,7 +202,7 @@ export default class EditAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group">
                                         <label htmlFor="url" className="form-control-placeholder">Link</label>
-                                        <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control" id="url" name="url" placeholder='https://example.com' />
+                                        <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control gray_clr" id="url" name="url" placeholder='https://example.com' />
 
                                         {
                                             validation.url ?
@@ -215,7 +215,7 @@ export default class EditAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="show_at" className="form-control-placeholder">Show on this date</label>
-                                        <input type="date" onChange={this.changeHandler} value={moment(this.state.annotation.show_at).format('YYYY-MM-DD')} className="form-control" id="show_at" name="show_at" />
+                                        <input type="date" onChange={this.changeHandler} value={moment(this.state.annotation.show_at).format('YYYY-MM-DD')} className="form-control gray_clr" id="show_at" name="show_at" />
 
                                         {
                                             validation.show_at ?
@@ -232,6 +232,7 @@ export default class EditAnnotation extends React.Component {
                                             aProperties={this.state.googleAnnotationProperties}
                                             name="google_analytics_property_id"
                                             id="google_analytics_property_id"
+                                            className="gray_clr"
                                             value={this.state.annotation.google_analytics_property_id}
                                             onChangeCallback={this.changeHandler}
                                             onChangeCallback2={this.gAPropertyChangeHandler}
