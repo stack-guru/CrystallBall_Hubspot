@@ -65,6 +65,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
             Route::group(['prefix' => 'zapier', 'as' => 'zapier.'], function () {
                 Route::post('annotations', 'Zapier\AnnotationController@store');
                 Route::get('annotations', 'Zapier\AnnotationController@index');
+                Route::get('google-analytics-properties', 'Zapier\MiscellaneousController@getGoogleAnalyticsProperty');
 
                 Route::resource('user-webhooks', 'Zapier\UserWebhookController')->only(['store', 'destroy']);
             });
