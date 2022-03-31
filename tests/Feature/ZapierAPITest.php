@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Models\PricePlan;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
@@ -14,9 +15,11 @@ class ZapierAPITest extends TestCase
 
     public function testAnnotationsGETAPITest()
     {
+        $pricePlanId = PricePlan::where('has_api', true)->first()->id;
         do {
-            $user = User::inRandomOrder()->first();
+            $user = User::inRandomOrder()->firstOrFail();
         } while (count($user->annotations) < 1);
+        $user->price_plan_id = $pricePlanId;
 
         Passport::actingAs($user);
 
