@@ -3,6 +3,10 @@
     overflow-x: hidden;
 }
 
+.OSXscroll{
+    -webkit-overflow-scrolling: touch
+}
+
 @media screen and (min-width: 992px) and (max-width: 1439px) {
     .sidebar-inner {
         overflow-y: auto;

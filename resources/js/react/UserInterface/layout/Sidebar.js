@@ -40,7 +40,7 @@ class Sidebar extends React.Component {
 
     render() {
         return (
-            <div className="sidebar-inner">
+            <div className="sidebar-inner OSXscroll" >
                 <div className="sidebar-logo bg-white">
                     <div className="peers ai-c fxw-nw">
                         <div className="peer peer-greed">

@@ -591,6 +591,14 @@ setting-menu-item.dropdown {
     border-right: 1px solid rgba(0, 0, 0, 0.0625);
 }
 
+.OSXscroll{
+    -webkit-overflow-scrolling: touch
+}
+
+.gray_clr{
+    color: #72777a;
+}
+
 thead th {
     text-align: center;
 }
