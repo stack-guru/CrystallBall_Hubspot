@@ -33,25 +33,23 @@ class GoogleDataStudioAPITest extends TestCase
         ]));
 
         $response->assertStatus(200)
-            ->assertJson(
-                function (AssertableJson $json) {
-                    $json->has('annotations')
-                        ->has('annotations.0', function ($json) {
-                            $json->has('added_by')
-                                ->has("is_enabled")
-                                ->has("show_at")
-                                ->has("created_at")
-                                ->has("id")
-                                ->has("category")
-                                ->has("event_name")
-                                ->has("url")
-                                ->has("description")
-                                ->has("user_name")
-                                ->has("annotation_ga_property_id")
-                                ->has("google_analytics_property_name")
-                                ->etc();
-                        });
-                }
-            );
+            ->assertJsonStructure([
+                'annotations' => [
+                    '*' => [
+                        'added_by',
+                        'is_enabled',
+                        'show_at',
+                        'created_at',
+                        'id',
+                        'category',
+                        'event_name',
+                        'url',
+                        'description',
+                        'user_name',
+                        'annotation_ga_property_id',
+                        'google_analytics_property_name',
+                    ]
+                ]
+            ]);
     }
 }

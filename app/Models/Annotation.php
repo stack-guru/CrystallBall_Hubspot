@@ -18,6 +18,15 @@ class Annotation extends Model
         'is_enabled', 'added_by',
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'show_at' => 'date'
+    ];
+
     const SAMPLE_ANNOTATION_EVENT_NAME = 'Sample Annotation';
 
     public function user()

@@ -32,19 +32,16 @@ class ZapierAPITest extends TestCase
         ]);
 
         $response->assertStatus(200)
-            ->assertJson(
-                function (AssertableJson $json) {
-                    $json->first(function ($json) {
-                        $json->has('show_at')
-                            ->has("id")
-                            ->has("category")
-                            ->has("event_name")
-                            ->has("url")
-                            ->has("description")
-                            ->etc();
-                    });
-                }
-            );
+            ->assertJsonStructure([
+                    '*' => [
+                        'show_at',
+                        'id',
+                        'category',
+                        'event_name',
+                        'url',
+                        'description',
+                    ]
+            ]);
     }
 
     public function testAnnotationCreateAPITest()
