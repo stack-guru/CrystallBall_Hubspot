@@ -49,6 +49,20 @@ class ChromeExtensionAPITest extends TestCase
                         'show_at'
                     ]
                 ]
+            ])
+            ->assertJsonStructure([
+                'user_annotation_color' => [
+                    'manual',
+                    'csv',
+                    'api',
+                    'holidays',
+                    'google_algorithm_updates',
+                    'retail_marketings',
+                    'weather_alerts',
+                    'web_monitors',
+                    'wordpress_updates',
+                    'google_alerts',
+                ]
             ]);
     }
 
@@ -59,11 +73,9 @@ class ChromeExtensionAPITest extends TestCase
         } while (count($user->annotations) < 1);
 
         Passport::actingAs($user);
-        $startDate = $user->annotations()->orderBy('show_at')->first()->show_at->format('Y-m-d');
-        print "\nSending request for $startDate from $user->email.\n";
 
         $response = $this->getJson('/api/v1/chrome-extension/annotations?' . implode("&", [
-            'startDate=' . $startDate,
+            'startDate=2001-01-01',
             'endDate=2030-12-31',
             'show_manual_annotations=true',
             'show_csv_annotations=true',
