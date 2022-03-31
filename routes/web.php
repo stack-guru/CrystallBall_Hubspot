@@ -55,7 +55,7 @@ Route::group(['prefix' => 'app-sumo', 'as' => 'app-sumo.', 'middleware' => ['aut
 Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () {
 
     Route::view('dashboard', 'ui/app'); // obsolete
-    Route::view('analytics', 'ui/app');
+    // Route::view('analytics', 'ui/app');
     Route::view('dashboard/analytics', 'ui/app');
     Route::view('dashboard/search-console', 'ui/app');
 
