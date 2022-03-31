@@ -66,7 +66,7 @@ class Sidebar extends React.Component {
                     </div>
                 </div>
                 <ul className="sidebar-menu scrollable pos-r ">
-                    <li className="nav-item gaa-menu-item">
+                    {/* <li className="nav-item gaa-menu-item">
                         <Link to="/analytics" >
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
@@ -75,7 +75,7 @@ class Sidebar extends React.Component {
                                 <span className="title">Analytics</span>
                             </span>
                         </Link>
-                    </li>
+                    </li> */}
                     {/* <li className="nav-item gaa-menu-item">
                         <Link to="/dashboard/search-console" >
                             <span className="sidebar-link" >
