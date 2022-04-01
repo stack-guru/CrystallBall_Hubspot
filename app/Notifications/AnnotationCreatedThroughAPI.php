@@ -7,6 +7,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use App\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
+use Illuminate\Support\Facades\Auth;
 
 class AnnotationCreatedThroughAPI extends Notification
 {
@@ -63,9 +64,9 @@ class AnnotationCreatedThroughAPI extends Notification
         $this->logNotificationTrigger($notifiable->id, null, get_class(), 'Mail');
 
         return (new MailMessage)
-            ->subject("New Annotation for " . auth()->user()->token()->name ?? "")
+            ->subject("New Annotation for " . Auth::user()->token()->name ?? "")
             ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('A new annotation was received from the API KEY: ' . auth()->user()->token()->name ?? "");
+            ->line('A new annotation was received from the API KEY: ' . Auth::user()->token()->name ?? "");
     }
 
     public function toPushNotification($notifiable)
@@ -76,7 +77,7 @@ class AnnotationCreatedThroughAPI extends Notification
             ->platform('web')
             ->web()
             ->sound('default')
-            ->title("A new annotation was received from the API KEY: [API_KEY_NAME]")
+            ->title("A new annotation was received from the API KEY: " . Auth::user()->token()->name ?? "")
             ->body("");
     }
 }
