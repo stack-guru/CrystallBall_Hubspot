@@ -34,8 +34,8 @@
                                             </td>
                                             <td>
                                                 {{ $user->email }}
-                                                @if ($user->parent)
-                                                    <span class="badge badge-primary">{{ $user->parent->email }}</span>
+                                                @if ($user->user)
+                                                    <span class="badge badge-primary">{{ $user->user->email }}</span>
                                                 @endif
                                             </td>
                                             <td>{{ $user->name }}</td>
