@@ -63,9 +63,9 @@ class AnnotationCreatedThroughAPI extends Notification
         $this->logNotificationTrigger($notifiable->id, null, get_class(), 'Mail');
 
         return (new MailMessage)
-            ->subject("New Annotation for [API_KEY_NAME]")
+            ->subject("New Annotation for " . auth()->user()->token()->name ?? "")
             ->greeting('Hi ' . $notifiable->name . ',')
-            ->line('A new annotation was received from the API KEY: [API_KEY_NAME]');
+            ->line('A new annotation was received from the API KEY: ' . auth()->user()->token()->name ?? "");
     }
 
     public function toPushNotification($notifiable)
