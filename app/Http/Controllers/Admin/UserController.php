@@ -21,6 +21,7 @@ class UserController extends Controller
 
         $data['users'] = User::with([
             'pricePlan',
+            'parent'
         ])
             ->orderBy('created_at', 'DESC')->get();
 

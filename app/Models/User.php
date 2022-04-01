@@ -411,4 +411,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\NotificationLog')->where('notification_channel', 'Mail');
     }
+
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
