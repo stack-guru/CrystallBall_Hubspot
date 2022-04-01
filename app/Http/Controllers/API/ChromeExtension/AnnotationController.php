@@ -251,7 +251,7 @@ class AnnotationController extends Controller
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));
 
-        $annotationsQuery = "SELECT TempTable.category, TempTable.event_name, TempTable.show_at FROM (";
+        $annotationsQuery = "SELECT TempTable.category, TempTable.event_name, TempTable.show_at, `annotation_ga_properties`.`google_analytics_property_id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
 
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= "SELECT DISTINCT DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` FROM `annotations`";
@@ -347,8 +347,15 @@ class AnnotationController extends Controller
             }
         }
         ////////////////////////////////////////////////////////////////////
-        $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at DESC";
+        $annotationsQuery .= ") AS TempTable ";
 
+        // LEFT JOIN to load all properties selected in annotations
+        $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
+        // LEFT JOINs to load all property details which are loaded from above statement
+        $annotationsQuery .= " LEFT JOIN google_analytics_properties ON annotation_ga_properties.google_analytics_property_id = google_analytics_properties.id";
+
+        $annotationsQuery .= " WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at DESC";
+        
         // Add limit for annotations if the price plan is limited in annotations count
         if ($user->pricePlan->annotations_count > 0) {
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
