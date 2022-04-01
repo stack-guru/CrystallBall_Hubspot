@@ -17,7 +17,7 @@ class ChromeExtensionAPITest extends TestCase
     {
         do {
             $user = User::where('price_plan_id', PricePlan::where('has_chrome_extension', true)->first()->id)->inRandomOrder()->firstOrFail();
-        } while (count($user->annotations) < 1);
+        } while ($user->annotations()->count() < 1 || $user->userAnnotationColor()->count() < 1);
 
         Passport::actingAs($user);
 
@@ -70,7 +70,7 @@ class ChromeExtensionAPITest extends TestCase
     {
         do {
             $user = User::where('price_plan_id', PricePlan::where('has_chrome_extension', true)->first()->id)->inRandomOrder()->firstOrFail();
-        } while (count($user->annotations) < 1);
+        } while ($user->annotations()->count() < 1);
 
         Passport::actingAs($user);
 

@@ -24,7 +24,7 @@ class AnalyticsDashboardPageTest extends TestCase
 
         do {
             $user = User::inRandomOrder()->first();
-        } while (count($user->googleAnalyticsProperties) < 1 || count($user->annotations) < 1);
+        } while ($user->googleAnalyticsProperties()->count() < 1 || $user->annotations()->count() < 1);
 
         $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/annotations-metrics-dimensions?' . implode("&", [
             'start_date=2005-01-02',
@@ -34,24 +34,22 @@ class AnalyticsDashboardPageTest extends TestCase
         ]));
 
         $response->assertStatus(200)
-            ->assertJson(
-                function (AssertableJson $json) {
-                    $json->has('annotations')
-                        ->has('annotations.0', function ($json) {
-                            $json->has('event_name')
-                                ->has("category")
-                                ->has("show_at")
-                                ->has("description")
-                                ->has("seven_day_old_date")
-                                ->has("sum_users_count")
-                                ->has("sum_sessions_count")
-                                ->has("sum_events_count")
-                                ->has("sum_conversions_count")
-                                ->has("statistics_date")
-                                ->etc();
-                        });
-                }
-            );
+            ->assertJsonStructure([
+                'annotations' => [
+                    '*' => [
+                        'event_name',
+                        'category',
+                        'show_at',
+                        'description',
+                        'seven_day_old_date',
+                        'sum_users_count',
+                        'sum_sessions_count',
+                        'sum_events_count',
+                        'sum_conversions_count',
+                        'statistics_date',
+                    ]
+                ]
+            ]);
     }
 
     public function testUsersDaysAPITest()
@@ -59,7 +57,7 @@ class AnalyticsDashboardPageTest extends TestCase
 
         do {
             $user = User::inRandomOrder()->first();
-        } while (count($user->googleAnalyticsProperties) < 1);
+        } while ($user->googleAnalyticsProperties()->count() < 1);
 
         $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/users-days?' . implode("&", [
             'start_date=2005-01-02',
@@ -68,16 +66,14 @@ class AnalyticsDashboardPageTest extends TestCase
         ]));
 
         $response->assertStatus(200)
-            ->assertJson(
-                function (AssertableJson $json) {
-                    $json->has('statistics')
-                        ->has('statistics.0', function ($json) {
-                            $json->has('statistics_date')
-                                ->has("sum_users_count")
-                                ->etc();
-                        });
-                }
-            );
+            ->assertJsonStructure([
+                'statistics' => [
+                    '*' => [
+                        'statistics_date',
+                        'sum_users_count',
+                    ]
+                ]
+            ]);
     }
 
     public function testUsersDaysAnnotationsAPITest()
@@ -85,7 +81,7 @@ class AnalyticsDashboardPageTest extends TestCase
 
         do {
             $user = User::inRandomOrder()->first();
-        } while (count($user->googleAnalyticsProperties) < 1);
+        } while ($user->googleAnalyticsProperties()->count() < 1);
 
         $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/users-days-annotations?' . implode("&", [
             'start_date=2005-01-02',
@@ -95,22 +91,19 @@ class AnalyticsDashboardPageTest extends TestCase
         ]));
 
         $response->assertStatus(200)
-            ->assertJson(
-                function (AssertableJson $json) {
-                    $json->has('google_account')
-                        ->has('statistics')
-                        ->has('statistics.0', function ($json) {
-                            $json->has('statistics_date')
-                                ->has("sum_users_count")
-                                ->has("event_name")
-                                ->has("category")
-                                ->has("show_at")
-                                ->has("description")
-                                ->has("seven_day_old_date")
-                                ->etc();
-                        });
-                }
-            );
+            ->assertJsonStructure([
+                'statistics' => [
+                    '*' => [
+                        'statistics_date',
+                        'sum_users_count',
+                        'event_name',
+                        'category',
+                        'show_at',
+                        'description',
+                        'seven_day_old_date',
+                    ]
+                ]
+            ]);
     }
 
     public function testMediaAPITest()
@@ -118,7 +111,7 @@ class AnalyticsDashboardPageTest extends TestCase
 
         do {
             $user = User::inRandomOrder()->first();
-        } while (count($user->googleAnalyticsProperties) < 1);
+        } while ($user->googleAnalyticsProperties()->count() < 1);
 
         $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/media?' . implode("&", [
             'start_date=2005-01-02',
@@ -127,23 +120,21 @@ class AnalyticsDashboardPageTest extends TestCase
         ]));
 
         $response->assertStatus(200)
-            ->assertJson(
-                function (AssertableJson $json) {
-                    $json->has('statistics')
-                        ->has('statistics.0', function ($json) {
-                            $json->has('medium_name')
-                                ->has("sum_users_count")
-                                ->etc();
-                        });
-                }
-            );
+            ->assertJsonStructure([
+                'statistics' => [
+                    '*' => [
+                        'medium_name',
+                        'sum_users_count',
+                    ]
+                ]
+            ]);
     }
 
     public function testSourcesAPITest()
     {
         do {
             $user = User::inRandomOrder()->first();
-        } while (count($user->googleAnalyticsProperties) < 1);
+        } while ($user->googleAnalyticsProperties()->count() < 1);
 
         $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/sources?' . implode("&", [
             'start_date=2005-01-02',
@@ -152,18 +143,16 @@ class AnalyticsDashboardPageTest extends TestCase
         ]));
 
         $response->assertStatus(200)
-            ->assertJson(
-                function (AssertableJson $json) {
-                    $json->has('statistics')
-                        ->has('statistics.0', function ($json) {
-                            $json->has('source_name')
-                                ->has("sum_users_count")
-                                ->has("sum_events_count")
-                                ->has("sum_conversions_count")
-                                ->etc();
-                        });
-                }
-            );
+            ->assertJsonStructure([
+                'statistics' => [
+                    '*' => [
+                        'source_name',
+                        'sum_users_count',
+                        'sum_events_count',
+                        'sum_conversions_count',
+                    ]
+                ]
+            ]);
     }
 
     public function testDevicesAPITest()
@@ -171,7 +160,7 @@ class AnalyticsDashboardPageTest extends TestCase
 
         do {
             $user = User::inRandomOrder()->first();
-        } while (count($user->googleAnalyticsProperties) < 1);
+        } while ($user->googleAnalyticsProperties()->count() < 1);
 
         $response = $this->actingAs($user)->getJson('/ui/dashboard/analytics/device-categories?' . implode("&", [
             'start_date=2005-01-02',
@@ -180,17 +169,15 @@ class AnalyticsDashboardPageTest extends TestCase
         ]));
 
         $response->assertStatus(200)
-            ->assertJson(
-                function (AssertableJson $json) {
-                    $json->has('statistics')
-                        ->has('statistics.0', function ($json) {
-                            $json->has('device_category')
-                                ->has("sum_users_count")
-                                ->has("sum_events_count")
-                                ->has("sum_conversions_count")
-                                ->etc();
-                        });
-                }
-            );
+            ->assertJsonStructure([
+                'statistics' => [
+                    '*' => [
+                        'device_category',
+                        'sum_users_count',
+                        'sum_events_count',
+                        'sum_conversions_count',
+                    ]
+                ]
+            ]);
     }
 }

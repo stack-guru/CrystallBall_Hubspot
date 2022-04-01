@@ -18,7 +18,7 @@ class MicrosoftPowerBIAPITest extends TestCase
         $pricePlanId = PricePlan::where('has_microsoft_power_bi', true)->first()->id;
         do {
             $user = User::inRandomOrder()->firstOrFail();
-        } while (count($user->annotations) < 1);
+        } while ($user->annotations()->count() < 1);
         $user->price_plan_id = $pricePlanId;
 
         Passport::actingAs($user);

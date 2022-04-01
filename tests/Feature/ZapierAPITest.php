@@ -18,7 +18,7 @@ class ZapierAPITest extends TestCase
         $pricePlanId = PricePlan::where('has_api', true)->first()->id;
         do {
             $user = User::inRandomOrder()->firstOrFail();
-        } while (count($user->annotations) < 1);
+        } while ($user->annotations()->count() < 1);
         $user->price_plan_id = $pricePlanId;
 
         Passport::actingAs($user);
@@ -33,14 +33,14 @@ class ZapierAPITest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                    '*' => [
-                        'show_at',
-                        'id',
-                        'category',
-                        'event_name',
-                        'url',
-                        'description',
-                    ]
+                '*' => [
+                    'show_at',
+                    'id',
+                    'category',
+                    'event_name',
+                    'url',
+                    'description',
+                ]
             ]);
     }
 
