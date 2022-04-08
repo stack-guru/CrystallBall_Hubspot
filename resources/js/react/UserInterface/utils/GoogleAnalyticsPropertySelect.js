@@ -10,7 +10,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         super(props)
         this.state = {
             aProperties: [{ value: "", label: "All Properties" }],
-            allProperties: []
+            allProperties: [],
+            isAccountLinked: true
         };
         this.searchGoogleAnalyticsProperties = this.searchGoogleAnalyticsProperties.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -51,19 +52,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 callback(options);
             }, (err) => {
                 if (err.response.status == 400) {
-                    swal.fire({
-                        title: "Your Google Analytics Account is not linked yet",
-                        text: "To assign an annotation to a property, first, you need to connect your Google Analytics accounts.",
-                        icon: "info",
-                        buttons: ['Cancel', 'Connect'],
-                        dangerMode: false,
-                    }).then(value => {
-                        if (value) {
-                            // Save pathname in this storage without domain name
-                            localStorage.setItem("frontend_redirect_to", window.location.pathname);
-                            window.location = "/settings/google-account/create";
-                        }
-                    })
+                    this.setState({ isAccountLinked: false });
                 }
             }).catch(err => {
                 this.setState({ errors: err, isLoading: false });
@@ -118,7 +107,22 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 isSearchable={true}
                 placeholder={this.props.placeholder}
                 components={this.props.components}
-                onFocus={this.props.onFocus}
+                onFocus={(e) => {
+                    if (!this.state.isAccountLinked) {
+                        swal.fire({
+                            title: "Your Google Analytics Account is not linked yet",
+                            text: "To assign an annotation to a property, first, you need to connect your Google Analytics accounts.",
+                            icon: "info",
+                        }).then(value => {
+                            if (value.isConfirmed) {
+                                // Save pathname in this storage without domain name
+                                localStorage.setItem("frontend_redirect_to", window.location.pathname);
+                                window.location = "/settings/google-account/create";
+                            }
+                        })
+                    }
+                    this.props.onFocus(e);
+                }}
             />
         )
     }
