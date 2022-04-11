@@ -88,7 +88,19 @@ export function removeStateFromLocalStorage(componentName) {
     return true;
 }
 
-export function calculateDiscountedPrice(price, yearlyDiscountPercent) {
-    if (yearlyDiscountPercent == 0) return price;
-    return parseFloat((price) - (yearlyDiscountPercent / 100 * price)).toFixed(0);
+export function calculatePricePlanPrice(price, monthDuration, yearlyDiscountPercent, coupon) {
+    let newPrice = price;
+    switch (monthDuration) {
+        case "12":
+            if (yearlyDiscountPercent != 0) {
+                newPrice = parseFloat((newPrice) - (yearlyDiscountPercent / 100 * newPrice)).toFixed(0);
+            }
+            break;
+    }
+    if (coupon) {
+        if (coupon.discount_percent != 0) {
+            newPrice = parseFloat((newPrice) - (coupon.discount_percent / 100 * newPrice)).toFixed(0);
+        }
+    }
+    return newPrice;
 }

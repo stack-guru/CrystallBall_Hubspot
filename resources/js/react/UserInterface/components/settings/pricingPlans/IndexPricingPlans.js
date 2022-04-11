@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
-import { calculateDiscountedPrice } from '../../../helpers/CommonFunctions';
+import { calculatePricePlanPrice } from '../../../helpers/CommonFunctions';
 
 import HttpClient from "../../../utils/HttpClient";
 
@@ -86,6 +86,10 @@ export default class IndexPricingPlans extends React.Component {
 
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+
+        let userSpecificCoupon = undefined;
+        if (this.props.user.user_specific_coupons) if (this.props.user.user_specific_coupons.length) userSpecificCoupon = this.props.user.user_specific_coupons[0];
+
         return (
             <div className=" bg-white component-wrapper">
                 <section className="pricing bg-white ">
@@ -140,7 +144,7 @@ export default class IndexPricingPlans extends React.Component {
                                                 it might have caused some compilation errors that's why I avoided
                                                 them. If you can do it without any errors feel free to do it. */}
                                             <h6 className="card-price text-center w-100">
-                                                ${this.state.planDuration == '12' ? calculateDiscountedPrice(pricePlan.price, pricePlan.yearly_discount_percent) : pricePlan.price}
+                                                ${calculatePricePlanPrice(pricePlan.price, this.state.planDuration, pricePlan.yearly_discount_percent, userSpecificCoupon)}
                                                 <span className="period">/per month</span>
                                             </h6>
                                             {this.state.planDuration == '12' ? <sub className="mt-2 w-100 text-center">Billed Annually</sub> : <sub className="mt-2 w-100 text-center">Billed Monthly</sub>}
