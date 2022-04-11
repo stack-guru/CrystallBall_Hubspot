@@ -18,6 +18,7 @@ class UserSpecificCoupon extends Model
 
         'heading',
         'description',
+        'on_click_url',
 
         "usage_count",
         'discount_percent',

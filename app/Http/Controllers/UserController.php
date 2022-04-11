@@ -6,7 +6,6 @@ use App\Http\Requests\UserRequest;
 use App\Mail\UserInviteMail;
 use App\Models\User;
 use App\Models\UserGaAccount;
-use App\Models\UserSpecificCoupon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -37,8 +36,6 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
         $user = Auth::user();
         $users = $user->user_id ? $user->user->users : $user->users;
-
-        $user->user_specific_coupons = UserSpecificCoupon::ofCurrentUser()->get();
 
         return ['users' => $users];
     }

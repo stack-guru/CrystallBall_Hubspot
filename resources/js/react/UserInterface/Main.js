@@ -38,6 +38,7 @@ import IndexSearchConsole from './components/dashboard/searchConsole/IndexSearch
 import SiteRenamedTopNotice from './utils/SiteRenamedTopNotice';
 import { IsDomain } from './helpers/CommonFunctions';
 import PromotionPopup from './utils/PromotionPopup';
+import UserSpecificCoupon from './utils/UserSpecificCoupon';
 
 class Main extends React.Component {
 
@@ -87,6 +88,7 @@ class Main extends React.Component {
                 <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" />
                 <div className="page-container">
                     <SiteRenamedTopNotice show={IsDomain('app.gaannotations.com') || IsDomain('localhost')} />
+                    {this.state.user.user_specific_coupons.map(uSC => <UserSpecificCoupon key={uSC.id} coupon={uSC} />)}
                     <div className="header navbar">
                         <Header user={this.state.user} />
                     </div>
