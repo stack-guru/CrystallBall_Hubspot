@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationSetting extends Model
 {
@@ -28,7 +29,11 @@ class NotificationSetting extends Model
 
         // 'user_id'
     ];
-
+    
+    public function scopeOfCurrentUser($query)
+    {
+        return $query->where('user_id', Auth::id());
+    }
 
     static public function disableNotifications($user)
     {

@@ -21,7 +21,9 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\AddSampleAnnotation::class,
             \App\Listeners\SendAdminNewUserEmail::class,
             \App\Listeners\AddUserToSendGridList::class,
+            \App\Listeners\CreateUserSpecificCoupon::class,
         ],
+
         \Illuminate\Auth\Events\Login::class => [
             'App\Listeners\LoginListener',
         ],

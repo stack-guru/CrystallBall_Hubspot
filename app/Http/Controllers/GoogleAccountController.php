@@ -19,7 +19,7 @@ class GoogleAccountController extends Controller
 
     public function uiIndex()
     {
-        $googleAccounts = GoogleAccount::where('user_id', Auth::id())->get();
+        $googleAccounts = GoogleAccount::ofCurrentUser()->get();
         return ['google_accounts' => $googleAccounts];
     }
 
@@ -50,7 +50,7 @@ class GoogleAccountController extends Controller
         $user = Socialite::driver('google')->stateless()->user();
         $googleAccountId = $user->getId();
 
-        $googleAccount = GoogleAccount::where('account_id', $googleAccountId)->where('user_id', Auth::id())->first();
+        $googleAccount = GoogleAccount::where('account_id', $googleAccountId)->ofCurrentUser()->first();
         if (!$googleAccount) {
             $googleAccount = new GoogleAccount;
         }

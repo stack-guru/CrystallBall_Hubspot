@@ -116,4 +116,76 @@ class ChromeExtensionAPITest extends TestCase
                 ]
             ]);
     }
+
+    public function testAnnotationsCreateAPITest()
+    {
+        do {
+            $user = User::where('price_plan_id', PricePlan::where('has_chrome_extension', true)->first()->id)->inRandomOrder()->firstOrFail();
+        } while ($user->annotations()->count() < 1);
+
+        Passport::actingAs($user);
+
+        $response = $this->postJson('/api/v1/chrome-extension/annotations', [
+            'category' => 'Test Category',
+            'event_name' => 'Test Event',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'annotation' => [
+                    "category",
+                    "event_name",
+                    "show_at",
+                    "user_id",
+                    "is_enabled",
+                    "added_by",
+                    "updated_at",
+                    "created_at",
+                    "id",
+                ]
+            ]);
+    }
+
+    public function testEventLoggingAPITest()
+    {
+        do {
+            $user = User::where('price_plan_id', PricePlan::where('has_chrome_extension', true)->first()->id)->inRandomOrder()->firstOrFail();
+        } while ($user->annotations()->count() < 1);
+
+        Passport::actingAs($user);
+
+        $response = $this->postJson('/api/v1/chrome-extension/log', [
+            'event_name' => 'Chrome Extension Event recorded',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'success'
+            ]);
+    }
+
+    public function testGoogleAnalyticsPropertyIndexTest()
+    {
+        do {
+            $user = User::where('price_plan_id', PricePlan::where('has_chrome_extension', true)->first()->id)->inRandomOrder()->firstOrFail();
+        } while ($user->annotations()->count() < 1);
+
+        Passport::actingAs($user);
+
+        $response = $this->getJson('/api/v1/chrome-extension/google-analytics-properties');
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'google_analytics_properties' => [
+                    '*' => [
+                        "id",
+                        "name",
+                        "google_account" => [
+                            "id",
+                            "name",
+                        ]
+                    ]
+                ]
+            ]);
+    }
 }

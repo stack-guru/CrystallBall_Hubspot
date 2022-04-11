@@ -26,7 +26,7 @@ class PaymentController extends Controller
             abort(403, 'Only account owner is allowed to view payment history.');
         }
 
-        $pricePlanSubscriptions = PricePlanSubscription::with(['paymentDetail', 'pricePlan'])->orderBy('created_at', 'DESC')->where('user_id', Auth::id())->get();
+        $pricePlanSubscriptions = PricePlanSubscription::with(['paymentDetail', 'pricePlan'])->orderBy('created_at', 'DESC')->ofCurrentUser()->get();
 
         return ['price_plan_subscriptions' => $pricePlanSubscriptions];
     }

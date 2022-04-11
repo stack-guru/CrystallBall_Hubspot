@@ -39,7 +39,7 @@ class WebMonitorController extends Controller
             return response()->json(['message' => 'Maximum number of monitors limit reached'], 402);
         }
 
-        if (WebMonitor::where('url', $request->url)->where('user_id', Auth::id())->count()) {
+        if (WebMonitor::where('url', $request->url)->ofCurrentUser()->count()) {
             return response()->json(['message' => 'We already have this monitor setup.'], 402);
         }
 

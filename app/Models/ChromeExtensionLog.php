@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class ChromeExtensionLog extends Model
 {
@@ -20,4 +21,9 @@ class ChromeExtensionLog extends Model
         'event_name',
 
     ];
+
+    public function scopeOfCurrentUser($query)
+    {
+        return $query->where('user_id', Auth::id());
+    }
 }

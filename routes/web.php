@@ -122,6 +122,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
         Route::resource('user-checklist-item', App\Http\Controllers\UserChecklistItemController::class)->only(['index', 'update']);
 
         Route::get('user', [App\Http\Controllers\HomeController::class, 'uiUserShow'])->withoutMiddleware('only.non.empty.password');
+        Route::get('user-specific-coupon', [App\Http\Controllers\UserSpecificCouponController::class, 'index']);
         Route::get('coupon', [App\Http\Controllers\CouponController::class, 'verify']);
         Route::get('annotation', [App\Http\Controllers\AnnotationController::class, 'uiIndex']);
 

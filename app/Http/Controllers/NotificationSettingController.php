@@ -16,7 +16,7 @@ class NotificationSettingController extends Controller
      */
     public function index()
     {
-        $notificationSettings = NotificationSetting::where('user_id', Auth::id())->get()->toArray();
+        $notificationSettings = NotificationSetting::ofCurrentUser()->get()->toArray();
         return ['notification_settings' => $notificationSettings];
     }
 

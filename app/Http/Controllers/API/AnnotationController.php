@@ -33,7 +33,7 @@ class AnnotationController extends Controller
             abort(402, "Please upgrade your plan to use API feature.");
         }
 
-        $annotations = Annotation::where('user_id', Auth::id())->get();
+        $annotations = Annotation::ofCurrentUser()->get();
         $resource = new annotationResource($annotations);
 
         if ($user->last_api_called_at == null) {

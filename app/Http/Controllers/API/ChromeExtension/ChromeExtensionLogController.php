@@ -13,7 +13,7 @@ class ChromeExtensionLogController extends Controller
 {
     public function store(ChromeExtensionLogRequest $request)
     {
-        $chromeExtensionOldLogsCount = ChromeExtensionLog::where('user_id', Auth::id())
+        $chromeExtensionOldLogsCount = ChromeExtensionLog::ofCurrentUser()
             ->where('event_name', ChromeExtensionLog::ANNOTATION_BUTTON_CLICKED)
             ->count();
 

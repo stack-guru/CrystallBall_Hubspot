@@ -355,7 +355,7 @@ class AnnotationController extends Controller
         $annotationsQuery .= " LEFT JOIN google_analytics_properties ON annotation_ga_properties.google_analytics_property_id = google_analytics_properties.id";
 
         $annotationsQuery .= " WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at DESC";
-        
+
         // Add limit for annotations if the price plan is limited in annotations count
         if ($user->pricePlan->annotations_count > 0) {
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
@@ -429,7 +429,7 @@ class AnnotationController extends Controller
         }
         DB::commit();
 
-        $chromeExtensionOldLogsCount = ChromeExtensionLog::where('user_id', Auth::id())
+        $chromeExtensionOldLogsCount = ChromeExtensionLog::ofCurrentUser()
             ->where('event_name', ChromeExtensionLog::ANNOTATION_CREATED)
             ->count();
         $chromeExtensionLog = new ChromeExtensionLog;
@@ -444,6 +444,8 @@ class AnnotationController extends Controller
 
         if (!$chromeExtensionOldLogsCount) event(new \App\Events\ChromeExtensionFirstAnnotationCreated($user, $annotation));
         event(new \App\Events\AnnotationCreated($annotation));
+
+        if (isset($annotation->user)) unset($annotation->user);
         return ['annotation' => $annotation];
     }
 

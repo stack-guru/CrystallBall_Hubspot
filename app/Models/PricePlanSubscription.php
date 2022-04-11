@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class PricePlanSubscription extends Model
 {
@@ -34,6 +35,11 @@ class PricePlanSubscription extends Model
     public function coupon()
     {
         return $this->belongsTo('App\Models\Coupon');
+    }
+    
+    public function scopeOfCurrentUser($query)
+    {
+        return $query->where('user_id', Auth::id());
     }
 
 }

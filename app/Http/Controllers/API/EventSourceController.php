@@ -15,7 +15,7 @@ class EventSourceController extends Controller
      */
     public function index()
     {
-        $annotationEvents = Annotation::where('user_id', Auth::id())
+        $annotationEvents = Annotation::ofCurrentUser()
             ->orderBy('event_name', 'ASC')
             ->distinct()
             ->get(['id', 'event_type', 'event_name']);
