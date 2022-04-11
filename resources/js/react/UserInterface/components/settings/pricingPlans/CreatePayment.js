@@ -240,7 +240,7 @@ export default class CreatePayment extends Component {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
         const validation = this.state.validation;
-        let totalPrice = 0.00, discountPrice = 0.00, annualDiscountAmount = 0.00, taxAmount = 0.00, actualPrice = 0.00;
+        let totalPrice = 0.00, discountPrice = 0.00, userSpecificCouponDiscountAmount = 0.00, annualDiscountAmount = 0.00, taxAmount = 0.00, actualPrice = 0.00;
 
         if (this.state.pricePlan) {
             actualPrice = this.state.pricePlan.price;
@@ -254,6 +254,18 @@ export default class CreatePayment extends Component {
             totalPrice -= annualDiscountAmount;
         }
 
+        let userSpecificCoupon = undefined;
+        if (this.props.user.user_specific_coupons) {
+            if (this.props.user.user_specific_coupons.length) {
+                userSpecificCoupon = this.props.user.user_specific_coupons[0];
+                if (userSpecificCoupon.discount_percent != 0) {
+                    userSpecificCouponDiscountAmount = parseFloat(((userSpecificCoupon.discount_percent / 100) * totalPrice)).toFixed(0);
+                    totalPrice -= userSpecificCouponDiscountAmount;
+                }
+            }
+        }
+
+
         if (this.state.coupon) {
             discountPrice = parseFloat(((this.state.coupon.discount_percent / 100) * this.state.pricePlan.price)).toFixed(2);
             totalPrice -= discountPrice;
@@ -265,7 +277,7 @@ export default class CreatePayment extends Component {
         totalPrice = totalPrice.toFixed(2);
 
         return (
-            <div className="container-xl bg-white component-wrapper">
+            <div className="container-xl bg-white component-wrapper" >
                 <ErrorAlert errors={this.state.errors} />
                 <div className="masonry-item">
                     <div className="bgc-white bd">
@@ -387,6 +399,17 @@ export default class CreatePayment extends Component {
                                                                 <div className="row">
                                                                     <div className="col-6">Discount Price</div>
                                                                     <div className="col-6 text-right">${discountPrice}</div>
+                                                                </div>
+                                                                <hr />
+                                                            </React.Fragment>
+                                                            : null
+                                                    }
+                                                    {
+                                                        userSpecificCouponDiscountAmount ?
+                                                            <React.Fragment>
+                                                                <div className="row">
+                                                                    <div className="col-6">Auto Coupon Discount ({userSpecificCoupon.discount_percent}%)</div>
+                                                                    <div className="col-6 text-right">${userSpecificCouponDiscountAmount}</div>
                                                                 </div>
                                                                 <hr />
                                                             </React.Fragment>
