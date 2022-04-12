@@ -97,19 +97,10 @@ export default class IndexPricingPlans extends React.Component {
                         <div className="row ml-0 mr-0 p-2">
                             <div className="col-3">
                             </div>
-                            <div className="col-5 text-center">
-                            </div>
-                            <div className="col-4 text-right" style={{ color: '#1a98f0', paddingTop: '12px' }}>
-                                {userSpecificCoupon ? 'You already have a 20% off coupon active' : null}
-                            </div>
-                        </div>
-                        <div className="row ml-0 mr-0 p-2">
-                            <div className="col-3">
-                            </div>
                             <div className="col-6 text-center">
-                                <h2 className="gaa-title">Choose Your Plan</h2>
+                                <h2 className="gaa-title">{userSpecificCoupon ? 'Limited Time Offer' : 'Choose Your Plan'}</h2>
                             </div>
-                            <div className="col-2 text-right" style={{ color: '#1a98f0', paddingTop: '12px' }}>
+                            {/*    <div className="col-2 text-right" style={{ color: '#1a98f0', paddingTop: '12px' }}>
                                 Yearly SAVE 30%
                             </div>
                             <div className="col-1" style={{ paddingTop: '10px' }}>
@@ -121,7 +112,7 @@ export default class IndexPricingPlans extends React.Component {
                                     />
                                     <span className="slider round" />
                                 </label>
-                            </div>
+                            </div>*/}
                         </div>
                         <div className="row ml-0 mr-0 d-flex flex-row justify-content-center pt-3">
 
@@ -149,10 +140,11 @@ export default class IndexPricingPlans extends React.Component {
                                                     pricePlan.short_description.length == 0 ? <p className="mb-0 card-text w-100 text-center">&nbsp;<br />&nbsp;</p> :
                                                         <p className="mb-0 card-text w-100 text-center">{pricePlan.short_description}<br />&nbsp;</p>
                                             }
-                                            {/* Constants for 1 and Annual values should have been used. But 
-                                                it might have caused some compilation errors that's why I avoided
-                                                them. If you can do it without any errors feel free to do it. */}
+                                            {/* Constants for Monthly and Annual values should have been used. But 
+                                                it might have caused some compilation errors that's why I have
+                                                avoided them. If you can do it without any error feel free to do it. */}
                                             <h6 className="card-price text-center w-100">
+                                                {userSpecificCoupon ? <span className="real-price" style={{ textDecoration: 'line-through' }}>${pricePlan.price}</span> : null}
                                                 ${calculatePricePlanPrice(pricePlan.price, this.state.planDuration, pricePlan.yearly_discount_percent, userSpecificCoupon)}
                                                 <span className="period">/per month</span>
                                             </h6>
@@ -302,8 +294,8 @@ export default class IndexPricingPlans extends React.Component {
                                 : null
                         } */}
                     </div>
-                </section>
-            </div>
+                </section >
+            </div >
         );
     }
 

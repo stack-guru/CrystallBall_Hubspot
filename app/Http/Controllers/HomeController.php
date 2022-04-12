@@ -45,7 +45,7 @@ class HomeController extends Controller
         // $user->annotations_count = $user->getTotalAnnotationsCount(true);
         $user->google_analytics_properties_in_use_count = $user->googleAnalyticsPropertiesInUse()->count();
         $user->do_require_password_change = ($user->password == User::EMPTY_PASSWORD && !is_null($user->app_sumo_uuid));
-        $user->user_specific_coupons = UserSpecificCoupon::ofCurrentUser()->get();
+        $user->user_specific_coupons = UserSpecificCoupon::ofCurrentUser()->alive()->get();
 
         return ['user' => $user];
     }

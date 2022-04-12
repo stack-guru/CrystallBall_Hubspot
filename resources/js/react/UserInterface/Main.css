@@ -253,6 +253,11 @@ setting-menu-item.dropdown {
     color: #456287;
 }
 
+.pricing .card-price .real-price {
+    font-size: 1.6rem;
+    font-weight: normal;
+}
+
 .pricing .card-price .period {
     font-size: 1rem;
     font-weight: normal;

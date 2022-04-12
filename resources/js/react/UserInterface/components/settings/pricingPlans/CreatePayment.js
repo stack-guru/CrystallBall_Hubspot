@@ -259,7 +259,7 @@ export default class CreatePayment extends Component {
             if (this.props.user.user_specific_coupons.length) {
                 userSpecificCoupon = this.props.user.user_specific_coupons[0];
                 if (userSpecificCoupon.discount_percent != 0) {
-                    userSpecificCouponDiscountAmount = parseFloat(((userSpecificCoupon.discount_percent / 100) * totalPrice)).toFixed(2);
+                    userSpecificCouponDiscountAmount = parseFloat(((userSpecificCoupon.discount_percent / 100) * (this.state.pricePlan.price * this.state.planDuration))).toFixed(2);
                     totalPrice -= userSpecificCouponDiscountAmount;
                 }
             }
@@ -267,7 +267,7 @@ export default class CreatePayment extends Component {
 
 
         if (this.state.coupon) {
-            discountPrice = parseFloat(((this.state.coupon.discount_percent / 100) * this.state.pricePlan.price)).toFixed(2);
+            discountPrice = parseFloat(((this.state.coupon.discount_percent / 100) * (this.state.pricePlan.price * this.state.planDuration))).toFixed(2);
             totalPrice -= discountPrice;
         }
         if (this.state.taxPercent) {
