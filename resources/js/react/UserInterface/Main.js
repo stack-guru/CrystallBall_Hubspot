@@ -39,6 +39,7 @@ import SiteRenamedTopNotice from './utils/SiteRenamedTopNotice';
 import { IsDomain } from './helpers/CommonFunctions';
 import PromotionPopup from './utils/PromotionPopup';
 import UserSpecificCoupon from './utils/UserSpecificCoupon';
+import TimerPromotionPopup from './utils/TimerPromotionPopup';
 
 class Main extends React.Component {
 
@@ -50,7 +51,8 @@ class Main extends React.Component {
             showStartupConfiguration: false,
             showInterfaceTour: false,
             showDataSourceTour: false,
-            showPromotionPopup: false
+            showPromotionPopup: false,
+            showTimerPromotionPopup: false
         }
         this.loadUser = this.loadUser.bind(this)
 
@@ -58,12 +60,14 @@ class Main extends React.Component {
         this.toggleInterfaceTour = this.toggleInterfaceTour.bind(this);
         this.toggleDataSourceTour = this.toggleDataSourceTour.bind(this);
         this.togglePromotionPopup = this.togglePromotionPopup.bind(this);
+        this.toggleTimerPromotionPopup = this.toggleTimerPromotionPopup.bind(this);
     }
 
     // toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
     toggleInterfaceTour(keepInterfaceTour = false) { this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, keepInterfaceTour, false); }
     toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, false, false); }
     togglePromotionPopup() { this.setState({ showPromotionPopup: !this.state.showPromotionPopup }); }
+    toggleTimerPromotionPopup() { this.setState({ showTimerPromotionPopup: !this.state.showTimerPromotionPopup }); }
 
     render() {
         if (this.state.user == undefined) return null;
@@ -85,7 +89,8 @@ class Main extends React.Component {
 
                     <Sidebar user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
                 </div>
-                <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" />
+                {/* <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" /> */}
+                <TimerPromotionPopup show={this.state.showTimerPromotionPopup} togglePopupCallback={this.toggleTimerPromotionPopup} promotionLink="/settings/price-plans" promotionImage="/images/50-off-24-hours.jpg" />
                 <div className="page-container">
                     <SiteRenamedTopNotice show={IsDomain('app.gaannotations.com') || IsDomain('localhost')} />
                     {this.state.user.user_specific_coupons.map(uSC => <UserSpecificCoupon key={uSC.id} coupon={uSC} />)}
@@ -224,6 +229,10 @@ class Main extends React.Component {
 
                 if (response.data.user.price_plan.name == 'Free') {
                     setTimeout(() => { this.setState({ showPromotionPopup: true }); }, 5000);
+                }
+
+                if (response.data.user.user_specific_coupons.length) {
+                    setTimeout(() => { this.setState({ showTimerPromotionPopup: true }); }, 60000);
                 }
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
