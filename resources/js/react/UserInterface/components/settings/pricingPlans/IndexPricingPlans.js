@@ -12,7 +12,7 @@ export default class IndexPricingPlans extends React.Component {
         this.state = {
             pricePlans: [],
             redirectTo: null,
-            planDuration: '12', // [1, 12]
+            planDuration: 12, // [1, 12]
         };
 
         this.freeSubscribe = this.freeSubscribe.bind(this);

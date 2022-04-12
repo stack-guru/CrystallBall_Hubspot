@@ -28,7 +28,7 @@ export default class CreatePayment extends Component {
             taxPercent: 0,
             cardType: 'Card',
 
-            planDuration: '1'
+            planDuration: 12
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)

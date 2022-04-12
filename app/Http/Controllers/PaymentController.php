@@ -9,6 +9,7 @@ use App\Models\PaymentDetail;
 use App\Models\PricePlan;
 use App\Models\WebMonitor;
 use App\Models\PricePlanSubscription;
+use App\Models\UserSpecificCoupon;
 use App\Services\BlueSnapService;
 use App\Services\SendGridService;
 use Illuminate\Support\Facades\Auth;
@@ -108,13 +109,20 @@ class PaymentController extends Controller
 
             // Basic monthly price
             $price = $pricePlan->price;
+            $discountPercentSum = 0.00;
 
             // Applying annual discount if applicable
             if ($request->plan_duration == PricePlan::ANNUALLY) {
                 if ($pricePlan->yearly_discount_percent > 0) {
-                    // price = 12*price - discount*12
-                    $price = ($pricePlan->price * 12) - (round((float)(($pricePlan->price * 12) * ($pricePlan->yearly_discount_percent / 100)), 2));
+                    $discountPercentSum += $pricePlan->yearly_discount_percent;
+                    $price = $pricePlan->price * PricePlan::ANNUALLY;
                 }
+            }
+
+            // User Specific Coupon
+            $userSpecificCoupons = UserSpecificCoupon::ofCurrentUser()->alive()->get();
+            foreach ($userSpecificCoupons as $userSpecificCoupon) {
+                $discountPercentSum += $userSpecificCoupon->discount_percent;
             }
 
             // Coupon Code
@@ -129,9 +137,11 @@ class PaymentController extends Controller
                 }
 
                 $pricePlanSubscription->coupon_id = $coupon->id;
-                $price = $price - (($coupon->discount_percent / 100) * $price);
+                $discountPercentSum += $coupon->discount_percent;
                 $pricePlanSubscription->left_coupon_recurring = $coupon->recurring_discount_count;
             }
+
+            $price = $price - (round((float)(($price) * ($discountPercentSum / 100)), 2));
 
             // General Sales Tax
             if (array_search($request->country, ["IL"]) !== false) {

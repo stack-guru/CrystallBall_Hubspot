@@ -23,8 +23,8 @@ class PricePlan extends Model
     const APPSUMO_TIER_1 = 'AppSumo Tier 1';
     const APPSUMO_TIER_2 = 'AppSumo Tier 2';
 
-    const ANNUALLY = '12';
-    const MONTHLY = '1';
+    const ANNUALLY = 12;
+    const MONTHLY = 1;
 
     protected $fillable = [
         'name', 'annotations_count', 'price', 'has_manual_add',

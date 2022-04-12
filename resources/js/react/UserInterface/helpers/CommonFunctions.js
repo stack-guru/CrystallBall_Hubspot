@@ -91,7 +91,7 @@ export function removeStateFromLocalStorage(componentName) {
 export function calculatePricePlanPrice(price, monthDuration, yearlyDiscountPercent, coupon) {
     let discountSum = 0.00;
     switch (monthDuration) {
-        case "12":
+        case 12:
             if (yearlyDiscountPercent != 0) {
                 discountSum += parseFloat(yearlyDiscountPercent);
             }
