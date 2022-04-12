@@ -133,7 +133,7 @@ class IndexAnnotations extends React.Component {
         let wasLastAnnotationInFuture = true;
         const categories = this.state.annotationCategories;
         return (
-            <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
+            <div className="container-xl bg-white anno-container d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
                     <div className="container-xl p-0">
                         <div className="row ml-0 mr-0 mb-1">

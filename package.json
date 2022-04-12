@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "@pusher/push-notifications-web": "^1.1.0",
+        "animate.css": "^4.1.1",
         "chart.js": "^3.6.2",
         "crypto-js": "^4.1.1",
         "d3-scale": "^4.0.2",
