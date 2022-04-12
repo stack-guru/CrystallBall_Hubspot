@@ -35,8 +35,9 @@ class CreateUserSpecificCoupon
             'heading' => "Special Offer only for the next [{expires_at}], get 50% on the monthly plans",
             'description' => 'some description',
             'on_click_url' => '/settings/price-plans',
-            'discount_percent' => '50',
-            'recurring_discount_count' => '100',
+            'discount_percent' => '20',
+            'monthly_recurring_discount_count' => '12',
+            'yearly_recurring_discount_count' => '1',
         ];
 
         $userSpecificCoupon = new UserSpecificCoupon([
@@ -50,7 +51,8 @@ class CreateUserSpecificCoupon
             "usage_count" => 0,
             'discount_percent' => $coupon['discount_percent'],
             'expires_at' => Carbon::now()->addHour(24),
-            'recurring_discount_count' => $coupon['recurring_discount_count'],
+            'monthly_recurring_discount_count' => $coupon['monthly_recurring_discount_count'],
+            'yearly_recurring_discount_count' => $coupon['yearly_recurring_discount_count'],
         ]);
         $userSpecificCoupon->user_id =  $event->user->id;
         $userSpecificCoupon->save();

@@ -97,6 +97,15 @@ export default class IndexPricingPlans extends React.Component {
                         <div className="row ml-0 mr-0 p-2">
                             <div className="col-3">
                             </div>
+                            <div className="col-5 text-center">
+                            </div>
+                            <div className="col-4 text-right" style={{ color: '#1a98f0', paddingTop: '12px' }}>
+                                {userSpecificCoupon ? 'You already have a 20% off coupon active' : null}
+                            </div>
+                        </div>
+                        <div className="row ml-0 mr-0 p-2">
+                            <div className="col-3">
+                            </div>
                             <div className="col-6 text-center">
                                 <h2 className="gaa-title">Choose Your Plan</h2>
                             </div>

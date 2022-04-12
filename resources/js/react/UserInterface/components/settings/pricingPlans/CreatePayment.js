@@ -259,7 +259,7 @@ export default class CreatePayment extends Component {
             if (this.props.user.user_specific_coupons.length) {
                 userSpecificCoupon = this.props.user.user_specific_coupons[0];
                 if (userSpecificCoupon.discount_percent != 0) {
-                    userSpecificCouponDiscountAmount = parseFloat(((userSpecificCoupon.discount_percent / 100) * totalPrice)).toFixed(0);
+                    userSpecificCouponDiscountAmount = parseFloat(((userSpecificCoupon.discount_percent / 100) * totalPrice)).toFixed(2);
                     totalPrice -= userSpecificCouponDiscountAmount;
                 }
             }
@@ -408,7 +408,7 @@ export default class CreatePayment extends Component {
                                                         userSpecificCouponDiscountAmount ?
                                                             <React.Fragment>
                                                                 <div className="row">
-                                                                    <div className="col-6">Auto Coupon Discount ({userSpecificCoupon.discount_percent}%)</div>
+                                                                    <div className="col-6">Limited Time Offer</div>
                                                                     <div className="col-6 text-right">${userSpecificCouponDiscountAmount}</div>
                                                                 </div>
                                                                 <hr />
