@@ -93,7 +93,7 @@ class Main extends React.Component {
                 <div className="page-container">
                     <SiteRenamedTopNotice show={IsDomain('app.gaannotations.com') || IsDomain('localhost')} />
                     {this.state.user.user_specific_coupons.map(uSC => <React.Fragment key={uSC.id}>
-                        <TimerPromotionPopup show={this.state.showTimerPromotionPopup} togglePopupCallback={this.toggleTimerPromotionPopup} promotionLink="/settings/price-plans" promotionImage="/images/50-off-24-hours.jpg" coupon={uSC} />
+                        <TimerPromotionPopup show={true || this.state.showTimerPromotionPopup} togglePopupCallback={this.toggleTimerPromotionPopup} promotionLink="/settings/price-plans" promotionImage="/images/50-off-24-hours.jpg" coupon={uSC} />
                         <UserSpecificCoupon coupon={uSC} />
                     </React.Fragment>)}
                     <div className="header navbar">

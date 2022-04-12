@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 // import 'animate.css';
+import 'react-circular-progressbar/dist/styles.css';
 
 import './Sidebarjs.js';
 

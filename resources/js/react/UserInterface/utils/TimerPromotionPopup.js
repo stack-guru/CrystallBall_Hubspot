@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import moment from 'moment'
+import { CircularProgressbar } from 'react-circular-progressbar';
 
 export default class TimerPromotionPopup extends Component {
     constructor(props) {
@@ -38,14 +39,30 @@ export default class TimerPromotionPopup extends Component {
             <div className="promo-pop-image-holder" >
                 <div >
                     <a href={this.props.promotionLink} target="_blank">
-                        <h1 style={{
+
+                        <div style={{
                             position: 'absolute',
-                            top: '390px',
+                            top: '380px',
                             left: '660px',
                             zIndex: 9,
                             color: 'white',
-                            letterSpacing: '19px'
-                        }}>{`${hoursDiff}:${minutesDiff}:${secondsDiff}`}</h1>
+                            letterSpacing: '19px',
+                            width: '300px',
+                            height: '200px'
+                        }}>
+                            <div style={{ "display": "inline-flex" }}>
+                                <div style={{ "width": "30%", "display": "inline-block" }}>
+                                    <CircularProgressbar value={hoursDiff} maxValue={24} text="Hours" />
+                                </div>
+                                <div style={{ "width": "30%", "display": "inline-block" }}>
+                                    <CircularProgressbar value={minutesDiff} maxValue={60} text="Minutes" />
+                                </div>
+                                <div style={{ "width": "30%", "display": "inline-block" }}>
+                                    <CircularProgressbar value={secondsDiff} maxValue={60} text="Seconds" />
+                                </div>
+                                {/* {`${hoursDiff}:${minutesDiff}:${secondsDiff}`} */}
+                            </div>
+                        </div>
                         <img className="promo-pop-image animate__animated animate__tada" src={this.props.promotionImage} />
                     </a>
                 </div>
