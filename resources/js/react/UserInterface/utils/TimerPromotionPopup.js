@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import moment from 'moment'
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 export default class TimerPromotionPopup extends Component {
     constructor(props) {
@@ -35,6 +35,29 @@ export default class TimerPromotionPopup extends Component {
         const minutesDiff = moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').diff(moment(), 'minutes');
         const secondsDiff = moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').subtract(minutesDiff, 'minutes').diff(moment(), 'seconds');
 
+        const circleStyles = buildStyles({
+            // Rotation of path and trail, in number of turns (0-1)
+            // rotation: 0.25,
+
+            // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+            strokeLinecap: 'round',
+
+            // Text size
+            textSize: '12px',
+
+            // How long animation takes to go from one percentage to another, in seconds
+            pathTransitionDuration: 0.5,
+
+            // Can specify path transition in more detail, or remove it entirely
+            // pathTransition: 'none',
+
+            // Colors
+            pathColor: '#001d6d',
+            textColor: '#ffff',
+            trailColor: '#ffc126',
+            backgroundColor: '#3e98c7',
+        });
+
         return <div className="promo-pop-container" onClick={() => { (this.props.togglePopupCallback)(); }}>
             <div className="promo-pop-image-holder" >
                 <div >
@@ -42,23 +65,22 @@ export default class TimerPromotionPopup extends Component {
 
                         <div style={{
                             position: 'absolute',
-                            top: '380px',
-                            left: '660px',
+                            top: '370px',
+                            left: '620px',
                             zIndex: 9,
                             color: 'white',
-                            letterSpacing: '19px',
-                            width: '300px',
+                            width: '350px',
                             height: '200px'
                         }}>
                             <div style={{ "display": "inline-flex" }}>
-                                <div style={{ "width": "30%", "display": "inline-block" }}>
-                                    <CircularProgressbar value={hoursDiff} maxValue={24} text="Hours" />
+                                <div style={{ "width": "33%", "display": "inline-block", paddingLeft: '10px', paddingRight: '10px' }}>
+                                    <CircularProgressbar value={hoursDiff} maxValue={24} text={`${hoursDiff} Hours`} styles={circleStyles} />
                                 </div>
-                                <div style={{ "width": "30%", "display": "inline-block" }}>
-                                    <CircularProgressbar value={minutesDiff} maxValue={60} text="Minutes" />
+                                <div style={{ "width": "33%", "display": "inline-block", paddingLeft: '10px', paddingRight: '10px' }}>
+                                    <CircularProgressbar value={minutesDiff} maxValue={60} text={`${minutesDiff} Minutes`} styles={circleStyles} />
                                 </div>
-                                <div style={{ "width": "30%", "display": "inline-block" }}>
-                                    <CircularProgressbar value={secondsDiff} maxValue={60} text="Seconds" />
+                                <div style={{ "width": "33%", "display": "inline-block", paddingLeft: '10px', paddingRight: '10px' }}>
+                                    <CircularProgressbar value={secondsDiff} maxValue={60} text={`${secondsDiff} Seconds`} styles={circleStyles} />
                                 </div>
                                 {/* {`${hoursDiff}:${minutesDiff}:${secondsDiff}`} */}
                             </div>
