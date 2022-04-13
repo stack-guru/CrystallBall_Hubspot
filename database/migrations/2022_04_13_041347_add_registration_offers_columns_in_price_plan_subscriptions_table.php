@@ -15,7 +15,7 @@ class AddRegistrationOffersColumnsInPricePlanSubscriptionsTable extends Migratio
     {
         Schema::table('price_plan_subscriptions', function (Blueprint $table) {
 
-            $table->unsignedBigInteger('user_registration_offer_id')->required();
+            $table->unsignedBigInteger('user_registration_offer_id')->nullable();
             $table->foreign('user_registration_offer_id')->references('id')->on('user_registration_offers')->onDelete('RESTRICT');
 
             $table->integer('left_registration_offer_recurring')->unsigned()->nullable()->default(0);
