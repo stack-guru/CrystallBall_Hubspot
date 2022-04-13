@@ -9,7 +9,7 @@ use App\Models\PaymentDetail;
 use App\Models\PricePlan;
 use App\Models\WebMonitor;
 use App\Models\PricePlanSubscription;
-use App\Models\UserSpecificCoupon;
+use App\Models\UserRegistrationOffer;
 use App\Services\BlueSnapService;
 use App\Services\SendGridService;
 use Illuminate\Support\Facades\Auth;
@@ -120,9 +120,9 @@ class PaymentController extends Controller
             }
 
             // User Specific Coupon
-            $userSpecificCoupons = UserSpecificCoupon::ofCurrentUser()->alive()->get();
-            foreach ($userSpecificCoupons as $userSpecificCoupon) {
-                $discountPercentSum += $userSpecificCoupon->discount_percent;
+            $userRegistrationOffers = UserRegistrationOffer::ofCurrentUser()->alive()->get();
+            foreach ($userRegistrationOffers as $userRegistrationOffer) {
+                $discountPercentSum += $userRegistrationOffer->discount_percent;
             }
 
             // Coupon Code

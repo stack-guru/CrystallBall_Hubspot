@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserSpecificCouponsTable extends Migration
+class CreateUserRegistrationOffersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUserSpecificCouponsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_specific_coupons', function (Blueprint $table) {
+        Schema::create('user_registration_offers', function (Blueprint $table) {
             $table->id();
 
             $table->string('name', 100)->required();
@@ -27,7 +27,7 @@ class CreateUserSpecificCouponsTable extends Migration
             $table->double('discount_percent', 5, 2)->required()->default(0.00);
             $table->date('expires_at')->required();
             $table->integer('recurring_discount_count')->unsigned()->nullable()->default(0);
-            
+
             $table->bigInteger('user_id')->required()->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
 
@@ -42,6 +42,6 @@ class CreateUserSpecificCouponsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_specific_coupons');
+        Schema::dropIfExists('user_registration_offers');
     }
 }

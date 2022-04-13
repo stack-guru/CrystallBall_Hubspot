@@ -26,4 +26,10 @@ class RegistrationOffer extends Model
         'expires_in_value',
 
     ];
+
+
+    public function scopeEnabled($query)
+    {
+        return $query->where('is_enabled', true);
+    }
 }

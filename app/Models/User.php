@@ -186,9 +186,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\UserGaAccount');
     }
 
-    public function userSpecificCoupons()
+    public function userRegistrationOffers()
     {
-        return $this->hasMany('App\Models\UserSpecificCoupon');
+        return $this->hasMany('App\Models\UserRegistrationOffer');
     }
 
     public function pricePlanSubscriptions()
