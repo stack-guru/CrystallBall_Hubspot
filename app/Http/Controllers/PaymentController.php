@@ -122,7 +122,13 @@ class PaymentController extends Controller
             // User Specific Coupon
             $userRegistrationOffers = UserRegistrationOffer::ofCurrentUser()->alive()->get();
             foreach ($userRegistrationOffers as $userRegistrationOffer) {
+                $pricePlanSubscription->user_registration_offer_id = $userRegistrationOffer->id;
                 $discountPercentSum += $userRegistrationOffer->discount_percent;
+                if ($request->plan_duration == PricePlan::ANNUALLY) {
+                    $pricePlanSubscription->left_registration_offer_recurring = $userRegistrationOffer->yearly_recurring_discount_count;
+                } else {
+                    $pricePlanSubscription->left_registration_offer_recurring = $userRegistrationOffer->monthly_recurring_discount_count;
+                }
             }
 
             // Coupon Code

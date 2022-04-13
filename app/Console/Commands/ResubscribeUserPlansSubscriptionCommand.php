@@ -146,6 +146,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             ->with('pricePlan')
             ->with('lastPaymentDetail')
             ->with('lastPricePlanSubscription')
+            ->with('userRegistrationOffer')
             ->get();
         $this->comment(count($users) . " user(s) are currently on paid plans and will be charged.");
 
@@ -173,13 +174,21 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     }
                 }
 
+                $discountPercentSum = 0.00;
                 // Coupon Code
                 $isCouponApplied = false;
                 if ($lastPricePlanSubscription->coupon && $lastPricePlanSubscription->left_coupon_recurring > 0) {
                     $isCouponApplied = true;
                     $coupon = $lastPricePlanSubscription->coupon;
-                    $pricePlanPrice = $pricePlanPrice - (($coupon->discount_percent / 100) * $pricePlanPrice);
+                    $discountPercentSum += $coupon->discount_percent;
                 }
+
+                //Registration Offer
+                if ($lastPricePlanSubscription->userRegistrationOffer && $lastPricePlanSubscription->left_registration_offer_recurring > 0) {
+                    $discountPercentSum += $lastPricePlanSubscription->userRegistrationOffer->discount_percent;
+                }
+
+                $pricePlanPrice = $pricePlanPrice - (($discountPercentSum / 100) * $pricePlanPrice);
 
                 // General Sales Tax
                 if (array_search($lastPaymentDetail->country, ["IL"]) !== false) {
@@ -204,6 +213,12 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                         $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice, new \DateTime('+' . $lastPricePlanSubscription->plan_duration . ' month'), $coupon->id, $coupon->recurring_discount_count - 1);
                     } else {
                         $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice, new \DateTime('+' . $lastPricePlanSubscription->plan_duration . ' month'));
+                    }
+                    if ($lastPricePlanSubscription->userRegistrationOffer) {
+                        $pricePlanSubscription = PricePlanSubscription::find($pricePlanSubscriptionId);
+                        $pricePlanSubscription->left_registration_offer_recurring = $lastPricePlanSubscription->left_registration_offer_recurring - 1;
+                        $pricePlanSubscription->user_registration_offer_id = $lastPricePlanSubscription->userRegistrationOffer->id;
+                        $pricePlanSubscription->save();
                     }
                     $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $lastPaymentDetail->id, $lastPaymentDetail->card_number, null, $pricePlanPrice, true);
                     $this->subscribeUserToPlan($user, $user->price_plan_id,  new \DateTime('+' . $lastPricePlanSubscription->plan_duration . ' month'));

@@ -18,7 +18,8 @@ class PricePlanSubscription extends Model
         // app_sumo_invoice_item_uuid
     ];
 
-    public function paymentDetail(){
+    public function paymentDetail()
+    {
         return $this->belongsTo(PaymentDetail::class);
     }
 
@@ -36,10 +37,14 @@ class PricePlanSubscription extends Model
     {
         return $this->belongsTo('App\Models\Coupon');
     }
-    
+
+    public function userRegistrationOffer()
+    {
+        return $this->belongsTo('App\Models\UserRegistrationOffer');
+    }
+
     public function scopeOfCurrentUser($query)
     {
         return $query->where('user_id', Auth::id());
     }
-
 }

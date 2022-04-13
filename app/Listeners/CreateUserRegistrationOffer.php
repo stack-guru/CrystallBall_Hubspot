@@ -47,6 +47,7 @@ class CreateUserRegistrationOffer
                 'monthly_recurring_discount_count' => $registrationOffer->monthly_recurring_discount_count,
                 'yearly_recurring_discount_count' => $registrationOffer->yearly_recurring_discount_count,
             ]);
+            $userRegistrationOffer->registration_offer_id =  $registrationOffer->id;
             $userRegistrationOffer->user_id =  $event->user->id;
             $userRegistrationOffer->save();
         }
