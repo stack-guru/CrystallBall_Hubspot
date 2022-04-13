@@ -191,6 +191,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\UserSpecificCoupon');
     }
 
+    public function pricePlanSubscriptions()
+    {
+        return $this->hasMany('App\Models\PricePlanSubscription');
+    }
+
     public function scopeOfCurrentUser($query)
     {
         return $query->where('user_id', Auth::id());
@@ -224,6 +229,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function userChecklistItems()
     {
         return $this->hasMany(UserChecklistItem::class);
+    }
+
+    public function notificationSettings()
+    {
+        return $this->hasMany(NotificationSetting::class);
     }
 
     public function notificationSettingFor($settingName)

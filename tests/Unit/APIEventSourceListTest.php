@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Passport\Passport;
 
-class NotificationList extends TestCase
+class APIEventSourceListTest extends TestCase
 {
     // use RefreshDatabase;
     // public $seed = true;
@@ -18,7 +18,7 @@ class NotificationList extends TestCase
      *
      * @return void
      */
-    public function testNotificationsList()
+    public function testAPIEventSourceList()
     {
         do {
             $user = User::where('price_plan_id', PricePlan::where('has_api', true)->first()->id)->inRandomOrder()->firstOrFail();
@@ -26,13 +26,17 @@ class NotificationList extends TestCase
 
         Passport::actingAs($user);
 
-        $response = $this->getJson('/ui/settings/google-account');
+        $response = $this->getJson('/api/v1/event-sources');
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'notification_settings' => [
+                'eventSources' => [
                     '*' => [
-                        
+                        "_id",
+                        "name",
+                        "type",
+                        "scope",
+                        "categories"
                     ]
                 ]
             ]);

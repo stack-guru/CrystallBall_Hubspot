@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Passport\Passport;
 
-class PricePlanSubscriptionsList extends TestCase
+class GoogleAccountListTest extends TestCase
 {
     // use RefreshDatabase;
     // public $seed = true;
@@ -18,11 +18,11 @@ class PricePlanSubscriptionsList extends TestCase
      *
      * @return void
      */
-    public function testPricePlanSubscriptionsList()
+    public function testAPIEventSourceList()
     {
         do {
-            $user = User::inRandomOrder()->firstOrFail();
-        } while ($user->pricePlanSubscriptions()->count() < 1);
+            $user = User::where('price_plan_id', PricePlan::where('has_api', true)->first()->id)->inRandomOrder()->firstOrFail();
+        } while ($user->annotations()->count() < 1);
 
         Passport::actingAs($user);
 
