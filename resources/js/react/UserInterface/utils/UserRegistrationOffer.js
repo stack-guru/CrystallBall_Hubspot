@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import TopNoticeBar from './TopNoticeBar';
 
-export default class UserSpecificCoupon extends Component {
+export default class UserRegistrationOffer extends Component {
     constructor(props) {
         super(props);
 

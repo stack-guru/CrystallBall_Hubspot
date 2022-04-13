@@ -240,7 +240,7 @@ export default class CreatePayment extends Component {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
         const validation = this.state.validation;
-        let totalPrice = 0.00, discountPrice = 0.00, userSpecificCouponDiscountAmount = 0.00, annualDiscountAmount = 0.00, taxAmount = 0.00, actualPrice = 0.00;
+        let totalPrice = 0.00, discountPrice = 0.00, userRegistrationOfferDiscountAmount = 0.00, annualDiscountAmount = 0.00, taxAmount = 0.00, actualPrice = 0.00;
 
         if (this.state.pricePlan) {
             actualPrice = this.state.pricePlan.price;
@@ -254,17 +254,17 @@ export default class CreatePayment extends Component {
             totalPrice -= annualDiscountAmount;
         }
 
-        let userSpecificCoupon = undefined;
-        if (this.props.user.user_specific_coupons) {
-            if (this.props.user.user_specific_coupons.length) {
-                userSpecificCoupon = this.props.user.user_specific_coupons[0];
-                if (userSpecificCoupon.discount_percent != 0) {
-                    userSpecificCouponDiscountAmount = parseFloat(((userSpecificCoupon.discount_percent / 100) * (this.state.pricePlan.price * this.state.planDuration))).toFixed(2);
-                    totalPrice -= userSpecificCouponDiscountAmount;
-                }
+        if (this.props.user.user_registration_offers) {
+            if (this.props.user.user_registration_offers.length) {
+                this.props.user.user_registration_offers.forEach(userRegistrationOffer => {
+                    if (userRegistrationOffer.discount_percent != 0) {
+                        userRegistrationOfferDiscountAmount += parseFloat(((userRegistrationOffer.discount_percent / 100) * (this.state.pricePlan.price * this.state.planDuration)));
+                    }
+                });
+                totalPrice -= parseFloat(userRegistrationOfferDiscountAmount).toFixed(2);
+                userRegistrationOfferDiscountAmount = parseFloat(userRegistrationOfferDiscountAmount).toFixed(2)
             }
         }
-
 
         if (this.state.coupon) {
             discountPrice = parseFloat(((this.state.coupon.discount_percent / 100) * (this.state.pricePlan.price * this.state.planDuration))).toFixed(2);
@@ -405,11 +405,11 @@ export default class CreatePayment extends Component {
                                                             : null
                                                     }
                                                     {
-                                                        userSpecificCouponDiscountAmount ?
+                                                        userRegistrationOfferDiscountAmount ?
                                                             <React.Fragment>
                                                                 <div className="row">
                                                                     <div className="col-6">Limited Time Offer</div>
-                                                                    <div className="col-6 text-right">${userSpecificCouponDiscountAmount}</div>
+                                                                    <div className="col-6 text-right">${userRegistrationOfferDiscountAmount}</div>
                                                                 </div>
                                                                 <hr />
                                                             </React.Fragment>

@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Passport\Passport;
 
-class NotificationListTest extends TestCase
+class NotificationsListTest extends TestCase
 {
     // use RefreshDatabase;
     // public $seed = true;

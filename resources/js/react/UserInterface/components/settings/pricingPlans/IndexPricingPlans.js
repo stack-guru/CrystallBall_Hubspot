@@ -77,18 +77,18 @@ export default class IndexPricingPlans extends React.Component {
     }
 
     togglePricingMode() {
-        if (this.state.planDuration == '1') {
-            this.setState({ planDuration: '12' });
-        } else if (this.state.planDuration == '12') {
-            this.setState({ planDuration: '1' });
+        if (this.state.planDuration == 1) {
+            this.setState({ planDuration: 12 });
+        } else if (this.state.planDuration == 12) {
+            this.setState({ planDuration: 1 });
         }
     }
 
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
-        let userSpecificCoupon = undefined;
-        if (this.props.user.user_specific_coupons) if (this.props.user.user_specific_coupons.length) userSpecificCoupon = this.props.user.user_specific_coupons[0];
+        let userRegistrationOffer = undefined;
+        if (this.props.user.user_registration_offers) if (this.props.user.user_registration_offers.length) userRegistrationOffer = this.props.user.user_registration_offers[0];
 
         return (
             <div className=" bg-white component-wrapper">
@@ -98,9 +98,9 @@ export default class IndexPricingPlans extends React.Component {
                             <div className="col-3">
                             </div>
                             <div className="col-6 text-center">
-                                <h2 className="gaa-title">{userSpecificCoupon ? 'Limited Time Offer' : 'Choose Your Plan'}</h2>
+                                <h2 className="gaa-title">{userRegistrationOffer ? 'Limited Time Offer' : 'Choose Your Plan'}</h2>
                             </div>
-                            {/*    <div className="col-2 text-right" style={{ color: '#1a98f0', paddingTop: '12px' }}>
+                            <div className="col-2 text-right" style={{ color: '#1a98f0', paddingTop: '12px' }}>
                                 Yearly SAVE 30%
                             </div>
                             <div className="col-1" style={{ paddingTop: '10px' }}>
@@ -108,11 +108,11 @@ export default class IndexPricingPlans extends React.Component {
                                     <input
                                         type="checkbox"
                                         onChange={this.togglePricingMode}
-                                        checked={this.state.planDuration == '12'}
+                                        checked={this.state.planDuration == 12}
                                     />
                                     <span className="slider round" />
                                 </label>
-                            </div>*/}
+                            </div>
                         </div>
                         <div className="row ml-0 mr-0 d-flex flex-row justify-content-center pt-3">
 
@@ -144,11 +144,11 @@ export default class IndexPricingPlans extends React.Component {
                                                 it might have caused some compilation errors that's why I have
                                                 avoided them. If you can do it without any error feel free to do it. */}
                                             <h6 className="card-price text-center w-100">
-                                                {userSpecificCoupon ? <span className="real-price" style={{ textDecoration: 'line-through' }}>${pricePlan.price}</span> : null}
-                                                ${calculatePricePlanPrice(pricePlan.price, this.state.planDuration, pricePlan.yearly_discount_percent, userSpecificCoupon)}
+                                                {userRegistrationOffer ? <span className="real-price" style={{ textDecoration: 'line-through' }}>${pricePlan.price}</span> : null}
+                                                ${calculatePricePlanPrice(pricePlan.price, this.state.planDuration, pricePlan.yearly_discount_percent, userRegistrationOffer)}
                                                 <span className="period">/per month</span>
                                             </h6>
-                                            {this.state.planDuration == '12' ? <sub className="mt-2 w-100 text-center">Billed Annually</sub> : <sub className="mt-2 w-100 text-center">Billed Monthly</sub>}
+                                            {this.state.planDuration == 12 ? <sub className="mt-2 w-100 text-center">Billed Annually</sub> : <sub className="mt-2 w-100 text-center">Billed Monthly</sub>}
                                             {
                                                 pricePlan.google_analytics_property_count == 1 ?
                                                     <p className="mt-3 w-100 ml-2" style={{ color: '#1a98f0' }}><i className="fa fa-check-circle-o" style={{ marginRight: '5px' }}></i> One Property/Website</p>

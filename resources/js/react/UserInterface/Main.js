@@ -38,7 +38,7 @@ import IndexSearchConsole from './components/dashboard/searchConsole/IndexSearch
 import SiteRenamedTopNotice from './utils/SiteRenamedTopNotice';
 import { IsDomain } from './helpers/CommonFunctions';
 import PromotionPopup from './utils/PromotionPopup';
-import UserSpecificCoupon from './utils/UserSpecificCoupon';
+import UserRegistrationOffer from './utils/UserRegistrationOffer';
 import TimerPromotionPopup from './utils/TimerPromotionPopup';
 
 class Main extends React.Component {
@@ -92,9 +92,9 @@ class Main extends React.Component {
                 {/* <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" /> */}
                 <div className="page-container">
                     <SiteRenamedTopNotice show={IsDomain('app.gaannotations.com') || IsDomain('localhost')} />
-                    {this.state.user.user_specific_coupons.map(uSC => <React.Fragment key={uSC.id}>
+                    {this.state.user.user_registration_offers.map(uSC => <React.Fragment key={uSC.id}>
                         <TimerPromotionPopup show={this.state.showTimerPromotionPopup} togglePopupCallback={this.toggleTimerPromotionPopup} promotionLink="/settings/price-plans" promotionImage="/images/50-off-24-hours.jpg" coupon={uSC} />
-                        <UserSpecificCoupon coupon={uSC} />
+                        <UserRegistrationOffer coupon={uSC} />
                     </React.Fragment>)}
                     <div className="header navbar">
                         <Header user={this.state.user} />
@@ -233,7 +233,7 @@ class Main extends React.Component {
                     setTimeout(() => { this.setState({ showPromotionPopup: true }); }, 5000);
                 }
 
-                if (response.data.user.user_specific_coupons.length) {
+                if (response.data.user.user_registration_offers.length) {
                     setTimeout(() => { this.setState({ showTimerPromotionPopup: true }); }, 60000);
                 }
             }, (err) => {
