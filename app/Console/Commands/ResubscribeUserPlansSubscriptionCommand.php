@@ -176,7 +176,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
                 $discountPercentSum = 0.00;
                 // Coupon Code
-                $isCouponApplied = false;
+                $isCouponApplied = $isRegistrationOfferApplied = false;
                 if ($lastPricePlanSubscription->coupon && $lastPricePlanSubscription->left_coupon_recurring > 0) {
                     $isCouponApplied = true;
                     $coupon = $lastPricePlanSubscription->coupon;
@@ -185,6 +185,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
                 //Registration Offer
                 if ($lastPricePlanSubscription->userRegistrationOffer && $lastPricePlanSubscription->left_registration_offer_recurring > 0) {
+                    $isRegistrationOfferApplied = true;
                     $discountPercentSum += $lastPricePlanSubscription->userRegistrationOffer->discount_percent;
                 }
 
@@ -214,9 +215,13 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     } else {
                         $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice, new \DateTime('+' . $lastPricePlanSubscription->plan_duration . ' month'));
                     }
-                    if ($lastPricePlanSubscription->userRegistrationOffer) {
+
+                    // checking if registration offer is applied
+                    if ($isRegistrationOfferApplied) {
                         $pricePlanSubscription = PricePlanSubscription::find($pricePlanSubscriptionId);
                         $pricePlanSubscription->left_registration_offer_recurring = $lastPricePlanSubscription->left_registration_offer_recurring - 1;
+                        // Backend is capable of saving only 1 registration offer
+                        // while the frontend supports multiple registration offers calculations
                         $pricePlanSubscription->user_registration_offer_id = $lastPricePlanSubscription->userRegistrationOffer->id;
                         $pricePlanSubscription->save();
                     }

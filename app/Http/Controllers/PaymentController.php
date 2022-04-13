@@ -119,9 +119,11 @@ class PaymentController extends Controller
                 }
             }
 
-            // User Specific Coupon
+            // Registration Offers
             $userRegistrationOffers = UserRegistrationOffer::ofCurrentUser()->alive()->get();
             foreach ($userRegistrationOffers as $userRegistrationOffer) {
+                // Backend is capable of saving only 1 registration offer with price plan subscription details
+                // while the frontend supports multiple registration offer's calculations
                 $pricePlanSubscription->user_registration_offer_id = $userRegistrationOffer->id;
                 $discountPercentSum += $userRegistrationOffer->discount_percent;
                 if ($request->plan_duration == PricePlan::ANNUALLY) {
