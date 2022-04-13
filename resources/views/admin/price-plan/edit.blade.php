@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label>Number of annotations <sub>(0 means unlimited, -1 means not allowed)</sub></label>
-                            <input type="number" name="annotations_count" id="annotationsCount" class="form-control" value="{{ old('annotation_count',$pricePlan->annotations_count) }}" />
+                            <input type="number" name="annotations_count" id="annotationsCount" class="form-control" value="{{ old('annotations_count',$pricePlan->annotations_count) }}" />
                         </div>
                         <div class="form-group">
                             <label>Ga Account Count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
