@@ -35,28 +35,47 @@ export default class TimerPromotionPopup extends Component {
         const minutesDiff = moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').diff(moment(), 'minutes');
         const secondsDiff = moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').subtract(minutesDiff, 'minutes').diff(moment(), 'seconds');
 
-        const circleStyles = buildStyles({
-            // Rotation of path and trail, in number of turns (0-1)
-            // rotation: 0.25,
-
-            // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-            strokeLinecap: 'round',
-
-            // Text size
-            textSize: '12px',
-
-            // How long animation takes to go from one percentage to another, in seconds
-            pathTransitionDuration: 0.5,
-
-            // Can specify path transition in more detail, or remove it entirely
-            // pathTransition: 'none',
-
-            // Colors
-            pathColor: '#001d6d',
-            textColor: '#ffff',
-            trailColor: '#ffc126',
-            backgroundColor: '#3e98c7',
-        });
+        const circleStyles = {
+            // Customize the root svg element
+            root: {},
+            // Customize the path, i.e. the "completed progress"
+            path: {
+                // Path color
+                stroke: '#001d6d',
+                strokeWidth: 4,
+                // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                strokeLinecap: 'round',
+                // Customize transition animation
+                transition: 'stroke-dashoffset 0.5s ease 0s',
+                // Rotate the path
+                // transform: 'rotate(0.25turn)',
+                transformOrigin: 'center center',
+            },
+            // Customize the circle behind the path, i.e. the "total progress"
+            trail: {
+                // Trail color
+                stroke: '#ffc126',
+                strokeWidth: 4,
+                // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                strokeLinecap: 'round',
+                // Rotate the trail
+                // transform: 'rotate(0.25turn)',
+                transformOrigin: 'center center',
+            },
+            // Customize the text
+            text: {
+                wordWrap: 'break-word',
+                fontWeight: 'bold',
+                // Text color
+                fill: '#fff',
+                // Text size
+                fontSize: '14px',
+            },
+            // Customize background - only used when the `background` prop is true
+            background: {
+                fill: '#3e98c7',
+            },
+        };
 
         return <div className="promo-pop-container" onClick={() => { (this.props.togglePopupCallback)(); }}>
             <div className="promo-pop-image-holder" >
