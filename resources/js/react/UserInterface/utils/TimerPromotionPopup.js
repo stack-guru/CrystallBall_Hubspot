@@ -32,8 +32,8 @@ export default class TimerPromotionPopup extends Component {
         if (!this.props.show) return null;
 
         const hoursDiff = moment(this.state.offerExpiringTime).diff(moment(), 'hours');
-        const minutesDiff = moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').diff(moment(), 'minutes');
-        const secondsDiff = moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').subtract(minutesDiff, 'minutes').diff(moment(), 'seconds');
+        const minutesDiff = String(moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').diff(moment(), 'minutes')).padStart(2, '0');
+        const secondsDiff = String(moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').subtract(minutesDiff, 'minutes').diff(moment(), 'seconds')).padStart(2, '0');
 
         const circleStyles = {
             // Customize the root svg element
@@ -80,7 +80,7 @@ export default class TimerPromotionPopup extends Component {
         return <div className="promo-pop-container" onClick={() => { (this.props.togglePopupCallback)(); }}>
             <div className="promo-pop-image-holder" >
                 <div >
-                    <a href={this.props.promotionLink} target="_blank">
+                    <a href={this.props.promotionLink}>
 
                         <div style={{
                             position: 'absolute',
@@ -91,7 +91,7 @@ export default class TimerPromotionPopup extends Component {
                             width: '350px',
                             height: '200px'
                         }}>
-                            <div style={{ "display": "inline-flex" }}>
+                            <div style={{ "display": "inline-flex" }} className="animate__animated animate__bounceIn animate__delay-2s">
                                 <div style={{ "width": "33%", "display": "inline-block", paddingLeft: '10px', paddingRight: '10px' }}>
                                     <CircularProgressbar value={hoursDiff} maxValue={24} text={`${hoursDiff} Hours`} styles={circleStyles} />
                                 </div>

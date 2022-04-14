@@ -64,7 +64,14 @@ class Main extends React.Component {
     }
 
     // toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
-    toggleInterfaceTour(keepInterfaceTour = false) { this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, keepInterfaceTour, false); }
+    toggleInterfaceTour(keepInterfaceTour = false) {
+        // If the user has alive registration offers and interface tour is showing
+        if (this.state.user.user_registration_offers.length && this.state.showInterfaceTour) {
+            setTimeout(() => { this.setState({ showTimerPromotionPopup: true }); }, 120000);
+        }
+        this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour });
+        this.loadUser(false, keepInterfaceTour, false);
+    }
     toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, false, false); }
     togglePromotionPopup() { this.setState({ showPromotionPopup: !this.state.showPromotionPopup }); }
     toggleTimerPromotionPopup() { this.setState({ showTimerPromotionPopup: !this.state.showTimerPromotionPopup }); }
@@ -231,10 +238,6 @@ class Main extends React.Component {
 
                 if (response.data.user.price_plan.name == 'Free') {
                     setTimeout(() => { this.setState({ showPromotionPopup: true }); }, 5000);
-                }
-
-                if (response.data.user.user_registration_offers.length) {
-                    setTimeout(() => { this.setState({ showTimerPromotionPopup: true }); }, 60000);
                 }
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
