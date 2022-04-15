@@ -31,7 +31,7 @@ export default class UserRegistrationOffer extends Component {
 
         if (!this.props.coupon) return null;
 
-        const hoursDiff = moment(this.state.offerExpiringTime).diff(moment(), 'hours');
+        const hoursDiff = (moment(this.state.offerExpiringTime).diff(moment(), 'days') * 24) + moment(this.state.offerExpiringTime).diff(moment(), 'hours');
         const minutesDiff = moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').diff(moment(), 'minutes');
         const secondsDiff = moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').subtract(minutesDiff, 'minutes').diff(moment(), 'seconds');
 

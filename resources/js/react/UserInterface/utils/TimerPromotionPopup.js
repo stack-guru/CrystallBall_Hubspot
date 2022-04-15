@@ -31,7 +31,7 @@ export default class TimerPromotionPopup extends Component {
         if (!this.props.coupon) return null;
         if (!this.props.show) return null;
 
-        const hoursDiff = moment(this.state.offerExpiringTime).diff(moment(), 'hours');
+        const hoursDiff = (moment(this.state.offerExpiringTime).diff(moment(), 'days') * 24) + moment(this.state.offerExpiringTime).diff(moment(), 'hours');
         const minutesDiff = String(moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').diff(moment(), 'minutes')).padStart(2, '0');
         const secondsDiff = String(moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').subtract(minutesDiff, 'minutes').diff(moment(), 'seconds')).padStart(2, '0');
 
@@ -84,14 +84,14 @@ export default class TimerPromotionPopup extends Component {
 
                         <div style={{
                             position: 'absolute',
-                            top: '370px',
-                            left: '620px',
+                            top: 'calc(40px + 42%)',
+                            left: 'calc(0px + 39%)',
                             zIndex: 9,
                             color: 'white',
                             width: '350px',
                             height: '200px'
                         }}>
-                            <div style={{ "display": "inline-flex" }} className="animate__animated animate__bounceIn animate__delay-2s">
+                            <div style={{ "display": "inline-flex" }} className="animate__animated animate__bounceIn animate__delay-1s">
                                 <div style={{ "width": "33%", "display": "inline-block", paddingLeft: '10px', paddingRight: '10px' }}>
                                     <CircularProgressbar value={hoursDiff} maxValue={24} text={`${hoursDiff} Hours`} styles={circleStyles} />
                                 </div>
