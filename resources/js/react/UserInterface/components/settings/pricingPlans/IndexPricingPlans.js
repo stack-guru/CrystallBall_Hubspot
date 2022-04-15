@@ -103,8 +103,10 @@ export default class IndexPricingPlans extends React.Component {
                             <div className="col-2 text-right" style={{ color: '#1a98f0', paddingTop: '12px' }}>
                                 {this.state.pricePlans.length ?
                                     (userRegistrationOffer ?
-                                        'Yearly ' :
-                                        'Yearly SAVE ' + this.state.pricePlans[0].yearly_discount_percent + '%')
+                                        (this.state.planDuration == 12 ?
+                                            'Yearly - SAVE ' + parseFloat(parseFloat(userRegistrationOffer.discount_percent) + parseFloat(this.state.pricePlans[0].yearly_discount_percent)).toFixed(0) + '%' :
+                                            'Yearly - SAVE ' + parseFloat(userRegistrationOffer.discount_percent).toFixed(0) + '%') :
+                                        'Yearly - SAVE ' + parseFloat(this.state.pricePlans[0].yearly_discount_percent).toFixed(0) + '%')
                                     : null}
                             </div>
                             <div className="col-1" style={{ paddingTop: '10px' }}>
