@@ -30,7 +30,8 @@ class AddRegistrationOffersColumnsInPricePlanSubscriptionsTable extends Migratio
     public function down()
     {
         Schema::table('price_plan_subscriptions', function (Blueprint $table) {
-            $table->dropColumn(['user_registration_offer_id', 'left_registration_offer_recurring']);
+            $table->dropConstrainedForeignId('user_registration_offer_id');
+            $table->dropColumn(['left_registration_offer_recurring']);
         });
     }
 }

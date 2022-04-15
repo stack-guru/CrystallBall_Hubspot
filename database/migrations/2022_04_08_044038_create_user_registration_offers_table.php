@@ -25,9 +25,9 @@ class CreateUserRegistrationOffersTable extends Migration
 
             $table->bigInteger("usage_count")->unsigned()->default(0);
             $table->double('discount_percent', 5, 2)->required()->default(0.00);
-            $table->date('expires_at')->required();
+            $table->timestamp('expires_at')->required();
             $table->integer('recurring_discount_count')->unsigned()->nullable()->default(0);
-            
+
             $table->bigInteger('registration_offer_id')->required()->unsigned();
             $table->foreign('registration_offer_id')->references('id')->on('registration_offers')->onDelete('RESTRICT');
 
