@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
-import { calculatePricePlanPrice } from '../../../helpers/CommonFunctions';
+import { calculatePricePlanPrice, manipulateRegistrationOfferText } from '../../../helpers/CommonFunctions';
 
 import HttpClient from "../../../utils/HttpClient";
 
@@ -13,6 +13,7 @@ export default class IndexPricingPlans extends React.Component {
             pricePlans: [],
             redirectTo: null,
             planDuration: 12, // [1, 12]
+            shownSeconds: 0,
         };
 
         this.freeSubscribe = this.freeSubscribe.bind(this);
@@ -33,6 +34,16 @@ export default class IndexPricingPlans extends React.Component {
 
                 this.setState({ isBusy: false, errors: err });
             });
+
+        if (this.props.user.user_registration_offers) {
+            if (this.props.user.user_registration_offers.length) {
+                setInterval(() => {
+                    this.setState({
+                        shownSeconds: this.state.shownSeconds++
+                    });
+                }, 1 * 1000);
+            }
+        }
     }
 
     changePricePlan(pricePlan) {
@@ -103,9 +114,7 @@ export default class IndexPricingPlans extends React.Component {
                             <div className="col-2 text-right" style={{ color: '#1a98f0', paddingTop: '12px' }}>
                                 {this.state.pricePlans.length ?
                                     (userRegistrationOffer ?
-                                        (this.state.planDuration == 12 ?
-                                            'Yearly - SAVE ' + parseFloat(parseFloat(userRegistrationOffer.discount_percent) + parseFloat(this.state.pricePlans[0].yearly_discount_percent)).toFixed(0) + '%' :
-                                            'Yearly - SAVE ' + parseFloat(userRegistrationOffer.discount_percent).toFixed(0) + '%') :
+                                        'Yearly' :
                                         'Yearly - SAVE ' + parseFloat(this.state.pricePlans[0].yearly_discount_percent).toFixed(0) + '%')
                                     : null}
                             </div>
@@ -120,6 +129,7 @@ export default class IndexPricingPlans extends React.Component {
                                 </label>
                             </div>
                         </div>
+                        {userRegistrationOffer ? <div className="row ml-0 mr-0 p-2"><div className="col-12 text-center"><h2 className="gaa-title">{manipulateRegistrationOfferText(userRegistrationOffer.description, userRegistrationOffer)}</h2></div></div> : null}
                         <div className="row ml-0 mr-0 d-flex flex-row justify-content-center pt-3">
 
                             {this.state.pricePlans.map(pricePlan => {

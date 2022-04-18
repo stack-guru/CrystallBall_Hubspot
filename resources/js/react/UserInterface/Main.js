@@ -99,9 +99,9 @@ class Main extends React.Component {
                 {/* <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" /> */}
                 <div className="page-container">
                     <SiteRenamedTopNotice show={IsDomain('app.gaannotations.com') || IsDomain('localhost')} />
-                    {this.state.user.user_registration_offers.map(uSC => <React.Fragment key={uSC.id}>
-                        <TimerPromotionPopup show={this.state.showTimerPromotionPopup} togglePopupCallback={this.toggleTimerPromotionPopup} promotionLink="/settings/price-plans" promotionImage="/images/50-off-24-hours.jpg" coupon={uSC} />
-                        <UserRegistrationOffer coupon={uSC} />
+                    {this.state.user.user_registration_offers.map(uRO => <React.Fragment key={uRO.id}>
+                        <TimerPromotionPopup show={this.state.showTimerPromotionPopup} togglePopupCallback={this.toggleTimerPromotionPopup} promotionLink="/settings/price-plans" promotionImage="/images/50-off-24-hours.jpg" userRegistrationOffer={uRO} />
+                        <UserRegistrationOffer userRegistrationOffer={uRO} />
                     </React.Fragment>)}
                     <div className="header navbar">
                         <Header user={this.state.user} />

@@ -88,8 +88,15 @@ export function removeStateFromLocalStorage(componentName) {
     return true;
 }
 
-export function calculatePricePlanPrice(price, monthDuration, yearlyDiscountPercent, coupon) {
+export function calculatePricePlanPrice(price, monthDuration, yearlyDiscountPercent, registrationOffer) {
     let discountSum = 0.00;
+    if (registrationOffer) {
+        if (registrationOffer.discount_percent != 0) {
+            discountSum = parseFloat(registrationOffer.discount_percent);
+            return parseFloat((price) - ((discountSum / 100) * price)).toFixed(1);
+        }
+    }
+
     switch (monthDuration) {
         case 12:
             if (yearlyDiscountPercent != 0) {
@@ -97,11 +104,21 @@ export function calculatePricePlanPrice(price, monthDuration, yearlyDiscountPerc
             }
             break;
     }
-    if (coupon) {
-        if (coupon.discount_percent != 0) {
-            discountSum += parseFloat(coupon.discount_percent);
-        }
-    }
 
     return parseFloat((price) - ((discountSum / 100) * price)).toFixed(1);
+}
+
+export function manipulateRegistrationOfferText(text, userRegistrationOffer) {
+    let offerExpiringDate = moment(userRegistrationOffer.expires_at);
+    const offerDiscountPercent = userRegistrationOffer.discount_percent;
+
+    const daysDiff = offerExpiringDate.diff(moment(), 'days');
+    offerExpiringDate = offerExpiringDate.subtract(daysDiff, 'days');
+    const hoursDiff = offerExpiringDate.diff(moment(), 'hours');
+    offerExpiringDate = offerExpiringDate.subtract(hoursDiff, 'hours')
+    const minutesDiff = offerExpiringDate.diff(moment(), 'minutes');
+    offerExpiringDate = offerExpiringDate.subtract(minutesDiff, 'minutes');
+    const secondsDiff = offerExpiringDate.diff(moment(), 'seconds');
+
+    return text.replace('[{expires_at}]', `${hoursDiff + (daysDiff * 24)}:${minutesDiff}:${secondsDiff}`).replace("[{discount_percent}]", offerDiscountPercent);
 }

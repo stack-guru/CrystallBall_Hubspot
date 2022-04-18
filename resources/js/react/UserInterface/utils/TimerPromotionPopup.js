@@ -7,33 +7,30 @@ export default class TimerPromotionPopup extends Component {
         super(props);
 
         this.state = {
-            'offerExpiringTime': moment(this.props.coupon.expires_at ?? undefined).format("YYYY-MM-DDTHH:mm:ssZ")
+            'shownSeconds': 0
         };
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps != this.props) {
-            this.offerExpiringTime = moment(this.props.coupon.expires_at).format("YYYY-MM-DDTHH:mm:ssZ");
-        }
     }
 
     componentDidMount() {
         setInterval(() => {
             this.setState({
-                offerExpiringTime: moment(this.state.offerExpiringTime).format("YYYY-MM-DDTHH:mm:ssZ")
+                shownSeconds: this.state.shownSeconds++
             });
         }, 1 * 1000);
     }
 
-
     render() {
 
-        if (!this.props.coupon) return null;
+        if (!this.props.userRegistrationOffer) return null;
         if (!this.props.show) return null;
 
-        const hoursDiff = (moment(this.state.offerExpiringTime).diff(moment(), 'days') * 24) + moment(this.state.offerExpiringTime).diff(moment(), 'hours');
-        const minutesDiff = String(moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').diff(moment(), 'minutes')).padStart(2, '0');
-        const secondsDiff = String(moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').subtract(minutesDiff, 'minutes').diff(moment(), 'seconds')).padStart(2, '0');
+        const daysDiff = offerExpiringDate.diff(moment(), 'days');
+        offerExpiringDate = offerExpiringDate.subtract(daysDiff, 'days');
+        const hoursDiff = offerExpiringDate.diff(moment(), 'hours');
+        offerExpiringDate = offerExpiringDate.subtract(hoursDiff, 'hours')
+        const minutesDiff = offerExpiringDate.diff(moment(), 'minutes');
+        offerExpiringDate = offerExpiringDate.subtract(minutesDiff, 'minutes');
+        const secondsDiff = offerExpiringDate.diff(moment(), 'seconds');
 
         const circleStyles = {
             // Customize the root svg element
@@ -93,7 +90,7 @@ export default class TimerPromotionPopup extends Component {
                         }}>
                             <div style={{ "display": "inline-flex" }} className="animate__animated animate__bounceIn animate__delay-1s">
                                 <div style={{ "width": "33%", "display": "inline-block", paddingLeft: '10px', paddingRight: '10px' }}>
-                                    <CircularProgressbar value={hoursDiff} maxValue={24} text={`${hoursDiff} Hours`} styles={circleStyles} />
+                                    <CircularProgressbar value={hoursDiff + (daysDiff * 24)} maxValue={24} text={`${hoursDiff + (daysDiff * 24)} Hours`} styles={circleStyles} />
                                 </div>
                                 <div style={{ "width": "33%", "display": "inline-block", paddingLeft: '10px', paddingRight: '10px' }}>
                                     <CircularProgressbar value={minutesDiff} maxValue={60} text={`${minutesDiff} Minutes`} styles={circleStyles} />

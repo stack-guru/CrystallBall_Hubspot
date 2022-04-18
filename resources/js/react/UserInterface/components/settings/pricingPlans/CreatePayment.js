@@ -246,23 +246,20 @@ export default class CreatePayment extends Component {
             actualPrice = this.state.pricePlan.price;
             totalPrice += this.state.pricePlan.price;
         }
+        totalPrice = actualPrice = parseFloat(actualPrice * this.state.planDuration).toFixed(2);
 
-        if (this.state.planDuration == 12) {
-            totalPrice = actualPrice = parseFloat(actualPrice * 12).toFixed(2);
-
-            annualDiscountAmount = (parseFloat((this.state.pricePlan.price * 12) * (this.state.pricePlan.yearly_discount_percent / 100)).toFixed(2));
-            totalPrice -= annualDiscountAmount;
-        }
-
-        if (this.props.user.user_registration_offers) {
-            if (this.props.user.user_registration_offers.length) {
-                this.props.user.user_registration_offers.forEach(userRegistrationOffer => {
-                    if (userRegistrationOffer.discount_percent != 0) {
-                        userRegistrationOfferDiscountAmount += parseFloat(((userRegistrationOffer.discount_percent / 100) * (this.state.pricePlan.price * this.state.planDuration)));
-                    }
-                });
-                totalPrice -= parseFloat(userRegistrationOfferDiscountAmount).toFixed(2);
-                userRegistrationOfferDiscountAmount = parseFloat(userRegistrationOfferDiscountAmount).toFixed(2)
+        if (this.props.user.user_registration_offers && this.props.user.user_registration_offers.length) {
+            this.props.user.user_registration_offers.forEach(userRegistrationOffer => {
+                if (userRegistrationOffer.discount_percent != 0) {
+                    userRegistrationOfferDiscountAmount += parseFloat(((userRegistrationOffer.discount_percent / 100) * (this.state.pricePlan.price * this.state.planDuration)));
+                }
+            });
+            totalPrice -= parseFloat(userRegistrationOfferDiscountAmount).toFixed(2);
+            userRegistrationOfferDiscountAmount = parseFloat(userRegistrationOfferDiscountAmount).toFixed(2)
+        } else {
+            if (this.state.planDuration == 12) {
+                annualDiscountAmount = (parseFloat((this.state.pricePlan.price * 12) * (this.state.pricePlan.yearly_discount_percent / 100)).toFixed(2));
+                totalPrice -= annualDiscountAmount;
             }
         }
 
@@ -274,7 +271,7 @@ export default class CreatePayment extends Component {
             taxAmount = parseFloat(((this.state.taxPercent / 100) * totalPrice)).toFixed(2);
             totalPrice += +taxAmount
         }
-        totalPrice = totalPrice.toFixed(2);
+        totalPrice = parseFloat(totalPrice).toFixed(2);
 
         return (
             <div className="container-xl bg-white component-wrapper" >
@@ -384,7 +381,7 @@ export default class CreatePayment extends Component {
                                                         <div className="col-6 text-right">${actualPrice}</div>
                                                     </div>
 
-                                                    {this.state.planDuration == 12 ?
+                                                    {annualDiscountAmount ?
                                                         <React.Fragment>
                                                             <div className="row">
                                                                 <div className="col-6">Annual Discount ({this.state.pricePlan.yearly_discount_percent}%)</div>
