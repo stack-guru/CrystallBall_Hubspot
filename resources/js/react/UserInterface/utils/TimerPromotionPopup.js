@@ -24,6 +24,8 @@ export default class TimerPromotionPopup extends Component {
         if (!this.props.userRegistrationOffer) return null;
         if (!this.props.show) return null;
 
+        let offerExpiringDate = moment(this.props.userRegistrationOffer.expires_at);
+
         const daysDiff = offerExpiringDate.diff(moment(), 'days');
         offerExpiringDate = offerExpiringDate.subtract(daysDiff, 'days');
         const hoursDiff = offerExpiringDate.diff(moment(), 'hours');
