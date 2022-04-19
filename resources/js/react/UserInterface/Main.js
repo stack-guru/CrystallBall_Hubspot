@@ -67,7 +67,7 @@ class Main extends React.Component {
     toggleInterfaceTour(keepInterfaceTour = false) {
         // If the user has alive registration offers and interface tour is showing
         if (this.state.user.user_registration_offers.length && this.state.showInterfaceTour) {
-            setTimeout(() => { this.setState({ showTimerPromotionPopup: true }); }, 120000);
+            setTimeout(() => { this.setState({ showTimerPromotionPopup: true }); }, 60000);
         }
         this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour });
         this.loadUser(false, keepInterfaceTour, false);
