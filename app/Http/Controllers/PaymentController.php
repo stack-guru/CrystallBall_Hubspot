@@ -111,25 +111,27 @@ class PaymentController extends Controller
             $price = $pricePlan->price;
             $discountPercentSum = 0.00;
 
-            // Applying annual discount if applicable
-            if ($request->plan_duration == PricePlan::ANNUALLY) {
-                if ($pricePlan->yearly_discount_percent > 0) {
-                    $discountPercentSum += $pricePlan->yearly_discount_percent;
-                    $price = $pricePlan->price * PricePlan::ANNUALLY;
-                }
-            }
-
             // Registration Offers
             $userRegistrationOffers = UserRegistrationOffer::ofCurrentUser()->alive()->get();
-            foreach ($userRegistrationOffers as $userRegistrationOffer) {
-                // Backend is capable of saving only 1 registration offer with price plan subscription details
-                // while the frontend supports multiple registration offer's calculations
-                $pricePlanSubscription->user_registration_offer_id = $userRegistrationOffer->id;
-                $discountPercentSum += $userRegistrationOffer->discount_percent;
+            if (count($userRegistrationOffers)) {
+                foreach ($userRegistrationOffers as $userRegistrationOffer) {
+                    // Backend is capable of saving only 1 registration offer with price plan subscription details
+                    // while the frontend supports multiple registration offer's calculations
+                    $pricePlanSubscription->user_registration_offer_id = $userRegistrationOffer->id;
+                    $discountPercentSum += $userRegistrationOffer->discount_percent;
+                    if ($request->plan_duration == PricePlan::ANNUALLY) {
+                        $pricePlanSubscription->left_registration_offer_recurring = $userRegistrationOffer->yearly_recurring_discount_count;
+                    } else {
+                        $pricePlanSubscription->left_registration_offer_recurring = $userRegistrationOffer->monthly_recurring_discount_count;
+                    }
+                }
+            } else {
+                // Applying annual discount if applicable
                 if ($request->plan_duration == PricePlan::ANNUALLY) {
-                    $pricePlanSubscription->left_registration_offer_recurring = $userRegistrationOffer->yearly_recurring_discount_count;
-                } else {
-                    $pricePlanSubscription->left_registration_offer_recurring = $userRegistrationOffer->monthly_recurring_discount_count;
+                    if ($pricePlan->yearly_discount_percent > 0) {
+                        $discountPercentSum += $pricePlan->yearly_discount_percent;
+                        $price = $pricePlan->price * PricePlan::ANNUALLY;
+                    }
                 }
             }
 

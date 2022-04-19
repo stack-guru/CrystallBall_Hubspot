@@ -82,7 +82,7 @@ export default class CreatePayment extends Component {
         if (e.target.name == 'country') {
             if (['IL'].indexOf(e.target.value) != -1) {
                 this.setState({ taxPercent: 17 })
-            }else{
+            } else {
                 this.setState({ taxPercent: 0 })
             }
         }
