@@ -23,7 +23,11 @@ class GoogleSearchConsoleService extends GoogleAPIService
 
         $respJson = $response->json();
         if (!array_key_exists('siteEntry', $respJson)) {
-            if (array_key_exists('error', $respJson)) Log::channel('google')->error("Error fetching Sites: ", ['message' => $response->json()['error']['message']]);
+            if (array_key_exists('error', $respJson)) {
+                Log::channel('google')->error("Error fetching Sites: ", ['message' => $response->json()['error']['message']]);
+            } else {
+                Log::channel('google')->error("Error fetching Sites: ", ['message' => 'Response does not contain any site.', 'response' => $response->json()]);
+            }
             return false;
         }
 

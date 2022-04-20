@@ -54,6 +54,9 @@ return [
 
         'adwords' => [
             'developer_token' => env('GOOGLE_ADWORDS_DEVELOPER_TOKEN'),
+            'manager_account' => [
+                'customer_id' => env('GOOGLE_ADWORDS_MANAGER_ACCOUNT_CUSTOMER_ID')
+            ]
         ],
 
         'analytics' => [
