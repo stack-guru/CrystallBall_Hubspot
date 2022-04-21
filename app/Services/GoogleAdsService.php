@@ -26,9 +26,8 @@ class GoogleAdsService  extends GoogleAPIService
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
-            'login-customer-id' => $this->ManagerAccountCustomerId
+            // 'login-customer-id' => $this->ManagerAccountCustomerId
         ])->withToken($googleAccount->token)->get($url);
-        Log::channel('google')->error("Adwords API Response: ", ['response' => $response]);
 
         if ($response->status() == 400 && !$repeatCall) {
             // This code block only checks if google accounts can be fetched after refreshing access token
@@ -47,21 +46,13 @@ class GoogleAdsService  extends GoogleAPIService
             return false;
         }
 
-        $simpleXML = simplexml_load_string($response->body());
+        $respJson = $response->json();
+        if (!array_key_exists('resourceNames', $respJson)) return [];
 
-        if (!$simpleXML->table->row->count()) {
-            return false;
-        }
-
-        $keywords = [];
-        foreach ($simpleXML->table->row as $row) {
-            $arr = [];
-            foreach ($row->attributes() as $key => $value) {
-                $arr[$key] = $value->__toString();
-            }
-            array_push($keywords, $arr);
-        }
-        return $keywords;
+        return array_map(function ($a) {
+            $accountId = substr($a, 10);
+            return substr($accountId, 0, 3) . '-' . substr($accountId, 3, 3) . '-' . substr($accountId, 6, 4);
+        }, $respJson['resourceNames']);
     }
 
     public function getCampaignData(GoogleAccount $googleAccount, $repeatCall = false)

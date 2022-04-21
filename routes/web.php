@@ -159,6 +159,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
             Route::post('payment-detail', [App\Http\Controllers\PaymentDetailController::class, 'store']);
 
             Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
+            Route::get('google-ads-account-ids', [App\Http\Controllers\GoogleAdsAccountController::class, 'uiIndex']);
             Route::put('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'update']);
             Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
             Route::post('change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword'])->withoutMiddleware('only.non.empty.password');
