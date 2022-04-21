@@ -26,7 +26,7 @@ class GoogleAnalyticsAccountController extends Controller
 
         $gAS = new GoogleAnalyticsService;
         $googleAnalyticsAccounts = $gAS->getConnectedAccounts($googleAccount);
-        if ($googleAnalyticsAccounts == false) {
+        if ($googleAnalyticsAccounts === false) {
             abort(response()->json(['message' => "Unable to fetch google analytics accounts. Possibly no google analytics account exists or access removed by user."], 422));
         }
 

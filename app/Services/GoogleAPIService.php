@@ -101,6 +101,12 @@ class GoogleAPIService
         }
 
         $respJson = $response->json();
+        if (array_key_exists('error', $respJson) && array_key_exists('message', $respJson['error'])) {
+            if ($respJson['error']['message'] == "User does not have any Google Analytics account.") {
+                Log::channel('google')->error($respJson['error']['message'],  ['GoogleAccount' => $googleAccount->name]);
+                return [];
+            }
+        }
         if (!array_key_exists('items', $respJson)) {
             return false;
         }

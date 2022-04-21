@@ -31,7 +31,7 @@ class GoogleSearchConsoleSiteController extends Controller
 
         $gAS = new GoogleSearchConsoleService;
         $googleSearchConsoleSites = $gAS->getSites($googleAccount);
-        if ($googleSearchConsoleSites == false) {
+        if ($googleSearchConsoleSites === false) {
             abort(response()->json(['message' => "Unable to fetch google search console sites."], 422));
         }
 
