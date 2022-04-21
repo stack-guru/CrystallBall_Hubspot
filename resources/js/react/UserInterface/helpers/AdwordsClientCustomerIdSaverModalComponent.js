@@ -41,12 +41,17 @@ export default class AdwordsClientCustomerIdSaverModal extends React.Component {
                     <div className="modal-body">
                         <div className="form-group">
                             <label htmlFor="adwordsClientCustomerId">Your Google AdWords Customer Account ID</label>
-                            <select className="form-control" id="adwordsClientCustomerId" aria-describedby="clientCustomerIdHelp" placeholder="Enter your adwords account id" >
-                                {this.state.googleAdsAccountIds.map(id => <option value={id}>{id}</option>)}
-                            </select>
+                            <input type="text" className="form-control" id="adwordsClientCustomerId" aria-describedby="clientCustomerIdHelp" placeholder="Enter your adwords account id" />
                             <small id="clientCustomerIdHelp" className="form-text text-muted">It looks something like this: 123-123-1234</small>
                             <img src="/images/adwords-client-customer-id-sample.png" />
                         </div>
+                        <div className="form-group">
+                            <label>Customer Account Ids revealed through Google Ads API:</label><br />
+                            {this.state.googleAdsAccountIds.map(id =>
+                                <React.Fragment><label>{id}</label><br /></React.Fragment>
+                            )}
+                        </div>
+
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary"

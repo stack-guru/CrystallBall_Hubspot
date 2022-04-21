@@ -55,59 +55,63 @@ class GoogleAdsService  extends GoogleAPIService
         }, $respJson['resourceNames']);
     }
 
-    public function getCampaignData(GoogleAccount $googleAccount, $repeatCall = false)
+    public function getCampaigns(GoogleAccount $googleAccount, $repeatCall = false)
     {
-        $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/googleAds:searchStream";
+        $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/googleAds:search";
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
             'login-customer-id' => $this->ManagerAccountCustomerId
         ])->withToken($googleAccount->token)->asForm()->post($url, [
-            'query' => 'SELECT
-            campaign.name,
+            'pageSize' => 10,
+            'query' => "SELECT campaign.name,
+            campaign_budget.amount_micros,
             campaign.status,
-            segments.device,
-            metrics.impressions,
+            campaign.optimization_score,
+            campaign.advertising_channel_type,
+            campaign.bidding_strategy_type
+          FROM campaign
+          WHERE campaign.status != 'REMOVED'",
+        ]);
+        Log::channel('google')->error("Adwords API Response: ", ['response' => $response->json()]);
+    }
+
+    public function getAdGroups(GoogleAccount $googleAccount, $repeatCall = false)
+    {
+        $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/adGroups:search";
+
+        $response = Http::withHeaders([
+            'developer-token' => $this->adwordsDeveloperToken,
+            'login-customer-id' => $this->ManagerAccountCustomerId
+        ])->withToken($googleAccount->token)->asForm()->post($url, [
+            'pageSize' => 10,
+            'query' => "SELECT adgroup.id,
+            adgroup.name,
+            adgroup.optimization_score,
+            adgroup.advertising_channel_type,
+            adgroup.name,
+            adgroup.baseAdGroup,
+            adgroup.trackingUrlTemplate,
+            adgroup.campaign,
+            adgroup.cpcBidMicros,
+            adgroup.effectiveCpcBidMicros,
+            adgroup.cpmBidMicros,
+            adgroup.targetCpaMicros,
+            adgroup.cpvBidMicros,
+            adgroup.targetCpmMicros,
+            adgroup.targetRoas,
+            adgroup.percentCpcBidMicros,
+            adgroup.finalUrlSuffix,
+            adgroup.effectiveTargetCpaMicros,
+            adgroup.effectiveTargetRoas,
             metrics.clicks,
+            metrics.impressions,
             metrics.ctr,
             metrics.average_cpc,
             metrics.cost_micros
-          FROM campaign',
+          FROM adgroup",
         ]);
         Log::channel('google')->error("Adwords API Response: ", ['response' => $response->json()]);
-
-        if ($response->status() == 400 && !$repeatCall) {
-            // This code block only checks if google accounts can be fetched after refreshing access token
-            if ($this->refreshToken($googleAccount) == false) {
-                return false;
-            } else {
-                $gAK = $this->getCampaignData($googleAccount, true);
-                // On success it returns google analytics accounts else false
-                if ($gAK !== false) {
-                    return $gAK;
-                } else {
-                    return false;
-                }
-            }
-        } else if ($response->status() == 401 && $repeatCall) {
-            return false;
-        }
-
-        $simpleXML = simplexml_load_string($response->body());
-
-        if (!$simpleXML->table->row->count()) {
-            return false;
-        }
-
-        $keywords = [];
-        foreach ($simpleXML->table->row as $row) {
-            $arr = [];
-            foreach ($row->attributes() as $key => $value) {
-                $arr[$key] = $value->__toString();
-            }
-            array_push($keywords, $arr);
-        }
-        return $keywords;
     }
 
     public function getAccountCampaigns(GoogleAccount $googleAccount, $repeatCall = false)
