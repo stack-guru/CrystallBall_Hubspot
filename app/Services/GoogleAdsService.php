@@ -157,7 +157,7 @@ class GoogleAdsService  extends GoogleAPIService
         Log::channel('google')->error("Adwords API Response: ", ['response' => $response->json()]);
     }
 
-    public function getAdGroupBetweenDaysMetrics(GoogleAccount $googleAccount, $startDate, $endDate, $repeatCall = false)
+    public function getAdGroupBetweenDaysAVGMetrics(GoogleAccount $googleAccount, $startDate, $endDate, $repeatCall = false)
     {
         $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/googleAds:search";
 
