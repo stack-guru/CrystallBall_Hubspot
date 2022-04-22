@@ -1,5 +1,6 @@
 var urlSearchParams = new URLSearchParams(window.location.search);
 var bsObj = {
+    '3DS': true,
     token: urlSearchParams.get('_token'),
     onFieldEventHandler: {
         /*OPTIONAL*/ setupComplete: function () {
@@ -11,7 +12,7 @@ var bsObj = {
         // tagId returns: "ccn", "cvv", "exp" 
         onFocus: function (tagId) { }, // Handle focus
         onBlur: function (tagId) { }, // Handle blur 
-        onError: function (tagId, errorCode /*, errorDescription*/) { }, // Handle a change in validation
+        onError: function (tagId, errorCode, errorDescription) { console.error(tagId, errorCode, errorDescription); }, // Handle a change in validation
         /*errorCode returns:
             "10" --> invalidCcNumber, invalidExpDate, invalidCvv Dependent on the tagId;
             "22013" --> "CC type is not supported by the merchant"; 
@@ -24,7 +25,7 @@ var bsObj = {
 
         /* errorDescription is optional. Returns BlueSnap's standard error description */
 
-        onType: function (tagId, cardType  , cardData) {
+        onType: function (tagId, cardType, cardData) {
             /* cardType will give card type, and only applies to ccn: AMEX, VISA, MASTERCARD, AMEX, DISCOVER, DINERS, JCB */
             if (null != cardData) {
                 /* cardData is an optional parameter which will provide ccType, last4Digits, issuingCountry, isRegulatedCard, cardSubType, binCategory and ccBin details (only applies to ccn) in a JsonObject */
@@ -63,5 +64,5 @@ var bsObj = {
     expPlaceHolder: "MM/YY" //for example
 };
 
-//Run the following command after Document Object Model (DOM) is fully loaded 
+//Run the following command after Document Object Model (DOM) is fully loaded
 // bluesnap.hostedPaymentFieldsCreate(bsObj);

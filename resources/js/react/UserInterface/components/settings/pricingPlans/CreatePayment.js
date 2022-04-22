@@ -459,7 +459,7 @@ export default class CreatePayment extends Component {
                                         <div className="row ml-0 mr-0 mt-1">
                                             <div className="col-12 text-right p-5">
 
-                                                <button type="submit" className={"btn gaa-btn-primary btn-md payBtn  " + (this.state.isBusy ? "disabled" : '')}>
+                                                <button type="submit" data-bluesnap="submitButton" className={"btn gaa-btn-primary btn-md payBtn  " + (this.state.isBusy ? "disabled" : '')}>
                                                     {
                                                         this.state.isBusy ?
                                                             <i className="fa fa-spinner fa-pulse"></i> :
@@ -533,6 +533,9 @@ export default class CreatePayment extends Component {
                         errorArray[i].errorDescription);
                 }
             }
+        }, {
+            amount: 35.75,
+            currency: 'USD'
         });
     }
     attachFieldsToBlueSnap() {
