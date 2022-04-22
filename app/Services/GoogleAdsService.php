@@ -64,155 +64,123 @@ class GoogleAdsService  extends GoogleAPIService
             'login-customer-id' => $this->ManagerAccountCustomerId
         ])->withToken($googleAccount->token)->asForm()->post($url, [
             'pageSize' => 10,
-            'query' => "SELECT campaign.name,
-            campaign_budget.amount_micros,
+            // https://developers.google.com/google-ads/api/fields/v10/campaign
+            // https://developers.google.com/google-ads/api/fields/v10/campaign_query_builder
+            'query' => "SELECT campaign.id,
+            campaign.end_date,
+            campaign.name,
+            campaign.resource_name,
+            campaign.serving_status,
+            campaign.start_date,
             campaign.status,
-            campaign.optimization_score,
-            campaign.advertising_channel_type,
-            campaign.bidding_strategy_type
-          FROM campaign
-          WHERE campaign.status != 'REMOVED'",
+            campaign.target_cpm,
+            metrics.average_cost,
+            metrics.average_cpc,
+            metrics.average_cpe,
+            metrics.average_cpm,
+            metrics.average_cpv,
+            metrics.average_page_views,
+            metrics.bounce_rate,
+            metrics.clicks,
+            metrics.conversions,
+            metrics.ctr 
+          FROM campaign 
+          WHERE 
+            campaign.status != 'REMOVED'",
         ]);
         Log::channel('google')->error("Adwords API Response: ", ['response' => $response->json()]);
     }
 
     public function getAdGroups(GoogleAccount $googleAccount, $repeatCall = false)
     {
-        $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/adGroups:search";
+        $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/googleAds:search";
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
             'login-customer-id' => $this->ManagerAccountCustomerId
         ])->withToken($googleAccount->token)->asForm()->post($url, [
             'pageSize' => 10,
-            'query' => "SELECT adgroup.id,
-            adgroup.name,
-            adgroup.optimization_score,
-            adgroup.advertising_channel_type,
-            adgroup.name,
-            adgroup.baseAdGroup,
-            adgroup.trackingUrlTemplate,
-            adgroup.campaign,
-            adgroup.cpcBidMicros,
-            adgroup.effectiveCpcBidMicros,
-            adgroup.cpmBidMicros,
-            adgroup.targetCpaMicros,
-            adgroup.cpvBidMicros,
-            adgroup.targetCpmMicros,
-            adgroup.targetRoas,
-            adgroup.percentCpcBidMicros,
-            adgroup.finalUrlSuffix,
-            adgroup.effectiveTargetCpaMicros,
-            adgroup.effectiveTargetRoas,
-            metrics.clicks,
-            metrics.impressions,
-            metrics.ctr,
+            // https://developers.google.com/google-ads/api/fields/v10/ad_group
+            // https://developers.google.com/google-ads/api/fields/v10/ad_group_query_builder
+            'query' => "SELECT ad_group.id,
+            ad_group.campaign,
+            ad_group.name,
+            ad_group.resource_name,
+            ad_group.status,
+            ad_group.type,
+            ad_group.target_cpa_micros,
+            ad_group.target_cpm_micros,
+            ad_group.target_roas,
+            metrics.absolute_top_impression_percentage,
+            metrics.active_view_cpm,
+            metrics.active_view_ctr,
+            metrics.average_cost,
             metrics.average_cpc,
-            metrics.cost_micros
-          FROM adgroup",
+            metrics.average_cpe,
+            metrics.average_cpm,
+            metrics.average_cpv,
+            metrics.average_page_views,
+            metrics.bounce_rate,
+            metrics.clicks,
+            metrics.ctr,
+            campaign.name
+          FROM ad_group 
+          WHERE 
+            ad_group.status != 'REMOVED' ",
         ]);
         Log::channel('google')->error("Adwords API Response: ", ['response' => $response->json()]);
     }
 
-    public function getAccountCampaigns(GoogleAccount $googleAccount, $repeatCall = false)
+    public function getAdGroupOneDayMetrics(GoogleAccount $googleAccount, $selectedDate, $repeatCall = false)
     {
-        $url = "https://adwords.google.com/api/adwords/reportdownload/v201809";
-
-        $response = Http::withHeaders([
-            'clientCustomerId' => $googleAccount->adwords_client_customer_id,
-            'adwordsDeveloperToken' => $this->adwordsDeveloperToken,
-        ])->withToken($googleAccount->token)->asForm()->post($url, [
-            '__rdquery' => 'SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id',
-            '__fmt' => 'XML',
-        ]);
-        Log::channel('google')->error("Adwords API Response: ", ['response' => $response->json()]);
-
-        if ($response->status() == 400 && !$repeatCall) {
-            // This code block only checks if google accounts can be fetched after refreshing access token
-            if ($this->refreshToken($googleAccount) == false) {
-                return false;
-            } else {
-                $gAK = $this->getAccountCampaigns($googleAccount, true);
-                // On success it returns google analytics accounts else false
-                if ($gAK !== false) {
-                    return $gAK;
-                } else {
-                    return false;
-                }
-            }
-        } else if ($response->status() == 401 && $repeatCall) {
-            return false;
-        }
-
-        $simpleXML = simplexml_load_string($response->body());
-
-        if (!$simpleXML->table->row->count()) {
-            return false;
-        }
-
-        $keywords = [];
-        foreach ($simpleXML->table->row as $row) {
-            $arr = [];
-            foreach ($row->attributes() as $key => $value) {
-                $arr[$key] = $value->__toString();
-            }
-            array_push($keywords, $arr);
-        }
-        return $keywords;
-    }
-
-    public function getAdGroupLabel(GoogleAccount $googleAccount, $repeatCall = false)
-    {
-        $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/adGroupAdLabels:mutate";
+        $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/googleAds:search";
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
             'login-customer-id' => $this->ManagerAccountCustomerId
         ])->withToken($googleAccount->token)->asForm()->post($url, [
-            'query' => 'SELECT
-            campaign.name,
-            campaign.status,
-            segments.device,
+            'pageSize' => 10,
+            // https://developers.google.com/google-ads/api/fields/v10/ad_group
+            // https://developers.google.com/google-ads/api/fields/v10/ad_group_query_builder
+            'query' => "SELECT 
             metrics.impressions,
             metrics.clicks,
-            metrics.ctr,
-            metrics.average_cpc,
-            metrics.cost_micros
-          FROM campaign',
+            metrics.cost_per_all_conversions,
+            metrics.cost_per_conversion,
+            metrics.all_conversions,
+            metrics.conversions
+          FROM ad_group 
+          WHERE 
+            ad_group.status != 'REMOVED' 
+            AND segments.date = '" . $selectedDate->format('Y-m-d') . "'",
         ]);
         Log::channel('google')->error("Adwords API Response: ", ['response' => $response->json()]);
+    }
 
-        if ($response->status() == 400 && !$repeatCall) {
-            // This code block only checks if google accounts can be fetched after refreshing access token
-            if ($this->refreshToken($googleAccount) == false) {
-                return false;
-            } else {
-                $gAK = $this->getAccountCampaigns($googleAccount, true);
-                // On success it returns google analytics accounts else false
-                if ($gAK !== false) {
-                    return $gAK;
-                } else {
-                    return false;
-                }
-            }
-        } else if ($response->status() == 401 && $repeatCall) {
-            return false;
-        }
+    public function getAdGroupBetweenDaysMetrics(GoogleAccount $googleAccount, $startDate, $endDate, $repeatCall = false)
+    {
+        $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/googleAds:search";
 
-        $simpleXML = simplexml_load_string($response->body());
-
-        if (!$simpleXML->table->row->count()) {
-            return false;
-        }
-
-        $keywords = [];
-        foreach ($simpleXML->table->row as $row) {
-            $arr = [];
-            foreach ($row->attributes() as $key => $value) {
-                $arr[$key] = $value->__toString();
-            }
-            array_push($keywords, $arr);
-        }
-        return $keywords;
+        $response = Http::withHeaders([
+            'developer-token' => $this->adwordsDeveloperToken,
+            'login-customer-id' => $this->ManagerAccountCustomerId
+        ])->withToken($googleAccount->token)->asForm()->post($url, [
+            'pageSize' => 10,
+            // https://developers.google.com/google-ads/api/fields/v10/ad_group
+            // https://developers.google.com/google-ads/api/fields/v10/ad_group_query_builder
+            'query' => "SELECT 
+            metrics.average_cost,
+            metrics.average_cpc,
+            metrics.average_cpe,
+            metrics.average_cpm,
+            metrics.average_cpv,
+            metrics.average_page_views,
+            metrics.average_time_on_site 
+          FROM ad_group 
+          WHERE 
+            ad_group.status != 'REMOVED' 
+            AND segments.date BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "'",
+        ]);
+        Log::channel('google')->error("Adwords API Response: ", ['response' => $response->json()]);
     }
 }
