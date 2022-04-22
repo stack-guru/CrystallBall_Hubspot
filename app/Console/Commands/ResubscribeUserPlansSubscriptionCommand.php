@@ -145,8 +145,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
             ->with('pricePlan')
             ->with('lastPaymentDetail')
-            ->with('lastPricePlanSubscription')
-            ->with('userRegistrationOffer')
+            ->with('lastPricePlanSubscription.userRegistrationOffer')
             ->get();
         $this->comment(count($users) . " user(s) are currently on paid plans and will be charged.");
 
