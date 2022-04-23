@@ -36,7 +36,7 @@ class GoogleAccountController extends Controller
         ];
 
         // if (config('app.env') == 'development' || config('app.env') == 'local') {
-            array_push($scopes, 'https://www.googleapis.com/auth/adwords');
+            // array_push($scopes, 'https://www.googleapis.com/auth/adwords');
         // }
 
         return Socialite::driver('google')
