@@ -280,6 +280,7 @@ export default class CreatePayment extends Component {
         }
         totalPrice = parseFloat(totalPrice).toFixed(2);
 
+        window.pricePlanTotalPurchasePrice = totalPrice;
         return (
             <div className="container-xl bg-white component-wrapper" >
                 <ErrorAlert errors={this.state.errors} />
@@ -534,7 +535,7 @@ export default class CreatePayment extends Component {
                 }
             }
         }, {
-            amount: 35.75,
+            amount: window.pricePlanTotalPurchasePrice,
             currency: 'USD'
         });
     }
