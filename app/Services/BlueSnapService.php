@@ -82,7 +82,8 @@ class BlueSnapService
             'recurringTransaction' => 'ECOMMERCE',
             'cardTransactionType' => 'AUTH_CAPTURE',
             'vaultedShopperId' => $vaultedShopperId,
-            'storeCard' => $vaultedShopperId == null,
+            // 'storeCard' => $vaultedShopperId == null,
+            'storeCard' => true,
         ]);
         Log::channel('bluesnap')->info("Deduction attempt: ", (array) $response->data);
 
