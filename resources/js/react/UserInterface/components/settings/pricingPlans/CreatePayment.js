@@ -527,15 +527,26 @@ export default class CreatePayment extends Component {
             } else {
                 this.setState({ isBusy: false })
                 var errorArray = callback.error;
-                for (i in errorArray) {
-                    console.log("Received error: tagId= " +
-                        errorArray[i].tagId + ", errorCode= " +
-                        errorArray[i].errorCode + ", errorDescription= " +
-                        errorArray[i].errorDescription);
-                }
+                let formattedErrors = {};
+                errorArray.forEach(e => { formattedErrors[e.tagId ?? e.eventType] = [e.errorDescription] })
+
+                this.setState({
+                    errors: {
+                        message: 'Error occured while setting up payment process.',
+                        errors: formattedErrors
+                    }
+                })
+
+                // console.log(errorArray);
+                // for (i in errorArray) {
+                //     console.log("Received error: tagId= " +
+                //         errorArray[i].tagId + ", errorCode= " +
+                //         errorArray[i].errorCode + ", errorDescription= " +
+                //         errorArray[i].errorDescription);
+                // }
             }
         }, {
-            amount: window.pricePlanTotalPurchasePrice,
+            amount: parseFloat(window.pricePlanTotalPurchasePrice),
             currency: 'USD'
         });
     }
