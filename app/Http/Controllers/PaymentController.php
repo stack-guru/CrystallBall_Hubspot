@@ -156,7 +156,7 @@ class PaymentController extends Controller
             $price = $price - (round((float)(($price) * ($discountPercentSum / 100)), 2));
 
             // General Sales Tax
-            if (array_search($request->country, $this->taxableCountries) !== false) {
+            if (array_search($request->country, $this::taxableCountries) !== false) {
                 $price = $price + ((17 / 100) * $price);
             }
             $price = round($price, 2);
