@@ -101,7 +101,7 @@ class PaymentController extends Controller
                 'last_name' => 'required',
                 'billing_address' => 'required',
                 'city' => 'required',
-                'zip_code' => 'nullable',
+                'zip_code' => 'required',
                 'country' => 'required',
                 'pfToken' => 'required',
             ]);
