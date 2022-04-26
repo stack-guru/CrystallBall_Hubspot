@@ -12,6 +12,11 @@ class PaymentDetail extends Model
     use HasFactory;
 
     protected $fillable = [
+        'company_name',
+        'company_registration_number',
+        'phone_number_prefix',
+        'phone_number',
+
         'card_number',
         'expiry_month',
         'expiry_year',

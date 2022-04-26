@@ -97,6 +97,12 @@ class PaymentController extends Controller
                 'ccLast4Digits' => 'required',
                 'expirationMonth' => 'required',
                 'expirationYear' => 'required',
+
+                'company_name' => 'nullable|string',
+                'company_registration_number' => 'nullable|string',
+                'phone_number_prefix' => 'nullable|string',
+                'phone_number' => 'nullable|string',
+
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'billing_address' => 'required',
@@ -194,6 +200,7 @@ class PaymentController extends Controller
             // Saving payment details to database
             $paymentDetail = new PaymentDetail;
             $paymentDetail->fill($request->all());
+
             $paymentDetail->card_number = $request->ccLast4Digits;
             $paymentDetail->expiry_month = $request->expirationMonth;
             $paymentDetail->expiry_year = $request->expirationYear;

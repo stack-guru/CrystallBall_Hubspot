@@ -28,6 +28,12 @@ class PaymentDetailRequest extends FormRequest
             'expiry_month' => 'required|numeric',
             'expiry_year' => 'required|numeric',
             'security_code' => 'required|numeric',
+
+            'company_name' => 'nullable|string',
+            'company_registration_number' => 'nullable|string',
+            'phone_number_prefix' => 'nullable|string',
+            'phone_number' => 'nullable|string',
+
             'first_name' => 'required|string',
             'last_name' => 'required|string',
         ];

@@ -16,6 +16,11 @@ export default class CreatePayment extends Component {
         this.state = {
             pricePlan: undefined,
             paymentDetails: {
+                company_name: '',
+                company_registration_number: '',
+                phone_number_prefix: '',
+                phone_number: '',
+
                 cardNumber: '',
                 expirationMonth: '',
                 expirationYear: '',
@@ -107,6 +112,12 @@ export default class CreatePayment extends Component {
             expirationMonth: this.state.cardData.exp.split('/')[0],
             expirationYear: this.state.cardData.exp.split('/')[1],
             ccLast4Digits: this.state.cardData.last4Digits,
+
+            company_name: this.state.paymentDetails.company_name,
+            company_registration_number: this.state.paymentDetails.company_registration_number,
+            phone_number_prefix: this.state.paymentDetails.phone_number_prefix,
+            phone_number: this.state.paymentDetails.phone_number,
+
             first_name: this.state.paymentDetails.first_name,
             last_name: this.state.paymentDetails.last_name,
             billing_address: this.state.paymentDetails.billing_address,
@@ -298,11 +309,50 @@ export default class CreatePayment extends Component {
                                     <div className="col-12 col-sm-12 col-md-6 col-lg-6">
                                         <h4 className="gaa-text-primary">Billing Information</h4>
 
-                                        <div className="form-group floating-labels">
-                                            <input type="text" className="form-control " placeholder="Billing address" name="billing_address"
-                                                id="billingAddress" onChange={this.changeHandler} value={this.state.paymentDetails.billing_address} />
-                                            <label htmlFor="">Billing Address</label>
+                                        <div className="row ml-0 mr-0">
+                                            <div className="col-6  pl-0">
+                                                <div className="form-group floating-labels">
+                                                    <input type="text" className="form-control" placeholder="Company Name" name="company_name"
+                                                        id="company_name" onChange={this.changeHandler} value={this.state.paymentDetails.company_name} />
+                                                    <label htmlFor="">Company Name</label>
+                                                </div>
+                                            </div>
+                                            <div className="col-6">
+                                                <div className="form-group floating-labels">
+                                                    <input type="text" className="form-control" placeholder="Company Number" name="company_registration_number"
+                                                        id="company_registration_number" onChange={this.changeHandler} value={this.state.paymentDetails.company_registration_number} />
+                                                    <label htmlFor="">Company Number</label>
+                                                </div>
+                                            </div>
                                         </div>
+
+                                        <div className="row ml-0 mr-0">
+                                            <div className="col-12  pl-0">
+                                                <div className="form-group floating-labels">
+                                                    <input type="text" className="form-control " placeholder="Billing address" name="billing_address"
+                                                        id="billingAddress" onChange={this.changeHandler} value={this.state.paymentDetails.billing_address} />
+                                                    <label htmlFor="">Billing Address</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="row ml-0 mr-0">
+                                            <div className="col-2  pl-0">
+                                                <div className="form-group floating-labels">
+                                                    <input type="text" className="form-control" placeholder="Prefix" name="phone_number_prefix"
+                                                        id="phone_number_prefix" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number_prefix} />
+                                                    <label htmlFor="">Prefix</label>
+                                                </div>
+                                            </div>
+                                            <div className="col-5">
+                                                <div className="form-group floating-labels">
+                                                    <input type="text" className="form-control" placeholder="Phone Number" name="phone_number"
+                                                        id="phone_number" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number} />
+                                                    <label htmlFor="">Phone Number</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div className="row ml-0 mr-0">
                                             <div className="col-4  pl-0">
                                                 <div className="form-group ">
