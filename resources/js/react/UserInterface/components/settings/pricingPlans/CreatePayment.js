@@ -8,6 +8,8 @@ import CountryCodeSelect from "../../../utils/CountryCodeSelect";
 import { Link } from 'react-router-dom';
 
 export default class CreatePayment extends Component {
+
+    taxableCountries = ['IL', 'PK'];
     constructor(props) {
         super(props)
 
@@ -60,7 +62,7 @@ export default class CreatePayment extends Component {
 
         HttpClient.get("https://ipinfo.io/?token=cc0c476b4a3fc7").then(response => {
             let taxPercent = 0;
-            if (['IL'].indexOf(response.data.country) != -1) {
+            if (this.taxableCountries.indexOf(response.data.country) != -1) {
                 taxPercent = 17;
             }
             this.setState({ taxPercent: taxPercent, paymentDetails: { ...this.state.paymentDetails, city: response.data.city, country: response.data.country } });
@@ -80,7 +82,7 @@ export default class CreatePayment extends Component {
         };
 
         if (e.target.name == 'country') {
-            if (['IL'].indexOf(e.target.value) != -1) {
+            if (this.taxableCountries.indexOf(e.target.value) != -1) {
                 this.setState({ taxPercent: 17 })
             } else {
                 this.setState({ taxPercent: 0 })

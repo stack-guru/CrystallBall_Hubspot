@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Mail;
 class PaymentController extends Controller
 {
 
+    private const taxableCountries = ['IL', 'PK'];
+
     public function indexPaymentHistory()
     {
         if (Auth::user()->user_id) {
@@ -154,7 +156,7 @@ class PaymentController extends Controller
             $price = $price - (round((float)(($price) * ($discountPercentSum / 100)), 2));
 
             // General Sales Tax
-            if (array_search($request->country, ["IL"]) !== false) {
+            if (array_search($request->country, $this->taxableCountries) !== false) {
                 $price = $price + ((17 / 100) * $price);
             }
             $price = round($price, 2);
