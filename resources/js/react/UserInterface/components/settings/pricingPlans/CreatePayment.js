@@ -61,11 +61,11 @@ export default class CreatePayment extends Component {
 
 
         HttpClient.get("https://ipinfo.io/?token=cc0c476b4a3fc7").then(response => {
-            let taxPercent = 0;
+            let tP = 0;
             if (this.taxableCountries.indexOf(response.data.country) != -1) {
-                taxPercent = 17;
+                tP = 17;
             }
-            this.setState({ taxPercent: taxPercent, paymentDetails: { ...this.state.paymentDetails, city: response.data.city, country: response.data.country } });
+            this.setState({ taxPercent: tP, paymentDetails: { ...this.state.paymentDetails, city: response.data.city, country: response.data.country } });
         });
 
         setTimeout(this.attachFieldsToBlueSnap, 5000)
@@ -255,7 +255,7 @@ export default class CreatePayment extends Component {
             actualPrice = this.state.pricePlan.price;
             totalPrice += this.state.pricePlan.price;
         }
-        totalPrice = actualPrice = parseFloat(actualPrice * this.state.planDuration).toFixed(2);
+        totalPrice = actualPrice = parseFloat(actualPrice * this.state.planDuration);
 
         if (this.props.user.user_registration_offers && this.props.user.user_registration_offers.length) {
             this.props.user.user_registration_offers.forEach(userRegistrationOffer => {
@@ -263,7 +263,7 @@ export default class CreatePayment extends Component {
                     userRegistrationOfferDiscountAmount += parseFloat(((userRegistrationOffer.discount_percent / 100) * (this.state.pricePlan.price * this.state.planDuration)));
                 }
             });
-            totalPrice -= parseFloat(userRegistrationOfferDiscountAmount).toFixed(2);
+            totalPrice -= parseFloat(userRegistrationOfferDiscountAmount);
             userRegistrationOfferDiscountAmount = parseFloat(userRegistrationOfferDiscountAmount).toFixed(2)
         } else {
             if (this.state.planDuration == 12) {
@@ -277,9 +277,10 @@ export default class CreatePayment extends Component {
             totalPrice -= discountPrice;
         }
         if (this.state.taxPercent) {
-            taxAmount = parseFloat(((this.state.taxPercent / 100) * totalPrice)).toFixed(2);
-            totalPrice += +taxAmount
+            taxAmount = parseFloat(((this.state.taxPercent / 100) * totalPrice));
+            totalPrice += taxAmount;
         }
+        taxAmount = parseFloat(taxAmount).toFixed(2);
         totalPrice = parseFloat(totalPrice).toFixed(2);
 
         window.pricePlanTotalPurchasePrice = totalPrice;

@@ -163,7 +163,7 @@ class header extends React.Component {
                         {this.props.user.price_plan.name == "Trial" ?
                             <li className="notifications">
                                 <div className="no-after">
-                                    <a className="trial-countdown">Trial: {moment(this.props.user.price_plan_expiry_date).diff(moment(), "days")} days left</a>
+                                    <a className="trial-countdown">Trial ending {moment(this.props.user.price_plan_expiry_date).fromNow()}</a>
                                 </div>
                             </li>
                             : null}
