@@ -79,7 +79,14 @@ class Main extends React.Component {
     render() {
         if (this.state.user == undefined) return null;
 
-        if (["/settings/price-plans", "/settings/price-plans/payment"].indexOf(this.props.location.pathname) == -1 && this.state.user.price_plan.name == "Trial Ended") {
+        console.log(this.props.location.pathname);
+        if ([
+            "/settings",
+            "/settings/price-plans",
+            "/settings/price-plans/payment",
+            "/settings/payment-history",
+            "/settings/payment-detail/create",
+        ].indexOf(this.props.location.pathname) == -1 && this.state.user.price_plan.name == "Trial Ended") {
             return <Redirect to={"/settings/price-plans"} />
         }
 
