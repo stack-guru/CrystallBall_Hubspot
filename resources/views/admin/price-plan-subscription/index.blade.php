@@ -1,14 +1,19 @@
 @extends('layouts/admin')
 @section('page-title','Payment History')
-@section('content')
 
+@section('css')
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" />
+@endsection
+
+@section('content')
 <div class="contianer">
     <div class="row ml-0 mr-0 justify-content-center">
         <div class="col-md-12 p-5">
             <div class="card">
                 <div class="card-header">Payment History</div>
                 <div class="card-body">
-                    <table class="table table-hover table-bordered ">
+                    <table class="table table-hover table-bordered " id="myTable">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -64,6 +69,21 @@
         </div>
     </div>
 </div>
+@endsection
 
-
+@section('js')
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'csv'
+                ],
+                "paging": true
+            });
+        });
+    </script>
 @endsection
