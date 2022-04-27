@@ -33,6 +33,21 @@
         gtag('config', '{{ config('services.google.analytics.code') }}');
     </script>
 @endif
+@php config(['services.hotjar.site.code' => '2809005']); @endphp
+@if(config('services.hotjar.site.code'))
+    <!-- Hotjar Tracking Code -->
+    <script>
+        (function (h, o, t, j, a, r) {
+            h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+            h._hjSettings = { hjid: {{ config('services.hotjar.site.code') }}, hjsv: 6 };
+        a = o.getElementsByTagName('head')[0];
+        r = o.createElement('script'); r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+        }) (window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+    </script>
+@endif
+@php config(['services.hotjar.site.code' => '2552820']); @endphp
 @if(config('services.hotjar.site.code'))
     <!-- Hotjar Tracking Code -->
     <script>
