@@ -119,10 +119,10 @@ export default class GoogleAccountIndex extends React.Component {
                                 <table className="table table-hover gaa-hover table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Profile Image</th>
+                                            <th className="col-1">Profile Image</th>
                                             <th>Google Account</th>
                                             <th>Email</th>
-                                            <th>Actions</th>
+                                            <th className="col-4">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
