@@ -39,6 +39,9 @@
                     <table class="table table-hover table-bordered ">
                         <thead>
                             <tr>
+                                <th>Company Name</th>
+                                <th>Company Registration Number</th>
+                                <th>Company Phone Number</th>
                                 <th>BlueSnap vaulted shopper id</th>
                                 <th>Name</th>
                                 <th>Card end with</th>
@@ -48,6 +51,10 @@
                         </thead>
                         <tbody>
                             <tr>
+                                <td>{{@$pricePlanSubscription->paymentDetail->company_name}}</td>
+                                <td>{{@$pricePlanSubscription->paymentDetail->company_registration_number}}</td>
+                                <td>{{@$pricePlanSubscription->paymentDetail->phone_number_prefix}} {{@$pricePlanSubscription->paymentDetail->phone_number}}</td>
+
                                 <td>{{@$pricePlanSubscription->paymentDetail->bluesnap_vaulted_shopper_id}}</td>
                                 <td>{{@$pricePlanSubscription->paymentDetail->first_name}} {{@$pricePlanSubscription->paymentDetail->last_name}}</td>
                                 <td>{{@$pricePlanSubscription->paymentDetail->card_number}}</td>
