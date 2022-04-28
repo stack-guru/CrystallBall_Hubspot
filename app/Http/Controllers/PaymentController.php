@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Mail;
 class PaymentController extends Controller
 {
 
-    private const taxableCountries = ['IL', 'PK'];
+    private const taxableCountries = ['IL'];
 
     public function indexPaymentHistory()
     {

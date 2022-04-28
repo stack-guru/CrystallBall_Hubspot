@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 export default class CreatePayment extends Component {
 
-    taxableCountries = ['IL', 'PK'];
+    taxableCountries = ['IL'];
     constructor(props) {
         super(props)
 
