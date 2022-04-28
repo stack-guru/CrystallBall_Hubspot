@@ -2,7 +2,7 @@
 @section('page-title','Auto Payment Logs')
 @section('content')
 
-<div class="contianer">
+<div class="container">
     <div class="row ml-0 mr-0 justify-content-center">
         <div class="col-md-12 p-5">
             <div class="card">

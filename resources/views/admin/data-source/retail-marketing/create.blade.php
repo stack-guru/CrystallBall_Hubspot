@@ -2,7 +2,7 @@
 @section('page-title','Create Retail Marketings')
 @section('content')
 
-    <div class="contianer">
+    <div class="container">
         <div class="row ml-0 mr-0 justify-content-center">
             <div class="col-md-10 p-5">
                 <h1 class="my-4 ">Create R M</h1>
