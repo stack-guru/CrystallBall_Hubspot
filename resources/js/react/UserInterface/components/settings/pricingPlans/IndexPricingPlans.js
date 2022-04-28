@@ -121,6 +121,7 @@ export default class IndexPricingPlans extends React.Component {
                             <div className="col-1" style={{ paddingTop: '10px' }}>
                                 <label className="trigger switch">
                                     <input
+                                        autocomplete="off"
                                         type="checkbox"
                                         onChange={this.togglePricingMode}
                                         checked={this.state.planDuration == 12}
