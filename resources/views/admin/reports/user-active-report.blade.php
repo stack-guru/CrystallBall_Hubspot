@@ -111,10 +111,18 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#myTable').DataTable();
-    });
-</script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'csv'
+                    ],
+                    "paging": true
+                });
+        });
+    </script>
 @endsection
