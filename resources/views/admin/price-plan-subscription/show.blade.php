@@ -18,6 +18,7 @@
                                 <th>Amount</th>
                                 <th>Paid at</th>
                                 <th>Next Billing At (Duration)</th>
+                                <th>Plan Name</th>
                                 <th>Plan Price</th>
                             </tr>
                         </thead>
@@ -31,6 +32,7 @@
                                 <td>{{$pricePlanSubscription->created_at->todateString()}}</td>
 
                                 <td>{{$pricePlanSubscription->expires_at}} ({{$pricePlanSubscription->plan_duration}})</td>
+                                <td>{{@$pricePlanSubscription->pricePlan->name}}</td>
                                 <td>${{@$pricePlanSubscription->pricePlan->price}}</td>
                             </tr>
                         </tbody>
