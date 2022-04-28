@@ -47,6 +47,9 @@
                                             </td>
                                             <td>
                                                 <div class="row ml-0 mr-0 d-flex flex-row ">
+                                                <a class="btn btn-primary m-2"
+                                                        href="{{ route('admin.user.show', $user->id) }}">Show</a>
+                                                        
                                                     <a class="btn btn-primary m-2"
                                                         href="{{ route('admin.user.edit', $user->id) }}">Edit</a>
                                                     <form id="deleteUserForm{{ $user->id }}" method="POST"

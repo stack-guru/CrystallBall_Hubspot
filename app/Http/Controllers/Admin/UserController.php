@@ -36,7 +36,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user->with('pricePlan');
+        $user->with(['pricePlan', 'pricePlanSubscriptions']);
         return view('admin/user/show')->with('user', $user);
     }
 
