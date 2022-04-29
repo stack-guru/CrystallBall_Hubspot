@@ -331,7 +331,7 @@ export default class CreatePayment extends Component {
                                                 <div className="form-group floating-labels">
                                                     <input type="text" className="form-control " placeholder="Billing address" name="billing_address"
                                                         id="billingAddress" onChange={this.changeHandler} value={this.state.paymentDetails.billing_address} />
-                                                    <label htmlFor="">Billing Address</label>
+                                                    <label htmlFor="">Address</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -359,14 +359,14 @@ export default class CreatePayment extends Component {
                                         </div>
 
                                         <div className="row ml-0 mr-0">
-                                            <div className="col-2  pl-0">
+                                            <div className="col-2 pl-0 pr-0">
                                                 <div className="form-group floating-labels">
                                                     <input type="text" className="form-control" placeholder="Prefix" name="phone_number_prefix"
                                                         id="phone_number_prefix" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number_prefix} />
                                                     <label htmlFor="">Prefix</label>
                                                 </div>
                                             </div>
-                                            <div className="col-5">
+                                            <div className="col-5 pl-0">
                                                 <div className="form-group floating-labels">
                                                     <input type="text" className="form-control" placeholder="Phone Number" name="phone_number"
                                                         id="phone_number" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number} />
