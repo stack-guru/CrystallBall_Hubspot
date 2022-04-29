@@ -335,24 +335,6 @@ export default class CreatePayment extends Component {
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div className="row ml-0 mr-0">
-                                            <div className="col-2  pl-0">
-                                                <div className="form-group floating-labels">
-                                                    <input type="text" className="form-control" placeholder="Prefix" name="phone_number_prefix"
-                                                        id="phone_number_prefix" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number_prefix} />
-                                                    <label htmlFor="">Prefix</label>
-                                                </div>
-                                            </div>
-                                            <div className="col-5">
-                                                <div className="form-group floating-labels">
-                                                    <input type="text" className="form-control" placeholder="Phone Number" name="phone_number"
-                                                        id="phone_number" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number} />
-                                                    <label htmlFor="">Phone Number</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <div className="row ml-0 mr-0">
                                             <div className="col-4  pl-0">
                                                 <div className="form-group ">
@@ -374,11 +356,24 @@ export default class CreatePayment extends Component {
                                                     <label htmlFor="">Zip Code</label>
                                                 </div>
                                             </div>
-
-
-
                                         </div>
 
+                                        <div className="row ml-0 mr-0">
+                                            <div className="col-2  pl-0">
+                                                <div className="form-group floating-labels">
+                                                    <input type="text" className="form-control" placeholder="Prefix" name="phone_number_prefix"
+                                                        id="phone_number_prefix" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number_prefix} />
+                                                    <label htmlFor="">Prefix</label>
+                                                </div>
+                                            </div>
+                                            <div className="col-5">
+                                                <div className="form-group floating-labels">
+                                                    <input type="text" className="form-control" placeholder="Phone Number" name="phone_number"
+                                                        id="phone_number" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number} />
+                                                    <label htmlFor="">Phone Number</label>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         {/* second column start*/}
                                         <div className="mt-2">
