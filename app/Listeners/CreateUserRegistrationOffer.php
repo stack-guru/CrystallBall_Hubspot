@@ -31,25 +31,30 @@ class CreateUserRegistrationOffer
         // This variable below, will be replaced by a fetched row from database
         // There should be an interface available in admin area to manage coupon data values
         $registrationOffers = RegistrationOffer::enabled()->get();
+        $currentIpAddress = request()->ip();
 
-        foreach ($registrationOffers as $registrationOffer) {
-            $userRegistrationOffer = new UserRegistrationOffer([
-                'name' => $registrationOffer->name,
-                'code' => $registrationOffer->code,
+        if (!UserRegistrationOffer::where('ip_address', $currentIpAddress)->count()) {
 
-                'heading' => $registrationOffer->heading,
-                'description' => $registrationOffer->description,
-                'on_click_url' => $registrationOffer->on_click_url,
+            foreach ($registrationOffers as $registrationOffer) {
+                $userRegistrationOffer = new UserRegistrationOffer([
+                    'name' => $registrationOffer->name,
+                    'code' => $registrationOffer->code,
 
-                "usage_count" => 0,
-                'discount_percent' => $registrationOffer->discount_percent,
-                'expires_at' => Carbon::now()->add($registrationOffer->expires_in_value, $registrationOffer->expires_in_period),
-                'monthly_recurring_discount_count' => $registrationOffer->monthly_recurring_discount_count,
-                'yearly_recurring_discount_count' => $registrationOffer->yearly_recurring_discount_count,
-            ]);
-            $userRegistrationOffer->registration_offer_id =  $registrationOffer->id;
-            $userRegistrationOffer->user_id =  $event->user->id;
-            $userRegistrationOffer->save();
+                    'heading' => $registrationOffer->heading,
+                    'description' => $registrationOffer->description,
+                    'on_click_url' => $registrationOffer->on_click_url,
+
+                    "usage_count" => 0,
+                    'discount_percent' => $registrationOffer->discount_percent,
+                    'expires_at' => Carbon::now()->add($registrationOffer->expires_in_value, $registrationOffer->expires_in_period),
+                    'monthly_recurring_discount_count' => $registrationOffer->monthly_recurring_discount_count,
+                    'yearly_recurring_discount_count' => $registrationOffer->yearly_recurring_discount_count,
+                ]);
+                $userRegistrationOffer->registration_offer_id =  $registrationOffer->id;
+                $userRegistrationOffer->user_id =  $event->user->id;
+                $userRegistrationOffer->ip_address = $currentIpAddress;
+                $userRegistrationOffer->save();
+            }
         }
     }
 }

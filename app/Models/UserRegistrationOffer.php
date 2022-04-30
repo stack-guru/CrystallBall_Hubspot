@@ -25,6 +25,8 @@ class UserRegistrationOffer extends Model
         'expires_at',
         'recurring_discount_count',
 
+        'ip_adddress',
+
     ];
 
     protected $casts = [
