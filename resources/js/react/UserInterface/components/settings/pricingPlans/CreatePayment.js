@@ -16,15 +16,23 @@ export default class CreatePayment extends Component {
         this.state = {
             pricePlan: undefined,
             paymentDetails: {
-                company_name: '',
-                company_registration_number: '',
-                phone_number_prefix: '',
-                phone_number: '',
+                company_name: ' ',
+                company_registration_number: ' ',
+                phone_number_prefix: ' ',
+                phone_number: ' ',
 
-                cardNumber: '',
-                expirationMonth: '',
-                expirationYear: '',
-                securityCode: '',
+                city: ' ',
+                country: 'Country',
+                billing_address: ' ',
+                zip_code: ' ',
+
+                first_name: ' ',
+                last_name: ' ',
+
+                cardNumber: ' ',
+                expirationMonth: ' ',
+                expirationYear: ' ',
+                securityCode: ' ',
             },
             isBusy: false,
             isDirty: false,
