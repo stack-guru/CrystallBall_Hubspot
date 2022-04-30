@@ -1,20 +1,58 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import HttpClient from '../../utils/HttpClient';
 
 export default class indexSettings extends React.Component {
 
     constructor(props) {
         super(props);
 
+        this.state = {
+            showSuspendAccountModal: false,
+            suspension_feedback: ''
+        };
+
+        this.toggleSuspendAccountModal = this.toggleSuspendAccountModal.bind(this);
+        this.suspendAccount = this.suspendAccount.bind(this);
     }
 
     componentDidMount() {
         document.title = 'Settings';
     }
 
+    toggleSuspendAccountModal(event) {
+        if (this.props.user.user) swal.fire("Unauthorized", "Only owner of the account can suspend accounts.", "error");
+        this.setState({ showSuspendAccountModal: !this.state.showSuspendAccountModal });
+    }
+
+    suspendAccount(event) {
+        event.preventDefault();
+    }
+
     render() {
         return (
             <div className="container-xl  component-wrapper">
+                <div className="modal fade show" tabIndex="-1" role="dialog" style={{ display: this.state.showSuspendAccountModal ? 'block' : 'none' }}>
+                    <div className="modal-dialog" role="document" >
+                        <div className="modal-content" style={{ width: '450px' }}>
+                            <form action="/user" method="POST">
+                                <input type="hidden" name={"_token"} value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <div className="modal-header">
+                                    <h3>Account Suspension</h3>
+                                </div>
+                                <div className="modal-body text-left">
+                                    <label>Are you sure you want to delete your account? This action can not be undone. Why do you decided to delete your account?</label>
+                                    <textarea required className="form-control" rows={5} name="suspension_feedback" value={this.state.suspension_feedback} onChange={(event) => { this.setState({ [event.target.name]: event.target.value }) }}></textarea>
+                                </div>
+                                <div className="modal-footer">
+                                    <button className="btn btn-primary float-left" type="submit" >Suspend Account</button>
+                                    <button className="btn btn-secondary float-right" type="button" onClick={this.toggleSuspendAccountModal}>Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
                         <div className="user-setting-head box-shadow gaa-text-color rounded">
@@ -36,11 +74,16 @@ export default class indexSettings extends React.Component {
                                         <span className="nav-link">Change password</span>
                                     </Link>
                                 </li >
+                                <li className='nav-item border-bottom'>
+                                    <a href="#" onClick={this.toggleSuspendAccountModal}>
+                                        <span className="nav-link">Suspend Account</span>
+                                    </a>
+                                </li >
                             </ul>
                         </div>
 
                         <div className="plan bg-white my-3 user-setting-box  box-shadow rounded">
-                            <h4 className="border-bottom gaa-text-primary"><b>Accounts</b></h4>
+                            <h4 className="border-bottom gaa-text-primary"><b>Connected Accounts</b></h4>
                             <ul className='list-unstyled list-group mt-2 ml-4'>
                                 <li className='nav-item border-bottom'>
                                     <Link to="/settings/google-account">

@@ -2,29 +2,29 @@
 
 namespace App\Mail;
 
-use App\Models\Admin;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AdminPlanUpgradedMail extends Mailable implements ShouldQueue
+class AdminUserSuspendedAccount extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
     public $admin;
     public $user;
+    public $suspensionFeedback;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Admin $admin, User $user)
+    public function __construct($admin, $user, $suspensionFeedback)
     {
         $this->admin = $admin;
         $this->user = $user;
+        $this->suspensionFeedback = $suspensionFeedback;
     }
 
     /**
@@ -34,9 +34,10 @@ class AdminPlanUpgradedMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject($this->user->name . " upgraded his/her plan!")
-            ->view('mails/admin/planUpgraded')
+        return $this->subject($this->user->name . " suspended account!")
+            ->view('mails/admin/userSuspendedAccount')
             ->with('admin', $this->admin)
-            ->with('user', $this->user);
+            ->with('user', $this->user)
+            ->with('suspensionFeedback', $this->suspensionFeedback);
     }
 }

@@ -16,8 +16,10 @@ use App\Events\WebsiteMonitoringActivated;
 use App\Events\WebsiteMonitoringDeactivated;
 use App\Events\WordPressActivated;
 use App\Events\WordPressDeactivatedManually;
+use App\Mail\AdminUserSuspendedAccount;
 use App\Mail\SupportRequestMail;
 use App\Models\Annotation;
+use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -48,6 +50,23 @@ class HomeController extends Controller
         $user->user_registration_offers =  $user->pricePlan->price == 0 ? UserRegistrationOffer::ofCurrentUser()->alive()->get() : [];
 
         return ['user' => $user];
+    }
+
+    public function suspendAccount(Request $request)
+    {
+        $user = Auth::user();
+        if ($user->user) abort(403, 'Only owner of the account can suspend accounts.');
+
+        $user->status = User::STATUS_SUSPENDED;
+        $user->save();
+
+        Auth::logout();
+
+        foreach (Admin::all() as $admin) {
+            Mail::to($admin)->send(new AdminUserSuspendedAccount($admin, $user, $request->suspension_feedback));
+        }
+
+        return redirect()->route('login')->with('message', 'User Account suspended.');
     }
 
     private function checkPricePlanLimit($user)

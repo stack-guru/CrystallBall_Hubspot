@@ -26,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
     const VIEWER = 'viewer';
 
     const STATUS_ACTIVE = 'active';
+    const STATUS_SUSPENDED = 'suspended';
 
     const EMPTY_PASSWORD = '.';
 

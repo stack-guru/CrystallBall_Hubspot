@@ -5,10 +5,11 @@ namespace App\Mail;
 use App\Models\Admin;
 use App\Models\PaymentDetail;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AdminFailedPaymentTransactionMail extends Mailable
+class AdminFailedPaymentTransactionMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -24,7 +25,6 @@ class AdminFailedPaymentTransactionMail extends Mailable
     {
         $this->paymentDetail = $paymentDetail;
         $this->admin = $admin;
-
     }
 
     /**

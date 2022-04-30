@@ -79,7 +79,6 @@ class Main extends React.Component {
     render() {
         if (this.state.user == undefined) return null;
 
-        console.log(this.props.location.pathname);
         if ([
             "/settings",
             "/settings/price-plans",
