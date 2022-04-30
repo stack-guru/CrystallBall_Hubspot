@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\ActiveStatusScope;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
@@ -23,6 +24,8 @@ class User extends Authenticatable implements MustVerifyEmail
     const ADMIN = 'admin';
     const TEAM = 'team';
     const VIEWER = 'viewer';
+
+    const STATUS_ACTIVE = 'active';
 
     const EMPTY_PASSWORD = '.';
 
@@ -112,6 +115,16 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $with = ['user'];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new ActiveStatusScope);
+    }
 
     public function pricePlan()
     {
