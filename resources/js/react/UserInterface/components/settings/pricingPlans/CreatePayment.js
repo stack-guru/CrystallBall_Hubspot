@@ -451,7 +451,7 @@ export default class CreatePayment extends Component {
                                                         <div className="col-6 text-right">${actualPrice}</div>
                                                     </div>
 
-                                                    {annualDiscountAmount ?
+                                                    {annualDiscountAmount && annualDiscountAmount != "0.00" ?
                                                         <React.Fragment>
                                                             <div className="row">
                                                                 <div className="col-6">Annual Discount ({this.state.pricePlan.yearly_discount_percent}%)</div>
@@ -472,7 +472,7 @@ export default class CreatePayment extends Component {
                                                             : null
                                                     }
                                                     {
-                                                        userRegistrationOfferDiscountAmount ?
+                                                        userRegistrationOfferDiscountAmount && userRegistrationOfferDiscountAmount != "0.00" ?
                                                             <React.Fragment>
                                                                 <div className="row">
                                                                     <div className="col-6">Limited Time Offer</div>
