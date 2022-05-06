@@ -116,7 +116,7 @@ class PaymentController extends Controller
             $blueSnapService = new BlueSnapService;
 
             // Basic monthly price
-            $price = $pricePlan->price;
+            $price = $pricePlan->price * $request->plan_duration;
             $discountPercentSum = 0.00;
 
             // Registration Offers
@@ -138,7 +138,6 @@ class PaymentController extends Controller
                 if ($request->plan_duration == PricePlan::ANNUALLY) {
                     if ($pricePlan->yearly_discount_percent > 0) {
                         $discountPercentSum += $pricePlan->yearly_discount_percent;
-                        $price = $pricePlan->price * PricePlan::ANNUALLY;
                     }
                 }
             }
