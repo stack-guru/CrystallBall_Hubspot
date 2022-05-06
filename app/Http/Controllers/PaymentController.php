@@ -158,7 +158,7 @@ class PaymentController extends Controller
                 $pricePlanSubscription->left_coupon_recurring = $coupon->recurring_discount_count;
             }
 
-            $price = $price - (round((float)(($price) * ($discountPercentSum / 100)), 2));
+            $price = $price - (($price) * ($discountPercentSum / 100));
 
             // General Sales Tax
             if (array_search($request->country, $this::taxableCountries) !== false) {

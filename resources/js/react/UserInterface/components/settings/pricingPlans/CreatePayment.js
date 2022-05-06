@@ -283,22 +283,28 @@ export default class CreatePayment extends Component {
                 }
             });
             totalPrice -= parseFloat(userRegistrationOfferDiscountAmount);
-            userRegistrationOfferDiscountAmount = parseFloat(userRegistrationOfferDiscountAmount).toFixed(2)
+            userRegistrationOfferDiscountAmount = parseFloat(userRegistrationOfferDiscountAmount);
         } else {
             if (this.state.planDuration == 12) {
-                annualDiscountAmount = (parseFloat((this.state.pricePlan.price * 12) * (this.state.pricePlan.yearly_discount_percent / 100)).toFixed(2));
+                annualDiscountAmount = (parseFloat((this.state.pricePlan.price * 12) * (this.state.pricePlan.yearly_discount_percent / 100)));
                 totalPrice -= annualDiscountAmount;
             }
         }
 
         if (this.state.coupon) {
-            discountPrice = parseFloat(((this.state.coupon.discount_percent / 100) * (this.state.pricePlan.price * this.state.planDuration))).toFixed(2);
+            discountPrice = parseFloat(((this.state.coupon.discount_percent / 100) * (this.state.pricePlan.price * this.state.planDuration)));
             totalPrice -= discountPrice;
         }
         if (this.state.taxPercent) {
             taxAmount = parseFloat(((this.state.taxPercent / 100) * totalPrice));
             totalPrice += taxAmount;
         }
+
+
+        actualPrice = parseFloat(actualPrice).toFixed(2);
+        annualDiscountAmount = parseFloat(annualDiscountAmount).toFixed(2);
+        discountPrice = parseFloat(discountPrice).toFixed(2);
+        userRegistrationOfferDiscountAmount = parseFloat(userRegistrationOfferDiscountAmount).toFixed(2);
         taxAmount = parseFloat(taxAmount).toFixed(2);
         totalPrice = parseFloat(totalPrice).toFixed(2);
 
