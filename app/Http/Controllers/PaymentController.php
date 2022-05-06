@@ -164,7 +164,7 @@ class PaymentController extends Controller
             if (array_search($request->country, $this::taxableCountries) !== false) {
                 $price = $price + ((17 / 100) * $price);
             }
-            $price = round($price, 2);
+            $price = round($price, 2, PHP_ROUND_HALF_DOWN);
 
             // Create this user in BlueSnap as Vaulted Shopper
             $vaultedShopper = $blueSnapService->createVaultedShopper([
