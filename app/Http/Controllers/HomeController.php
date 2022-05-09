@@ -69,7 +69,7 @@ class HomeController extends Controller
         Auth::logout();
 
         foreach (Admin::all() as $admin) {
-//            Mail::to($admin)->send(new AdminUserSuspendedAccount($admin, $user, $request->suspension_feedback));
+            Mail::to($admin)->send(new AdminUserSuspendedAccount($admin, $user, $request->suspension_feedback));
         }
 
         return redirect()->route('login')->with('message', 'Your account is deleted.');
