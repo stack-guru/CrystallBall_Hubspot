@@ -88,7 +88,27 @@ class GoogleAdsService  extends GoogleAPIService
           WHERE 
             campaign.status != 'REMOVED'",
         ]);
-        Log::channel('google')->error("Adwords API Response: ", ['response' => $response->json()]);
+        
+        if ($response->status() == 400 && !$repeatCall) {
+            // This code block only checks if google accounts can be fetched after refreshing access token
+            if ($this->refreshToken($googleAccount) == false) {
+                return false;
+            } else {
+                $gAK = $this->getCampaigns($googleAccount, true);
+                // On success it returns google analytics accounts else false
+                if ($gAK !== false) {
+                    return $gAK;
+                } else {
+                    return false;
+                }
+            }
+        } else if ($response->status() == 401 && $repeatCall) {
+            return false;
+        }
+
+        $respJson = $response->json();
+
+        return $respJson;
     }
 
     public function getAdGroups(GoogleAccount $googleAccount, $repeatCall = false)
@@ -128,7 +148,27 @@ class GoogleAdsService  extends GoogleAPIService
           WHERE 
             ad_group.status != 'REMOVED' ",
         ]);
-        Log::channel('google')->error("Adwords API Response: ", ['response' => $response->json()]);
+        
+        if ($response->status() == 400 && !$repeatCall) {
+            // This code block only checks if google accounts can be fetched after refreshing access token
+            if ($this->refreshToken($googleAccount) == false) {
+                return false;
+            } else {
+                $gAK = $this->getAdGroups($googleAccount, true);
+                // On success it returns google analytics accounts else false
+                if ($gAK !== false) {
+                    return $gAK;
+                } else {
+                    return false;
+                }
+            }
+        } else if ($response->status() == 401 && $repeatCall) {
+            return false;
+        }
+
+        $respJson = $response->json();
+
+        return $respJson;
     }
 
     public function getAdGroupOneDayMetrics(GoogleAccount $googleAccount, $selectedDate, $repeatCall = false)
@@ -154,7 +194,28 @@ class GoogleAdsService  extends GoogleAPIService
             ad_group.status != 'REMOVED' 
             AND segments.date = '" . $selectedDate->format('Y-m-d') . "'",
         ]);
-        Log::channel('google')->error("Adwords API Response: ", ['response' => $response->json()]);
+        
+        if ($response->status() == 400 && !$repeatCall) {
+            // This code block only checks if google accounts can be fetched after refreshing access token
+            if ($this->refreshToken($googleAccount) == false) {
+                return false;
+            } else {
+                $gAK = $this->getAdGroupOneDayMetrics($googleAccount, true);
+                // On success it returns google analytics accounts else false
+                if ($gAK !== false) {
+                    return $gAK;
+                } else {
+                    return false;
+                }
+            }
+        } else if ($response->status() == 401 && $repeatCall) {
+            return false;
+        }
+
+        $respJson = $response->json();
+
+        return $respJson;
+
     }
 
     public function getAdGroupBetweenDaysAVGMetrics(GoogleAccount $googleAccount, $startDate, $endDate, $repeatCall = false)
@@ -181,6 +242,27 @@ class GoogleAdsService  extends GoogleAPIService
             ad_group.status != 'REMOVED' 
             AND segments.date BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "'",
         ]);
-        Log::channel('google')->error("Adwords API Response: ", ['response' => $response->json()]);
+        
+        if ($response->status() == 400 && !$repeatCall) {
+            // This code block only checks if google accounts can be fetched after refreshing access token
+            if ($this->refreshToken($googleAccount) == false) {
+                return false;
+            } else {
+                $gAK = $this->getAdGroupBetweenDaysAVGMetrics($googleAccount, $startDate, $endDate, true);
+                // On success it returns google analytics accounts else false
+                if ($gAK !== false) {
+                    return $gAK;
+                } else {
+                    return false;
+                }
+            }
+        } else if ($response->status() == 401 && $repeatCall) {
+            return false;
+        }
+
+        $respJson = $response->json();
+
+        return $respJson;
+
     }
 }
