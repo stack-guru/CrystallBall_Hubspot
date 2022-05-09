@@ -11,13 +11,13 @@ class GoogleAdsService  extends GoogleAPIService
 {
 
     protected $adwordsDeveloperToken;
-    protected $loginManagerCustomerId;
+    protected $loginManagerAccountCustomerId;
 
     public function __construct()
     {
         parent::__construct();
         $this->adwordsDeveloperToken = config('services.google.adwords.developer_token');
-        $this->ManagerAccountCustomerId =  str_replace("-", "", config('services.google.adwords.manager_account.customer_id'));
+        $this->loginManagerAccountCustomerId =  str_replace("-", "", config('services.google.adwords.manager_account.customer_id'));
     }
 
     public function getAccessibleCustomers(GoogleAccount $googleAccount, $repeatCall = false)
@@ -26,7 +26,7 @@ class GoogleAdsService  extends GoogleAPIService
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
-            // 'login-customer-id' => $this->ManagerAccountCustomerId
+            // 'login-customer-id' => $this->loginManagerAccountCustomerId
         ])->withToken($googleAccount->token)->get($url);
 
         if ($response->status() == 400 && !$repeatCall) {
@@ -61,7 +61,7 @@ class GoogleAdsService  extends GoogleAPIService
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
-            'login-customer-id' => $this->ManagerAccountCustomerId
+            'login-customer-id' => $this->loginManagerAccountCustomerId
         ])->withToken($googleAccount->token)->asForm()->post($url, [
             'pageSize' => 10,
             // https://developers.google.com/google-ads/api/fields/v10/campaign
@@ -117,7 +117,7 @@ class GoogleAdsService  extends GoogleAPIService
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
-            'login-customer-id' => $this->ManagerAccountCustomerId
+            'login-customer-id' => $this->loginManagerAccountCustomerId
         ])->withToken($googleAccount->token)->asForm()->post($url, [
             'pageSize' => 10,
             // https://developers.google.com/google-ads/api/fields/v10/ad_group
@@ -177,7 +177,7 @@ class GoogleAdsService  extends GoogleAPIService
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
-            'login-customer-id' => $this->ManagerAccountCustomerId
+            'login-customer-id' => $this->loginManagerAccountCustomerId
         ])->withToken($googleAccount->token)->asForm()->post($url, [
             'pageSize' => 10,
             // https://developers.google.com/google-ads/api/fields/v10/ad_group
@@ -224,7 +224,7 @@ class GoogleAdsService  extends GoogleAPIService
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
-            'login-customer-id' => $this->ManagerAccountCustomerId
+            'login-customer-id' => $this->loginManagerAccountCustomerId
         ])->withToken($googleAccount->token)->asForm()->post($url, [
             'pageSize' => 10,
             // https://developers.google.com/google-ads/api/fields/v10/ad_group
