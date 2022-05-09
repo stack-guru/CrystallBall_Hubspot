@@ -21,6 +21,7 @@ use App\Mail\SupportRequestMail;
 use App\Models\Annotation;
 use App\Models\Admin;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -52,21 +53,26 @@ class HomeController extends Controller
         return ['user' => $user];
     }
 
-    public function suspendAccount(Request $request)
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function deleteAccount(Request $request): RedirectResponse
     {
         $user = Auth::user();
-        if ($user->user) abort(403, 'Only owner of the account can suspend accounts.');
+        if ($user->user) abort(403, 'Only the admin can delete the account.');
 
-        $user->status = User::STATUS_SUSPENDED;
+        $user->status = User::STATUS_DELETED;
+        $user->status_changed_reason = $request->deletion_reason ?? '';
         $user->save();
 
         Auth::logout();
 
         foreach (Admin::all() as $admin) {
-            Mail::to($admin)->send(new AdminUserSuspendedAccount($admin, $user, $request->suspension_feedback));
+//            Mail::to($admin)->send(new AdminUserSuspendedAccount($admin, $user, $request->suspension_feedback));
         }
 
-        return redirect()->route('login')->with('message', 'User Account suspended.');
+        return redirect()->route('login')->with('message', 'Your account is deleted.');
     }
 
     private function checkPricePlanLimit($user)

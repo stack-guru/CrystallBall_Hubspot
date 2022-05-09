@@ -21,8 +21,12 @@ export default class indexSettings extends React.Component {
     }
 
     toggleSuspendAccountModal(event) {
-        if (this.props.user.user) swal.fire("Unauthorized", "Only owner of the account can suspend accounts.", "error");
-        this.setState({ showSuspendAccountModal: !this.state.showSuspendAccountModal });
+        if (this.props.user.user) {
+            swal.fire("Unauthorized", "Only the admin can delete the account.", "error");
+        }
+        else{
+            this.setState({ showSuspendAccountModal: !this.state.showSuspendAccountModal });
+        }
     }
 
     suspendAccount(event) {
@@ -39,14 +43,14 @@ export default class indexSettings extends React.Component {
                                 <input type="hidden" name={"_token"} value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />
                                 <input type="hidden" name="_method" value="DELETE" />
                                 <div className="modal-header">
-                                    <h3>Account Suspension</h3>
+                                    <h3>Delete Account</h3>
                                 </div>
                                 <div className="modal-body text-left">
                                     <label>Are you sure you want to delete your account? This action can not be undone. Why do you decided to delete your account?</label>
-                                    <textarea required className="form-control" rows={5} name="suspension_feedback" value={this.state.suspension_feedback} onChange={(event) => { this.setState({ [event.target.name]: event.target.value }) }}></textarea>
+                                    <textarea required className="form-control" rows={5} name="deletion_reason" ></textarea>
                                 </div>
                                 <div className="modal-footer">
-                                    <button className="btn btn-primary float-left" type="submit" >Suspend Account</button>
+                                    <button className="btn btn-danger float-left" type="submit" >Delete Account</button>
                                     <button className="btn btn-secondary float-right" type="button" onClick={this.toggleSuspendAccountModal}>Cancel</button>
                                 </div>
                             </form>
@@ -76,7 +80,7 @@ export default class indexSettings extends React.Component {
                                 </li >
                                 <li className='nav-item border-bottom'>
                                     <a href="#" onClick={this.toggleSuspendAccountModal}>
-                                        <span className="nav-link">Suspend Account</span>
+                                        <span className="nav-link text-danger">Delete Account</span>
                                     </a>
                                 </li >
                             </ul>
