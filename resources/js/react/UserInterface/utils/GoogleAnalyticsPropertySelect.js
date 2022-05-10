@@ -29,6 +29,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             }
             this.setState({ allProperties: options });
         });
+
     }
     componentDidUpdate(prevProps) {
         if (this.props != prevProps) {
@@ -100,12 +101,10 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             'Connect your Google Account to see all your data in one place, be able to filter data by property, see anomalies and analyze your data better.' +
             '</p>' +
             '<p style="font-size:14px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="text-dark">' +
-            'We do not share any data from your Google Accounts (<span class="text-primary"><a>see Privacy Policy</a></span>)' +
+            'We do not share any data from your Google Accounts (<span class="text-primary"><a href="https://www.crystalballinsight.com/privacy-policy" target="_blank">see Privacy Policy</a></span>)' +
             '</p>' +
             '</div>' +
             '</div>'
-
-
 
         return (
             <Select
@@ -125,7 +124,6 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 components={this.props.components}
                 onFocus={(e) => {
                     if (!this.state.isAccountLinked) {
-                    // if (true) {
                         /*
                         * Show new google analytics account popup
                         * */
@@ -138,13 +136,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                             },
                             confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                             confirmButtonText: "Connect"+ "<i class='ml-2 fa fa-caret-right'> </i>"
-                            // title: "Your Google Analytics Account is not linked yet",
-                            // text: "To assign an annotation to a property, first, you need to connect your Google Analytics accounts.",
-                            // icon: "info",
                         }).then(value => {
-
-                            // document.getElementById('swal2-html-container').style.MarginTop = '0px !important';
-
                             if (value.isConfirmed) {
                                 // Save pathname in this storage without domain name
                                 localStorage.setItem("frontend_redirect_to", window.location.pathname);
