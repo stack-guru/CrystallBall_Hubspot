@@ -91,6 +91,22 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         //     selectedOptions = this.props.value;
         // }
 
+        const accountNotLinkedHtml = '' +
+            '<div class="">' +
+                '<img src="/images/imgpopup.png" class="img-fluid">' +
+            '<div class="bg-light p-3">' +
+            '<h1  class=" text-black mt-2 py-4">Let\'s Connect Your Google Account</h1>' +
+            '<p style="line-height:23px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="px-5 text-dark">' +
+            'Connect your Google Account to see all your data in one place, be able to filter data by property, see anomalies and analyze your data better.' +
+            '</p>' +
+            '<p style="font-size:14px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="text-dark">' +
+            'We do not share any data from your Google Accounts (<span class="text-primary"><a>see Privacy Policy</a></span>)' +
+            '</p>' +
+            '</div>' +
+            '</div>'
+
+
+
         return (
             <Select
                 loadOptions={this.searchGoogleAnalyticsProperties}
@@ -108,18 +124,33 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 placeholder={this.props.placeholder}
                 components={this.props.components}
                 onFocus={(e) => {
-                    if (!this.state.isAccountLinked) {
+                    // if (!this.state.isAccountLinked) {
+                    if (true) {
+                        /*
+                        * Show new google analytics account popup
+                        * */
                         swal.fire({
-                            title: "Your Google Analytics Account is not linked yet",
-                            text: "To assign an annotation to a property, first, you need to connect your Google Analytics accounts.",
-                            icon: "info",
+                            html: accountNotLinkedHtml,
+                            width: 700,
+                            customClass: {
+                                popup: 'bg-light pb-5',
+                                htmlContainer: 'm-0',
+                            },
+                            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                            confirmButtonText: "Connect"+ "<i class='ml-2 fa fa-caret-right'> </i>"
+                            // title: "Your Google Analytics Account is not linked yet",
+                            // text: "To assign an annotation to a property, first, you need to connect your Google Analytics accounts.",
+                            // icon: "info",
                         }).then(value => {
+
+                            // document.getElementById('swal2-html-container').style.MarginTop = '0px !important';
+
                             if (value.isConfirmed) {
                                 // Save pathname in this storage without domain name
                                 localStorage.setItem("frontend_redirect_to", window.location.pathname);
                                 window.location = "/settings/google-account/create";
                             }
-                        })
+                        });
                     }
                     this.props.onFocus(e);
                 }}
