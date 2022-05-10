@@ -124,8 +124,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 placeholder={this.props.placeholder}
                 components={this.props.components}
                 onFocus={(e) => {
-                    // if (!this.state.isAccountLinked) {
-                    if (true) {
+                    if (!this.state.isAccountLinked) {
+                    // if (true) {
                         /*
                         * Show new google analytics account popup
                         * */
