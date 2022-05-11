@@ -669,6 +669,163 @@ export default class DataSourceIndex extends React.Component {
                                     <div></div>
                                 </div>
                             </div>
+                            {/*
+                                Google ads history changes section
+                            */}
+                            <div className="col-md-6 mt-2" style={{minHeight: "230px"}}>
+                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                                    <div>
+                                        <div className="d-flex mt-2 justify-content-between "
+                                             id="web-monitoring-data-source-section">
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small style={{ fontSize: "18px" }}>
+                                                        Google Ads History Changes <UserAnnotationColorPicker
+                                                            name="wordpress_updates"
+                                                            value={this.state.userAnnotationColors.wordpress_updates}
+                                                            updateCallback={this.updateUserAnnotationColors}/>
+                                                        <img id="web-monitors-datasource-hint" className="hint-button-2" src="/images/info-logo.png"/>
+                                                    </small>
+                                                </h2>
+                                                <UncontrolledPopover trigger="legacy" placement="right"
+                                                                     isOpen={this.state.showHintFor == 'google_ads_history_changes'}
+                                                                     target="web-monitors-datasource-hint"
+                                                                     toggle={() => {
+                                                                         this.changeShownHint(null)
+                                                                     }} onClick={() => {
+                                                    this.changeShownHint(null)
+                                                }}>
+                                                    <PopoverHeader>Coming soon</PopoverHeader>
+                                                    <PopoverBody>This feature will be available soon, stay tuned.</PopoverBody>
+                                                </UncontrolledPopover>
+                                            </div>
+                                            <div className="px-2">
+                                                Deactive
+                                                <label className="trigger switch">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="is_google_ads_history_changes_enabled"
+                                                        onClick={e => {
+                                                            e.preventDefault();
+                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                        }}
+                                                    />
+                                                    <span className="slider round"/>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/*
+                                Anomalies Detection section
+                            */}
+                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
+                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                                    <div>
+                                        <div className="d-flex mt-2 justify-content-between "
+                                            id="web-monitoring-data-source-section">
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Anomalies Detection <UserAnnotationColorPicker
+                                                            name="wordpress_updates"
+                                                            value={this.state.userAnnotationColors.wordpress_updates}
+                                                            updateCallback={this.updateUserAnnotationColors} />
+                                                        <img id="web-monitors-datasource-hint" className="hint-button-2" src="/images/info-logo.png" />
+                                                    </small>
+                                                </h2>
+                                                <UncontrolledPopover trigger="legacy" placement="right"
+                                                    isOpen={this.state.showHintFor == 'google_ads_history_changes'}
+                                                    target="web-monitors-datasource-hint"
+                                                    toggle={() => {
+                                                        this.changeShownHint(null)
+                                                    }} onClick={() => {
+                                                        this.changeShownHint(null)
+                                                    }}>
+                                                    <PopoverHeader>Coming soon</PopoverHeader>
+                                                    <PopoverBody>This feature will be available soon, stay tuned.</PopoverBody>
+                                                </UncontrolledPopover>
+                                            </div>
+                                            <div className="px-2">
+                                                Deactive
+                                                <label className="trigger switch">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="is_google_ads_history_changes_enabled"
+                                                        onClick={e => {
+                                                            e.preventDefault();
+                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                        }}
+                                                    />
+                                                    <span className="slider round" />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/*
+                                Budget Tracking section
+                            */}
+                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
+                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                                    <div>
+                                        <div className="d-flex mt-2 justify-content-between "
+                                            id="web-monitoring-data-source-section">
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Budget Tracking <UserAnnotationColorPicker
+                                                            name="wordpress_updates"
+                                                            value={this.state.userAnnotationColors.wordpress_updates}
+                                                            updateCallback={this.updateUserAnnotationColors} />
+                                                        <img id="web-monitors-datasource-hint" className="hint-button-2" src="/images/info-logo.png" />
+                                                    </small>
+                                                </h2>
+                                                <UncontrolledPopover trigger="legacy" placement="right"
+                                                    isOpen={this.state.showHintFor == 'google_ads_history_changes'}
+                                                    target="web-monitors-datasource-hint"
+                                                    toggle={() => {
+                                                        this.changeShownHint(null)
+                                                    }} onClick={() => {
+                                                        this.changeShownHint(null)
+                                                    }}>
+                                                    <PopoverHeader>Coming soon</PopoverHeader>
+                                                    <PopoverBody>This feature will be available soon, stay tuned.</PopoverBody>
+                                                </UncontrolledPopover>
+                                            </div>
+                                            <div className="px-2">
+                                                Deactive
+                                                <label className="trigger switch">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="is_google_ads_history_changes_enabled"
+                                                        onClick={e => {
+                                                            e.preventDefault();
+                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                        }}
+                                                    />
+                                                    <span className="slider round" />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                     <div className="col-md-3 col-sm-12 border-left" id="data-source-detail-container">
