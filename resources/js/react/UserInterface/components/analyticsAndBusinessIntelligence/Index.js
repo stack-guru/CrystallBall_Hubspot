@@ -91,10 +91,7 @@ export default class AnalyticsAndBusinessIntelligenceIndex extends React.Compone
                                 {/*
                                     href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en"
                                 */}
-                                <a target="_blank" href="#" onClick={e => {
-                                    e.preventDefault();
-                                    swal.fire('Coming Soon!', '', 'info');
-                                }}>
+                                <a target="_blank" href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en">
                                     <img style={{width: '90%', height: 'auto'}} src="/images/buttons/google-ads.svg"/>
                                 </a>
                                 <br/>
