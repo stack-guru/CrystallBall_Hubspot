@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
 import HttpClient from './HttpClient'
 
@@ -9,7 +9,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            aProperties: [{ value: "", label: "All Properties" }],
+            aProperties: [{value: "", label: "All Properties"}],
             allProperties: [],
             isAccountLinked: true
         };
@@ -21,20 +21,21 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         this.searchGoogleAnalyticsProperties(' ', (options) => {
             if (options.length) {
                 if (this.props.autoSelectFirst) {
-                    this.setState({ aProperties: [{ value: "", label: "Loading..." }] });
+                    this.setState({aProperties: [{value: "", label: "Loading..."}]});
                     setTimeout(() => {
                         this.onChangeHandler(options[0]);
                     }, 5000);
                 }
             }
-            this.setState({ allProperties: options });
+            this.setState({allProperties: options});
         });
 
     }
+
     componentDidUpdate(prevProps) {
         if (this.props != prevProps) {
             if (this.props.aProperties) {
-                this.setState({ aProperties: this.props.aProperties });
+                this.setState({aProperties: this.props.aProperties});
             }
         }
     }
@@ -53,19 +54,68 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 callback(options);
             }, (err) => {
                 if (err.response.status == 400) {
-                    this.setState({ isAccountLinked: false });
+                    this.setState({isAccountLinked: false});
                 }
             }).catch(err => {
-                this.setState({ errors: err, isLoading: false });
+            this.setState({errors: err, isLoading: false});
+        });
+
+        if (!this.state.isAccountLinked) {
+            const accountNotLinkedHtml = '' +
+                '<div class="">' +
+                '<img src="/images/imgpopup.png" class="img-fluid">' +
+                '<div class="bg-light p-3">' +
+                '<h1  class=" text-black mt-2 py-4">Let\'s Connect Your Google Account</h1>' +
+                '<p style="line-height:23px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="px-5 text-dark">' +
+                'Connect your Google Account to see all your data in one place, be able to filter data by property, see anomalies and analyze your data better.' +
+                '</p>' +
+                '<p style="font-size:14px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="text-dark">' +
+                'We do not share any data from your Google Accounts (<span class="text-primary"><a href="https://www.crystalballinsight.com/privacy-policy" target="_blank">see Privacy Policy</a></span>)' +
+                '</p>' +
+                '</div>' +
+                '</div>'
+            /*
+            * Show new google analytics account popup
+            * */
+            swal.fire({
+                html: accountNotLinkedHtml,
+                width: 700,
+                customClass: {
+                    popup: 'bg-light pb-5',
+                    htmlContainer: 'm-0',
+                },
+                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                confirmButtonText: "Connect" + "<i class='ml-2 fa fa-caret-right'> </i>",
+                allowOutsideClick: false
+            }).then(value => {
+                if (value.isConfirmed) {
+                    // Save pathname in this storage without domain name
+                    localStorage.setItem("frontend_redirect_to", window.location.pathname);
+                    window.location = "/settings/google-account/create";
+                }
             });
+
+
+        }
+
+
     }
 
     onChangeHandler(sOption) {
         if (sOption == null) {
-            this.setState({ aProperties: [{ value: "", label: "All Properties" }] });
-            if (this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: [""], wasLastDataFetchingSuccessful: sOption.was_last_data_fetching_successful } });
-            if (!this.props.multiple) this.props.onChangeCallback({ target: { name: this.props.name, value: "" }, wasLastDataFetchingSuccessful: sOption.was_last_data_fetching_successful });
-            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Properties" }]);
+            this.setState({aProperties: [{value: "", label: "All Properties"}]});
+            if (this.props.multiple) this.props.onChangeCallback({
+                target: {
+                    name: this.props.name,
+                    value: [""],
+                    wasLastDataFetchingSuccessful: sOption.was_last_data_fetching_successful
+                }
+            });
+            if (!this.props.multiple) this.props.onChangeCallback({
+                target: {name: this.props.name, value: ""},
+                wasLastDataFetchingSuccessful: sOption.was_last_data_fetching_successful
+            });
+            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{value: "", label: "All Properties"}]);
         } else {
             // aProperties.push(sOption);
             let aProperties = null;
@@ -74,15 +124,27 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             } else {
                 aProperties = sOption;
             }
-            this.setState({ aProperties: aProperties });
-            if (this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.filter(sO => sO.value !== "").map(sO => sO.value), wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful } });
-            if (!this.props.multiple) (this.props.onChangeCallback)({ target: { name: this.props.name, value: sOption.value, wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful } });
+            this.setState({aProperties: aProperties});
+            if (this.props.multiple) (this.props.onChangeCallback)({
+                target: {
+                    name: this.props.name,
+                    value: sOption.filter(sO => sO.value !== "").map(sO => sO.value),
+                    wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful
+                }
+            });
+            if (!this.props.multiple) (this.props.onChangeCallback)({
+                target: {
+                    name: this.props.name,
+                    value: sOption.value,
+                    wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful
+                }
+            });
             if (this.props.onChangeCallback2) (this.props.onChangeCallback2)(aProperties);
         }
     }
 
     render() {
-        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo}/>
         let aProperties = this.state.aProperties;
 
         // let selectedOptions;
@@ -92,24 +154,26 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         //     selectedOptions = this.props.value;
         // }
 
-        const accountNotLinkedHtml = '' +
-            '<div class="">' +
-                '<img src="/images/imgpopup.png" class="img-fluid">' +
-            '<div class="bg-light p-3">' +
-            '<h1  class=" text-black mt-2 py-4">Let\'s Connect Your Google Account</h1>' +
-            '<p style="line-height:23px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="px-5 text-dark">' +
-            'Connect your Google Account to see all your data in one place, be able to filter data by property, see anomalies and analyze your data better.' +
-            '</p>' +
-            '<p style="font-size:14px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="text-dark">' +
-            'We do not share any data from your Google Accounts (<span class="text-primary"><a href="https://www.crystalballinsight.com/privacy-policy" target="_blank">see Privacy Policy</a></span>)' +
-            '</p>' +
-            '</div>' +
-            '</div>'
+        // const accountNotLinkedHtml = '' +
+        //     '<div class="">' +
+        //     '<img src="/images/imgpopup.png" class="img-fluid">' +
+        //     '<div class="bg-light p-3">' +
+        //     '<h1  class=" text-black mt-2 py-4">Let\'s Connect Your Google Account</h1>' +
+        //     '<p style="line-height:23px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="px-5 text-dark">' +
+        //     'Connect your Google Account to see all your data in one place, be able to filter data by property, see anomalies and analyze your data better.' +
+        //     '</p>' +
+        //     '<p style="font-size:14px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="text-dark">' +
+        //     'We do not share any data from your Google Accounts (<span class="text-primary"><a href="https://www.crystalballinsight.com/privacy-policy" target="_blank">see Privacy Policy</a></span>)' +
+        //     '</p>' +
+        //     '</div>' +
+        //     '</div>'
 
         return (
             <Select
                 loadOptions={this.searchGoogleAnalyticsProperties}
-                noOptionsMessage={() => { return "Enter chars to search" }}
+                noOptionsMessage={() => {
+                    return "Enter chars to search"
+                }}
                 className={this.props.className}
                 name={this.props.name}
                 disabled={this.props.disabled}
@@ -123,27 +187,27 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 placeholder={this.props.placeholder}
                 components={this.props.components}
                 onFocus={(e) => {
-                    if (!this.state.isAccountLinked) {
-                        /*
-                        * Show new google analytics account popup
-                        * */
-                        swal.fire({
-                            html: accountNotLinkedHtml,
-                            width: 700,
-                            customClass: {
-                                popup: 'bg-light pb-5',
-                                htmlContainer: 'm-0',
-                            },
-                            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                            confirmButtonText: "Connect"+ "<i class='ml-2 fa fa-caret-right'> </i>"
-                        }).then(value => {
-                            if (value.isConfirmed) {
-                                // Save pathname in this storage without domain name
-                                localStorage.setItem("frontend_redirect_to", window.location.pathname);
-                                window.location = "/settings/google-account/create";
-                            }
-                        });
-                    }
+                    // if (!this.state.isAccountLinked) {
+                    //     /*
+                    //     * Show new google analytics account popup
+                    //     * */
+                    //     swal.fire({
+                    //         html: accountNotLinkedHtml,
+                    //         width: 700,
+                    //         customClass: {
+                    //             popup: 'bg-light pb-5',
+                    //             htmlContainer: 'm-0',
+                    //         },
+                    //         confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                    //         confirmButtonText: "Connect"+ "<i class='ml-2 fa fa-caret-right'> </i>"
+                    //     }).then(value => {
+                    //         if (value.isConfirmed) {
+                    //             // Save pathname in this storage without domain name
+                    //             localStorage.setItem("frontend_redirect_to", window.location.pathname);
+                    //             window.location = "/settings/google-account/create";
+                    //         }
+                    //     });
+                    // }
                     this.props.onFocus(e);
                 }}
             />
