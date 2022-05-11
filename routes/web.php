@@ -57,7 +57,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
     Route::delete('user', [App\Http\Controllers\HomeController::class, 'deleteAccount'])->withoutMiddleware('only.non.empty.password');
 
     Route::view('dashboard', 'ui/app'); // obsolete
-    // Route::view('analytics', 'ui/app');
+    Route::view('analytics', 'ui/app');
     Route::view('dashboard/analytics', 'ui/app');
     Route::view('dashboard/search-console', 'ui/app');
 

@@ -11,6 +11,7 @@ class Sidebar extends React.Component {
         this.state = {
             show: false,
         }
+
     }
 
     componentDidMount() {
@@ -36,6 +37,31 @@ class Sidebar extends React.Component {
             $("body").toggleClass("is-collapsed");
         });
 
+    }
+
+    showBetaAlert(ev) {
+        ev.preventDefault();
+        let alreadyDisplayed = localStorage.getItem('analytics_popup_showed') === 'true';
+        if (!alreadyDisplayed) {
+            swal.fire({
+                title: "Warning",
+                text: "This page is still on Beta, would you like to access anyway?",
+                icon: "warning",
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                dangerMode: true,
+            }).then(value => {
+                // save state 
+                localStorage.setItem('analytics_popup_showed', 'true');
+                if (value.isConfirmed) {
+                    window.location.href = '/analytics';
+                }
+            })
+        } else{
+            window.location.href = '/analytics';
+        }
     }
 
     render() {
@@ -66,8 +92,10 @@ class Sidebar extends React.Component {
                     </div>
                 </div>
                 <ul className="sidebar-menu scrollable pos-r ">
-                    {/* <li className="nav-item gaa-menu-item">
-                        <Link to="/analytics" >
+                    <li className="nav-item gaa-menu-item">
+                        <Link to="/analytics" onClick={(ev) => {
+                            this.showBetaAlert(ev)
+                        }}>
                             <span className="sidebar-link" >
                                 <span className="icon-holder">
                                     <img src="/images/svg/google-analytics-icon.svg" width="25px" height="25px" />
@@ -75,7 +103,7 @@ class Sidebar extends React.Component {
                                 <span className="title">Analytics</span>
                             </span>
                         </Link>
-                    </li> */}
+                    </li>
                     {/* <li className="nav-item gaa-menu-item">
                         <Link to="/dashboard/search-console" >
                             <span className="sidebar-link" >
