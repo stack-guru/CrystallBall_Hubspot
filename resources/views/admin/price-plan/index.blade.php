@@ -11,25 +11,36 @@
                     <a href="{{ route('admin.price-plan.create') }}" class="btn btn-primary">Add</a>
                     <table class="table table-hoved table-bordered">
                         <thead>
-                            <tr><th>Name</th><th>Price</th><th>Actions</th></tr>
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
                         </thead>
                         <tbody>
                             @foreach($pricePlans as $pricePlan)
-                                <tr>
-                                    <td>{{ $pricePlan->name }}</td>
-                                    <td>{{ $pricePlan->price }}</td>
-                                    <td>
-                                        <a class="btn btn-default" href="{{ route('admin.price-plan.edit', $pricePlan->id) }}">Edit</a>
-                                        <form id="deletePricePlanForm{{$pricePlan->id}}" method="POST" action="{{ route('admin.price-plan.destroy', $pricePlan->id) }}">
-                                            @csrf @method("DELETE")
-                                        </form>
-                                        <button type="button" onclick="if(confirm('Do you really want to delete this entity?')) document.getElementById('deletePricePlanForm{{$pricePlan->id}}').submit();" class="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>{{ $pricePlan->code }}</td>
+                                <td>{{ $pricePlan->name }}</td>
+                                <td>{{ $pricePlan->price }}</td>
+                                <td>
+                                    <a class="btn btn-default" href="{{ route('admin.price-plan.edit', $pricePlan->id) }}">Edit</a>
+                                    <form id="deletePricePlanForm{{$pricePlan->id}}" method="POST" action="{{ route('admin.price-plan.destroy', $pricePlan->id) }}">
+                                        @csrf @method("DELETE")
+                                    </form>
+                                    <button type="button" onclick="if(confirm('Do you really want to delete this entity?')) document.getElementById('deletePricePlanForm{{$pricePlan->id}}').submit();" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
                             @endforeach
                         </tbody>
                         <tfoot>
-                            <tr><th>Name</th><th>Price</th><th>Actions</th></tr>
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>

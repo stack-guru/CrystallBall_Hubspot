@@ -15,6 +15,10 @@
                             <input type="text" name="name" id="name" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label>Code</label>
+                            <input type="text" name="code" id="code" class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label>Price</label>
                             <input type="number" name="price" id="price" class="form-control" />
                         </div>
