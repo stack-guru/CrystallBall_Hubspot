@@ -88,11 +88,12 @@ export default class AnalyticsAndBusinessIntelligenceIndex extends React.Compone
                                 <br/>
                             </div>
                             <div className="col-lg-3 col-sm-4 text-center">
-                                {/*
-                                    href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en"
-                                */}
                                 <a target="_blank" href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en">
-                                    <img style={{width: '90%', height: 'auto'}} src="/images/buttons/google-ads.svg"/>
+                                    {/* <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-ads.svg" /> */}
+                                    <div style={{ position: "relative", left:"-12px", top:"-25px" }}>
+                                        <img style={{ position: "absolute", top: "25px", left: "25px" }} src="/images/buttons/google-ads.svg" />
+                                        <img style={{ position: "absolute", top: "29px", left: "28px", width: "95px", "z-index": "2" }} src='/images/coming_soon.png' />
+                                    </div>
                                 </a>
                                 <br/>
                                 {/* <a target="_blank" href="https://youtu.be/rIOB3Pc3N5E">See how it works</a> */}
