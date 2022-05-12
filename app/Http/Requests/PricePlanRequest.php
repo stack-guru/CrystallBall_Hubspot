@@ -26,6 +26,7 @@ class PricePlanRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'code' => 'nullable|string',
             'short_description' => 'required|string',
             'badge_text' => 'nullable|string',
             'annotations_count' => "required|numeric",
