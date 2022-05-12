@@ -23,21 +23,38 @@ class GoogleAccountController extends Controller
         return ['google_accounts' => $googleAccounts];
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $scopes = [
-            'https://www.googleapis.com/auth/userinfo.profile',
-            'https://www.googleapis.com/auth/userinfo.email',
+        if ($request->has('google_analytics_perm')) {
+            $scopes = [
+                'https://www.googleapis.com/auth/userinfo.profile',
+                'https://www.googleapis.com/auth/userinfo.email',
+            ];
+            if ($request->google_analytics_perm == 'true') {
+                array_push($scopes, 'https://www.googleapis.com/auth/analytics.readonly');
+            }
+            if ($request->google_search_console_perm == 'true') {
+                array_push($scopes, 'https://www.googleapis.com/auth/webmasters');
+                array_push($scopes, 'https://www.googleapis.com/auth/webmasters.readonly');
+            }
+            if ($request->google_ads_perm == 'true') {
+                array_push($scopes, 'https://www.googleapis.com/auth/adwords');
+            }
+        } else {
+            $scopes = [
+                'https://www.googleapis.com/auth/userinfo.profile',
+                'https://www.googleapis.com/auth/userinfo.email',
 
-            'https://www.googleapis.com/auth/analytics.readonly',
+                'https://www.googleapis.com/auth/analytics.readonly',
 
-            'https://www.googleapis.com/auth/webmasters',
-            'https://www.googleapis.com/auth/webmasters.readonly',
-        ];
+                'https://www.googleapis.com/auth/webmasters',
+                'https://www.googleapis.com/auth/webmasters.readonly',
+            ];
 
-        // if (config('app.env') == 'development' || config('app.env') == 'local') {
-            array_push($scopes, 'https://www.googleapis.com/auth/adwords');
-        // }
+            if (config('app.env') == 'development' || config('app.env') == 'local') {
+                array_push($scopes, 'https://www.googleapis.com/auth/adwords');
+            }
+        }
 
         return Socialite::driver('google')
             ->scopes($scopes)
