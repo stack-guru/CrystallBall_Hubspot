@@ -58,7 +58,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
      */
     public function handle()
     {
-        $downgradePricePlan = PricePlan::where('price', 0)->where('name', PricePlan::TRIAL_ENDED)->first();
+        $downgradePricePlan = PricePlan::where('price', 0)->where('code', PricePlan::CODE_FREE_NEW)->first();
         if ($downgradePricePlan) {
             $this->downgradePricePlanId = $downgradePricePlan->id;
             $this->downgradePricePlan = $downgradePricePlan;

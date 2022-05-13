@@ -294,7 +294,7 @@ setting-menu-item.dropdown {
     padding: 1rem;
     opacity: 0.7;
     transition: all 0.2s;
-    width: 15vw;
+    width: 100%;
 }
 
 .gaa-menu-item {

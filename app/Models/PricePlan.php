@@ -20,6 +20,8 @@ class PricePlan extends Model
     const PRO = 'Pro';
     const ENTERPRISE = 'Enterprise';
 
+    const CODE_FREE_NEW = 'free new';
+
     const APPSUMO_TIER_1 = 'AppSumo Tier 1';
     const APPSUMO_TIER_2 = 'AppSumo Tier 2';
 
