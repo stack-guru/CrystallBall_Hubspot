@@ -111,11 +111,9 @@ class RegisterController extends Controller
             ->scopes([
                 'https://www.googleapis.com/auth/userinfo.profile',
                 'https://www.googleapis.com/auth/userinfo.email',
-
-                'https://www.googleapis.com/auth/analytics.readonly',
-
-                'https://www.googleapis.com/auth/webmasters',
-                'https://www.googleapis.com/auth/webmasters.readonly',
+                // 'https://www.googleapis.com/auth/analytics.readonly',
+                // 'https://www.googleapis.com/auth/webmasters',
+                // 'https://www.googleapis.com/auth/webmasters.readonly',
             ])
             ->redirectUrl(route('socialite.google.redirect'))
             ->redirect();

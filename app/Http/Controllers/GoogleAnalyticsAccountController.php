@@ -21,13 +21,15 @@ class GoogleAnalyticsAccountController extends Controller
     {
         $user = Auth::user();
         if ($googleAccount->user_id !== $user->id) {
-            abort(404, 'Unable to find Google Analytics account with the given id.');
+            return ['success' => false];
+            // abort(404, 'Unable to find Google Analytics account with the given id.');
         }
 
         $gAS = new GoogleAnalyticsService;
         $googleAnalyticsAccounts = $gAS->getConnectedAccounts($googleAccount);
         if ($googleAnalyticsAccounts === false) {
-            abort(response()->json(['message' => "Unable to fetch google analytics accounts. Possibly no google analytics account exists or access removed by user."], 422));
+            return ['success' => false];
+            // abort(response()->json(['message' => "Unable to fetch google analytics accounts. Possibly no google analytics account exists or access removed by user."], 422));
         }
 
         $savedGoogleAnalyticAccountIds = GoogleAnalyticsAccount::select('ga_id')->ofCurrentUser()->orderBy('ga_id')->get()->pluck('ga_id')->toArray();
