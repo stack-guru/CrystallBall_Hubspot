@@ -26,15 +26,13 @@ class GoogleSearchConsoleSiteController extends Controller
     {
         $user = Auth::user();
         if ($googleAccount->user_id !== $user->id) {
-            return ['success' => false];
-            // abort(404, 'Unable to find Google Analytics account with the given id.');
+            abort(404, 'Unable to find Google Analytics account with the given id.');
         }
 
         $gAS = new GoogleSearchConsoleService;
         $googleSearchConsoleSites = $gAS->getSites($googleAccount);
         if ($googleSearchConsoleSites === false) {
-            return ['success' => false];
-            // abort(response()->json(['message' => "Unable to fetch google search console sites."], 422));
+            abort(response()->json(['message' => "Unable to fetch google search console sites."], 422));
         }
 
         $savedGoogleSearchConsoleSiteUrls = GoogleSearchConsoleSite::select('site_url')->ofCurrentUser()->orderBy('site_url')->get()->pluck('site_url')->toArray();

@@ -106,7 +106,7 @@ export default class GoogleAccountIndex extends React.Component {
                     </div>
                     <div className="row ml-0 mr-0 my-5">
                         <div className="col-12 text-center text-md-right text-lg-right">
-                            <a href="/settings/google-account/create"
+                            <a href="#"
                                 onClick={this.restrictionHandler}
                                 className="btn gaa-btn-primary text-white" >
                                 Connect New Account
@@ -338,7 +338,59 @@ export default class GoogleAccountIndex extends React.Component {
     restrictionHandler(e) {
         e.preventDefault();
         if (this.props.user.price_plan.ga_account_count > this.state.googleAccounts.length || this.props.user.price_plan.ga_account_count == 0) {
-            window.location = "/settings/google-account/create";
+            // window.location = "/settings/google-account/create";
+            /*
+            * Show permissions popup
+            * */
+
+            let googlePermissionsHtml = "<div class='text-center font-weight-bold'>Confirm the tools you'd like to activate</div>";
+
+            googlePermissionsHtml += "<div class='text-left my-4'>";
+
+            googlePermissionsHtml += "<div class='form-check form-check-inline'>";
+            googlePermissionsHtml += '<input class="form-check-input" type="checkbox" id="google_analytics_perm">';
+            googlePermissionsHtml += '<label class="form-check-label" for="google_analytics_perm">Access to Google Analytics <i class="fa fa-exclamation-circle"></i></label>';
+            googlePermissionsHtml += '</div>';
+
+            googlePermissionsHtml += "<div class='form-check form-check-inline mt-2'>";
+            googlePermissionsHtml += '<input class="form-check-input" type="checkbox" id="google_search_console_perm">';
+            googlePermissionsHtml += '<label class="form-check-label" for="google_search_console_perm">Access to Google Search Console <i class="fa fa-exclamation-circle"></i></label>';
+            googlePermissionsHtml += '</div>';
+
+            googlePermissionsHtml += "<div class='form-check form-check-inline mt-2'>";
+            googlePermissionsHtml += '<input class="form-check-input" type="checkbox" id="google_ads_perm">';
+            googlePermissionsHtml += '<label class="form-check-label" for="google_ads_perm">Access to Google Ads <i class="fa fa-exclamation-circle"></i></label>';
+            googlePermissionsHtml += '</div>';
+
+            googlePermissionsHtml += '<div class="mt-4">';
+            googlePermissionsHtml += '<a href="https://www.crystalballinsight.com/privacy-policy" target="_blank" class="">See our privacy policy</a>';
+            googlePermissionsHtml += '</div>';
+
+            googlePermissionsHtml += "</div>";
+
+            swal.fire({
+                html: googlePermissionsHtml,
+                width: 500,
+                confirmButtonClass: "btn btn-primary",
+                cancelButtonClass: "btn btn-secondary",
+                confirmButtonText: "Connect",
+                showCloseButton: true,
+                showCancelButton: true,
+                cancelButtonText: 'Cancel',
+                allowOutsideClick: false
+            }).then(value => {
+                if (value.isConfirmed) {
+                    let query_string_obj = {
+                        'google_analytics_perm': document.getElementById('google_analytics_perm').checked,
+                        'google_search_console_perm': document.getElementById('google_search_console_perm').checked,
+                        'google_ads_perm': document.getElementById('google_ads_perm').checked,
+                    }
+                    let query_string = new URLSearchParams(query_string_obj).toString();
+                    // Save pathname in this storage without domain name
+                    localStorage.setItem("frontend_redirect_to", window.location.pathname);
+                    window.location = "/settings/google-account/create?" + query_string;
+                }
+            });
         } else {
             swal.fire("Upgrade to Pro Plan!", "Google account feature is not available in this plan.", "warning").then(value => {
                 this.setState({ redirectTo: '/settings/price-plans' });
