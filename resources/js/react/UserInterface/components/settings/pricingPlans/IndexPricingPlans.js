@@ -135,7 +135,7 @@ export default class IndexPricingPlans extends React.Component {
 
                             {this.state.pricePlans.map(pricePlan => {
 
-                                return <div className="col-lg-4" key={pricePlan.id}>
+                                return <div className={"col-lg-" + (this.state.pricePlans.count / 12)} key={pricePlan.id}>
 
                                     {/*<input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />*/}
                                     {/*<input type="hidden" name="price_plan_id" value={pricePlan.id} />*/}
