@@ -44,7 +44,7 @@ class Sidebar extends React.Component {
         let alreadyDisplayed = localStorage.getItem('analytics_popup_showed') === 'true';
         if (!alreadyDisplayed) {
             swal.fire({
-                title: "Warning",
+                title: "",
                 text: "This page is still on Beta, would you like to access anyway?",
                 icon: "warning",
                 showCloseButton: true,
