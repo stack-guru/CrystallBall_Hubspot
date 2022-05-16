@@ -20,5 +20,8 @@ class UserAnnotationColor extends Model
         'web_monitors',
         'wordpress_updates',
         'google_alerts',
+        'g_ads_history_change',
+        'anomolies_detection',
+        'budget_tracking',
     ];
 }

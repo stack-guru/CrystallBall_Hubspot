@@ -167,6 +167,19 @@ class HomeController extends Controller
             $user->save();
         }
 
+        if ($request->has('is_ds_g_ads_history_change_enabled')) {
+            $user->is_ds_g_ads_history_change_enabled = $request->is_ds_g_ads_history_change_enabled;
+            $user->save();
+        }
+        if ($request->has('is_ds_anomolies_detection_enabled')) {
+            $user->is_ds_anomolies_detection_enabled = $request->is_ds_anomolies_detection_enabled;
+            $user->save();
+        }
+        if ($request->has('is_ds_budget_tracking_enabled')) {
+            $user->is_ds_budget_tracking_enabled = $request->is_ds_budget_tracking_enabled;
+            $user->save();
+        }
+
         return ['user_services' => $user];
     }
 

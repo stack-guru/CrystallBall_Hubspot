@@ -135,10 +135,10 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Website Monitoring Section
                             */}
-                            <div class="col-md-6 mt-2" style={{ minHeight: "230px" }}>
-                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                            <div class="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight:"180px" }}>
                                     <div>
-                                        <div className="d-flex mt-2 justify-content-between "
+                                        <div className="d-flex mt-2 justify-content-between"
                                             id="web-monitoring-data-source-section">
                                             <div className="px-2">
                                                 <h2>
@@ -157,8 +157,6 @@ export default class DataSourceIndex extends React.Component {
                                                     isOpen={this.state.showHintFor == 'web-monitors'}
                                                     target="web-monitors-datasource-hint"
                                                     toggle={() => {
-                                                        this.changeShownHint(null)
-                                                    }} onClick={() => {
                                                         this.changeShownHint(null)
                                                     }}>
                                                     <PopoverHeader>Web Monitoring</PopoverHeader>
@@ -205,8 +203,8 @@ export default class DataSourceIndex extends React.Component {
                                 News Alert Section
                             */}
 
-                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
-                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
                                             id="web-monitoring-data-source-section">
@@ -292,8 +290,8 @@ export default class DataSourceIndex extends React.Component {
                                 Google Updates Section
                             */}
 
-                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
-                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
                                             id="web-monitoring-data-source-section">
@@ -369,8 +367,8 @@ export default class DataSourceIndex extends React.Component {
                                 Retail Marketing Section
                             */}
 
-                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
-                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
                                             id="web-monitoring-data-source-section">
@@ -432,8 +430,8 @@ export default class DataSourceIndex extends React.Component {
                                 Holidays Section
                             */}
 
-                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
-                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
                                             id="web-monitoring-data-source-section">
@@ -508,8 +506,8 @@ export default class DataSourceIndex extends React.Component {
                                 Weather Alerts Section
                             */}
 
-                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
-                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
                                             id="web-monitoring-data-source-section">
@@ -597,8 +595,8 @@ export default class DataSourceIndex extends React.Component {
                                 Wordpress Updates Section
                             */}
 
-                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
-                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
                                             id="web-monitoring-data-source-section">
@@ -672,50 +670,38 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Google ads history changes section
                             */}
-                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
-                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
                                             id="web-monitoring-data-source-section">
                                             <div className="px-2">
                                                 <h2>
-                                                    <small style={{ fontSize: "18px" }}>
-                                                        Google Ads History Changes <UserAnnotationColorPicker
-                                                            name="wordpress_updates"
-                                                            value={this.state.userAnnotationColors.wordpress_updates}
+                                                    <small>
+                                                        Google Ads Changes <UserAnnotationColorPicker name="g_ads_history_change"
+                                                            value={this.state.userAnnotationColors.g_ads_history_change}
                                                             updateCallback={this.updateUserAnnotationColors} />
-                                                        <img id="web-monitors-datasource-hint" className="hint-button-2" src="/images/info-logo.png" />
+                                                        <img id="" className="hint-button-2" src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
-                                                <UncontrolledPopover trigger="legacy" placement="right"
-                                                    isOpen={this.state.showHintFor == 'google_ads_history_changes'}
-                                                    target="web-monitors-datasource-hint"
-                                                    toggle={() => {
-                                                        this.changeShownHint(null)
-                                                    }} onClick={() => {
-                                                        this.changeShownHint(null)
-                                                    }}>
-                                                    <PopoverHeader>Coming soon</PopoverHeader>
-                                                    <PopoverBody>This feature will be available soon, stay tuned.</PopoverBody>
-                                                </UncontrolledPopover>
                                             </div>
                                             <div className="px-2">
-                                                Deactive
+                                                {this.state.userServices.is_ds_g_ads_history_change_enabled ? "Active" : "Deactive"}
                                                 <label className="trigger switch">
-                                                    <input
-                                                        type="checkbox"
-                                                        name="is_google_ads_history_changes_enabled"
-                                                        onClick={e => {
-                                                            e.preventDefault();
-                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                        }}
+                                                    <input type="checkbox"
+                                                        checked={this.state.userServices.is_ds_g_ads_history_change_enabled}
+                                                        onChange={this.serviceStatusHandler}
+                                                        name="is_ds_g_ads_history_change_enabled"
                                                     />
-                                                    <span className="slider round" />
+                                                    <span className={`slider round ${this.state.userServices.is_ds_g_ads_history_change_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
                                         <div className="px-2">
                                             <div className="list-wrapper">
+                                            </div>
+                                            <div className='text-center mt-2'>
+                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
                                             </div>
                                         </div>
                                     </div>
@@ -724,50 +710,38 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Anomalies Detection section
                             */}
-                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
-                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
                                             id="web-monitoring-data-source-section">
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
-                                                        Anomalies Detection <UserAnnotationColorPicker
-                                                            name="wordpress_updates"
-                                                            value={this.state.userAnnotationColors.wordpress_updates}
+                                                        Anomalies Detection <UserAnnotationColorPicker name="anomolies_detection"
+                                                            value={this.state.userAnnotationColors.anomolies_detection}
                                                             updateCallback={this.updateUserAnnotationColors} />
-                                                        <img id="web-monitors-datasource-hint" className="hint-button-2" src="/images/info-logo.png" />
+                                                        <img className="hint-button-2" src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
-                                                <UncontrolledPopover trigger="legacy" placement="right"
-                                                    isOpen={this.state.showHintFor == 'google_ads_history_changes'}
-                                                    target="web-monitors-datasource-hint"
-                                                    toggle={() => {
-                                                        this.changeShownHint(null)
-                                                    }} onClick={() => {
-                                                        this.changeShownHint(null)
-                                                    }}>
-                                                    <PopoverHeader>Coming soon</PopoverHeader>
-                                                    <PopoverBody>This feature will be available soon, stay tuned.</PopoverBody>
-                                                </UncontrolledPopover>
                                             </div>
                                             <div className="px-2">
-                                                Deactive
+                                                {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"}
                                                 <label className="trigger switch">
-                                                    <input
-                                                        type="checkbox"
-                                                        name="is_google_ads_history_changes_enabled"
-                                                        onClick={e => {
-                                                            e.preventDefault();
-                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                        }}
+                                                    <input type="checkbox"
+                                                        checked={this.state.userServices.is_ds_anomolies_detection_enabled}
+                                                        onChange={this.serviceStatusHandler}
+                                                        name="is_ds_anomolies_detection_enabled"
                                                     />
-                                                    <span className="slider round" />
+                                                    <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
                                         <div className="px-2">
                                             <div className="list-wrapper">
+                                            </div>
+                                            <div className='text-center mt-2'>
+                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
                                             </div>
                                         </div>
                                     </div>
@@ -776,50 +750,39 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Budget Tracking section
                             */}
-                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
-                                <div className="d-flex border rounded flex-column justify-content-between h-100">
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
                                             id="web-monitoring-data-source-section">
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
-                                                        Budget Tracking <UserAnnotationColorPicker
-                                                            name="wordpress_updates"
-                                                            value={this.state.userAnnotationColors.wordpress_updates}
+                                                        Budget Tracking <UserAnnotationColorPicker name="budget_tracking"
+                                                            value={this.state.userAnnotationColors.budget_tracking}
                                                             updateCallback={this.updateUserAnnotationColors} />
-                                                        <img id="web-monitors-datasource-hint" className="hint-button-2" src="/images/info-logo.png" />
+                                                        <img className="hint-button-2" src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
-                                                <UncontrolledPopover trigger="legacy" placement="right"
-                                                    isOpen={this.state.showHintFor == 'google_ads_history_changes'}
-                                                    target="web-monitors-datasource-hint"
-                                                    toggle={() => {
-                                                        this.changeShownHint(null)
-                                                    }} onClick={() => {
-                                                        this.changeShownHint(null)
-                                                    }}>
-                                                    <PopoverHeader>Coming soon</PopoverHeader>
-                                                    <PopoverBody>This feature will be available soon, stay tuned.</PopoverBody>
-                                                </UncontrolledPopover>
                                             </div>
+
                                             <div className="px-2">
-                                                Deactive
+                                                {this.state.userServices.is_ds_budget_tracking_enabled ? "Active" : "Deactive"}
                                                 <label className="trigger switch">
-                                                    <input
-                                                        type="checkbox"
-                                                        name="is_google_ads_history_changes_enabled"
-                                                        onClick={e => {
-                                                            e.preventDefault();
-                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                        }}
+                                                    <input type="checkbox"
+                                                        checked={this.state.userServices.is_ds_budget_tracking_enabled}
+                                                        onChange={this.serviceStatusHandler}
+                                                        name="is_ds_budget_tracking_enabled"
                                                     />
-                                                    <span className="slider round" />
+                                                    <span className={`slider round ${this.state.userServices.is_ds_budget_tracking_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
                                         <div className="px-2">
                                             <div className="list-wrapper">
+                                            </div>
+                                            <div className='text-center mt-2'>
+                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
                                             </div>
                                         </div>
                                     </div>

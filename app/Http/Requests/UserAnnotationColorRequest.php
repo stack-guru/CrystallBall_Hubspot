@@ -34,6 +34,9 @@ class UserAnnotationColorRequest extends FormRequest
             'web_monitors' => 'nullable|string|max:10',
             'wordpress_updates' => 'nullable|string|max:10',
             'google_alerts' => 'nullable|string|max:10',
+            'g_ads_history_change' => 'nullable|string|max:10',
+            'anomolies_detection' => 'nullable|string|max:10',
+            'budget_tracking' => 'nullable|string|max:10',
         ];
     }
 }
