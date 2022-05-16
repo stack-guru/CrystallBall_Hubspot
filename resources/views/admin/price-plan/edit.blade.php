@@ -11,6 +11,10 @@
                     <div class="card-body">
                         @csrf @method('PUT')
                         <div class="form-group">
+                            <label>Sort Rank</label>
+                            <input type="number" name="sort_rank" id="sort_rank" value="{{old('sort_rank',$pricePlan->sort_rank)}}" class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label>Name</label>
                             <input type="text" name="name" id="name" class="form-control" value="{{old('name',$pricePlan->name ) }}" />
                         </div>

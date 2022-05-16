@@ -21,7 +21,7 @@ class PricePlanController extends Controller
 
     public function uiIndex()
     {
-        $pricePlans = PricePlan::where('is_enabled', true)->get();
+        $pricePlans = PricePlan::where('is_enabled', true)->orderBy('sort_rank')->get();
 
         return ['price_plans' => $pricePlans];
     }

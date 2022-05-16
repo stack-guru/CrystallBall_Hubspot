@@ -153,9 +153,9 @@ export default class IndexPricingPlans extends React.Component {
                                                 If you have some better approach for it, don't hesitate
                                                 to comment this one and try yours. */}
                                             {
-                                                pricePlan.short_description.length > 35 ? <p className="mb-0 card-text w-100 text-center">{pricePlan.short_description}</p> :
-                                                    pricePlan.short_description.length == 0 ? <p className="mb-0 card-text w-100 text-center">&nbsp;<br />&nbsp;</p> :
-                                                        <p className="mb-0 card-text w-100 text-center">{pricePlan.short_description}<br />&nbsp;</p>
+                                                pricePlan.short_description.length > 35 ? <p className="mb-0 card-text w-100 text-center minh-92px">{pricePlan.short_description}</p> :
+                                                    pricePlan.short_description.length == 0 ? <p className="mb-0 card-text w-100 text-center minh-92px"></p> :
+                                                        <p className="mb-0 card-text w-100 text-center minh-92px">{pricePlan.short_description}</p>
                                             }
                                             {/* Constants for Monthly and Annual values should have been used. But 
                                                 it might have caused some compilation errors that's why I have
