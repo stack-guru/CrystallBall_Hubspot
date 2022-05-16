@@ -37,8 +37,10 @@ class GoogleAccountController extends Controller
                 array_push($scopes, GoogleAccount::SCOPE_AUTH_WEBMASTERS);
                 array_push($scopes, GoogleAccount::SCOPE_AUTH_WEBMASTERS_READONLY);
             }
-            if ($request->google_ads_perm == 'true') {
-                array_push($scopes, GoogleAccount::SCOPE_AUTH_ADWORDS);
+            if (config('app.env') == 'development' || config('app.env') == 'local') {
+                if ($request->google_ads_perm == 'true') {
+                    array_push($scopes, GoogleAccount::SCOPE_AUTH_ADWORDS);
+                }
             }
         } else {
             $scopes = [
