@@ -27,6 +27,8 @@ class Controller extends BaseController
         $request = request();
         $googleAccountId = $googleUser->getId();
 
+        $allowedScopes = explode(" ", $request->query('scope'));
+
         $googleAccount->token = $googleUser->token;
         $googleAccount->refresh_token = $googleUser->refreshToken;
         $googleAccount->expires_in = Carbon::now()->addSeconds($googleUser->expiresIn);
@@ -36,14 +38,18 @@ class Controller extends BaseController
         $googleAccount->email = $googleUser->getEmail();
         $googleAccount->avatar = $googleUser->getAvatar();
         $googleAccount->user_id = $user->id;
-        $googleAccount->scopes = json_encode(explode(" ", $request->query('scope')));
+        $googleAccount->scopes = json_encode($allowedScopes);
         $googleAccount->state = $request->query('state');
 
         $googleAccount->save();
 
-        $googleAnalyticsAccountController = new GoogleAnalyticsAccountController;
-        $googleAnalyticsAccountController->fetch($googleAccount);
-        $googleSearchConsoleSiteController = new GoogleSearchConsoleSiteController;
-        $googleSearchConsoleSiteController->fetch($googleAccount);
+        if ($googleAccount->hasGoogleAnalyticsScope()) {
+            $googleAnalyticsAccountController = new GoogleAnalyticsAccountController;
+            $googleAnalyticsAccountController->fetch($googleAccount);
+        }
+        if ($googleAccount->hasSearchConsoleScope()) {
+            $googleSearchConsoleSiteController = new GoogleSearchConsoleSiteController;
+            $googleSearchConsoleSiteController->fetch($googleAccount);
+        }
     }
 }

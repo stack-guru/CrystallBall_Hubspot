@@ -9,6 +9,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class GoogleAccount extends Model
 {
+
+    const SCOPE_AUTH_USERINFO_PROFILE = 'https://www.googleapis.com/auth/userinfo.profile';
+    const SCOPE_AUTH_USERINFO_EMAIL = 'https://www.googleapis.com/auth/userinfo.email';
+    const SCOPE_AUTH_ANALYTICS_READONLY = 'https://www.googleapis.com/auth/analytics.readonly';
+    const SCOPE_AUTH_WEBMASTERS = 'https://www.googleapis.com/auth/webmasters';
+    const SCOPE_AUTH_WEBMASTERS_READONLY = 'https://www.googleapis.com/auth/webmasters.readonly';
+    const SCOPE_AUTH_ADWORDS = 'https://www.googleapis.com/auth/adwords';
+
     use HasFactory;
 
     protected $fillable = [
@@ -53,11 +61,16 @@ class GoogleAccount extends Model
 
     public function hasSearchConsoleScope(): bool
     {
-        return strpos($this->scopes, "https://www.googleapis.com/auth/webmasters.readonly") && strpos($this->scopes, "https://www.googleapis.com/auth/webmasters");
+        return strpos($this->scopes, self::SCOPE_AUTH_WEBMASTERS_READONLY) && strpos($this->scopes, self::SCOPE_AUTH_WEBMASTERS);
     }
 
     public function hasGoogleAnalyticsScope(): bool
     {
-        return strpos($this->scopes, "https://www.googleapis.com/auth/analytics.readonly");
+        return strpos($this->scopes, self::SCOPE_AUTH_ANALYTICS_READONLY);
+    }
+
+    public function hasGoogleAdsScope(): bool
+    {
+        return strpos($this->scopes, self::SCOPE_AUTH_ADWORDS);
     }
 }

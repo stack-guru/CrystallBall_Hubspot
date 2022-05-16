@@ -109,11 +109,8 @@ class RegisterController extends Controller
 
         return Socialite::driver('google')
             ->scopes([
-                'https://www.googleapis.com/auth/userinfo.profile',
-                'https://www.googleapis.com/auth/userinfo.email',
-                // 'https://www.googleapis.com/auth/analytics.readonly',
-                // 'https://www.googleapis.com/auth/webmasters',
-                // 'https://www.googleapis.com/auth/webmasters.readonly',
+                GoogleAccount::SCOPE_AUTH_USERINFO_PROFILE,
+                GoogleAccount::SCOPE_AUTH_USERINFO_EMAIL,
             ])
             ->redirectUrl(route('socialite.google.redirect'))
             ->redirect();

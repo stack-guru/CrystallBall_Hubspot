@@ -25,34 +25,34 @@ class GoogleAccountController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->has('google_analytics_perm')) {
+        if ($request->has('google_analytics_perm') || $request->has('google_search_console_perm') || $request->has('google_ads_perm')) {
             $scopes = [
-                'https://www.googleapis.com/auth/userinfo.profile',
-                'https://www.googleapis.com/auth/userinfo.email',
+                GoogleAccount::SCOPE_AUTH_USERINFO_PROFILE,
+                GoogleAccount::SCOPE_AUTH_USERINFO_EMAIL,
             ];
             if ($request->google_analytics_perm == 'true') {
-                array_push($scopes, 'https://www.googleapis.com/auth/analytics.readonly');
+                array_push($scopes, GoogleAccount::SCOPE_AUTH_ANALYTICS_READONLY);
             }
             if ($request->google_search_console_perm == 'true') {
-                array_push($scopes, 'https://www.googleapis.com/auth/webmasters');
-                array_push($scopes, 'https://www.googleapis.com/auth/webmasters.readonly');
+                array_push($scopes, GoogleAccount::SCOPE_AUTH_WEBMASTERS);
+                array_push($scopes, GoogleAccount::SCOPE_AUTH_WEBMASTERS_READONLY);
             }
             if ($request->google_ads_perm == 'true') {
-                array_push($scopes, 'https://www.googleapis.com/auth/adwords');
+                array_push($scopes, GoogleAccount::SCOPE_AUTH_ADWORDS);
             }
         } else {
             $scopes = [
-                'https://www.googleapis.com/auth/userinfo.profile',
-                'https://www.googleapis.com/auth/userinfo.email',
+                GoogleAccount::SCOPE_AUTH_USERINFO_PROFILE,
+                GoogleAccount::SCOPE_AUTH_USERINFO_EMAIL,
 
-                'https://www.googleapis.com/auth/analytics.readonly',
+                GoogleAccount::SCOPE_AUTH_ANALYTICS_READONLY,
 
-                'https://www.googleapis.com/auth/webmasters',
-                'https://www.googleapis.com/auth/webmasters.readonly',
+                GoogleAccount::SCOPE_AUTH_WEBMASTERS,
+                GoogleAccount::SCOPE_AUTH_WEBMASTERS_READONLY,
             ];
 
             if (config('app.env') == 'development' || config('app.env') == 'local') {
-                array_push($scopes, 'https://www.googleapis.com/auth/adwords');
+                array_push($scopes, GoogleAccount::SCOPE_AUTH_ADWORDS);
             }
         }
 
