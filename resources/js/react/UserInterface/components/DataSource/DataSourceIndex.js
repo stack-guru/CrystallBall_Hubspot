@@ -691,6 +691,11 @@ export default class DataSourceIndex extends React.Component {
                                                     <input type="checkbox"
                                                         checked={this.state.userServices.is_ds_g_ads_history_change_enabled}
                                                         onChange={this.serviceStatusHandler}
+                                                        onClick={e => {
+                                                            if (!this.state.userServices.is_ds_g_ads_history_change_enabled) {
+                                                                swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                            }
+                                                        }}
                                                         name="is_ds_g_ads_history_change_enabled"
                                                     />
                                                     <span className={`slider round ${this.state.userServices.is_ds_g_ads_history_change_enabled ? 'animate-pulse' : ''}`} />
@@ -731,6 +736,11 @@ export default class DataSourceIndex extends React.Component {
                                                     <input type="checkbox"
                                                         checked={this.state.userServices.is_ds_anomolies_detection_enabled}
                                                         onChange={this.serviceStatusHandler}
+                                                        onClick={e => {
+                                                            if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
+                                                                swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                            }
+                                                        }}
                                                         name="is_ds_anomolies_detection_enabled"
                                                     />
                                                     <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} />
@@ -772,6 +782,11 @@ export default class DataSourceIndex extends React.Component {
                                                     <input type="checkbox"
                                                         checked={this.state.userServices.is_ds_budget_tracking_enabled}
                                                         onChange={this.serviceStatusHandler}
+                                                        onClick={e => {
+                                                            if (!this.state.userServices.is_ds_budget_tracking_enabled) {
+                                                                swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                            }
+                                                        }}
                                                         name="is_ds_budget_tracking_enabled"
                                                     />
                                                     <span className={`slider round ${this.state.userServices.is_ds_budget_tracking_enabled ? 'animate-pulse' : ''}`} />
