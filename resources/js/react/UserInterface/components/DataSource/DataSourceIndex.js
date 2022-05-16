@@ -1,7 +1,7 @@
 import React from 'react';
-import {toast} from "react-toastify";
-import {Redirect} from "react-router-dom";
-import {UncontrolledPopover, PopoverHeader, PopoverBody} from 'reactstrap';
+import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
+import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 import LoaderAnimation from "../../utils/LoaderAnimation";
 import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";
@@ -15,7 +15,7 @@ import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySe
 import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
 import ErrorAlert from '../../utils/ErrorAlert';
 import DataSourceInterfaceTour from '../../helpers/DataSourceInterfaceTour';
-import {getCompanyName} from '../../helpers/CommonFunctions';
+import { getCompanyName } from '../../helpers/CommonFunctions';
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -56,52 +56,52 @@ export default class DataSourceIndex extends React.Component {
 
     loadUserDataSources(gaPropertyId) {
         if (!this.state.isLoading) {
-            this.setState({isLoading: true});
+            this.setState({ isLoading: true });
             HttpClient.get(`/data-source/user-data-source?ga_property_id=${gaPropertyId}`).then(resp => {
-                this.setState({isLoading: false, userDataSources: resp.data.user_data_sources});
+                this.setState({ isLoading: false, userDataSources: resp.data.user_data_sources });
             }, (err) => {
-                this.setState({isLoading: false, errors: (err.response).data});
+                this.setState({ isLoading: false, errors: (err.response).data });
             }).catch(err => {
-                this.setState({isLoading: false, errors: err});
+                this.setState({ isLoading: false, errors: err });
             })
         }
     }
 
     loadUserAnnotationColors() {
         if (!this.state.isLoading) {
-            this.setState({isLoading: true});
+            this.setState({ isLoading: true });
             HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
-                this.setState({isLoading: false, userAnnotationColors: resp.data.user_annotation_color});
+                this.setState({ isLoading: false, userAnnotationColors: resp.data.user_annotation_color });
             }, (err) => {
-                this.setState({isLoading: false, errors: (err.response).data});
+                this.setState({ isLoading: false, errors: (err.response).data });
             }).catch(err => {
-                this.setState({isLoading: false, errors: err});
+                this.setState({ isLoading: false, errors: err });
             })
         }
     }
 
     updateUserAnnotationColors(userAnnotationColors) {
-        this.setState({userAnnotationColors: userAnnotationColors});
+        this.setState({ userAnnotationColors: userAnnotationColors });
     }
 
     reloadWebMonitors(gaPropertyId) {
         HttpClient.get(`/data-source/web-monitor?ga_property_id=${gaPropertyId}`).then(resp => {
-            this.setState({webMonitors: resp.data.web_monitors, isBusy: false})
+            this.setState({ webMonitors: resp.data.web_monitors, isBusy: false })
         }, (err) => {
-            this.setState({isBusy: false});
+            this.setState({ isBusy: false });
         }).catch(err => {
-            this.setState({isBusy: false});
+            this.setState({ isBusy: false });
         })
     }
 
     render() {
-        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo}/>
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
         return (
             <div className="container bg-white d-flex flex-column justify-content-center">
                 <DataSourceInterfaceTour isOpen={this.props.showDataSourceTour}
-                                         toggleShowTour={this.props.toggleDataSourceTour} userId={this.props.user.id}/>
-                <LoaderAnimation show={this.state.isLoading}/>
+                    toggleShowTour={this.props.toggleDataSourceTour} userId={this.props.user.id} />
+                <LoaderAnimation show={this.state.isLoading} />
                 <div className="row ml-0 mr-0">
                     <div className="col-4">
                         <h2 className="heading-section gaa-title">Set Automations for:</h2>
@@ -111,16 +111,16 @@ export default class DataSourceIndex extends React.Component {
                             value={this.state.ga_property_id}
                             onChangeCallback={(gAP) => {
                                 if (gAP.target.value == "") {
-                                    this.setState({ga_property_id: null});
+                                    this.setState({ ga_property_id: null });
                                     this.loadUserDataSources(null);
                                     this.reloadWebMonitors(null);
                                 } else {
-                                    this.setState({ga_property_id: gAP.target.value});
+                                    this.setState({ ga_property_id: gAP.target.value });
                                     this.loadUserDataSources(gAP.target.value);
                                     this.reloadWebMonitors(gAP.target.value);
                                 }
                             }}
-                            components={{DropdownIndicator: () => null, IndicatorSeparator: () => null}}
+                            components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
                             placeholder="Select GA Properties"
                             isClearable={true}
                         />
@@ -128,39 +128,39 @@ export default class DataSourceIndex extends React.Component {
                     <div className="col-3">
                     </div>
                 </div>
-                <ErrorAlert errors={this.state.errors}/>
+                <ErrorAlert errors={this.state.errors} />
                 <div className="row p-2 mt-4">
                     <div className="col-md-9 col-sm-12" id="data-source-page-container">
                         <div class="row">
                             {/*
                                 Website Monitoring Section
                             */}
-                            <div class="col-md-6 mt-2" style={{minHeight: "230px"}}>
+                            <div class="col-md-6 mt-2" style={{ minHeight: "230px" }}>
                                 <div className="d-flex border rounded flex-column justify-content-between h-100">
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
-                                             id="web-monitoring-data-source-section">
+                                            id="web-monitoring-data-source-section">
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
                                                         Website Monitoring <UserAnnotationColorPicker
-                                                        name="web_monitors"
-                                                        value={this.state.userAnnotationColors.web_monitors}
-                                                        updateCallback={this.updateUserAnnotationColors}/>
+                                                            name="web_monitors"
+                                                            value={this.state.userAnnotationColors.web_monitors}
+                                                            updateCallback={this.updateUserAnnotationColors} />
                                                         <img id="web-monitors-datasource-hint" className="hint-button-2"
-                                                             onClick={() => {
-                                                                 this.changeShownHint('web-monitors')
-                                                             }} src="/images/info-logo.png"/>
+                                                            onClick={() => {
+                                                                this.changeShownHint('web-monitors')
+                                                            }} src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
                                                 <UncontrolledPopover trigger="legacy" placement="right"
-                                                                     isOpen={this.state.showHintFor == 'web-monitors'}
-                                                                     target="web-monitors-datasource-hint"
-                                                                     toggle={() => {
-                                                                         this.changeShownHint(null)
-                                                                     }} onClick={() => {
-                                                    this.changeShownHint(null)
-                                                }}>
+                                                    isOpen={this.state.showHintFor == 'web-monitors'}
+                                                    target="web-monitors-datasource-hint"
+                                                    toggle={() => {
+                                                        this.changeShownHint(null)
+                                                    }} onClick={() => {
+                                                        this.changeShownHint(null)
+                                                    }}>
                                                     <PopoverHeader>Web Monitoring</PopoverHeader>
                                                     <PopoverBody>Downtime happens even to the best of us. But it’s
                                                         important to know it before customers are affected and also keep
@@ -177,13 +177,13 @@ export default class DataSourceIndex extends React.Component {
                                                         onChange={this.serviceStatusHandler}
                                                         checked={this.state.userServices.is_ds_web_monitors_enabled}
                                                     />
-                                                    <span className="slider round"/>
+                                                    <span className={`slider round ${this.state.userServices.is_ds_web_monitors_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
                                         <div className="px-2">
                                             <div className="list-wrapper">
-                                                <p style={{fontSize: "13px"}}>Keywords:</p>
+                                                <p style={{ fontSize: "13px" }}>Keywords:</p>
                                                 {
                                                     this.state.webMonitors.map(wM => wM.name).join(", ")
                                                 }
@@ -191,10 +191,10 @@ export default class DataSourceIndex extends React.Component {
                                         </div>
                                     </div>
 
-                                    <p className="ds-update-text m-0 pb-3 px-2 text-right" style={{fontSize: "13px"}}
-                                       onClick={() => {
-                                           this.sectionToggler('web_monitors')
-                                       }}>
+                                    <p className="ds-update-text m-0 pb-3 px-2 text-right" style={{ fontSize: "13px" }}
+                                        onClick={() => {
+                                            this.sectionToggler('web_monitors')
+                                        }}>
                                         {this.state.sectionName == "web_monitors" ? "Hide" : "Configure Monitors"}
                                     </p>
                                 </div>
@@ -205,29 +205,29 @@ export default class DataSourceIndex extends React.Component {
                                 News Alert Section
                             */}
 
-                            <div className="col-md-6 mt-2" style={{minHeight: "230px"}}>
+                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
                                 <div className="d-flex border rounded flex-column justify-content-between h-100">
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
-                                             id="web-monitoring-data-source-section">
+                                            id="web-monitoring-data-source-section">
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
                                                         News Alerts <UserAnnotationColorPicker name="google_alerts"
-                                                                                               value={this.state.userAnnotationColors.google_alerts}
-                                                                                               updateCallback={this.updateUserAnnotationColors}/>
+                                                            value={this.state.userAnnotationColors.google_alerts}
+                                                            updateCallback={this.updateUserAnnotationColors} />
                                                         <img id="google-alert-datasource-hint" className="hint-button-2"
-                                                             onClick={() => {
-                                                                 this.changeShownHint('google-alert')
-                                                             }} src="/images/info-logo.png"/>
+                                                            onClick={() => {
+                                                                this.changeShownHint('google-alert')
+                                                            }} src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
                                                 <UncontrolledPopover trigger="legacy" placement="right"
-                                                                     isOpen={this.state.showHintFor == 'google-alert'}
-                                                                     target="google-alert-datasource-hint"
-                                                                     toggle={() => {
-                                                                         this.changeShownHint(null)
-                                                                     }}>
+                                                    isOpen={this.state.showHintFor == 'google-alert'}
+                                                    target="google-alert-datasource-hint"
+                                                    toggle={() => {
+                                                        this.changeShownHint(null)
+                                                    }}>
                                                     <PopoverHeader>News Alerts</PopoverHeader>
                                                     <PopoverBody><strong>News Alerts</strong> Is a content change
                                                         detection on the
@@ -252,7 +252,7 @@ export default class DataSourceIndex extends React.Component {
                                                         onChange={this.serviceStatusHandler}
                                                         checked={this.state.userServices.is_ds_google_alerts_enabled}
                                                     />
-                                                    <span className="slider round"/>
+                                                    <span className={`slider round ${this.state.userServices.is_ds_google_alerts_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
@@ -260,7 +260,7 @@ export default class DataSourceIndex extends React.Component {
                                             <div className="list-wrapper">
                                                 {this.state.userDataSources.google_alert_keywords ?
                                                     <div>
-                                                        <p style={{fontSize: "13px"}}>Keywords:</p>
+                                                        <p style={{ fontSize: "13px" }}>Keywords:</p>
                                                         <dl className="d-flex flex-row flex-wrap data-source-select-options">
                                                             {this.state.userDataSources.google_alert_keywords
                                                                 ? this.state.userDataSources.google_alert_keywords.map(keyword => keyword.value).join(", ")
@@ -269,7 +269,7 @@ export default class DataSourceIndex extends React.Component {
 
                                                         </dl>
                                                     </div>
-                                                     : null
+                                                    : null
                                                 }
                                             </div>
                                         </div>
@@ -292,28 +292,28 @@ export default class DataSourceIndex extends React.Component {
                                 Google Updates Section
                             */}
 
-                            <div className="col-md-6 mt-2" style={{minHeight: "230px"}}>
+                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
                                 <div className="d-flex border rounded flex-column justify-content-between h-100">
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
-                                             id="web-monitoring-data-source-section">
+                                            id="web-monitoring-data-source-section">
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
                                                         Google Updates <UserAnnotationColorPicker name="google_algorithm_updates"
-                                                                                                  value={this.state.userAnnotationColors.google_algorithm_updates}
-                                                                                                  updateCallback={this.updateUserAnnotationColors}/>
+                                                            value={this.state.userAnnotationColors.google_algorithm_updates}
+                                                            updateCallback={this.updateUserAnnotationColors} />
                                                         <img id="google-updates-datasource-hint" className="hint-button-2"
-                                                             onClick={() => {
-                                                                 this.changeShownHint('google-updates')
-                                                             }} src="/images/info-logo.png"/>
+                                                            onClick={() => {
+                                                                this.changeShownHint('google-updates')
+                                                            }} src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
                                                 <UncontrolledPopover trigger="legacy" placement="right"
-                                                                     isOpen={this.state.showHintFor == 'google-updates'}
-                                                                     target="google-updates-datasource-hint" toggle={() => {
-                                                    this.changeShownHint(null)
-                                                }}>
+                                                    isOpen={this.state.showHintFor == 'google-updates'}
+                                                    target="google-updates-datasource-hint" toggle={() => {
+                                                        this.changeShownHint(null)
+                                                    }}>
                                                     <PopoverHeader>Google Algorithm Updates</PopoverHeader>
                                                     <PopoverBody>Most of these Google updates are so slight that they go completely
                                                         unnoticed. However, on occasion, the search engine rolls out major
@@ -325,11 +325,11 @@ export default class DataSourceIndex extends React.Component {
                                                 {this.state.userServices.is_ds_google_algorithm_updates_enabled ? "Active" : "Deactive"}
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
-                                                           checked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
-                                                           onChange={this.serviceStatusHandler}
-                                                           name="is_ds_google_algorithm_updates_enabled"
+                                                        checked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
+                                                        onChange={this.serviceStatusHandler}
+                                                        name="is_ds_google_algorithm_updates_enabled"
                                                     />
-                                                    <span className="slider round"/>
+                                                    <span className={`slider round ${this.state.userServices.is_ds_google_algorithm_updates_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
@@ -337,7 +337,7 @@ export default class DataSourceIndex extends React.Component {
                                             <div className="list-wrapper">
                                                 {this.state.userDataSources.google_alert_keywords ?
                                                     <div>
-                                                        <p style={{fontSize: "13px"}}>Keywords:</p>
+                                                        <p style={{ fontSize: "13px" }}>Keywords:</p>
                                                         <dl className="d-flex flex-row flex-wrap data-source-select-options">
                                                             {this.state.userDataSources.google_alert_keywords
                                                                 ? this.state.userDataSources.google_alert_keywords.map(keyword => keyword.value).join(", ")
@@ -369,28 +369,28 @@ export default class DataSourceIndex extends React.Component {
                                 Retail Marketing Section
                             */}
 
-                            <div className="col-md-6 mt-2" style={{minHeight: "230px"}}>
+                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
                                 <div className="d-flex border rounded flex-column justify-content-between h-100">
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
-                                             id="web-monitoring-data-source-section">
+                                            id="web-monitoring-data-source-section">
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
                                                         Retail Marketing Dates <UserAnnotationColorPicker name="retail_marketings"
-                                                                                                          value={this.state.userAnnotationColors.retail_marketings}
-                                                                                                          updateCallback={this.updateUserAnnotationColors}/>
+                                                            value={this.state.userAnnotationColors.retail_marketings}
+                                                            updateCallback={this.updateUserAnnotationColors} />
                                                         <img id="retail-marketing-datasource-hint" className="hint-button-2"
-                                                             onClick={() => {
-                                                                 this.changeShownHint('retail-marketing')
-                                                             }} src="/images/info-logo.png"/>
+                                                            onClick={() => {
+                                                                this.changeShownHint('retail-marketing')
+                                                            }} src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
                                                 <UncontrolledPopover trigger="legacy" placement="right"
-                                                                     isOpen={this.state.showHintFor == 'retail-marketing'}
-                                                                     target="retail-marketing-datasource-hint" toggle={() => {
-                                                    this.changeShownHint(null)
-                                                }}>
+                                                    isOpen={this.state.showHintFor == 'retail-marketing'}
+                                                    target="retail-marketing-datasource-hint" toggle={() => {
+                                                        this.changeShownHint(null)
+                                                    }}>
                                                     <PopoverHeader>Retail Marketing Dates</PopoverHeader>
                                                     <PopoverBody>If you run an ecommerce business, you know the drill: Having a
                                                         promotional calendar for marketing and shopping events is key to deliver on
@@ -408,7 +408,7 @@ export default class DataSourceIndex extends React.Component {
                                                         onChange={this.serviceStatusHandler}
                                                         checked={this.state.userServices.is_ds_retail_marketing_enabled}
                                                     />
-                                                    <span className="slider round"/>
+                                                    <span className={`slider round ${this.state.userServices.is_ds_retail_marketing_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
@@ -432,30 +432,30 @@ export default class DataSourceIndex extends React.Component {
                                 Holidays Section
                             */}
 
-                            <div className="col-md-6 mt-2" style={{minHeight: "230px"}}>
+                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
                                 <div className="d-flex border rounded flex-column justify-content-between h-100">
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
-                                             id="web-monitoring-data-source-section">
+                                            id="web-monitoring-data-source-section">
                                             <div className="px-2">
 
                                                 <h2>
                                                     <small>Holidays <UserAnnotationColorPicker name="holidays"
-                                                                                               value={this.state.userAnnotationColors.holidays}
-                                                                                               updateCallback={this.updateUserAnnotationColors}/>
+                                                        value={this.state.userAnnotationColors.holidays}
+                                                        updateCallback={this.updateUserAnnotationColors} />
                                                         <img id="holidays-datasource-hint" className="hint-button-2"
-                                                             onClick={() => {
-                                                                 this.changeShownHint('holidays')
-                                                             }} src="/images/info-logo.png"/>
+                                                            onClick={() => {
+                                                                this.changeShownHint('holidays')
+                                                            }} src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
                                                 <UncontrolledPopover trigger="legacy" placement="right"
-                                                                     isOpen={this.state.showHintFor == 'holidays'}
-                                                                     target="holidays-datasource-hint" toggle={() => {
-                                                    this.changeShownHint(null)
-                                                }} onClick={() => {
-                                                    this.changeShownHint(null)
-                                                }}>
+                                                    isOpen={this.state.showHintFor == 'holidays'}
+                                                    target="holidays-datasource-hint" toggle={() => {
+                                                        this.changeShownHint(null)
+                                                    }} onClick={() => {
+                                                        this.changeShownHint(null)
+                                                    }}>
                                                     <PopoverHeader>Holidays</PopoverHeader>
                                                     <PopoverBody>How Christmas Day affect your sells? Add automatic annotations for
                                                         the Holidays of any country</PopoverBody>
@@ -471,7 +471,7 @@ export default class DataSourceIndex extends React.Component {
                                                         onChange={this.serviceStatusHandler}
                                                         checked={this.state.userServices.is_ds_weather_alerts_enabled}
                                                     />
-                                                    <span className="slider round"/>
+                                                    <span className={`slider round ${this.state.userServices.is_ds_weather_alerts_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
@@ -479,7 +479,7 @@ export default class DataSourceIndex extends React.Component {
                                             <div className="list-wrapper">
                                                 {this.state.userDataSources.holidays ?
                                                     <div>
-                                                        <p style={{fontSize: "13px"}}>Annotations for:</p>
+                                                        <p style={{ fontSize: "13px" }}>Annotations for:</p>
                                                         <dl className="d-flex flex-row flex-wrap data-source-select-options">
                                                             {this.state.userDataSources.holidays
                                                                 ? this.state.userDataSources.holidays.map(country => country.country_name).join(", ")
@@ -494,9 +494,9 @@ export default class DataSourceIndex extends React.Component {
                                     </div>
 
                                     <p className="ds-update-text m-0 pb-3 px-2 text-right"
-                                       onClick={() => {
-                                           this.sectionToggler('holidays')
-                                       }}>
+                                        onClick={() => {
+                                            this.sectionToggler('holidays')
+                                        }}>
                                         {this.state.sectionName == "holidays" ? "Hide" : "Choose Countries"}
                                     </p>
 
@@ -508,28 +508,28 @@ export default class DataSourceIndex extends React.Component {
                                 Weather Alerts Section
                             */}
 
-                            <div className="col-md-6 mt-2" style={{minHeight: "230px"}}>
+                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
                                 <div className="d-flex border rounded flex-column justify-content-between h-100">
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
-                                             id="web-monitoring-data-source-section">
+                                            id="web-monitoring-data-source-section">
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
                                                         Weather Alerts <UserAnnotationColorPicker name="weather_alerts"
-                                                                                                  value={this.state.userAnnotationColors.weather_alerts}
-                                                                                                  updateCallback={this.updateUserAnnotationColors}/>
+                                                            value={this.state.userAnnotationColors.weather_alerts}
+                                                            updateCallback={this.updateUserAnnotationColors} />
                                                         <img id="weather-alert-datasource-hint" className="hint-button-2"
-                                                             onClick={() => {
-                                                                 this.changeShownHint('weather-alert')
-                                                             }} src="/images/info-logo.png"/>
+                                                            onClick={() => {
+                                                                this.changeShownHint('weather-alert')
+                                                            }} src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
                                                 <UncontrolledPopover trigger="legacy" placement="right"
-                                                                     isOpen={this.state.showHintFor == 'weather-alert'}
-                                                                     target="weather-alert-datasource-hint" toggle={() => {
-                                                    this.changeShownHint(null)
-                                                }}>
+                                                    isOpen={this.state.showHintFor == 'weather-alert'}
+                                                    target="weather-alert-datasource-hint" toggle={() => {
+                                                        this.changeShownHint(null)
+                                                    }}>
                                                     <PopoverHeader>Weather Alerts</PopoverHeader>
                                                     <PopoverBody><strong>Weather</strong> disrupts the operating and financial
                                                         performance of 70% of businesses worldwide. Add automated annotations for
@@ -545,7 +545,7 @@ export default class DataSourceIndex extends React.Component {
                                                         onChange={this.serviceStatusHandler}
                                                         checked={this.state.userServices.is_ds_holidays_enabled}
                                                     />
-                                                    <span className="slider round"/>
+                                                    <span className={`slider round ${this.state.userServices.is_ds_holidays_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
@@ -553,7 +553,7 @@ export default class DataSourceIndex extends React.Component {
                                             <div className="list-wrapper">
                                                 {this.state.userDataSources.open_weather_map_cities ?
                                                     <div>
-                                                        <p style={{fontSize: "13px"}}>Alerts for:</p>
+                                                        <p style={{ fontSize: "13px" }}>Alerts for:</p>
                                                         <dl className="d-flex flex-row flex-wrap data-source-select-options">
                                                             {this.state.userDataSources.open_weather_map_cities
                                                                 ? this.state.userDataSources.open_weather_map_cities.map(owmc => (
@@ -565,7 +565,7 @@ export default class DataSourceIndex extends React.Component {
                                                             }
                                                         </dl>
                                                     </div>
-                                                     : null}
+                                                    : null}
                                             </div>
                                         </div>
                                     </div>
@@ -597,41 +597,41 @@ export default class DataSourceIndex extends React.Component {
                                 Wordpress Updates Section
                             */}
 
-                            <div className="col-md-6 mt-2" style={{minHeight: "230px"}}>
+                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
                                 <div className="d-flex border rounded flex-column justify-content-between h-100">
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
-                                             id="web-monitoring-data-source-section">
+                                            id="web-monitoring-data-source-section">
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
                                                         Wordpress Updates <UserAnnotationColorPicker name="wordpress_updates"
-                                                                                                     value={this.state.userAnnotationColors.wordpress_updates}
-                                                                                                     updateCallback={this.updateUserAnnotationColors}/>
+                                                            value={this.state.userAnnotationColors.wordpress_updates}
+                                                            updateCallback={this.updateUserAnnotationColors} />
                                                         <img id="wordpress-updates-datasource-hint" className="hint-button-2"
-                                                             onClick={() => {
-                                                                 this.changeShownHint('wordpress-updates')
-                                                             }} src="/images/info-logo.png"/>
+                                                            onClick={() => {
+                                                                this.changeShownHint('wordpress-updates')
+                                                            }} src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
                                                 <div className="input-group-prepend">
-                                                    <div className="input-group" style={{marginTop: "7px"}}>
-                                                        <input type="checkbox" style={{position: 'absolute', top: '3px'}}
-                                                               onChange={(e) => {
-                                                                   if (e.target.checked) {
-                                                                       this.userDataSourceAddHandler({
-                                                                           code: 'wordpress_updates',
-                                                                           name: 'WordpressUpdate',
-                                                                           country_name: null,
-                                                                           retail_marketing_id: null,
-                                                                           value: 'last year'
-                                                                       })
-                                                                   } else {
-                                                                       this.userDataSourceDeleteHandler(this.state.userDataSources.wordpress_updates[0].id, 'wordpress_updates')
-                                                                   }
-                                                               }}
-                                                               checked={this.state.userDataSources.wordpress_updates && this.state.userDataSources.wordpress_updates.length > 0}
-                                                               name="last_year_only"/>
+                                                    <div className="input-group" style={{ marginTop: "7px" }}>
+                                                        <input type="checkbox" style={{ position: 'absolute', top: '3px' }}
+                                                            onChange={(e) => {
+                                                                if (e.target.checked) {
+                                                                    this.userDataSourceAddHandler({
+                                                                        code: 'wordpress_updates',
+                                                                        name: 'WordpressUpdate',
+                                                                        country_name: null,
+                                                                        retail_marketing_id: null,
+                                                                        value: 'last year'
+                                                                    })
+                                                                } else {
+                                                                    this.userDataSourceDeleteHandler(this.state.userDataSources.wordpress_updates[0].id, 'wordpress_updates')
+                                                                }
+                                                            }}
+                                                            checked={this.state.userDataSources.wordpress_updates && this.state.userDataSources.wordpress_updates.length > 0}
+                                                            name="last_year_only" />
                                                         <h6 style={{
                                                             position: 'absolute',
                                                             top: '0px',
@@ -640,10 +640,10 @@ export default class DataSourceIndex extends React.Component {
                                                     </div>
                                                 </div>
                                                 <UncontrolledPopover trigger="legacy" placement="right"
-                                                                     isOpen={this.state.showHintFor == 'wordpress-updates'}
-                                                                     target="wordpress-updates-datasource-hint" toggle={() => {
-                                                    this.changeShownHint(null)
-                                                }}>
+                                                    isOpen={this.state.showHintFor == 'wordpress-updates'}
+                                                    target="wordpress-updates-datasource-hint" toggle={() => {
+                                                        this.changeShownHint(null)
+                                                    }}>
                                                     <PopoverHeader>WordPress Core Updates</PopoverHeader>
                                                     <PopoverBody><strong>WordPress Core Updates</strong> Our automated annotation
                                                         feature will inform you when a new version, Security, or Maintenance Release
@@ -654,11 +654,11 @@ export default class DataSourceIndex extends React.Component {
                                                 {this.state.userServices.is_ds_wordpress_updates_enabled ? "Active" : "Deactive"}
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
-                                                           checked={this.state.userServices.is_ds_wordpress_updates_enabled}
-                                                           onChange={this.serviceStatusHandler}
-                                                           name="is_ds_wordpress_updates_enabled"
+                                                        checked={this.state.userServices.is_ds_wordpress_updates_enabled}
+                                                        onChange={this.serviceStatusHandler}
+                                                        name="is_ds_wordpress_updates_enabled"
                                                     />
-                                                    <span className="slider round"/>
+                                                    <span className={`slider round ${this.state.userServices.is_ds_wordpress_updates_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
@@ -672,29 +672,29 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Google ads history changes section
                             */}
-                            <div className="col-md-6 mt-2" style={{minHeight: "230px"}}>
+                            <div className="col-md-6 mt-2" style={{ minHeight: "230px" }}>
                                 <div className="d-flex border rounded flex-column justify-content-between h-100">
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
-                                             id="web-monitoring-data-source-section">
+                                            id="web-monitoring-data-source-section">
                                             <div className="px-2">
                                                 <h2>
                                                     <small style={{ fontSize: "18px" }}>
                                                         Google Ads History Changes <UserAnnotationColorPicker
                                                             name="wordpress_updates"
                                                             value={this.state.userAnnotationColors.wordpress_updates}
-                                                            updateCallback={this.updateUserAnnotationColors}/>
-                                                        <img id="web-monitors-datasource-hint" className="hint-button-2" src="/images/info-logo.png"/>
+                                                            updateCallback={this.updateUserAnnotationColors} />
+                                                        <img id="web-monitors-datasource-hint" className="hint-button-2" src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
                                                 <UncontrolledPopover trigger="legacy" placement="right"
-                                                                     isOpen={this.state.showHintFor == 'google_ads_history_changes'}
-                                                                     target="web-monitors-datasource-hint"
-                                                                     toggle={() => {
-                                                                         this.changeShownHint(null)
-                                                                     }} onClick={() => {
-                                                    this.changeShownHint(null)
-                                                }}>
+                                                    isOpen={this.state.showHintFor == 'google_ads_history_changes'}
+                                                    target="web-monitors-datasource-hint"
+                                                    toggle={() => {
+                                                        this.changeShownHint(null)
+                                                    }} onClick={() => {
+                                                        this.changeShownHint(null)
+                                                    }}>
                                                     <PopoverHeader>Coming soon</PopoverHeader>
                                                     <PopoverBody>This feature will be available soon, stay tuned.</PopoverBody>
                                                 </UncontrolledPopover>
@@ -710,7 +710,7 @@ export default class DataSourceIndex extends React.Component {
                                                             swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
                                                         }}
                                                     />
-                                                    <span className="slider round"/>
+                                                    <span className="slider round" />
                                                 </label>
                                             </div>
                                         </div>
@@ -825,7 +825,7 @@ export default class DataSourceIndex extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div className="col-md-3 col-sm-12 border-left" id="data-source-detail-container">
@@ -931,32 +931,32 @@ export default class DataSourceIndex extends React.Component {
         } else if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && !e.target.checked) {
             this.sectionToggler(null)
         }
-        HttpClient.post('/userService', {[e.target.name]: e.target.checked ? 1 : 0}).then(resp => {
+        HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
             if (resp.data.user_services[e.target.name] == 1) {
                 toast.success("Service activated successfully.");
-                this.setState({userServices: resp.data.user_services})
+                this.setState({ userServices: resp.data.user_services })
             }
             if (resp.data.user_services[e.target.name] == 0) {
-                this.setState({userServices: resp.data.user_services})
+                this.setState({ userServices: resp.data.user_services })
                 toast.info("Service deactivated successfully.");
             }
             (this.props.reloadUser)();
         }, (err) => {
 
-            this.setState({isBusy: false, errors: (err.response).data});
+            this.setState({ isBusy: false, errors: (err.response).data });
             if ((err.response).status == 402) {
                 swal.fire("Upgrade to Pro Plan!", "You have reached your Free 100 credits.", "warning").then(value => {
-                    this.setState({redirectTo: '/settings/price-plans'});
+                    this.setState({ redirectTo: '/settings/price-plans' });
                 })
             }
         }).catch(err => {
 
-            this.setState({isBusy: false, errors: err});
+            this.setState({ isBusy: false, errors: err });
         });
     }
 
     userDataSourceAddHandler(dataSource) {
-        this.setState({isBusy: true});
+        this.setState({ isBusy: true });
         let formData = {
             'ds_code': dataSource.code,
             'ds_name': dataSource.name,
@@ -978,45 +978,45 @@ export default class DataSourceIndex extends React.Component {
                 ar.push(uds)
             }
             this.setState({
-                userDataSources: {...this.state.userDataSources, [uds.ds_code]: ar},
+                userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar },
                 isBusy: false,
                 errors: undefined
             })
         }, (err) => {
-            this.setState({isBusy: false, errors: err.response.data})
+            this.setState({ isBusy: false, errors: err.response.data })
         }).catch(err => {
-            this.setState({isBusy: false, errors: err})
+            this.setState({ isBusy: false, errors: err })
         })
     }
 
     userDataSourceDeleteHandler(userDataSourceId, dsCode) {
-        this.setState({isBusy: true});
+        this.setState({ isBusy: true });
         HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`).then(resp => {
             let ar = this.state.userDataSources[dsCode];
             let newAr = ar.filter(a => a.id != userDataSourceId)
             this.setState({
-                userDataSources: {...this.state.userDataSources, [dsCode]: newAr},
+                userDataSources: { ...this.state.userDataSources, [dsCode]: newAr },
                 isBusy: false,
                 errors: undefined
             })
         }, (err) => {
-            this.setState({isBusy: false, errors: err.response.data})
+            this.setState({ isBusy: false, errors: err.response.data })
         }).catch(err => {
-            this.setState({isBusy: false, errors: err})
+            this.setState({ isBusy: false, errors: err })
         })
     }
 
     changeShownHint(obj) {
-        this.setState({showHintFor: obj})
+        this.setState({ showHintFor: obj })
     }
 
     sectionToggler(sectionName) {
         if (null == sectionName) {
-            this.setState({sectionName: null})
+            this.setState({ sectionName: null })
         } else if (this.state.sectionName == sectionName) {
-            this.setState({sectionName: null})
+            this.setState({ sectionName: null })
         } else {
-            this.setState({sectionName: sectionName});
+            this.setState({ sectionName: sectionName });
         }
     }
 
