@@ -104,7 +104,7 @@ export default class IndexPricingPlans extends React.Component {
         return (
             <div className=" bg-white component-wrapper">
                 <section className="pricing bg-white ">
-                    <div className="container">
+                    <div className="container" style={{ maxWidth: 'none' }}>
                         <div className="row ml-0 mr-0 p-2">
                             <div className="col-3">
                             </div>
