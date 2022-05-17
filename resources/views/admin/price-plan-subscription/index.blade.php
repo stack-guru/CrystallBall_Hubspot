@@ -34,7 +34,7 @@
                             <tr>
                                 <td>{{$pricePlanSubscription->id}}</td>
                                 <td>
-                                    {{$pricePlanSubscription->user->name}}
+                                    {{@$pricePlanSubscription->user->name}}
                                     <!-- 
                                         The logic below is used to track AppSumo refunds.
                                         This logic is not much appreciated and should be 
@@ -44,7 +44,7 @@
                                     <span class="badge badge-danger">REFUND</span>
                                     @endif
                                 </td>
-                                <td>{{$pricePlanSubscription->user->email}}</td>
+                                <td>{{@$pricePlanSubscription->user->email}}</td>
                                 <td>{{@$pricePlanSubscription->paymentDetail->bluesnap_vaulted_shopper_id}}</td>
                                 <td>@if($pricePlanSubscription->coupon){{$pricePlanSubscription->coupon->code}} / {{$pricePlanSubscription->coupon->discount_percent}}%@endif</td>
                                 <td>${{$pricePlanSubscription->charged_price}}</td>
