@@ -19,25 +19,25 @@ export default class GooglePermissionPopup extends Component {
         googlePermissionsHtml += "<div class='text-left my-4'>";
 
         googlePermissionsHtml += "<div class='form-check form-check-inline'>";
-        googlePermissionsHtml += '<input class="form-check-input" type="checkbox" id="google_analytics_perm">';
+        googlePermissionsHtml += '<input class="form-check-input" type="checkbox" checked id="google_analytics_perm">';
         googlePermissionsHtml += '<label class="form-check-label" for="google_analytics_perm">Google Analytics</label>';
         googlePermissionsHtml += '</div>';
-        googlePermissionsHtml += '<div style="font-size: 14px !important;margin-left: 20px;">Allows you to assign annotations to specific properties.</div>';
+        googlePermissionsHtml += '<div style="font-size: 14px !important;margin-left: 20px;margin-bottom:15px;">Allows you to assign annotations to specific properties.</div>';
 
         googlePermissionsHtml += "<div class='form-check form-check-inline mt-2'>";
-        googlePermissionsHtml += '<input class="form-check-input" type="checkbox" id="google_search_console_perm">';
+        googlePermissionsHtml += '<input class="form-check-input" type="checkbox" checked id="google_search_console_perm">';
         googlePermissionsHtml += '<label class="form-check-label" for="google_search_console_perm">Google Search Console </label>';
         googlePermissionsHtml += '</div>';
-        googlePermissionsHtml += '<div style="font-size: 14px !important;margin-left: 20px;">Provides insights on how the people found your site and converted.</div>';
+        googlePermissionsHtml += '<div style="font-size: 14px !important;margin-left: 20px;margin-bottom:15px;">Provides insights on how the people found your site and converted.</div>';
 
         googlePermissionsHtml += "<div class='form-check form-check-inline mt-2'>";
-        googlePermissionsHtml += '<input class="form-check-input" type="checkbox" id="google_ads_perm">';
-        googlePermissionsHtml += '<label class="form-check-label" for="google_ads_perm">Google Ads </label>';
+        googlePermissionsHtml += '<input class="form-check-input" type="checkbox" disabled id="google_ads_perm">';
+        googlePermissionsHtml += '<label class="form-check-label" for="google_ads_perm">Google Ads <label class="badge badge-warning text-sm">Coming Soon</label></label>';
         googlePermissionsHtml += '</div>';
-        googlePermissionsHtml += '<div style="font-size: 14px !important;margin-left: 20px;">Creates automatic annotations when ads are changed.</div>';
+        googlePermissionsHtml += '<div style="font-size: 14px !important;margin-left: 20px;margin-bottom:5px;">Creates automatic annotations when ads are changed.</div>';
 
-        googlePermissionsHtml += '<div class="mt-4">';
-        googlePermissionsHtml += 'See our <a href="https://www.crystalballinsight.com/privacy-policy" target="_blank" class="">privacy policy</a>';
+        googlePermissionsHtml += '<div class="mt-4" style="font-size: 16px;">';
+        googlePermissionsHtml += 'See our <a href="https://www.crystalballinsight.com/privacy-policy" target="_blank" class="" style="color:blue;">privacy policy</a>';
         googlePermissionsHtml += '</div>';
 
         googlePermissionsHtml += "</div>";
@@ -45,7 +45,7 @@ export default class GooglePermissionPopup extends Component {
         swal.fire({
             html: googlePermissionsHtml,
             width: 500,
-            confirmButtonClass: "btn btn-primary",
+            confirmButtonClass: "btn btn-primary bg-primary",
             cancelButtonClass: "btn btn-secondary ml-5",
             confirmButtonText: "Connect",
             showCloseButton: true,

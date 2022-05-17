@@ -129,7 +129,7 @@ export default class DataSourceIndex extends React.Component {
                     </div>
                 </div>
                 <ErrorAlert errors={this.state.errors} />
-                <div className="row p-2 mt-4">
+                <div className="row p-2 mt-4 mb-5">
                     <div className="col-md-9 col-sm-12" id="data-source-page-container">
                         <div class="row">
                             {/*
@@ -686,19 +686,22 @@ export default class DataSourceIndex extends React.Component {
                                                 </h2>
                                             </div>
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_g_ads_history_change_enabled ? "Active" : "Deactive"}
+                                                {/* {this.state.userServices.is_ds_g_ads_history_change_enabled ? "Active" : "Deactive"} */}
+                                                Deactive
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
-                                                        checked={this.state.userServices.is_ds_g_ads_history_change_enabled}
-                                                        onChange={this.serviceStatusHandler}
+                                                        // checked={this.state.userServices.is_ds_g_ads_history_change_enabled}
+                                                        // onChange={this.serviceStatusHandler}
                                                         onClick={e => {
-                                                            if (!this.state.userServices.is_ds_g_ads_history_change_enabled) {
-                                                                swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                            }
+                                                            e.preventDefault()
+                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                            // if (!this.state.userServices.is_ds_g_ads_history_change_enabled) {
+                                                            // }
                                                         }}
                                                         name="is_ds_g_ads_history_change_enabled"
                                                     />
-                                                    <span className={`slider round ${this.state.userServices.is_ds_g_ads_history_change_enabled ? 'animate-pulse' : ''}`} />
+                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_g_ads_history_change_enabled ? 'animate-pulse' : ''}`} /> */}
+                                                    <span className={`slider round`} />
                                                 </label>
                                             </div>
                                         </div>
@@ -731,19 +734,23 @@ export default class DataSourceIndex extends React.Component {
                                                 </h2>
                                             </div>
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"}
+                                                {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
+                                                Deactive
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
-                                                        checked={this.state.userServices.is_ds_anomolies_detection_enabled}
-                                                        onChange={this.serviceStatusHandler}
+                                                        // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
+                                                        // onChange={this.serviceStatusHandler}
                                                         onClick={e => {
-                                                            if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
-                                                                swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                            }
+                                                            e.preventDefault()
+                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                            // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
+                                                                
+                                                            // }
                                                         }}
                                                         name="is_ds_anomolies_detection_enabled"
                                                     />
-                                                    <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} />
+                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} /> */}
+                                                    <span className={`slider round`} />
                                                 </label>
                                             </div>
                                         </div>
@@ -777,19 +784,23 @@ export default class DataSourceIndex extends React.Component {
                                             </div>
 
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_budget_tracking_enabled ? "Active" : "Deactive"}
+                                                {/* {this.state.userServices.is_ds_budget_tracking_enabled ? "Active" : "Deactive"} */}
+                                                Deactive
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
-                                                        checked={this.state.userServices.is_ds_budget_tracking_enabled}
-                                                        onChange={this.serviceStatusHandler}
+                                                        // checked={this.state.userServices.is_ds_budget_tracking_enabled}
+                                                        // onChange={this.serviceStatusHandler}
                                                         onClick={e => {
-                                                            if (!this.state.userServices.is_ds_budget_tracking_enabled) {
-                                                                swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                            }
+                                                            e.preventDefault()
+                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                            // if (!this.state.userServices.is_ds_budget_tracking_enabled) {
+                                                                
+                                                            // }
                                                         }}
                                                         name="is_ds_budget_tracking_enabled"
                                                     />
-                                                    <span className={`slider round ${this.state.userServices.is_ds_budget_tracking_enabled ? 'animate-pulse' : ''}`} />
+                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_budget_tracking_enabled ? 'animate-pulse' : ''}`} /> */}
+                                                    <span className={`slider round`} />
                                                 </label>
                                             </div>
                                         </div>
