@@ -16,6 +16,7 @@
   </div>
   <p class="mt-4 pt-4 text-center">OR <a href="{{ route('register', ['email' => true]) }}">Register</a> with Company Email</p>
   <p class="mt-2 text-center">Already have an account? <a href="{{ route('login') }}">Login</a></p>
+  <p class="mt-2 text-center">Check out our <a href="https://www.gaannotations.com/pricing" target="_blank">Plans and Pricing</a></p>
 </form>
 @endsection
 
