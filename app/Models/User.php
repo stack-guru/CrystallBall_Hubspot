@@ -50,6 +50,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_ds_google_alerts_enabled',
         'is_ds_wordpress_updates_enabled',
         'is_ds_web_monitors_enabled',
+        'is_ds_g_ads_history_change_enabled',
+        'is_ds_anomolies_detection_enabled',
+        'is_ds_budget_tracking_enabled',
 
         'user_level',
         'department',
@@ -104,6 +107,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_ds_google_alerts_enabled' => 'boolean',
         'is_ds_wordpress_updates_enabled' => 'boolean',
         'is_ds_web_monitors_enabled' => 'boolean',
+        'is_ds_g_ads_history_change_enabled' => 'boolean',
+        'is_ds_anomolies_detection_enabled' => 'boolean',
+        'is_ds_budget_tracking_enabled' => 'boolean',
 
         "last_logged_into_extension_at" => 'datetime',
         "last_activated_any_data_source_at" => 'datetime',

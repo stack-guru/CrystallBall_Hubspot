@@ -513,8 +513,8 @@ setting-menu-item.dropdown {
 }
 
 .data-source-select-options {
-    margin-bottom: 0px;
-    height: 100px;
+    /* margin-bottom: 0px; */
+    /* height: 100px; */
     overflow-y: auto;
     align-content: flex-start;
 }
