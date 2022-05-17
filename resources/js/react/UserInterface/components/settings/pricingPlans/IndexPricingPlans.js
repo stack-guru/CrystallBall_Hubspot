@@ -104,7 +104,7 @@ export default class IndexPricingPlans extends React.Component {
         return (
             <div className=" bg-white component-wrapper">
                 <section className="pricing bg-white ">
-                    <div className="container">
+                    <div className="container" style={{ maxWidth: 'none' }}>
                         <div className="row ml-0 mr-0 p-2">
                             <div className="col-3">
                             </div>
@@ -302,14 +302,14 @@ export default class IndexPricingPlans extends React.Component {
                             })}
                         </div>
 
-                        {/* {
+                        {
                             this.props.user.price_plan.name != "Free" && this.props.user.is_billing_enabled == 0 ?
-                                <div className="p-5 text-center">
+                                <div className="p-5 mt-4 text-center">
                                     <p>Your account will be automatically downgraded to the Free plan at {this.props.user.price_plan_expiry_date}.<br />
-                                        So to keep enjoying all the features, upgrade your account.</p>
+                                        Upgrade your account to keep enjoying all the features.</p>
                                 </div>
                                 : null
-                        } */}
+                        }
                     </div>
                 </section >
             </div >

@@ -99,8 +99,8 @@ export default class DataSourceIndex extends React.Component {
 
         return (
             <div className="container bg-white d-flex flex-column justify-content-center">
-                <DataSourceInterfaceTour isOpen={this.props.showDataSourceTour}
-                    toggleShowTour={this.props.toggleDataSourceTour} userId={this.props.user.id} />
+                {/* <DataSourceInterfaceTour isOpen={this.props.showDataSourceTour}
+                    toggleShowTour={this.props.toggleDataSourceTour} userId={this.props.user.id} /> */}
                 <LoaderAnimation show={this.state.isLoading} />
                 <div className="row ml-0 mr-0">
                     <div className="col-4">
@@ -136,7 +136,7 @@ export default class DataSourceIndex extends React.Component {
                                 Website Monitoring Section
                             */}
                             <div class="col-md-6 mt-2">
-                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight:"180px" }}>
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between"
                                             id="web-monitoring-data-source-section">
@@ -744,7 +744,7 @@ export default class DataSourceIndex extends React.Component {
                                                             e.preventDefault()
                                                             swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
                                                             // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
-                                                                
+
                                                             // }
                                                         }}
                                                         name="is_ds_anomolies_detection_enabled"
@@ -794,7 +794,7 @@ export default class DataSourceIndex extends React.Component {
                                                             e.preventDefault()
                                                             swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
                                                             // if (!this.state.userServices.is_ds_budget_tracking_enabled) {
-                                                                
+
                                                             // }
                                                         }}
                                                         name="is_ds_budget_tracking_enabled"
