@@ -381,7 +381,7 @@ export default class CreatePayment extends Component {
                                                 </div>
                                             </div>
                                             <div className="col-5 pl-0">
-                                                <div className="form-group floating-labels">
+                                                <div className="form-group floating-labels ml-2">
                                                     <input type="text" className="form-control" placeholder="Phone Number" name="phone_number"
                                                         id="phone_number" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number} />
                                                     <label htmlFor="">Phone Number</label>

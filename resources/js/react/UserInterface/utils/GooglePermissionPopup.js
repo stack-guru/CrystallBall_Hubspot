@@ -30,9 +30,9 @@ export default class GooglePermissionPopup extends Component {
         googlePermissionsHtml += '</div>';
         googlePermissionsHtml += '<div style="font-size: 14px !important;margin-left: 20px;margin-bottom:15px;">Provides insights on how the people found your site and converted.</div>';
 
-        googlePermissionsHtml += "<div class='form-check form-check-inline mt-2'>";
+        googlePermissionsHtml += "<div class='form-check form-check-inline'>";
         googlePermissionsHtml += '<input class="form-check-input" type="checkbox" disabled id="google_ads_perm">';
-        googlePermissionsHtml += '<label class="form-check-label" for="google_ads_perm">Google Ads <label class="badge badge-warning text-sm">Coming Soon</label></label>';
+        googlePermissionsHtml += '<label class="form-check-label" for="google_ads_perm">Google Ads </label><label class="badge badge-warning badge-sm float-left ml-2">Coming Soon</label>';
         googlePermissionsHtml += '</div>';
         googlePermissionsHtml += '<div style="font-size: 14px !important;margin-left: 20px;margin-bottom:5px;">Creates automatic annotations when ads are changed.</div>';
 
@@ -48,7 +48,7 @@ export default class GooglePermissionPopup extends Component {
             confirmButtonClass: "btn btn-primary bg-primary",
             cancelButtonClass: "btn btn-secondary ml-5",
             confirmButtonText: "Connect",
-            showCloseButton: true,
+            showCloseButton: false,
             showCancelButton: true,
             cancelButtonText: 'Cancel',
             allowOutsideClick: false
