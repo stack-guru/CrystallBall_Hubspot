@@ -26,7 +26,7 @@ class GoogleAnalyticsPropertyController extends Controller
                 ->whereIn('user_id', $userIdsArray);
 
             $googleAnalyticsAccountIdsArray = Auth::user()->userGaAccounts->pluck('google_analytics_account_id')->toArray();
-            if ($googleAnalyticsAccountIdsArray != [null]) {
+            if ($googleAnalyticsAccountIdsArray != [null] || $googleAnalyticsAccountIdsArray != []) {
                 $googleAnalyticsPropertiesQuery->whereIn('google_analytics_account_id', $googleAnalyticsAccountIdsArray);
             }
         } else {
