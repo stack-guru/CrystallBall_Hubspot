@@ -24,6 +24,11 @@ class GoogleAnalyticsPropertyController extends Controller
                 ->with(['googleAccount:id,name', 'googleAnalyticsAccount:id,name'])
                 ->where('name', 'LIKE', '%' . $request->query('keyword') . '%')
                 ->whereIn('user_id', $userIdsArray);
+
+            $googleAnalyticsAccountIdsArray = Auth::user()->userGaAccounts->pluck('google_analytics_account_id')->toArray();
+            if ($googleAnalyticsAccountIdsArray != [null]) {
+                $googleAnalyticsPropertiesQuery->whereIn('google_analytics_account_id', $googleAnalyticsAccountIdsArray);
+            }
         } else {
             $googleAnalyticsPropertiesQuery->ofCurrentUser();
         }
