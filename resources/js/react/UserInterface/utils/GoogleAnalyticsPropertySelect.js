@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
 import HttpClient from './HttpClient'
 
@@ -10,7 +10,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            aProperties: [{value: "", label: "All Properties"}],
+            aProperties: [{ value: "", label: "All Properties" }],
             allProperties: [],
             isAccountLinked: true,
             isPermissionPopupOpened: false,
@@ -23,22 +23,22 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         this.searchGoogleAnalyticsProperties(' ', (options) => {
             if (options.length) {
                 if (this.props.autoSelectFirst) {
-                    this.setState({aProperties: [{value: "", label: "Loading..."}]});
+                    this.setState({ aProperties: [{ value: "", label: "Loading..." }] });
                     setTimeout(() => {
                         this.onChangeHandler(options[0]);
                     }, 5000);
                 }
             }
-            this.setState({allProperties: options});
+            this.setState({ allProperties: options });
         });
-        
+
 
     }
 
     componentDidUpdate(prevProps) {
         if (this.props != prevProps) {
             if (this.props.aProperties) {
-                this.setState({aProperties: this.props.aProperties});
+                this.setState({ aProperties: this.props.aProperties });
             }
         }
     }
@@ -57,17 +57,17 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 callback(options);
             }, (err) => {
                 if (err.response.status == 400) {
-                    this.setState({isAccountLinked: false});
+                    this.setState({ isAccountLinked: false });
                 }
             }).catch(err => {
-            this.setState({errors: err, isLoading: false});
-        });
+                this.setState({ errors: err, isLoading: false });
+            });
 
     }
 
     onChangeHandler(sOption) {
         if (sOption == null) {
-            this.setState({aProperties: [{value: "", label: "All Properties"}]});
+            this.setState({ aProperties: [{ value: "", label: "All Properties" }] });
             if (this.props.multiple) this.props.onChangeCallback({
                 target: {
                     name: this.props.name,
@@ -76,10 +76,10 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 }
             });
             if (!this.props.multiple) this.props.onChangeCallback({
-                target: {name: this.props.name, value: ""},
+                target: { name: this.props.name, value: "" },
                 wasLastDataFetchingSuccessful: sOption.was_last_data_fetching_successful
             });
-            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{value: "", label: "All Properties"}]);
+            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Properties" }]);
         } else {
             // aProperties.push(sOption);
             let aProperties = null;
@@ -88,7 +88,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             } else {
                 aProperties = sOption;
             }
-            this.setState({aProperties: aProperties});
+            this.setState({ aProperties: aProperties });
             if (this.props.multiple) (this.props.onChangeCallback)({
                 target: {
                     name: this.props.name,
@@ -108,12 +108,13 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     }
 
     render() {
-        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo}/>
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         let aProperties = this.state.aProperties;
         return (
             <div>
 
                 <Select
+                    onFocus={this.props.onFocus}
                     loadOptions={this.searchGoogleAnalyticsProperties}
                     noOptionsMessage={() => {
                         return "Enter chars to search"
@@ -130,7 +131,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                     isSearchable={true}
                     placeholder={this.props.placeholder}
                     components={this.props.components}
-                    onKeyDown={(e) => {
+                    onKeyUp={(e) => {
                         if (!this.state.isAccountLinked) {
                             const accountNotLinkedHtml = '' +
                                 '<div class="">' +
