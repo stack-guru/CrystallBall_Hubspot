@@ -131,7 +131,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                     isSearchable={true}
                     placeholder={this.props.placeholder}
                     components={this.props.components}
-                    onKeyUp={(e) => {
+                    onKeyDown={(e) => {
                         if (!this.state.isAccountLinked) {
                             const accountNotLinkedHtml = '' +
                                 '<div class="">' +

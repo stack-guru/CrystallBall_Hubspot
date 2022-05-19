@@ -889,59 +889,79 @@ export default class DataSourceIndex extends React.Component {
     }
 
     serviceStatusHandler(e) {
-        e.persist();
-        if (e.target.name == 'is_ds_holidays_enabled' && e.target.checked) {
-            this.sectionToggler('holidays')
-        } else if (e.target.name == 'is_ds_holidays_enabled' && !e.target.checked) {
-            this.sectionToggler(null)
-        }
-        if (e.target.name == 'is_ds_retail_marketing_enabled' && e.target.checked) {
-            this.sectionToggler('retail_marketings')
-        } else if (e.target.name == 'is_ds_retail_marketing_enabled' && !e.target.checked) {
-            this.sectionToggler(null)
-        }
-        if (e.target.name == 'is_ds_weather_alerts_enabled' && e.target.checked) {
-            this.sectionToggler('weather_alerts')
-        } else if (e.target.name == 'is_ds_weather_alerts_enabled' && !e.target.checked) {
-            this.sectionToggler(null)
-        }
-        if (e.target.name == 'is_ds_google_alerts_enabled' && e.target.checked) {
-            this.sectionToggler('google_alerts')
-        } else if (e.target.name == 'is_ds_google_alerts_enabled' && !e.target.checked) {
-            this.sectionToggler(null)
-        }
-        if (e.target.name == 'is_ds_web_monitors_enabled' && e.target.checked) {
-            this.sectionToggler('web_monitors')
-        } else if (e.target.name == 'is_ds_web_monitors_enabled' && !e.target.checked) {
-            this.sectionToggler(null)
-        }
-        if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && e.target.checked) {
-            this.sectionToggler('google_algorithm_updates')
-        } else if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && !e.target.checked) {
-            this.sectionToggler(null)
-        }
-        HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
-            if (resp.data.user_services[e.target.name] == 1) {
-                toast.success("Service activated successfully.");
-                this.setState({ userServices: resp.data.user_services })
-            }
-            if (resp.data.user_services[e.target.name] == 0) {
-                this.setState({ userServices: resp.data.user_services })
-                toast.info("Service deactivated successfully.");
-            }
-            (this.props.reloadUser)();
-        }, (err) => {
+        if (this.props.user.price_plan.has_data_sources) {
 
-            this.setState({ isBusy: false, errors: (err.response).data });
-            if ((err.response).status == 402) {
-                swal.fire("Upgrade to Pro Plan!", "You have reached your Free 100 credits.", "warning").then(value => {
-                    this.setState({ redirectTo: '/settings/price-plans' });
-                })
+            e.persist();
+            if (e.target.name == 'is_ds_holidays_enabled' && e.target.checked) {
+                this.sectionToggler('holidays')
+            } else if (e.target.name == 'is_ds_holidays_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
             }
-        }).catch(err => {
+            if (e.target.name == 'is_ds_retail_marketing_enabled' && e.target.checked) {
+                this.sectionToggler('retail_marketings')
+            } else if (e.target.name == 'is_ds_retail_marketing_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+            }
+            if (e.target.name == 'is_ds_weather_alerts_enabled' && e.target.checked) {
+                this.sectionToggler('weather_alerts')
+            } else if (e.target.name == 'is_ds_weather_alerts_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+            }
+            if (e.target.name == 'is_ds_google_alerts_enabled' && e.target.checked) {
+                this.sectionToggler('google_alerts')
+            } else if (e.target.name == 'is_ds_google_alerts_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+            }
+            if (e.target.name == 'is_ds_web_monitors_enabled' && e.target.checked) {
+                this.sectionToggler('web_monitors')
+            } else if (e.target.name == 'is_ds_web_monitors_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+            }
+            if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && e.target.checked) {
+                this.sectionToggler('google_algorithm_updates')
+            } else if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+            }
+            HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
+                if (resp.data.user_services[e.target.name] == 1) {
+                    toast.success("Service activated successfully.");
+                    this.setState({ userServices: resp.data.user_services })
+                }
+                if (resp.data.user_services[e.target.name] == 0) {
+                    this.setState({ userServices: resp.data.user_services })
+                    toast.info("Service deactivated successfully.");
+                }
+                (this.props.reloadUser)();
+            }, (err) => {
+                this.setState({ isBusy: false, errors: (err.response).data });
+                if ((err.response).status == 402) {
+                    swal.fire("Upgrade to Pro Plan!", "You have reached your Free 100 credits.", "warning").then(value => {
+                        this.setState({ redirectTo: '/settings/price-plans' });
+                    })
+                }
+            }).catch(err => {
+                this.setState({ isBusy: false, errors: err });
+            });
+        } else {
+            const accountNotLinkedHtml = '' +
+                '<div class="">' +
+                '<img src="/images/automation-upgrade-modal.jpg" class="img-fluid">' +
+                '</div>'
 
-            this.setState({ isBusy: false, errors: err });
-        });
+            swal.fire({
+                html: accountNotLinkedHtml,
+                width: 700,
+                customClass: {
+                    popup: 'bg-light pb-5',
+                    htmlContainer: 'm-0',
+                },
+                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+            }).then(value => {
+                this.setState({ redirectTo: "/settings/price-plans" });
+            });
+        }
     }
 
     userDataSourceAddHandler(dataSource) {
