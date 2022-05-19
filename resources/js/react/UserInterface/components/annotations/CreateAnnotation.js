@@ -1,13 +1,13 @@
 import React from 'react';
 import { toast } from "react-toastify";
-import VideoModalBox from '../../utils/VideoModalBox';
+import { Redirect } from 'react-router';
 
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
-
 import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
-import { loadStateFromLocalStorage, saveStateToLocalStorage, removeStateFromLocalStorage } from '../../helpers/CommonFunctions';
 import AnnotationCategorySelect from '../../utils/AnnotationCategorySelect';
+
+import { loadStateFromLocalStorage, saveStateToLocalStorage, removeStateFromLocalStorage } from '../../helpers/CommonFunctions';
 
 export default class CreateAnnotation extends React.Component {
 
@@ -26,7 +26,8 @@ export default class CreateAnnotation extends React.Component {
             resp: '',
             error: '',
             isBusy: false,
-            isDirty: false
+            isDirty: false,
+            redirectTo: null,
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
@@ -136,6 +137,8 @@ export default class CreateAnnotation extends React.Component {
     }
 
     render() {
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+
         const validation = this.state.validation;
         return (
             <div className="container-xl bg-white  component-wrapper" >
@@ -234,8 +237,30 @@ export default class CreateAnnotation extends React.Component {
                                             components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
                                             multiple
                                             onFocus={(e) => {
-                                                if (this.props.currentPricePlan.ga_account_count == 1) swal.fire("Upgrade to Pro Plan!", "Google Analytics Properties are not available in this plan.", "warning");
-                                                if (this.props.currentPricePlan.google_analytics_property_count == -1) swal.fire("Upgrade your Plan!", "Google Analytics Properties are not available in this plan.", "warning");
+                                                if (this.props.currentPricePlan.ga_account_count == 1 || this.props.currentPricePlan.google_analytics_property_count == -1) {
+                                                    const accountNotLinkedHtml = '' +
+                                                        '<div class="">' +
+                                                        '<img src="/images/property-upgrade-modal.jpg" class="img-fluid">' +
+                                                        '</div>'
+                                                    /*
+                                                    * Show new google analytics account popup
+                                                    * */
+                                                    swal.fire({
+                                                        html: accountNotLinkedHtml,
+                                                        width: 700,
+                                                        customClass: {
+                                                            popup: 'bg-light pb-5',
+                                                            htmlContainer: 'm-0',
+                                                        },
+                                                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                                        confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                                                    }).then(value => {
+                                                        if (value.isConfirmed) {
+                                                            this.setState({ redirectTo: "/settings/price-plans" });
+                                                        }
+                                                    });
+                                                }
                                             }}
                                         />
 

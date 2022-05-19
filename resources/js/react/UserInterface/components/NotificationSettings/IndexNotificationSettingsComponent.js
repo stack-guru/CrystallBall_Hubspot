@@ -35,7 +35,22 @@ export default class IndexNotificationSettings extends Component {
             });
 
         if (!this.props.user.price_plan.has_notifications) {
-            swal.fire("Upgrade Your Plan!", "Notifications feature is not available in this plan.", "warning").then((b) => {
+            const accountNotLinkedHtml = '' +
+                '<div class="">' +
+                '<img src="/images/notification-upgrade-modal.jpg" class="img-fluid">' +
+                '</div>'
+
+            swal.fire({
+                html: accountNotLinkedHtml,
+                width: 700,
+                customClass: {
+                    popup: 'bg-light pb-5',
+                    htmlContainer: 'm-0',
+                },
+                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+            }).then(value => {
                 this.setState({ redirectTo: '/settings/price-plans' });
             });
         }

@@ -17,6 +17,6 @@ class ActiveStatusScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('status', 'active');
+        $builder->where($model->getTable() . '.status', 'active');
     }
 }

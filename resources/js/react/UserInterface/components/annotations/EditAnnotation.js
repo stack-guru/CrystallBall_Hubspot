@@ -239,8 +239,30 @@ export default class EditAnnotation extends React.Component {
                                             placeholder="Select GA Properties"
                                             multiple
                                             onFocus={(e) => {
-                                                if (this.props.currentPricePlan.ga_account_count == 1) swal.fire("Upgrade to Pro Plan!", "Google Analytics Properties are not available in this plan.", "warning");
-                                                if (this.props.currentPricePlan.google_analytics_property_count == -1) swal.fire("Upgrade your Plan!", "Google Analytics Properties are not available in this plan.", "warning");
+                                                if (this.props.currentPricePlan.ga_account_count == 1 || this.props.currentPricePlan.google_analytics_property_count == -1) {
+                                                    const accountNotLinkedHtml = '' +
+                                                        '<div class="">' +
+                                                        '<img src="/images/property-upgrade-modal.jpg" class="img-fluid">' +
+                                                        '</div>'
+                                                    /*
+                                                    * Show new google analytics account popup
+                                                    * */
+                                                    swal.fire({
+                                                        html: accountNotLinkedHtml,
+                                                        width: 700,
+                                                        customClass: {
+                                                            popup: 'bg-light pb-5',
+                                                            htmlContainer: 'm-0',
+                                                        },
+                                                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                                        confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                                                    }).then(value => {
+                                                        if (value.isConfirmed) {
+                                                            this.setState({ redirectTo: "/settings/price-plans" });
+                                                        }
+                                                    });
+                                                }
                                             }}
                                         ></GoogleAnalyticsPropertySelect>
                                     </div>

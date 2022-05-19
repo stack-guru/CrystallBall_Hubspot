@@ -51,11 +51,7 @@ class IndexAPIKey extends React.Component {
     }
 
     generateAPIKey() {
-        if (this.props.currentPricePlan.has_api == 0) {
-            swal.fire("Upgrade Your Plan!", "API feature is not available in this plan.", "warning").then(value => {
-                this.setState({ redirectTo: '/settings/price-plans' });
-            })
-        } else {
+        if (this.props.currentPricePlan.has_api) {
             if (!this.state.isBusy) {
                 this.setState({ isBusy: true });
                 HttpClient({ url: `/oauth/personal-access-tokens`, baseURL: "/", method: 'post', data: { name: this.state.token_name, scopes: [] } })
@@ -72,6 +68,25 @@ class IndexAPIKey extends React.Component {
                         this.setState({ isBusy: false, errors: err });
                     });
             }
+        } else {
+            const accountNotLinkedHtml = '' +
+                '<div class="">' +
+                '<img src="/images/api-upgrade-modal.jpg" class="img-fluid">' +
+                '</div>'
+
+            swal.fire({
+                html: accountNotLinkedHtml,
+                width: 700,
+                customClass: {
+                    popup: 'bg-light pb-5',
+                    htmlContainer: 'm-0',
+                },
+                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+            }).then(value => {
+                this.setState({ redirectTo: "/settings/price-plans" });
+            });
         }
     }
 

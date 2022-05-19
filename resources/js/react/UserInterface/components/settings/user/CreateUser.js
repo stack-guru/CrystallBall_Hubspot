@@ -51,10 +51,8 @@ export default class CreateUser extends Component {
                 toast.success("New user added.");
                 this.setState({ redirectTo: "/settings/user" })
             }, (err) => {
-                
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
-                
                 this.setState({ errors: err });
             });
     }
