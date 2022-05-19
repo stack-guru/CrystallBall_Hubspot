@@ -3,6 +3,20 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Route::get('test_service', function (){
+    $dfs_service = new \App\Services\DataForSeoService();
+    $params = [
+        'language_code' => 'en',
+        'location_code' => '1011087',
+        'keyword' => 'online shopping',
+        'device' => 'desktop',
+        'target' => 'google.com'
+    ];
+    $res = $dfs_service->getSearchResults($params);
+    dd($res);
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
