@@ -78,7 +78,7 @@ class IndexAPIKey extends React.Component {
                 html: accountNotLinkedHtml,
                 width: 700,
                 customClass: {
-                    popup: 'bg-light pb-5',
+                    popup: 'bg-light-red pb-5',
                     htmlContainer: 'm-0',
                 },
                 confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
