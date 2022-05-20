@@ -132,7 +132,7 @@ export default class UploadAnnotation extends React.Component {
                                                             html: accountNotLinkedHtml,
                                                             width: 700,
                                                             customClass: {
-                                                                popup: 'bg-light pb-5',
+                                                                popup: 'custom_bg pb-5',
                                                                 htmlContainer: 'm-0',
                                                             },
                                                             confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",

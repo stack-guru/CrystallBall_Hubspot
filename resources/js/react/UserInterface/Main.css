@@ -512,6 +512,10 @@ setting-menu-item.dropdown {
     color: #0f9aee;
 }
 
+.custom_bg{
+    background-color: #f4f4f4;
+}
+
 .data-source-select-options {
     /* margin-bottom: 0px; */
     /* height: 100px; */
