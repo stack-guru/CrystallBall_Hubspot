@@ -25,15 +25,35 @@ class GoogleAnalyticsPropertyController extends Controller
                 ->where('name', 'LIKE', '%' . $request->query('keyword') . '%')
                 ->whereIn('user_id', $userIdsArray);
 
-            $googleAnalyticsAccountIdsArray = Auth::user()->userGaAccounts->pluck('google_analytics_account_id')->toArray();
+            // Check if the current user has any permission set over google analytics accounts
+            $googleAnalyticsAccountIdsArray = $user->userGaAccounts->pluck('google_analytics_account_id')->toArray();
             if ($googleAnalyticsAccountIdsArray != [null] && $googleAnalyticsAccountIdsArray != []) {
                 $googleAnalyticsPropertiesQuery->whereIn('google_analytics_account_id', $googleAnalyticsAccountIdsArray);
             }
+
+            // Check if the price plan has limited google analytics properties allowed
+            switch ($user->pricePlan->google_analytics_property_count) {
+                case 0:
+                    break;
+                case -1:
+                    abort(402, "Please upgrade your plan to use Google Analytics Properties.");
+                    break;
+                case $user->pricePlan->google_analytics_property_count > 0:
+                    $googleAnalyticsPropertiesQueryTemp = $googleAnalyticsPropertiesQuery;
+                    $googleAnalyticsProperties = $googleAnalyticsPropertiesQueryTemp->where('is_in_use', true)->get();
+
+                    // If the user has used google analytics properties less than the allowed number then we will show 
+                    // all google analytics properties in the list
+                    if (count($googleAnalyticsProperties) < $user->pricePlan->google_analytics_property_count) {
+                        $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get();
+                    }
+                    break;
+            }
         } else {
-            $googleAnalyticsPropertiesQuery->ofCurrentUser();
+            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->ofCurrentUser()->get();
         }
 
-        return ['google_analytics_properties' => $googleAnalyticsPropertiesQuery->get()];
+        return ['google_analytics_properties' => $googleAnalyticsProperties];
     }
 
     public function destroy(GoogleAnalyticsProperty $googleAnalyticsProperty)
