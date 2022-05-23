@@ -39,7 +39,9 @@ class GoogleAnalyticsPropertyController extends Controller
                     abort(402, "Please upgrade your plan to use Google Analytics Properties.");
                     break;
                 case $user->pricePlan->google_analytics_property_count > 0:
-                    $googleAnalyticsPropertiesQueryTemp = $googleAnalyticsPropertiesQuery;
+                    // Duplicating whole query builder as we might require it if the limit is not reached
+                    $googleAnalyticsPropertiesQueryTemp = $googleAnalyticsPropertiesQuery->clone();
+
                     $googleAnalyticsProperties = $googleAnalyticsPropertiesQueryTemp->where('is_in_use', true)->get();
 
                     // If the user has used google analytics properties less than the allowed number then we will show 
