@@ -1,6 +1,6 @@
 import React from 'react';
 import { toast } from "react-toastify";
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
@@ -62,37 +62,6 @@ export default class CreateAnnotation extends React.Component {
 
     changeHandler(e) {
         switch (e.target.name) {
-            case "google_analytics_property_id":
-                if ((this.props.currentPricePlan.google_analytics_property_count < e.target.value.length) && (this.props.currentPricePlan.google_analytics_property_count !== 0)) {
-                    const accountNotLinkedHtml = '' +
-                        '<div class="">' +
-                        '<img src="/images/property-upgrade-modal.jpg" class="img-fluid">' +
-                        '</div>'
-                    /*
-                    * Show new google analytics account popup
-                    * */
-                    swal.fire({
-                        html: accountNotLinkedHtml,
-                        width: 700,
-                        customClass: {
-                            popup: 'custom_bg pb-5',
-                            htmlContainer: 'm-0',
-                        },
-                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                        confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
-
-                    }).then(value => {
-                        this.setState({ redirectTo: "/settings/price-plans" });
-                    });
-                } else {
-                    this.setState({ isDirty: true, annotation: { ...this.state.annotation, [e.target.name]: e.target.value } },
-                        () => {
-                            setTimeout(() => {
-                                saveStateToLocalStorage("CreateAnnotation", { annotation: this.state.annotation });
-                            }, 500);
-                        });
-                }
-                break;
             default:
                 this.setState({ isDirty: true, annotation: { ...this.state.annotation, [e.target.name]: e.target.value } },
                     () => {
@@ -271,6 +240,7 @@ export default class CreateAnnotation extends React.Component {
                                             onChangeCallback={this.changeHandler} placeholder="Select GA Properties"
                                             components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
                                             multiple
+                                            currentPricePlan={this.props.currentPricePlan}
                                         />
                                     </div>
                                 </div>

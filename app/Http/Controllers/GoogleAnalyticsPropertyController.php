@@ -20,7 +20,7 @@ class GoogleAnalyticsPropertyController extends Controller
 
         $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::with(['googleAccount', 'googleAnalyticsAccount'])->orderBy('name');
         if ($request->has('keyword')) {
-            $googleAnalyticsPropertiesQuery->select('id', 'name', 'google_account_id', 'google_analytics_account_id', 'was_last_data_fetching_successful')
+            $googleAnalyticsPropertiesQuery->select('id', 'name', 'google_account_id', 'google_analytics_account_id', 'was_last_data_fetching_successful', 'is_in_use')
                 ->with(['googleAccount:id,name', 'googleAnalyticsAccount:id,name'])
                 ->where('name', 'LIKE', '%' . $request->query('keyword') . '%')
                 ->whereIn('user_id', $userIdsArray);
@@ -31,26 +31,12 @@ class GoogleAnalyticsPropertyController extends Controller
                 $googleAnalyticsPropertiesQuery->whereIn('google_analytics_account_id', $googleAnalyticsAccountIdsArray);
             }
 
-            // Check if the price plan has limited google analytics properties allowed
-            switch ($user->pricePlan->google_analytics_property_count) {
-                case 0:
-                    break;
-                case -1:
-                    abort(402, "Please upgrade your plan to use Google Analytics Properties.");
-                    break;
-                case $user->pricePlan->google_analytics_property_count > 0:
-                    // Duplicating whole query builder as we might require it if the limit is not reached
-                    $googleAnalyticsPropertiesQueryTemp = $googleAnalyticsPropertiesQuery->clone();
-
-                    $googleAnalyticsProperties = $googleAnalyticsPropertiesQueryTemp->where('is_in_use', true)->get();
-
-                    // If the user has used google analytics properties less than the allowed number then we will show 
-                    // all google analytics properties in the list
-                    if (count($googleAnalyticsProperties) < $user->pricePlan->google_analytics_property_count) {
-                        $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get();
-                    }
-                    break;
+            // Check if the price plan has google analytics properties allowed
+            if ($user->pricePlan->google_analytics_property_count == -1) {
+                abort(402, "Please upgrade your plan to use Google Analytics Properties.");
             }
+
+            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get();
         } else {
             $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->ofCurrentUser()->get();
         }
