@@ -38,10 +38,9 @@ class DataForSeoService
         /*
          * Get search results from DFS for a given Task ID
          * */
-        if ($task_id){
-            return $this->getResultsForTask($task_id);
-        }
-        else{
+        if ($task_id) {
+            return $this->getResultsForSERPGoogleOrganicTask($task_id);
+        } else {
             return false;
         }
     }
@@ -67,18 +66,17 @@ class DataForSeoService
      * Sometimes it can return status_code=40602, which means our request is in DFS queue and can be accessed in few seconds
      * In that case we need to make another request after few seconds using same id
      */
-    private function getResultsForTask(string $task_id = '')
+    private function getResultsForSERPGoogleOrganicTask(string $task_id = '')
     {
         $url2 = 'https://api.dataforseo.com/v3/serp/google/organic/task_get/advanced/' . $task_id;
         $_res_2 = $this->http->get($url2)->collect()->all();
-        if ($_res_2['tasks']['0']['status_code'] == '40602' or $_res_2['tasks']['0']['status_code'] == '40601'){
+        if ($_res_2['tasks']['0']['status_code'] == '40602' or $_res_2['tasks']['0']['status_code'] == '40601') {
             sleep(2);
-            return $this->getResultsForTask($task_id);
+            return $this->getResultsForSERPGoogleOrganicTask($task_id);
         }
         if (isset($_res_2['tasks']['0']['result'])) {
             return $_res_2['tasks']['0']['result'];
         }
         return false;
     }
-
 }
