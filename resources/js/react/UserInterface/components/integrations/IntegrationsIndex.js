@@ -1,18 +1,45 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import VideoModalBox from '../../utils/VideoModalBox';
+import { Redirect } from 'react-router';
 
 export default class IntegrationsIndex extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = { redirectTo: null }
     }
 
     componentDidMount() {
         document.title = "Integrations";
+
+        if (!this.props.user.price_plan.has_integrations) {
+            setTimeout(() => {
+                const accountNotLinkedHtml = '' +
+                    '<div class="">' +
+                    '<img src="/images/integrations-upgrade-modal.jpg" class="img-fluid">' +
+                    '</div>'
+
+                swal.fire({
+                    html: accountNotLinkedHtml,
+                    width: 700,
+                    customClass: {
+                        popup: 'bg-light-red pb-5',
+                        htmlContainer: 'm-0',
+                    },
+                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                    confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                }).then(value => {
+                    this.setState({ redirectTo: '/settings/price-plans' });
+                });
+            }, 10000);
+        }
     }
 
     render() {
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+
         return (
             <div className="container-xl bg-white d-flex flex-column justify-content-center component-wrapper data-source-container pt-0">
                 <div className="row ml-0 mr-0">

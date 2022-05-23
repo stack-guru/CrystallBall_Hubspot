@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router';
-import PhoneVerificationModal from '../../helpers/PhoneVerificationModal';
+
 import HttpClient from "../../utils/HttpClient";
+
+import PhoneVerificationModal from '../../helpers/PhoneVerificationModal';
 import ChangePhoneModal from '../../helpers/ChangePhoneModal';
 import { getCompanyName } from '../../helpers/CommonFunctions';
 
@@ -19,6 +21,7 @@ export default class IndexNotificationSettings extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.sendVerificationEmail = this.sendVerificationEmail.bind(this);
+        this.showPricePlanModal = this.showPricePlanModal.bind(this);
     }
 
 
@@ -35,64 +38,72 @@ export default class IndexNotificationSettings extends Component {
             });
 
         if (!this.props.user.price_plan.has_notifications) {
-            const accountNotLinkedHtml = '' +
-                '<div class="">' +
-                '<img src="/images/notification-upgrade-modal.jpg" class="img-fluid">' +
-                '</div>'
-
-            swal.fire({
-                html: accountNotLinkedHtml,
-                width: 700,
-                customClass: {
-                    popup: 'bg-light pb-5',
-                    htmlContainer: 'm-0',
-                },
-                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
-
-            }).then(value => {
-                this.setState({ redirectTo: '/settings/price-plans' });
-            });
+            setTimeout(this.showPricePlanModal, 5000);
         }
 
     }
 
+    showPricePlanModal() {
+        const accountNotLinkedHtml = '' +
+            '<div class="">' +
+            '<img src="/images/notification-upgrade-modal.jpg" class="img-fluid">' +
+            '</div>'
+
+        swal.fire({
+            html: accountNotLinkedHtml,
+            width: 700,
+            customClass: {
+                popup: 'bg-light-red pb-5',
+                htmlContainer: 'm-0',
+            },
+            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+            confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+        }).then(value => {
+            this.setState({ redirectTo: '/settings/price-plans' });
+        });
+    }
+
     handleChange(e) {
-        if (e.target.checked) {
-            switch (e.target.getAttribute('notification-setting-name')) {
-                case 'web_monitors':
-                    if (!this.props.user.is_ds_web_monitors_enabled) {
-                        swal.fire("Activate the Automation", "To receive notifications, you need to activate and configure Website Monitoring on the automation page.", "info");
-                    }
-                    break;
-                case 'google_alerts':
-                    if (!this.props.user.is_ds_google_alerts_enabled) {
-                        swal.fire("Activate the Automation", "To receive notifications, you need to activate and configure News Alerts on the automation page.", "info");
-                    }
-                    break;
-            }
-            if (e.target.name == 'is_enabled') {
-                beamsClient.start()
-                    .then(() => beamsClient.setUserId(this.props.user.id.toString(), window.beamsTokenProvider))
-                    .catch((e) => {
-                        console.error(e);
-                        if (e.name == "NotAllowedError") {
-                            swal.fire("Browser Notifications", "You need to allow push notifications inorder to receive browser notifcations from " + getCompanyName() + ".", "warning");
+        if (e.target.checked && !this.props.user.price_plan.has_notifications) {
+            this.showPricePlanModal();
+        } else {
+            if (e.target.checked) {
+                switch (e.target.getAttribute('notification-setting-name')) {
+                    case 'web_monitors':
+                        if (!this.props.user.is_ds_web_monitors_enabled) {
+                            swal.fire("Activate the Automation", "To receive notifications, you need to activate and configure Website Monitoring on the automation page.", "info");
                         }
-                    });
+                        break;
+                    case 'google_alerts':
+                        if (!this.props.user.is_ds_google_alerts_enabled) {
+                            swal.fire("Activate the Automation", "To receive notifications, you need to activate and configure News Alerts on the automation page.", "info");
+                        }
+                        break;
+                }
+                if (e.target.name == 'is_enabled') {
+                    beamsClient.start()
+                        .then(() => beamsClient.setUserId(this.props.user.id.toString(), window.beamsTokenProvider))
+                        .catch((e) => {
+                            console.error(e);
+                            if (e.name == "NotAllowedError") {
+                                swal.fire("Browser Notifications", "You need to allow push notifications inorder to receive browser notifcations from " + getCompanyName() + ".", "warning");
+                            }
+                        });
 
+                }
             }
-        }
 
-        HttpClient.put(`/notification-setting/` + e.target.getAttribute('notification-setting-id'), { [e.target.name]: e.target.checked })
-            .then(response => {
-                let notificationSettings = this.state.notification_settings.map(nS => { if (nS.id == response.data.notification_setting.id) { return response.data.notification_setting; } else { return nS; } })
-                this.setState({ notification_settings: notificationSettings });
-            }, (err) => {
-                this.setState({ errors: (err.response).data });
-            }).catch(err => {
-                this.setState({ errors: err });
-            });
+            HttpClient.put(`/notification-setting/` + e.target.getAttribute('notification-setting-id'), { [e.target.name]: e.target.checked })
+                .then(response => {
+                    let notificationSettings = this.state.notification_settings.map(nS => { if (nS.id == response.data.notification_setting.id) { return response.data.notification_setting; } else { return nS; } })
+                    this.setState({ notification_settings: notificationSettings });
+                }, (err) => {
+                    this.setState({ errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ errors: err });
+                });
+        }
     }
 
     sendVerificationEmail() {
