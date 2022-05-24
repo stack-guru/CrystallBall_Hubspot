@@ -41,7 +41,7 @@ class ProcessOneDayOldTrialExpiredUsers extends Command
      */
     public function handle()
     {
-        $trialEndedPlanId = PricePlan::where('name', PricePlan::TRIAL_ENDED)->first()->id;
+        $trialEndedPlanId = PricePlan::where('code', PricePlan::CODE_FREE_NEW)->first()->id;
         print "Looking for users whos are on trial ended plan but trial ended on " . Carbon::now()->subDays(1)->format("Y-m-d") . "\n";
 
         $users = User::whereRaw("DATE(trial_ended_at) = '" . Carbon::now()->subDays(1)->format("Y-m-d") . "'")
