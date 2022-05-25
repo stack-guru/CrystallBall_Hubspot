@@ -1,6 +1,6 @@
 import React from 'react';
 import { toast } from "react-toastify";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router';
 
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
