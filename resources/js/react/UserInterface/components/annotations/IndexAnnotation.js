@@ -24,6 +24,8 @@ class IndexAnnotations extends React.Component {
             error: '',
             isBusy: false,
             isLoading: false,
+            allAnnotationsSelected: false,
+            selectedRows: []
         }
         this.deleteAnnotation = this.deleteAnnotation.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
@@ -33,6 +35,8 @@ class IndexAnnotations extends React.Component {
 
         this.handleChange = this.handleChange.bind(this)
         this.checkSearchText = this.checkSearchText.bind(this)
+
+        this.handleAllSelection = this.handleAllSelection.bind(this)
 
     }
     componentDidMount() {
@@ -113,6 +117,17 @@ class IndexAnnotations extends React.Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
+    handleAllSelection(e) {
+        this.setState({
+            allAnnotationsSelected: e.target.checked
+        });
+        let els = document.getElementsByClassName('row_checkbox')
+        for (let el of els) {
+            let anno_id = el.dataset.anno_id;
+            this.state.selectedRows.push(anno_id)
+        }
+    }
+
     checkSearchText(annotation) {
         if (this.state.searchText.length) {
             const searchText = this.state.searchText.toLowerCase();
@@ -158,7 +173,11 @@ class IndexAnnotations extends React.Component {
                                         <option value="ga-property">By GA Property</option>
                                         {/* <option value="added-by">By Colour</option> */}
                                     </select>
-
+                                    {
+                                        this.state.allAnnotationsSelected == true ?
+                                            <button className='btn btn-danger btn-sm mt-2'>Delete all</button>
+                                            : null
+                                    }
                                 </div>
                                 <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-left text-lg-left">
                                     {
@@ -191,6 +210,7 @@ class IndexAnnotations extends React.Component {
                                         <table className="table table-hover gaa-hover table-bordered">
                                             <thead id="annotation-table-head">
                                                 <tr>
+                                                    <th><input type="checkbox" onChange={this.handleAllSelection} /></th>
                                                     <th>Category</th>
                                                     <th>Event Name</th>
                                                     <th>Description</th>
@@ -237,6 +257,7 @@ class IndexAnnotations extends React.Component {
                                                             return (
                                                                 <tr data-diff-in-milliseconds={diffTime} id={rowId} key={anno.category + anno.event_name + anno.description + anno.url + anno.id}>
                                                                     {/* style={{ borderLeft: `${borderLeftColor} solid 20px` }} */}
+                                                                    <td><input type="checkbox" class='row_checkbox' data-anno_id={anno.id} /></td>
                                                                     <td>{anno.category}</td>
                                                                     <td>{anno.event_name}</td>
                                                                     <td style={{ overflowWrap: "anywhere" }}>
