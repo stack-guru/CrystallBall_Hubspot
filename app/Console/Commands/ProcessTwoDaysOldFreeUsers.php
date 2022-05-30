@@ -41,7 +41,7 @@ class ProcessTwoDaysOldFreeUsers extends Command
      */
     public function handle()
     {
-        $freePlanId = PricePlan::where('name', PricePlan::FREE)->first()->id;
+        $freePlanId = PricePlan::where('code', PricePlan::CODE_FREE_NEW)->first()->id;
         print "Looking for users whos are on free plan but trial ended on " . Carbon::now()->subDays(2)->format("Y-m-d") . "\n";
 
         $users = User::whereRaw("DATE(trial_ended_at) = '" . Carbon::now()->subDays(2)->format("Y-m-d") . "'")
@@ -49,7 +49,7 @@ class ProcessTwoDaysOldFreeUsers extends Command
             ->where("price_plan_id", $freePlanId)
             ->get()
             ->toArray();
-            
+
         if (count($users)) {
             $sGS = new SendGridService;
             $sGS->addUsersToMarketingList($users, "2 days on FREE");

@@ -268,6 +268,7 @@ export default class EditAnnotation extends React.Component {
                                             onChangeCallback2={this.gAPropertyChangeHandler}
                                             placeholder="Select GA Properties"
                                             multiple
+                                            currentPricePlan={this.props.currentPricePlan}
                                         ></GoogleAnalyticsPropertySelect>
                                     </div>
                                 </div>

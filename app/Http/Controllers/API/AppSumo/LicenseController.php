@@ -110,7 +110,7 @@ class LicenseController extends Controller
             case 'refund':
                 $user = User::where('email', $request->activation_email)->first();
                 $pricePlan = PricePlan::find($request->plan_id);
-                $downgradePricePlan = PricePlan::where('price', 0)->where('name', PricePlan::TRIAL_ENDED)->first();
+                $downgradePricePlan = PricePlan::where('price', 0)->where('code', PricePlan::CODE_FREE_NEW)->first();
 
                 $user->price_plan_expiry_date = new \DateTime("+100 years");
                 $user->price_plan_id = $downgradePricePlan->id;

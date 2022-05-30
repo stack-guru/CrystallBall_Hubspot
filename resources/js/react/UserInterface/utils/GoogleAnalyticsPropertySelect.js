@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router';
 
 import HttpClient from './HttpClient'
 
@@ -51,7 +52,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                     return {
                         value: gap.id,
                         label: gap.name + ' ' + gap.google_analytics_account.name,
-                        wasLastDataFetchingSuccessful: gap.was_last_data_fetching_successful
+                        wasLastDataFetchingSuccessful: gap.was_last_data_fetching_successful,
+                        isInUse: gap.is_in_use,
                     };
                 });
                 callback(options);
@@ -81,7 +83,34 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             });
             if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Properties" }]);
         } else {
-            // aProperties.push(sOption);
+            if (
+                (this.props.currentPricePlan.google_analytics_property_count < (
+                    this.state.allProperties.filter(sO => sO.isInUse).length
+                    + sOption.filter(sO => sO.value !== "").filter(sO => !sO.isInUse).length)
+                )
+                && (this.props.currentPricePlan.google_analytics_property_count !== 0)
+            ) {
+                const accountNotLinkedHtml = '' +
+                    '<div class="">' +
+                    '<img src="/images/property-upgrade-modal.jpg" class="img-fluid">' +
+                    '</div>'
+                /*
+                * Show new google analytics account popup
+                * */
+                swal.fire({
+                    html: accountNotLinkedHtml,
+                    width: 700,
+                    customClass: {
+                        popup: 'custom_bg pb-5',
+                        htmlContainer: 'm-0',
+                    },
+                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                    confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                }).then(value => {
+                    this.setState({ redirectTo: "/settings/price-plans" });
+                });
+            }
             let aProperties = null;
             if (this.props.multiple) {
                 aProperties = sOption.filter(sO => sO.value !== "");

@@ -20,20 +20,28 @@ class GoogleAnalyticsPropertyController extends Controller
 
         $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::with(['googleAccount', 'googleAnalyticsAccount'])->orderBy('name');
         if ($request->has('keyword')) {
-            $googleAnalyticsPropertiesQuery->select('id', 'name', 'google_account_id', 'google_analytics_account_id', 'was_last_data_fetching_successful')
+            $googleAnalyticsPropertiesQuery->select('id', 'name', 'google_account_id', 'google_analytics_account_id', 'was_last_data_fetching_successful', 'is_in_use')
                 ->with(['googleAccount:id,name', 'googleAnalyticsAccount:id,name'])
                 ->where('name', 'LIKE', '%' . $request->query('keyword') . '%')
                 ->whereIn('user_id', $userIdsArray);
 
-            $googleAnalyticsAccountIdsArray = Auth::user()->userGaAccounts->pluck('google_analytics_account_id')->toArray();
+            // Check if the current user has any permission set over google analytics accounts
+            $googleAnalyticsAccountIdsArray = $user->userGaAccounts->pluck('google_analytics_account_id')->toArray();
             if ($googleAnalyticsAccountIdsArray != [null] && $googleAnalyticsAccountIdsArray != []) {
                 $googleAnalyticsPropertiesQuery->whereIn('google_analytics_account_id', $googleAnalyticsAccountIdsArray);
             }
+
+            // Check if the price plan has google analytics properties allowed
+            if ($user->pricePlan->google_analytics_property_count == -1) {
+                abort(402, "Please upgrade your plan to use Google Analytics Properties.");
+            }
+
+            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get();
         } else {
-            $googleAnalyticsPropertiesQuery->ofCurrentUser();
+            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->ofCurrentUser()->get();
         }
 
-        return ['google_analytics_properties' => $googleAnalyticsPropertiesQuery->get()];
+        return ['google_analytics_properties' => $googleAnalyticsProperties];
     }
 
     public function destroy(GoogleAnalyticsProperty $googleAnalyticsProperty)
