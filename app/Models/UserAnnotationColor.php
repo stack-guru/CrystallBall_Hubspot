@@ -23,5 +23,6 @@ class UserAnnotationColor extends Model
         'g_ads_history_change',
         'anomolies_detection',
         'budget_tracking',
+        'keyword_tracking',
     ];
 }

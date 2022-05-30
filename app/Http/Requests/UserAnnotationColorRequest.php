@@ -37,6 +37,7 @@ class UserAnnotationColorRequest extends FormRequest
             'g_ads_history_change' => 'nullable|string|max:10',
             'anomolies_detection' => 'nullable|string|max:10',
             'budget_tracking' => 'nullable|string|max:10',
+            'keyword_tracking' => 'nullable|string|max:10',
         ];
     }
 }

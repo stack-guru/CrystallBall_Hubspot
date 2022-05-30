@@ -12,6 +12,7 @@ import DSGAUDatesSelect from '../../utils/DSGAUDatesSelect';
 import DSGoogleAlertsSelect from '../../utils/DSGoogleAlertsSelect';
 import DSWebMonitorsSelect from '../../utils/DSWebMonitorsSelect';
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
+import DSKeywordTracking from '../../utils/DSKeywordTracking';
 import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
 import ErrorAlert from '../../utils/ErrorAlert';
 import DataSourceInterfaceTour from '../../helpers/DataSourceInterfaceTour';
@@ -815,6 +816,67 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
 
+                            {/*
+                                Keyword Tracking section
+                            */}
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
+                                    <div>
+                                        <div className="d-flex mt-2 justify-content-between "
+                                            id="keyword-tracking-data-source-section">
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Keyword Tracking <UserAnnotationColorPicker name="keyword_tracking"
+                                                            value={this.state.userAnnotationColors.keyword_tracking}
+                                                            updateCallback={this.updateUserAnnotationColors} />
+                                                        <img className="hint-button-2" src="/images/info-logo.png" />
+                                                    </small>
+                                                </h2>
+                                            </div>
+
+                                            <div className="px-2">
+                                                {this.state.userServices.is_ds_keyword_tracking_enabled ? "Active" : "Deactive"}
+                                                <label className="trigger switch">
+                                                    <input type="checkbox"
+                                                        checked={this.state.userServices.is_ds_keyword_tracking_enabled}
+                                                        onChange={this.serviceStatusHandler}
+                                                        name="is_ds_keyword_tracking_enabled"
+                                                    />
+                                                    <span className={`slider round ${this.state.userServices.is_ds_keyword_tracking_enabled ? 'animate-pulse' : ''}`} />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                                {this.state.userDataSources.keyword_tracking ?
+                                                    <div>
+                                                        <p style={{ fontSize: "13px" }}>Keywords:</p>
+                                                        <dl className="d-flex flex-row flex-wrap data-source-select-options">
+                                                            {this.state.userDataSources.keyword_tracking
+                                                                ? this.state.userDataSources.keyword_tracking.map((keyword) => {
+                                                                    return keyword.value;
+                                                                }).join(", ")
+                                                                : <dd>no keyword added&nbsp;</dd>
+                                                            }
+                                                        </dl>
+                                                    </div>
+                                                    : <dd>No keywords added.&nbsp;</dd>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p
+                                        className="ds-update-text m-0 pb-3 px-2 text-right"
+                                        onClick={() => {
+                                            this.sectionToggler('keyword_tracking');
+                                        }}
+                                    >
+                                        {this.state.sectionName == "keyword_tracking" ? "Hide" : "Choose Keywords"}
+                                    </p>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div className="col-md-3 col-sm-12 border-left" id="data-source-detail-container">
@@ -882,6 +944,17 @@ export default class DataSourceIndex extends React.Component {
                                 />
                                 : null
                         }
+
+                        {
+                            this.state.sectionName == 'keyword_tracking' && this.state.userDataSources ?
+                                <DSKeywordTracking
+                                    onCheckCallback={this.userDataSourceAddHandler}
+                                    onUncheckCallback={this.userDataSourceDeleteHandler}
+                                    ds_data={this.state.userDataSources.keyword_tracking}
+                                />
+                                : null
+                        }
+
                     </div>
                 </div>
             </div>
@@ -920,6 +993,11 @@ export default class DataSourceIndex extends React.Component {
             if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && e.target.checked) {
                 this.sectionToggler('google_algorithm_updates')
             } else if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+            }
+            if (e.target.name == 'is_ds_keyword_tracking_enabled' && e.target.checked) {
+                this.sectionToggler('keyword_tracking')
+            } else if (e.target.name == 'is_ds_keyword_tracking_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
             }
             HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
