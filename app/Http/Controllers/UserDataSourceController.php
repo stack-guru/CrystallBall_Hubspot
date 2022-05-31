@@ -100,4 +100,39 @@ class UserDataSourceController extends Controller
 
         return ['success' => true, 'data_source' => $userDataSource];
     }
+
+    /**
+     * saveDFSkeywordsforTracking
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function saveDFSkeywordsforTracking(Request $request)
+    {
+        $data_source = UserDataSource::where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->first();
+        if (!$data_source) {
+            $data_source = new UserDataSource();
+            $data_source->ds_code = 'keyword_tracking';
+            $data_source->ds_name = "KeywordTracking";
+            $data_source->user_id = Auth::id();
+        }
+        $data_source->is_enabled = true;
+        $data_source->meta = serialize($request->all());
+        $data_source->save();
+        $data_source->meta = unserialize($data_source->meta);
+        return $data_source;
+    }
+
+    /**
+     * getDFSkeywordsforTracking
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function getDFSkeywordsforTracking()
+    {
+        $data_source = UserDataSource::where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->first();
+        $data_source->meta = unserialize($data_source->meta);
+        return $data_source;
+    }
 }

@@ -149,6 +149,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
         Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);
         Route::get('annotation-categories', [App\Http\Controllers\AnnotationController::class, 'getCategories']);
 
+
         Route::resource('notification-setting', App\Http\Controllers\NotificationSettingController::class)->only(['index', 'update']);
 
         Route::group(['prefix' => 'data-source'], function () {
@@ -158,6 +159,10 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
             Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'destroy']);
 
             Route::resource('web-monitor', App\Http\Controllers\WebMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
+            // save dfs keywords for keyword tracking automation
+            Route::post('save-dfs-keywords', [App\Http\Controllers\UserDataSourceController::class, 'saveDFSkeywordsforTracking']);
+            // get DFS keywords data
+            Route::get('get-dfs-keywords', [App\Http\Controllers\UserDataSourceController::class, 'getDFSkeywordsforTracking']);
 
             Route::get('google-algorithm-updates/date', [App\Http\Controllers\GoogleAlgorithmUpdateController::class, 'uiIndex']);
             Route::get('retail-marketing-dates', [App\Http\Controllers\RetailMarketingController::class, 'uiIndex']);
