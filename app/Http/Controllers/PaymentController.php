@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\MarkSalesInFirstPromoter;
 use App\Mail\AdminPlanUpgradedMail;
 use App\Models\Admin;
 use App\Models\Coupon;
@@ -254,6 +255,7 @@ class PaymentController extends Controller
         // A notification to system administrator of the purchase
         $admin = Admin::first();
         Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
+        if ($pricePlan->price) dispatch(new MarkSalesInFirstPromoter($user, $pricePlan, $price, $transactionId));
 
         return ['success' => true, 'transaction_id' => $transactionId];
     }

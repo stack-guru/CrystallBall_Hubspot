@@ -124,5 +124,11 @@ return [
 
     'user_back' => [
         'access_token' => env('USER_BACK_ACCESS_TOKEN', '')
+    ],
+
+    'first_promoter' => [
+        'api' => [
+            'key' => env('FIRST_PROMOTER_API_KEY')
+        ]
     ]
 ];
