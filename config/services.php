@@ -129,6 +129,7 @@ return [
     'first_promoter' => [
         'api' => [
             'key' => env('FIRST_PROMOTER_API_KEY')
-        ]
+        ],
+        'cid' => env('FIRST_PROMOTER_CID')
     ]
 ];
