@@ -24,11 +24,16 @@ class DataForSeoService
      * First request returns the task id which will be sent in second request to that fetches search results
      * Same task id can be used multiple times, we can save it if needed.
      */
-    public function getSearchResults(array $params = [])
+    public function getSearchResults($url, $keyword, $seach_engine, $location_code, $language_code)
     {
-        if (empty($params)) {
-            return false;
-        }
+
+        $params = [
+            'language_code' => $language_code,
+            'location_code' => $location_code,
+            'keyword' => $keyword,
+            'target' => $seach_engine,
+            'url' => $url,
+        ];
 
         /*
          * Make a post request to DFS with parameters to get Task ID

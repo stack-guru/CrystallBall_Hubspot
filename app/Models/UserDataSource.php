@@ -60,4 +60,9 @@ class UserDataSource extends Model
         $user->is_ds_web_monitors_enabled = false;
         $user->save();
     }
+
+    public function keywords()
+    {
+        return $this->hasMany(Keyword::class);
+    }
 }
