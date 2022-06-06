@@ -82,6 +82,13 @@ return [
             'days' => 3,
         ],
 
+        'firstpromoter' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/firstpromoter.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 3,
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),

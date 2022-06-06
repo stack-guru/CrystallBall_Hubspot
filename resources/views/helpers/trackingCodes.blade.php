@@ -74,3 +74,10 @@
         (d.head || d.body).appendChild(s);})(document);
     </script>
 @endif
+@if(config('services.user_back.access_token'))
+<script>(function(w){w.fpr=w.fpr||function(){w.fpr.q = w.fpr.q||[];w.fpr.q[arguments[0]=='set'?'unshift':'push'](arguments);};})(window);
+fpr("init", {cid:"{{ config('services.first_promoter.cid') }}"}); 
+fpr("click");
+</script>
+<script src="https://cdn.firstpromoter.com/fpr.js" async></script>
+@endif
