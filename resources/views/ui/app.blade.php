@@ -135,6 +135,13 @@
 
     <script type="text/javascript" src="{{asset('js/UI.js')}}"></script>
 
+    @if(empty(Auth::user()->last_login_at))
+    <script>
+        fpr("referral", {
+            email: "{{ Auth::user()->email }}"
+        })
+    </script>
+    @endif
 </body>
 
 </html>
