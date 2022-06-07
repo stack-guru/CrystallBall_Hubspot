@@ -836,6 +836,19 @@ export default class DataSourceIndex extends React.Component {
                                             </div>
 
                                             <div className="px-2">
+                                                Deactive
+                                                <label className="trigger switch">
+                                                    <input type="checkbox"
+                                                        onClick={e => {
+                                                            e.preventDefault()
+                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                        }}
+                                                        name="is_ds_budget_tracking_enabled"
+                                                    />
+                                                    <span className={`slider round`} />
+                                                </label>
+                                            </div>
+                                            {/* <div className="px-2">
                                                 {this.state.userServices.is_ds_keyword_tracking_enabled ? "Active" : "Deactive"}
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
@@ -845,9 +858,16 @@ export default class DataSourceIndex extends React.Component {
                                                     />
                                                     <span className={`slider round ${this.state.userServices.is_ds_keyword_tracking_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div className="px-2">
+                                            <div className="list-wrapper">
+                                            </div>
+                                            <div className='text-center mt-2'>
+                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
+                                            </div>
+                                        </div>
+                                        {/* <div className="px-2">
                                             <div className="list-wrapper">
                                                 {this.state.userDataSources.keyword_tracking ?
                                                     <div>
@@ -864,7 +884,7 @@ export default class DataSourceIndex extends React.Component {
                                                     : <dd>No keywords added.&nbsp;</dd>
                                                 }
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <p
                                         className="ds-update-text m-0 pb-3 px-2 text-right"
