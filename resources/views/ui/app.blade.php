@@ -138,7 +138,7 @@
     @if(empty(Auth::user()->last_login_at))
     <script>
         fpr("referral", {
-            email: "{{ Auth::user()->email }}"
+            uid: "{{ Auth::user()->id }}"
         })
     </script>
     @endif
