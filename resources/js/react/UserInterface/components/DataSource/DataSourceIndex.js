@@ -892,7 +892,7 @@ export default class DataSourceIndex extends React.Component {
                                             this.sectionToggler('keyword_tracking');
                                         }}
                                     >
-                                        {this.state.sectionName == "keyword_tracking" ? "Hide" : "Choose Keywords"}
+                                        {/* {this.state.sectionName == "keyword_tracking" ? "Hide" : "Choose Keywords"} */}
                                     </p>
                                 </div>
                             </div>
