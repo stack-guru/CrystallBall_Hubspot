@@ -240,6 +240,9 @@ class Main extends React.Component {
                         eventAction: 'SignUp',
                         eventLabel: 'SignUp'
                     });
+                    fpr("referral", {
+                        uid: "{{ Auth::user()->id }}"
+                    })
                 }
 
                 if (response.data.user.price_plan.name == 'Free') {

@@ -135,13 +135,6 @@
 
     <script type="text/javascript" src="{{asset('js/UI.js')}}"></script>
 
-    @if(empty(Auth::user()->last_login_at))
-    <script>
-        fpr("referral", {
-            uid: "{{ Auth::user()->id }}"
-        })
-    </script>
-    @endif
 </body>
 
 </html>
