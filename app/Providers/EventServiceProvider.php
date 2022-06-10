@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\UserDataSourceUpdatedOrCreated;
+use App\Listeners\RetrieveDFSTaskIdForKeyword;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -98,6 +99,13 @@ class EventServiceProvider extends ServiceProvider
 
         \App\Events\AnnotationsLimitReached::class => [\App\Listeners\AddUserToSendGridList::class],
 
+        /*
+         * Retrieve Task ID and store for CronJob
+         * */
+        UserDataSourceUpdatedOrCreated::class => [
+            RetrieveDFSTaskIdForKeyword::class
+        ]
+
     ];
 
     /**
@@ -108,5 +116,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         \App\Models\Annotation::observe(\App\Observers\AnnotationObserver::class);
+        // UserDataSource::observe(UserDataSourceObserver::class);
     }
 }

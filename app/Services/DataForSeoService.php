@@ -24,7 +24,7 @@ class DataForSeoService
      * First request returns the task id which will be sent in second request to that fetches search results
      * Same task id can be used multiple times, we can save it if needed.
      */
-    public function getSearchResults($url, $keyword, $seach_engine, $location_code, $language_code)
+    public function getSearchResults($keyword, $seach_engine, $location_code, $language_code)
     {
 
         $params = [
@@ -32,13 +32,15 @@ class DataForSeoService
             'location_code' => $location_code,
             'keyword' => $keyword,
             'target' => $seach_engine,
-            'url' => $url,
+            'depth' => 700 // 700 max records
         ];
 
         /*
          * Make a post request to DFS with parameters to get Task ID
          * */
         $task_id = $this->getTaskID($params);
+        dump($task_id);
+
 
         /*
          * Get search results from DFS for a given Task ID
@@ -50,7 +52,7 @@ class DataForSeoService
         }
     }
 
-    private function getTaskID($params)
+    public function getTaskID($params)
     {
         /*
          * Need to wrap object inside array (otherwise it won't work)
@@ -71,16 +73,16 @@ class DataForSeoService
      * Sometimes it can return status_code=40602, which means our request is in DFS queue and can be accessed in few seconds
      * In that case we need to make another request after few seconds using same id
      */
-    private function getResultsForSERPGoogleOrganicTask(string $task_id = '')
+    public function getResultsForSERPGoogleOrganicTask(string $task_id = '')
     {
+        // endpoint
         $url2 = 'https://api.dataforseo.com/v3/serp/google/organic/task_get/advanced/' . $task_id;
+        // fetch results
         $_res_2 = $this->http->get($url2)->collect()->all();
-        if ($_res_2['tasks']['0']['status_code'] == '40602' or $_res_2['tasks']['0']['status_code'] == '40601') {
-            sleep(2);
-            return $this->getResultsForSERPGoogleOrganicTask($task_id);
-        }
-        if (isset($_res_2['tasks']['0']['result'])) {
-            return $_res_2['tasks']['0']['result'];
+        // necessary checks
+        // if the request is successfully done, return the data
+        if (isset($_res_2['tasks']['0']['status_code']) && $_res_2['tasks']['0']['status_code'] == '20000') {
+            return $_res_2;
         }
         return false;
     }

@@ -22,7 +22,14 @@ class UserDataSource extends Model
         'value',
         'is_enabled',
         'ga_property_id',
-        'meta'
+
+        'url',
+        'search_engine',
+        'location',
+        'lang',
+        'ranking_direction',
+        'ranking_places',
+        'user_id',
     ];
 
     protected $casts = [

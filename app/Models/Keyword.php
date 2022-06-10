@@ -9,4 +9,9 @@ class Keyword extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function user_data_source()
+    {
+        return $this->belongsTo(UserDataSource::class);
+    }
 }

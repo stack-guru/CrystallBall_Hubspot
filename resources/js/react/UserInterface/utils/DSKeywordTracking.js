@@ -167,13 +167,22 @@ export default class DSKeywordTracking extends React.Component {
                         <input
                             type="text"
                             className="form-control"
-                            placeholder="https://your-company-domain"
+                            placeholder="your-company-domain.com"
                             name="url"
                             id="url"
-                            onChange={(e) => this.setState({ url: e.target.value })}
+                            onChange={(e) => {
+                                let val = e.target.value;
+                                val = val.split(' ').join('');
+                                val = val.replace('/', '');
+                                val = val.replace('www.', '');
+                                val = val.replace('https://', '');
+                                val = val.replace('http://', '');
+                                e.target.value = val;
+                                this.setState({ url: val });
+                            }}
                         />
                     </div>
-                    <label>Keywords</label> 
+                    <label>Keywords</label>
                     <div className="input-group mb-1">
                         <input
                             type="text"
@@ -196,21 +205,21 @@ export default class DSKeywordTracking extends React.Component {
                                 : ''
                         }
                     </div>
-                    <label>Search Engine</label> 
+                    <label>Search Engine</label>
                     <div className="input-group mb-3">
                         <select className='form-control' id="search_engine" onChange={(e) => { this.setState({ search_engine: e.target.options[e.target.selectedIndex].value}) }}>
                             <option selected disabled>Select Search Engine</option>
                             <option value='google.com'>Google</option>
                         </select>
                     </div>
-                    <label>Location</label> 
+                    <label>Location</label>
                     <div className="input-group mb-3">
                         <select className='form-control' id="country" onChange={(e) => { this.setState({ country: e.target.options[e.target.selectedIndex].value }) }}>
                             <option selected disabled>Select Country</option>
                             <option value='2840'>USA</option>
                         </select>
                     </div>
-                    <label>Language</label> 
+                    <label>Language</label>
                     <div className="input-group mb-3">
                         <select className='form-control' id="lang" onChange={(e) => { this.setState({ lang: e.target.options[e.target.selectedIndex].value }) }}>
                             <option selected disabled>Select Language</option>
