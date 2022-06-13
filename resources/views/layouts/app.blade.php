@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     
-    @include('helpers/trackingCodes')
+    @include('helpers/trackingCodesHeader')
         
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +24,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    @include('helpers/trackingCodesBody')
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ config('services.google.tag_manager.code')}}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">

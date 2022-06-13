@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @include('helpers/trackingCodes')
+    @include('helpers/trackingCodesHeader')
 
     <meta charset="utf-8">
 
@@ -101,6 +101,7 @@
 </head>
 
 <body class="app is-collapsed">
+    @include('helpers/trackingCodesBody')
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ config('services.google.tag_manager.code')}}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div id="loader">
         <div class="spinner"></div>

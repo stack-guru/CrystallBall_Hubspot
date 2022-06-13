@@ -3,7 +3,7 @@
 
 <head>
     
-    @include('helpers/trackingCodes')
+    @include('helpers/trackingCodesHeader')
 
     <meta charset="utf-8">
     <link rel="shortcut icon" type="image/ico" href="{{config('app.icon')}}" />
@@ -25,6 +25,7 @@
 </head>
 
 <body>
+    @include('helpers/trackingCodesBody')
     <div class="left-menu">
         <div class="content-logo">
             <img alt="" title="" src="{{ config('app.logo') }}" height="32" />
