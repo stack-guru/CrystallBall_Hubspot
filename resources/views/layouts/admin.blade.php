@@ -3,7 +3,7 @@
 
 <head>
 
-    @include('helpers/trackingCodes')
+    @include('helpers/trackingCodesHeader')
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,6 +27,7 @@
 </head>
 
 <body>
+    @include('helpers/trackingCodesBody')
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">

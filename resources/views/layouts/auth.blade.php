@@ -3,7 +3,7 @@
 
 <head>
 
-  @include('helpers/trackingCodes')
+  @include('helpers/trackingCodesHeader')
 
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
@@ -27,6 +27,7 @@
 </head>
 
 <body>
+  @include('helpers/trackingCodesBody')
   @yield('content')
   @yield('javascript')
 </body>

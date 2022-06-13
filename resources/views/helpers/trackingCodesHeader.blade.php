@@ -1,3 +1,11 @@
+@if(config('services.google.tag_manager.code'))
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','{{ config('services.google.tag_manager.code') }}');</script>
+@endif
+{{--
 @if(config('services.microsoft.clarity.code'))
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
@@ -6,13 +14,6 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "{{ config('services.microsoft.clarity.code') }}");
     </script>
-@endif
-@if(config('services.google.tag_manager.code'))
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','{{ config('services.google.tag_manager.code') }}');</script>
 @endif
 @if(config('services.google.analytics.code'))
     <script>
@@ -24,7 +25,6 @@
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     </script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google.analytics.code')}}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -35,7 +35,6 @@
 @endif
 @php config(['services.hotjar.site.code' => '2809005']); @endphp
 @if(config('services.hotjar.site.code'))
-    <!-- Hotjar Tracking Code -->
     <script>
         (function (h, o, t, j, a, r) {
             h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
@@ -49,7 +48,6 @@
 @endif
 @php config(['services.hotjar.site.code' => '2552820']); @endphp
 @if(config('services.hotjar.site.code'))
-    <!-- Hotjar Tracking Code -->
     <script>
         (function (h, o, t, j, a, r) {
             h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
@@ -81,3 +79,4 @@ fpr("click");
 </script>
 <script src="https://cdn.firstpromoter.com/fpr.js" async></script>
 @endif
+--}}
