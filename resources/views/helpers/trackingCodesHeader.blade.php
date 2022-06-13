@@ -5,7 +5,8 @@
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','{{ config('services.google.tag_manager.code') }}');</script>
 @endif
-<!-- @if(config('services.microsoft.clarity.code'))
+{{--
+@if(config('services.microsoft.clarity.code'))
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -77,4 +78,5 @@ fpr("init", {cid:"{{ config('services.first_promoter.cid') }}"});
 fpr("click");
 </script>
 <script src="https://cdn.firstpromoter.com/fpr.js" async></script>
-@endif -->
+@endif
+--}}
