@@ -95,7 +95,7 @@ class IndexAnnotations extends React.Component {
     toggleStatus(id) {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
-            let prevAnnotation = this.state.annotations.filter(an => an.id == id)[0];
+            let prevAnnotation = this.state.annotations.find(an => an.id == id);
             let newStatus = 0;
             if (prevAnnotation.is_enabled) { newStatus = 0 } else { newStatus = 1 }
             HttpClient.put(`/annotation/${id}`, { is_enabled: newStatus }).then(response => {
