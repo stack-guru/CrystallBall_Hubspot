@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserDataSourceUpdatedOrCreated;
+use App\Http\Requests\StoreKeywordsRequest;
 use App\Http\Requests\UserDataSourceRequest;
+use App\Models\Keyword;
 use App\Models\UserDataSource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -40,6 +43,7 @@ class UserDataSourceController extends Controller
                 'google_algorithm_update_dates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'status')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'google_algorithm_update_dates')->get(),
                 'google_alert_keywords' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'google_alert_keywords')->get(),
                 'wordpress_updates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'wordpress_updates')->get(),
+                'keyword_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'keyword_tracking')->get(),
             ],
         ];
     }
@@ -47,7 +51,7 @@ class UserDataSourceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(UserDataSourceRequest $request)
@@ -86,7 +90,7 @@ class UserDataSourceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\UserDataSource  $userDataSource
+     * @param \App\Models\UserDataSource $userDataSource
      * @return \Illuminate\Http\Response
      */
     public function destroy(UserDataSource $userDataSource)
@@ -104,35 +108,101 @@ class UserDataSourceController extends Controller
     /**
      * saveDFSkeywordsforTracking
      *
-     * @param  mixed $request
+     * @param mixed $request
      * @return void
      */
-    public function saveDFSkeywordsforTracking(Request $request)
+    public function saveDFSkeywordsforTracking(StoreKeywordsRequest $request)
     {
-        $data_source = UserDataSource::where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->first();
-        if (!$data_source) {
-            $data_source = new UserDataSource();
-            $data_source->ds_code = 'keyword_tracking';
-            $data_source->ds_name = "KeywordTracking";
-            $data_source->user_id = Auth::id();
+        DB::beginTransaction();
+        try {
+            $where = [
+                'user_id' => Auth::id(),
+                'ds_code' => 'keyword_tracking',
+                'ds_name' => 'KeywordTracking'
+            ];
+            $update = [
+                'is_enabled' => true,
+                'url' => $request->url,
+                'search_engine' => $request->search_engine,
+                'location' => $request->location,
+                'lang' => $request->lang,
+                'ranking_direction' => $request->ranking_direction,
+                'ranking_places' => $request->ranking_places,
+            ];
+            $data_source =  UserDataSource::updateOrCreate($where, $update);
+//            $data_source = UserDataSource::where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->first();
+//            if (!$data_source) {
+//                $data_source = new UserDataSource();
+//                $data_source->ds_code = 'keyword_tracking';
+//                $data_source->ds_name = "KeywordTracking";
+//                $data_source->user_id = Auth::id();
+//            }
+//            $data_source->is_enabled = true;
+//            $data_source->url = $request->url;
+//            $data_source->search_engine = $request->search_engine;
+//            $data_source->location = $request->location;
+//            $data_source->lang = $request->lang;
+//            $data_source->ranking_direction = $request->ranking_direction;
+//            $data_source->ranking_places = $request->ranking_places;
+//            $data_source->save();
+            $this->saveKeywords($request->keywords, $data_source);
+            DB::commit();
+            UserDataSourceUpdatedOrCreated::dispatch($data_source);
+            return $data_source;
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
         }
-        $data_source->is_enabled = true;
-        $data_source->meta = serialize($request->all());
-        $data_source->save();
-        $data_source->meta = unserialize($data_source->meta);
-        return $data_source;
+    }
+
+    private function saveKeywords($keywords, $data_source)
+    {
+        foreach ($keywords as $keyword) {
+            if (!isset($keyword['user_data_source_id'])) {
+                $where = [
+                    'user_data_source_id' => $data_source->id,
+                    'keyword' => $keyword['keyword'],
+                ];
+                $update = [
+                    'user_data_source_id' => $data_source->id,
+                    'keyword' => $keyword['keyword'],
+                ];
+                Keyword::updateOrCreate($where, $update);
+            }
+        }
     }
 
     /**
      * getDFSkeywordsforTracking
      *
-     * @param  mixed $request
+     * @param mixed $request
      * @return void
      */
     public function getDFSkeywordsforTracking()
     {
-        $data_source = UserDataSource::where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->first();
-        $data_source->meta = unserialize($data_source->meta);
+        $data_source = UserDataSource::with('keywords')->where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->first();
         return $data_source;
+    }
+
+    /**
+     * deleteDFSkeywordforTracking
+     *
+     * @param mixed $request
+     * @return void
+     */
+    public function deleteDFSkeywordforTracking(Request $request)
+    {
+        $request->validate([
+            'keyword_id' => 'required',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $keyword_data_source = UserDataSource::with('keywords')->where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->first();
+            $keyword_data_source->keywords()->where('id', $request->keyword_id)->first()->delete();
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

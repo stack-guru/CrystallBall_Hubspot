@@ -22,7 +22,14 @@ class UserDataSource extends Model
         'value',
         'is_enabled',
         'ga_property_id',
-        'meta'
+
+        'url',
+        'search_engine',
+        'location',
+        'lang',
+        'ranking_direction',
+        'ranking_places',
+        'user_id',
     ];
 
     protected $casts = [
@@ -59,5 +66,10 @@ class UserDataSource extends Model
         $user->is_ds_wordpress_updates_enabled = false;
         $user->is_ds_web_monitors_enabled = false;
         $user->save();
+    }
+
+    public function keywords()
+    {
+        return $this->hasMany(Keyword::class);
     }
 }
