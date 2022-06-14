@@ -144,6 +144,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
         Route::get('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
         Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->only(['store', 'update', 'destroy']);
 
+        Route::post('annotations/bulk_delete', [App\Http\Controllers\AnnotationController::class, 'bulk_delete']);
+
         Route::get('team-name', [App\Http\Controllers\UserController::class, 'getTeamName']);
         Route::get('countries', [App\Http\Controllers\HolidayController::class, 'holidayApi']);
         Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);

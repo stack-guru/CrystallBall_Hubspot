@@ -37,6 +37,8 @@ class IndexAnnotations extends React.Component {
         this.checkSearchText = this.checkSearchText.bind(this)
 
         this.handleAllSelection = this.handleAllSelection.bind(this)
+        this.handleOneSelection = this.handleOneSelection.bind(this)
+        this.handleDeleteSelected = this.handleDeleteSelected.bind(this)
 
     }
     componentDidMount() {
@@ -47,6 +49,7 @@ class IndexAnnotations extends React.Component {
             this.setState({ userAnnotationColors: resp.data.user_annotation_color });
             HttpClient.get(`/annotation`)
                 .then(response => {
+                    console.log(response.data.annotations);
                     this.setState({ annotations: response.data.annotations, isLoading: false });
                 }, (err) => {
                     this.setState({ errors: (err.response).data, isLoading: false });
@@ -121,11 +124,84 @@ class IndexAnnotations extends React.Component {
         this.setState({
             allAnnotationsSelected: e.target.checked
         });
-        let els = document.getElementsByClassName('row_checkbox')
-        for (let el of els) {
-            let anno_id = el.dataset.anno_id;
-            this.state.selectedRows.push(anno_id)
+        if (e.target.checked) {
+            let els = document.getElementsByClassName('row_checkbox')
+            for (let el of els) {
+                let anno_id = el.dataset.anno_id;
+                this.state.selectedRows.push(anno_id)
+                el.checked = true;
+            }
         }
+        else {
+            this.state.selectedRows = [];
+            let els = document.getElementsByClassName('row_checkbox')
+            for (let el of els) {
+                el.checked = false;
+            }
+        }
+    }
+
+    handleOneSelection(e) {
+        let anno_id = e.target.dataset.anno_id;
+        
+        // if input is checked
+        if (e.target.checked) {
+            // if annotation id is not in the array
+            if (!this.state.selectedRows.includes(anno_id)) {
+                this.state.selectedRows.push(anno_id)
+            }
+        }
+        // if input is not checked, remove the id from array if it exists
+        else {
+            if (this.state.selectedRows.includes(anno_id)) {
+                let rows = this.state.selectedRows;
+                let new_rows = rows.filter(item => item !== anno_id)
+                this.setState({
+                    selectedRows: new_rows
+                })
+            }
+        }
+
+        if (this.state.selectedRows.length > 0) {
+            this.setState({
+                allAnnotationsSelected: true
+            });
+        }
+        else {
+            this.setState({
+                allAnnotationsSelected: false
+            });
+        }
+    }
+
+    handleDeleteSelected() {
+        this.setState({ isBusy: true });
+        HttpClient.post(`annotations/bulk_delete`, {
+            annotation_ids: this.state.selectedRows
+        }).then(resp => {
+            toast.success("Annotation(s) deleted.");
+
+            let selected_annotations = this.state.selectedRows;
+            let annotations = this.state.annotations;
+
+            for (let selected_annotation of selected_annotations) {
+                annotations = annotations.filter(a => a.id != selected_annotation);
+                this.setState({ annotations: annotations })
+            }
+            
+            this.setState({ isBusy: false })
+
+            this.setState({
+                allAnnotationsSelected: false
+            });
+
+        }, (err) => {
+
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+
+            this.setState({ isBusy: false, errors: err });
+        });
     }
 
     checkSearchText(annotation) {
@@ -175,7 +251,7 @@ class IndexAnnotations extends React.Component {
                                     </select>
                                     {
                                         this.state.allAnnotationsSelected == true ?
-                                            <button className='btn btn-danger btn-sm mt-2'>Delete all</button>
+                                            <button className='btn btn-danger btn-sm mt-2' onClick={this.handleDeleteSelected}>Delete all</button>
                                             : null
                                     }
                                 </div>
@@ -210,7 +286,7 @@ class IndexAnnotations extends React.Component {
                                         <table className="table table-hover gaa-hover table-bordered">
                                             <thead id="annotation-table-head">
                                                 <tr>
-                                                    <th><input type="checkbox" onChange={this.handleAllSelection} /></th>
+                                                    <th><input type="checkbox" onClick={this.handleAllSelection} /></th>
                                                     <th>Category</th>
                                                     <th>Event Name</th>
                                                     <th>Description</th>
@@ -257,7 +333,7 @@ class IndexAnnotations extends React.Component {
                                                             return (
                                                                 <tr data-diff-in-milliseconds={diffTime} id={rowId} key={anno.category + anno.event_name + anno.description + anno.url + anno.id}>
                                                                     {/* style={{ borderLeft: `${borderLeftColor} solid 20px` }} */}
-                                                                    <td><input type="checkbox" class='row_checkbox' data-anno_id={anno.id} /></td>
+                                                                    <td><input type="checkbox" class='row_checkbox' data-anno_id={anno.id} onChange={this.handleOneSelection} /></td>
                                                                     <td>{anno.category}</td>
                                                                     <td>{anno.event_name}</td>
                                                                     <td style={{ overflowWrap: "anywhere" }}>
