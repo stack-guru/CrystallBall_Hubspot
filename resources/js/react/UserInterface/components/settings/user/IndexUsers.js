@@ -105,7 +105,7 @@ export default class IndexUsers extends Component {
                                             </thead>
                                             <tbody>
                                                 {
-                                                    this.state.users.filter(u => this.checkSearchText(u)).map((user) => {
+                                                    this.state.users.filter(this.checkSearchText).map((user) => {
                                                         return <tr key={user.id} >
                                                             <td>{user.email}</td>
                                                             <td>{user.name}</td>
