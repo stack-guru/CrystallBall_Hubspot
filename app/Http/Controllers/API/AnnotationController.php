@@ -287,4 +287,10 @@ class AnnotationController extends Controller
 
         return response()->json([], 204);
     }
+
+    public function bulk_delete(Request $request)
+    {
+        dd($request->all());
+        # code...
+    }
 }

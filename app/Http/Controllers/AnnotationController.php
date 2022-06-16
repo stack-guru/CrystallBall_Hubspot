@@ -441,4 +441,25 @@ class AnnotationController extends Controller
         $categories = DB::select($annotationsQuery);
         return ['categories' => $categories];
     }
+
+    public function bulk_delete(Request $request)
+    {
+        $request->validate([
+            'annotation_ids' => 'required',
+        ]);
+
+        foreach ($request->annotation_ids as $annotation_id) {
+            $annotation = Annotation::find($annotation_id);
+
+            $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+
+            $annotation->delete();
+        }
+
+        return ["success" => true];
+    }
 }
