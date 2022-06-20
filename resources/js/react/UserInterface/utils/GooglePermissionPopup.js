@@ -46,11 +46,11 @@ export default class GooglePermissionPopup extends Component {
             html: googlePermissionsHtml,
             width: 500,
             confirmButtonClass: "m-0 p-0 border-0 rounded-0 bg-white",
-            cancelButtonClass: "btn btn-secondary ml-5",
             confirmButtonText: `<img src="/images/buttons/google_signin.png" width="auto" height="36px" />`,
-            showCloseButton: false,
-            showCancelButton: true,
-            cancelButtonText: 'Cancel',
+            // cancelButtonClass: "btn btn-secondary ml-5",
+            showCloseButton: true,
+            // showCancelButton: false,
+            // cancelButtonText: 'Cancel',
             allowOutsideClick: false
         }).then(value => {
             if (value.isConfirmed) {
