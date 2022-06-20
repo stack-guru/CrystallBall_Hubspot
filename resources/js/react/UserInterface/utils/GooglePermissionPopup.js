@@ -45,9 +45,9 @@ export default class GooglePermissionPopup extends Component {
         swal.fire({
             html: googlePermissionsHtml,
             width: 500,
-            confirmButtonClass: "btn btn-primary bg-primary",
+            confirmButtonClass: "m-0 p-0 border-0 rounded-0 bg-white",
             cancelButtonClass: "btn btn-secondary ml-5",
-            confirmButtonText: "Connect",
+            confirmButtonText: `<img src="/images/buttons/google_signin.png" width="auto" height="36px" />`,
             showCloseButton: false,
             showCancelButton: true,
             cancelButtonText: 'Cancel',
