@@ -151,6 +151,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
         Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);
         Route::get('annotation-categories', [App\Http\Controllers\AnnotationController::class, 'getCategories']);
 
+        Route::get('get-search-engine-list', [\App\Http\Controllers\DataForSeoController::class, 'getSearchEngineList']);
+        Route::get('get-locations-list', [\App\Http\Controllers\DataForSeoController::class, 'getLocationList']);
+        Route::get('search-locations-list', [\App\Http\Controllers\DataForSeoController::class, 'searchLocationList']);
 
         Route::resource('notification-setting', App\Http\Controllers\NotificationSettingController::class)->only(['index', 'update']);
 

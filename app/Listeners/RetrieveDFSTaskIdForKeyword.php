@@ -41,7 +41,8 @@ class RetrieveDFSTaskIdForKeyword implements ShouldQueue
                 'language_code' => $language_code,
                 'location_code' => $location_code,
                 'keyword' => $keyword->keyword,
-                'target' => $search_engine,
+                'target' => $search_engine.'.com',
+                'search_engine_name' => $search_engine,
                 'depth' => 700 // max = 700
             ];
             $task_id = $this->service->getTaskID($params);

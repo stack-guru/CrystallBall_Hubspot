@@ -1,5 +1,9 @@
 import React from 'react';
 import HttpClient from "./HttpClient";
+import SearchEngineSelect from "./SearchEngineSelect";
+import LocationSelect from "./LocationSelect";
+import AnnotationCategorySelect from "./AnnotationCategorySelect";
+import {saveStateToLocalStorage} from "../helpers/CommonFunctions";
 
 export default class DSKeywordTracking extends React.Component {
     constructor(props) {
@@ -21,6 +25,8 @@ export default class DSKeywordTracking extends React.Component {
         this.saveKeywords = this.saveKeywords.bind(this)
 
         this.loadDFSKeywords = this.loadDFSKeywords.bind(this)
+        this.changeSearchEngineHandler = this.changeSearchEngineHandler.bind(this)
+        this.changeLocationHandler = this.changeLocationHandler.bind(this)
 
     }
 
@@ -42,8 +48,8 @@ export default class DSKeywordTracking extends React.Component {
                 ranking_places: resp.data.ranking_places,
             });
             this.state.url ? document.getElementById('url').value = this.state.url : '';
-            this.state.search_engine ? document.getElementById('search_engine').value = this.state.search_engine : '';
-            this.state.country ? document.getElementById('country').value = this.state.country : '';
+            // this.state.search_engine ? document.getElementById('search_engine').value = this.state.search_engine : '';
+            // this.state.country ? document.getElementById('country').value = this.state.country : '';
             this.state.lang ? document.getElementById('lang').value = this.state.lang : '';
             this.state.ranking_direction ? document.getElementById('ranking_direction').value = this.state.ranking_direction : '';
             this.state.ranking_places ? document.getElementById('ranking_places').value = this.state.ranking_places : '';
@@ -65,7 +71,6 @@ export default class DSKeywordTracking extends React.Component {
                 this.setState({
                     keywords: keywords
                 });
-                console.log(this.state.keywords);
             }
             else {
                 swal.fire('Maximum keywords limit is 10!', '', 'warning');
@@ -107,6 +112,18 @@ export default class DSKeywordTracking extends React.Component {
         }).catch(err => {
             this.setState({ isBusy: false, errors: err });
         });
+    }
+
+    changeSearchEngineHandler(val) {
+        this.setState({
+            search_engine: val
+        })
+    }
+
+    changeLocationHandler(val) {
+        this.setState({
+            country: val
+        })
     }
 
     deleteKeyword(e) {
@@ -207,17 +224,16 @@ export default class DSKeywordTracking extends React.Component {
                     </div>
                     <label>Search Engine</label>
                     <div className="input-group mb-3">
-                        <select className='form-control' id="search_engine" onChange={(e) => { this.setState({ search_engine: e.target.options[e.target.selectedIndex].value}) }}>
-                            <option selected disabled>Select Search Engine</option>
-                            <option value='google.com'>Google</option>
-                        </select>
+                        <SearchEngineSelect className="gray_clr" name="search_engine" id="search_engine" value={this.state.search_engine} onChangeCallback={this.changeSearchEngineHandler} placeholder="Select Search Engine" />
                     </div>
                     <label>Location</label>
                     <div className="input-group mb-3">
-                        <select className='form-control' id="country" onChange={(e) => { this.setState({ country: e.target.options[e.target.selectedIndex].value }) }}>
+                        <LocationSelect className="gray_clr" name="country" id="country" value={this.state.country} onChangeCallback={this.changeLocationHandler} placeholder="Select Location" />
+
+                        {/* <select className='form-control' id="country" onChange={(e) => { this.setState({ country: e.target.options[e.target.selectedIndex].value }) }}>
                             <option selected disabled>Select Country</option>
                             <option value='2840'>USA</option>
-                        </select>
+                        </select> */}
                     </div>
                     <label>Language</label>
                     <div className="input-group mb-3">

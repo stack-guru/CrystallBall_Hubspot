@@ -14,7 +14,7 @@ class DataForSeoService
      */
     public function __construct()
     {
-        $this->http = Http::withBasicAuth(env('DFS_USER'), env('DFS_PASS'))->withHeaders(['Content-Type' => 'application/json']);
+        $this->http = Http::withBasicAuth(config('data_for_seo.credentials.user'), config('data_for_seo.credentials.pass'))->withHeaders(['Content-Type' => 'application/json']);
     }
 
     /**
@@ -24,14 +24,15 @@ class DataForSeoService
      * First request returns the task id which will be sent in second request to that fetches search results
      * Same task id can be used multiple times, we can save it if needed.
      */
-    public function getSearchResults($keyword, $seach_engine, $location_code, $language_code)
+    public function getSearchResults($keyword, $search_engine, $location_code, $language_code)
     {
 
         $params = [
             'language_code' => $language_code,
             'location_code' => $location_code,
             'keyword' => $keyword,
-            'target' => $seach_engine,
+            'target' => $search_engine.'.com',
+            'search_engine_name' => $search_engine,
             'depth' => 700 // 700 max records
         ];
 
@@ -57,26 +58,28 @@ class DataForSeoService
         /*
          * Need to wrap object inside array (otherwise it won't work)
          * */
-        $params = [$params];
+        $param_new = [$params];
         /*
          * Get Task ID
+         * $params['search_engine_name'] can be google, bing, yahoo, baidu, naver
          * */
-        $url = "https://api.dataforseo.com/v3/serp/google/organic/task_post";
-        $_res_1 = $this->http->withBody(json_encode($params), 'application/json')->post($url)->collect()->all();
+        $url = "https://api.dataforseo.com/v3/serp/".$params['search_engine_name']."/organic/task_post";
+        $_res_1 = $this->http->withBody(json_encode($param_new), 'application/json')->post($url)->collect()->all();
         return $_res_1['tasks'][0]['id'] ?? false;
     }
 
     /**
      * @param string $task_id
-     * @return false|mixed
+     * @param string $search_engine
+     * @return array|false
      * Get search results for given task ID
      * Sometimes it can return status_code=40602, which means our request is in DFS queue and can be accessed in few seconds
      * In that case we need to make another request after few seconds using same id
      */
-    public function getResultsForSERPGoogleOrganicTask(string $task_id = '')
+    public function getResultsForSERPGoogleOrganicTask(string $task_id = '', string $search_engine='google')
     {
         // endpoint
-        $url2 = 'https://api.dataforseo.com/v3/serp/google/organic/task_get/advanced/' . $task_id;
+        $url2 = 'https://api.dataforseo.com/v3/serp/'.$search_engine.'/organic/task_get/advanced/' . $task_id;
         // fetch results
         $_res_2 = $this->http->get($url2)->collect()->all();
         // necessary checks
@@ -85,5 +88,18 @@ class DataForSeoService
             return $_res_2;
         }
         return false;
+    }
+
+    /**
+     * @return false|mixed
+     */
+    public function getLocations()
+    {
+        // endpoint
+        $url = 'https://api.dataforseo.com/v3/serp/google/locations';
+        // fetch results
+        $_res = $this->http->get($url)->collect()->all();
+        // if the request is successfully done, return the data
+        return $_res['tasks'][0]['result'] ?? false;
     }
 }

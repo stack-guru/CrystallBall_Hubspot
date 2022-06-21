@@ -55,7 +55,7 @@ class DataForSeoCommand extends Command
             $ranking_places = (int)$data_source->ranking_places;
             $keywords = $data_source->keywords;
             foreach ($keywords as $keyword) {
-                $data = $this->service->getResultsForSERPGoogleOrganicTask($keyword->task_id);
+                $data = $this->service->getResultsForSERPGoogleOrganicTask($keyword->task_id, $data_source->search_engine);
                 if (isset($data['tasks'][0]['result'][0]['items']) && !empty($data['tasks'][0]['result'][0]['items'])) {
                     $items = $data['tasks'][0]['result'][0]['items'];
                     $this->processResults($items, $url, $ranking_direction, $ranking_places, $keyword, $data_source);
