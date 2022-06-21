@@ -47,6 +47,7 @@ export default class GooglePermissionPopup extends Component {
             width: 500,
             confirmButtonClass: "m-0 p-0 border-0 rounded-0 bg-white",
             confirmButtonText: `<img src="/images/buttons/google_signin.png" width="auto" height="36px" />`,
+            focusConfirm: false,
             // cancelButtonClass: "btn btn-secondary ml-5",
             showCloseButton: true,
             // showCancelButton: false,
