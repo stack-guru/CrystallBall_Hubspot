@@ -59,10 +59,10 @@ class DataForSeoCommand extends Command
                 if (isset($data['tasks'][0]['result'][0]['items']) && !empty($data['tasks'][0]['result'][0]['items'])) {
                     $items = $data['tasks'][0]['result'][0]['items'];
                     $this->processResults($items, $url, $ranking_direction, $ranking_places, $keyword, $data_source);
-                    dump('results are processed for a  particular keyword');
+                    info('results are processed for a  particular keyword');
                     // refresh the Task ID
                     UserDataSourceUpdatedOrCreated::dispatch($data_source);
-                    dump('event is triggered and queued to update the task id, that wil be processed tommorow');
+                    info('event is triggered and queued to update the task id, that wil be processed tommorow');
                 }
             }
         }
@@ -77,19 +77,19 @@ class DataForSeoCommand extends Command
             // it means its ranking
             // for example if our website: "testwebsite.com" is included in result "www.testwebsite.com"
             if (isset($result['domain']) && strpos($result['domain'], $url) !== false) {
-                dump('your domain exists in the list');
+                info('your domain exists in the list');
                 // check if we have received absolute rank value in the result
                 if (isset($result['rank_absolute'])) {
                     // check if we have stored previous rank position in the database
                     // for the first time, we may not have ranking value in our database
                     if (!$keyword->ranking) {
-                        dump('no existing ranking in the database');
+                        info('no existing ranking in the database');
                         // just store the rankings and do not process further
                         // process later when we have value in our database to compare the result position to.
                         $keyword->ranking = $result['rank_absolute'];
                         $keyword->save();
                     } else {
-                        dump('existing ranking found in the database');
+                        info('existing ranking found in the database');
                         // we already have some ranking saved in our database
                         // compare the ranking from result with our previous stored ranking value
                         // if there is change in the position by X places than we create an annotation
@@ -98,14 +98,14 @@ class DataForSeoCommand extends Command
                         // if current ranking is greater than new ranking
                         // it means our website has gained position in ranking
                         if ($previous_ranking > $new_ranking) {
-                            dump('our website gained position in ranking');
+                            info('our website gained position in ranking');
                             $rank_difference = $previous_ranking - $new_ranking;
                             $ranked_higher = true;
                         }
                         // if new ranking is greater than current ranking
                         // it means our website has lost position in ranking
                         else if ($new_ranking > $previous_ranking) {
-                            dump('our website lost position in ranking');
+                            info('our website lost position in ranking');
                             $rank_difference = $new_ranking - $previous_ranking;
                             $ranked_higher = false;
                         }
@@ -118,7 +118,7 @@ class DataForSeoCommand extends Command
                         // if it is greater than our defined places
                         // than we process further
                         if ($rank_difference >= $ranking_places) {
-                            dump('website is ranked higher or equals than your defined ranking_places');
+                            info('website is ranked higher or equals than your defined ranking_places');
                             // check in which case (up or down) do we need to process further...
                             // if our specified direction is up
                             if ($ranking_direction == 'up') {
@@ -146,7 +146,7 @@ class DataForSeoCommand extends Command
     //create annotation in the database
     public function createKeywordTrackingAnnotation($ranking_direction, $ranking_difference, $keyword, $data_source)
     {
-        dump('creating annotation');
+        info('creating annotation');
         // Your website domoain.com is up/down by 100 places on google search results for keyword "Keyword"
         $description =
             'Your website ' . $data_source->url . ' is ' . $ranking_direction .
