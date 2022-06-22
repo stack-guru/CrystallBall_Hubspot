@@ -21,9 +21,11 @@ class DataForSeoController extends Controller
             'label' => 'undefined',
             'value' => 'undefined'
         ];
-        foreach ($all_search_engines as $s) {
-            if ($s['value'] == $selected_search_engine->search_engine) {
-                $selected = $s;
+        if($selected_search_engine){
+            foreach ($all_search_engines as $s) {
+                if ($s['value'] == $selected_search_engine->search_engine) {
+                    $selected = $s;
+                }
             }
         }
         return response()->json([
@@ -39,12 +41,18 @@ class DataForSeoController extends Controller
             'location_name as label',
             'location_code as value'
         ])->toArray();
-        $selected_location = Location::where('location_code', $data_source->location)->first();
         $selected = [
-            'label' => $selected_location->location_name,
-            'value' => $selected_location->location_code
+            'label' => '',
+            'value' => ''
         ];
-        array_push($locations, $selected);
+        if ($data_source){
+            $selected_location = Location::where('location_code', $data_source->location)->first();
+            $selected = [
+                'label' => $selected_location->location_name,
+                'value' => $selected_location->location_code
+            ];
+            $locations[] = $selected;
+        }
         return response()->json([
             'locations' => $locations,
             'selected_location' => $selected,
