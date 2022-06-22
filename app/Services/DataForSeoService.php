@@ -100,6 +100,7 @@ class DataForSeoService
         $url = 'https://api.dataforseo.com/v3/serp/google/locations';
         // fetch results
         $_res = $this->http->get($url)->collect()->all();
+        dd($_res);
         // if the request is successfully done, return the data
         return $_res['tasks'][0]['result'] ?? false;
     }
