@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+Route::get('test_loc', function(){
+    dd(\App\Models\Location::limit(20)->get());
+});
 // Route::get('test_service', function (){
 //     $dfs_service = new \App\Services\DataForSeoService();
 //     $params = [
