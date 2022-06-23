@@ -49,7 +49,6 @@ class IndexAnnotations extends React.Component {
             this.setState({ userAnnotationColors: resp.data.user_annotation_color });
             HttpClient.get(`/annotation`)
                 .then(response => {
-                    console.log(response.data.annotations);
                     this.setState({ annotations: response.data.annotations, isLoading: false });
                 }, (err) => {
                     this.setState({ errors: (err.response).data, isLoading: false });
@@ -143,7 +142,7 @@ class IndexAnnotations extends React.Component {
 
     handleOneSelection(e) {
         let anno_id = e.target.dataset.anno_id;
-        
+
         // if input is checked
         if (e.target.checked) {
             // if annotation id is not in the array
@@ -188,7 +187,7 @@ class IndexAnnotations extends React.Component {
                 annotations = annotations.filter(a => a.id != selected_annotation);
                 this.setState({ annotations: annotations })
             }
-            
+
             this.setState({ isBusy: false })
 
             this.setState({
@@ -223,6 +222,7 @@ class IndexAnnotations extends React.Component {
     render() {
         let wasLastAnnotationInFuture = true;
         const categories = this.state.annotationCategories;
+
         return (
             <div className="container-xl bg-white anno-container d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
@@ -250,8 +250,8 @@ class IndexAnnotations extends React.Component {
                                         {/* <option value="added-by">By Colour</option> */}
                                     </select>
                                     {
-                                        this.state.allAnnotationsSelected == true ?
-                                            <button className='btn btn-danger btn-sm mt-2' onClick={this.handleDeleteSelected}>Delete all</button>
+                                        this.state.selectedRows.length ?
+                                            <button className='btn btn-danger btn-sm mt-2' onClick={this.handleDeleteSelected}>Delete</button>
                                             : null
                                     }
                                 </div>
