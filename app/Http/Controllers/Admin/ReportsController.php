@@ -12,6 +12,7 @@ class ReportsController extends Controller
     {
         $users = User::orderBy('created_at', 'DESC')
             ->with([
+                'user',
                 'pricePlan',
                 'googleAccounts',
                 'lastAnnotation',
@@ -30,6 +31,7 @@ class ReportsController extends Controller
             ->withCount('last90DaysAnnotationButtonClickedChromeExtensionLogs')
             ->withCount('last90DaysNotificationLogs')
             ->withCount('emailNotificationLogs')
+            ->withCount('users')
             ->get();
 
         foreach ($users as $user) {
