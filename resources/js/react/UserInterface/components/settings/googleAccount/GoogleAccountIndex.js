@@ -48,7 +48,7 @@ export default class GoogleAccountIndex extends React.Component {
         if (searchParams.has('do-refresh') && searchParams.has('google_account_id')) {
             if (searchParams.get('do-refresh') == "1") {
                 const redirectTo = localStorage.getItem('frontend_redirect_to');
-                if (redirectTo) {
+                if (redirectTo && redirectTo !== "/settings/google-account") {
                     localStorage.removeItem('frontend_redirect_to');
                     window.location = redirectTo;
                 }
@@ -83,13 +83,13 @@ export default class GoogleAccountIndex extends React.Component {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
         return (
-            
+
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
 
-                {/* <AdwordsClientCustomerIdSaverModal
+                <AdwordsClientCustomerIdSaverModal
                     show={this.state.showACCISModal}
                     dismissCallback={this.closeACCISModal}
-                /> */}
+                />
                 <div className="container p-5">
                     <div className="row ml-0 mr-0">
                         <div className="col-12">
@@ -139,7 +139,7 @@ export default class GoogleAccountIndex extends React.Component {
                                                         {googleAccount.name}<br />
                                                         {scopes.indexOf("https://www.googleapis.com/auth/analytics.readonly") == -1 ? <span className="badge badge-danger">Google Analytics Access <i className="fa fa-times"></i></span> : <span className="badge badge-success">Google Analytics Access <i className="fa fa-check"></i></span>}
                                                         {scopes.indexOf("https://www.googleapis.com/auth/webmasters") == -1 || scopes.indexOf("https://www.googleapis.com/auth/webmasters.readonly") == -1 ? <span className="badge badge-danger">Search Console Access <i className="fa fa-times"></i></span> : <span className="badge badge-success">Search Console Access <i className="fa fa-check"></i></span>}
-                                                        {/* {scopes.indexOf("https://www.googleapis.com/auth/adwords") == -1 ? <span className="badge badge-danger">Google Ads Access <i className="fa fa-times"></i></span> : <span className="badge badge-success">Google Ads Access <i className="fa fa-check"></i></span>} */}
+                                                        {scopes.indexOf("https://www.googleapis.com/auth/adwords") == -1 ? <span className="badge badge-danger">Google Ads Access <i className="fa fa-times"></i></span> : <span className="badge badge-success">Google Ads Access <i className="fa fa-check"></i></span>}
                                                     </td>
                                                     <td>{googleAccount.email}</td>
                                                     <td className="text-center">
@@ -211,7 +211,7 @@ export default class GoogleAccountIndex extends React.Component {
                                                 <td>{gAP.google_analytics_account.name}</td>
                                                 <td>
                                                     {gAP.name}&nbsp;&nbsp;&nbsp;
-                                                    {gAP.is_in_use ? <span class="badge badge-pill badge-success">In use</span> : null}
+                                                    {gAP.is_in_use ? <span className="badge badge-pill badge-success">In use</span> : null}
                                                 </td>
                                                 <td>{gAP.google_account.name}</td>
                                                 <td className="text-center"><button className="btn btn-danger" onClick={() => this.handleGAPDelete(gAP.id)}><i className="fa fa-trash-o"></i></button></td>
