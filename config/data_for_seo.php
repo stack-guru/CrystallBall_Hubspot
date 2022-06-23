@@ -2,8 +2,8 @@
 
 return [
     'credentials' => [
-        'user' => env('fernando@crystalballinsight.com') ??  '',
-        'pass' => env('27894ecf1c2b62b6') ??  ''
+        'user' => env('DFS_USER'),
+        'pass' => env('DFS_PASS')
     ],
     'search_engines' => [
         [

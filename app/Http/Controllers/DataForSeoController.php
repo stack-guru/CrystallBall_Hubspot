@@ -18,8 +18,8 @@ class DataForSeoController extends Controller
         $selected_search_engine = UserDataSource::where('user_id', auth()->user()->id)->where('ds_code', 'keyword_tracking')->first();
         $all_search_engines = config('data_for_seo.search_engines');
         $selected = [
-            'label' => 'undefined',
-            'value' => 'undefined'
+            'label' => '',
+            'value' => ''
         ];
         if($selected_search_engine){
             foreach ($all_search_engines as $s) {

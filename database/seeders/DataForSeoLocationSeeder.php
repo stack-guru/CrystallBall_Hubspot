@@ -16,8 +16,8 @@ class DataForSeoLocationSeeder extends Seeder
     public function run()
     {
         $locations = (new DataForSeoService())->getLocations();
-        if (is_array($locations) && !empty($locations)){
-            foreach ($locations as $location){
+        if (is_array($locations) && !empty($locations)) {
+            foreach ($locations as $location) {
                 Location::create([
                     'location_name' => $location['location_name'] ?? null,
                     'location_code' => $location['location_code'] ?? null,

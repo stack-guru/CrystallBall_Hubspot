@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use function GuzzleHttp\Promise\task;
 
 class DataForSeoService
@@ -31,7 +32,7 @@ class DataForSeoService
             'language_code' => $language_code,
             'location_code' => $location_code,
             'keyword' => $keyword,
-            'target' => $search_engine.'.com',
+            'target' => $search_engine . '.com',
             'search_engine_name' => $search_engine,
             'depth' => 700 // 700 max records
         ];
@@ -63,7 +64,7 @@ class DataForSeoService
          * Get Task ID
          * $params['search_engine_name'] can be google, bing, yahoo, baidu, naver
          * */
-        $url = "https://api.dataforseo.com/v3/serp/".$params['search_engine_name']."/organic/task_post";
+        $url = "https://api.dataforseo.com/v3/serp/" . $params['search_engine_name'] . "/organic/task_post";
         $_res_1 = $this->http->withBody(json_encode($param_new), 'application/json')->post($url)->collect()->all();
         return $_res_1['tasks'][0]['id'] ?? false;
     }
@@ -76,10 +77,10 @@ class DataForSeoService
      * Sometimes it can return status_code=40602, which means our request is in DFS queue and can be accessed in few seconds
      * In that case we need to make another request after few seconds using same id
      */
-    public function getResultsForSERPGoogleOrganicTask(string $task_id = '', string $search_engine='google')
+    public function getResultsForSERPGoogleOrganicTask(string $task_id = '', string $search_engine = 'google')
     {
         // endpoint
-        $url2 = 'https://api.dataforseo.com/v3/serp/'.$search_engine.'/organic/task_get/advanced/' . $task_id;
+        $url2 = 'https://api.dataforseo.com/v3/serp/' . $search_engine . '/organic/task_get/advanced/' . $task_id;
         // fetch results
         $_res_2 = $this->http->get($url2)->collect()->all();
         // necessary checks
