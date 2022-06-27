@@ -180,6 +180,14 @@ export default class DataSourceIndex extends React.Component {
                                                 </label>
                                             </div>
                                         </div>
+                                        {this.state.webMonitors ?
+                                            <div className="px-2">
+                                                <div className="list-wrapper">
+                                                    <p style={{ fontSize: "13px" }}>Credits: {this.state.webMonitors.length}/{this.props.user.price_plan.web_monitor_count}</p>
+                                                </div>
+                                            </div>
+                                            : null
+                                        }
                                         <div className="px-2">
                                             <div className="list-wrapper">
                                                 <p style={{ fontSize: "13px" }}>Keywords:</p>
@@ -255,6 +263,13 @@ export default class DataSourceIndex extends React.Component {
                                                 </label>
                                             </div>
                                         </div>
+                                        {this.state.userDataSources.google_alert_keywords ?
+                                            <div className="px-2">
+                                                <div className="list-wrapper">
+                                                    <p style={{ fontSize: "13px" }}>Credits: {this.state.userDataSources.google_alert_keywords.length}/{this.props.user.price_plan.google_alert_keyword_count}</p>
+                                                </div>
+                                            </div>
+                                            : null}
                                         <div className="px-2">
                                             <div className="list-wrapper">
                                                 {this.state.userDataSources.google_alert_keywords ?
@@ -546,6 +561,17 @@ export default class DataSourceIndex extends React.Component {
                                                     />
                                                     <span className={`slider round ${this.state.userServices.is_ds_holidays_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                                {this.state.userDataSources.open_weather_map_cities ?
+                                                    <div className="px-2">
+                                                        <div className="list-wrapper">
+                                                            <p style={{ fontSize: "13px" }}>Credits: {this.state.userDataSources.open_weather_map_cities.length}/{this.props.user.price_plan.owm_city_count}</p>
+                                                        </div>
+                                                    </div>
+                                                    : null}
                                             </div>
                                         </div>
                                         <div className="px-2">
