@@ -30,6 +30,7 @@ class UserDataSource extends Model
         'ranking_direction',
         'ranking_places',
         'user_id',
+        'is_competitor_url'
     ];
 
     protected $casts = [

@@ -42,14 +42,10 @@ export default class LocationSelect extends React.Component {
 
     onChangeHandler(sOption) {
         // update in the parent component state
-        this.props.onChangeCallback(sOption.value);
-        // update in the selected ui
+        this.props.onChangeCallback(sOption);
+        // // update in the selected ui
         this.setState({
-            selected_option: this.state.locations.map((item) => {
-                if (item.value == sOption.value) {
-                    return item;
-                }
-            })
+            selected_option: sOption
         })
     }
 
@@ -104,6 +100,7 @@ export default class LocationSelect extends React.Component {
                 value={this.state.selected_option}
                 className="gray_clr w-100"
                 loadOptions={this.loadOptions}
+                isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}
             />
             // <CreatableSelect

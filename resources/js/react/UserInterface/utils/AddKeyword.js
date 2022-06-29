@@ -5,60 +5,34 @@ import LocationSelect from "./LocationSelect";
 import AnnotationCategorySelect from "./AnnotationCategorySelect";
 import {saveStateToLocalStorage} from "../helpers/CommonFunctions";
 
-export default class DSKeywordTracking extends React.Component {
+export default class AddKeyword extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isBusy: false,
             errors: '',
             url: '',
-            search_engine: '',
+            search_engines: {},
             keywords: [],
-            country: '',
+            locations: {},
             lang: '',
             ranking_direction: '',
             ranking_places: '',
-            tracking_of: ''
+            tracking_of: '',
+            is_url_competitors: '',
         }
 
         this.addKeyword = this.addKeyword.bind(this)
         this.deleteKeyword = this.deleteKeyword.bind(this)
         this.saveKeywords = this.saveKeywords.bind(this)
 
-        this.loadDFSKeywords = this.loadDFSKeywords.bind(this)
         this.changeSearchEngineHandler = this.changeSearchEngineHandler.bind(this)
         this.changeLocationHandler = this.changeLocationHandler.bind(this)
 
     }
 
     componentDidMount() {
-        this.loadDFSKeywords();
-    }
-
-    loadDFSKeywords() {
-        this.setState({ isBusy: true, errors: '' });
-        HttpClient.get(`/data-source/get-dfs-keywords`).then(resp => {
-            this.setState({
-                isLoading: false,
-                url: resp.data.url,
-                search_engine: resp.data.search_engine,
-                keywords: resp.data.keywords ? resp.data.keywords : [],
-                country: resp.data.location,
-                lang: resp.data.lang,
-                ranking_direction: resp.data.ranking_direction,
-                ranking_places: resp.data.ranking_places,
-                tracking_of: resp.data.is_competitor_url
-            });
-            this.state.tracking_of ? document.getElementById('tracking_of').value = this.state.tracking_of : '';
-            this.state.url ? document.getElementById('url').value = this.state.url : '';
-            this.state.lang ? document.getElementById('lang').value = this.state.lang : '';
-            this.state.ranking_direction ? document.getElementById('ranking_direction').value = this.state.ranking_direction : '';
-            this.state.ranking_places ? document.getElementById('ranking_places').value = this.state.ranking_places : '';
-        }, (err) => {
-            this.setState({ isLoading: false, errors: (err.response).data });
-        }).catch(err => {
-            this.setState({ isLoading: false, errors: err });
-        })
+        // this.loadDFSKeywords();
     }
 
     addKeyword(e) {
@@ -84,14 +58,16 @@ export default class DSKeywordTracking extends React.Component {
         this.setState({ isBusy: true, errors: '' });
         let params = {
             url: this.state.url,
-            search_engine: this.state.search_engine,
+            search_engine: this.state.search_engines,
             keywords: this.state.keywords,
-            location: this.state.country,
+            location: this.state.locations,
             lang: this.state.lang,
             ranking_direction: this.state.ranking_direction,
-            ranking_places: this.state.ranking_places
+            ranking_places: this.state.ranking_places,
+            is_url_competitors: this.state.is_url_competitors
         };
         HttpClient.post('/data-source/save-dfs-keywords', params).then(resp => {
+
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -115,15 +91,15 @@ export default class DSKeywordTracking extends React.Component {
         });
     }
 
-    changeSearchEngineHandler(val) {
+    changeSearchEngineHandler(search_engines) {
         this.setState({
-            search_engine: val
-        })
+            search_engines: search_engines
+        });
     }
 
-    changeLocationHandler(val) {
+    changeLocationHandler(selectedLocations) {
         this.setState({
-            country: val
+            locations: selectedLocations
         })
     }
 
@@ -140,35 +116,14 @@ export default class DSKeywordTracking extends React.Component {
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         })
-        if (e.target.dataset.keyword_id) {
-            let params = {
-                keyword_id: e.target.dataset.keyword_id
-            }
-            HttpClient.post('/data-source/delete-dfs-keyword', params).then(resp => {
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Deleted successfully!'
-                })
-            }, (err) => {
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-                this.setState({ isBusy: false, errors: err });
-            });
-            let new_keywords_array = keywords_existing.filter(keyword => keyword.id != e.target.dataset.keyword_id);
-            this.setState({
-                keywords: new_keywords_array
-            })
-        }
-        else {
-            let new_keywords_array = keywords_existing.filter(keyword => keyword.keyword != e.target.dataset.keyword);
-            this.setState({
-                keywords: new_keywords_array
-            })
-            Toast.fire({
-                icon: 'success',
-                title: 'Deleted successfully!'
-            })
-        }
+        let new_keywords_array = keywords_existing.filter(keyword => keyword.keyword != e.target.dataset.keyword);
+        this.setState({
+            keywords: new_keywords_array
+        })
+        Toast.fire({
+            icon: 'success',
+            title: 'Deleted successfully!'
+        })
     }
 
     render() {
@@ -182,10 +137,10 @@ export default class DSKeywordTracking extends React.Component {
                     </h4>
                     <label>Tracking</label>
                     <div className="input-group mb-3">
-                        <select className='form-control' id="tracking_of">
+                        <select className='form-control' id="tracking_of" onChange={(e) => { this.setState({ is_url_competitors: e.target.options[e.target.selectedIndex].value }) }}>
                             <option selected disabled>--Select--</option>
-                            <option value='true'>My website</option>
-                            <option value='false'>Competitor's website</option>
+                            <option value='false'>My website</option>
+                            <option value='true'>Competitor's website</option>
                         </select>
                     </div>
                     <label>Website URL</label>
@@ -233,11 +188,11 @@ export default class DSKeywordTracking extends React.Component {
                     </div>
                     <label>Search Engine</label>
                     <div className="input-group mb-3">
-                        <SearchEngineSelect className="gray_clr" name="search_engine" id="search_engine" value={this.state.search_engine} onChangeCallback={this.changeSearchEngineHandler} placeholder="Select Search Engine" />
+                        <SearchEngineSelect className="gray_clr" name="search_engine" id="search_engine" value={this.state.search_engine} onChangeCallback={this.changeSearchEngineHandler} placeholder="Select Search Engine" multiple='true' />
                     </div>
                     <label>Location</label>
                     <div className="input-group mb-3">
-                        <LocationSelect className="gray_clr" name="country" id="country" value={this.state.country} onChangeCallback={this.changeLocationHandler} placeholder="Select Location" />
+                        <LocationSelect className="gray_clr" name="country" id="country" value={this.state.country} onChangeCallback={this.changeLocationHandler} placeholder="Select Location" multiple="true" />
 
                         {/* <select className='form-control' id="country" onChange={(e) => { this.setState({ country: e.target.options[e.target.selectedIndex].value }) }}>
                             <option selected disabled>Select Country</option>

@@ -30,7 +30,8 @@ class StoreKeywordsRequest extends FormRequest
             'location' => 'required',
             'lang' => 'required',
             'ranking_direction' => 'required',
-            'ranking_places' => 'required'
+            'ranking_places' => 'required',
+            'is_url_competitors' => 'required'
         ];
     }
 }
