@@ -42,7 +42,14 @@
                                 @foreach($users as $user)
                                 <tr>
                                     <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
+                                    <td>
+                                        {{ $user->email }}
+                                        @if ($user->user)
+                                            <span class="badge badge-primary">{{ $user->user->email }}</span>
+                                        @else
+                                            (Child Users: {{ $user->users_count }})
+                                        @endif
+                                    </td>
                                     <td>{{ $user->created_at }}</td>
                                     <td>
                                         {{ $user->last_login_at }} + {{ $user->login_logs_count }}

@@ -8,6 +8,7 @@ use App\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
 use NotificationChannels\PusherPushNotifications\PusherMessage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Notifications\Messages\SlackMessage;
 
 class AnnotationCreatedThroughAPI extends Notification
 {
@@ -79,5 +80,18 @@ class AnnotationCreatedThroughAPI extends Notification
             ->sound('default')
             ->title("A new annotation was received from the API KEY: " . Auth::user()->token()->name ?? "")
             ->body("");
+    }
+
+
+    /**
+     * Get the Slack representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\SlackMessage
+     */
+    public function toSlack($notifiable)
+    {
+        return (new SlackMessage)
+            ->content("A new annotation was received from the API KEY: `" . (Auth::user()->token()->name ?? "") . "`.");
     }
 }

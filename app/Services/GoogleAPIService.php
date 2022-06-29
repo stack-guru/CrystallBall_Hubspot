@@ -21,6 +21,7 @@ class GoogleAPIService
     public function refreshToken(GoogleAccount $googleAccount)
     {
         if (!$googleAccount->refresh_token) {
+            Log::channel('google')->error("Refresh token does not exist for this Google Account.",  ['GoogleAccount' => $googleAccount->email]);
             return false;
         }
 
@@ -34,11 +35,13 @@ class GoogleAPIService
         ]);
 
         if ($response->status() == 401) {
+            Log::channel('google')->error("Unable to refresh access token for google account.",  ['GoogleAccount' => $googleAccount->email, 'response' => $response->json()]);
             return false;
         }
 
         $respJson = $response->json();
         if (!array_key_exists('access_token', $respJson)) {
+            Log::channel('google')->error("Unable to refresh access token for google account.",  ['GoogleAccount' => $googleAccount->email, 'response' => $response->json()]);
             return false;
         }
 
