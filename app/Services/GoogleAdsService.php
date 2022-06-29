@@ -57,11 +57,12 @@ class GoogleAdsService  extends GoogleAPIService
 
     public function getCampaigns(GoogleAccount $googleAccount, $repeatCall = false)
     {
-        $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/googleAds:search";
+        $adwordsClientCustomerId = str_replace("-", "", $googleAccount->adwords_client_customer_id);
+        $url = "https://googleads.googleapis.com/v10/customers/" . $adwordsClientCustomerId . "/googleAds:search";
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
-            'login-customer-id' => $this->loginManagerAccountCustomerId
+            'login-customer-id' => $adwordsClientCustomerId
         ])->withToken($googleAccount->token)->asForm()->post($url, [
             'pageSize' => 10,
             // https://developers.google.com/google-ads/api/fields/v10/campaign
@@ -88,7 +89,7 @@ class GoogleAdsService  extends GoogleAPIService
           WHERE 
             campaign.status != 'REMOVED'",
         ]);
-        
+
         if ($response->status() == 400 && !$repeatCall) {
             // This code block only checks if google accounts can be fetched after refreshing access token
             if ($this->refreshToken($googleAccount) == false) {
@@ -113,11 +114,12 @@ class GoogleAdsService  extends GoogleAPIService
 
     public function getAdGroups(GoogleAccount $googleAccount, $repeatCall = false)
     {
-        $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/googleAds:search";
+        $adwordsClientCustomerId = str_replace("-", "", $googleAccount->adwords_client_customer_id);
+        $url = "https://googleads.googleapis.com/v10/customers/" . $adwordsClientCustomerId . "/googleAds:search";
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
-            'login-customer-id' => $this->loginManagerAccountCustomerId
+            'login-customer-id' => $adwordsClientCustomerId
         ])->withToken($googleAccount->token)->asForm()->post($url, [
             'pageSize' => 10,
             // https://developers.google.com/google-ads/api/fields/v10/ad_group
@@ -148,7 +150,7 @@ class GoogleAdsService  extends GoogleAPIService
           WHERE 
             ad_group.status != 'REMOVED' ",
         ]);
-        
+
         if ($response->status() == 400 && !$repeatCall) {
             // This code block only checks if google accounts can be fetched after refreshing access token
             if ($this->refreshToken($googleAccount) == false) {
@@ -173,11 +175,12 @@ class GoogleAdsService  extends GoogleAPIService
 
     public function getAdGroupOneDayMetrics(GoogleAccount $googleAccount, $selectedDate, $repeatCall = false)
     {
-        $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/googleAds:search";
+        $adwordsClientCustomerId = str_replace("-", "", $googleAccount->adwords_client_customer_id);
+        $url = "https://googleads.googleapis.com/v10/customers/" . $adwordsClientCustomerId . "/googleAds:search";
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
-            'login-customer-id' => $this->loginManagerAccountCustomerId
+            'login-customer-id' => $adwordsClientCustomerId
         ])->withToken($googleAccount->token)->asForm()->post($url, [
             'pageSize' => 10,
             // https://developers.google.com/google-ads/api/fields/v10/ad_group
@@ -194,7 +197,7 @@ class GoogleAdsService  extends GoogleAPIService
             ad_group.status != 'REMOVED' 
             AND segments.date = '" . $selectedDate->format('Y-m-d') . "'",
         ]);
-        
+
         if ($response->status() == 400 && !$repeatCall) {
             // This code block only checks if google accounts can be fetched after refreshing access token
             if ($this->refreshToken($googleAccount) == false) {
@@ -215,16 +218,16 @@ class GoogleAdsService  extends GoogleAPIService
         $respJson = $response->json();
 
         return $respJson;
-
     }
 
     public function getAdGroupBetweenDaysAVGMetrics(GoogleAccount $googleAccount, $startDate, $endDate, $repeatCall = false)
     {
-        $url = "https://googleads.googleapis.com/v10/customers/" . str_replace("-", "", $googleAccount->adwords_client_customer_id) . "/googleAds:search";
+        $adwordsClientCustomerId = str_replace("-", "", $googleAccount->adwords_client_customer_id);
+        $url = "https://googleads.googleapis.com/v10/customers/" . $adwordsClientCustomerId . "/googleAds:search";
 
         $response = Http::withHeaders([
             'developer-token' => $this->adwordsDeveloperToken,
-            'login-customer-id' => $this->loginManagerAccountCustomerId
+            'login-customer-id' => $adwordsClientCustomerId
         ])->withToken($googleAccount->token)->asForm()->post($url, [
             'pageSize' => 10,
             // https://developers.google.com/google-ads/api/fields/v10/ad_group
@@ -242,7 +245,7 @@ class GoogleAdsService  extends GoogleAPIService
             ad_group.status != 'REMOVED' 
             AND segments.date BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "'",
         ]);
-        
+
         if ($response->status() == 400 && !$repeatCall) {
             // This code block only checks if google accounts can be fetched after refreshing access token
             if ($this->refreshToken($googleAccount) == false) {
@@ -263,6 +266,5 @@ class GoogleAdsService  extends GoogleAPIService
         $respJson = $response->json();
 
         return $respJson;
-
     }
 }
