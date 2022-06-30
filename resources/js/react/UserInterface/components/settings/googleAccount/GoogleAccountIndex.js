@@ -50,7 +50,13 @@ export default class GoogleAccountIndex extends React.Component {
                 const redirectTo = localStorage.getItem('frontend_redirect_to');
                 if (redirectTo && redirectTo !== "/settings/google-account") {
                     localStorage.removeItem('frontend_redirect_to');
-                    window.location = redirectTo;
+                    const autoRedirectDelay = 10000;
+                    toast.info("Redirecting you in 10 seconds, please wait.", {
+                        autoClose: autoRedirectDelay
+                    });
+                    setTimeout(() => {
+                        window.location = redirectTo;
+                    }, autoRedirectDelay)
                 }
             }
         }
