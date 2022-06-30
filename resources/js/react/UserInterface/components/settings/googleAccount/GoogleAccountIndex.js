@@ -44,21 +44,25 @@ export default class GoogleAccountIndex extends React.Component {
     componentDidMount() {
         document.title = 'Google Accounts';
 
+        let autoRedirectDelay = 3000;
         let searchParams = new URLSearchParams(document.location.search);
         if (searchParams.has('do-refresh') && searchParams.has('google_account_id')) {
             if (searchParams.get('do-refresh') == "1") {
-                const redirectTo = localStorage.getItem('frontend_redirect_to');
-                if (redirectTo && redirectTo !== "/settings/google-account") {
-                    localStorage.removeItem('frontend_redirect_to');
-                    const autoRedirectDelay = 10000;
-                    toast.info("Redirecting you in 10 seconds, please wait.", {
-                        autoClose: autoRedirectDelay
-                    });
-                    setTimeout(() => {
-                        window.location = redirectTo;
-                    }, autoRedirectDelay)
-                }
+                autoRedirectDelay = 10000;
+                this.fetchGSCSites(searchParams.get('google_account_id'))
+                this.fetchGAAccounts(searchParams.get('google_account_id'))
             }
+        }
+
+        const redirectTo = localStorage.getItem('frontend_redirect_to');
+        if (redirectTo && redirectTo !== "/settings/google-account") {
+            localStorage.removeItem('frontend_redirect_to');
+            toast.info("Redirecting you in 10 seconds, please wait.", {
+                autoClose: autoRedirectDelay
+            });
+            setTimeout(() => {
+                window.location = redirectTo;
+            }, autoRedirectDelay)
         }
 
         if (searchParams.has('message') && searchParams.has('success')) {
