@@ -83,7 +83,10 @@ export default class AddKeyword extends React.Component {
             Toast.fire({
                 icon: 'success',
                 title: 'Stored successfully!'
-            })
+            });
+
+            this.props.onAddCallback();
+
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
@@ -188,11 +191,11 @@ export default class AddKeyword extends React.Component {
                     </div>
                     <label>Search Engine</label>
                     <div className="input-group mb-3">
-                        <SearchEngineSelect className="gray_clr" name="search_engine" id="search_engine" value={this.state.search_engine} onChangeCallback={this.changeSearchEngineHandler} placeholder="Select Search Engine" multiple='true' />
+                        <SearchEngineSelect className="gray_clr" name="search_engine" id="search_engine"  onChangeCallback={this.changeSearchEngineHandler} placeholder="Select Search Engine" multiple='true' />
                     </div>
                     <label>Location</label>
                     <div className="input-group mb-3">
-                        <LocationSelect className="gray_clr" name="country" id="country" value={this.state.country} onChangeCallback={this.changeLocationHandler} placeholder="Select Location" multiple="true" />
+                        <LocationSelect className="gray_clr" name="country" id="country"  onChangeCallback={this.changeLocationHandler} placeholder="Select Location" multiple="true" />
 
                         {/* <select className='form-control' id="country" onChange={(e) => { this.setState({ country: e.target.options[e.target.selectedIndex].value }) }}>
                             <option selected disabled>Select Country</option>

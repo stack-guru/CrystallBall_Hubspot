@@ -141,55 +141,78 @@ class UserDataSourceController extends Controller
             $ranking_direction = $request->ranking_direction;
             $ranking_places_changed = $request->ranking_places;
             $is_url_competitors = $request->is_url_competitors;
-            // check if locations are more or languages are more
-            if(count($request->search_engine) >= count($request->location)){
-                for($i=0; $i < count($request->search_engine); $i++){
-                    $search_engine = $request->search_engine[$i]['value'] ?? '';
-                    $location_code = $request->location[$i]['value'] ?? '';
-                    $configuration_id = $this->saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors);
-                    // doing pivot entry
-                    $keyword_meta = new KeywordMeta();
-                    $keyword_meta->keyword_id = $keyword->id;
-                    $keyword_meta->keyword_configuration_id = $configuration_id;
-                    $keyword_meta->save();
+            // check if locations are more or search engines are more
+            if(count($request->search_engine) <= count($request->location)){
+                foreach($request->search_engine as $search_engine_loop){
+                    foreach ($request->location as $location) {
+                        $search_engine = $search_engine_loop['value'] ?? '';
+                        $location_code = $location['value'] ?? '';
+                        $configuration_id = $this->saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors);
+                        // doing pivot entry
+                        $keyword_meta = new KeywordMeta();
+                        $keyword_meta->keyword_id = $keyword->id;
+                        $keyword_meta->keyword_configuration_id = $configuration_id;
+                        $keyword_meta->save();
+                    }
                 }
             }
-            elseif(count($request->location) > count($request->search_engine)){
-                for($i=0; $i < count($request->location); $i++){
-                    $search_engine = $request->search_engine[$i];
-                    $location_code = $request->location[$i] ?? '';
-                    $configuration_id = $this->saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors);
-                    // doing pivot entry
-                    $keyword_meta = new KeywordMeta();
-                    $keyword_meta->keyword_id = $keyword->id;
-                    $keyword_meta->keyword_configuration_id = $configuration_id;
-                    $keyword_meta->save();
+            elseif(count($request->location) < count($request->search_engine)){
+                foreach($request->location as $location){
+                    foreach ($request->search_engine as $search_engine_loop) {
+                        $search_engine = $search_engine_loop['value'] ?? '';
+                        $location_code = $location['value'] ?? '';
+                        $configuration_id = $this->saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors);
+                        // doing pivot entry
+                        $keyword_meta = new KeywordMeta();
+                        $keyword_meta->keyword_id = $keyword->id;
+                        $keyword_meta->keyword_configuration_id = $configuration_id;
+                        $keyword_meta->save();
+                    }
                 }
             }
-            
 
         }
 
         // get and store dfs task id
-        UserDataSourceUpdatedOrCreated::dispatch($user_data_source);
+        // UserDataSourceUpdatedOrCreated::dispatch($user_data_source);
     }
 
     private function saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors){
-        $configuration = new KeywordConfiguration();
-        $configuration->url = $url;
-        $configuration->search_engine = $search_engine;
-        $configuration->location_code = $location_code;
-        $configuration->language = $language;
-        $configuration->ranking_direction = $ranking_direction;
-        $configuration->ranking_places_changed = $ranking_places_changed;
         if($is_url_competitors == 'true'){
-            $configuration->is_url_competitors = true;
+            $is_url_competitors = true;
         }
         else if($is_url_competitors == 'false'){
-            $configuration->is_url_competitors = false;
+            $is_url_competitors = false;
         }
-        $configuration->save();
-        return $configuration->id;
+        // check if already exists 
+        $configuration = KeywordConfiguration::where([
+            'url' => $url,
+            'search_engine' => $search_engine,
+            'location_code' => $location_code,
+            'language' => $language,
+            'ranking_direction' => $ranking_direction,
+            'ranking_places_changed' => $ranking_places_changed,
+            'is_url_competitors' => $is_url_competitors,
+        ])->first();
+        // if it does not exist just create it
+        if($configuration){
+            return $configuration->id;
+        }
+        // if it exists just reutrn the id
+        else{
+            $configuration = new KeywordConfiguration();
+            $configuration->url = $url;
+            $configuration->search_engine = $search_engine;
+            $configuration->location_code = $location_code;
+            $configuration->language = $language;
+            $configuration->ranking_direction = $ranking_direction;
+            $configuration->ranking_places_changed = $ranking_places_changed;
+            $configuration->is_url_competitors = $is_url_competitors;
+            
+            $configuration->save();
+            return $configuration->id;
+        }
+        
     }
 
     private function saveKeywords($keywords, $data_source)
@@ -217,8 +240,16 @@ class UserDataSourceController extends Controller
      */
     public function getDFSkeywordsforTracking()
     {
-        $data_source = UserDataSource::with('keywords')->where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->first();
-        return $data_source;
+        $data_source = UserDataSource::where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->first();
+        if($data_source){
+            $keywords = Keyword::with('configurations')->select('id', 'keyword')->where('user_data_source_id', $data_source->id)->get();
+            return [
+                'keywords' => $keywords
+            ];
+        }
+        return response()->json([
+            'Something went wrong.'
+        ], 500);
     }
 
     /**

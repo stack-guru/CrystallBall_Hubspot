@@ -97,7 +97,7 @@ export default class LocationSelect extends React.Component {
             <AsyncSelect
                 cacheOptions
                 defaultOptions={this.state.locations}
-                value={this.state.selected_option}
+                // value={this.state.selected_option}
                 className="gray_clr w-100"
                 loadOptions={this.loadOptions}
                 isMulti={this.props.multiple}

@@ -7,17 +7,17 @@ export default class ManageKeywords extends React.Component {
         this.state = {
             isBusy: false,
             errors: '',
-            keywords: ''
+            keywords: []
         }
 
         this.loadDFSKeywords = this.loadDFSKeywords.bind(this)
         this.deleteKeyword = this.deleteKeyword.bind(this)
+        this.closePopup = this.closePopup.bind(this)
 
     }
 
     componentDidMount() {
         document.getElementById('manage_modal_btn').click();
-        // (this.props.manageKeyword)();
         this.loadDFSKeywords();
     }
 
@@ -28,7 +28,6 @@ export default class ManageKeywords extends React.Component {
                 isLoading: false,
                 keywords: resp.data.keywords ? resp.data.keywords : [],
             });
-            console.log(this.state.keywords);
         }, (err) => {
             this.setState({ isLoading: false, errors: (err.response).data });
         }).catch(err => {
@@ -80,17 +79,46 @@ export default class ManageKeywords extends React.Component {
         }
     }
 
-    render() {
+    closePopup(){
+        this.props.closeManageKeywordPopup()
+    }
 
+    render() {
+        const keywords = this.state.keywords.map(function(keyword_instance, index){
+            return keyword_instance.configurations.map(function(configuration_instance){
+                return <tr className='border-bottom border-top py-2'>
+                    <td className='text-left'>
+                        <span className=''>{ keyword_instance.keyword }</span>
+                    </td>
+                    <td className='text-left'>
+                        <span className=''>{ configuration_instance.url }</span>
+                    </td>
+                    <td className='text-left'>
+                        <span className=''>{ configuration_instance.search_engine }</span>
+                    </td>
+                    <td className='text-left'>
+                        <span className=''>{ configuration_instance.location_code }</span>
+                    </td>
+                    <td className='text-left'>
+                        <span className=''>{ configuration_instance.language }</span>
+                    </td>
+                    <td className='text-right'>
+                        <a href='#' className=' btn btn-sm btn-primary text-white  mr-1'>Edit</a>
+                        <a href='#' className='  btn btn-sm btn-danger  text-white'>Delete</a>
+                    </td>
+                </tr>; 
+            })
+            
+        });
         return (
             <div>
                 <button id='manage_modal_btn' style={{ display: "none"}} type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage_modal"></button>
-                <div class="modal fade" id="manage_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="manage_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog modal-lg modal-dialog-centered"  role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Manage Keywords</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={this.closePopup}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -111,34 +139,40 @@ export default class ManageKeywords extends React.Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr className='border-bottom border-top py-2'>
-                                                <td className='text-left'>
-                                                    <span className=''>Test keyword</span>
-                                                </td>
-                                                <td className='text-left'>
-                                                    <span className=''>https://www.test.com</span>
-                                                </td>
-                                                <td className='text-left'>
-                                                    <span className=''>Google</span>
-                                                </td>
-                                                <td className='text-left'>
-                                                    <span className=''>United States of America</span>
-                                                </td>
-                                                <td className='text-left'>
-                                                    <span className=''>English</span>
-                                                </td>
-                                                <td className='text-right'>
-                                                    <a href='#' className='text-primary mr-1'>Edit</a>
-                                                    <a href='#' className='text-danger '>Delete</a>
-                                                </td>
-                                            </tr>
-                                            
+                                            { keywords }
+                                            {/* {
+                                                this.state.keywords.each(function(el){
+                                                    return (
+                                                        <tr className='border-bottom border-top py-2'>
+                                                            <td className='text-left'>
+                                                                <span className=''>Test keyword</span>
+                                                            </td>
+                                                            <td className='text-left'>
+                                                                <span className=''>https://www.test.com</span>
+                                                            </td>
+                                                            <td className='text-left'>
+                                                                <span className=''>Google</span>
+                                                            </td>
+                                                            <td className='text-left'>
+                                                                <span className=''>United States of America</span>
+                                                            </td>
+                                                            <td className='text-left'>
+                                                                <span className=''>English</span>
+                                                            </td>
+                                                            <td className='text-right'>
+                                                                <a href='#' className='text-primary mr-1'>Edit</a>
+                                                                <a href='#' className='text-danger '>Delete</a>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            } */}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary">Close</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close" onClick={this.closePopup}>Close</button>
                             </div>
                         </div>
                     </div>

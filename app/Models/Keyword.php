@@ -14,4 +14,8 @@ class Keyword extends Model
     {
         return $this->belongsTo(UserDataSource::class);
     }
+
+    public function configurations(){
+        return $this->belongsToMany(KeywordConfiguration::class, 'keyword_metas', 'keyword_id', 'keyword_configuration_id')->select('url', 'language', 'location_code', 'search_engine');
+    }
 }
