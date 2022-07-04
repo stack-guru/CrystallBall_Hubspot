@@ -15,7 +15,7 @@ class DataForSeoService
      */
     public function __construct()
     {
-        $this->http = Http::withBasicAuth(config('data_for_seo.credentials.user'), config('data_for_seo.credentials.pass'))->withHeaders(['Content-Type' => 'application/json']);
+        // $this->http = Http::withBasicAuth(config('data_for_seo.credentials.user'), config('data_for_seo.credentials.pass'))->withHeaders(['Content-Type' => 'application/json']);
     }
 
     /**

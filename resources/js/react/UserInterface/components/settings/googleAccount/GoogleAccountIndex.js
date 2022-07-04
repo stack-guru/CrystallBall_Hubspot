@@ -44,15 +44,25 @@ export default class GoogleAccountIndex extends React.Component {
     componentDidMount() {
         document.title = 'Google Accounts';
 
+        let autoRedirectDelay = 3000;
         let searchParams = new URLSearchParams(document.location.search);
         if (searchParams.has('do-refresh') && searchParams.has('google_account_id')) {
             if (searchParams.get('do-refresh') == "1") {
-                const redirectTo = localStorage.getItem('frontend_redirect_to');
-                if (redirectTo && redirectTo !== "/settings/google-account") {
-                    localStorage.removeItem('frontend_redirect_to');
-                    window.location = redirectTo;
-                }
+                autoRedirectDelay = 10000;
+                this.fetchGSCSites(searchParams.get('google_account_id'))
+                this.fetchGAAccounts(searchParams.get('google_account_id'))
             }
+        }
+
+        const redirectTo = localStorage.getItem('frontend_redirect_to');
+        if (redirectTo && redirectTo !== "/settings/google-account") {
+            localStorage.removeItem('frontend_redirect_to');
+            toast.info("Redirecting you in 10 seconds, please wait.", {
+                autoClose: autoRedirectDelay
+            });
+            setTimeout(() => {
+                window.location = redirectTo;
+            }, autoRedirectDelay)
         }
 
         if (searchParams.has('message') && searchParams.has('success')) {
@@ -86,10 +96,10 @@ export default class GoogleAccountIndex extends React.Component {
 
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
 
-                {/* <AdwordsClientCustomerIdSaverModal
+                <AdwordsClientCustomerIdSaverModal
                     show={this.state.showACCISModal}
                     dismissCallback={this.closeACCISModal}
-                /> */}
+                />
                 <div className="container p-5">
                     <div className="row ml-0 mr-0">
                         <div className="col-12">
