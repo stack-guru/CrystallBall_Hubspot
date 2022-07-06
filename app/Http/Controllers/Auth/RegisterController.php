@@ -100,6 +100,8 @@ class RegisterController extends Controller
         ]);
         $user->is_billing_enabled = false;
         $user->save();
+        
+        event(new \Illuminate\Auth\Events\Registered($user));
 
         return $user;
     }
