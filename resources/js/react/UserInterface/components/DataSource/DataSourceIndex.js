@@ -34,7 +34,7 @@ export default class DataSourceIndex extends React.Component {
             showHintFor: null,
             ga_property_id: '',
             webMonitors: [],
-            manage_keywords_popup: false,
+            manage_keyword_show: false,
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
@@ -50,6 +50,9 @@ export default class DataSourceIndex extends React.Component {
         this.reloadWebMonitors = this.reloadWebMonitors.bind(this);
 
         this.manage_keyword_popup_handler = this.manage_keyword_popup_handler.bind(this);
+
+        this.keywordAddHandler = this.keywordAddHandler.bind(this);
+
     }
 
     componentDidMount() {
@@ -100,10 +103,15 @@ export default class DataSourceIndex extends React.Component {
     }
 
     manage_keyword_popup_handler(){
-        console.log('its now false');
-        // this.setState({
-        //     manage_keywords_popup: false,
-        // })
+        this.setState({
+            manage_keyword_show: false,
+        })
+    }
+
+    keywordAddHandler(){
+        // reload the component
+        this.sectionToggler('keyword_tracking')
+
     }
 
     render() {
@@ -853,58 +861,10 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
 
-                            <div className="col-md-6 mt-2">
-                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
-                                    <div>
-                                        <div className="d-flex mt-2 justify-content-between "
-                                            id="web-monitoring-data-source-section">
-                                            <div className="px-2">
-                                                <h2>
-                                                    <small>
-                                                        Keyword Tracking <UserAnnotationColorPicker name="budget_tracking"
-                                                            value={this.state.userAnnotationColors.budget_tracking}
-                                                            updateCallback={this.updateUserAnnotationColors} />
-                                                        <img className="hint-button-2" src="/images/info-logo.png" />
-                                                    </small>
-                                                </h2>
-                                            </div>
-
-                                            <div className="px-2">
-                                                {/* {this.state.userServices.is_ds_budget_tracking_enabled ? "Active" : "Deactive"} */}
-                                                Deactive
-                                                <label className="trigger switch">
-                                                    <input type="checkbox"
-                                                        // checked={this.state.userServices.is_ds_budget_tracking_enabled}
-                                                        // onChange={this.serviceStatusHandler}
-                                                        onClick={e => {
-                                                            e.preventDefault()
-                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                            // if (!this.state.userServices.is_ds_budget_tracking_enabled) {
-
-                                                            // }
-                                                        }}
-                                                        name="is_ds_budget_tracking_enabled"
-                                                    />
-                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_budget_tracking_enabled ? 'animate-pulse' : ''}`} /> */}
-                                                    <span className={`slider round`} />
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="px-2">
-                                            <div className="list-wrapper">
-                                            </div>
-                                            <div className='text-center mt-2'>
-                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             {/*
                                 Keyword Tracking section
                             */}
-                            {/* <div className="col-md-6 mt-2">
+                            <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
@@ -946,23 +906,23 @@ export default class DataSourceIndex extends React.Component {
                                             className="ds-update-text m-0 px-2 text-right"
                                             onClick={() => {
                                                 this.setState({
-                                                    manage_keywords_popup: true
+                                                    manage_keyword_show: true
                                                 })
                                             }}
                                         >
                                             Manage Keywords
-                                            {
-                                                this.state.manage_keywords_popup == true ? 
-                                                <ManageKeywords
-                                                    manageKeyword={this.manage_keyword_popup_handler}
-                                                />
-                                                : null
-                                            }
                                         </p>
+                                        {
+                                            this.state.manage_keyword_show == true ? 
+                                            <ManageKeywords
+                                                closeManageKeywordPopup={this.manage_keyword_popup_handler}
+                                            />
+                                            : null
+                                        }
  
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
 
                         </div>
                     </div>
@@ -1046,9 +1006,7 @@ export default class DataSourceIndex extends React.Component {
                         {
                             this.state.sectionName == 'keyword_tracking' && this.state.userDataSources ?
                                 <AddKeyword
-                                    onCheckCallback={this.userDataSourceAddHandler}
-                                    onUncheckCallback={this.userDataSourceDeleteHandler}
-                                    ds_data={this.state.userDataSources.keyword_tracking}
+                                    onAddCallback={this.keywordAddHandler}
                                 />
                                 : null
                         }

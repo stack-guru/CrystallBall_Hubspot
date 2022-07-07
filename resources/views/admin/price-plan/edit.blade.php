@@ -51,6 +51,10 @@
                             <input type="number" name="web_monitor_count" id="web_monitor_count" value="{{old('web_monitor_count',$pricePlan->web_monitor_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label>Keyword Tracking count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" name="keyword_tracking_count" id="keyword_tracking_count" value="{{old('keyword_tracking_count',$pricePlan->keyword_tracking_count)}}" class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label>Open Weather Map City count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" name="owm_city_count" id="owm_city_count" value="{{old('owm_city_count',$pricePlan->owm_city_count)}}" class="form-control" />
                         </div>

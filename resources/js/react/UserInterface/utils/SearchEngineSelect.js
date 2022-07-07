@@ -53,7 +53,7 @@ export default class SearchEngineSelect extends React.Component {
             <CreatableSelect
                 name={this.props.name}
                 disabled={this.props.disabled}
-                value={this.state.selected_option}
+                // value={this.state.selected_option}
                 id={this.props.id}
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}
