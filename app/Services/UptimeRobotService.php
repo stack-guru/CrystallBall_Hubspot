@@ -36,14 +36,33 @@ class UptimeRobotService
         return $this->outputFormat == 'json' ? $response->json() : $response->body();
     }
 
-    public function getMonitors()
+    public function getAllMonitors()
+    {
+        $monitors = [];
+        $offset = 0;
+        $limit = 50;
+        do {
+            $newMonitors = $this->getMonitors($offset)['monitors'];
+            $monitors = array_merge($monitors, $newMonitors);
+            $offset += $limit;
+        } while (count($newMonitors));
+
+        return ['monitors' => $monitors];
+    }
+
+    // 50 is the maximum possible value for limit
+    public function getMonitors($offset = 0, $limit = 50)
     {
         $url = "https://api.uptimerobot.com/v2/getMonitors";
 
+        Log::channel('uptimerobot')->info("Fetching all monitor with statuses.");
         $response = Http::post($url, [
             'api_key' => $this->apiKey,
             'format' => $this->outputFormat,
+            'offset' => $offset,
+            'limit' => $limit
         ]);
+        Log::channel('uptimerobot')->info("Fetching all monitor statuses.", ['response' => $response->body()]);
 
         if (!$response->successful()) {
             return false;
@@ -102,5 +121,4 @@ class UptimeRobotService
 
         return $this->outputFormat == 'json' ? $response->json() : $response->body();
     }
-
 }
