@@ -53,6 +53,15 @@ class CheckWebMonitorStatuses extends Command
         if (is_array($uptimeMonitors)) {
 
             foreach ($uptimeMonitors as $uptimeMonitor) {
+                // This code is here for debugging purposes. It will allow you to generate notification for a specific web monitor
+                // $this->info($uptimeMonitor['friendly_name'] . ' of URL ' . $uptimeMonitor['url'] . ' is ' . $uptimeMonitor['status']);
+                // if ($uptimeMonitor['friendly_name'] == 'ABC') {
+                //     if ($uptimeMonitor['status'] == 9) {
+                //         $uptimeMonitor['status'] = 2;
+                //     } else {
+                //         $uptimeMonitor['status'] = 9;
+                //     }
+                // }
                 $webMonitor = WebMonitor::where('uptime_robot_id', $uptimeMonitor['id'])->first();
                 if ($webMonitor) {
                     $rightNowDateTime = Carbon::now();

@@ -40,10 +40,12 @@ class UptimeRobotService
     {
         $url = "https://api.uptimerobot.com/v2/getMonitors";
 
+        Log::channel('uptimerobot')->info("Fetching all monitor with statuses.");
         $response = Http::post($url, [
             'api_key' => $this->apiKey,
             'format' => $this->outputFormat,
         ]);
+        Log::channel('uptimerobot')->info("Fetching all monitor statuses.", ['response' => $response->body()]);
 
         if (!$response->successful()) {
             return false;
@@ -102,5 +104,4 @@ class UptimeRobotService
 
         return $this->outputFormat == 'json' ? $response->json() : $response->body();
     }
-
 }
