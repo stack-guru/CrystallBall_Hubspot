@@ -48,12 +48,12 @@ class CheckWebMonitorStatuses extends Command
     public function handle()
     {
         $uptimeRobotService = new UptimeRobotService;
-        $uptimeMonitors = $uptimeRobotService->getMonitors()['monitors'];
+        $uptimeMonitors = $uptimeRobotService->getAllMonitors()['monitors'];
 
         if (is_array($uptimeMonitors)) {
 
             foreach ($uptimeMonitors as $uptimeMonitor) {
-                // This code is here for debugging purposes. It will allow you to generate notification for a specific web monitor
+                // // This code is here for debugging purposes. It will allow you to generate notification for a specific web monitor
                 // $this->info($uptimeMonitor['friendly_name'] . ' of URL ' . $uptimeMonitor['url'] . ' is ' . $uptimeMonitor['status']);
                 // if ($uptimeMonitor['friendly_name'] == 'ABC') {
                 //     if ($uptimeMonitor['status'] == 9) {
