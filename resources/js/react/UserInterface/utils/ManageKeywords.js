@@ -18,7 +18,7 @@ export default class ManageKeywords extends React.Component {
 
     componentDidMount() {
         document.getElementById('manage_modal_btn').click();
-        this.loadDFSKeywords();
+        // this.loadDFSKeywords();
     }
 
     loadDFSKeywords() {
@@ -84,7 +84,7 @@ export default class ManageKeywords extends React.Component {
     }
 
     render() {
-        const keywords = this.state.keywords.map(function(keyword_instance, index){
+        const keywords = this.props.keywords.map(function(keyword_instance, index){
             return keyword_instance.configurations.map(function(configuration_instance){
                 return <tr className='border-bottom border-top py-2'>
                     <td className='text-left'>
@@ -130,43 +130,16 @@ export default class ManageKeywords extends React.Component {
                                     <table className='table table-responsive'>
                                         <thead>
                                             <tr>
-                                                <th className='text-left'>Keyword</th>
-                                                <th className='text-left'>URL</th>
-                                                <th className='text-left'>Search Engine</th>
-                                                <th className='text-left'>Location</th>
-                                                <th className='text-left'>Language</th>
-                                                <th className='text-right'>Action</th>
+                                                <th width="10%" className='text-left'>Keyword</th>
+                                                <th width="35%" className='text-left'>URL</th>
+                                                <th width="15%" className='text-left'>Search Engine</th>
+                                                <th width="10%" className='text-left'>Location</th>
+                                                <th width="10%" className='text-left'>Language</th>
+                                                <th width="20%" className='text-right'>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             { keywords }
-                                            {/* {
-                                                this.state.keywords.each(function(el){
-                                                    return (
-                                                        <tr className='border-bottom border-top py-2'>
-                                                            <td className='text-left'>
-                                                                <span className=''>Test keyword</span>
-                                                            </td>
-                                                            <td className='text-left'>
-                                                                <span className=''>https://www.test.com</span>
-                                                            </td>
-                                                            <td className='text-left'>
-                                                                <span className=''>Google</span>
-                                                            </td>
-                                                            <td className='text-left'>
-                                                                <span className=''>United States of America</span>
-                                                            </td>
-                                                            <td className='text-left'>
-                                                                <span className=''>English</span>
-                                                            </td>
-                                                            <td className='text-right'>
-                                                                <a href='#' className='text-primary mr-1'>Edit</a>
-                                                                <a href='#' className='text-danger '>Delete</a>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            } */}
                                         </tbody>
                                     </table>
                                 </div>

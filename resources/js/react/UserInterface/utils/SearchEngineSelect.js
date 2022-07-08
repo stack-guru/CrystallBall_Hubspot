@@ -40,12 +40,15 @@ export default class SearchEngineSelect extends React.Component {
 
     onChangeHandler(sOption) {
         // update in the parent component state
-        this.props.onChangeCallback(sOption);
-        // console.log(sOption);
-        // update in the selected ui
-        this.setState({
-            selected_option: sOption
-        });
+        let is_updated = this.props.onChangeCallback(sOption);
+
+        if (is_updated) {
+            // update in the selected ui
+            this.setState({
+                selected_option: sOption
+            });
+        }
+        
     }
 
     render() {

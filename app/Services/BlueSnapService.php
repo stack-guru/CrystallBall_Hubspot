@@ -123,7 +123,6 @@ class BlueSnapService
             'address' => $data['billing_address'],
             'zip' => $data['zip_code'],
         ]);
-        Log::channel('bluesnap')->info("New Shopper Id: " . $response->data->id);
 
         if ($response->failed()) {
             $error = $response->data;
@@ -134,6 +133,8 @@ class BlueSnapService
                 'vaultedShopperId' => null,
             ];
         }
+        Log::channel('bluesnap')->info("New Shopper Id: " . $response->data->id);
+
 
         $vaulted_shopper = $response->data;
 

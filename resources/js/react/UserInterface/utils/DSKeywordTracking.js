@@ -32,7 +32,7 @@ export default class DSKeywordTracking extends React.Component {
     }
 
     componentDidMount() {
-        this.loadDFSKeywords();
+        // this.loadDFSKeywords();
     }
 
     loadDFSKeywords() {

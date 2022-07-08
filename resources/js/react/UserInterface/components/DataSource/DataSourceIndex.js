@@ -35,6 +35,8 @@ export default class DataSourceIndex extends React.Component {
             ga_property_id: '',
             webMonitors: [],
             manage_keyword_show: false,
+            dfsKeywords: [],
+            totalDfsKeywordCreditsUsed: 0,
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
@@ -60,6 +62,10 @@ export default class DataSourceIndex extends React.Component {
         this.loadUserDataSources('');
         this.loadUserAnnotationColors();
         this.reloadWebMonitors('');
+
+        this.loadDFSKeywords();
+
+
     }
 
     loadUserDataSources(gaPropertyId) {
@@ -73,6 +79,29 @@ export default class DataSourceIndex extends React.Component {
                 this.setState({ isLoading: false, errors: err });
             })
         }
+    }
+
+    loadDFSKeywords() {
+        this.setState({ isBusy: true, errors: '' });
+        HttpClient.get(`/data-source/get-dfs-keywords`).then(resp => {
+            this.setState({
+                isLoading: false,
+                dfsKeywords: resp.data.keywords ? resp.data.keywords : [],
+            });
+            let total = 0;
+            this.state.dfsKeywords.map(function (keyword_instance, index) {
+                keyword_instance.configurations.map(function (configuration_instance) {
+                    total++;
+                });
+            });
+            this.setState({
+                totalDfsKeywordCreditsUsed: total,
+            });
+        }, (err) => {
+            this.setState({ isLoading: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isLoading: false, errors: err });
+        })
     }
 
     loadUserAnnotationColors() {
@@ -864,7 +893,60 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Keyword Tracking section
                             */}
+
+
                             <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
+                                    <div>
+                                        <div className="d-flex mt-2 justify-content-between "
+                                            id="web-monitoring-data-source-section">
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Keyword Tracking <UserAnnotationColorPicker name="keyword_tracking"
+                                                            value={this.state.userAnnotationColors.keyword_tracking}
+                                                            updateCallback={this.updateUserAnnotationColors} />
+                                                        <img className="hint-button-2" src="/images/info-logo.png" />
+                                                    </small>
+                                                </h2>
+                                            </div>
+
+                                            <div className="px-2">
+                                                {/* {this.state.userServices.is_ds_budget_tracking_enabled ? "Active" : "Deactive"} */}
+                                                Deactive
+                                                <label className="trigger switch">
+                                                    <input type="checkbox"
+                                                        // checked={this.state.userServices.is_ds_budget_tracking_enabled}
+                                                        // onChange={this.serviceStatusHandler}
+                                                        onClick={e => {
+                                                            e.preventDefault()
+                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                            // if (!this.state.userServices.is_ds_budget_tracking_enabled) {
+
+                                                            // }
+                                                        }}
+                                                        name="is_ds_budget_tracking_enabled"
+                                                    />
+                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_budget_tracking_enabled ? 'animate-pulse' : ''}`} /> */}
+                                                    <span className={`slider round`} />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                            </div>
+                                            <div className='text-center mt-2'>
+                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            {/* <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
@@ -892,6 +974,10 @@ export default class DataSourceIndex extends React.Component {
                                                 </label>
                                             </div>
                                         </div>
+
+                                        <div className='ml-2'>
+                                            Credits: { this.state.totalDfsKeywordCreditsUsed }/{this.props.user.price_plan.keyword_tracking_count}
+                                        </div>
                                     </div>
                                     <div>
                                         <p
@@ -914,15 +1000,16 @@ export default class DataSourceIndex extends React.Component {
                                         </p>
                                         {
                                             this.state.manage_keyword_show == true ? 
-                                            <ManageKeywords
-                                                closeManageKeywordPopup={this.manage_keyword_popup_handler}
-                                            />
+                                                <ManageKeywords
+                                                    keywords={this.state.dfsKeywords}
+                                                    closeManageKeywordPopup={this.manage_keyword_popup_handler}
+                                                />
                                             : null
                                         }
  
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>
@@ -1006,6 +1093,8 @@ export default class DataSourceIndex extends React.Component {
                         {
                             this.state.sectionName == 'keyword_tracking' && this.state.userDataSources ?
                                 <AddKeyword
+                                    used_credits={this.state.totalDfsKeywordCreditsUsed}
+                                    total_credits={this.props.user.price_plan.keyword_tracking_count}
                                     onAddCallback={this.keywordAddHandler}
                                 />
                                 : null

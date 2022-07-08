@@ -48,6 +48,8 @@ class DataForSeoCommand extends Command
      */
     public function handle()
     {
+        echo "disabled";
+        die();
         $user_data_sources = UserDataSource::with('keywords')->where('ds_code', 'keyword_tracking')->get();
         foreach ($user_data_sources as $data_source) {
             $url = $data_source->url;

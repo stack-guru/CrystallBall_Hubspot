@@ -42,11 +42,14 @@ export default class LocationSelect extends React.Component {
 
     onChangeHandler(sOption) {
         // update in the parent component state
-        this.props.onChangeCallback(sOption);
-        // // update in the selected ui
-        this.setState({
-            selected_option: sOption
-        })
+        let is_updated = this.props.onChangeCallback(sOption);
+        if (is_updated) {
+            // update in the selected ui
+            this.setState({
+                selected_option: sOption
+            })
+        }
+        
     }
 
     filterLocations(inputValue) {

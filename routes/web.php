@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KeywordTrackingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -148,6 +149,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
             Route::put('mark-google-accounts-tour', [App\Http\Controllers\HomeController::class, 'markGoogleAccountsTourDone']);
 
             Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'destroy']);
+
+            Route::get('user-keyword-configurations-for-keyword-tracking', [KeywordTrackingController::class, 'userKeywordConfigurationsTotal']);
 
             Route::resource('web-monitor', App\Http\Controllers\WebMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
             // save dfs keywords for keyword tracking automation
