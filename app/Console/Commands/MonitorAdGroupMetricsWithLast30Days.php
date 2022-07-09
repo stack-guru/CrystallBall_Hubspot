@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Services\GoogleAdsService;
 use Illuminate\Console\Command;
 use App\Models\GoogleAccount;
+use App\Models\GoogleAdsAnnotation;
 use Illuminate\Support\Carbon;
 
 class MonitorAdGroupMetricsWithLast30Days extends Command
@@ -65,10 +66,24 @@ class MonitorAdGroupMetricsWithLast30Days extends Command
 
             foreach ($oneDayAdGroupMetrics as $adGroup) {
                 if (key_exists($adGroup['id'], $thirtyDaysAdGroupMetrics)) {
+                    // Cost Per Conversion annotation
                     if (key_exists('costPerConversion', $adGroup)) {
                         $difference = $adGroup['costPerConversion'] - $thirtyDaysAdGroupMetrics[$adGroup['id']]['averageCpc'];
                         $differencePercent = abs((($difference / $thirtyDaysAdGroupMetrics[$adGroup['id']]['averageCpc']) * 100));
                         if ($differencePercent > 80) {
+                            $googleAdsAnnotation = new GoogleAdsAnnotation;
+
+                            $googleAdsAnnotation->user_id = $googleAccount->user_id;
+                            $googleAdsAnnotation->google_account_id = $googleAccount->id;
+                            $googleAdsAnnotation->title = '';
+                            $googleAdsAnnotation->event_name = '';
+                            $googleAdsAnnotation->category = '';
+                            $googleAdsAnnotation->url = '';
+                            $googleAdsAnnotation->description = "Anomally detected $differencePercent%. From AVG(" . $thirtyDaysAdGroupMetrics[$adGroup['id']]['averageCpc'] . ") to " . $adGroup['costPerConversion'];
+                            $googleAdsAnnotation->detected_at = $fetchingDate;
+
+                            $googleAdsAnnotation->save();
+
                             $this->info("Anomally detected $differencePercent%. From AVG(" . $thirtyDaysAdGroupMetrics[$adGroup['id']]['averageCpc'] . ") to " . $adGroup['costPerConversion']);
                         }
                     }

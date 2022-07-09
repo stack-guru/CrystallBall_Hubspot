@@ -195,6 +195,7 @@ class GoogleAdsService  extends GoogleAPIService
             ad_group.name,
             metrics.impressions,
             metrics.clicks,
+            metrics.engagements,
             metrics.cost_per_all_conversions,
             metrics.cost_per_conversion,
             metrics.all_conversions,
