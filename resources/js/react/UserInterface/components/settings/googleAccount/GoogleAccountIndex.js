@@ -142,7 +142,7 @@ export default class GoogleAccountIndex extends React.Component {
                                     <tbody>
                                         {
                                             this.state.googleAccounts.map(googleAccount => {
-                                                const scopes = JSON.parse(googleAccount.scopes);
+                                                const scopes = JSON.parse(googleAccount.scopes) ?? [];
                                                 return <tr key={googleAccount.id}>
                                                     <td><img src={googleAccount.avatar} className="social-profile-picture" /></td>
                                                     <td>
