@@ -13,14 +13,16 @@ export default class AdwordsClientCustomerIdSaverModal extends React.Component {
 
     componentDidMount() {
         const searchParams = new URLSearchParams(document.location.search);
-        HttpClient.get('settings/google-ads-account-ids?google_account_id=' + searchParams.get('google_account_id'))
-            .then(response => {
-                this.setState({ googleAdsAccountIds: response.data.google_ads_account_ids });
-            }, (err) => {
+        if (searchParams.get('google_account_id')) {
+            HttpClient.get('settings/google-ads-account-ids?google_account_id=' + searchParams.get('google_account_id'))
+                .then(response => {
+                    this.setState({ googleAdsAccountIds: response.data.google_ads_account_ids });
+                }, (err) => {
 
-            }).catch(err => {
+                }).catch(err => {
 
-            });
+                });
+        }
     }
 
     render() {
