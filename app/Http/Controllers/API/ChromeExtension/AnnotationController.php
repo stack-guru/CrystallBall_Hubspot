@@ -27,7 +27,7 @@ class AnnotationController extends Controller
         $this->validate($request, [
             'startDate' => 'bail|required|date',
             'endDate' => 'bail|required|date',
-            'google_analytics_property_id' => 'bail|nullable|numeric|exists:google_analytics_properties,id',
+            // 'google_analytics_property_id' => 'bail|nullable|numeric|exists:google_analytics_properties,id',
             'user_id' => 'bail|nullable|numeric|exists:users,id',
         ]);
 
