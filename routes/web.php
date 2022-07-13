@@ -154,11 +154,11 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
 
             Route::resource('web-monitor', App\Http\Controllers\WebMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
             // save dfs keywords for keyword tracking automation
-            Route::post('save-dfs-keywords', [App\Http\Controllers\UserDataSourceController::class, 'saveDFSkeywordsforTracking']);
+            Route::post('save-keyword-tracking-keywords', [App\Http\Controllers\UserDataSourceController::class, 'saveDFSkeywordsforTracking']);
             // get DFS keywords data
-            Route::get('get-dfs-keywords', [App\Http\Controllers\UserDataSourceController::class, 'getDFSkeywordsforTracking']);
+            Route::get('get-keyword-tracking-keywords', [App\Http\Controllers\UserDataSourceController::class, 'getDFSkeywordsforTracking']);
             // delete DFS keyword
-            Route::post('delete-dfs-keyword', [App\Http\Controllers\UserDataSourceController::class, 'deleteDFSkeywordforTracking']);
+            Route::post('delete-keyword-tracking-keyword', [App\Http\Controllers\UserDataSourceController::class, 'deleteDFSkeywordforTracking']);
 
 
             Route::get('google-algorithm-updates/date', [App\Http\Controllers\GoogleAlgorithmUpdateController::class, 'uiIndex']);

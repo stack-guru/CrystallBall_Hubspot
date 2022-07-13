@@ -133,7 +133,7 @@ export default class AddKeyword extends React.Component {
             ranking_places: this.state.ranking_places,
             is_url_competitors: this.state.is_url_competitors,
         };
-        HttpClient.post("/data-source/save-dfs-keywords", params)
+        HttpClient.post("/data-source/save-keyword-tracking-keywords", params)
             .then(
                 (resp) => {
                     const Toast = Swal.mixin({

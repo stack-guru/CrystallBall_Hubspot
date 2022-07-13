@@ -23,7 +23,7 @@ export default class ManageKeywords extends React.Component {
 
     loadDFSKeywords() {
         this.setState({ isBusy: true, errors: '' });
-        HttpClient.get(`/data-source/get-dfs-keywords`).then(resp => {
+        HttpClient.get(`/data-source/get-keyword-tracking-keywords`).then(resp => {
             this.setState({
                 isLoading: false,
                 keywords: resp.data.keywords ? resp.data.keywords : [],
@@ -52,7 +52,7 @@ export default class ManageKeywords extends React.Component {
             let params = {
                 keyword_id: e.target.dataset.keyword_id
             }
-            HttpClient.post('/data-source/delete-dfs-keyword', params).then(resp => {
+            HttpClient.post('/data-source/delete-keyword-tracking-keyword', params).then(resp => {
                 Toast.fire({
                     icon: 'success',
                     title: 'Deleted successfully!'

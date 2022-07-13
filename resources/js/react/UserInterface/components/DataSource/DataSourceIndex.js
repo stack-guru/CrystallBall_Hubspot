@@ -83,7 +83,7 @@ export default class DataSourceIndex extends React.Component {
 
     loadDFSKeywords() {
         this.setState({ isBusy: true, errors: '' });
-        HttpClient.get(`/data-source/get-dfs-keywords`).then(resp => {
+        HttpClient.get(`/data-source/get-keyword-tracking-keywords`).then(resp => {
             this.setState({
                 isLoading: false,
                 dfsKeywords: resp.data.keywords ? resp.data.keywords : [],
@@ -895,7 +895,7 @@ export default class DataSourceIndex extends React.Component {
                             */}
 
 
-                            <div className="col-md-6 mt-2">
+                            {/* <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
@@ -912,22 +912,15 @@ export default class DataSourceIndex extends React.Component {
                                             </div>
 
                                             <div className="px-2">
-                                                {/* {this.state.userServices.is_ds_budget_tracking_enabled ? "Active" : "Deactive"} */}
                                                 Deactive
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
-                                                        // checked={this.state.userServices.is_ds_budget_tracking_enabled}
-                                                        // onChange={this.serviceStatusHandler}
                                                         onClick={e => {
                                                             e.preventDefault()
                                                             swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                            // if (!this.state.userServices.is_ds_budget_tracking_enabled) {
-
-                                                            // }
                                                         }}
                                                         name="is_ds_budget_tracking_enabled"
                                                     />
-                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_budget_tracking_enabled ? 'animate-pulse' : ''}`} /> */}
                                                     <span className={`slider round`} />
                                                 </label>
                                             </div>
@@ -941,12 +934,12 @@ export default class DataSourceIndex extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
 
 
 
-                            {/* <div className="col-md-6 mt-2">
+                            <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
@@ -1009,7 +1002,7 @@ export default class DataSourceIndex extends React.Component {
  
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
 
                         </div>
                     </div>

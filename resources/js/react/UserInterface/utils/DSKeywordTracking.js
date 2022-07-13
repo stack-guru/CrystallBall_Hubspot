@@ -37,7 +37,7 @@ export default class DSKeywordTracking extends React.Component {
 
     loadDFSKeywords() {
         this.setState({ isBusy: true, errors: '' });
-        HttpClient.get(`/data-source/get-dfs-keywords`).then(resp => {
+        HttpClient.get(`/data-source/get-keyword-tracking-keywords`).then(resp => {
             this.setState({
                 isLoading: false,
                 url: resp.data.url,
@@ -91,7 +91,7 @@ export default class DSKeywordTracking extends React.Component {
             ranking_direction: this.state.ranking_direction,
             ranking_places: this.state.ranking_places
         };
-        HttpClient.post('/data-source/save-dfs-keywords', params).then(resp => {
+        HttpClient.post('/data-source/save-keyword-tracking-keywords', params).then(resp => {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -144,7 +144,7 @@ export default class DSKeywordTracking extends React.Component {
             let params = {
                 keyword_id: e.target.dataset.keyword_id
             }
-            HttpClient.post('/data-source/delete-dfs-keyword', params).then(resp => {
+            HttpClient.post('/data-source/delete-keyword-tracking-keyword', params).then(resp => {
                 Toast.fire({
                     icon: 'success',
                     title: 'Deleted successfully!'
