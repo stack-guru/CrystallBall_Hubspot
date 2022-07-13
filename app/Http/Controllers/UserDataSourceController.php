@@ -247,9 +247,11 @@ class UserDataSourceController extends Controller
                 'keywords' => $keywords
             ];
         }
-        return response()->json([
-            'Something went wrong.'
-        ], 500);
+        else{
+            return [
+                'keywords' => []
+            ];
+        }
     }
 
     /**
