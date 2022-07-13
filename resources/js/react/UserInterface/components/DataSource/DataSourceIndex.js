@@ -895,7 +895,7 @@ export default class DataSourceIndex extends React.Component {
                             */}
 
 
-                            {/* <div className="col-md-6 mt-2">
+                            <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
@@ -934,12 +934,12 @@ export default class DataSourceIndex extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
 
 
 
 
-                            <div className="col-md-6 mt-2">
+                            {/* <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
@@ -1002,7 +1002,7 @@ export default class DataSourceIndex extends React.Component {
  
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>
