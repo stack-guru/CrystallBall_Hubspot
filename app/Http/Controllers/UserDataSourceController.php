@@ -241,6 +241,14 @@ class UserDataSourceController extends Controller
         $data_source = UserDataSource::where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->first();
         if ($data_source) {
             $keywords = Keyword::with('configurations')->select('id', 'keyword')->where('user_data_source_id', $data_source->id)->get();
+            foreach ($keywords as $key => $keyword) {
+                if ($keyword->configurations->count() > 0) {
+                    foreach ($keyword->configurations as $conf) {
+                        $location = Location::where('location_code', $conf->location_code)->first();
+                        $conf->location_name = $location->location_name;
+                    }
+                }
+            }
             return [
                 'keywords' => $keywords
             ];
@@ -325,12 +333,31 @@ class UserDataSourceController extends Controller
             'keyword_configuration_id' => 'required',
             'url' => 'required',
             'search_engine' => 'required',
-            'keyword' => 'required',
+            // 'keyword' => 'required',
             'location' => 'required',
             'lang' => 'required',
             'ranking_direction' => 'required',
             'ranking_places' => 'required',
             'is_url_competitors' => 'required'
         ]);
+
+        $keyword = Keyword::find($request->keyword_id);
+        $keyword_configuration = KeywordConfiguration::find($request->keyword_configuration_id);
+        $pivot = KeywordMeta::where('keyword_id', $keyword->id)->where('keyword_configuration_id', $keyword_configuration->id)->first();
+        if ($pivot) {
+            $pivot->delete();
+        }
+
+        if ($keyword) {
+            $user_data_source = $keyword->user_data_source;
+            if ($user_data_source->user_id == Auth::id()) {
+                $configuration_id = $this->saveKeywordConfiguration($request->url, $request->search_engine, $request->location, $request->lang, $request->ranking_direction, $request->ranking_places, $request->is_url_competitors);
+                // doing pivot entry
+                $keyword_meta = new KeywordMeta();
+                $keyword_meta->keyword_id = $keyword->id;
+                $keyword_meta->keyword_configuration_id = $configuration_id;
+                $keyword_meta->save();
+            }
+        }
     }
 }

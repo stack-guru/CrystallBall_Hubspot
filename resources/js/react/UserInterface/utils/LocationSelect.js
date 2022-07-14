@@ -60,7 +60,7 @@ export default class LocationSelect extends React.Component {
     };
 
     loadOptions(input, loadCallback) {
-        if (input.length > 2) {
+        if (input.length > 4) {
 
             HttpClient.get(`/search-locations-list?search_str=` + input)
                 .then(response => {
@@ -75,23 +75,6 @@ export default class LocationSelect extends React.Component {
                 });
         }
         
-        // setTimeout(() => {
-        //     // search options
-        //     loadCallback(this.filterLocations(input));
-        // }, 1500);
-        // if input size is minimum of 3 characters
-        // if (input.length >= 3) {
-        //     setTimeout(() => {
-        //         // search options
-        //         loadCallback(this.filterLocations(input));
-        //     }, 1500);
-        // }
-
-        // else {
-        //     return this.state.locations.filter((i) =>
-        //         i.label.toLowerCase().includes(input.toLowerCase())
-        //     );    
-        // }
         
     }
     
@@ -106,18 +89,6 @@ export default class LocationSelect extends React.Component {
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}
             />
-            // <CreatableSelect
-            //     name={this.props.name}
-            //     disabled={this.props.disabled}
-            //     value={this.state.selected_option}
-            //     id={this.props.id}
-            //     isMulti={this.props.multiple}
-            //     onChange={this.onChangeHandler}
-            //     className="gray_clr w-100"
-            //     options={this.state.locations}
-            //     placeholder={this.props.placeholder}
-            // >
-            // </CreatableSelect>
         )
     }
 
