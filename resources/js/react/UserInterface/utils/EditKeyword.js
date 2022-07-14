@@ -57,7 +57,15 @@ export default class EditKeyword extends React.Component {
                     is_url_competitors: resp.data.is_url_competitors,
                 });
 
-                console.log(this.state);
+                console.log(resp.data.is_url_competitors);
+
+                if (resp.data.is_url_competitors == 1) {
+                    document.getElementById('tracking_of').options[select.selectedIndex].value = 'true'
+                }
+                else if(resp.data.is_url_competitors == 0) {
+                    document.getElementById('tracking_of').options[select.selectedIndex].value = 'false'
+                }
+
 
             },
             (err) => {
@@ -107,7 +115,7 @@ export default class EditKeyword extends React.Component {
 
                     Toast.fire({
                         icon: "success",
-                        title: "Stored successfully!",
+                        title: "Updated successfully!",
                     });
 
                     this.props.onAddCallback();

@@ -76,13 +76,10 @@ export default class ManageKeywords extends React.Component {
                         <span className=''>{ configuration_instance.url }</span>
                     </td>
                     <td className='text-left'>
-                        <span className=''>{ configuration_instance.search_engine }</span>
+                        <span className=''>{ configuration_instance.search_engine.charAt(0).toUpperCase() + configuration_instance.search_engine.slice(1) }</span>
                     </td>
                     <td className='text-left'>
-                        <span className=''>{ configuration_instance.location_code }</span>
-                    </td>
-                    <td className='text-left'>
-                        <span className=''>{ configuration_instance.language }</span>
+                        <span className=''>{ configuration_instance.location_name }</span>
                     </td>
                     <td className='text-right'>
                         <a href='#' onClick={this.editKeyword} data-configuration_id={configuration_instance.id} data-keyword_id={keyword_instance.id} className='btn btn-sm btn-primary text-white mr-1'>Edit</a>
@@ -116,7 +113,6 @@ export default class ManageKeywords extends React.Component {
                                                 <th width="35%" className='text-left'>URL</th>
                                                 <th width="15%" className='text-left'>Search Engine</th>
                                                 <th width="10%" className='text-left'>Location</th>
-                                                <th width="10%" className='text-left'>Language</th>
                                                 <th width="20%" className='text-right'>Action</th>
                                             </tr>
                                         </thead>

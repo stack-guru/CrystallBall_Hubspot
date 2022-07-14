@@ -1,8 +1,26 @@
 <?php
 
 use App\Http\Controllers\KeywordTrackingController;
+use App\Models\KeywordTrackingAnnotation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+
+
+// Route::get('test', function () {
+//     $description = 'Your website domoain.com is up/down by 100 places on google search results for keyword "Keyword"';
+//     KeywordTrackingAnnotation::create([
+//         'user_id' => Auth::id(),
+//         'category' => 'Website Ranking',
+//         'eventy_type' => 'Ranking',
+//         'event_name' => 'Website Ranking Changed',
+//         'description' => $description,
+//         'title' => 'Your website ranking is changed for keyword "' . 'Keyword' . '"',
+//         'show_at' => today()
+//     ]);
+// });
+
+
 
 /*
 |--------------------------------------------------------------------------
