@@ -60,7 +60,7 @@ export default class LocationSelect extends React.Component {
     };
 
     loadOptions(input, loadCallback) {
-        if (input.length > 4) {
+        if (input.length >= 2) {
 
             HttpClient.get(`/search-locations-list?search_str=` + input)
                 .then(response => {
@@ -74,7 +74,6 @@ export default class LocationSelect extends React.Component {
                     this.setState({ errors: err });
                 });
         }
-        
         
     }
     
