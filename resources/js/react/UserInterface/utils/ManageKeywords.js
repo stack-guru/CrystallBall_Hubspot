@@ -34,7 +34,7 @@ export default class ManageKeywords extends React.Component {
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         })
-        if (id) {
+        if (keyword_id) {
             let params = {
                 keyword_configuration_id: keyword_configuration_id,
                 keyword_id: keyword_id
