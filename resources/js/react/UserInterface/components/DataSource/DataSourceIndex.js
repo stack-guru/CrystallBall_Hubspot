@@ -18,6 +18,7 @@ import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerCo
 import ErrorAlert from '../../utils/ErrorAlert';
 import DataSourceInterfaceTour from '../../helpers/DataSourceInterfaceTour';
 import { getCompanyName } from '../../helpers/CommonFunctions';
+import EditKeyword from '../../utils/EditKeyword';
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -37,6 +38,9 @@ export default class DataSourceIndex extends React.Component {
             manage_keyword_show: false,
             dfsKeywords: [],
             totalDfsKeywordCreditsUsed: 0,
+            editKeyword: false,
+            editKeyword_keyword_id: '',
+            editKeyword_keyword_configuration_id: ''
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
@@ -54,6 +58,10 @@ export default class DataSourceIndex extends React.Component {
         this.manage_keyword_popup_handler = this.manage_keyword_popup_handler.bind(this);
 
         this.keywordAddHandler = this.keywordAddHandler.bind(this);
+        this.loadKeywordTrackingKeywords = this.loadKeywordTrackingKeywords.bind(this);
+        
+        this.editKeywordToggler = this.editKeywordToggler.bind(this);
+
 
     }
 
@@ -63,8 +71,7 @@ export default class DataSourceIndex extends React.Component {
         this.loadUserAnnotationColors();
         this.reloadWebMonitors('');
 
-        this.loadDFSKeywords();
-
+        this.loadKeywordTrackingKeywords();
 
     }
 
@@ -81,7 +88,7 @@ export default class DataSourceIndex extends React.Component {
         }
     }
 
-    loadDFSKeywords() {
+    loadKeywordTrackingKeywords() {
         this.setState({ isBusy: true, errors: '' });
         HttpClient.get(`/data-source/get-keyword-tracking-keywords`).then(resp => {
             this.setState({
@@ -140,7 +147,29 @@ export default class DataSourceIndex extends React.Component {
     keywordAddHandler(){
         // reload the component
         this.sectionToggler('keyword_tracking')
+        this.loadKeywordTrackingKeywords();
 
+    }
+
+    editKeywordToggler(keyword_id, keyword_configuration_id) {
+        // close popup
+        this.manage_keyword_popup_handler()
+        
+        // show edit form
+        this.setState({
+            editKeyword_keyword_id: keyword_id,
+            editKeyword_keyword_configuration_id: keyword_configuration_id
+        });
+
+        this.setState({
+            editKeyword: true
+        });
+
+        this.sectionToggler('edit_keyword')
+
+        console.log(this.state);
+
+        
     }
 
     render() {
@@ -995,6 +1024,8 @@ export default class DataSourceIndex extends React.Component {
                                             this.state.manage_keyword_show == true ? 
                                                 <ManageKeywords
                                                     keywords={this.state.dfsKeywords}
+                                                    loadKeywordsCallback={this.loadKeywordTrackingKeywords}
+                                                    editKeywordCallback={this.editKeywordToggler}
                                                     closeManageKeywordPopup={this.manage_keyword_popup_handler}
                                                 />
                                             : null
@@ -1092,6 +1123,16 @@ export default class DataSourceIndex extends React.Component {
                                 />
                                 : null
                         }
+
+                        {
+                            this.state.sectionName == 'edit_keyword' && this.state.editKeyword ? 
+                                <EditKeyword
+                                    keyword_id={this.state.editKeyword_keyword_id}
+                                    keyword_configuration_id={this.state.editKeyword_keyword_configuration_id}
+                                />
+                                : null
+                        }
+
 
                     </div>
                 </div>

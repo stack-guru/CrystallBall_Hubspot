@@ -15,7 +15,7 @@ export default class AddKeyword extends React.Component {
             search_engines: [],
             keywords: [],
             locations: [],
-            lang: "",
+            lang: "en",
             ranking_direction: "",
             ranking_places: "",
             tracking_of: "",
@@ -350,25 +350,6 @@ export default class AddKeyword extends React.Component {
                             <option selected disabled>Select Country</option>
                             <option value='2840'>USA</option>
                         </select> */}
-                    </div>
-                    <label>Language</label>
-                    <div className="input-group mb-3">
-                        <select
-                            className="form-control"
-                            id="lang"
-                            onChange={(e) => {
-                                this.setState({
-                                    lang: e.target.options[
-                                        e.target.selectedIndex
-                                    ].value,
-                                });
-                            }}
-                        >
-                            <option selected disabled>
-                                Select Language
-                            </option>
-                            <option value="en">English</option>
-                        </select>
                     </div>
                     <div className="mt-3">
                         <label className="font-weight-bold">

@@ -159,7 +159,10 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
             Route::get('get-keyword-tracking-keywords', [App\Http\Controllers\UserDataSourceController::class, 'getDFSkeywordsforTracking']);
             // delete DFS keyword
             Route::post('delete-keyword-tracking-keyword', [App\Http\Controllers\UserDataSourceController::class, 'deleteDFSkeywordforTracking']);
-
+            // get keyword details
+            Route::post('get-keyword-details-for-keyword-tracking', [App\Http\Controllers\UserDataSourceController::class, 'getKeywordTrackingDetailsForKeyword']);
+            // update the keyword details
+            Route::post('update-keyword-tracking-keyword', [App\Http\Controllers\UserDataSourceController::class, 'updateKeywordTrackingDetailsForKeyword']);
 
             Route::get('google-algorithm-updates/date', [App\Http\Controllers\GoogleAlgorithmUpdateController::class, 'uiIndex']);
             Route::get('retail-marketing-dates', [App\Http\Controllers\RetailMarketingController::class, 'uiIndex']);
