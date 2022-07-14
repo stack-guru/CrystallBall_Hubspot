@@ -10,33 +10,19 @@ export default class ManageKeywords extends React.Component {
             keywords: []
         }
 
-        this.loadDFSKeywords = this.loadDFSKeywords.bind(this)
         this.deleteKeyword = this.deleteKeyword.bind(this)
+        this.editKeyword = this.editKeyword.bind(this)
         this.closePopup = this.closePopup.bind(this)
 
     }
 
     componentDidMount() {
         document.getElementById('manage_modal_btn').click();
-        // this.loadDFSKeywords();
-    }
-
-    loadDFSKeywords() {
-        this.setState({ isBusy: true, errors: '' });
-        HttpClient.get(`/data-source/get-keyword-tracking-keywords`).then(resp => {
-            this.setState({
-                isLoading: false,
-                keywords: resp.data.keywords ? resp.data.keywords : [],
-            });
-        }, (err) => {
-            this.setState({ isLoading: false, errors: (err.response).data });
-        }).catch(err => {
-            this.setState({ isLoading: false, errors: err });
-        })
     }
 
     deleteKeyword(e) {
-        let keywords_existing = this.state.keywords;
+        let keyword_configuration_id = e.target.dataset.configuration_id;
+        let keyword_id = e.target.dataset.keyword_id;
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -48,35 +34,31 @@ export default class ManageKeywords extends React.Component {
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         })
-        if (e.target.dataset.keyword_id) {
+        if (id) {
             let params = {
-                keyword_id: e.target.dataset.keyword_id
+                keyword_configuration_id: keyword_configuration_id,
+                keyword_id: keyword_id
             }
             HttpClient.post('/data-source/delete-keyword-tracking-keyword', params).then(resp => {
                 Toast.fire({
                     icon: 'success',
                     title: 'Deleted successfully!'
                 })
+                this.props.loadKeywordsCallback();
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
                 this.setState({ isBusy: false, errors: err });
             });
-            let new_keywords_array = keywords_existing.filter(keyword => keyword.id != e.target.dataset.keyword_id);
-            this.setState({
-                keywords: new_keywords_array
-            })
         }
-        else {
-            let new_keywords_array = keywords_existing.filter(keyword => keyword.keyword != e.target.dataset.keyword);
-            this.setState({
-                keywords: new_keywords_array
-            })
-            Toast.fire({
-                icon: 'success',
-                title: 'Deleted successfully!'
-            })
-        }
+    }
+
+    editKeyword(e) {
+        let keyword_id = e.target.dataset.keyword_id;
+        let keyword_configuration_id = e.target.dataset.configuration_id;
+        document.getElementById('close_popup').click();
+
+        this.props.editKeywordCallback(keyword_id, keyword_configuration_id);
     }
 
     closePopup(){
@@ -103,13 +85,13 @@ export default class ManageKeywords extends React.Component {
                         <span className=''>{ configuration_instance.language }</span>
                     </td>
                     <td className='text-right'>
-                        <a href='#' className=' btn btn-sm btn-primary text-white  mr-1'>Edit</a>
-                        <a href='#' className='  btn btn-sm btn-danger  text-white'>Delete</a>
+                        <a href='#' onClick={this.editKeyword} data-configuration_id={configuration_instance.id} data-keyword_id={keyword_instance.id} className='btn btn-sm btn-primary text-white mr-1'>Edit</a>
+                        <a href='#' onClick={this.deleteKeyword} data-configuration_id={configuration_instance.id} data-keyword_id={keyword_instance.id} className='btn btn-sm btn-danger text-white'>Delete</a>
                     </td>
                 </tr>; 
-            })
+            }, this)
             
-        });
+        }, this);
         return (
             <div>
                 <button id='manage_modal_btn' style={{ display: "none"}} type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage_modal"></button>
@@ -118,7 +100,7 @@ export default class ManageKeywords extends React.Component {
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Manage Keywords</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={this.closePopup}>
+                                <button type="button" id='close_popup' class="close" data-dismiss="modal" aria-label="Close" onClick={this.closePopup}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
