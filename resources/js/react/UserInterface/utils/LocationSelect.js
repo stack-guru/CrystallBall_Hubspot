@@ -29,14 +29,15 @@ export default class LocationSelect extends React.Component {
         HttpClient.get(`/get-locations-list`)
             .then(response => {
                 this.setState({isBusy: false, locations: response.data.locations});
-                this.setState({
-                    'selected_option': response.data.selected_location
-                });
+                
             }, (err) => {
                 this.setState({isBusy: false, errors: (err.response).data});
             }).catch(err => {
 
             this.setState({isBusy: false, errors: err});
+            });
+        this.setState({
+            'selected_option': this.props.selected
         });
     }
 
@@ -82,7 +83,7 @@ export default class LocationSelect extends React.Component {
             <AsyncSelect
                 cacheOptions
                 defaultOptions={this.state.locations}
-                // value={this.state.selected_option}
+                value={this.state.selected_option}
                 className="gray_clr w-100"
                 loadOptions={this.loadOptions}
                 isMulti={this.props.multiple}

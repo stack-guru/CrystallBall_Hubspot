@@ -341,6 +341,10 @@ export default class AddKeyword extends React.Component {
                             className="gray_clr"
                             name="country"
                             id="country"
+                            selected={{
+                                label: '',
+                                value: ''
+                            }}
                             onChangeCallback={this.changeLocationHandler}
                             placeholder="Select Location"
                             multiple="true"

@@ -23,15 +23,24 @@ export default class EditKeyword extends React.Component {
             ranking_places: "",
             tracking_of: "",
             is_url_competitors: "",
+            show_async_selects: false,
+            available_credits: '',
         };
 
         this.updateKeyword = this.updateKeyword.bind(this);
         this.getKeywordDetails = this.getKeywordDetails.bind(this);
+        this.locationChangeCallback = this.locationChangeCallback.bind(this);
+        this.searchEngineChangeCallback = this.searchEngineChangeCallback.bind(this);
 
     }
 
     componentDidMount() {
         this.getKeywordDetails()
+        this.setState({
+            available_credits:
+                this.props.total_credits - this.props.used_credits,
+                total_credits: this.props.total_credits - this.props.used_credits
+        });
     }
 
     getKeywordDetails() {
@@ -53,19 +62,25 @@ export default class EditKeyword extends React.Component {
                     location_name: resp.data.location_name,
                     lang: resp.data.language,
                     ranking_direction: resp.data.ranking_direction,
-                    ranking_places: resp.data.ranking_places,
+                    ranking_places: resp.data.ranking_places_changed,
                     is_url_competitors: resp.data.is_url_competitors,
                 });
 
-                console.log(resp.data.is_url_competitors);
-
                 if (resp.data.is_url_competitors == 1) {
-                    document.getElementById('tracking_of').options[select.selectedIndex].value = 'true'
+                    document.getElementById('tracking_of').value = 'true'
                 }
                 else if(resp.data.is_url_competitors == 0) {
-                    document.getElementById('tracking_of').options[select.selectedIndex].value = 'false'
+                    document.getElementById('tracking_of').value = 'false'
                 }
 
+                document.getElementById('url').value = resp.data.url
+                document.getElementById('ranking_direction').value = resp.data.ranking_direction
+                document.getElementById('ranking_places').value = resp.data.ranking_places_changed
+
+                // show locations select and search engine select, when data is loaded
+                this.setState({
+                    show_async_selects: true
+                });
 
             },
             (err) => {
@@ -87,11 +102,11 @@ export default class EditKeyword extends React.Component {
             search_engine: this.state.search_engine,
             keyword: this.state.keyword,
             location: this.state.location,
-            lang: this.state.lang,
             ranking_direction: this.state.ranking_direction,
             ranking_places: this.state.ranking_places,
             is_url_competitors: this.state.is_url_competitors,
         };
+        console.log(params);
         HttpClient.post("/data-source/update-keyword-tracking-keyword", params)
             .then(
                 (resp) => {
@@ -129,6 +144,23 @@ export default class EditKeyword extends React.Component {
             });
     }
 
+    locationChangeCallback(option) {
+        this.setState({
+            location_name: option.label,
+            location: option.value
+        })
+
+        return true
+        
+    }
+
+    searchEngineChangeCallback(option) {
+        this.setState({
+            search_engine: option.value
+        })
+        return true;
+    }
+
     render() {
         return (
             <div className="switch-wrapper">
@@ -139,6 +171,9 @@ export default class EditKeyword extends React.Component {
                         <select
                             className="form-control"
                             id="tracking_of"
+                            onChange={(e) => {
+                                this.setState({ is_url_competitors: e.target.value });
+                            }}
                         >
                             <option selected disabled>
                                 --Select--
@@ -167,7 +202,7 @@ export default class EditKeyword extends React.Component {
                             }}
                         />
                     </div>
-                    <label>Keywords</label>
+                    <label>Keyword</label>
                     <div className="input-group mb-3">
                         <input
                             type="text"
@@ -177,6 +212,9 @@ export default class EditKeyword extends React.Component {
                             name="keyword"
                             id="keyword"
                             disabled
+                            onChange={(e) => {
+                                this.setState({ keyword: e.target.value });
+                            }}
                         />
                         <div className="input-group-append">
                             <i className="ti-plus"></i>
@@ -184,23 +222,40 @@ export default class EditKeyword extends React.Component {
                     </div>
                     <label>Search Engine</label>
                     <div className="input-group mb-3">
-                        <SearchEngineSelect
-                            className="gray_clr"
-                            name="search_engine"
-                            id="search_engine"
-                            onChangeCallback={{}}
-                            placeholder="Select Search Engine"
-                        />
+                        {
+                        this.state.show_async_selects ? 
+                            <SearchEngineSelect
+                                className="gray_clr"
+                                name="search_engine"
+                                id="search_engine"
+                                selected={{
+                                    label: this.state.search_engine.charAt(0).toUpperCase() + this.state.search_engine.slice(1),
+                                    value: this.state.search_engine
+                                }}
+                                onChangeCallback={this.searchEngineChangeCallback}
+                                placeholder="Select Search Engine"
+                            />
+                            : null
+                        }
                     </div>
+                    
                     <label>Location</label>
                     <div className="input-group mb-3">
-                        <LocationSelect
-                            className="gray_clr"
-                            name="country"
-                            id="country"
-                            onChangeCallback={{}}
-                            placeholder="Select Location"
-                        />
+                        {
+                        this.state.show_async_selects ? 
+                            <LocationSelect
+                                className="gray_clr"
+                                name="country"
+                                id="country"
+                                onChangeCallback={ this.locationChangeCallback }
+                                selected={{
+                                    label: this.state.location_name,
+                                    value: this.state.location
+                                }}
+                                placeholder="Select Location"
+                            />
+                            : null
+                        }
                     </div>
                     <div className="mt-3">
                         <label className="font-weight-bold">
@@ -211,6 +266,9 @@ export default class EditKeyword extends React.Component {
                         <select
                             className="form-control my-2"
                             id="ranking_direction"
+                            onChange={(e) => {
+                                this.setState({ ranking_direction: e.target.value });
+                            }}
                         >
                             <option value="up">Up</option>
                             <option value="down" selected>
@@ -224,6 +282,9 @@ export default class EditKeyword extends React.Component {
                             placeholder="Places"
                             type="number"
                             min="0"
+                            onChange={(e) => {
+                                this.setState({ ranking_places: e.target.value });
+                            }}
                         />
                         in search result, create annotation
                     </div>
