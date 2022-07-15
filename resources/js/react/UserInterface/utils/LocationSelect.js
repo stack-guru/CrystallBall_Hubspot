@@ -13,10 +13,7 @@ export default class LocationSelect extends React.Component {
             isBusy: false,
             errors: '',
             locations: [],
-            selected_option: {
-                label: '',
-                value: ''
-            }
+            selected_option: ''
         }
 
         this.onChangeHandler = this.onChangeHandler.bind(this)
@@ -29,16 +26,18 @@ export default class LocationSelect extends React.Component {
         HttpClient.get(`/get-locations-list`)
             .then(response => {
                 this.setState({isBusy: false, locations: response.data.locations});
-                
             }, (err) => {
                 this.setState({isBusy: false, errors: (err.response).data});
             }).catch(err => {
 
             this.setState({isBusy: false, errors: err});
             });
-        this.setState({
-            'selected_option': this.props.selected
-        });
+
+        if (this.props.selected.value.length > 0) {
+            this.setState({
+                'selected_option': this.props.selected
+            });     
+        }
     }
 
     onChangeHandler(sOption) {

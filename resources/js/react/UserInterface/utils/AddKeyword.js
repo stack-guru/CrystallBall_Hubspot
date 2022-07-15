@@ -330,6 +330,10 @@ export default class AddKeyword extends React.Component {
                             className="gray_clr"
                             name="search_engine"
                             id="search_engine"
+                            selected={{
+                                label: '',
+                                value: ''
+                            }}
                             onChangeCallback={this.changeSearchEngineHandler}
                             placeholder="Select Search Engine"
                             multiple="true"
