@@ -12,10 +12,7 @@ export default class SearchEngineSelect extends React.Component {
             isBusy: false,
             errors: '',
             search_engines: [],
-            selected_option: {
-                label: '',
-                value: ''
-            }
+            selected_option: ''
         }
 
         this.onChangeHandler = this.onChangeHandler.bind(this)
@@ -34,9 +31,11 @@ export default class SearchEngineSelect extends React.Component {
 
             this.setState({isBusy: false, errors: err});
             });
-        this.setState({
-            'selected_option': this.props.selected
-        });
+        if (this.props.selected.value.length > 0) {
+            this.setState({
+                'selected_option': this.props.selected
+            });   
+        }
     }
 
     onChangeHandler(sOption) {
