@@ -1128,6 +1128,8 @@ export default class DataSourceIndex extends React.Component {
                             this.state.sectionName == 'edit_keyword' && this.state.editKeyword ? 
                                 <EditKeyword
                                     keyword_id={this.state.editKeyword_keyword_id}
+                                    total_credits={this.props.user.price_plan.keyword_tracking_count}
+                                    used_credits={this.state.totalDfsKeywordCreditsUsed}
                                     keyword_configuration_id={this.state.editKeyword_keyword_configuration_id}
                                 />
                                 : null

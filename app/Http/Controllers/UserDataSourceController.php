@@ -333,9 +333,7 @@ class UserDataSourceController extends Controller
             'keyword_configuration_id' => 'required',
             'url' => 'required',
             'search_engine' => 'required',
-            // 'keyword' => 'required',
             'location' => 'required',
-            'lang' => 'required',
             'ranking_direction' => 'required',
             'ranking_places' => 'required',
             'is_url_competitors' => 'required'
@@ -351,7 +349,7 @@ class UserDataSourceController extends Controller
         if ($keyword) {
             $user_data_source = $keyword->user_data_source;
             if ($user_data_source->user_id == Auth::id()) {
-                $configuration_id = $this->saveKeywordConfiguration($request->url, $request->search_engine, $request->location, $request->lang, $request->ranking_direction, $request->ranking_places, $request->is_url_competitors);
+                $configuration_id = $this->saveKeywordConfiguration($request->url, $request->search_engine, $request->location, 'en', $request->ranking_direction, $request->ranking_places, $request->is_url_competitors);
                 // doing pivot entry
                 $keyword_meta = new KeywordMeta();
                 $keyword_meta->keyword_id = $keyword->id;
