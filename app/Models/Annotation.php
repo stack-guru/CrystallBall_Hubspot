@@ -111,6 +111,11 @@ class Annotation extends Model
                 $annotationsQuery .= " where (update_date BETWEEN '" . Carbon::now()->subYear()->format('Y-m-d') . "' AND '" . Carbon::now()->format('Y-m-d') . "' )";
             }
         }
+        // Add keyword tracking annotations if it is enabled in user data source
+        if ($user->is_ds_keyword_tracking_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `keyword_tracking_annotations`";
+        }
         return $annotationsQuery;
     }
 }

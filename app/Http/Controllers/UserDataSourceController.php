@@ -8,6 +8,7 @@ use App\Http\Requests\UserDataSourceRequest;
 use App\Models\Keyword;
 use App\Models\KeywordConfiguration;
 use App\Models\KeywordMeta;
+use App\Models\Location;
 use App\Models\UserDataSource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -119,7 +120,7 @@ class UserDataSourceController extends Controller
         // get user data source 
         $user_data_source = UserDataSource::where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->where('ds_name', 'KeywordTracking')->first();
         // create user data source if not exist
-        if(!$user_data_source){
+        if (!$user_data_source) {
             $user_data_source = new UserDataSource();
             $user_data_source->user_id = Auth::id();
             $user_data_source->ds_code = 'keyword_tracking';
@@ -142,8 +143,8 @@ class UserDataSourceController extends Controller
             $ranking_places_changed = $request->ranking_places;
             $is_url_competitors = $request->is_url_competitors;
             // check if locations are more or search engines are more
-            if(count($request->search_engine) <= count($request->location)){
-                foreach($request->search_engine as $search_engine_loop){
+            if (count($request->search_engine) <= count($request->location)) {
+                foreach ($request->search_engine as $search_engine_loop) {
                     foreach ($request->location as $location) {
                         $search_engine = $search_engine_loop['value'] ?? '';
                         $location_code = $location['value'] ?? '';
@@ -155,9 +156,8 @@ class UserDataSourceController extends Controller
                         $keyword_meta->save();
                     }
                 }
-            }
-            elseif(count($request->location) < count($request->search_engine)){
-                foreach($request->location as $location){
+            } elseif (count($request->location) < count($request->search_engine)) {
+                foreach ($request->location as $location) {
                     foreach ($request->search_engine as $search_engine_loop) {
                         $search_engine = $search_engine_loop['value'] ?? '';
                         $location_code = $location['value'] ?? '';
@@ -170,18 +170,17 @@ class UserDataSourceController extends Controller
                     }
                 }
             }
-
         }
 
         // get and store dfs task id
         // UserDataSourceUpdatedOrCreated::dispatch($user_data_source);
     }
 
-    private function saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors){
-        if($is_url_competitors == 'true'){
+    private function saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors)
+    {
+        if ($is_url_competitors == 'true') {
             $is_url_competitors = true;
-        }
-        else if($is_url_competitors == 'false'){
+        } else if ($is_url_competitors == 'false') {
             $is_url_competitors = false;
         }
         // check if already exists 
@@ -195,11 +194,11 @@ class UserDataSourceController extends Controller
             'is_url_competitors' => $is_url_competitors,
         ])->first();
         // if it does not exist just create it
-        if($configuration){
+        if ($configuration) {
             return $configuration->id;
         }
         // if it exists just reutrn the id
-        else{
+        else {
             $configuration = new KeywordConfiguration();
             $configuration->url = $url;
             $configuration->search_engine = $search_engine;
@@ -208,11 +207,10 @@ class UserDataSourceController extends Controller
             $configuration->ranking_direction = $ranking_direction;
             $configuration->ranking_places_changed = $ranking_places_changed;
             $configuration->is_url_competitors = $is_url_competitors;
-            
+
             $configuration->save();
             return $configuration->id;
         }
-        
     }
 
     private function saveKeywords($keywords, $data_source)
@@ -241,15 +239,24 @@ class UserDataSourceController extends Controller
     public function getDFSkeywordsforTracking()
     {
         $data_source = UserDataSource::where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->first();
-        if($data_source){
+        if ($data_source) {
             $keywords = Keyword::with('configurations')->select('id', 'keyword')->where('user_data_source_id', $data_source->id)->get();
+            foreach ($keywords as $key => $keyword) {
+                if ($keyword->configurations->count() > 0) {
+                    foreach ($keyword->configurations as $conf) {
+                        $location = Location::where('location_code', $conf->location_code)->first();
+                        $conf->location_name = $location->location_name;
+                    }
+                }
+            }
             return [
                 'keywords' => $keywords
             ];
+        } else {
+            return [
+                'keywords' => []
+            ];
         }
-        return response()->json([
-            'Something went wrong.'
-        ], 500);
     }
 
     /**
@@ -261,16 +268,94 @@ class UserDataSourceController extends Controller
     public function deleteDFSkeywordforTracking(Request $request)
     {
         $request->validate([
-            'keyword_id' => 'required',
+            'keyword_configuration_id' => 'required',
+            'keyword_id' => 'required'
         ]);
 
         try {
             DB::beginTransaction();
-            $keyword_data_source = UserDataSource::with('keywords')->where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->first();
-            $keyword_data_source->keywords()->where('id', $request->keyword_id)->first()->delete();
+            $keyword_configuration = KeywordConfiguration::find($request->keyword_configuration_id);
+            $keyword = Keyword::with('user_data_source')->find($request->keyword_id);
+            if ($keyword && $keyword_configuration) {
+                $user_data_source = $keyword->user_data_source;
+                if ($user_data_source->user_id == Auth::id()) {
+                    // delete link between user keyword and configuration
+                    // but do not delete the configuraiton it might be used later
+                    $meta = KeywordMeta::where('keyword_id', $keyword->id)->where('keyword_configuration_id', $keyword_configuration->id)->first();
+                    if ($meta) {
+                        $meta->delete();
+                    }
+                }
+            }
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
+        }
+    }
+
+    public function getKeywordTrackingDetailsForKeyword(Request $request)
+    {
+        $request->validate([
+            'keyword_configuration_id' => 'required',
+            'keyword_id' => 'required'
+        ]);
+
+        $keyword = Keyword::find($request->keyword_id);
+        $keyword_configuration = KeywordConfiguration::find($request->keyword_configuration_id);
+
+        if ($keyword && $keyword_configuration) {
+            $user_data_source = $keyword->user_data_source;
+            if ($user_data_source->user_id == Auth::id()) {
+                $location_name = Location::where('location_code', $keyword_configuration->location_code)->first()->location_name;
+                return response()->json([
+                    'keyword_id' => $keyword->id,
+                    'keyword_configuration_id' => $keyword_configuration->id,
+                    'keyword' => $keyword->keyword,
+                    'is_url_competitors' => $keyword_configuration->is_url_competitors,
+                    'url' => $keyword_configuration->url,
+                    'search_engine' => $keyword_configuration->search_engine,
+                    'location' => $keyword_configuration->location_code,
+                    'location_name' => $location_name,
+                    'language' => $keyword_configuration->language,
+                    'ranking_direction' => $keyword_configuration->ranking_direction,
+                    'ranking_places_changed' => $keyword_configuration->ranking_places_changed,
+                ]);
+            }
+        }
+
+        return response()->json('Keyword details not found.', 500);
+    }
+
+    public function updateKeywordTrackingDetailsForKeyword(Request $request)
+    {
+        $request->validate([
+            'keyword_id' => 'required',
+            'keyword_configuration_id' => 'required',
+            'url' => 'required',
+            'search_engine' => 'required',
+            'location' => 'required',
+            'ranking_direction' => 'required',
+            'ranking_places' => 'required',
+            'is_url_competitors' => 'required'
+        ]);
+
+        $keyword = Keyword::find($request->keyword_id);
+        $keyword_configuration = KeywordConfiguration::find($request->keyword_configuration_id);
+        $pivot = KeywordMeta::where('keyword_id', $keyword->id)->where('keyword_configuration_id', $keyword_configuration->id)->first();
+        if ($pivot) {
+            $pivot->delete();
+        }
+
+        if ($keyword) {
+            $user_data_source = $keyword->user_data_source;
+            if ($user_data_source->user_id == Auth::id()) {
+                $configuration_id = $this->saveKeywordConfiguration($request->url, $request->search_engine, $request->location, 'en', $request->ranking_direction, $request->ranking_places, $request->is_url_competitors);
+                // doing pivot entry
+                $keyword_meta = new KeywordMeta();
+                $keyword_meta->keyword_id = $keyword->id;
+                $keyword_meta->keyword_configuration_id = $configuration_id;
+                $keyword_meta->save();
+            }
         }
     }
 }

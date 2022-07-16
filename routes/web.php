@@ -1,8 +1,26 @@
 <?php
 
 use App\Http\Controllers\KeywordTrackingController;
+use App\Models\KeywordTrackingAnnotation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+
+
+// Route::get('test', function () {
+//     $description = 'Your website domoain.com is up/down by 100 places on google search results for keyword "Keyword"';
+//     KeywordTrackingAnnotation::create([
+//         'user_id' => Auth::id(),
+//         'category' => 'Website Ranking',
+//         'eventy_type' => 'Ranking',
+//         'event_name' => 'Website Ranking Changed',
+//         'description' => $description,
+//         'title' => 'Your website ranking is changed for keyword "' . 'Keyword' . '"',
+//         'show_at' => today()
+//     ]);
+// });
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -154,12 +172,15 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
 
             Route::resource('web-monitor', App\Http\Controllers\WebMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
             // save dfs keywords for keyword tracking automation
-            Route::post('save-dfs-keywords', [App\Http\Controllers\UserDataSourceController::class, 'saveDFSkeywordsforTracking']);
+            Route::post('save-keyword-tracking-keywords', [App\Http\Controllers\UserDataSourceController::class, 'saveDFSkeywordsforTracking']);
             // get DFS keywords data
-            Route::get('get-dfs-keywords', [App\Http\Controllers\UserDataSourceController::class, 'getDFSkeywordsforTracking']);
+            Route::get('get-keyword-tracking-keywords', [App\Http\Controllers\UserDataSourceController::class, 'getDFSkeywordsforTracking']);
             // delete DFS keyword
-            Route::post('delete-dfs-keyword', [App\Http\Controllers\UserDataSourceController::class, 'deleteDFSkeywordforTracking']);
-
+            Route::post('delete-keyword-tracking-keyword', [App\Http\Controllers\UserDataSourceController::class, 'deleteDFSkeywordforTracking']);
+            // get keyword details
+            Route::post('get-keyword-details-for-keyword-tracking', [App\Http\Controllers\UserDataSourceController::class, 'getKeywordTrackingDetailsForKeyword']);
+            // update the keyword details
+            Route::post('update-keyword-tracking-keyword', [App\Http\Controllers\UserDataSourceController::class, 'updateKeywordTrackingDetailsForKeyword']);
 
             Route::get('google-algorithm-updates/date', [App\Http\Controllers\GoogleAlgorithmUpdateController::class, 'uiIndex']);
             Route::get('retail-marketing-dates', [App\Http\Controllers\RetailMarketingController::class, 'uiIndex']);

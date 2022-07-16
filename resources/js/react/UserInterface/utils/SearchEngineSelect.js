@@ -12,10 +12,7 @@ export default class SearchEngineSelect extends React.Component {
             isBusy: false,
             errors: '',
             search_engines: [],
-            selected_option: {
-                label: '',
-                value: ''
-            }
+            selected_option: ''
         }
 
         this.onChangeHandler = this.onChangeHandler.bind(this)
@@ -27,15 +24,18 @@ export default class SearchEngineSelect extends React.Component {
         HttpClient.get(`/get-search-engine-list`)
             .then(response => {
                 this.setState({isBusy: false, search_engines: response.data.search_engines});
-                this.setState({
-                    'selected_option': response.data.selected_search_engine
-                });
+                
             }, (err) => {
                 this.setState({isBusy: false, errors: (err.response).data});
             }).catch(err => {
 
             this.setState({isBusy: false, errors: err});
-        });
+            });
+        if (this.props.selected.value.length > 0) {
+            this.setState({
+                'selected_option': this.props.selected
+            });   
+        }
     }
 
     onChangeHandler(sOption) {
@@ -56,7 +56,7 @@ export default class SearchEngineSelect extends React.Component {
             <CreatableSelect
                 name={this.props.name}
                 disabled={this.props.disabled}
-                // value={this.state.selected_option}
+                value={this.state.selected_option}
                 id={this.props.id}
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}

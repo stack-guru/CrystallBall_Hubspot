@@ -27,7 +27,7 @@ class DataForSeoController extends Controller
 
     public function getLocationList()
     {
-        $locations = Location::limit(100)->get([
+        $locations = Location::where('location_type', 'Country')->get([
             'location_name as label',
             'location_code as value'
         ])->toArray();
@@ -43,7 +43,7 @@ class DataForSeoController extends Controller
 
     public function searchLocationList(Request $request)
     {
-        $locations = Location::where('location_name', 'LIKE', '%' . $request->search_str . '%')->get([
+        $locations = Location::where('location_name', 'LIKE', '%' . $request->search_str . '%')->where('location_type', 'Country')->get([
             'location_name as label',
             'location_code as value'
         ])->toArray();

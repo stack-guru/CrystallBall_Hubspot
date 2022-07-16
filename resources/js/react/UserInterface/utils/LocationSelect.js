@@ -13,10 +13,7 @@ export default class LocationSelect extends React.Component {
             isBusy: false,
             errors: '',
             locations: [],
-            selected_option: {
-                label: '',
-                value: ''
-            }
+            selected_option: ''
         }
 
         this.onChangeHandler = this.onChangeHandler.bind(this)
@@ -29,15 +26,18 @@ export default class LocationSelect extends React.Component {
         HttpClient.get(`/get-locations-list`)
             .then(response => {
                 this.setState({isBusy: false, locations: response.data.locations});
-                this.setState({
-                    'selected_option': response.data.selected_location
-                });
             }, (err) => {
                 this.setState({isBusy: false, errors: (err.response).data});
             }).catch(err => {
 
             this.setState({isBusy: false, errors: err});
-        });
+            });
+
+        if (this.props.selected.value.length > 0) {
+            this.setState({
+                'selected_option': this.props.selected
+            });     
+        }
     }
 
     onChangeHandler(sOption) {
@@ -60,7 +60,7 @@ export default class LocationSelect extends React.Component {
     };
 
     loadOptions(input, loadCallback) {
-        if (input.length > 2) {
+        if (input.length >= 2) {
 
             HttpClient.get(`/search-locations-list?search_str=` + input)
                 .then(response => {
@@ -75,24 +75,6 @@ export default class LocationSelect extends React.Component {
                 });
         }
         
-        // setTimeout(() => {
-        //     // search options
-        //     loadCallback(this.filterLocations(input));
-        // }, 1500);
-        // if input size is minimum of 3 characters
-        // if (input.length >= 3) {
-        //     setTimeout(() => {
-        //         // search options
-        //         loadCallback(this.filterLocations(input));
-        //     }, 1500);
-        // }
-
-        // else {
-        //     return this.state.locations.filter((i) =>
-        //         i.label.toLowerCase().includes(input.toLowerCase())
-        //     );    
-        // }
-        
     }
     
     render() {
@@ -100,24 +82,12 @@ export default class LocationSelect extends React.Component {
             <AsyncSelect
                 cacheOptions
                 defaultOptions={this.state.locations}
-                // value={this.state.selected_option}
+                value={this.state.selected_option}
                 className="gray_clr w-100"
                 loadOptions={this.loadOptions}
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}
             />
-            // <CreatableSelect
-            //     name={this.props.name}
-            //     disabled={this.props.disabled}
-            //     value={this.state.selected_option}
-            //     id={this.props.id}
-            //     isMulti={this.props.multiple}
-            //     onChange={this.onChangeHandler}
-            //     className="gray_clr w-100"
-            //     options={this.state.locations}
-            //     placeholder={this.props.placeholder}
-            // >
-            // </CreatableSelect>
         )
     }
 

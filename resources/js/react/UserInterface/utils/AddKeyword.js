@@ -15,7 +15,7 @@ export default class AddKeyword extends React.Component {
             search_engines: [],
             keywords: [],
             locations: [],
-            lang: "",
+            lang: "en",
             ranking_direction: "",
             ranking_places: "",
             tracking_of: "",
@@ -133,7 +133,7 @@ export default class AddKeyword extends React.Component {
             ranking_places: this.state.ranking_places,
             is_url_competitors: this.state.is_url_competitors,
         };
-        HttpClient.post("/data-source/save-dfs-keywords", params)
+        HttpClient.post("/data-source/save-keyword-tracking-keywords", params)
             .then(
                 (resp) => {
                     const Toast = Swal.mixin({
@@ -330,6 +330,10 @@ export default class AddKeyword extends React.Component {
                             className="gray_clr"
                             name="search_engine"
                             id="search_engine"
+                            selected={{
+                                label: '',
+                                value: ''
+                            }}
                             onChangeCallback={this.changeSearchEngineHandler}
                             placeholder="Select Search Engine"
                             multiple="true"
@@ -341,6 +345,10 @@ export default class AddKeyword extends React.Component {
                             className="gray_clr"
                             name="country"
                             id="country"
+                            selected={{
+                                label: '',
+                                value: ''
+                            }}
                             onChangeCallback={this.changeLocationHandler}
                             placeholder="Select Location"
                             multiple="true"
@@ -350,25 +358,6 @@ export default class AddKeyword extends React.Component {
                             <option selected disabled>Select Country</option>
                             <option value='2840'>USA</option>
                         </select> */}
-                    </div>
-                    <label>Language</label>
-                    <div className="input-group mb-3">
-                        <select
-                            className="form-control"
-                            id="lang"
-                            onChange={(e) => {
-                                this.setState({
-                                    lang: e.target.options[
-                                        e.target.selectedIndex
-                                    ].value,
-                                });
-                            }}
-                        >
-                            <option selected disabled>
-                                Select Language
-                            </option>
-                            <option value="en">English</option>
-                        </select>
                     </div>
                     <div className="mt-3">
                         <label className="font-weight-bold">
