@@ -173,7 +173,7 @@ class UserDataSourceController extends Controller
         }
 
         // get and store dfs task id
-        // UserDataSourceUpdatedOrCreated::dispatch($user_data_source);
+        UserDataSourceUpdatedOrCreated::dispatch($user_data_source);
     }
 
     private function saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors)
