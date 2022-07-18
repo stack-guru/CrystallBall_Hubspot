@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Events\serpResultsProcessed;
 use App\Events\UserDataSourceUpdatedOrCreated;
 use App\Models\Keyword;
+use App\Models\KeywordMeta;
 use App\Models\KeywordTrackingAnnotation;
 use App\Models\UserDataSource;
 use App\Services\DataForSeoService;
@@ -48,30 +49,34 @@ class DataForSeoCommand extends Command
      */
     public function handle()
     {
-        echo "disabled";
-        die();
+
         $user_data_sources = UserDataSource::with('keywords')->where('ds_code', 'keyword_tracking')->get();
         foreach ($user_data_sources as $data_source) {
-            $url = $data_source->url;
-            $ranking_direction = $data_source->ranking_direction;
-            $ranking_places = (int)$data_source->ranking_places;
             $keywords = $data_source->keywords;
             foreach ($keywords as $keyword) {
-                $data = $this->service->getResultsForSERPGoogleOrganicTask($keyword->task_id, $data_source->search_engine);
-                if (isset($data['tasks'][0]['result'][0]['items']) && !empty($data['tasks'][0]['result'][0]['items'])) {
-                    $items = $data['tasks'][0]['result'][0]['items'];
-                    $this->processResults($items, $url, $ranking_direction, $ranking_places, $keyword, $data_source);
-                    info('results are processed for a  particular keyword');
-                    // refresh the Task ID
-                    UserDataSourceUpdatedOrCreated::dispatch($data_source);
-                    info('event is triggered and queued to update the task id, that wil be processed tommorow');
+                // get configurations of keyword
+                $configurations = $keyword->configurations;
+                foreach ($configurations as $configuration) {
+                    $pivot = KeywordMeta::where('keyword_configuration_id', $configuration->id)->where('keyword_id', $keyword->id)->first();
+                    $data = $this->service->getResultsForSERPGoogleOrganicTask($pivot->dfs_task_id, $configuration->search_engine);
+                    if (isset($data['tasks'][0]['result'][0]['items']) && !empty($data['tasks'][0]['result'][0]['items'])) {
+                        $items = $data['tasks'][0]['result'][0]['items'];
+                        $url = $configuration->url;
+                        $ranking_direction = $configuration->ranking_direction;
+                        $ranking_places = (int)$configuration->ranking_places_changed;
+                        $this->processResults($items, $url, $ranking_direction, $ranking_places, $keyword, $pivot, $configuration);
+                        info('results are processed for a  particular keyword');
+                    }
                 }
+                // refresh the Task IDs of all data sources
+                UserDataSourceUpdatedOrCreated::dispatch($data_source);
+                info('event is triggered and queued to update the task id, that wil be processed tommorow');
             }
         }
     }
 
     // processing records from DFS results
-    public function processResults($items, $url, $ranking_direction, $ranking_places, $keyword, $data_source)
+    public function processResults($items, $url, $ranking_direction, $ranking_places, $keyword, $pivot, $configuration)
     {
         // items being an array of results from Data For SEO API
         foreach ($items as $result) {
@@ -84,19 +89,21 @@ class DataForSeoCommand extends Command
                 if (isset($result['rank_absolute'])) {
                     // check if we have stored previous rank position in the database
                     // for the first time, we may not have ranking value in our database
-                    if (!$keyword->ranking) {
+                    if (!$pivot->current_ranking) {
                         info('no existing ranking in the database');
                         // just store the rankings and do not process further
                         // process later when we have value in our database to compare the result position to.
-                        $keyword->ranking = $result['rank_absolute'];
-                        $keyword->save();
+                        $pivot->current_ranking = $result['rank_absolute'];
+                        $pivot->save();
                     } else {
                         info('existing ranking found in the database');
                         // we already have some ranking saved in our database
                         // compare the ranking from result with our previous stored ranking value
                         // if there is change in the position by X places than we create an annotation
-                        $previous_ranking = (int)$keyword->ranking;
+                        $previous_ranking = (int)$pivot->current_ranking;
                         $new_ranking = (int)$result['rank_absolute'];
+                        $pivot->current_ranking = $new_ranking;
+                        $pivot->save();
                         // if current ranking is greater than new ranking
                         // it means our website has gained position in ranking
                         if ($previous_ranking > $new_ranking) {
@@ -127,7 +134,7 @@ class DataForSeoCommand extends Command
                                 // if our website actually ranked up
                                 if ($ranked_higher) {
                                     // create annotation
-                                    $this->createKeywordTrackingAnnotation($ranking_direction, $rank_difference, $keyword, $data_source);
+                                    $this->createKeywordTrackingAnnotation($ranking_direction, $rank_difference, $keyword, $configuration);
                                 }
                             }
                             // if our specified direction is down
@@ -135,7 +142,7 @@ class DataForSeoCommand extends Command
                                 // if our website is not ranked up
                                 if (!$ranked_higher) {
                                     // create annotation
-                                    $this->createKeywordTrackingAnnotation($ranking_direction, $rank_difference, $keyword, $data_source);
+                                    $this->createKeywordTrackingAnnotation($ranking_direction, $rank_difference, $keyword, $configuration);
                                 }
                             }
                         }
@@ -146,14 +153,15 @@ class DataForSeoCommand extends Command
     }
 
     //create annotation in the database
-    public function createKeywordTrackingAnnotation($ranking_direction, $ranking_difference, $keyword, $data_source)
+    public function createKeywordTrackingAnnotation($ranking_direction, $ranking_difference, $keyword, $configuration)
     {
         info('creating annotation');
         // Your website domoain.com is up/down by 100 places on google search results for keyword "Keyword"
         $description =
-            'Your website ' . $data_source->url . ' is ' . $ranking_direction .
-            'by ' . $ranking_difference . ' places on ' . $data_source->search_engine .
+        'Your website ' . $configuration->url . ' is ' . $ranking_direction .
+        'by ' . $ranking_difference . ' places on ' . $configuration->search_engine .
             ' search results for keyword "' . $keyword->keyword . '"';
+
         KeywordTrackingAnnotation::create([
             'user_id' => $keyword->user_data_source->user_id,
             'category' => 'Website Ranking',
