@@ -62,8 +62,11 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $this->authorize('create', User::class);
-
         $parentUser = Auth::user();
+
+        if ($parentUser->user_id) {
+            $parentUser = User::find($parentUser->user_id);
+        }
 
         if ($parentUser->pricePlan->user_per_ga_account_count == -1) {
             abort(402);
@@ -82,7 +85,7 @@ class UserController extends Controller
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
         $user->save();
 
-        Mail::to($user)->send(new UserInviteMail($user, $request->password));
+        // Mail::to($user)->send(new UserInviteMail($user, $request->password));
 
         if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
             foreach ($request->google_analytics_account_id as $gAAId) {
@@ -98,7 +101,7 @@ class UserController extends Controller
             $uGAA->save();
         }
 
-        event(new \App\Events\UserInvitedTeamMember($parentUser));
+        // event(new \App\Events\UserInvitedTeamMember($parentUser));
         return ['user' => $user];
     }
 
