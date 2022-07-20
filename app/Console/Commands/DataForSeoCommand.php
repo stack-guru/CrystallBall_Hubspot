@@ -81,8 +81,10 @@ class DataForSeoCommand extends Command
     // processing records from DFS results
     public function processResults($items, $url, $ranking_direction, $ranking_places, $keyword, $pivot, $configuration)
     {
+        info("processing results  " . __LINE__ . " results: " . print_r($items, 1));
         // items being an array of results from Data For SEO API
         foreach ($items as $result) {
+            
             // if result domain string contains our url domain
             // it means its ranking
             // for example if our website: "testwebsite.com" is included in result "www.testwebsite.com"
