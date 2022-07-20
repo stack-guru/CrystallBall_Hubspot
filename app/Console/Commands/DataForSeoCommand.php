@@ -58,15 +58,18 @@ class DataForSeoCommand extends Command
                 $configurations = $keyword->configurations;
                 foreach ($configurations as $configuration) {
                     $pivot = KeywordMeta::where('keyword_configuration_id', $configuration->id)->where('keyword_id', $keyword->id)->first();
-                    $data = $this->service->getResultsForSERPGoogleOrganicTask($pivot->dfs_task_id, $configuration->search_engine);
-                    if (isset($data['tasks'][0]['result'][0]['items']) && !empty($data['tasks'][0]['result'][0]['items'])) {
-                        $items = $data['tasks'][0]['result'][0]['items'];
-                        $url = $configuration->url;
-                        $ranking_direction = $configuration->ranking_direction;
-                        $ranking_places = (int)$configuration->ranking_places_changed;
-                        $this->processResults($items, $url, $ranking_direction, $ranking_places, $keyword, $pivot, $configuration);
-                        info('results are processed for a  particular keyword');
+                    if ($pivot->dfs_task_id) {
+                        $data = $this->service->getResultsForSERPGoogleOrganicTask($pivot->dfs_task_id, $configuration->search_engine);
+                        if (isset($data['tasks'][0]['result'][0]['items']) && !empty($data['tasks'][0]['result'][0]['items'])) {
+                            $items = $data['tasks'][0]['result'][0]['items'];
+                            $url = $configuration->url;
+                            $ranking_direction = $configuration->ranking_direction;
+                            $ranking_places = (int)$configuration->ranking_places_changed;
+                            $this->processResults($items, $url, $ranking_direction, $ranking_places, $keyword, $pivot, $configuration);
+                            info('results are processed for a  particular keyword');
+                        }
                     }
+                    
                 }
                 // refresh the Task IDs of all data sources
                 UserDataSourceUpdatedOrCreated::dispatch($data_source);
