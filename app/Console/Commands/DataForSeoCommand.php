@@ -153,9 +153,7 @@ class DataForSeoCommand extends Command
                         }
                     }
                 }
-            } else {
-                info('domain does not exists in the list');
-            }
+            } 
         }
     }
 
