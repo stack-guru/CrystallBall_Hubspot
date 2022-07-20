@@ -109,9 +109,9 @@ export default class ManageKeywords extends React.Component {
                                     <table className='table table-responsive'>
                                         <thead>
                                             <tr>
-                                                <th width="10%" className='text-left'>Keyword</th>
-                                                <th width="35%" className='text-left'>URL</th>
-                                                <th width="15%" className='text-left'>Search Engine</th>
+                                                <th width="20%" className='text-left'>Keyword</th>
+                                                <th width="30%" className='text-left'>URL</th>
+                                                <th width="20%" className='text-left'>Search Engine</th>
                                                 <th width="10%" className='text-left'>Location</th>
                                                 <th width="20%" className='text-right'>Action</th>
                                             </tr>
