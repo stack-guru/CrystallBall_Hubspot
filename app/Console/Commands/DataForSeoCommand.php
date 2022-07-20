@@ -125,7 +125,7 @@ class DataForSeoCommand extends Command
                         }
                         // ranking is same dont perform any action, for now
                         else {
-                            return;
+                            break;
                         }
                         // check how many places our website is ranked higher or lower
                         // if it is not ranked (higher or lower) more than our defined ranking places value, than it does not matter in which direction it is ranked
@@ -136,16 +136,21 @@ class DataForSeoCommand extends Command
                             // check in which case (up or down) do we need to process further...
                             // if our specified direction is up
                             if ($ranking_direction == 'up') {
+                                info("our specified direction is up");
                                 // if our website actually ranked up
                                 if ($ranked_higher) {
+                                    info("our website actually ranked up");
                                     // create annotation
                                     $this->createKeywordTrackingAnnotation($ranking_direction, $rank_difference, $keyword, $configuration, $new_ranking);
                                 }
                             }
                             // if our specified direction is down
                             else if ($ranking_direction == 'down') {
+                                info("our specified direction is down");
+
                                 // if our website is not ranked up
                                 if (!$ranked_higher) {
+                                    info("our website actually ranked down");
                                     // create annotation
                                     $this->createKeywordTrackingAnnotation($ranking_direction, $rank_difference, $keyword, $configuration, $new_ranking);
                                 }
@@ -164,6 +169,8 @@ class DataForSeoCommand extends Command
         $whose_website = ($configuration->is_url_competitors) ? "Competitor's website " : "Your website ";
 
         $description = $whose_website. "moves ". $ranking_difference. " positions " . $ranking_direction . " to " . $current_position . " place under the keyword ". $keyword->keyword;
+
+        info("creating annotation");
 
         KeywordTrackingAnnotation::create([
             'user_id' => $keyword->user_data_source->user_id,
