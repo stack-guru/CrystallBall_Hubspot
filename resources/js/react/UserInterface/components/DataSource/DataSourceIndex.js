@@ -59,7 +59,7 @@ export default class DataSourceIndex extends React.Component {
 
         this.keywordAddHandler = this.keywordAddHandler.bind(this);
         this.loadKeywordTrackingKeywords = this.loadKeywordTrackingKeywords.bind(this);
-        
+
         this.editKeywordToggler = this.editKeywordToggler.bind(this);
 
 
@@ -154,7 +154,7 @@ export default class DataSourceIndex extends React.Component {
     editKeywordToggler(keyword_id, keyword_configuration_id) {
         // close popup
         this.manage_keyword_popup_handler()
-        
+
         // show edit form
         this.setState({
             editKeyword_keyword_id: keyword_id,
@@ -169,7 +169,7 @@ export default class DataSourceIndex extends React.Component {
 
         console.log(this.state);
 
-        
+
     }
 
     render() {
@@ -924,7 +924,7 @@ export default class DataSourceIndex extends React.Component {
                             */}
 
 
-                            {/* <div className="col-md-6 mt-2">
+                            <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
@@ -963,77 +963,77 @@ export default class DataSourceIndex extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
 
 
 
 
-                             <div className="col-md-6 mt-2">
-                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
-                                    <div>
-                                        <div className="d-flex mt-2 justify-content-between "
-                                            id="keyword-tracking-data-source-section">
-                                            <div className="px-2">
-                                                <h2>
-                                                    <small>
-                                                        Keyword Tracking <UserAnnotationColorPicker name="keyword_tracking"
-                                                            value={this.state.userAnnotationColors.keyword_tracking}
-                                                            updateCallback={this.updateUserAnnotationColors} />
-                                                        <img className="hint-button-2" src="/images/info-logo.png" />
-                                                    </small>
-                                                </h2>
-                                            </div>
+                            {/* <div className="col-md-6 mt-2">*/}
+                            {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
+                            {/*        <div>*/}
+                            {/*            <div className="d-flex mt-2 justify-content-between "*/}
+                            {/*                id="keyword-tracking-data-source-section">*/}
+                            {/*                <div className="px-2">*/}
+                            {/*                    <h2>*/}
+                            {/*                        <small>*/}
+                            {/*                            Keyword Tracking <UserAnnotationColorPicker name="keyword_tracking"*/}
+                            {/*                                value={this.state.userAnnotationColors.keyword_tracking}*/}
+                            {/*                                updateCallback={this.updateUserAnnotationColors} />*/}
+                            {/*                            <img className="hint-button-2" src="/images/info-logo.png" />*/}
+                            {/*                        </small>*/}
+                            {/*                    </h2>*/}
+                            {/*                </div>*/}
 
-                                            <div className="px-2">
-                                                {this.state.userServices.is_ds_keyword_tracking_enabled ? "Active" : "Deactive"}
-                                                <label className="trigger switch">
-                                                    <input type="checkbox"
-                                                        checked={this.state.userServices.is_ds_keyword_tracking_enabled}
-                                                        onChange={this.serviceStatusHandler}
-                                                        name="is_ds_keyword_tracking_enabled"
-                                                    />
-                                                    <span className={`slider round ${this.state.userServices.is_ds_keyword_tracking_enabled ? 'animate-pulse' : ''}`} />
-                                                </label>
-                                            </div>
-                                        </div>
+                            {/*                <div className="px-2">*/}
+                            {/*                    {this.state.userServices.is_ds_keyword_tracking_enabled ? "Active" : "Deactive"}*/}
+                            {/*                    <label className="trigger switch">*/}
+                            {/*                        <input type="checkbox"*/}
+                            {/*                            checked={this.state.userServices.is_ds_keyword_tracking_enabled}*/}
+                            {/*                            onChange={this.serviceStatusHandler}*/}
+                            {/*                            name="is_ds_keyword_tracking_enabled"*/}
+                            {/*                        />*/}
+                            {/*                        <span className={`slider round ${this.state.userServices.is_ds_keyword_tracking_enabled ? 'animate-pulse' : ''}`} />*/}
+                            {/*                    </label>*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
 
-                                        <div className='ml-2'>
-                                            Credits: { this.state.totalDfsKeywordCreditsUsed }/{this.props.user.price_plan.keyword_tracking_count}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p
-                                            className="ds-update-text m-0 px-2 text-right"
-                                            onClick={() => {
-                                                this.sectionToggler('keyword_tracking');
-                                            }}
-                                        >
-                                            {this.state.sectionName == "keyword_tracking" ? "Hide" : "Add Keywords"}
-                                        </p>
-                                        <p
-                                            className="ds-update-text m-0 px-2 text-right"
-                                            onClick={() => {
-                                                this.setState({
-                                                    manage_keyword_show: true
-                                                })
-                                            }}
-                                        >
-                                            Manage Keywords
-                                        </p>
-                                        {
-                                            this.state.manage_keyword_show == true ? 
-                                                <ManageKeywords
-                                                    keywords={this.state.dfsKeywords}
-                                                    loadKeywordsCallback={this.loadKeywordTrackingKeywords}
-                                                    editKeywordCallback={this.editKeywordToggler}
-                                                    closeManageKeywordPopup={this.manage_keyword_popup_handler}
-                                                />
-                                            : null
-                                        }
- 
-                                    </div>
-                                </div>
-                            </div> 
+                            {/*            <div className='ml-2'>*/}
+                            {/*                Credits: { this.state.totalDfsKeywordCreditsUsed }/{this.props.user.price_plan.keyword_tracking_count}*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*        <div>*/}
+                            {/*            <p*/}
+                            {/*                className="ds-update-text m-0 px-2 text-right"*/}
+                            {/*                onClick={() => {*/}
+                            {/*                    this.sectionToggler('keyword_tracking');*/}
+                            {/*                }}*/}
+                            {/*            >*/}
+                            {/*                {this.state.sectionName == "keyword_tracking" ? "Hide" : "Add Keywords"}*/}
+                            {/*            </p>*/}
+                            {/*            <p*/}
+                            {/*                className="ds-update-text m-0 px-2 text-right"*/}
+                            {/*                onClick={() => {*/}
+                            {/*                    this.setState({*/}
+                            {/*                        manage_keyword_show: true*/}
+                            {/*                    })*/}
+                            {/*                }}*/}
+                            {/*            >*/}
+                            {/*                Manage Keywords*/}
+                            {/*            </p>*/}
+                            {/*            {*/}
+                            {/*                this.state.manage_keyword_show == true ? */}
+                            {/*                    <ManageKeywords*/}
+                            {/*                        keywords={this.state.dfsKeywords}*/}
+                            {/*                        loadKeywordsCallback={this.loadKeywordTrackingKeywords}*/}
+                            {/*                        editKeywordCallback={this.editKeywordToggler}*/}
+                            {/*                        closeManageKeywordPopup={this.manage_keyword_popup_handler}*/}
+                            {/*                    />*/}
+                            {/*                : null*/}
+                            {/*            }*/}
+
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*</div> */}
 
                         </div>
                     </div>
@@ -1125,7 +1125,7 @@ export default class DataSourceIndex extends React.Component {
                         }
 
                         {
-                            this.state.sectionName == 'edit_keyword' && this.state.editKeyword ? 
+                            this.state.sectionName == 'edit_keyword' && this.state.editKeyword ?
                                 <EditKeyword
                                     keyword_id={this.state.editKeyword_keyword_id}
                                     total_credits={this.props.user.price_plan.keyword_tracking_count}

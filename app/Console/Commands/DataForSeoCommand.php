@@ -134,7 +134,7 @@ class DataForSeoCommand extends Command
                                 // if our website actually ranked up
                                 if ($ranked_higher) {
                                     // create annotation
-                                    $this->createKeywordTrackingAnnotation($ranking_direction, $rank_difference, $keyword, $configuration);
+                                    $this->createKeywordTrackingAnnotation($ranking_direction, $rank_difference, $keyword, $configuration, $new_ranking);
                                 }
                             }
                             // if our specified direction is down
@@ -142,7 +142,7 @@ class DataForSeoCommand extends Command
                                 // if our website is not ranked up
                                 if (!$ranked_higher) {
                                     // create annotation
-                                    $this->createKeywordTrackingAnnotation($ranking_direction, $rank_difference, $keyword, $configuration);
+                                    $this->createKeywordTrackingAnnotation($ranking_direction, $rank_difference, $keyword, $configuration, $new_ranking);
                                 }
                             }
                         }
@@ -153,22 +153,20 @@ class DataForSeoCommand extends Command
     }
 
     //create annotation in the database
-    public function createKeywordTrackingAnnotation($ranking_direction, $ranking_difference, $keyword, $configuration)
+    public function createKeywordTrackingAnnotation($ranking_direction, $ranking_difference, $keyword, $configuration, $current_position)
     {
-        info('creating annotation');
-        // Your website domoain.com is up/down by 100 places on google search results for keyword "Keyword"
-        $description =
-        'Your website ' . $configuration->url . ' is ' . $ranking_direction .
-        'by ' . $ranking_difference . ' places on ' . $configuration->search_engine .
-            ' search results for keyword "' . $keyword->keyword . '"';
+
+        $whose_website = ($configuration->is_url_competitors) ? "Competitor's website " : "Your website ";
+
+        $description = $whose_website. "moves ". $ranking_difference. " positions " . $ranking_direction . " to " . $current_position . " place under the keyword ". $keyword->keyword;
 
         KeywordTrackingAnnotation::create([
             'user_id' => $keyword->user_data_source->user_id,
-            'category' => 'Website Ranking',
+            'category' => 'Keyword Tracking',
             'eventy_type' => 'Ranking',
-            'event_name' => 'Website Ranking Changed',
+            'event_name' => $configuration->url,
             'description' => $description,
-            'title' => 'Your website ranking is changed for keyword "' . $keyword->keyword . '"',
+            'title' => 'Website ranking is changed for keyword "' . $keyword->keyword . '"',
             'show_at' => today()
         ]);
     }
