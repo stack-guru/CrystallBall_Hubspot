@@ -338,7 +338,7 @@ class IndexAnnotations extends React.Component {
                                                                     <td>{anno.event_name}</td>
                                                                     <td style={{ overflowWrap: "anywhere" }}>
                                                                         {anno.description}
-                                                                        {anno.url ? <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a> : null}
+                                                                        {(anno.url && anno.url != "https://") ? <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a> : null}
                                                                     </td>
                                                                     <td>
                                                                         {anno.google_analytics_property_name ? anno.google_analytics_property_name : 'All Properties'}
