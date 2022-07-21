@@ -69,7 +69,7 @@ class Annotation extends Model
         // Add google algorithm update annotations if it is enabled in user data source
         if ($user->is_ds_google_algorithm_updates_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select null, 1, update_date AS show_at, update_date AS created_at, null, category, event_name, NULL as url, description, 'System' AS user_name from `google_algorithm_updates`";
+            $annotationsQuery .= "select null, 1, update_date AS show_at, update_date AS created_at, null, category, event_name, url, description, 'System' AS user_name from `google_algorithm_updates`";
             $gAUConf = UserDataSource::where('user_id', $user->id)->where('ds_code', 'google_algorithm_update_dates')->first();
             if ($gAUConf) {
                 if ($gAUConf->status != '' && $gAUConf->status != null) {
