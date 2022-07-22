@@ -69,7 +69,7 @@ class DataForSeoCommand extends Command
                             info('results are processed for a  particular keyword');
                         }
                     }
-                    
+
                 }
                 // refresh the Task IDs of all data sources
                 UserDataSourceUpdatedOrCreated::dispatch($data_source);
@@ -84,10 +84,45 @@ class DataForSeoCommand extends Command
         // info("processing results  " . __LINE__ . " results: " . print_r($items, 1));
         // items being an array of results from Data For SEO API
         foreach ($items as $result) {
-            
+
             // if result domain string contains our url domain
             // it means its ranking
-            // for example if our website: "testwebsite.com" is included in result "www.testwebsite.com"
+
+            // extract domain name with .com from user given url
+            // for example https://daraz.pk to daraz.pk
+
+            $url1 = parse_url($url);
+
+            if(isset($url1['host'])){
+                // check if it has www.
+                if(strpos($url1['host'], 'www.') !== false){
+                    // remove www. from url
+                    $url = str_replace('www.', '', $url1['host']);
+                }
+                else{
+                    $url = $url1['host'];
+                }
+            }
+            elseif(isset($url1['path'])){
+                // check if it has www.
+                if(strpos($url1['path'], 'www.') !== false){
+                    // remove www. from url and other query string
+                    $url = str_replace('www.', '', $url1['path']);
+                    $url_arr = explode('/', $url);
+                    if(isset($url_arr[0])){
+                        $url = $url_arr[0];
+                    }
+                }
+                else{
+                    $url = $url1['path'];
+                    $url_arr = explode('/', $url);
+                    if(isset($url_arr[0])){
+                        $url = $url_arr[0];
+                    }
+                }
+            }
+
+
             if (isset($result['domain']) && strpos($result['domain'], $url) !== false) {
                 info('your domain exists in the list');
                 // check if we have received absolute rank value in the result
@@ -158,7 +193,7 @@ class DataForSeoCommand extends Command
                         }
                     }
                 }
-            } 
+            }
         }
     }
 
