@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 
 import HttpClient from '../../../utils/HttpClient';
 import ErrorAlert from '../../../utils/ErrorAlert'
-import AdwordsClientCustomerIdSaverModal from '../../../helpers/AdwordsClientCustomerIdSaverModalComponent';
+// import AdwordsClientCustomerIdSaverModal from '../../../helpers/AdwordsClientCustomerIdSaverModalComponent';
 import VideoModalBox from '../../../utils/VideoModalBox';
 import GooglePermissionPopup from '../../../utils/GooglePermissionPopup';
 
@@ -96,10 +96,10 @@ export default class GoogleAccountIndex extends React.Component {
 
             <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
 
-                <AdwordsClientCustomerIdSaverModal
-                    show={this.state.showACCISModal}
-                    dismissCallback={this.closeACCISModal}
-                />
+                {/*<AdwordsClientCustomerIdSaverModal*/}
+                {/*    show={this.state.showACCISModal}*/}
+                {/*    dismissCallback={this.closeACCISModal}*/}
+                {/*/>*/}
                 <div className="container p-5">
                     <div className="row ml-0 mr-0">
                         <div className="col-12">
