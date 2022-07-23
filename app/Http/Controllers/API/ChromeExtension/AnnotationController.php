@@ -137,6 +137,11 @@ class AnnotationController extends Controller
             }
         }
         ////////////////////////////////////////////////////////////////////
+        if ($user->is_ds_g_ads_history_change_enabled  && $request->query('show_g_ads_history_change_enabled') == 'true') {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations`";
+        }
+        ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
 
         // Add limit for annotations if the price plan is limited in annotations count
@@ -351,6 +356,11 @@ class AnnotationController extends Controller
             if (UserDataSource::ofCurrentUser()->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count()) {
                 $annotationsQuery .= " where (update_date BETWEEN " . Carbon::now()->subYear()->format('Y-m-d') . " AND " . Carbon::now()->format('Y-m-d') . " )";
             }
+        }
+        ////////////////////////////////////////////////////////////////////
+        if ($user->is_ds_g_ads_history_change_enabled  && $request->query('show_g_ads_history_change_enabled') == 'true') {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations`";
         }
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= ") AS TempTable ";

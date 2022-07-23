@@ -158,6 +158,11 @@ class AnnotationController extends Controller
             }
         }
         ////////////////////////////////////////////////////////////////////
+        if ($user->is_ds_g_ads_history_change_enabled  && $request->query('show_g_ads_history_change_enabled') == 'true') {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations`";
+        }
+        ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= ") AS TempTable ORDER BY show_at DESC";
 
         // Add limit for annotations if the price plan is limited in annotations count
