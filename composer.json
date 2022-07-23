@@ -20,6 +20,7 @@
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "rap2hpoutre/laravel-log-viewer": "^2.2",
         "sentry/sentry-laravel": "^2.10",
         "ventepos/bluesnap-php": "^0.3.5"
     },

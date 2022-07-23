@@ -69,7 +69,7 @@ export default class AddKeyword extends React.Component {
             else {
                 alert("credit limit reached");
             }
-        } 
+        }
     }
 
     canAddMoreConfigurations(
@@ -269,14 +269,7 @@ export default class AddKeyword extends React.Component {
                             name="url"
                             id="url"
                             onChange={(e) => {
-                                let val = e.target.value;
-                                val = val.split(" ").join("");
-                                val = val.replace("/", "");
-                                val = val.replace("www.", "");
-                                val = val.replace("https://", "");
-                                val = val.replace("http://", "");
-                                e.target.value = val;
-                                this.setState({ url: val });
+                                this.setState({ url: e.target.value });
                             }}
                         />
                     </div>

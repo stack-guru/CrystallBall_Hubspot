@@ -11,7 +11,6 @@ export default class AnnotationCategorySelect extends React.Component {
         this.state = {
             isBusy: false,
             errors: '',
-            categories: [],
         }
 
         this.onChangeHandler = this.onChangeHandler.bind(this)
@@ -19,17 +18,7 @@ export default class AnnotationCategorySelect extends React.Component {
 
 
     componentDidMount() {
-        this.setState({ isBusy: true })
-        HttpClient.get(`/annotation-categories`)
-            .then(response => {
-                this.setState({ isBusy: false, teamNames: response.data.categories.map(c => { return { label: c.category, value: c.category } }) });
-            }, (err) => {
-                
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-                
-                this.setState({ isBusy: false, errors: err });
-            });
+
     }
 
     onChangeHandler(sOption) {
@@ -46,7 +35,7 @@ export default class AnnotationCategorySelect extends React.Component {
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}
                 className="gray_clr"
-                options={this.state.teamNames}
+                options={this.props.categories}
                 placeholder={this.props.placeholder}
             >
             </CreatableSelect>

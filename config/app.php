@@ -71,7 +71,7 @@ return [
     */
 
     'timezone' => 'America/Denver',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -168,6 +168,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
         /*
          * Application Service Providers...

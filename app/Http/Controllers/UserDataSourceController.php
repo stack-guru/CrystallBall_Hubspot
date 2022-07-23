@@ -117,7 +117,7 @@ class UserDataSourceController extends Controller
     public function saveDFSkeywordsforTracking(StoreKeywordsRequest $request)
     {
         // dd($request->all());
-        // get user data source 
+        // get user data source
         $user_data_source = UserDataSource::where('user_id', Auth::id())->where('ds_code', 'keyword_tracking')->where('ds_name', 'KeywordTracking')->first();
         // create user data source if not exist
         if (!$user_data_source) {
@@ -173,7 +173,7 @@ class UserDataSourceController extends Controller
         }
 
         // get and store dfs task id
-        // UserDataSourceUpdatedOrCreated::dispatch($user_data_source);
+        UserDataSourceUpdatedOrCreated::dispatch($user_data_source);
     }
 
     private function saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors)
@@ -183,7 +183,7 @@ class UserDataSourceController extends Controller
         } else if ($is_url_competitors == 'false') {
             $is_url_competitors = false;
         }
-        // check if already exists 
+        // check if already exists
         $configuration = KeywordConfiguration::where([
             'url' => $url,
             'search_engine' => $search_engine,

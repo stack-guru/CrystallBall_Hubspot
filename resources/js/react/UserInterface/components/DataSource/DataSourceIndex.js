@@ -59,7 +59,7 @@ export default class DataSourceIndex extends React.Component {
 
         this.keywordAddHandler = this.keywordAddHandler.bind(this);
         this.loadKeywordTrackingKeywords = this.loadKeywordTrackingKeywords.bind(this);
-        
+
         this.editKeywordToggler = this.editKeywordToggler.bind(this);
 
 
@@ -154,7 +154,7 @@ export default class DataSourceIndex extends React.Component {
     editKeywordToggler(keyword_id, keyword_configuration_id) {
         // close popup
         this.manage_keyword_popup_handler()
-        
+
         // show edit form
         this.setState({
             editKeyword_keyword_id: keyword_id,
@@ -169,7 +169,7 @@ export default class DataSourceIndex extends React.Component {
 
         console.log(this.state);
 
-        
+
     }
 
     render() {
@@ -924,49 +924,46 @@ export default class DataSourceIndex extends React.Component {
                             */}
 
 
-                            {/* <div className="col-md-6 mt-2">
-                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
-                                    <div>
-                                        <div className="d-flex mt-2 justify-content-between "
-                                            id="web-monitoring-data-source-section">
-                                            <div className="px-2">
-                                                <h2>
-                                                    <small>
-                                                        Keyword Tracking <UserAnnotationColorPicker name="keyword_tracking"
-                                                            value={this.state.userAnnotationColors.keyword_tracking}
-                                                            updateCallback={this.updateUserAnnotationColors} />
-                                                        <img className="hint-button-2" src="/images/info-logo.png" />
-                                                    </small>
-                                                </h2>
-                                            </div>
+                            {/*<div className="col-md-6 mt-2">*/}
+                            {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
+                            {/*        <div>*/}
+                            {/*            <div className="d-flex mt-2 justify-content-between "*/}
+                            {/*                id="web-monitoring-data-source-section">*/}
+                            {/*                <div className="px-2">*/}
+                            {/*                    <h2>*/}
+                            {/*                        <small>*/}
+                            {/*                            Keyword Tracking <UserAnnotationColorPicker name="keyword_tracking"*/}
+                            {/*                                value={this.state.userAnnotationColors.keyword_tracking}*/}
+                            {/*                                updateCallback={this.updateUserAnnotationColors} />*/}
+                            {/*                            <img className="hint-button-2" src="/images/info-logo.png" />*/}
+                            {/*                        </small>*/}
+                            {/*                    </h2>*/}
+                            {/*                </div>*/}
 
-                                            <div className="px-2">
-                                                Deactive
-                                                <label className="trigger switch">
-                                                    <input type="checkbox"
-                                                        onClick={e => {
-                                                            e.preventDefault()
-                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                        }}
-                                                        name="is_ds_budget_tracking_enabled"
-                                                    />
-                                                    <span className={`slider round`} />
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="px-2">
-                                            <div className="list-wrapper">
-                                            </div>
-                                            <div className='text-center mt-2'>
-                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
-
-
-
+                            {/*                <div className="px-2">*/}
+                            {/*                    Deactive*/}
+                            {/*                    <label className="trigger switch">*/}
+                            {/*                        <input type="checkbox"*/}
+                            {/*                            onClick={e => {*/}
+                            {/*                                e.preventDefault()*/}
+                            {/*                                swal.fire('This feature is coming soon. Stay tuned!', '', 'info');*/}
+                            {/*                            }}*/}
+                            {/*                            name="is_ds_budget_tracking_enabled"*/}
+                            {/*                        />*/}
+                            {/*                        <span className={`slider round`} />*/}
+                            {/*                    </label>*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*            <div className="px-2">*/}
+                            {/*                <div className="list-wrapper">*/}
+                            {/*                </div>*/}
+                            {/*                <div className='text-center mt-2'>*/}
+                            {/*                    <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
 
                              <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
@@ -1021,7 +1018,7 @@ export default class DataSourceIndex extends React.Component {
                                             Manage Keywords
                                         </p>
                                         {
-                                            this.state.manage_keyword_show == true ? 
+                                            this.state.manage_keyword_show == true ?
                                                 <ManageKeywords
                                                     keywords={this.state.dfsKeywords}
                                                     loadKeywordsCallback={this.loadKeywordTrackingKeywords}
@@ -1030,10 +1027,10 @@ export default class DataSourceIndex extends React.Component {
                                                 />
                                             : null
                                         }
- 
+
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
 
                         </div>
                     </div>
@@ -1125,7 +1122,7 @@ export default class DataSourceIndex extends React.Component {
                         }
 
                         {
-                            this.state.sectionName == 'edit_keyword' && this.state.editKeyword ? 
+                            this.state.sectionName == 'edit_keyword' && this.state.editKeyword ?
                                 <EditKeyword
                                     keyword_id={this.state.editKeyword_keyword_id}
                                     total_credits={this.props.user.price_plan.keyword_tracking_count}

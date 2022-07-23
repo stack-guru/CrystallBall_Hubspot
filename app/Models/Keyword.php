@@ -16,6 +16,6 @@ class Keyword extends Model
     }
 
     public function configurations(){
-        return $this->belongsToMany(KeywordConfiguration::class, 'keyword_metas', 'keyword_id', 'keyword_configuration_id')->select('keyword_configurations.id', 'url', 'language', 'location_code', 'search_engine');
+        return $this->belongsToMany(KeywordConfiguration::class, 'keyword_metas', 'keyword_id', 'keyword_configuration_id')->select('keyword_configurations.id', 'url', 'language', 'location_code', 'search_engine', 'ranking_direction', 'ranking_places_changed', 'is_url_competitors');
     }
 }

@@ -62,8 +62,11 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $this->authorize('create', User::class);
-
         $parentUser = Auth::user();
+
+        if ($parentUser->user_id) {
+            $parentUser = User::find($parentUser->user_id);
+        }
 
         if ($parentUser->pricePlan->user_per_ga_account_count == -1) {
             abort(402);

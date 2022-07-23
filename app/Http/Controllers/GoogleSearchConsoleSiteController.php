@@ -31,21 +31,23 @@ class GoogleSearchConsoleSiteController extends Controller
 
         $gAS = new GoogleSearchConsoleService;
         $googleSearchConsoleSites = $gAS->getSites($googleAccount);
-        if ($googleSearchConsoleSites === false) {
-            abort(response()->json(['message' => "Unable to fetch google search console sites."], 422));
-        }
+//        if ($googleSearchConsoleSites === false) {
+//            abort(response()->json(['message' => "Unable to fetch google search console sites."], 422));
+//        }
 
         $savedGoogleSearchConsoleSiteUrls = GoogleSearchConsoleSite::select('site_url')->ofCurrentUser()->orderBy('site_url')->get()->pluck('site_url')->toArray();
 
-        foreach ($googleSearchConsoleSites as $index => $googleSearchConsoleSite) {
-            if (!in_array($googleSearchConsoleSite['siteUrl'], $savedGoogleSearchConsoleSiteUrls)) {
-                $nGSCS = new GoogleSearchConsoleSite;
-                $nGSCS->site_url = $googleSearchConsoleSite['siteUrl'];
-                $nGSCS->permission_level = $googleSearchConsoleSite['permissionLevel'];
-                $nGSCS->google_account_id = $googleAccount->id;
-                $nGSCS->user_id = $user->id;
-                $nGSCS->save();
-                FetchGSCSStatisticsJob::dispatch($nGSCS, '2021-01-01', Carbon::yesterday()->format('Y-m-d'));
+        if(!empty($googleSearchConsoleSites)){
+            foreach ($googleSearchConsoleSites as $index => $googleSearchConsoleSite) {
+                if (!in_array($googleSearchConsoleSite['siteUrl'], $savedGoogleSearchConsoleSiteUrls)) {
+                    $nGSCS = new GoogleSearchConsoleSite;
+                    $nGSCS->site_url = $googleSearchConsoleSite['siteUrl'];
+                    $nGSCS->permission_level = $googleSearchConsoleSite['permissionLevel'];
+                    $nGSCS->google_account_id = $googleAccount->id;
+                    $nGSCS->user_id = $user->id;
+                    $nGSCS->save();
+                    FetchGSCSStatisticsJob::dispatch($nGSCS, '2021-01-01', Carbon::yesterday()->format('Y-m-d'));
+                }
             }
         }
 

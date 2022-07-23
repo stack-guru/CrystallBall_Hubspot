@@ -22,6 +22,7 @@ export default class CreateAnnotation extends React.Component {
                 show_at: '',
                 google_analytics_property_id: [""]
             },
+            categories: [],
             validation: {},
             resp: '',
             error: '',
@@ -32,6 +33,7 @@ export default class CreateAnnotation extends React.Component {
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
         this.setDefaultState = this.setDefaultState.bind(this)
+        this.loadCategoriesList = this.loadCategoriesList.bind(this)
     }
 
     componentDidMount() {
@@ -39,6 +41,23 @@ export default class CreateAnnotation extends React.Component {
         setTimeout(() => {
             this.setState(loadStateFromLocalStorage("CreateAnnotation"));
         }, 1000);
+
+
+        this.loadCategoriesList();
+    }
+
+    loadCategoriesList(){
+        this.setState({ isBusy: true })
+        HttpClient.get(`/annotation-categories`)
+            .then(response => {
+                this.setState({ isBusy: false, categories: response.data.categories.map(c => { return { label: c.category, value: c.category } }) });
+            }, (err) => {
+
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+
+            this.setState({ isBusy: false, errors: err });
+        });
     }
 
     setDefaultState() {
@@ -89,6 +108,7 @@ export default class CreateAnnotation extends React.Component {
                     removeStateFromLocalStorage("CreateAnnotation");
                     toast.success("Annotation added.");
                     this.setDefaultState();
+                    this.loadCategoriesList();
                 }, (err) => {
                     if (err.response.status == 402) {
                         swal.fire({
@@ -97,6 +117,7 @@ export default class CreateAnnotation extends React.Component {
                             html: err.response.data.message,
                         });
                     }
+                    loadCategoriesList();
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
 
@@ -184,7 +205,7 @@ export default class CreateAnnotation extends React.Component {
                                 <div className="col-lg-3 col-sm-4">
                                     <div className="form-group ">
                                         <label htmlFor="category" className="form-control-placeholder">Category *</label>
-                                        <AnnotationCategorySelect className="gray_clr" name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
+                                        <AnnotationCategorySelect className="gray_clr" name="category" id="category" value={this.state.annotation.category} categories={this.state.categories} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
                                     </div>
                                 </div>
 
