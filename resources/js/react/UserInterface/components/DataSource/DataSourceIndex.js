@@ -425,23 +425,23 @@ export default class DataSourceIndex extends React.Component {
                                                 </label>
                                             </div>
                                         </div>
-                                        <div className="px-2">
-                                            <div className="list-wrapper">
-                                                {this.state.userDataSources.google_alert_keywords ?
-                                                    <div>
-                                                        <p style={{ fontSize: "13px" }}>Keywords:</p>
-                                                        <dl className="d-flex flex-row flex-wrap data-source-select-options">
-                                                            {this.state.userDataSources.google_alert_keywords
-                                                                ? this.state.userDataSources.google_alert_keywords.map(keyword => keyword.value).join(", ")
-                                                                : <dd>no keyword added&nbsp;</dd>
-                                                            }
+                                        {/*<div className="px-2">*/}
+                                        {/*    <div className="list-wrapper">*/}
+                                        {/*        {this.state.userDataSources.google_alert_keywords ?*/}
+                                        {/*            <div>*/}
+                                        {/*                <p style={{ fontSize: "13px" }}>Keywords:</p>*/}
+                                        {/*                <dl className="d-flex flex-row flex-wrap data-source-select-options">*/}
+                                        {/*                    {this.state.userDataSources.google_alert_keywords*/}
+                                        {/*                        ? this.state.userDataSources.google_alert_keywords.map(keyword => keyword.value).join(", ")*/}
+                                        {/*                        : <dd>no keyword added&nbsp;</dd>*/}
+                                        {/*                    }*/}
 
-                                                        </dl>
-                                                    </div>
-                                                    : null
-                                                }
-                                            </div>
-                                        </div>
+                                        {/*                </dl>*/}
+                                        {/*            </div>*/}
+                                        {/*            : null*/}
+                                        {/*        }*/}
+                                        {/*    </div>*/}
+                                        {/*</div>*/}
                                     </div>
 
                                     <p
