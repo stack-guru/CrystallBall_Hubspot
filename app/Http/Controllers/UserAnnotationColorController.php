@@ -50,6 +50,8 @@ class UserAnnotationColorController extends Controller
             $userAnnotationColor->web_monitors = '#227c9d';
             $userAnnotationColor->wordpress_updates = '#227c9d';
             $userAnnotationColor->google_alerts = '#227c9d';
+            $userAnnotationColor->keyword_tracking = '#227c9d';
+            $userAnnotationColor->facebook_tracking = '#227c9d';
 
             $userAnnotationColor->save();
         }
