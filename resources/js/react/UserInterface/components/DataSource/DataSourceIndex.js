@@ -19,6 +19,7 @@ import ErrorAlert from '../../utils/ErrorAlert';
 import DataSourceInterfaceTour from '../../helpers/DataSourceInterfaceTour';
 import { getCompanyName } from '../../helpers/CommonFunctions';
 import EditKeyword from '../../utils/EditKeyword';
+import GoogleAdChanges from "../../utils/GoogleAdChanges";
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -424,23 +425,23 @@ export default class DataSourceIndex extends React.Component {
                                                 </label>
                                             </div>
                                         </div>
-                                        <div className="px-2">
-                                            <div className="list-wrapper">
-                                                {this.state.userDataSources.google_alert_keywords ?
-                                                    <div>
-                                                        <p style={{ fontSize: "13px" }}>Keywords:</p>
-                                                        <dl className="d-flex flex-row flex-wrap data-source-select-options">
-                                                            {this.state.userDataSources.google_alert_keywords
-                                                                ? this.state.userDataSources.google_alert_keywords.map(keyword => keyword.value).join(", ")
-                                                                : <dd>no keyword added&nbsp;</dd>
-                                                            }
+                                        {/*<div className="px-2">*/}
+                                        {/*    <div className="list-wrapper">*/}
+                                        {/*        {this.state.userDataSources.google_alert_keywords ?*/}
+                                        {/*            <div>*/}
+                                        {/*                <p style={{ fontSize: "13px" }}>Keywords:</p>*/}
+                                        {/*                <dl className="d-flex flex-row flex-wrap data-source-select-options">*/}
+                                        {/*                    {this.state.userDataSources.google_alert_keywords*/}
+                                        {/*                        ? this.state.userDataSources.google_alert_keywords.map(keyword => keyword.value).join(", ")*/}
+                                        {/*                        : <dd>no keyword added&nbsp;</dd>*/}
+                                        {/*                    }*/}
 
-                                                        </dl>
-                                                    </div>
-                                                    : null
-                                                }
-                                            </div>
-                                        </div>
+                                        {/*                </dl>*/}
+                                        {/*            </div>*/}
+                                        {/*            : null*/}
+                                        {/*        }*/}
+                                        {/*    </div>*/}
+                                        {/*</div>*/}
                                     </div>
 
                                     <p
@@ -774,51 +775,95 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Google ads history changes section
                             */}
+                            {/*<div className="col-md-6 mt-2">*/}
+                            {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
+                            {/*        <div>*/}
+                            {/*            <div className="d-flex mt-2 justify-content-between "*/}
+                            {/*                id="web-monitoring-data-source-section">*/}
+                            {/*                <div className="px-2">*/}
+                            {/*                    <h2>*/}
+                            {/*                        <small>*/}
+                            {/*                            Google Ads Changes <UserAnnotationColorPicker name="g_ads_history_change"*/}
+                            {/*                                value={this.state.userAnnotationColors.g_ads_history_change}*/}
+                            {/*                                updateCallback={this.updateUserAnnotationColors} />*/}
+                            {/*                            <img id="" className="hint-button-2" src="/images/info-logo.png" />*/}
+                            {/*                        </small>*/}
+                            {/*                    </h2>*/}
+                            {/*                </div>*/}
+                            {/*                <div className="px-2">*/}
+                            {/*                    /!* {this.state.userServices.is_ds_g_ads_history_change_enabled ? "Active" : "Deactive"} *!/*/}
+                            {/*                    Deactive*/}
+                            {/*                    <label className="trigger switch">*/}
+                            {/*                        <input type="checkbox"*/}
+                            {/*                            // checked={this.state.userServices.is_ds_g_ads_history_change_enabled}*/}
+                            {/*                            // onChange={this.serviceStatusHandler}*/}
+                            {/*                            onClick={e => {*/}
+                            {/*                                e.preventDefault()*/}
+                            {/*                                swal.fire('This feature is coming soon. Stay tuned!', '', 'info');*/}
+                            {/*                                // if (!this.state.userServices.is_ds_g_ads_history_change_enabled) {*/}
+                            {/*                                // }*/}
+                            {/*                            }}*/}
+                            {/*                            name="is_ds_g_ads_history_change_enabled"*/}
+                            {/*                        />*/}
+                            {/*                        /!* <span className={`slider round ${this.state.userServices.is_ds_g_ads_history_change_enabled ? 'animate-pulse' : ''}`} /> *!/*/}
+                            {/*                        <span className={`slider round`} />*/}
+                            {/*                    </label>*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*            <div className="px-2">*/}
+                            {/*                <div className="list-wrapper">*/}
+                            {/*                </div>*/}
+                            {/*                <div className='text-center mt-2'>*/}
+                            {/*                    <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+
                             <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
-                                            id="web-monitoring-data-source-section">
+                                             id="google-ads-change-data-source-section">
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
                                                         Google Ads Changes <UserAnnotationColorPicker name="g_ads_history_change"
-                                                            value={this.state.userAnnotationColors.g_ads_history_change}
-                                                            updateCallback={this.updateUserAnnotationColors} />
-                                                        <img id="" className="hint-button-2" src="/images/info-logo.png" />
+                                                                                                    value={this.state.userAnnotationColors.g_ads_history_change}
+                                                                                                    updateCallback={this.updateUserAnnotationColors} />
+                                                        <img className="hint-button-2" src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
                                             </div>
+
                                             <div className="px-2">
-                                                {/* {this.state.userServices.is_ds_g_ads_history_change_enabled ? "Active" : "Deactive"} */}
-                                                Deactive
+                                                {this.state.userServices.is_ds_g_ads_history_change_enabled ? "Active" : "Deactive"}
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
-                                                        // checked={this.state.userServices.is_ds_g_ads_history_change_enabled}
-                                                        // onChange={this.serviceStatusHandler}
-                                                        onClick={e => {
-                                                            e.preventDefault()
-                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                            // if (!this.state.userServices.is_ds_g_ads_history_change_enabled) {
-                                                            // }
-                                                        }}
-                                                        name="is_ds_g_ads_history_change_enabled"
+                                                           checked={this.state.userServices.is_ds_g_ads_history_change_enabled}
+                                                           onChange={this.serviceStatusHandler}
+                                                           name="is_ds_g_ads_history_change_enabled"
                                                     />
-                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_g_ads_history_change_enabled ? 'animate-pulse' : ''}`} /> */}
-                                                    <span className={`slider round`} />
+                                                    <span className={`slider round ${this.state.userServices.is_ds_g_ads_history_change_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
-                                        <div className="px-2">
-                                            <div className="list-wrapper">
-                                            </div>
-                                            <div className='text-center mt-2'>
-                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
-                                            </div>
-                                        </div>
+                                    </div>
+                                    <div>
+                                        <p
+                                            className="ds-update-text m-0 px-2 text-right"
+                                            onClick={() => {
+                                                this.sectionToggler('g_ads_history_change');
+                                            }}
+                                        >
+                                            {this.state.sectionName == "g_ads_history_change" ? "Hide" : "Configure"}
+                                        </p>
+
                                     </div>
                                 </div>
                             </div>
+
                             {/*
                                 Anomalies Detection section
                             */}
@@ -922,7 +967,6 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Keyword Tracking section
                             */}
-
 
                             {/*<div className="col-md-6 mt-2">*/}
                             {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
@@ -1129,6 +1173,12 @@ export default class DataSourceIndex extends React.Component {
                                     used_credits={this.state.totalDfsKeywordCreditsUsed}
                                     keyword_configuration_id={this.state.editKeyword_keyword_configuration_id}
                                 />
+                                : null
+                        }
+
+                        {
+                            this.state.sectionName == 'g_ads_history_change' ?
+                                <GoogleAdChanges />
                                 : null
                         }
 

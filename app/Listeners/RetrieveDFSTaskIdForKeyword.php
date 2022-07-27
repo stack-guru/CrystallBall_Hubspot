@@ -53,6 +53,7 @@ class RetrieveDFSTaskIdForKeyword implements ShouldQueue
                     if ($pivot) {
                         $pivot->dfs_task_id = $task_id;
                         $pivot->save();
+                        info('Task id retrieved... saved.');
                     }
                 }
             }
