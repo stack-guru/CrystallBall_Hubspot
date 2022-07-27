@@ -62,6 +62,9 @@ class Kernel extends ConsoleKernel
 
         // Every month
         $schedule->command('gaa:send-card-expiry-mail')->monthly();
+
+        // run DFS SERP command daily
+        $schedule->command('gaa:fetch-wesbite-ranking-dfs')->daily();
     }
 
     /**
