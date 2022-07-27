@@ -24,5 +24,6 @@ class UserAnnotationColor extends Model
         'anomolies_detection',
         'budget_tracking',
         'keyword_tracking',
+        'facebook_tracking',
     ];
 }
