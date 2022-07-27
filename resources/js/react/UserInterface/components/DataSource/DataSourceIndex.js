@@ -20,6 +20,7 @@ import DataSourceInterfaceTour from '../../helpers/DataSourceInterfaceTour';
 import { getCompanyName } from '../../helpers/CommonFunctions';
 import EditKeyword from '../../utils/EditKeyword';
 import GoogleAdChanges from "../../utils/GoogleAdChanges";
+import FacebookTracking from "../../utils/FacebookTracking";
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -952,7 +953,7 @@ export default class DataSourceIndex extends React.Component {
                                                 this.sectionToggler('facebook_tracking');
                                             }}
                                         >
-                                            {this.state.sectionName == "keyword_tracking" ? "Hide" : "Configure"}
+                                            {this.state.sectionName == "facebook_tracking" ? "Hide" : "Configure"}
                                         </p>
 
                                     </div>
@@ -1277,6 +1278,12 @@ export default class DataSourceIndex extends React.Component {
                                 : null
                         }
 
+                        {
+                            this.state.sectionName == 'facebook_tracking' ?
+                                <FacebookTracking />
+                                : null
+                        }
+
 
                     </div>
                 </div>
@@ -1430,8 +1437,10 @@ export default class DataSourceIndex extends React.Component {
             this.setState({ sectionName: null })
         } else if (this.state.sectionName == sectionName) {
             this.setState({ sectionName: null })
+            window.scrollTo({top: 0, behavior: 'smooth'});
         } else {
             this.setState({ sectionName: sectionName });
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
     }
 
