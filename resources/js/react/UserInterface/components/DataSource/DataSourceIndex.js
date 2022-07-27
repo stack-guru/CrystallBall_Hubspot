@@ -938,7 +938,7 @@ export default class DataSourceIndex extends React.Component {
                                                     <input type="checkbox"
                                                            checked={this.state.userServices.is_ds_facebook_tracking_enabled}
                                                            onChange={this.serviceStatusHandler}
-                                                           name="is_ds_keyword_tracking_enabled"
+                                                           name="is_ds_facebook_tracking_enabled"
                                                     />
                                                     <span className={`slider round ${this.state.userServices.is_ds_facebook_tracking_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
@@ -1321,6 +1321,11 @@ export default class DataSourceIndex extends React.Component {
             if (e.target.name == 'is_ds_keyword_tracking_enabled' && e.target.checked) {
                 this.sectionToggler('keyword_tracking')
             } else if (e.target.name == 'is_ds_keyword_tracking_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+            }
+            if (e.target.name == 'is_ds_facebook_tracking_enabled' && e.target.checked) {
+                this.sectionToggler('facebook_tracking')
+            } else if (e.target.name == 'is_ds_facebook_tracking_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
             }
             HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {

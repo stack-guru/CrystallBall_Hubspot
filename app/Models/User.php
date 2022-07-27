@@ -54,6 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_ds_anomolies_detection_enabled',
         'is_ds_budget_tracking_enabled',
         'is_ds_keyword_tracking_enabled',
+        'is_ds_facebook_tracking_enabled',
 
         'user_level',
         'department',
