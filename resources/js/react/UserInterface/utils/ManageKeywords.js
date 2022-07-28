@@ -66,7 +66,7 @@ export default class ManageKeywords extends React.Component {
     }
 
     render() {
-        const keywords = this.props.keywords.map(function(keyword_instance, index){
+        let keywords = this.props.keywords.map(function(keyword_instance, index){
             return keyword_instance.configurations.map(function(configuration_instance){
                 return <tr className='border-bottom border-top py-2'>
                     <td className='text-left'>
@@ -85,23 +85,24 @@ export default class ManageKeywords extends React.Component {
                         <a href='#' onClick={this.editKeyword} data-configuration_id={configuration_instance.id} data-keyword_id={keyword_instance.id} className='btn btn-sm btn-primary text-white mr-1'>Edit</a>
                         <a href='#' onClick={this.deleteKeyword} data-configuration_id={configuration_instance.id} data-keyword_id={keyword_instance.id} className='btn btn-sm btn-danger text-white'>Delete</a>
                     </td>
-                </tr>; 
+                </tr>;
             }, this)
-            
+
         }, this);
+
         return (
             <div>
                 <button id='manage_modal_btn' style={{ display: "none"}} type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage_modal"></button>
                 <div class="modal fade" id="manage_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog modal-lg modal-dialog-centered"  role="document">
-                        <div class="modal-content">
+                        <div class="modal-content" style={{ height: "90vh" }}>
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Manage Keywords</h5>
                                 <button type="button" id='close_popup' class="close" data-dismiss="modal" aria-label="Close" onClick={this.closePopup}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body" style={{ overflow: 'scroll' }}>
+                            <div class="modal-body" style={{ overflow: 'auto' }}>
                                 <h6 className="">
                                     Edit or Delete Keywords
                                 </h6>
@@ -129,7 +130,7 @@ export default class ManageKeywords extends React.Component {
                     </div>
                 </div>
             </div>
-            
+
         );
     }
 }
