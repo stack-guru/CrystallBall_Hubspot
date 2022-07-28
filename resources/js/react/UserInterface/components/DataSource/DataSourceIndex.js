@@ -556,15 +556,15 @@ export default class DataSourceIndex extends React.Component {
 
                                             </div>
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_weather_alerts_enabled ? "Active" : "Deactive"}
+                                                {this.state.userServices.is_ds_holidays_enabled ? "Active" : "Deactive"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
-                                                        name="is_ds_weather_alerts_enabled"
+                                                        name="is_ds_holidays_enabled"
                                                         onChange={this.serviceStatusHandler}
-                                                        checked={this.state.userServices.is_ds_weather_alerts_enabled}
+                                                        checked={this.state.userServices.is_ds_holidays_enabled}
                                                     />
-                                                    <span className={`slider round ${this.state.userServices.is_ds_weather_alerts_enabled ? 'animate-pulse' : ''}`} />
+                                                    <span className={`slider round ${this.state.userServices.is_ds_holidays_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
@@ -630,15 +630,15 @@ export default class DataSourceIndex extends React.Component {
                                                 </UncontrolledPopover>
                                             </div>
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_holidays_enabled ? "Active" : "Deactive"}
+                                                {this.state.userServices.is_ds_weather_alerts_enabled ? "Active" : "Deactive"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
-                                                        name="is_ds_holidays_enabled"
+                                                        name="is_ds_weather_alerts_enabled"
                                                         onChange={this.serviceStatusHandler}
-                                                        checked={this.state.userServices.is_ds_holidays_enabled}
+                                                        checked={this.state.userServices.is_ds_weather_alerts_enabled}
                                                     />
-                                                    <span className={`slider round ${this.state.userServices.is_ds_holidays_enabled ? 'animate-pulse' : ''}`} />
+                                                    <span className={`slider round ${this.state.userServices.is_ds_weather_alerts_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
