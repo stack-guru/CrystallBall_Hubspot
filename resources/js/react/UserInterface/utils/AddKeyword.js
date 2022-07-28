@@ -240,6 +240,11 @@ export default class AddKeyword extends React.Component {
             <div className="switch-wrapper">
                 <div className="weather_alert_cities-form">
                     <h4 className="gaa-text-primary">Manage keywords</h4>
+                    <div className="my-1">
+                        <strong>
+                            Available Credits: {this.state.available_credits}
+                        </strong>
+                    </div>
                     <label>Tracking</label>
                     <div className="input-group mb-3">
                         <select
@@ -369,10 +374,9 @@ export default class AddKeyword extends React.Component {
                                 });
                             }}
                         >
+                            <option value="" selected disabled>--Select--</option>
                             <option value="up">Up</option>
-                            <option value="down" selected>
-                                Down
-                            </option>
+                            <option value="down">Down</option>
                         </select>
                         Places
                         <input
@@ -388,11 +392,6 @@ export default class AddKeyword extends React.Component {
                             }}
                         />
                         in search result, create annotation
-                    </div>
-                    <div className="my-1">
-                        <strong>
-                            Available Credits: {this.state.available_credits}
-                        </strong>
                     </div>
                     <div className="mt-4">
                         <button
