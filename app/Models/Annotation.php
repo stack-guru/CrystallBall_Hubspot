@@ -119,7 +119,7 @@ class Annotation extends Model
         // Add google ads annotations if it is enabled in user data source
         if ($user->is_ds_g_ads_history_change_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations`";
+            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations` WHERE `google_ads_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
         }
         return $annotationsQuery;
     }
