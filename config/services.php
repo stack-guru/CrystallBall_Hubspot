@@ -131,5 +131,11 @@ return [
             'key' => env('FIRST_PROMOTER_API_KEY')
         ],
         'cid' => env('FIRST_PROMOTER_CID')
+    ],
+
+    'facebook' => [
+        'client_id' => '1690129238039829',
+        'client_secret' => '7493652c85193d26caa4c98184ed3d8a',
+        'redirect' => 'socialite/facebook',
     ]
 ];
