@@ -65,6 +65,10 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('socialite/google', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogle'])->name('socialite.google');
 Route::get('socialite/google/redirect', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogleRedirect'])->name('socialite.google.redirect');
 
+Route::get('socialite/facebook', [\App\Http\Controllers\FacebookAutomationController::class, 'redirectFacebook'])->name('facebook.redirect');
+Route::get('socialite/facebook/redirect', [\App\Http\Controllers\FacebookAutomationController::class, 'callbackFacebook'])->name('facebook.callback');
+
+
 Route::view('documentation', 'documentation');
 Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
 
