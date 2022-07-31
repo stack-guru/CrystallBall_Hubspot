@@ -136,6 +136,6 @@ return [
     'facebook' => [
         'client_id' => '417643546831147',
         'client_secret' => 'af8387d1bf790e75d484e30e4080b4cb',
-        'redirect' => 'socialite/facebook',
+        'redirect' => 'socialite/facebook/redirect',
     ]
 ];
