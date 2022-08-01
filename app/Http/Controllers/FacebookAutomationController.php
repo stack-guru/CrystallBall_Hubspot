@@ -9,7 +9,10 @@ class FacebookAutomationController extends Controller
 {
     public function redirectFacebook()
     {
-        return Socialite::driver('facebook')->redirect();
+        return Socialite::driver('facebook')->scopes([
+            'pages_show_list',
+            'pages_read_engagement',
+        ])->redirect();
     }
 
     public function callbackFacebook()
