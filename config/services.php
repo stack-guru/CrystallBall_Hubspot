@@ -136,6 +136,6 @@ return [
     'facebook' => [
         'client_id' => '377176604499262',
         'client_secret' => '1b196073197d67564e4c743013258791',
-        'redirect' => 'socialite/facebook/redirect',
+        'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
     ]
 ];
