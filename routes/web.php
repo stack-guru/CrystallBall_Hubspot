@@ -1,25 +1,15 @@
 <?php
 
+use App\Http\Controllers\FacebookAutomationController;
 use App\Http\Controllers\KeywordTrackingController;
 use App\Models\KeywordTrackingAnnotation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
-
-// Route::get('test', function () {
-//     $description = 'Your website domoain.com is up/down by 100 places on google search results for keyword "Keyword"';
-//     KeywordTrackingAnnotation::create([
-//         'user_id' => Auth::id(),
-//         'category' => 'Website Ranking',
-//         'eventy_type' => 'Ranking',
-//         'event_name' => 'Website Ranking Changed',
-//         'description' => $description,
-//         'title' => 'Your website ranking is changed for keyword "' . 'Keyword' . '"',
-//         'show_at' => today()
-//     ]);
-// });
-
+Route::get('test_fb', function(){
+    $service = new App\Services\FacebookService();
+    $service->test();
+});
 
 
 /*
@@ -65,8 +55,8 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('socialite/google', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogle'])->name('socialite.google');
 Route::get('socialite/google/redirect', [App\Http\Controllers\Auth\RegisterController::class, 'registerLoginGoogleRedirect'])->name('socialite.google.redirect');
 
-Route::get('socialite/facebook', [\App\Http\Controllers\FacebookAutomationController::class, 'redirectFacebook'])->name('facebook.redirect');
-Route::get('socialite/facebook/redirect', [\App\Http\Controllers\FacebookAutomationController::class, 'callbackFacebook'])->name('facebook.callback');
+Route::get('socialite/facebook', [FacebookAutomationController::class, 'redirectFacebook'])->name('facebook.redirect');
+Route::get('socialite/facebook/redirect', [FacebookAutomationController::class, 'callbackFacebook'])->name('facebook.callback');
 
 
 Route::view('documentation', 'documentation');
@@ -109,6 +99,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
 
         Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store'])->name('settings.google-account.redirect.store');
+
+        Route::resource('facebook-accounts', App\Http\Controllers\FacebookAutomationController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
 
         Route::view('change-password', 'ui/app')->name('settings.change-password.index');
         Route::view('payment-detail/create', 'ui/app');
@@ -176,6 +168,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
 
             Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'destroy']);
 
+            Route::get('user-facebook-accounts-exists', [FacebookAutomationController::class, 'userFacebookAccountsExists']);
+
             Route::get('user-keyword-configurations-for-keyword-tracking', [KeywordTrackingController::class, 'userKeywordConfigurationsTotal']);
 
             Route::resource('web-monitor', App\Http\Controllers\WebMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
@@ -189,6 +183,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
             Route::post('get-keyword-details-for-keyword-tracking', [App\Http\Controllers\UserDataSourceController::class, 'getKeywordTrackingDetailsForKeyword']);
             // update the keyword details
             Route::post('update-keyword-tracking-keyword', [App\Http\Controllers\UserDataSourceController::class, 'updateKeywordTrackingDetailsForKeyword']);
+
+            Route::get('get-facebook-page-list', [App\Http\Controllers\UserFacebookPageController::class, 'index']);
 
             Route::get('google-algorithm-updates/date', [App\Http\Controllers\GoogleAlgorithmUpdateController::class, 'uiIndex']);
             Route::get('retail-marketing-dates', [App\Http\Controllers\RetailMarketingController::class, 'uiIndex']);
@@ -206,12 +202,16 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
             Route::post('payment-detail', [App\Http\Controllers\PaymentDetailController::class, 'store']);
 
             Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
+            
             Route::get('google-ads-account-ids', [App\Http\Controllers\GoogleAdsAccountController::class, 'uiIndex']);
             Route::put('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'update']);
             Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
             Route::post('change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword'])->withoutMiddleware('only.non.empty.password');
             Route::put('change-timezone', [App\Http\Controllers\HomeController::class, 'updateTimezone']);
             Route::put('change-phone', [App\Http\Controllers\HomeController::class, 'updatePhone']);
+
+            Route::get('facebook-accounts', [App\Http\Controllers\FacebookAutomationController::class, 'UIindex']);
+            Route::delete('facebook-account/{facebook_account}', [App\Http\Controllers\FacebookAutomationController::class, 'destroy']);
 
             Route::resource('google-analytics-account', App\Http\Controllers\GoogleAnalyticsAccountController::class)->only(['index', 'destroy']);
             Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);

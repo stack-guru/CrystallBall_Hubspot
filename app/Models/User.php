@@ -460,4 +460,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\NotificationLog')->where('notification_channel', 'Mail');
     }
+
+
+    /*
+     * Facebook automation relationships
+     * */
+    /**
+     * @return HasMany
+     */
+    public function facebook_accounts(): HasMany
+    {
+        return $this->hasMany(UserFacebookAccount::class, 'user_id');
+    }
+
 }
