@@ -63,6 +63,8 @@ export default class DataSourceIndex extends React.Component {
         this.loadKeywordTrackingKeywords = this.loadKeywordTrackingKeywords.bind(this);
 
         this.editKeywordToggler = this.editKeywordToggler.bind(this);
+        this.checkUserFacebookAccount = this.checkUserFacebookAccount.bind(this);
+        this.updateUserService = this.updateUserService.bind(this);
 
 
     }
@@ -1291,70 +1293,128 @@ export default class DataSourceIndex extends React.Component {
         );
     }
 
+    checkUserFacebookAccount(e){
+        this.setState({ isBusy: true });
+        HttpClient.get('/data-source/user-facebook-accounts-exists', {}).then(resp => {
+            if (resp.data.exists){
+                this.updateUserService(e);
+                this.sectionToggler('facebook_tracking')
+                this.setState({
+                    isBusy: false,
+                    errors: undefined
+                })
+            }
+            else{
+                swal.fire({
+                    customClass: {
+                        htmlContainer: "py-3",
+                    },
+                    showCloseButton: true,
+                    title: "Connect with Facebook",
+                    text: "Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                    confirmButtonText: "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-facebook'> </i>" + "Connect Facebook Account</a>",
+                })
+            }
+        }, (err) => {
+            this.setState({ isBusy: false, errors: err.response.data })
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err })
+        })
+    }
+
+    updateUserService(e){
+
+        HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
+            if (resp.data.user_services[e.target.name] == 1) {
+                toast.success("Service activated successfully.");
+                this.setState({ userServices: resp.data.user_services })
+            }
+            if (resp.data.user_services[e.target.name] == 0) {
+                this.setState({ userServices: resp.data.user_services })
+                toast.info("Service deactivated successfully.");
+            }
+            (this.props.reloadUser)();
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+            if ((err.response).status == 402) {
+                swal.fire("Upgrade to Pro Plan!", "You have reached your Free 100 credits.", "warning").then(value => {
+                    this.setState({ redirectTo: '/settings/price-plans' });
+                })
+            }
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
     serviceStatusHandler(e) {
         if (this.props.user.price_plan.has_data_sources) {
 
             e.persist();
             if (e.target.name == 'is_ds_holidays_enabled' && e.target.checked) {
                 this.sectionToggler('holidays')
+                this.updateUserService(e);
+
             } else if (e.target.name == 'is_ds_holidays_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
+                this.updateUserService(e);
             }
             if (e.target.name == 'is_ds_retail_marketing_enabled' && e.target.checked) {
                 this.sectionToggler('retail_marketings')
+                this.updateUserService(e);
             } else if (e.target.name == 'is_ds_retail_marketing_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
+                this.updateUserService(e);
             }
             if (e.target.name == 'is_ds_weather_alerts_enabled' && e.target.checked) {
                 this.sectionToggler('weather_alerts')
+                this.updateUserService(e);
             } else if (e.target.name == 'is_ds_weather_alerts_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
+                this.updateUserService(e);
             }
             if (e.target.name == 'is_ds_google_alerts_enabled' && e.target.checked) {
                 this.sectionToggler('google_alerts')
+                this.updateUserService(e);
             } else if (e.target.name == 'is_ds_google_alerts_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
+                this.updateUserService(e);
             }
             if (e.target.name == 'is_ds_web_monitors_enabled' && e.target.checked) {
                 this.sectionToggler('web_monitors')
+                this.updateUserService(e);
             } else if (e.target.name == 'is_ds_web_monitors_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
+                this.updateUserService(e);
+            }
+            if (e.target.name == 'is_ds_wordpress_updates_enabled' && e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            } else if (e.target.name == 'is_ds_wordpress_updates_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
             }
             if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && e.target.checked) {
                 this.sectionToggler('google_algorithm_updates')
+                this.updateUserService(e);
             } else if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
+                this.updateUserService(e);
             }
             if (e.target.name == 'is_ds_keyword_tracking_enabled' && e.target.checked) {
                 this.sectionToggler('keyword_tracking')
+                this.updateUserService(e);
             } else if (e.target.name == 'is_ds_keyword_tracking_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
+                this.updateUserService(e);
             }
             if (e.target.name == 'is_ds_facebook_tracking_enabled' && e.target.checked) {
-                this.sectionToggler('facebook_tracking')
+                this.checkUserFacebookAccount(e)
             } else if (e.target.name == 'is_ds_facebook_tracking_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
+                this.updateUserService(e);
             }
-            HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
-                if (resp.data.user_services[e.target.name] == 1) {
-                    toast.success("Service activated successfully.");
-                    this.setState({ userServices: resp.data.user_services })
-                }
-                if (resp.data.user_services[e.target.name] == 0) {
-                    this.setState({ userServices: resp.data.user_services })
-                    toast.info("Service deactivated successfully.");
-                }
-                (this.props.reloadUser)();
-            }, (err) => {
-                this.setState({ isBusy: false, errors: (err.response).data });
-                if ((err.response).status == 402) {
-                    swal.fire("Upgrade to Pro Plan!", "You have reached your Free 100 credits.", "warning").then(value => {
-                        this.setState({ redirectTo: '/settings/price-plans' });
-                    })
-                }
-            }).catch(err => {
-                this.setState({ isBusy: false, errors: err });
-            });
+
         } else {
             const accountNotLinkedHtml = '' +
                 '<div class="">' +

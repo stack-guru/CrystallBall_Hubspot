@@ -1,5 +1,6 @@
 import React from "react";
 import Select from 'react-select'
+import HttpClient from "./HttpClient";
 
 export default class FacebookTracking extends React.Component {
     constructor(props) {
@@ -7,16 +8,25 @@ export default class FacebookTracking extends React.Component {
         this.state = {
             isBusy: false,
             errors: "",
-            facebook_pages: [
-                { value: 'chocolate', label: 'Chocolate' },
-                { value: 'strawberry', label: 'Strawberry' },
-                { value: 'vanilla', label: 'Vanilla' }
-            ]
+            facebook_pages: []
         };
 
+        this.fetchFacebookPages = this.fetchFacebookPages.bind(this);
     }
 
     componentDidMount() {
+        this.fetchFacebookPages();
+    }
+
+    fetchFacebookPages(){
+        this.setState({ isBusy: true })
+            HttpClient.get('/data-source/get-facebook-page-list').then(resp => {
+                this.setState({ facebook_pages: resp.data.facebook_pages, isBusy: false });
+            }, (err) => {
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ isBusy: false, errors: err });
+        });
     }
 
     render() {
