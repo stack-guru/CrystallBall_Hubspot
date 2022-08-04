@@ -42,7 +42,8 @@ export default class DataSourceIndex extends React.Component {
             totalDfsKeywordCreditsUsed: 0,
             editKeyword: false,
             editKeyword_keyword_id: '',
-            editKeyword_keyword_configuration_id: ''
+            editKeyword_keyword_configuration_id: '',
+            userFacebookAccountsExists: false,
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
@@ -76,6 +77,8 @@ export default class DataSourceIndex extends React.Component {
         this.reloadWebMonitors('');
 
         this.loadKeywordTrackingKeywords();
+
+        this.checkUserFacebookAccount();
 
     }
 
@@ -1293,34 +1296,24 @@ export default class DataSourceIndex extends React.Component {
         );
     }
 
-    checkUserFacebookAccount(e){
+    checkUserFacebookAccount(){
+        // userFacebookAccountsExists
         this.setState({ isBusy: true });
-        HttpClient.get('/data-source/user-facebook-accounts-exists', {}).then(resp => {
-            if (resp.data.exists){
-                this.updateUserService(e);
-                this.sectionToggler('facebook_tracking')
-                this.setState({
-                    isBusy: false,
-                    errors: undefined
-                })
-            }
-            else{
-                swal.fire({
-                    customClass: {
-                        htmlContainer: "py-3",
-                    },
-                    showCloseButton: true,
-                    title: "Connect with Facebook",
-                    text: "Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
-                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                    confirmButtonText: "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-facebook'> </i>" + "Connect Facebook Account</a>",
-                })
-            }
-        }, (err) => {
-            this.setState({ isBusy: false, errors: err.response.data })
-        }).catch(err => {
-            this.setState({ isBusy: false, errors: err })
-        })
+            HttpClient.get('/data-source/user-facebook-accounts-exists', {}).then((resp) => {
+                if (resp.data.exists){
+                    this.setState({
+                        isBusy: false,
+                        errors: undefined,
+                        userFacebookAccountsExists: true
+                    })
+                }
+            }, (err) => {
+                this.setState({ isBusy: false, errors: err.response.data })
+                status = false;
+            }, this).catch(err => {
+                this.setState({ isBusy: false, errors: err })
+                status = false;
+            })
     }
 
     updateUserService(e){
@@ -1409,7 +1402,24 @@ export default class DataSourceIndex extends React.Component {
                 this.updateUserService(e);
             }
             if (e.target.name == 'is_ds_facebook_tracking_enabled' && e.target.checked) {
-                this.checkUserFacebookAccount(e)
+                
+                if(this.state.userFacebookAccountsExists){
+                    this.sectionToggler('facebook_tracking')
+                    this.updateUserService(e, this);                        
+                }
+                else{
+                    swal.fire({
+                        customClass: {
+                            htmlContainer: "py-3",
+                        },
+                        showCloseButton: true,
+                        title: "Connect with Facebook",
+                        text: "Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                        confirmButtonText: "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-facebook'> </i>" + "Connect Facebook Account</a>",
+                    })
+                }
+
             } else if (e.target.name == 'is_ds_facebook_tracking_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
                 this.updateUserService(e);
