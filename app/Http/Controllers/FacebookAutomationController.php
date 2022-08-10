@@ -23,7 +23,7 @@ class FacebookAutomationController extends Controller
     public function index()
     {
         return view('ui/app');
-        
+
         $user = \auth()->user();
         $user_facebook_accounts = $user->facebook_accounts;
 
@@ -59,6 +59,9 @@ class FacebookAutomationController extends Controller
             'pages_read_engagement',
             'pages_read_user_content',
             'public_profile',
+            'ads_management',
+            'ads_read',
+            'read_insights',
         ])->redirect();
     }
 
@@ -91,6 +94,11 @@ class FacebookAutomationController extends Controller
     public function userFacebookAccountsExists(Request $request): JsonResponse
     {
         return $this->facebookAutomationRepository->userFacebookAccountsExists();
+    }
+
+    public function facebookAdsWebhookGet(Request $request)
+    {
+        dd($request->all());
     }
 
 }
