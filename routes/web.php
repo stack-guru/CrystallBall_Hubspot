@@ -1,15 +1,16 @@
 <?php
 
 use App\Http\Controllers\FacebookAutomationController;
+use App\Http\Controllers\FacebookTrackingConfigurationController;
 use App\Http\Controllers\KeywordTrackingController;
 use App\Models\KeywordTrackingAnnotation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('test_fb', function(){
-    $service = new App\Services\FacebookService();
-    $service->test();
-});
+//Route::get('test_fb', function(){
+//    $service = new App\Services\FacebookService();
+//    $service->test();
+//});
 
 
 /*
@@ -22,6 +23,9 @@ Route::get('test_fb', function(){
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+Route::get('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookGet']);
+Route::post('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookPost']);
 
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
@@ -184,6 +188,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
             // update the keyword details
             Route::post('update-keyword-tracking-keyword', [App\Http\Controllers\UserDataSourceController::class, 'updateKeywordTrackingDetailsForKeyword']);
 
+            Route::post('save-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'save']);
+            Route::get('get-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'get']);
+
             Route::get('get-facebook-page-list', [App\Http\Controllers\UserFacebookPageController::class, 'index']);
 
             Route::get('google-algorithm-updates/date', [App\Http\Controllers\GoogleAlgorithmUpdateController::class, 'uiIndex']);
@@ -202,7 +209,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
             Route::post('payment-detail', [App\Http\Controllers\PaymentDetailController::class, 'store']);
 
             Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
-            
+
             Route::get('google-ads-account-ids', [App\Http\Controllers\GoogleAdsAccountController::class, 'uiIndex']);
             Route::put('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'update']);
             Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
