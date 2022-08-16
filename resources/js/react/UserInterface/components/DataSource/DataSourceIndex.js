@@ -216,11 +216,11 @@ export default class DataSourceIndex extends React.Component {
                 <ErrorAlert errors={this.state.errors} />
                 <div className="row p-2 mt-4 mb-5">
                     <div className="col-md-9 col-sm-12" id="data-source-page-container">
-                        <div className="row">
+                        <div class="row">
                             {/*
                                 Website Monitoring Section
                             */}
-                            <div className="col-md-6 mt-2">
+                            <div class="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between"
@@ -875,54 +875,54 @@ export default class DataSourceIndex extends React.Component {
                                 Facebook section
                             */}
 
-                            {/*<div className="col-md-6 mt-2">*/}
-                            {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
-                            {/*        <div>*/}
-                            {/*            <div className="d-flex mt-2 justify-content-between "*/}
-                            {/*                 id="web-monitoring-data-source-section">*/}
-                            {/*                <div className="px-2">*/}
-                            {/*                    <h2>*/}
-                            {/*                        <small>*/}
-                            {/*                            Facebook Tracking <UserAnnotationColorPicker name="anomolies_detection"*/}
-                            {/*                                                                           value={this.state.userAnnotationColors.facebook_tracking}*/}
-                            {/*                                                                           updateCallback={this.updateUserAnnotationColors} />*/}
-                            {/*                            <img className="hint-button-2" src="/images/info-logo.png" />*/}
-                            {/*                        </small>*/}
-                            {/*                    </h2>*/}
-                            {/*                </div>*/}
-                            {/*                <div className="px-2">*/}
-                            {/*                    /!* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} *!/*/}
-                            {/*                    Deactive*/}
-                            {/*                    <label className="trigger switch">*/}
-                            {/*                        <input type="checkbox"*/}
-                            {/*                            // checked={this.state.userServices.is_ds_anomolies_detection_enabled}*/}
-                            {/*                            // onChange={this.serviceStatusHandler}*/}
-                            {/*                               onClick={e => {*/}
-                            {/*                                   e.preventDefault()*/}
-                            {/*                                   swal.fire('This feature is coming soon. Stay tuned!', '', 'info');*/}
-                            {/*                                   // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {*/}
-
-                            {/*                                   // }*/}
-                            {/*                               }}*/}
-                            {/*                               name="is_ds_anomolies_detection_enabled"*/}
-                            {/*                        />*/}
-                            {/*                        /!* <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} /> *!/*/}
-                            {/*                        <span className={`slider round`} />*/}
-                            {/*                    </label>*/}
-                            {/*                </div>*/}
-                            {/*            </div>*/}
-                            {/*            <div className="px-2">*/}
-                            {/*                <div className="list-wrapper">*/}
-                            {/*                </div>*/}
-                            {/*                <div className='text-center mt-2'>*/}
-                            {/*                    <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />*/}
-                            {/*                </div>*/}
-                            {/*            </div>*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-
                             <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
+                                    <div>
+                                        <div className="d-flex mt-2 justify-content-between "
+                                             id="web-monitoring-data-source-section">
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Facebook Tracking <UserAnnotationColorPicker name="anomolies_detection"
+                                                                                                       value={this.state.userAnnotationColors.facebook_tracking}
+                                                                                                       updateCallback={this.updateUserAnnotationColors} />
+                                                        <img className="hint-button-2" src="/images/info-logo.png" />
+                                                    </small>
+                                                </h2>
+                                            </div>
+                                            <div className="px-2">
+                                                {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
+                                                Deactive
+                                                <label className="trigger switch">
+                                                    <input type="checkbox"
+                                                        // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
+                                                        // onChange={this.serviceStatusHandler}
+                                                           onClick={e => {
+                                                               e.preventDefault()
+                                                               swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                               // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
+
+                                                               // }
+                                                           }}
+                                                           name="is_ds_anomolies_detection_enabled"
+                                                    />
+                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} /> */}
+                                                    <span className={`slider round`} />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                            </div>
+                                            <div className='text-center mt-2'>
+                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/*<div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
@@ -963,7 +963,7 @@ export default class DataSourceIndex extends React.Component {
 
                                     </div>
                                 </div>
-                            </div>
+                            </div>*/}
 
                             {/*
                                 Anomalies Detection section
@@ -1402,10 +1402,10 @@ export default class DataSourceIndex extends React.Component {
                 this.updateUserService(e);
             }
             if (e.target.name == 'is_ds_facebook_tracking_enabled' && e.target.checked) {
-                
+
                 if(this.state.userFacebookAccountsExists){
                     this.sectionToggler('facebook_tracking')
-                    this.updateUserService(e, this);                        
+                    this.updateUserService(e, this);
                 }
                 else{
                     swal.fire({
