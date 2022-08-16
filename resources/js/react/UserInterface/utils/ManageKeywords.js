@@ -92,17 +92,17 @@ export default class ManageKeywords extends React.Component {
 
         return (
             <div>
-                <button id='manage_modal_btn' style={{ display: "none"}} type="button" class="btn btn-primary" data-toggle="modal" data-target="#manage_modal"></button>
-                <div class="modal fade" id="manage_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                    <div class="modal-dialog modal-lg modal-dialog-centered"  role="document">
-                        <div class="modal-content" style={{ height: "90vh" }}>
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Manage Keywords</h5>
-                                <button type="button" id='close_popup' class="close" data-dismiss="modal" aria-label="Close" onClick={this.closePopup}>
+                <button id='manage_modal_btn' style={{ display: "none"}} type="button" className="btn btn-primary" data-toggle="modal" data-target="#manage_modal"></button>
+                <div className="modal fade" id="manage_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                    <div className="modal-dialog modal-lg modal-dialog-centered"  role="document">
+                        <div className="modal-content" style={{ height: "90vh" }}>
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">Manage Keywords</h5>
+                                <button type="button" id='close_popup' className="close" data-dismiss="modal" aria-label="Close" onClick={this.closePopup}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body" style={{ overflow: 'auto' }}>
+                            <div className="modal-body" style={{ overflow: 'auto' }}>
                                 <h6 className="">
                                     Edit or Delete Keywords
                                 </h6>
@@ -123,8 +123,8 @@ export default class ManageKeywords extends React.Component {
                                     </table>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close" onClick={this.closePopup}>Close</button>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal" aria-label="Close" onClick={this.closePopup}>Close</button>
                             </div>
                         </div>
                     </div>
