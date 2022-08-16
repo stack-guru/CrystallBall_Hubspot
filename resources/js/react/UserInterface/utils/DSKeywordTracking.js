@@ -226,7 +226,7 @@ export default class DSKeywordTracking extends React.Component {
                         {
                             (this.state.keywords.length > 0) ?
                                 this.state.keywords.map((keyword, index) => {
-                                    return <h5 style={{ display: 'inline-block' }} key={(keyword.id != '') ? keyword.id : index}><span class="badge badge-pill badge-primary m-1 h5">{keyword.keyword} <i className='fa fa-times' data-keyword={keyword.keyword} data-keyword_id={keyword.id} onClick={(e) => { this.deleteKeyword(e) }}></i></span></h5>
+                                    return <h5 style={{ display: 'inline-block' }} key={(keyword.id != '') ? keyword.id : index}><span className="badge badge-pill badge-primary m-1 h5">{keyword.keyword} <i className='fa fa-times' data-keyword={keyword.keyword} data-keyword_id={keyword.id} onClick={(e) => { this.deleteKeyword(e) }}></i></span></h5>
                                 })
                                 : ''
                         }

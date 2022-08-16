@@ -333,7 +333,7 @@ class IndexAnnotations extends React.Component {
                                                             return (
                                                                 <tr data-diff-in-milliseconds={diffTime} id={rowId} key={anno.category + anno.event_name + anno.description + anno.url + anno.id}>
                                                                     {/* style={{ borderLeft: `${borderLeftColor} solid 20px` }} */}
-                                                                    <td><input type="checkbox" class='row_checkbox' data-anno_id={anno.id} onChange={this.handleOneSelection} /></td>
+                                                                    <td><input type="checkbox" className='row_checkbox' data-anno_id={anno.id} onChange={this.handleOneSelection} /></td>
                                                                     <td>{anno.category}</td>
                                                                     <td>{anno.event_name}</td>
                                                                     <td style={{ overflowWrap: "anywhere" }}>

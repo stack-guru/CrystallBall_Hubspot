@@ -210,7 +210,7 @@ class DataForSeoCommand extends Command
         KeywordTrackingAnnotation::create([
             'user_id' => $keyword->user_data_source->user_id,
             'category' => 'Keyword Tracking',
-            'eventy_type' => 'Ranking',
+            'event_type' => 'Ranking',
             'event_name' => $configuration->url,
             'description' => $description,
             'title' => 'Website ranking is changed for keyword "' . $keyword->keyword . '"',
