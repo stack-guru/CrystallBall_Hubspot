@@ -112,6 +112,7 @@ export default class UploadAnnotation extends React.Component {
                                         <div className="form-group  col-12 col-sm-12 col-md-5 col-lg-5 p-0 ua-r-pr ">
                                             <label htmlFor="property" className="form-control-placeholder">Google Properties</label>
                                             <GoogleAnalyticsPropertySelect
+                                                currentPricePlan={this.props.currentPricePlan}
                                                 name="google_analytics_property_id"
                                                 id="google_analytics_property_id"
                                                 value={this.state.google_analytics_property_id}
