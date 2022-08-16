@@ -304,11 +304,18 @@ class AnnotationController extends Controller
         //     return response()->json(['message' => 'Invalid number of columns'], 422);
         // }
 
+        // Checking if given headers contain non-printable  characters
+        foreach($headers as $header){
+            if (!ctype_print($header)) {
+                return response()->json(['message' => "Inappropriate character in header: " . json_encode($header)], 422);
+            }
+        }
+
         // Checking if given file contains all required headers
         $kHs = ['category', 'event_name', 'url', 'description', 'show_at'];
         foreach ($kHs as $kH) {
             if (!in_array($kH, $headers)) {
-                return response()->json(['message' => 'Incomplete CSV file headers'], 422);
+                return response()->json(['message' => "Incomplete CSV file headers.\nMissing header '" . $kH . "'.\nReceived headers: " . json_encode($headers)], 422);
             }
         }
 

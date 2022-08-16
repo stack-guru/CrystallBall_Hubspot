@@ -306,7 +306,7 @@ export default class AddKeyword extends React.Component {
                                                   : index
                                           }
                                       >
-                                          <span class="badge badge-pill badge-primary m-1 h5">
+                                          <span className="badge badge-pill badge-primary m-1 h5">
                                               {keyword.keyword}{" "}
                                               <i
                                                   className="fa fa-times"
