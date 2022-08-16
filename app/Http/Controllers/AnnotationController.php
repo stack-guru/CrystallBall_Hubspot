@@ -308,7 +308,7 @@ class AnnotationController extends Controller
         $kHs = ['category', 'event_name', 'url', 'description', 'show_at'];
         foreach ($kHs as $kH) {
             if (!in_array($kH, $headers)) {
-                return response()->json(['message' => 'Incomplete CSV file headers'], 422);
+                return response()->json(['message' => "Incomplete CSV file headers.\nMissing header '" . $kH . "'.\nReceived headers: " . json_encode($headers)], 422);
             }
         }
 
