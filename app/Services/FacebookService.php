@@ -36,10 +36,16 @@ class FacebookService
     {
         try {
             $response = $this->facebook->get('/me/accounts', $user_token);
-            return [
-                'status' => true,
-                'response' => $response
-            ];
+            $response->decodeBody();
+            $data_array = $response->getDecodedBody();
+            if (isset($data_array['data'])) {
+                if (isset($data_array['data'])) {
+                    return $data_array['data'];
+                }
+            }
+            else{
+                return false;
+            }
         } catch(FacebookResponseException $e) {
             // When Graph returns an error
             return [
@@ -60,7 +66,12 @@ class FacebookService
         }
     }
 
-    public function getFacebookPagePosts($user_token, $page_id)
+    /**
+     * @param $user_token
+     * @param $page_id
+     * @return array
+     */
+    public function getFacebookPagePosts($user_token, $page_id): array
     {
         try {
             $page_posts_response = $this->facebook->get($page_id.'/feed?fields=shares,likes.limit(0).summary(true),comments.limit(0).summary(true),attachments', $user_token);
@@ -124,14 +135,18 @@ class FacebookService
         }
     }
 
-    public function getPagePostImpressions($post_id, $page_token)
+    /**
+     * @param $post_id
+     * @param $page_token
+     * @return array
+     */
+    public function getPagePostImpressions($post_id, $page_token): array
     {
         try {
             $post_impressions = $this->facebook->get($post_id.'/insights/post_impressions', $page_token);
-
             return [
                 'status' => true,
-                'post_impressions' => $post_impressions->getDecodedBody()['data'][0]['values'][0]['value'] ?? false,
+                'post_impressions' => @$post_impressions->getDecodedBody()['data'][0]['values'][0]['value'],
             ];
         } catch(FacebookResponseException $e) {
             // When Graph returns an error

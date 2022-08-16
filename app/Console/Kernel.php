@@ -65,6 +65,7 @@ class Kernel extends ConsoleKernel
 
         // run DFS SERP command daily
         $schedule->command('gaa:fetch-wesbite-ranking-dfs')->daily();
+//        $schedule->command('gaa:execute-facebook-automation')->everyFiveMinutes();
     }
 
     /**

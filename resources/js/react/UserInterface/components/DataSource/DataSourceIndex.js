@@ -1118,7 +1118,7 @@ export default class DataSourceIndex extends React.Component {
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
-                                                        Keyword Tracking <UserAnnotationColorPicker name="keyword_tracking"
+                                                        Search Engine Position Tracking <UserAnnotationColorPicker name="keyword_tracking"
                                                             value={this.state.userAnnotationColors.keyword_tracking}
                                                             updateCallback={this.updateUserAnnotationColors} />
                                                         <img className="hint-button-2" src="/images/info-logo.png" />
