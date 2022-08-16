@@ -74,12 +74,12 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 target: {
                     name: this.props.name,
                     value: [""],
-                    wasLastDataFetchingSuccessful: sOption.was_last_data_fetching_successful
+                    wasLastDataFetchingSuccessful: true
                 }
             });
             if (!this.props.multiple) this.props.onChangeCallback({
                 target: { name: this.props.name, value: "" },
-                wasLastDataFetchingSuccessful: sOption.was_last_data_fetching_successful
+                wasLastDataFetchingSuccessful: true
             });
             if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Properties" }]);
         } else {
