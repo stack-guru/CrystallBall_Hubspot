@@ -252,7 +252,7 @@ export default class DataSourceIndex extends React.Component {
                                                 </UncontrolledPopover>
                                             </div>
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_web_monitors_enabled ? "Active" : "Deactive"}
+                                                {this.state.userServices.is_ds_web_monitors_enabled ? "On" : "Off"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
@@ -335,7 +335,7 @@ export default class DataSourceIndex extends React.Component {
                                                 </UncontrolledPopover>
                                             </div>
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_google_alerts_enabled ? "Active" : "Deactive"}
+                                                {this.state.userServices.is_ds_google_alerts_enabled ? "On" : "Off"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
@@ -420,7 +420,7 @@ export default class DataSourceIndex extends React.Component {
                                                 </UncontrolledPopover>
                                             </div>
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_google_algorithm_updates_enabled ? "Active" : "Deactive"}
+                                                {this.state.userServices.is_ds_google_algorithm_updates_enabled ? "On" : "Off"}
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                         checked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
@@ -498,7 +498,7 @@ export default class DataSourceIndex extends React.Component {
 
                                             </div>
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_retail_marketing_enabled ? "Active" : "Deactive"}
+                                                {this.state.userServices.is_ds_retail_marketing_enabled ? "On" : "Off"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
@@ -561,7 +561,7 @@ export default class DataSourceIndex extends React.Component {
 
                                             </div>
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_holidays_enabled ? "Active" : "Deactive"}
+                                                {this.state.userServices.is_ds_holidays_enabled ? "On" : "Off"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
@@ -635,7 +635,7 @@ export default class DataSourceIndex extends React.Component {
                                                 </UncontrolledPopover>
                                             </div>
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_weather_alerts_enabled ? "Active" : "Deactive"}
+                                                {this.state.userServices.is_ds_weather_alerts_enabled ? "On" : "Off"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
@@ -760,7 +760,7 @@ export default class DataSourceIndex extends React.Component {
                                                 </UncontrolledPopover>
                                             </div>
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_wordpress_updates_enabled ? "Active" : "Deactive"}
+                                                {this.state.userServices.is_ds_wordpress_updates_enabled ? "On" : "Off"}
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                         checked={this.state.userServices.is_ds_wordpress_updates_enabled}
@@ -778,6 +778,89 @@ export default class DataSourceIndex extends React.Component {
                                     <div></div>
                                 </div>
                             </div>
+
+                            {/*
+                                Search Engine Position Tracking
+                            */}
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
+                                    <div>
+                                        <div className="d-flex mt-2 justify-content-between "
+                                             id="keyword-tracking-data-source-section">
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Rank Tracking <UserAnnotationColorPicker name="keyword_tracking"
+                                                                                                                   value={this.state.userAnnotationColors.keyword_tracking}
+                                                                                                                   updateCallback={this.updateUserAnnotationColors} />
+                                                        <img id="keyword-tracking" className="hint-button-2"
+                                                             onClick={() => {
+                                                                 this.changeShownHint('keyword-tracking')
+                                                             }} src="/images/info-logo.png" />
+                                                    </small>
+                                                </h2>
+                                            </div>
+                                            <UncontrolledPopover trigger="legacy" placement="right"
+                                                                 isOpen={this.state.showHintFor == 'keyword-tracking'}
+                                                                 target="keyword-tracking" toggle={() => {
+                                                this.changeShownHint(null)
+                                            }}>
+                                                <PopoverHeader>Rank Tracking</PopoverHeader>
+                                                <PopoverBody>Track daily changes of your target keywords in your target area for your business or competitors.</PopoverBody>
+                                            </UncontrolledPopover>
+
+                                            <div className="px-2">
+                                                {this.state.userServices.is_ds_keyword_tracking_enabled ? "On" : "Off"}
+                                                <label className="trigger switch">
+                                                    <input type="checkbox"
+                                                           checked={this.state.userServices.is_ds_keyword_tracking_enabled}
+                                                           onChange={this.serviceStatusHandler}
+                                                           name="is_ds_keyword_tracking_enabled"
+                                                    />
+                                                    <span className={`slider round ${this.state.userServices.is_ds_keyword_tracking_enabled ? 'animate-pulse' : ''}`} />
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div className='ml-2'>
+                                            Credits: { this.state.totalDfsKeywordCreditsUsed }/{this.props.user.price_plan.keyword_tracking_count}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p
+                                            className="ds-update-text m-0 px-2 text-right"
+                                            onClick={() => {
+                                                this.sectionToggler('keyword_tracking');
+                                            }}
+                                        >
+                                            {this.state.sectionName == "keyword_tracking" ? "Hide" : "Add Keywords"}
+                                        </p>
+                                        <p
+                                            className="ds-update-text m-0 px-2 text-right"
+                                            onClick={() => {
+                                                this.setState({
+                                                    manage_keyword_show: true
+                                                })
+                                            }}
+                                        >
+                                            Manage Keywords
+                                        </p>
+                                        {
+                                            this.state.manage_keyword_show == true ?
+                                                <ManageKeywords
+                                                    keywords={this.state.dfsKeywords}
+                                                    loadKeywordsCallback={this.loadKeywordTrackingKeywords}
+                                                    editKeywordCallback={this.editKeywordToggler}
+                                                    closeManageKeywordPopup={this.manage_keyword_popup_handler}
+                                                />
+                                                : null
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+
+
                             {/*
                                 Google ads history changes section
                             */}
@@ -792,12 +875,23 @@ export default class DataSourceIndex extends React.Component {
                                                         Google Ads Changes <UserAnnotationColorPicker name="g_ads_history_change"
                                                             value={this.state.userAnnotationColors.g_ads_history_change}
                                                             updateCallback={this.updateUserAnnotationColors} />
-                                                        <img id="" className="hint-button-2" src="/images/info-logo.png" />
                                                     </small>
                                                 </h2>
+                                                <UncontrolledPopover trigger="legacy" placement="right"
+                                                                     isOpen={this.state.showHintFor == 'web-monitors'}
+                                                                     target="web-monitors-datasource-hint"
+                                                                     toggle={() => {
+                                                                         this.changeShownHint(null)
+                                                                     }}>
+                                                    <PopoverHeader>Web Monitoring</PopoverHeader>
+                                                    <PopoverBody>Downtime happens even to the best of us. But it’s
+                                                        important to know it before customers are affected and also keep
+                                                        annotations on your reports. Add your website URL; we will
+                                                        monitor it every 1 minute.</PopoverBody>
+                                                </UncontrolledPopover>
                                             </div>
                                             <div className="px-2">
-                                                {/* {this.state.userServices.is_ds_g_ads_history_change_enabled ? "Active" : "Deactive"} */}
+                                                {/* {this.state.userServices.is_ds_g_ads_history_change_enabled ? "Yes" : "No"} */}
                                                 Deactive
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
@@ -844,7 +938,7 @@ export default class DataSourceIndex extends React.Component {
                             {/*                </div>*/}
 
                             {/*                <div className="px-2">*/}
-                            {/*                    {this.state.userServices.is_ds_g_ads_history_change_enabled ? "Active" : "Deactive"}*/}
+                            {/*                    {this.state.userServices.is_ds_g_ads_history_change_enabled ? "On" : "Off"}*/}
                             {/*                    <label className="trigger switch">*/}
                             {/*                        <input type="checkbox"*/}
                             {/*                               checked={this.state.userServices.is_ds_g_ads_history_change_enabled}*/}
@@ -922,6 +1016,195 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
 
+
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
+                                    <div>
+                                        <div className="d-flex mt-2 justify-content-between "
+                                             id="web-monitoring-data-source-section">
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        LinkedIn Tracking <UserAnnotationColorPicker name="anomolies_detection"
+                                                                                                     value={this.state.userAnnotationColors.facebook_tracking}
+                                                                                                     updateCallback={this.updateUserAnnotationColors} />
+                                                        <img className="hint-button-2" src="/images/info-logo.png" />
+                                                    </small>
+                                                </h2>
+                                            </div>
+                                            <div className="px-2">
+                                                {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
+                                                Deactive
+                                                <label className="trigger switch">
+                                                    <input type="checkbox"
+                                                        // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
+                                                        // onChange={this.serviceStatusHandler}
+                                                           onClick={e => {
+                                                               e.preventDefault()
+                                                               swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                               // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
+
+                                                               // }
+                                                           }}
+                                                           name="is_ds_anomolies_detection_enabled"
+                                                    />
+                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} /> */}
+                                                    <span className={`slider round`} />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                            </div>
+                                            <div className='text-center mt-2'>
+                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
+                                    <div>
+                                        <div className="d-flex mt-2 justify-content-between "
+                                             id="web-monitoring-data-source-section">
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Twitter Tracking <UserAnnotationColorPicker name="anomolies_detection"
+                                                                                                     value={this.state.userAnnotationColors.facebook_tracking}
+                                                                                                     updateCallback={this.updateUserAnnotationColors} />
+                                                        <img className="hint-button-2" src="/images/info-logo.png" />
+                                                    </small>
+                                                </h2>
+                                            </div>
+                                            <div className="px-2">
+                                                {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
+                                                Deactive
+                                                <label className="trigger switch">
+                                                    <input type="checkbox"
+                                                        // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
+                                                        // onChange={this.serviceStatusHandler}
+                                                           onClick={e => {
+                                                               e.preventDefault()
+                                                               swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                               // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
+
+                                                               // }
+                                                           }}
+                                                           name="is_ds_anomolies_detection_enabled"
+                                                    />
+                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} /> */}
+                                                    <span className={`slider round`} />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                            </div>
+                                            <div className='text-center mt-2'>
+                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
+                                    <div>
+                                        <div className="d-flex mt-2 justify-content-between "
+                                             id="web-monitoring-data-source-section">
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        TikTok Tracking <UserAnnotationColorPicker name="anomolies_detection"
+                                                                                                    value={this.state.userAnnotationColors.facebook_tracking}
+                                                                                                    updateCallback={this.updateUserAnnotationColors} />
+                                                        <img className="hint-button-2" src="/images/info-logo.png" />
+                                                    </small>
+                                                </h2>
+                                            </div>
+                                            <div className="px-2">
+                                                {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
+                                                Deactive
+                                                <label className="trigger switch">
+                                                    <input type="checkbox"
+                                                        // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
+                                                        // onChange={this.serviceStatusHandler}
+                                                           onClick={e => {
+                                                               e.preventDefault()
+                                                               swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                               // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
+
+                                                               // }
+                                                           }}
+                                                           name="is_ds_anomolies_detection_enabled"
+                                                    />
+                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} /> */}
+                                                    <span className={`slider round`} />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                            </div>
+                                            <div className='text-center mt-2'>
+                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
+                                    <div>
+                                        <div className="d-flex mt-2 justify-content-between "
+                                             id="web-monitoring-data-source-section">
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Instagram Tracking <UserAnnotationColorPicker name="anomolies_detection"
+                                                                                                   value={this.state.userAnnotationColors.facebook_tracking}
+                                                                                                   updateCallback={this.updateUserAnnotationColors} />
+                                                        <img className="hint-button-2" src="/images/info-logo.png" />
+                                                    </small>
+                                                </h2>
+                                            </div>
+                                            <div className="px-2">
+                                                {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
+                                                Deactive
+                                                <label className="trigger switch">
+                                                    <input type="checkbox"
+                                                        // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
+                                                        // onChange={this.serviceStatusHandler}
+                                                           onClick={e => {
+                                                               e.preventDefault()
+                                                               swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                               // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
+
+                                                               // }
+                                                           }}
+                                                           name="is_ds_anomolies_detection_enabled"
+                                                    />
+                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} /> */}
+                                                    <span className={`slider round`} />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                            </div>
+                                            <div className='text-center mt-2'>
+                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             {/*<div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
@@ -939,7 +1222,7 @@ export default class DataSourceIndex extends React.Component {
                                             </div>
 
                                             <div className="px-2">
-                                                {this.state.userServices.is_ds_facebook_tracking_enabled ? "Active" : "Deactive"}
+                                                {this.state.userServices.is_ds_facebook_tracking_enabled ? "On" : "Off"}
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                            checked={this.state.userServices.is_ds_facebook_tracking_enabled}
@@ -968,102 +1251,102 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Anomalies Detection section
                             */}
-                            <div className="col-md-6 mt-2">
-                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
-                                    <div>
-                                        <div className="d-flex mt-2 justify-content-between "
-                                            id="web-monitoring-data-source-section">
-                                            <div className="px-2">
-                                                <h2>
-                                                    <small>
-                                                        Anomalies Detection <UserAnnotationColorPicker name="anomolies_detection"
-                                                            value={this.state.userAnnotationColors.anomolies_detection}
-                                                            updateCallback={this.updateUserAnnotationColors} />
-                                                        <img className="hint-button-2" src="/images/info-logo.png" />
-                                                    </small>
-                                                </h2>
-                                            </div>
-                                            <div className="px-2">
-                                                {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
-                                                Deactive
-                                                <label className="trigger switch">
-                                                    <input type="checkbox"
-                                                        // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
-                                                        // onChange={this.serviceStatusHandler}
-                                                        onClick={e => {
-                                                            e.preventDefault()
-                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                            // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
+                            {/*<div className="col-md-6 mt-2">*/}
+                            {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
+                            {/*        <div>*/}
+                            {/*            <div className="d-flex mt-2 justify-content-between "*/}
+                            {/*                id="web-monitoring-data-source-section">*/}
+                            {/*                <div className="px-2">*/}
+                            {/*                    <h2>*/}
+                            {/*                        <small>*/}
+                            {/*                            Anomalies Detection <UserAnnotationColorPicker name="anomolies_detection"*/}
+                            {/*                                value={this.state.userAnnotationColors.anomolies_detection}*/}
+                            {/*                                updateCallback={this.updateUserAnnotationColors} />*/}
+                            {/*                            <img className="hint-button-2" src="/images/info-logo.png" />*/}
+                            {/*                        </small>*/}
+                            {/*                    </h2>*/}
+                            {/*                </div>*/}
+                            {/*                <div className="px-2">*/}
+                            {/*                    /!* {this.state.userServices.is_ds_anomolies_detection_enabled ? "On" : "Off"} *!/*/}
+                            {/*                    Deactive*/}
+                            {/*                    <label className="trigger switch">*/}
+                            {/*                        <input type="checkbox"*/}
+                            {/*                            // checked={this.state.userServices.is_ds_anomolies_detection_enabled}*/}
+                            {/*                            // onChange={this.serviceStatusHandler}*/}
+                            {/*                            onClick={e => {*/}
+                            {/*                                e.preventDefault()*/}
+                            {/*                                swal.fire('This feature is coming soon. Stay tuned!', '', 'info');*/}
+                            {/*                                // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {*/}
 
-                                                            // }
-                                                        }}
-                                                        name="is_ds_anomolies_detection_enabled"
-                                                    />
-                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} /> */}
-                                                    <span className={`slider round`} />
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="px-2">
-                                            <div className="list-wrapper">
-                                            </div>
-                                            <div className='text-center mt-2'>
-                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {/*                                // }*/}
+                            {/*                            }}*/}
+                            {/*                            name="is_ds_anomolies_detection_enabled"*/}
+                            {/*                        />*/}
+                            {/*                        /!* <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} /> *!/*/}
+                            {/*                        <span className={`slider round`} />*/}
+                            {/*                    </label>*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*            <div className="px-2">*/}
+                            {/*                <div className="list-wrapper">*/}
+                            {/*                </div>*/}
+                            {/*                <div className='text-center mt-2'>*/}
+                            {/*                    <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
                             {/*
                                 Budget Tracking section
                             */}
-                            <div className="col-md-6 mt-2">
-                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
-                                    <div>
-                                        <div className="d-flex mt-2 justify-content-between "
-                                            id="web-monitoring-data-source-section">
-                                            <div className="px-2">
-                                                <h2>
-                                                    <small>
-                                                        Budget Tracking <UserAnnotationColorPicker name="budget_tracking"
-                                                            value={this.state.userAnnotationColors.budget_tracking}
-                                                            updateCallback={this.updateUserAnnotationColors} />
-                                                        <img className="hint-button-2" src="/images/info-logo.png" />
-                                                    </small>
-                                                </h2>
-                                            </div>
+                            {/*<div className="col-md-6 mt-2">*/}
+                            {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
+                            {/*        <div>*/}
+                            {/*            <div className="d-flex mt-2 justify-content-between "*/}
+                            {/*                id="web-monitoring-data-source-section">*/}
+                            {/*                <div className="px-2">*/}
+                            {/*                    <h2>*/}
+                            {/*                        <small>*/}
+                            {/*                            Budget Tracking <UserAnnotationColorPicker name="budget_tracking"*/}
+                            {/*                                value={this.state.userAnnotationColors.budget_tracking}*/}
+                            {/*                                updateCallback={this.updateUserAnnotationColors} />*/}
+                            {/*                            <img className="hint-button-2" src="/images/info-logo.png" />*/}
+                            {/*                        </small>*/}
+                            {/*                    </h2>*/}
+                            {/*                </div>*/}
 
-                                            <div className="px-2">
-                                                {/* {this.state.userServices.is_ds_budget_tracking_enabled ? "Active" : "Deactive"} */}
-                                                Deactive
-                                                <label className="trigger switch">
-                                                    <input type="checkbox"
-                                                        // checked={this.state.userServices.is_ds_budget_tracking_enabled}
-                                                        // onChange={this.serviceStatusHandler}
-                                                        onClick={e => {
-                                                            e.preventDefault()
-                                                            swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                            // if (!this.state.userServices.is_ds_budget_tracking_enabled) {
+                            {/*                <div className="px-2">*/}
+                            {/*                    /!* {this.state.userServices.is_ds_budget_tracking_enabled ? "On" : "Off"} *!/*/}
+                            {/*                    Deactive*/}
+                            {/*                    <label className="trigger switch">*/}
+                            {/*                        <input type="checkbox"*/}
+                            {/*                            // checked={this.state.userServices.is_ds_budget_tracking_enabled}*/}
+                            {/*                            // onChange={this.serviceStatusHandler}*/}
+                            {/*                            onClick={e => {*/}
+                            {/*                                e.preventDefault()*/}
+                            {/*                                swal.fire('This feature is coming soon. Stay tuned!', '', 'info');*/}
+                            {/*                                // if (!this.state.userServices.is_ds_budget_tracking_enabled) {*/}
 
-                                                            // }
-                                                        }}
-                                                        name="is_ds_budget_tracking_enabled"
-                                                    />
-                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_budget_tracking_enabled ? 'animate-pulse' : ''}`} /> */}
-                                                    <span className={`slider round`} />
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="px-2">
-                                            <div className="list-wrapper">
-                                            </div>
-                                            <div className='text-center mt-2'>
-                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {/*                                // }*/}
+                            {/*                            }}*/}
+                            {/*                            name="is_ds_budget_tracking_enabled"*/}
+                            {/*                        />*/}
+                            {/*                        /!* <span className={`slider round ${this.state.userServices.is_ds_budget_tracking_enabled ? 'animate-pulse' : ''}`} /> *!/*/}
+                            {/*                        <span className={`slider round`} />*/}
+                            {/*                    </label>*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*            <div className="px-2">*/}
+                            {/*                <div className="list-wrapper">*/}
+                            {/*                </div>*/}
+                            {/*                <div className='text-center mt-2'>*/}
+                            {/*                    <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
 
                             {/*
                                 Keyword Tracking section
@@ -1110,72 +1393,7 @@ export default class DataSourceIndex extends React.Component {
                             {/*    </div>*/}
                             {/*</div>*/}
 
-                             <div className="col-md-6 mt-2">
-                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
-                                    <div>
-                                        <div className="d-flex mt-2 justify-content-between "
-                                            id="keyword-tracking-data-source-section">
-                                            <div className="px-2">
-                                                <h2>
-                                                    <small>
-                                                        Search Engine Position Tracking <UserAnnotationColorPicker name="keyword_tracking"
-                                                            value={this.state.userAnnotationColors.keyword_tracking}
-                                                            updateCallback={this.updateUserAnnotationColors} />
-                                                        <img className="hint-button-2" src="/images/info-logo.png" />
-                                                    </small>
-                                                </h2>
-                                            </div>
 
-                                            <div className="px-2">
-                                                {this.state.userServices.is_ds_keyword_tracking_enabled ? "Active" : "Deactive"}
-                                                <label className="trigger switch">
-                                                    <input type="checkbox"
-                                                        checked={this.state.userServices.is_ds_keyword_tracking_enabled}
-                                                        onChange={this.serviceStatusHandler}
-                                                        name="is_ds_keyword_tracking_enabled"
-                                                    />
-                                                    <span className={`slider round ${this.state.userServices.is_ds_keyword_tracking_enabled ? 'animate-pulse' : ''}`} />
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div className='ml-2'>
-                                            Credits: { this.state.totalDfsKeywordCreditsUsed }/{this.props.user.price_plan.keyword_tracking_count}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p
-                                            className="ds-update-text m-0 px-2 text-right"
-                                            onClick={() => {
-                                                this.sectionToggler('keyword_tracking');
-                                            }}
-                                        >
-                                            {this.state.sectionName == "keyword_tracking" ? "Hide" : "Add Keywords"}
-                                        </p>
-                                        <p
-                                            className="ds-update-text m-0 px-2 text-right"
-                                            onClick={() => {
-                                                this.setState({
-                                                    manage_keyword_show: true
-                                                })
-                                            }}
-                                        >
-                                            Manage Keywords
-                                        </p>
-                                        {
-                                            this.state.manage_keyword_show == true ?
-                                                <ManageKeywords
-                                                    keywords={this.state.dfsKeywords}
-                                                    loadKeywordsCallback={this.loadKeywordTrackingKeywords}
-                                                    editKeywordCallback={this.editKeywordToggler}
-                                                    closeManageKeywordPopup={this.manage_keyword_popup_handler}
-                                                />
-                                            : null
-                                        }
-
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
                     </div>

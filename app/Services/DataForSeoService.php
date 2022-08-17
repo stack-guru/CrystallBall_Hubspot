@@ -34,7 +34,7 @@ class DataForSeoService
             'keyword' => $keyword,
             'target' => $search_engine . '.com',
             'search_engine_name' => $search_engine,
-            'depth' => 700 // 700 max records
+            'depth' => 100 // 700 max records
         ];
 
         /*
