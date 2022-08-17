@@ -251,8 +251,8 @@ export default class DataSourceIndex extends React.Component {
                                                         monitor it every 1 minute.</PopoverBody>
                                                 </UncontrolledPopover>
                                             </div>
-                                            <div className="px-2">
-                                                {this.state.userServices.is_ds_web_monitors_enabled ? "On" : "Off"}
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices.is_ds_web_monitors_enabled ? "ON" : "OFF"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
@@ -334,8 +334,8 @@ export default class DataSourceIndex extends React.Component {
                                                         activated.</PopoverBody>
                                                 </UncontrolledPopover>
                                             </div>
-                                            <div className="px-2">
-                                                {this.state.userServices.is_ds_google_alerts_enabled ? "On" : "Off"}
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices.is_ds_google_alerts_enabled ? "ON" : "OFF"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
@@ -419,8 +419,8 @@ export default class DataSourceIndex extends React.Component {
                                                         Pages</PopoverBody>
                                                 </UncontrolledPopover>
                                             </div>
-                                            <div className="px-2">
-                                                {this.state.userServices.is_ds_google_algorithm_updates_enabled ? "On" : "Off"}
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices.is_ds_google_algorithm_updates_enabled ? "ON" : "OFF"}
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                         checked={this.state.userServices.is_ds_google_algorithm_updates_enabled}
@@ -497,8 +497,8 @@ export default class DataSourceIndex extends React.Component {
                                                 </UncontrolledPopover>
 
                                             </div>
-                                            <div className="px-2">
-                                                {this.state.userServices.is_ds_retail_marketing_enabled ? "On" : "Off"}
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices.is_ds_retail_marketing_enabled ? "ON" : "OFF"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
@@ -560,8 +560,8 @@ export default class DataSourceIndex extends React.Component {
                                                 </UncontrolledPopover>
 
                                             </div>
-                                            <div className="px-2">
-                                                {this.state.userServices.is_ds_holidays_enabled ? "On" : "Off"}
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices.is_ds_holidays_enabled ? "ON" : "OFF"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
@@ -634,8 +634,8 @@ export default class DataSourceIndex extends React.Component {
                                                         the location you operate </PopoverBody>
                                                 </UncontrolledPopover>
                                             </div>
-                                            <div className="px-2">
-                                                {this.state.userServices.is_ds_weather_alerts_enabled ? "On" : "Off"}
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices.is_ds_weather_alerts_enabled ? "ON" : "OFF"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
@@ -759,8 +759,8 @@ export default class DataSourceIndex extends React.Component {
                                                         of WordPress is available.</PopoverBody>
                                                 </UncontrolledPopover>
                                             </div>
-                                            <div className="px-2">
-                                                {this.state.userServices.is_ds_wordpress_updates_enabled ? "On" : "Off"}
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices.is_ds_wordpress_updates_enabled ? "ON" : "OFF"}
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                         checked={this.state.userServices.is_ds_wordpress_updates_enabled}
@@ -809,8 +809,8 @@ export default class DataSourceIndex extends React.Component {
                                                 <PopoverBody>Track daily changes of your target keywords in your target area for your business or competitors.</PopoverBody>
                                             </UncontrolledPopover>
 
-                                            <div className="px-2">
-                                                {this.state.userServices.is_ds_keyword_tracking_enabled ? "On" : "Off"}
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices.is_ds_keyword_tracking_enabled ? "ON" : "OFF"}
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                            checked={this.state.userServices.is_ds_keyword_tracking_enabled}
@@ -892,7 +892,7 @@ export default class DataSourceIndex extends React.Component {
                                             </div>
                                             <div className="px-2">
                                                 {/* {this.state.userServices.is_ds_g_ads_history_change_enabled ? "Yes" : "No"} */}
-                                                Deactive
+                                                OFF
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                         // checked={this.state.userServices.is_ds_g_ads_history_change_enabled}
@@ -937,8 +937,8 @@ export default class DataSourceIndex extends React.Component {
                             {/*                    </h2>*/}
                             {/*                </div>*/}
 
-                            {/*                <div className="px-2">*/}
-                            {/*                    {this.state.userServices.is_ds_g_ads_history_change_enabled ? "On" : "Off"}*/}
+                            {/*                <div className="px-2 text-center">*/}
+                            {/*                    {this.state.userServices.is_ds_g_ads_history_change_enabled ? "ON" : "OFF"}*/}
                             {/*                    <label className="trigger switch">*/}
                             {/*                        <input type="checkbox"*/}
                             {/*                               checked={this.state.userServices.is_ds_g_ads_history_change_enabled}*/}
@@ -984,9 +984,9 @@ export default class DataSourceIndex extends React.Component {
                                                     </small>
                                                 </h2>
                                             </div>
-                                            <div className="px-2">
+                                            <div className="px-2 text-center">
                                                 {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
-                                                Deactive
+                                                OFF
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                         // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
@@ -1032,9 +1032,9 @@ export default class DataSourceIndex extends React.Component {
                                                     </small>
                                                 </h2>
                                             </div>
-                                            <div className="px-2">
+                                            <div className="px-2 text-center">
                                                 {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
-                                                Deactive
+                                                OFF
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                         // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
@@ -1079,9 +1079,9 @@ export default class DataSourceIndex extends React.Component {
                                                     </small>
                                                 </h2>
                                             </div>
-                                            <div className="px-2">
+                                            <div className="px-2 text-center">
                                                 {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
-                                                Deactive
+                                                OFF
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                         // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
@@ -1126,9 +1126,9 @@ export default class DataSourceIndex extends React.Component {
                                                     </small>
                                                 </h2>
                                             </div>
-                                            <div className="px-2">
+                                            <div className="px-2 text-center">
                                                 {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
-                                                Deactive
+                                                OFF
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                         // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
@@ -1173,9 +1173,9 @@ export default class DataSourceIndex extends React.Component {
                                                     </small>
                                                 </h2>
                                             </div>
-                                            <div className="px-2">
+                                            <div className="px-2 text-center">
                                                 {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
-                                                Deactive
+                                                OFF
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                         // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
@@ -1221,8 +1221,8 @@ export default class DataSourceIndex extends React.Component {
                                                 </h2>
                                             </div>
 
-                                            <div className="px-2">
-                                                {this.state.userServices.is_ds_facebook_tracking_enabled ? "On" : "Off"}
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices.is_ds_facebook_tracking_enabled ? "ON" : "OFF"}
                                                 <label className="trigger switch">
                                                     <input type="checkbox"
                                                            checked={this.state.userServices.is_ds_facebook_tracking_enabled}
@@ -1266,7 +1266,7 @@ export default class DataSourceIndex extends React.Component {
                             {/*                        </small>*/}
                             {/*                    </h2>*/}
                             {/*                </div>*/}
-                            {/*                <div className="px-2">*/}
+                            {/*                <div className="px-2 text-center">*/}
                             {/*                    /!* {this.state.userServices.is_ds_anomolies_detection_enabled ? "On" : "Off"} *!/*/}
                             {/*                    Deactive*/}
                             {/*                    <label className="trigger switch">*/}
@@ -1316,7 +1316,7 @@ export default class DataSourceIndex extends React.Component {
                             {/*                    </h2>*/}
                             {/*                </div>*/}
 
-                            {/*                <div className="px-2">*/}
+                            {/*                <div className="px-2 text-center">*/}
                             {/*                    /!* {this.state.userServices.is_ds_budget_tracking_enabled ? "On" : "Off"} *!/*/}
                             {/*                    Deactive*/}
                             {/*                    <label className="trigger switch">*/}
