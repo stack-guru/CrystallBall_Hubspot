@@ -9,7 +9,7 @@ class RetailMarketingController extends Controller
 {
     public function uiIndex(Request $request)
     {
-        $retailMarketingDates = RetailMarketing::select('id', 'event_name', 'show_at')->orderBy('show_at', 'ASC')->distinct()->get();
+        $retailMarketingDates = RetailMarketing::select('id', 'event_name', 'show_at')->orderBy('show_at', 'DESC')->distinct()->get();
         return ['retail_marketing_dates' => $retailMarketingDates];
     }
 }

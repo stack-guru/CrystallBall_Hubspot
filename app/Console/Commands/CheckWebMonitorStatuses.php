@@ -101,7 +101,7 @@ class CheckWebMonitorStatuses extends Command
                             case 9:
                                 // Down
                                 $event = "Site Down";
-                                $description = "The website $webMonitor->url it's down. At $rightNowDateTime";
+                                $description = "The website $webMonitor->url is down. At $rightNowDateTime";
                                 try {
                                     Notification::send($users, new WebMonitorDown($webMonitor));
                                 } catch (\Exception $e) {

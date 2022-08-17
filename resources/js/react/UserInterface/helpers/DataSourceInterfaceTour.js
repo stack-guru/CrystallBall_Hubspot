@@ -47,6 +47,12 @@ const steps = [
         redirectRoute: null,
     },
     {
+        position: 'top',
+        selector: '#keyword-tracking',
+        content: <p><strong>Weather</strong> disrupts the operating and financial performance of 70% of businesses worldwide. Add automated annotations for the location you operate</p>,
+        redirectRoute: null,
+    },
+    {
         position: 'right',
         selector: '#wordpress-updates-data-source-section',
         content: <p><strong>WordPress Core Updates</strong> Our automated annotation feature will inform you when a new version, Security, or Maintenance Release of WordPress is available.</p>,
