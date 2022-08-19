@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group">
                             <label>Price</label>
-                            <input type="number" name="price" id="price" class="form-control" value="{{ old('price',$pricePlan->price) }}" />
+                            <input type="number" step="0.1" name="price" id="price" class="form-control" value="{{ old('price',$pricePlan->price) }}" />
                         </div>
                         <div class="form-group">
                             <label>Short Description</label>

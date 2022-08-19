@@ -157,7 +157,7 @@ export default class IndexPricingPlans extends React.Component {
                                                     pricePlan.short_description.length == 0 ? <p className="mb-0 card-text w-100 text-center minh-92px"></p> :
                                                         <p className="mb-0 card-text w-100 text-center minh-92px">{pricePlan.short_description}</p>
                                             }
-                                            {/* Constants for Monthly and Annual values should have been used. But 
+                                            {/* Constants for Monthly and Annual values should have been used. But
                                                 it might have caused some compilation errors that's why I have
                                                 avoided them. If you can do it without any error feel free to do it. */}
                                             <h6 className="card-price text-center w-100">
@@ -206,7 +206,7 @@ export default class IndexPricingPlans extends React.Component {
                                                 {
                                                     pricePlan.ga_account_count == 0 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited GA accounts</li>
                                                         :
-                                                        pricePlan.ga_account_count == 1 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Single User</li>
+                                                        pricePlan.ga_account_count == 1 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to 1 GA Account</li>
                                                             :
                                                             <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>{pricePlan.ga_account_count} GA accounts</li>
                                                 }
