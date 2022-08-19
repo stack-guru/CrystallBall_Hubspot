@@ -57,11 +57,9 @@ class FacebookAutomationController extends Controller
             'read_insights',
             'pages_show_list',
             'pages_read_engagement',
-            'pages_read_user_content',
             'public_profile',
-            'ads_management',
-            'ads_read',
-            'read_insights',
+//            'ads_management',
+//            'ads_read',
         ])->redirect();
     }
 
