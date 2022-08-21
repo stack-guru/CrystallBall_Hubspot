@@ -378,6 +378,26 @@ class User extends Authenticatable implements MustVerifyEmail
             ->orderBy('created_at', 'DESC');
     }
 
+    public function last60DaysLoginLogs()
+    {
+        return $this->hasMany('App\Models\LoginLog')
+        ->where('created_at', '>=', Carbon::now()->subDays(60))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function last30DaysLoginLogs()
+    {
+        return $this->hasMany('App\Models\LoginLog')
+        ->where('created_at', '>=', Carbon::now()->subDays(30))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function allTimeLoginLogs()
+    {
+        return $this->hasMany('App\Models\LoginLog')
+        ->orderBy('created_at', 'DESC');
+    }
+
     public function last30DaysApiAnnotationCreatedLogs()
     {
         return $this->hasMany('App\Models\ApiLog')
@@ -391,6 +411,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\ApiLog')
             ->where('event_name', ApiLog::ANNOTATION_CREATED)
             ->where('created_at', '>=', Carbon::now()->subDays(90))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function last60DaysApiAnnotationCreatedLogs()
+    {
+        return $this->hasMany('App\Models\ApiLog')
+        ->where('event_name', ApiLog::ANNOTATION_CREATED)
+            ->where('created_at', '>=', Carbon::now()->subDays(60))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function allTimeApiAnnotationCreatedLogs()
+    {
+        return $this->hasMany('App\Models\ApiLog')
+        ->where('event_name', ApiLog::ANNOTATION_CREATED)
             ->orderBy('created_at', 'DESC');
     }
 
@@ -449,6 +484,26 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\NotificationLog')
             ->where('created_at', '>=', Carbon::now()->subDays(90))
             ->orderBy('created_at', 'DESC');
+    }
+
+    public function last60DaysNotificationLogs()
+    {
+        return $this->hasMany('App\Models\NotificationLog')
+        ->where('created_at', '>=', Carbon::now()->subDays(60))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function last30DaysNotificationLogs()
+    {
+        return $this->hasMany('App\Models\NotificationLog')
+        ->where('created_at', '>=', Carbon::now()->subDays(30))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function allTimeNotificationLogs()
+    {
+        return $this->hasMany('App\Models\NotificationLog')
+        ->orderBy('created_at', 'DESC');
     }
 
     public function notificationLogs()
