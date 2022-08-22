@@ -134,8 +134,8 @@ return [
     ],
 
     'facebook' => [
-        'client_id' => '417643546831147',
-        'client_secret' => 'af8387d1bf790e75d484e30e4080b4cb',
+        'client_id' => '1944502855758578',
+        'client_secret' => 'edad0b998cc735879f3addeaeb907140',
         'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
     ]
 ];
