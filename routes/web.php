@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FacebookAutomationController;
 use App\Http\Controllers\FacebookTrackingConfigurationController;
+use App\Http\Controllers\InstagramTrackingConfigurationController;
 use App\Http\Controllers\KeywordTrackingController;
 use App\Models\FacebookTrackingConfiguration;
 use App\Models\KeywordTrackingAnnotation;
@@ -204,6 +205,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
 
             Route::post('save-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'save']);
             Route::get('get-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'get']);
+
+            Route::post('save-instagram-tracking-configurations', [InstagramTrackingConfigurationController::class, 'save']);
+            Route::get('get-instagram-tracking-configurations', [InstagramTrackingConfigurationController::class, 'get']);
 
             Route::get('get-facebook-page-list', [App\Http\Controllers\UserFacebookPageController::class, 'index']);
 
