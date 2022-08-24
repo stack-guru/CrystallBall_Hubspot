@@ -288,7 +288,7 @@ class AnnotationController extends Controller
         }
 
         $this->validate($request, [
-            'csv' => 'required|file|mimetypes:text/plain|mimes:txt',
+            'csv' => 'required|file|mimetypes:text/csv,text/plain,text/html|mimes:csv,txt,html',
             'date_format' => 'required',
             'google_analytics_property_id' => 'nullable|array',
             'google_analytics_property_id.*' => 'nullable|exists:google_analytics_properties,id',
