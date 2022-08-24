@@ -143,5 +143,13 @@ return [
         'client_id' => '417643546831147',
         'client_secret' => 'af8387d1bf790e75d484e30e4080b4cb',
         'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
-    ]
+    ],
+
+    'instagram' => [
+        'client_id' => '5322713981188629',
+        'client_secret' => '9a2fd6d6c7c12a8592a1ae1b68613816',
+        'redirect' => 'https://lukionline.me/socialite/instagram/redirect',
+    ],
+
+
 ];

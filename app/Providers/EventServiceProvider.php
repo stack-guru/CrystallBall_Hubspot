@@ -104,7 +104,12 @@ class EventServiceProvider extends ServiceProvider
          * */
         UserDataSourceUpdatedOrCreated::class => [
             RetrieveDFSTaskIdForKeyword::class
-        ]
+        ],
+
+        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
+            // ... other providers
+            \SocialiteProviders\Instagram\InstagramExtendSocialite::class.'@handle',
+        ],
 
     ];
 

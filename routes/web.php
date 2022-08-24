@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FacebookAutomationController;
 use App\Http\Controllers\FacebookTrackingConfigurationController;
+use App\Http\Controllers\InstagramAutomationController;
 use App\Http\Controllers\InstagramTrackingConfigurationController;
 use App\Http\Controllers\KeywordTrackingController;
 use App\Models\FacebookTrackingConfiguration;
@@ -77,6 +78,8 @@ Route::get('socialite/google/redirect', [App\Http\Controllers\Auth\RegisterContr
 Route::get('socialite/facebook', [FacebookAutomationController::class, 'redirectFacebook'])->name('facebook.redirect');
 Route::get('socialite/facebook/redirect', [FacebookAutomationController::class, 'callbackFacebook'])->name('facebook.callback');
 
+Route::get('socialite/instagram', [InstagramAutomationController::class, 'redirectInstagram'])->name('instagram.redirect');
+Route::get('socialite/instagram/redirect', [InstagramAutomationController::class, 'callbackInstagram'])->name('instagram.callback');
 
 Route::view('documentation', 'documentation');
 Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');

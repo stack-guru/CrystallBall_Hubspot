@@ -23,6 +23,7 @@
         "laravel/ui": "^3.0",
         "rap2hpoutre/laravel-log-viewer": "^2.2",
         "sentry/sentry-laravel": "^2.10",
+        "socialiteproviders/instagram": "^4.1",
         "ventepos/bluesnap-php": "^0.3.5"
     },
     "require-dev": {
