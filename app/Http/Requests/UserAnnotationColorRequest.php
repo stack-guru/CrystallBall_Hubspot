@@ -39,6 +39,7 @@ class UserAnnotationColorRequest extends FormRequest
             'budget_tracking' => 'nullable|string|max:10',
             'keyword_tracking' => 'nullable|string|max:10',
             'facebook_tracking' => 'nullable|string|max:10',
+            'instagram_tracking' => 'nullable|string|max:10',
         ];
     }
 }

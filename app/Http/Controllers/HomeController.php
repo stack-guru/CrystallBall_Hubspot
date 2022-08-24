@@ -188,6 +188,10 @@ class HomeController extends Controller
             $user->is_ds_facebook_tracking_enabled = $request->is_ds_facebook_tracking_enabled;
             $user->save();
         }
+        if ($request->has('is_ds_instagram_tracking_enabled')) {
+            $user->is_ds_instagram_tracking_enabled = $request->is_ds_instagram_tracking_enabled;
+            $user->save();
+        }
 
         return ['user_services' => $user];
     }
