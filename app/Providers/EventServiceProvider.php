@@ -108,7 +108,7 @@ class EventServiceProvider extends ServiceProvider
 
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             // ... other providers
-            \SocialiteProviders\Instagram\InstagramExtendSocialite::class.'@handle',
+            \SocialiteProviders\InstagramBasic\InstagramBasicExtendSocialite::class.'@handle',
         ],
 
     ];

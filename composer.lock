@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc98c26a7f4593373bb8d3240799a92a",
+    "content-hash": "449edeb65b0a99529712f5bff3126b26",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4608,17 +4608,17 @@
             "time": "2021-11-16T19:20:42+00:00"
         },
         {
-            "name": "socialiteproviders/instagram",
+            "name": "socialiteproviders/instagram-basic",
             "version": "4.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/SocialiteProviders/Instagram.git",
-                "reference": "3d9c3d95eff84389a1b92f832b58dd765c24c5e5"
+                "url": "https://github.com/SocialiteProviders/InstagramBasic.git",
+                "reference": "e7b09b99662e3aaaea42f43282dec7a60c095171"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SocialiteProviders/Instagram/zipball/3d9c3d95eff84389a1b92f832b58dd765c24c5e5",
-                "reference": "3d9c3d95eff84389a1b92f832b58dd765c24c5e5",
+                "url": "https://api.github.com/repos/SocialiteProviders/InstagramBasic/zipball/e7b09b99662e3aaaea42f43282dec7a60c095171",
+                "reference": "e7b09b99662e3aaaea42f43282dec7a60c095171",
                 "shasum": ""
             },
             "require": {
@@ -4629,7 +4629,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "SocialiteProviders\\Instagram\\": ""
+                    "SocialiteProviders\\InstagramBasic\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4638,13 +4638,13 @@
             ],
             "authors": [
                 {
-                    "name": "Brian Faust",
-                    "email": "hello@brianfaust.de"
+                    "name": "Philipp Mochine",
+                    "email": "support@avidofood.com"
                 }
             ],
-            "description": "Instagram OAuth2 Provider for Laravel Socialite",
+            "description": "Instagram Basic Display OAuth2 Provider for Laravel Socialite",
             "support": {
-                "source": "https://github.com/SocialiteProviders/Instagram/tree/4.1.0"
+                "source": "https://github.com/SocialiteProviders/InstagramBasic/tree/4.1.0"
             },
             "time": "2020-12-01T23:10:59+00:00"
         },
