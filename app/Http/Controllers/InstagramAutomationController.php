@@ -14,7 +14,7 @@ class InstagramAutomationController extends Controller
 
     public function callbackInstagram(Request $request)
     {
-        $user = Socialite::driver('facebook')->user();
+        $user = Socialite::driver('instagrambasic')->user();
         dd($request->all(), $user);
     }
 }
