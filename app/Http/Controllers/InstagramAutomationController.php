@@ -9,7 +9,10 @@ class InstagramAutomationController extends Controller
 {
     public function redirectInstagram(Request $request)
     {
-        return Socialite::driver('instagrambasic')->redirect();
+        return Socialite::driver('instagrambasic')->scopes([
+            'instagram_graph_user_media',
+            'instagram_graph_user_profile'
+        ])->redirect();
     }
 
     public function callbackInstagram(Request $request)
