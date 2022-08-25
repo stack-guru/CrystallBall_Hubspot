@@ -8,23 +8,17 @@ use App\Http\Controllers\KeywordTrackingController;
 use App\Models\FacebookTrackingConfiguration;
 use App\Models\KeywordTrackingAnnotation;
 use App\Repositories\FacebookAutomationRepository;
+use App\Services\InstagramService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('test_fb', function () {
+Route::get('test_inst', function () {
 //    $service = new App\Services\FacebookService();
 //    $token = 'EAAF72DdAaSsBAO28LviJGzRzlZA92xwhaO7hiso79obMzDmQcZCfv1O6ezkItGZAfhzibnqEuZCN7z77br8L8QwvgMnViOgZCV5STn3ZAq5CQxHuzBV5BO3xWnXZB661KZCAknP6InSbOebTrc3ayEistZBdGwbyuZCZCuSiA80lryOyQRpaIoj4ToCD2Vu9TbZCULq8uZCDleZC9YGeyvBl8EZAXDBfbs485lzcPpwUlqRYX4WWaVJe0m4ZATaZAvnZAVqRwvydkZD';
 //    $page_id = '111145971667083';
 //    $res = $service->getFacebookPagePosts($token, $page_id);
 //    dd($res);
-    (new FacebookAutomationRepository())->handleFacebookAutomation();
-    die();
-    try{
-        (new FacebookAutomationRepository())->handleFacebookAutomation();
-    }
-    catch (Exception $exception){
-        dd($exception->getMessage());
-    }
+    (new InstagramService())->test();
 
 });
 
