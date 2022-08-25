@@ -58,6 +58,9 @@ class FacebookAutomationController extends Controller
             'pages_show_list',
             'pages_read_engagement',
             'public_profile',
+            'instagram_basic',
+            'pages_show_list',
+            'instagram_manage_insights',
 //            'ads_management',
 //            'ads_read',
         ])->redirect();
@@ -70,6 +73,7 @@ class FacebookAutomationController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
+            dd($user);
             if ($user){
                 /*
                  * Store facebook account, pages, ad account and other information if it does not exist
