@@ -9,7 +9,7 @@ class InstagramAutomationController extends Controller
 {
     public function redirectInstagram(Request $request)
     {
-        return Socialite::driver('facebook')->scopes([
+        return Socialite::driver('instagram')->scopes([
             'instagram_basic',
             'pages_show_list',
             'instagram_manage_insights',
