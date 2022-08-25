@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "449edeb65b0a99529712f5bff3126b26",
+    "content-hash": "d9737e34d64ecbba82480c67958b2f11",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4606,6 +4606,47 @@
                 }
             ],
             "time": "2021-11-16T19:20:42+00:00"
+        },
+        {
+            "name": "socialiteproviders/instagram",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Instagram.git",
+                "reference": "3d9c3d95eff84389a1b92f832b58dd765c24c5e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Instagram/zipball/3d9c3d95eff84389a1b92f832b58dd765c24c5e5",
+                "reference": "3d9c3d95eff84389a1b92f832b58dd765c24c5e5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.2 || ^8.0",
+                "socialiteproviders/manager": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Instagram\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Faust",
+                    "email": "hello@brianfaust.de"
+                }
+            ],
+            "description": "Instagram OAuth2 Provider for Laravel Socialite",
+            "support": {
+                "source": "https://github.com/SocialiteProviders/Instagram/tree/4.1.0"
+            },
+            "time": "2020-12-01T23:10:59+00:00"
         },
         {
             "name": "socialiteproviders/instagram-basic",
