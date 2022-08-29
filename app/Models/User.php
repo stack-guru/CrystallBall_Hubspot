@@ -530,4 +530,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(UserFacebookAccount::class, 'user_id');
     }
 
+    /*
+     * Instagram automation relationships
+     * */
+    /**
+     * @return HasMany
+     */
+    public function instagram_accounts(): HasMany
+    {
+        return $this->hasMany(InstagramAccount::class, 'user_id');
+    }
+
 }

@@ -469,4 +469,12 @@ class AnnotationController extends Controller
 
         return ["success" => true];
     }
+
+    public function user_total_annotations()
+    {
+        $annotations = Auth::user()->getTotalAnnotationsCount(1000000000000);
+        return [
+            'user_total_annotations' => $annotations,
+        ];
+    }
 }

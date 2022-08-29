@@ -1,26 +1,18 @@
 <?php
 
+use App\Http\Controllers\AnnotationController;
 use App\Http\Controllers\FacebookAutomationController;
 use App\Http\Controllers\FacebookTrackingConfigurationController;
 use App\Http\Controllers\InstagramAutomationController;
 use App\Http\Controllers\InstagramTrackingConfigurationController;
 use App\Http\Controllers\KeywordTrackingController;
-use App\Models\FacebookTrackingConfiguration;
-use App\Models\KeywordTrackingAnnotation;
-use App\Repositories\FacebookAutomationRepository;
 use App\Services\InstagramService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('test_inst', function () {
-//    $service = new App\Services\FacebookService();
-//    $token = 'EAAF72DdAaSsBAO28LviJGzRzlZA92xwhaO7hiso79obMzDmQcZCfv1O6ezkItGZAfhzibnqEuZCN7z77br8L8QwvgMnViOgZCV5STn3ZAq5CQxHuzBV5BO3xWnXZB661KZCAknP6InSbOebTrc3ayEistZBdGwbyuZCZCuSiA80lryOyQRpaIoj4ToCD2Vu9TbZCULq8uZCDleZC9YGeyvBl8EZAXDBfbs485lzcPpwUlqRYX4WWaVJe0m4ZATaZAvnZAVqRwvydkZD';
-//    $page_id = '111145971667083';
-//    $res = $service->getFacebookPagePosts($token, $page_id);
-//    dd($res);
-    (new InstagramService())->test();
-
-});
+// Route::get('test_inst', function () {
+//     $res = (new InstagramService())->getInstagramPosts('', '');
+// });
 
 
 /*
@@ -106,6 +98,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
     Route::view('notifications', 'ui/app');
     Route::view('analytics-and-business-intelligence', 'ui/app');
 
+    
+
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
 
@@ -172,6 +166,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
         Route::post('userService', [App\Http\Controllers\HomeController::class, 'userServices']);
         Route::get('annotation-categories', [App\Http\Controllers\AnnotationController::class, 'getCategories']);
 
+        Route::get('user_total_annotations', [AnnotationController::class, 'user_total_annotations']);
+
         Route::get('get-search-engine-list', [\App\Http\Controllers\DataForSeoController::class, 'getSearchEngineList']);
         Route::get('get-locations-list', [\App\Http\Controllers\DataForSeoController::class, 'getLocationList']);
         Route::get('search-locations-list', [\App\Http\Controllers\DataForSeoController::class, 'searchLocationList']);
@@ -185,6 +181,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
             Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'destroy']);
 
             Route::get('user-facebook-accounts-exists', [FacebookAutomationController::class, 'userFacebookAccountsExists']);
+            Route::get('user-instagram-accounts-exists', [InstagramAutomationController::class, 'userInstagramAccountsExists']);
 
             Route::get('user-keyword-configurations-for-keyword-tracking', [KeywordTrackingController::class, 'userKeywordConfigurationsTotal']);
 
