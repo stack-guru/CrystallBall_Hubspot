@@ -51,7 +51,17 @@ export default class CreateAnnotation extends React.Component {
                         // unlimited
                     }else{
                         if(response.data.user_total_annotations >= this.state.user.price_plan.annotations_count){
-                            swal.fire("Upgrade Your Plan!", "Annotations limit reached.", "error").then(function(){
+                            swal.fire({
+                                customClass: {
+                                    htmlContainer: "py-3",
+                                },
+                                icon: 'warning',
+                                showCloseButton: true,
+                                title: "You have reached your plan limits!",
+                                text: "Upgrade your plan to add more annotations.",
+                                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                confirmButtonText: "<a href='#' class='text-white'>Upgrade Now</a>",
+                            }).then(function(){
                                 window.location.href = '/settings/price-plans';
                             });
                         }
