@@ -23,8 +23,43 @@ export default class UploadAnnotation extends React.Component {
 
         this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
         this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
-    }
+        this.checkIfCanCreateAnnotation = this.checkIfCanCreateAnnotation.bind(this)
 
+    }
+    checkIfCanCreateAnnotation(){
+        HttpClient.get('user')
+        .then(user_response => {
+            this.setState({
+                user: user_response.data.user
+            })
+            HttpClient.get('user_total_annotations')
+            .then(response => {
+                if( this.state.user.price_plan.code == "free new" || this.state.user.price_plan.code == "Trial"){
+                    if(this.state.user.price_plan.annotations_count == 0){
+                        // unlimited
+                    }else{
+                        if(response.data.user_total_annotations >= this.state.user.price_plan.annotations_count){
+                            swal.fire({
+                                customClass: {
+                                    htmlContainer: "py-3",
+                                },
+                                icon: 'warning',
+                                showCloseButton: true,
+                                title: "You have reached your plan limits!",
+                                text: "Upgrade your plan to add more annotations.",
+                                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                confirmButtonText: "<a href='#' class='text-white'>Upgrade Now</a>",
+                            }).then(function(){
+                                window.location.href = '/settings/price-plans';
+                            });
+                        }
+                    }
+                    
+                }
+                
+            });
+        });
+    }
     handleSubmit(e) {
         e.preventDefault();
 
@@ -56,6 +91,7 @@ export default class UploadAnnotation extends React.Component {
         document.title = 'Upload CSV';
 
         this.loadUserAnnotationColors();
+        this.checkIfCanCreateAnnotation();
     }
     changeHandler(e) {
         this.setState({ [e.target.name]: e.target.value })
