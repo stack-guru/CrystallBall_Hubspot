@@ -182,7 +182,7 @@ export default class IndexPricingPlans extends React.Component {
                                             <ul className="fa-ul">
                                                 {
                                                     pricePlan.annotations_count > 0 ?
-                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span> {pricePlan.annotations_count} Annotations</li>
+                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span> Up to {pricePlan.annotations_count} Annotations</li>
                                                         :
                                                         <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span> Unlimited Annotations</li>
                                                 }

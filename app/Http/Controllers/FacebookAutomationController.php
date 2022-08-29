@@ -73,16 +73,25 @@ class FacebookAutomationController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
-            dd($user);
+
             if ($user){
+                
                 /*
-                 * Store facebook account, pages, ad account and other information if it does not exist
-                 * */
+                * Store facebook account, pages, ad account and other information if it does not exist
+                * */
                 $this->facebookAutomationRepository->setupFacebookAccount($user->token, $user->expiresIn, $user->id, $user->email, $user->avatar, $user->name);
-                return redirect()->to('data-source')->with('Facebook account connected.');
+                
+                /*
+                * Store instagram account, pages, ad account and other information if it does not exist
+                * */
+                // (new InstagramAccountController())->setupInstagramAccount($user->token);
+                
+                
+                return redirect()->to('data-source')->with('Account connected. You can enable the automation now.');
+
             }
             else{
-                return redirect()->to('data-source')->with('Facebook account not connected.');
+                return redirect()->to('data-source')->with('Account not connected.');
             }
         }catch (\Exception $exception){
             return redirect()->to('data-source')->with($exception->getMessage());

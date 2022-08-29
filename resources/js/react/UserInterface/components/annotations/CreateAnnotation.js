@@ -29,11 +29,38 @@ export default class CreateAnnotation extends React.Component {
             isBusy: false,
             isDirty: false,
             redirectTo: null,
+            user: null,
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
         this.setDefaultState = this.setDefaultState.bind(this)
         this.loadCategoriesList = this.loadCategoriesList.bind(this)
+        this.checkIfCanCreateAnnotation = this.checkIfCanCreateAnnotation.bind(this)
+    }
+
+    checkIfCanCreateAnnotation(){
+        HttpClient.get('user')
+        .then(user_response => {
+            this.setState({
+                user: user_response.data.user
+            })
+            HttpClient.get('user_total_annotations')
+            .then(response => {
+                if( this.state.user.price_plan.code == "free new" || this.state.user.price_plan.code == "Trial"){
+                    if(this.state.user.price_plan.annotations_count == 0){
+                        // unlimited
+                    }else{
+                        if(response.data.user_total_annotations >= this.state.user.price_plan.annotations_count){
+                            swal.fire("Upgrade Your Plan!", "Annotations limit reached.", "error").then(function(){
+                                window.location.href = '/settings/price-plans';
+                            });
+                        }
+                    }
+                    
+                }
+                
+            });
+        });
     }
 
     componentDidMount() {
@@ -44,6 +71,7 @@ export default class CreateAnnotation extends React.Component {
 
 
         this.loadCategoriesList();
+        this.checkIfCanCreateAnnotation();
     }
 
     loadCategoriesList(){

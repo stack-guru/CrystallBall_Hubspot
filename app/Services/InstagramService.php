@@ -62,4 +62,55 @@ class InstagramService
         dd($data_array);
     }
 
+
+    public function getInstagramAccount($page_access_token, $page_id)
+    {
+        // $page_access_token = "EAAF72DdAaSsBAB45JCZA4NFhiXJTpH0Wmze67dCVVJHMROqXRQledSF51bZBslkQKv5WgPbq9qjVFONpGmwZAj7JfCHv5lmZC03p8xAUOUleZBeVpdgxdMbczteRTDabx7ZAHUeuFt4pnDSZABdCDJOzanSDyHKjcbMa74pz8wZCfjuBsOo6ihIqjxlkZCCHMgZCLDEKfBvH3cwI7QXyZCJNtW76fKczvzu3EuZCEKFdZCNbclwTAl3C9Jdxs";
+        // $page_id = '111145971667083';
+        $response = $this->facebook->get('/' . $page_id . '?fields=instagram_business_account', $page_access_token); 
+        $response->decodeBody();
+        $data_array = $response->getDecodedBody();
+        if(isset($data_array['instagram_business_account']['id'])){
+            $insatagram_id = $data_array['instagram_business_account']['id'];
+            // get name, email or phone, avatar
+            $instagram_account = $this->facebook->get('/' . $insatagram_id . '?fields=name,username,profile_picture_url', $page_access_token); 
+            $instagram_account->decodeBody();
+            $instagram_account_data_array = $instagram_account->getDecodedBody();
+            if(isset($instagram_account_data_array['id'])){
+                return [
+                    'account_exists' => true,
+                    'instagram_account_id' => $insatagram_id,
+                    'name' => @$instagram_account_data_array['name'],
+                    'instagram_user_email' => @$instagram_account_data_array['username'],
+                    'instagram_avatar_url' => @$instagram_account_data_array['profile_picture_url'],
+                ];
+            }
+        }
+
+        return [];
+    }
+
+
+    public function getInstagramPosts($page_access_token, $instagram_account_id)
+    {
+        $page_access_token = "EAAF72DdAaSsBAB45JCZA4NFhiXJTpH0Wmze67dCVVJHMROqXRQledSF51bZBslkQKv5WgPbq9qjVFONpGmwZAj7JfCHv5lmZC03p8xAUOUleZBeVpdgxdMbczteRTDabx7ZAHUeuFt4pnDSZABdCDJOzanSDyHKjcbMa74pz8wZCfjuBsOo6ihIqjxlkZCCHMgZCLDEKfBvH3cwI7QXyZCJNtW76fKczvzu3EuZCEKFdZCNbclwTAl3C9Jdxs";
+        $instagram_account_id = '17841407061239713';
+
+
+        // $response = $this->facebook->get('/' . $instagram_account_id . '/media?fields=id,caption,like_count,comments_count,permalink&limit=1000', $page_access_token); 
+        $response = $this->facebook->get('/' . $instagram_account_id . '/media?fields=id,caption,like_count,comments_count,permalink,insights.metric(impressions)&limit=1000', $page_access_token);
+        $response->decodeBody();
+        $data_array = $response->getDecodedBody();
+        dd($data_array);
+
+        if(isset($data_array['data'])){
+            return $data_array['data'];
+        }
+
+        return [];
+
+    }
+
+
+
 }

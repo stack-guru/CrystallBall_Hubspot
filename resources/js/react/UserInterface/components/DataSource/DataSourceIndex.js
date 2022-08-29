@@ -45,6 +45,7 @@ export default class DataSourceIndex extends React.Component {
             editKeyword_keyword_id: '',
             editKeyword_keyword_configuration_id: '',
             userFacebookAccountsExists: false,
+            userInstagramAccountsExists: false,
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
@@ -951,7 +952,7 @@ a
                             */}
 
 
-                            <div className="col-md-6 mt-2">
+                            {/* <div className="col-md-6 mt-2">
                                <div className="d-flex border rounded flex-column justify-content-between"
                                     style={{minHeight: "180px"}}>
                                    <div>
@@ -996,9 +997,9 @@ a
 
                                    </div>
                                </div>
-                            </div>
+                            </div> */}
 
-                            {/* <div className="col-md-6 mt-2">
+                            <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
@@ -1036,13 +1037,13 @@ a
                                         </div>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
 
                             {/* 
                                 INSTAGRAM AUTOMATION
                             */}
 
-                            <div className="col-md-6 mt-2">
+                            {/* <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between"
                                      style={{minHeight: "180px"}}>
                                         <div className="d-flex mt-2 justify-content-between "
@@ -1085,9 +1086,9 @@ a
                                             </p>
                                         </div>
                                 </div>
-                            </div>
+                            </div> */}
                             
-                            {/* <div className="col-md-6 mt-2">
+                            <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between"
                                      style={{minHeight: "180px"}}>
                                     <div>
@@ -1128,7 +1129,7 @@ a
                                         </div>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
 
                             
 
@@ -1638,7 +1639,25 @@ a
         }, this).catch(err => {
             this.setState({isBusy: false, errors: err})
             status = false;
-        })
+        });
+
+        // userInstagramAccountsExists
+        this.setState({isBusy: true});
+        HttpClient.get('/data-source/user-instagram-accounts-exists', {}).then((resp) => {
+            if (resp.data.exists) {
+                this.setState({
+                    isBusy: false,
+                    errors: undefined,
+                    userInstagramAccountsExists: true
+                })
+            }
+        }, (err) => {
+            this.setState({isBusy: false, errors: err.response.data})
+            status = false;
+        }, this).catch(err => {
+            this.setState({isBusy: false, errors: err})
+            status = false;
+        });
     }
 
     updateUserService(e) {
@@ -1727,8 +1746,21 @@ a
                 this.updateUserService(e);
             } 
             if (e.target.name == 'is_ds_instagram_tracking_enabled' && e.target.checked) {
-                this.sectionToggler('instagram_tracking')
-                this.updateUserService(e);
+                if (this.state.userInstagramAccountsExists) {
+                    this.sectionToggler('instagram_tracking')
+                    this.updateUserService(e, this);
+                } else {
+                    swal.fire({
+                        customClass: {
+                            htmlContainer: "py-3",
+                        },
+                        showCloseButton: true,
+                        title: "Connect with Instagram",
+                        text: "Connect your Instagram account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                        confirmButtonText: "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-instagram'> </i>" + "Connect Instagram Account</a>",
+                    })
+                }
             } else if (e.target.name == 'is_ds_instagram_tracking_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
                 this.updateUserService(e);

@@ -1,12 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ProgressBar from 'react-progressbar';
+import HttpClient from './../utils/HttpClient'
 
 class header extends React.Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            user_total_annotations: 0,
+        };
 
+    }
+
+    componentDidMount(){
+        HttpClient.get('user_total_annotations')
+        .then(response => {
+            this.setState({ user_total_annotations: response.data.user_total_annotations });
+        });        
     }
 
     toggleSidebar(e) {
@@ -202,6 +213,7 @@ class header extends React.Component {
                                         </p>
                                     </div>
                                 </li>
+                                
                                 <li >
                                     <div className="header-profile-info">
                                         <ProgressBar completed={
@@ -210,9 +222,28 @@ class header extends React.Component {
                                                     ((this.props.user.google_analytics_properties_in_use_count / this.props.user.price_plan.google_analytics_property_count) * 100) || 10
                                                 )
                                                 : 10
-                                        }
-                                            color="#429A4C"
+                                            }
                                         />
+                                    </div>
+                                </li>
+                                <li className='mt-3'>
+                                    <div className="header-profile-info">
+                                        <p className="">Annotations:
+                                            <span className="float-right gaa-text-primary">
+                                                { this.state.user_total_annotations }
+                                                /
+                                                {
+                                                    (this.props.user.price_plan.annotations_count == 0) ? "∞" : this.props.user.price_plan.annotations_count
+                                                }
+                                            </span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li >
+                                    <div className="header-profile-info">
+                                        {
+                                            (this.props.user.price_plan.code == 'free new' || this.props.user.price_plan.code == 'Trial' || this.props.user.price_plan.code == null) ? <ProgressBar completed={ (this.state.user_total_annotations/this.props.user.price_plan.annotations_count) * 100 } /> : <ProgressBar completed={ 0 } />
+                                        }
                                     </div>
                                 </li>
                                 {this.props.user.price_plan.price == 0 ?

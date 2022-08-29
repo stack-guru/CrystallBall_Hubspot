@@ -7,18 +7,24 @@ use Laravel\Socialite\Facades\Socialite;
 
 class InstagramAutomationController extends Controller
 {
-    public function redirectInstagram(Request $request)
+
+    public function setupInstagramAutomation()
     {
-        return Socialite::driver('instagram')->scopes([
-            'instagram_basic',
-            'pages_show_list',
-            'instagram_manage_insights',
-        ])->redirect();
+        
     }
 
-    public function callbackInstagram(Request $request)
+    public function userInstagramAccountsExists(Request $request)
     {
-        $user = Socialite::driver('instagram')->user();
-        dd($request->all(), $user);
+        $instagram_accounts = \auth()->user()->instagram_accounts;
+        if ($instagram_accounts->count() > 0){
+            $exists = true;
+        }
+        else{
+            $exists = false;
+        }
+        return response()->json([
+            'exists' => $exists
+        ]);
     }
+    
 }
