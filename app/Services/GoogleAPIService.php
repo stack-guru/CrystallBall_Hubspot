@@ -113,6 +113,7 @@ class GoogleAPIService
         if (!array_key_exists('items', $respJson)) {
             return false;
         }
+        dd($respJson['items']);
 
         return $respJson['items'];
     }
