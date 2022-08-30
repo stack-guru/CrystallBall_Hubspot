@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Requests\GoogleAccountRequest;
+use App\Models\PricePlan;
+use App\Models\User;
 use App\Services\GoogleAPIService;
 
 class GoogleAccountController extends Controller
@@ -20,6 +22,10 @@ class GoogleAccountController extends Controller
     public function uiIndex()
     {
         $googleAccounts = GoogleAccount::ofCurrentUser()->get();
+        // if user's plan is trial or free new than only return 1 ga account with 1 property
+        if (Auth::user()->price_plan_id == PricePlan::TRIAL || Auth::user()->price_plan_id == PricePlan::CODE_FREE_NEW) {
+            $googleAccounts = $googleAccounts->first();
+        }
         return ['google_accounts' => $googleAccounts];
     }
 
