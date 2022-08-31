@@ -214,7 +214,6 @@ class FacebookAutomationRepository
 
                                 if ($response['status']) {
 
-
                                     // check if there is a new post
                                     if ((int)count($response['page_posts']) > (int)$facebook_page_posts_from_database->count()) {
                                         // check configuration if it's enabled to create annotation
@@ -305,7 +304,6 @@ class FacebookAutomationRepository
 
                 }
 
-
                 $this->updateFacebookAccountData($facebook_account);
 
             }
@@ -322,7 +320,7 @@ class FacebookAutomationRepository
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
                     'event_name' => 'New Post',
-                    'title' => $data['description'] ?? "N/A",
+                    'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
                     'show_at' => today()
                 ]);
@@ -334,7 +332,7 @@ class FacebookAutomationRepository
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
                     'event_name' => 'Likes Reached',
-                    'title' => $data['description'] ?? "N/A",
+                    'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
                     'show_at' => today()
                 ]);
@@ -346,7 +344,7 @@ class FacebookAutomationRepository
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
                     'event_name' => 'Comments Reached',
-                    'title' => $data['description'] ?? "N/A",
+                    'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
                     'show_at' => today()
                 ]);
@@ -358,7 +356,7 @@ class FacebookAutomationRepository
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
                     'event_name' => 'Views Reached',
-                    'title' => $data['description'] ?? "N/A",
+                    'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
                     'show_at' => today()
                 ]);
@@ -370,7 +368,7 @@ class FacebookAutomationRepository
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
                     'event_name' => 'Shares Reached',
-                    'title' => $data['description'] ?? "N/A",
+                    'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
                     'show_at' => today()
                 ]);
