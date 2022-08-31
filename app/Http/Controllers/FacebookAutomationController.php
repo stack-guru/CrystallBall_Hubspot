@@ -73,7 +73,6 @@ class FacebookAutomationController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
-            dd($user);
 
             if ($user){
                 
