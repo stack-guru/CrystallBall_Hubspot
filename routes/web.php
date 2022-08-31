@@ -3,16 +3,20 @@
 use App\Http\Controllers\AnnotationController;
 use App\Http\Controllers\FacebookAutomationController;
 use App\Http\Controllers\FacebookTrackingConfigurationController;
+use App\Http\Controllers\InstagramAccountController;
 use App\Http\Controllers\InstagramAutomationController;
 use App\Http\Controllers\InstagramTrackingConfigurationController;
 use App\Http\Controllers\KeywordTrackingController;
+use App\Repositories\FacebookAutomationRepository;
 use App\Services\InstagramService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('test_inst', function () {
-//     $res = (new InstagramService())->getInstagramPosts('', '');
-// });
+Route::get('test_inst', function () {
+    $token = 'EAAF72DdAaSsBAFvrZCz6E4shygXZBN2ZBCCHrCEGtZAtqOTT7SHZAjdA3wHVhPHAlZCW75m3w75s13c5468xXLi3aUH8qW0322PWX7yY4bSdu3vXAF9mDmCessxk03MC5s5zZC4z2sGmP1KVzUEQWalqwI8KZBMj8Nvy0VUbPsR1RKvmUcttW8snbNtCcjTYZAbYAxapgEUdtJ06bK6GZCEq5V';
+    // (new FacebookAutomationRepository())->setupFacebookAccount($token, 'user->expiresIn', 'user->id', 'user->email', 'user->avatar', 'user->name');
+    // (new InstagramAccountController())->setupInstagramAccount($token);
+});
 
 
 /*

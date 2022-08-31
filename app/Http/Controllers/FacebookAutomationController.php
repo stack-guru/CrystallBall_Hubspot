@@ -73,6 +73,7 @@ class FacebookAutomationController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
+            dd($user);
 
             if ($user){
                 
@@ -84,7 +85,7 @@ class FacebookAutomationController extends Controller
                 /*
                 * Store instagram account, pages, ad account and other information if it does not exist
                 * */
-                // (new InstagramAccountController())->setupInstagramAccount($user->token);
+                (new InstagramAccountController())->setupInstagramAccount($user->token);
                 
                 
                 return redirect()->to('data-source')->with('Account connected. You can enable the automation now.');
