@@ -40,7 +40,6 @@ class GoogleAnalyticsPropertyController extends Controller
         } else {
             $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->ofCurrentUser()->get();
         }
-        dd($googleAnalyticsProperties);
         // if user's plan is trial or free new than only return 1 ga account with 1 property
         
         // if (Auth::user()->price_plan_id == PricePlan::TRIAL || Auth::user()->price_plan_id == PricePlan::CODE_FREE_NEW) {
