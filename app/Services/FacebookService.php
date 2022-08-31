@@ -74,12 +74,12 @@ class FacebookService
     public function getFacebookPagePosts($user_token, $page_id): array
     {
         try {
-            $page_posts_response = $this->facebook->get($page_id.'/feed?fields=shares,likes.limit(0).summary(true),comments.limit(0).summary(true),attachments', $user_token);
+            $page_token = $this->getPageAccessTokenByUserToken($page_id, $user_token);
+            $page_posts_response = $this->facebook->get($page_id.'/feed?fields=shares,likes.limit(0).summary(true),comments.limit(0).summary(true),attachments', $page_token);
             $page_posts_response_obj = $page_posts_response;
             $page_posts_response_obj->decodeBody();
             $page_posts_data_array = $page_posts_response_obj->getDecodedBody();
 
-            $page_token = $this->getPageAccessTokenByUserToken($page_id, $user_token);
 
             return [
                 'status' => true,
