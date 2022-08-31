@@ -45,7 +45,7 @@ class InstagramAccountController extends Controller
                     );
 
                     $instagram_posts = $this->getInstagramAccountPosts($account_page->page_access_token, @$instagram_account['instagram_account_id']);
-
+                    
                     foreach($instagram_posts as $instagram_post){
                         InstagramPost::updateOrCreate(
                             [
@@ -58,12 +58,13 @@ class InstagramAccountController extends Controller
                                 'title' => @$instagram_post['title'],
                                 'description' => @$instagram_post['description'],
                                 'post_url' => @$instagram_post['post_url'],
-                                'views_count' => @$instagram_post['views_count'],
-                                'likes_count' => @$instagram_post['likes_count'],
-                                'comments_count' => @$instagram_post['comments_count'],
-                                'shares_count' => @$instagram_post['shares_count'],
+                                'views_count' => @$instagram_post['views_count'] ?? 0,
+                                'likes_count' => @$instagram_post['likes_count'] ?? 0,
+                                'comments_count' => @$instagram_post['comments_count'] ?? 0,
+                                'shares_count' => @$instagram_post['shares_count'] ?? 0,
                             ]
                         );
+                        
                     }
 
                 }
@@ -94,17 +95,23 @@ class InstagramAccountController extends Controller
         $service = new InstagramService();
 
         $response = $service->getInstagramPosts($page_access_token, $instagram_account_id);
+        $posts = [];
 
-        return [
-            'title' => @$response['title'],
-            'description' => @$response['description'],
-            'post_url' => @$response['post_url'],
-            'views_count' => @$response['insights']['data'][0]['values'][0]['value'],
-            'likes_count' => @$response['like_count'],
-            'comments_count' => @$response['comments_count'],
-            'shares_count' => @$response['shares_count'],
-        ];
-        
+        foreach ($response as $post) {
+            $post_data = [
+                'id' => @$post['id'],
+                'title' => '',
+                'description' => @$post['caption'],
+                'post_url' => @$post['permalink'],
+                'views_count' => @$post['insights']['data'][0]['values'][0]['value'] ?? 0,
+                'likes_count' => @$post['like_count'] ?? 0,
+                'comments_count' => @$post['comments_count'] ?? 0,
+                'shares_count' => 0,
+            ];
+            array_push($posts, $post_data);
+        }
+
+        return $posts;
     }
 
 }

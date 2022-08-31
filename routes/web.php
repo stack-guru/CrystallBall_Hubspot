@@ -14,8 +14,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('test_inst', function () {
     $token = 'EAAF72DdAaSsBAFvrZCz6E4shygXZBN2ZBCCHrCEGtZAtqOTT7SHZAjdA3wHVhPHAlZCW75m3w75s13c5468xXLi3aUH8qW0322PWX7yY4bSdu3vXAF9mDmCessxk03MC5s5zZC4z2sGmP1KVzUEQWalqwI8KZBMj8Nvy0VUbPsR1RKvmUcttW8snbNtCcjTYZAbYAxapgEUdtJ06bK6GZCEq5V';
-    // (new FacebookAutomationRepository())->setupFacebookAccount($token, 'user->expiresIn', 'user->id', 'user->email', 'user->avatar', 'user->name');
-    // (new InstagramAccountController())->setupInstagramAccount($token);
+    try{
+        (new FacebookAutomationRepository())->setupFacebookAccount($token, '', '367561972235394', 'ameer.hamza.official.mail@gmail.com', 'https://graph.facebook.com/v3.3/367561972235394/picture?type=normal', 'Ameer Hamza');
+        (new InstagramAccountController())->setupInstagramAccount($token);
+    }
+    catch(Exception $exception){
+        dd($exception->getMessage());
+    }
 });
 
 

@@ -45,15 +45,10 @@ class FacebookAutomationRepository
      */
     public function setupFacebookAccount($user_token, $expiresIn, $facebook_account_id, $email, $avatar, $name)
     {
-        if ($this->userFacebookAccountExistsByFacebookAccountId($facebook_account_id, \auth()->user()->facebook_accounts)){
-        }
-        else{
-            // store account
-            $user_facebook_account = $this->storeFacebookAccount($user_token, $expiresIn, $facebook_account_id, $email, $avatar, $name); // returns obj
-            if ($user_facebook_account){
-                // store facebook pages and posts
-                $this->storeFacebookPages($user_token, $user_facebook_account->id);
-            }
+        $user_facebook_account = $this->storeFacebookAccount($user_token, $expiresIn, $facebook_account_id, $email, $avatar, $name); // returns obj
+        if ($user_facebook_account){
+            // store facebook pages and posts
+            $this->storeFacebookPages($user_token, $user_facebook_account->id);
         }
     }
 
@@ -66,14 +61,24 @@ class FacebookAutomationRepository
      * @return UserFacebookAccount|false
      */
     public function storeFacebookAccount($token, $expiresIn, $facebook_account_id, $email, $avatar, $name){
-        $user_facebook_account = new UserFacebookAccount(); // creating new account
-        $user_facebook_account->user_id = \auth()->user()->id;
-        $user_facebook_account->name = $name;
-        $user_facebook_account->token = $token;
-        $user_facebook_account->token_expires_at = $expiresIn;
-        $user_facebook_account->facebook_account_id = $facebook_account_id;
-        $user_facebook_account->facebook_user_email = $email;
-        $user_facebook_account->facebook_avatar_url = $avatar;
+        $user_facebook_account = UserFacebookAccount::where('facebook_account_id', $facebook_account_id)->where('user_id', \auth()->user()->id)->first();
+        if($user_facebook_account){
+            $user_facebook_account->token = $token;
+            $user_facebook_account->token_expires_at = $expiresIn;
+            $user_facebook_account->facebook_user_email = $email;
+            $user_facebook_account->facebook_avatar_url = $avatar;
+        }
+        else{
+            $user_facebook_account = new UserFacebookAccount();
+            $user_facebook_account->user_id = \auth()->user()->id;
+            $user_facebook_account->name = $name;
+            $user_facebook_account->token = $token;
+            $user_facebook_account->token_expires_at = $expiresIn;
+            $user_facebook_account->facebook_account_id = $facebook_account_id;
+            $user_facebook_account->facebook_user_email = $email;
+            $user_facebook_account->facebook_avatar_url = $avatar;
+        }
+        
         if ($user_facebook_account->save()){
             return $user_facebook_account;
         }
@@ -93,7 +98,7 @@ class FacebookAutomationRepository
                 $page_name = $data['name'];
                 $page_id = $data['id'];
 
-                $user_facebook_page = UserFacebookPage::where('facebook_page_id', $page_id)->first();
+                $user_facebook_page = UserFacebookPage::where('facebook_page_id', $page_id)->where('user_facebook_account_id', $user_facebook_account_id)->first();
                 if ($user_facebook_page) {
                     $user_facebook_page->facebook_page_name = $page_name;
                     $user_facebook_page->page_access_token = $page_access_token;
@@ -125,7 +130,7 @@ class FacebookAutomationRepository
 
                 $page_post_impressions = $this->facebookService->getPagePostImpressions($post['id'], $response['page_token']);
 
-                $facebook_page_post = UserFacebookPagePost::where('facebook_post_id', @$post['id'])->first();
+                $facebook_page_post = UserFacebookPagePost::where('facebook_post_id', @$post['id'])->where('user_facebook_page_id', $user_facebook_page_id)->first();
                 if ($facebook_page_post) {
                     $facebook_page_post->title = $title;
                     $facebook_page_post->description = $description;
