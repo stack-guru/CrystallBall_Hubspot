@@ -93,15 +93,12 @@ class InstagramService
 
     public function getInstagramPosts($page_access_token, $instagram_account_id)
     {
-        $page_access_token = "EAAF72DdAaSsBAB45JCZA4NFhiXJTpH0Wmze67dCVVJHMROqXRQledSF51bZBslkQKv5WgPbq9qjVFONpGmwZAj7JfCHv5lmZC03p8xAUOUleZBeVpdgxdMbczteRTDabx7ZAHUeuFt4pnDSZABdCDJOzanSDyHKjcbMa74pz8wZCfjuBsOo6ihIqjxlkZCCHMgZCLDEKfBvH3cwI7QXyZCJNtW76fKczvzu3EuZCEKFdZCNbclwTAl3C9Jdxs";
-        $instagram_account_id = '17841407061239713';
+        // $page_access_token = "EAAF72DdAaSsBAB45JCZA4NFhiXJTpH0Wmze67dCVVJHMROqXRQledSF51bZBslkQKv5WgPbq9qjVFONpGmwZAj7JfCHv5lmZC03p8xAUOUleZBeVpdgxdMbczteRTDabx7ZAHUeuFt4pnDSZABdCDJOzanSDyHKjcbMa74pz8wZCfjuBsOo6ihIqjxlkZCCHMgZCLDEKfBvH3cwI7QXyZCJNtW76fKczvzu3EuZCEKFdZCNbclwTAl3C9Jdxs";
+        // $instagram_account_id = '17841407061239713';
 
-
-        // $response = $this->facebook->get('/' . $instagram_account_id . '/media?fields=id,caption,like_count,comments_count,permalink&limit=1000', $page_access_token); 
         $response = $this->facebook->get('/' . $instagram_account_id . '/media?fields=id,caption,like_count,comments_count,permalink,insights.metric(impressions)&limit=1000', $page_access_token);
         $response->decodeBody();
         $data_array = $response->getDecodedBody();
-        dd($data_array);
 
         if(isset($data_array['data'])){
             return $data_array['data'];
