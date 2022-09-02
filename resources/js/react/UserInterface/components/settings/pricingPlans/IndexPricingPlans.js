@@ -247,13 +247,13 @@ export default class IndexPricingPlans extends React.Component {
                                                                 <PopoverHeader>{pricePlan.name}</PopoverHeader>
                                                                 <PopoverBody>
                                                                     Website Monitoring: {pricePlan.web_monitor_count} URLs<br />
-                                                                    Weather Alerts: {pricePlan.owm_city_count == 0 ? 'unlimited' : pricePlan.owm_city_count} cities<br />
-                                                                    News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'unlimited' : pricePlan.google_alert_keyword_count} keywords<br />
+                                                                    Weather Alerts: {pricePlan.owm_city_count == 0 ? 'Unlimited' : pricePlan.owm_city_count} cities<br />
+                                                                    News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : pricePlan.google_alert_keyword_count} keywords<br />
                                                                     Retail Marketing Dates<br />
                                                                     Google Updates<br />
                                                                     WordPress Updates<br />
                                                                     Holidays<br />
-                                                                    Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'unlimited' : pricePlan.keyword_tracking_count} credits
+                                                                    Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count} Credits
                                                                 </PopoverBody>
                                                             </UncontrolledPopover>
                                                         </li>
@@ -269,8 +269,8 @@ export default class IndexPricingPlans extends React.Component {
                                                                 <PopoverHeader>{pricePlan.name}</PopoverHeader>
                                                                 <PopoverBody>
                                                                     Website Monitoring: {pricePlan.web_monitor_count} URLs<br />
-                                                                    Weather Alerts: {pricePlan.owm_city_count == 0 ? 'unlimited' : pricePlan.owm_city_count} cities<br />
-                                                                    News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'unlimited' : pricePlan.google_alert_keyword_count} keywords<br />
+                                                                    Weather Alerts: {pricePlan.owm_city_count == 0 ? 'Unlimited' : pricePlan.owm_city_count} cities<br />
+                                                                    News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : pricePlan.google_alert_keyword_count} keywords<br />
                                                                     Retail Marketing Dates<br />
                                                                     Google Updates<br />
                                                                     WordPress Updates<br />
