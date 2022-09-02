@@ -252,7 +252,8 @@ export default class IndexPricingPlans extends React.Component {
                                                                     Retail Marketing Dates<br />
                                                                     Google Updates<br />
                                                                     WordPress Updates<br />
-                                                                    Holidays
+                                                                    Holidays<br />
+                                                                    Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'unlimited' : pricePlan.keyword_tracking_count} credits
                                                                 </PopoverBody>
                                                             </UncontrolledPopover>
                                                         </li>
