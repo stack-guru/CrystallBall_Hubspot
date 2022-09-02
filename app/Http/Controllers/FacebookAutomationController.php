@@ -59,7 +59,6 @@ class FacebookAutomationController extends Controller
             'pages_read_engagement',
             'public_profile',
             'instagram_basic',
-            'pages_show_list',
             'instagram_manage_insights',
 //            'ads_management',
 //            'ads_read',
