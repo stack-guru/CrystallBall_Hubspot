@@ -41,6 +41,7 @@ import { IsDomain } from './helpers/CommonFunctions';
 import PromotionPopup from './utils/PromotionPopup';
 import UserRegistrationOffer from './utils/UserRegistrationOffer';
 import TimerPromotionPopup from './utils/TimerPromotionPopup';
+import CustomPricePlan from './components/settings/pricingPlans/CustomPricePlan'
 
 class Main extends React.Component {
 
@@ -192,6 +193,9 @@ class Main extends React.Component {
                             <Route exact path="/settings/user/:id?/edit" refresh={true}
                                 render={(routeParams) => <EditUser routeParams={routeParams} />}
                             />
+                            <Route exact path="/settings/custom-price-plan/:code?" refresh={true} render={(routeParams) =>
+                                <CustomPricePlan routeParams={routeParams} currentPricePlan={this.state.user.price_plan} user={this.state.user} />}
+                            ></Route>
                         </Switch>
                     </main>
                     <Footer />

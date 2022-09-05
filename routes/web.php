@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PricePlanController;
 use App\Http\Controllers\AnnotationController;
 use App\Http\Controllers\FacebookAutomationController;
 use App\Http\Controllers\FacebookTrackingConfigurationController;
@@ -115,6 +116,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
         Route::view('change-password', 'ui/app')->name('settings.change-password.index');
         Route::view('payment-detail/create', 'ui/app');
         Route::view('price-plans', 'ui/app')->name('settings.price-plans');
+        Route::view('custom-price-plan/{code}', 'ui/app')->name('settings.custom-price-plan');
+        
         Route::get('price-plans/payment', [App\Http\Controllers\PaymentController::class, 'show'])->name('settings.price-plan.payment');
         Route::view('payment-history', 'ui/app');
 
@@ -215,6 +218,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
         });
 
         Route::group(['prefix' => 'settings'], function () {
+            Route::get('price-plan-detail', [PricePlanController::class, 'customPricePlanDetailsByCode']);
 
             Route::post('price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');
             Route::get('price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
@@ -247,6 +251,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
         });
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
+
     });
 
     Route::get('/beaming/auth', function () {

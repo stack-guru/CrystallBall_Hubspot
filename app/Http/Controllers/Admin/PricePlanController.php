@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PricePlanRequest;
 use App\Models\PricePlan;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class PricePlanController extends Controller
@@ -115,4 +116,20 @@ class PricePlanController extends Controller
 
         return redirect()->route('admin.price-plan.index');
     }
+
+    public function customPricePlanDetailsByCode(Request $request)
+    {
+        $request->validate([
+            'code' => 'required'
+        ]);
+        $plan = PricePlan::where('custom_plan_code', $request->code)->first();
+        if($plan){
+            return [
+                'price_plans' => new Collection([$plan]),
+            ];
+        }else{
+            abort(404, 'Plan not found');
+        }
+    }
+
 }
