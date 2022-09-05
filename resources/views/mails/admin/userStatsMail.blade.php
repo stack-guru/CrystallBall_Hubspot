@@ -16,8 +16,26 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -97,33 +115,33 @@
                                                 <th>User Email</th>
                                             </tr>
                                         </thead>
-    
+
                                         <tbody>
                                             @if (isset($data['yesterday_registration_users']))
                                                 @foreach ($data['yesterday_registration_users'] as $user)
-                                                <tr>
-                                                    <td>
-                                                        {{ @$user['name'] }}
-                                                    </td>
-                                                    <td>
-                                                        {{ @$user['email'] }}
-                                                    </td>
-                                                </tr>    
-                                                @endforeach    
+                                                    <tr>
+                                                        <td>
+                                                            {{ @$user['name'] }}
+                                                        </td>
+                                                        <td>
+                                                            {{ @$user['email'] }}
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             @else
                                                 <tr>
                                                     <td colspan="2">
                                                         No new registrations yesterday..
                                                     </td>
-                                                </tr>    
+                                                </tr>
                                             @endif
-                                            
+
                                         </tbody>
-    
+
                                     </table>
                                 </div>
 
-                                
+
                                 <div class="my-5">
                                     <h2>New Paying Users Yesterday</h2>
                                     <table class="table table-borderd table-striped">
@@ -135,39 +153,39 @@
                                                 <th>Charged Price</th>
                                             </tr>
                                         </thead>
-    
+
                                         <tbody>
                                             @if (isset($data['new_paying_users_yesterday']))
                                                 @foreach ($data['new_paying_users_yesterday'] as $user)
-                                                <tr>
-                                                    <td>
-                                                        {{ $user->name ?? '' }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $user->email ?? '' }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $user->pricePlan->name ?? '' }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $user->paymentDetail->charged_price ?? '' }}
-                                                    </td>
-                                                </tr>    
-                                                @endforeach    
+                                                    <tr>
+                                                        <td>
+                                                            {{ $user->name ?? '' }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $user->email ?? '' }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $user->pricePlan->name ?? '' }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $user->paymentDetail->charged_price ?? '' }}
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             @else
                                                 <tr>
                                                     <td colspan="4">
                                                         No new paying users yesterday..
                                                     </td>
-                                                </tr>    
+                                                </tr>
                                             @endif
-                                            
+
                                         </tbody>
-    
+
                                     </table>
                                 </div>
 
-                                
+
                             </div>
 
                         </div>
