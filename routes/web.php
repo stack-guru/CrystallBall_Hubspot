@@ -8,11 +8,20 @@ use App\Http\Controllers\InstagramAccountController;
 use App\Http\Controllers\InstagramAutomationController;
 use App\Http\Controllers\InstagramTrackingConfigurationController;
 use App\Http\Controllers\KeywordTrackingController;
+use App\Mail\TestMail;
 use App\Repositories\FacebookAutomationRepository;
 use App\Services\InstagramService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
+Route::get('testemail', function(){
+    try{
+        Mail::to('goodblessnoman@gmail.com')->send(new TestMail());
+    }catch(Exception $e){
+        dd($e->getMessage());
+    }
+});
 
 
 
