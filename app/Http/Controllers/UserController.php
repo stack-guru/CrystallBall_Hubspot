@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Requests\UserRequest;
+use App\Mail\DailyUserStatsMail;
 use App\Mail\UserInviteMail;
+use App\Models\PricePlanSubscription;
 use App\Models\User;
 use App\Models\UserGaAccount;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
@@ -180,4 +185,70 @@ class UserController extends Controller
     {
         return ['team_names' => DB::table('users')->where('user_id', Auth::id())->whereNotNull('team_name')->select('team_name')->distinct()->get()];
     }
+
+    public function sendEmailWithUserStatsToAdmin()
+    {
+        $users  = User::with([
+            'pricePlan',
+            'lastPopupOpenedChromeExtensionLog',
+            'lastAnnotationButtonClickedChromeExtensionLog',
+        ])
+            ->withCount('last90DaysApiAnnotationCreatedLogs')
+            ->withCount('last90DaysNotificationLogs')
+            ->withCount('last90DaysLoginLogs')
+            ->orderBy('created_at', 'DESC')->get();
+
+        $active_users_in_90_days = 0;
+        $last6MonthsActiveUsers = 0;
+
+        foreach ($users as $user) {
+            if (
+                $user->last90_days_popup_opened_chrome_extension_logs_count
+                || $user->last90_days_annotation_button_clicked_chrome_extension_logs_count
+                || $user->last90_days_api_annotation_created_logs_count
+                || $user->last90_days_notification_logs_count
+                || @$user->pricePlan->price
+                || $user->last90_days_login_logs_count
+            ) {
+                $active_users_in_90_days++;
+                $last6MonthsActiveUsers++;
+            }
+        }
+
+        $active_users_yesterday =  (new DashboardController())->active_users_yesterday();
+        $active_users_in_30_days =  (new DashboardController())->active_users_in_30_days();
+        $active_users_in_60_days =  (new DashboardController())->active_users_in_60_days();
+
+        $total_registration_count = User::count();
+        $yesterday_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->count();
+        $yesterday_registration_users = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get()->pluck('name', 'email')->toArray();
+        $last_week_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(7)->format('Y-m-d'))->count();
+        $current_month_registration_count = User::where('created_at', '>=', Carbon::now()->startOfMonth()->format('Y-m-d'))->count();
+        $previous_month_registration_count = User::where('created_at', '>=', Carbon::now()->subMonth(1)->startOfMonth()->format('Y-m-d'))->where('created_at', '<=', Carbon::now()->subMonth(1)->endOfMonth()->format('Y-m-d'))->count();
+        
+        $new_paying_users_yesterday = PricePlanSubscription::with('user', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
+        $new_paying_users_yesterday_count = $new_paying_users_yesterday->count();
+
+        $data = [
+            'active_users_yesterday' => $active_users_yesterday,
+            'active_users_in_30_days' => $active_users_in_30_days,
+            'active_users_in_60_days' => $active_users_in_60_days,
+            'total_registration_count' => $total_registration_count,
+            'yesterday_registration_count' => $yesterday_registration_count,
+            'yesterday_registration_users' => $yesterday_registration_users,
+            'last_week_registration_count' => $last_week_registration_count,
+            'current_month_registration_count' => $current_month_registration_count,
+            'previous_month_registration_count' => $previous_month_registration_count,
+            'new_paying_users_yesterday' => $new_paying_users_yesterday,
+            'new_paying_users_yesterday_count' => $new_paying_users_yesterday_count,
+        ];
+
+        try {
+            Mail::to('fernando@app2you.co.il')->send(new DailyUserStatsMail($data));
+        } catch (\Exception $e) {
+            Log::error($e);
+        }
+        
+    }
+
 }

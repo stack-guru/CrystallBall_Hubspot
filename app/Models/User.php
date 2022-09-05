@@ -380,6 +380,13 @@ class User extends Authenticatable implements MustVerifyEmail
             ->orderBy('created_at', 'DESC');
     }
 
+    public function yesterdayLoginLogs()
+    {
+        return $this->hasMany('App\Models\LoginLog')
+            ->where('created_at', '>=', Carbon::now()->subDays(1))
+            ->orderBy('created_at', 'DESC');
+    }
+
     public function last60DaysLoginLogs()
     {
         return $this->hasMany('App\Models\LoginLog')
@@ -405,6 +412,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\ApiLog')
             ->where('event_name', ApiLog::ANNOTATION_CREATED)
             ->where('created_at', '>=', Carbon::now()->subDays(30))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function yesterdayApiAnnotationCreatedLogs()
+    {
+        return $this->hasMany('App\Models\ApiLog')
+            ->where('event_name', ApiLog::ANNOTATION_CREATED)
+            ->where('created_at', '>=', Carbon::now()->subDays(1))
             ->orderBy('created_at', 'DESC');
     }
 
@@ -485,6 +500,13 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\NotificationLog')
             ->where('created_at', '>=', Carbon::now()->subDays(90))
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function yesterdayNotificationLogs()
+    {
+        return $this->hasMany('App\Models\NotificationLog')
+            ->where('created_at', '>=', Carbon::now()->subDays(1))
             ->orderBy('created_at', 'DESC');
     }
 

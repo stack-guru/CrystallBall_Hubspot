@@ -48,7 +48,8 @@ class PricePlanRequest extends FormRequest
             'google_alert_keyword_count' => 'nullable|numeric',
             'google_analytics_property_count' => 'nullable|numeric',
             'yearly_discount_percent' => 'nullable|numeric|min:0|max:100',
-            'sort_rank' => 'nullable|numeric'
+            'sort_rank' => 'nullable|numeric',
+            'custom_plan_code' => 'nullable',
         ];
     }
 }

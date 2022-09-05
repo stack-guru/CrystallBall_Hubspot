@@ -72,6 +72,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Custom Plan Code</label>
+                            <input type="text" name="custom_plan_code" id="custom_plan_code" class="form-control" value="{{ $pricePlan->custom_plan_code }}" readonly />
+                            <small>Send this URL to your user: <span class="text-primary" style="cursor: copy;" onclick="window.prompt('Copy to clipboard: Ctrl+C, Enter', this.innerText);">{{ url('settings/custom-price-plan/' . $pricePlan->custom_plan_code) }}</span></small>
+                        </div>
+
+                        <div class="form-group">
                             <label>Has manual add?</label>
                             <input type="checkbox" name="has_manual_add" id="hasManualAdd" class="form-control" @if($pricePlan->has_manual_add) checked @endif />
                         </div>

@@ -53,7 +53,7 @@ class DashboardController extends Controller
             ->with('active_users_of_all_time', $active_users_of_all_time);
     }
 
-    private function active_users_in_60_days()
+    public function active_users_in_60_days()
     {
         $users  = User::with([
             'pricePlan',
@@ -82,7 +82,7 @@ class DashboardController extends Controller
         return $last60DaysActiveUsers;
     }
 
-    private function active_users_in_30_days()
+    public function active_users_in_30_days()
     {
         $users  = User::with([
             'pricePlan',
@@ -138,6 +138,35 @@ class DashboardController extends Controller
             }
         }
         return $allTimeActiveUsers;
+    }
+
+    public function active_users_yesterday()
+    {
+        $users  = User::with([
+            'pricePlan',
+            'lastPopupOpenedChromeExtensionLog',
+            'lastAnnotationButtonClickedChromeExtensionLog',
+        ])
+            ->withCount('yesterdayApiAnnotationCreatedLogs')
+            ->withCount('yesterdayNotificationLogs')
+            ->withCount('yesterdayLoginLogs')
+            ->orderBy('created_at', 'DESC')->get();
+
+        $yesterdayActiveUsers = 0;
+
+        foreach ($users as $user) {
+            if (
+                $user->yesterday_popup_opened_chrome_extension_logs_count
+                || $user->yesterday_annotation_button_clicked_chrome_extension_logs_count
+                || $user->yesterday_api_annotation_created_logs_count
+                || $user->yesterday_notification_logs_count
+                || @$user->pricePlan->price
+                || $user->yesterday_login_logs_count
+            ) {
+                $yesterdayActiveUsers++;
+            }
+        }
+        return $yesterdayActiveUsers;
     }
 
 }

@@ -67,6 +67,13 @@
                             <input type="number" name="yearly_discount_percent" id="yearly_discount_percent" class="form-control" />
                         </div>
 
+
+                        <div class="form-group">
+                            <label>Custom Plan Code</label>
+                            <input type="text" name="custom_plan_code" id="custom_plan_code" class="form-control" />
+                        </div>
+
+
                         <div class="form-group">
                             <label>Has manual add?</label>
                             <input type="checkbox" name="has_manual_add" id="hasManualAdd" class="form-control" />
