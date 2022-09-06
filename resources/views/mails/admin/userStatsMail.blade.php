@@ -43,9 +43,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+                <span class="text-primary">Activity and Traction</span>
             </div>
         </nav>
 
@@ -54,7 +52,6 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card">
-                            <div class="card-header">User Stats For Today</div>
 
                             <div class="card-body">
                                 <table class="table table-borderd table-striped">
@@ -63,6 +60,7 @@
                                             <th>Active Users Yesterday</th>
                                             <th>Active Users 30 Days</th>
                                             <th>Active Users 60 Days</th>
+                                            <th>Active Users 90 Days</th>
                                             <th>Total Registrations</th>
                                             <th>Yesterday Registrations</th>
                                             <th>Last Week Registrations</th>
@@ -82,6 +80,9 @@
                                             </td>
                                             <td>
                                                 {{ @$data['active_users_in_60_days'] }}
+                                            </td>
+                                            <td>
+                                                {{ @$data['active_users_in_90_days'] }}
                                             </td>
                                             <td>
                                                 {{ @$data['total_registration_count'] }}
@@ -111,8 +112,8 @@
                                     <table class="table table-borderd table-striped">
                                         <thead>
                                             <tr>
-                                                <th>User Name</th>
-                                                <th>User Email</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
                                             </tr>
                                         </thead>
 
@@ -147,9 +148,9 @@
                                     <table class="table table-borderd table-striped">
                                         <thead>
                                             <tr>
-                                                <th>User Name</th>
-                                                <th>User Email</th>
-                                                <th>User Plan</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Plan</th>
                                                 <th>Charged Price</th>
                                             </tr>
                                         </thead>
@@ -166,6 +167,16 @@
                                                         </td>
                                                         <td>
                                                             {{ $user->pricePlan->name ?? '' }}
+                                                            -
+                                                            @if ($user->lastPricePlanSubscription && $user->lastPricePlanSubscription->plan_duration)
+                                                                @if ($user->lastPricePlanSubscription->plan_duration == 12)
+                                                                    Annually
+                                                                @elseif($user->lastPricePlanSubscription->plan_duration == 1)
+                                                                    Monthly
+                                                                @endif
+                                                            @else
+                                                                N/A
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             {{ $user->paymentDetail->charged_price ?? '' }}
