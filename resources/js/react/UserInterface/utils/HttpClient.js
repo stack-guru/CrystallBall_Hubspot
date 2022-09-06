@@ -52,6 +52,11 @@ axiosInst.interceptors.response.use(function (response) {
         swal.fire("Error!", "Unprocessible request.", "error");
     }
 
+    if (error.response.status === 455) {
+        console.log(error);
+        swal.fire("Your limit has been reached.", "Unprocessible request.", "error");
+    }
+
     return Promise.reject(error);
 });
 
