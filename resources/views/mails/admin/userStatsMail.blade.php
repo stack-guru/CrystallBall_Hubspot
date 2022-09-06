@@ -119,13 +119,13 @@
 
                                         <tbody>
                                             @if (isset($data['yesterday_registration_users']))
-                                                @foreach ($data['yesterday_registration_users'] as $user)
+                                                @foreach ($data['yesterday_registration_users'] as $email=>$name)
                                                     <tr>
                                                         <td>
-                                                            {{ @$user['name'] }}
+                                                            {{ $name }}
                                                         </td>
                                                         <td>
-                                                            {{ @$user['email'] }}
+                                                            {{ $email }}
                                                         </td>
                                                     </tr>
                                                 @endforeach
