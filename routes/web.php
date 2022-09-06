@@ -15,13 +15,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
-Route::get('testemail', function(){
-    try{
-        Mail::to('goodblessnoman@gmail.com')->send(new TestMail());
-    }catch(Exception $e){
-        dd($e->getMessage());
-    }
-});
+// Route::get('testemail', function(){
+//     try{
+//         Mail::to('goodblessnoman@gmail.com')->send(new TestMail());
+//     }catch(Exception $e){
+//         dd($e->getMessage());
+//     }
+// });
 
 
 

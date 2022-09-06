@@ -190,6 +190,7 @@ class UserController extends Controller
     {
         $users  = User::with([
             'pricePlan',
+            'lastPricePlanSubscription',
             'lastPopupOpenedChromeExtensionLog',
             'lastAnnotationButtonClickedChromeExtensionLog',
         ])
@@ -233,6 +234,7 @@ class UserController extends Controller
             'active_users_yesterday' => $active_users_yesterday,
             'active_users_in_30_days' => $active_users_in_30_days,
             'active_users_in_60_days' => $active_users_in_60_days,
+            'active_users_in_90_days' => $active_users_in_90_days,
             'total_registration_count' => $total_registration_count,
             'yesterday_registration_count' => $yesterday_registration_count,
             'yesterday_registration_users' => $yesterday_registration_users,
@@ -242,6 +244,8 @@ class UserController extends Controller
             'new_paying_users_yesterday' => $new_paying_users_yesterday,
             'new_paying_users_yesterday_count' => $new_paying_users_yesterday_count,
         ];
+
+        Log::alert($data);
 
         try {
             Mail::to('fernando@app2you.co.il')->send(new DailyUserStatsMail($data));
