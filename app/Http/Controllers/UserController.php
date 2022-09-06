@@ -74,12 +74,13 @@ class UserController extends Controller
         }
 
         if ($parentUser->pricePlan->user_per_ga_account_count == -1) {
-            abort(402);
-        } else if ($parentUser->pricePlan->user_per_ga_account_count == 0) {
-            // unlimited users allowed
-            // do nothing
+            return response()->json([
+                'message' => 'Action not allowed in your plan.'
+            ], 455);
         } else if (count($parentUser->users) >= $parentUser->pricePlan->user_per_ga_account_count) {
-            abort(402);
+            return response()->json([
+                'message' => 'Your limit has been reached.'
+            ], 455);
         }
 
         $user = new User;
