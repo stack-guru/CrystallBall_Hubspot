@@ -38,8 +38,8 @@ export default class UploadAnnotation extends React.Component {
                     if(this.state.user.price_plan.annotations_count == 0){
                         // unlimited
                     }else{
-                        // if(response.data.user_total_annotations >= this.state.user.price_plan.annotations_count){
-                        if(true){
+                        if(response.data.user_total_annotations >= this.state.user.price_plan.annotations_count){
+                        // if(true){
                             let url = document.location.origin + '/images/annotation_limit_reached.jpg';
                             swal.fire({
                                 html: "<img src='"+url+"' style='width:100%;'>",
