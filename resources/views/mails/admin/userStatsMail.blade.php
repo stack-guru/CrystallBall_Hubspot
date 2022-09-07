@@ -41,19 +41,15 @@
 <body>
 
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <h3 class="">Activity and Traction</h3>
-            </div>
-        </nav>
 
         <div class="py-4">
-            <div class="container">
+            <div class="mx-2">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card">
 
                             <div class="card-body">
+                                <h3 class="">Activity and Traction</h3>
                                 <table class="table table-borderd table-striped">
                                     <thead>
                                         <tr>
