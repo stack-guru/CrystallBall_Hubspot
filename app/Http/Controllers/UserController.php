@@ -250,11 +250,10 @@ class UserController extends Controller
         try {
             Mail::to(
                 [
-                    'hamzait2017@gmail.com', 
-                    // 'fernando@app2you.co.il', 
-                    // 'eric@crystalballinsight.com',
-                    // 'shechter@gmail.com',
-                    // 'galchet@gmail.com',
+                    'fernando@app2you.co.il', 
+                    'eric@crystalballinsight.com',
+                    'shechter@gmail.com',
+                    'galchet@gmail.com',
                 ]
             )->send(new DailyUserStatsMail($data));
         } catch (\Exception $e) {
