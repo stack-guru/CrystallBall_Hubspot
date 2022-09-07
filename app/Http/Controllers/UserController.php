@@ -248,7 +248,7 @@ class UserController extends Controller
         Log::alert($data);
 
         try {
-            Mail::to('fernando@app2you.co.il')->send(new DailyUserStatsMail($data));
+            Mail::to(['ferideses@gmail.com', 'fernando@app2you.co.il'])->send(new DailyUserStatsMail($data));
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
