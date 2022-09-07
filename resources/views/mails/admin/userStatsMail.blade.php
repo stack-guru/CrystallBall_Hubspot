@@ -43,7 +43,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <h3 class="text-primary">Activity and Traction</h3>
+                <h3 class="">Activity and Traction</h3>
             </div>
         </nav>
 
