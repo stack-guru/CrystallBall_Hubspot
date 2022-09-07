@@ -32,7 +32,7 @@ class SendAdminNewUserEmail
         try {
             Mail::to($admin)->send(new AdminNewUserRegisterMail($admin, $event->user));
         } catch (\Exception $e) {
-            Log::error($e);
+            Log::error($e->getMessage());
         }
       
     }
