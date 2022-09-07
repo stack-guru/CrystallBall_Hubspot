@@ -30,6 +30,6 @@ class DailyUserStatsMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.admin.userStatsMail');
+        return $this->view('mails.admin.userStatsMail')->subject('Daily Stats Crystal Ball');
     }
 }
