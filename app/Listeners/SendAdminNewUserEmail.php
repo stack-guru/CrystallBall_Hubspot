@@ -31,6 +31,7 @@ class SendAdminNewUserEmail
         $admin = Admin::first();
 
         try {
+            Log::info("sending email to admin ");
             Mail::to('hamzait2017@gmail.com')->send(new AdminNewUserRegisterMail($admin, $event->user));
         } catch (\Exception $e) {
             Log::error($e);
