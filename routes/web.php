@@ -40,7 +40,7 @@ Route::get('facebookAdsWebhook', [FacebookAutomationController::class, 'facebook
 Route::post('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookPost']);
 
 
-// Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+Route::get('logs4727299@oolkidd9929', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
