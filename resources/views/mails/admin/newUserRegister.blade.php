@@ -37,7 +37,8 @@
                             <div class="card-header">New User Registered</div>
 
                             <div class="card-body">
-                                <h3>Hi, {{ $admin->name }}!</h3>
+                                {{-- <h3>Hi, {{ $admin->name }}!</h3> --}}
+                                <h3>Hi, Ameer!</h3>
                                 <p>A new user of name {{ $user->name }} and email {{ $user->email}} has just signed up.</p>
                                 <p>Please login to your dashboard for more details.</p>
                             </div>
