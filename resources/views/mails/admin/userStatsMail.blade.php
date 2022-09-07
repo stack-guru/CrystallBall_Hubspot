@@ -43,7 +43,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <span class="text-primary">Activity and Traction</span>
+                <h3 class="text-primary">Activity and Traction</h3>
             </div>
         </nav>
 
@@ -104,7 +104,7 @@
                                 </table>
 
                                 <div class="my-5">
-                                    <h2>Users Registered Yesterday</h2>
+                                    <h3>Users Registered Yesterday</h3>
                                     <table class="table table-borderd table-striped">
                                         <thead>
                                             <tr>
@@ -140,7 +140,7 @@
 
 
                                 <div class="my-5">
-                                    <h2>New Paying Users Yesterday</h2>
+                                    <h3>New Paying Users Yesterday</h3>
                                     <table class="table table-borderd table-striped">
                                         <thead>
                                             <tr>
