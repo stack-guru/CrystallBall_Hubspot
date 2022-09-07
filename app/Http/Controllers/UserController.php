@@ -191,7 +191,6 @@ class UserController extends Controller
     {
         $users  = User::with([
             'pricePlan',
-            'lastPricePlanSubscription',
             'lastPopupOpenedChromeExtensionLog',
             'lastAnnotationButtonClickedChromeExtensionLog',
         ])
@@ -228,7 +227,7 @@ class UserController extends Controller
         $current_month_registration_count = User::where('created_at', '>=', Carbon::now()->startOfMonth()->format('Y-m-d'))->count();
         $previous_month_registration_count = User::where('created_at', '>=', Carbon::now()->subMonth(1)->startOfMonth()->format('Y-m-d'))->where('created_at', '<=', Carbon::now()->subMonth(1)->endOfMonth()->format('Y-m-d'))->count();
         
-        $new_paying_users_yesterday = PricePlanSubscription::with('user', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
+        $new_paying_users_yesterday = PricePlanSubscription::with('user', 'user.lastPricePlanSubscription', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
         $new_paying_users_yesterday_count = $new_paying_users_yesterday->count();
 
         $data = [
@@ -251,7 +250,7 @@ class UserController extends Controller
         try {
             Mail::to('fernando@app2you.co.il')->send(new DailyUserStatsMail($data));
         } catch (\Exception $e) {
-            Log::error($e);
+            Log::error($e->getMessage());
         }
         
     }
