@@ -63,7 +63,6 @@
                                             <th>Active Users 90 Days</th>
                                             <th>Total Registrations</th>
                                             <th>Yesterday Registrations</th>
-                                            <th>Last Week Registrations</th>
                                             <th>Current Month Registrations</th>
                                             <th>Previous Month Registrations</th>
                                             <th>New Paying Users Yesterday</th>
@@ -89,9 +88,6 @@
                                             </td>
                                             <td>
                                                 {{ @$data['yesterday_registration_count'] }}
-                                            </td>
-                                            <td>
-                                                {{ @$data['last_week_registration_count'] }}
                                             </td>
                                             <td>
                                                 {{ @$data['current_month_registration_count'] }}
@@ -157,21 +153,21 @@
 
                                         <tbody>
                                             @if (isset($data['new_paying_users_yesterday']))
-                                                @foreach ($data['new_paying_users_yesterday'] as $user)
+                                                @foreach ($data['new_paying_users_yesterday'] as $price_plan_sub)
                                                     <tr>
                                                         <td>
-                                                            {{ $user->name ?? '' }}
+                                                            {{ $price_plan_sub->user->name ?? '' }}
                                                         </td>
                                                         <td>
-                                                            {{ $user->email ?? '' }}
+                                                            {{ $price_plan_sub->user->email ?? '' }}
                                                         </td>
                                                         <td>
-                                                            {{ $user->pricePlan->name ?? '' }}
+                                                            {{ $price_plan_sub->pricePlan->name ?? '' }}
                                                             -
-                                                            @if ($user->lastPricePlanSubscription && $user->lastPricePlanSubscription->plan_duration)
-                                                                @if ($user->lastPricePlanSubscription->plan_duration == 12)
+                                                            @if ($price_plan_sub->user->lastPricePlanSubscription && $price_plan_sub->user->lastPricePlanSubscription->plan_duration)
+                                                                @if ($price_plan_sub->user->lastPricePlanSubscription->plan_duration == 12)
                                                                     Annually
-                                                                @elseif($user->lastPricePlanSubscription->plan_duration == 1)
+                                                                @elseif($price_plan_sub->user->lastPricePlanSubscription->plan_duration == 1)
                                                                     Monthly
                                                                 @endif
                                                             @else
@@ -179,7 +175,7 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            {{ $user->paymentDetail->charged_price ?? '' }}
+                                                            {{ $price_plan_sub->paymentDetail->charged_price ?? '' }}
                                                         </td>
                                                     </tr>
                                                 @endforeach
