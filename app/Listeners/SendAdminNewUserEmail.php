@@ -29,13 +29,12 @@ class SendAdminNewUserEmail
     public function handle($event)
     {
         $admin = Admin::first();
-
+        Log::info("sending email to admin");
         try {
-            info('testing email');
-            Mail::to('hamzait2017@gmail.com')->send(new AdminNewUserRegisterMail($admin, $event->user));
+            Mail::to($admin)->send(new AdminNewUserRegisterMail($admin, $event->user));
         } catch (\Exception $e) {
             Log::error($e);
         }
-        
+      
     }
 }
