@@ -14,6 +14,7 @@ use App\Services\InstagramService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Services\SendGridService;
 
 // Route::get('testemail', function(){
 //     try{
@@ -22,6 +23,12 @@ use Illuminate\Support\Facades\Route;
 //         dd($e->getMessage());
 //     }
 // });
+
+Route::get('test_pro_plan_sendgrid', function(){
+    $sGS = new SendGridService;
+    $user = Auth::user();
+    $sGS->addUserToMarketingList($user, "10 GAa Upgraded to PRO");
+});
 
 
 
