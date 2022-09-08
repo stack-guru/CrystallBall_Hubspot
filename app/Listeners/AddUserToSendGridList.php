@@ -4,8 +4,8 @@ namespace App\Listeners;
 
 use App\Services\SendGridService;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
-class AddUserToSendGridList implements ShouldQueue
+// implements ShouldQueue
+class AddUserToSendGridList 
 {
     /**
      * Create the event listener.
