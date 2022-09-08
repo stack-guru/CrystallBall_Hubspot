@@ -50,8 +50,8 @@
 
                             <div class="card-body">
                                 <h3 class="">Activity and Traction</h3>
-                                <div style="overflow-x:auto;">
-                                    <table class="table table-borderd table-striped">
+                                <div style="overflow-x:auto;" style="min-height: 200px;">
+                                    <table class="table table-borderd table-striped" style="min-height: 200px;">
                                         <thead>
                                             <tr>
                                                 <th>Active Users Yesterday</th>
