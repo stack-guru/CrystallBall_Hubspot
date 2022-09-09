@@ -91,7 +91,7 @@ class LoginController extends Controller
             if ($user_parent) {
                 if( $user_parent->pricePlan->code == 'Trial' || $user_parent->pricePlan->code == 'Free' || $user_parent->pricePlan->code == 'Basic'){
                     Auth::logout();
-                    return redirect()->route('upgrade-plan');
+                    return redirect()->route('upgrade-plan-team');
                 }
             }
 

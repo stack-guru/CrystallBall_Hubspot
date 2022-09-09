@@ -86,6 +86,7 @@ Route::get('socialite/instagram/redirect', [InstagramAutomationController::class
 
 Route::view('documentation', 'documentation');
 Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
+Route::view('upgrade-plan-team', 'upgrade-plan-team')->name('upgrade-plan-team');
 
 // AppSumo Routes
 // In middleware auth.identification only identifies user through GET query parameter `identification_code` and logs it in

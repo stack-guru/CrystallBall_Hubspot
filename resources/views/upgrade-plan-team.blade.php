@@ -1,0 +1,1 @@
+<img src="{{ asset('images/upgrade-plan-team.png') }}" alt="" srcset="" style="margin-left: 20%; margin-top: 10%; width: 60%; height: auto;">
