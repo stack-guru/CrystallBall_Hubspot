@@ -178,7 +178,7 @@
                                                                 @endif
                                                             </td>
                                                             <td>
-                                                                {{ $price_plan_sub->paymentDetail->charged_price ?? '' }}
+                                                                {{ $price_plan_sub->charged_price ?? '' }}
                                                             </td>
                                                         </tr>
                                                     @endforeach
