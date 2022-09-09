@@ -228,6 +228,11 @@ class UserController extends Controller
         $previous_month_registration_count = User::where('created_at', '>=', Carbon::now()->subMonth(1)->startOfMonth()->format('Y-m-d'))->where('created_at', '<=', Carbon::now()->subMonth(1)->endOfMonth()->format('Y-m-d'))->count();
         
         $new_paying_users_yesterday = PricePlanSubscription::with('user', 'user.lastPricePlanSubscription', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
+        foreach ($new_paying_users_yesterday as $key => $new_paying_user_yesterday) {
+            if($new_paying_user_yesterday->user->created_at <= Carbon::now()->subDay(1)->format('Y-m-d')){
+                $new_paying_users_yesterday->forget($key);
+            }
+        }
         $new_paying_users_yesterday_count = $new_paying_users_yesterday->count();
 
         $data = [
