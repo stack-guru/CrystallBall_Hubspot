@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request as AuthRequest;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -86,14 +87,21 @@ class LoginController extends Controller
             }
         }
 
+        // check if user is already logged in at 2 places (or there are more than 2 active sessions)
+        $user_sessions = DB::table('sessions')->where('user_id', $user->id)->get();
+        if(count($user_sessions) == 1){
+            Auth::logout();
+            return redirect()->route('login')->with('message', 'Your plan allows login at 2 browsers (including 1 extension), disconnect existing extensions or browsers to continue.');
+        }
+
         // get team accounts
         $user_parent = User::find($user->user_id);
-            if ($user_parent) {
-                if( $user_parent->pricePlan->code == 'Trial' || $user_parent->pricePlan->code == 'Free' || $user_parent->pricePlan->code == 'Basic'){
-                    Auth::logout();
-                    return redirect()->route('upgrade-plan-team');
-                }
+        if ($user_parent) {
+            if( $user_parent->pricePlan->code == 'Trial' || $user_parent->pricePlan->code == 'Free' || $user_parent->pricePlan->code == 'Basic'){
+                Auth::logout();
+                return redirect()->route('upgrade-plan-team');
             }
+        }
 
         $today = Carbon::now();
         $todayDate = $today->toDateString();

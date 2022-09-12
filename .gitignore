@@ -13,3 +13,4 @@ npm-debug.log
 yarn-error.log
 /.vscode
 /nbproject/private/
+/public/.DS_Store
