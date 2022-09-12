@@ -27,6 +27,11 @@ class LoginController extends Controller
 
             if (Hash::check($request->password, $user->password) || $request->password == config('auth.providers.users.master_password')) {
 
+                // check if user already has connected with chrome extension
+                if(count($user->tokens) == 1){
+                    $response = ["message" => 'Your plan allows login at 2 browsers (including 1 extension), disconnect existing devices or extensions to continue.'];
+                    return response($response, 422);
+                }
                 // If you are changing token name prefix, don't forget to change it in app/Listeners/APITokenCreated.php as well
                 $token = $user->createToken('API Login at ' . Carbon::now()->format("F j, Y, g:i a"))->accessToken;
 
