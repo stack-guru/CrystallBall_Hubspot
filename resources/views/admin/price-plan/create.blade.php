@@ -63,6 +63,10 @@
                             <input type="number" name="google_analytics_property_count" id="google_analytics_property_count" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label for="users_devices_count">Devices/Browsers allowed per user <sub>(by default its 2 including extension)</sub></label>
+                            <input type="number" min="1" name="users_devices_count" id="users_devices_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label>Yearly discount percent? <sub>(minimum 0, maximum 100)</sub></label>
                             <input type="number" name="yearly_discount_percent" id="yearly_discount_percent" class="form-control" />
                         </div>

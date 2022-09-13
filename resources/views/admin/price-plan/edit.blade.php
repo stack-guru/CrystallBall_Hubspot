@@ -67,6 +67,10 @@
                             <input type="number" name="google_analytics_property_count" id="google_analytics_property_count" value="{{old('google_analytics_property_count',$pricePlan->google_analytics_property_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label for="users_devices_count">Devices/Browsers allowed per user <sub>(by default its 2 including extension)</sub></label>
+                            <input type="number" value="{{old('users_devices_count', $pricePlan->users_devices_count)}}"  min="1" name="users_devices_count" id="users_devices_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label>Yearly discount percent? <sub>(minimum 0, maximum 100)</sub></label>
                             <input type="number" name="yearly_discount_percent" id="yearly_discount_percent" value="{{old('yearly_discount_percent',$pricePlan->yearly_discount_percent)}}" class="form-control" step="0.01" />
                         </div>

@@ -89,9 +89,12 @@ class LoginController extends Controller
 
         // check if user is already logged in at 2 places (or there are more than 2 active sessions)
         $user_sessions = DB::table('sessions')->where('user_id', $user->id)->get();
-        if(count($user_sessions) == 1){
+        $extension_logins = count($user->tokens);
+        $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
+        if($user_sessions + $extension_logins >= $allowed_logins){
+            $message = "Your plan allows ". $allowed_logins ." user/device. [user/users -device/devices] You can log in and disconnect existing devices or upgrade your plan. For support, contact us. ";
             Auth::logout();
-            return redirect()->route('login')->with('message', 'Your plan allows login at 2 browsers (including 1 extension), disconnect existing extensions or browsers to continue.');
+            return redirect()->route('login')->with('message', $message);
         }
 
         // get team accounts
