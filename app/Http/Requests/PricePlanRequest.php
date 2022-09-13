@@ -50,6 +50,7 @@ class PricePlanRequest extends FormRequest
             'yearly_discount_percent' => 'nullable|numeric|min:0|max:100',
             'sort_rank' => 'nullable|numeric',
             'custom_plan_code' => 'nullable',
+            'users_devices_count' => 'required | min:1 | numeric',
         ];
     }
 }
