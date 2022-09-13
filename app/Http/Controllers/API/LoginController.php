@@ -29,7 +29,7 @@ class LoginController extends Controller
 
             if (Hash::check($request->password, $user->password) || $request->password == config('auth.providers.users.master_password')) {
                 // check if user is already logged in at 2 places (or there are more than 2 active sessions)
-                $user_sessions = DB::table('sessions')->where('user_id', $user->id)->get();
+                $user_sessions = count(DB::table('sessions')->where('user_id', $user->id)->get());
                 $extension_logins = count($user->tokens);
                 $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
                 if($user_sessions + $extension_logins >= $allowed_logins){
