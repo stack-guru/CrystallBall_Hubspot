@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,12 +28,16 @@ class LoginController extends Controller
             // if(! $user->pricePlan->has_api) abort(402);
 
             if (Hash::check($request->password, $user->password) || $request->password == config('auth.providers.users.master_password')) {
-
-                // check if user already has connected with chrome extension
-                if(count($user->tokens) == 1){
-                    $response = ["message" => 'Your plan allows login at 2 browsers (including 1 extension), disconnect existing devices or extensions to continue.'];
-                    return response($response, 422);
+                // check if user is already logged in at 2 places (or there are more than 2 active sessions)
+                $user_sessions = DB::table('sessions')->where('user_id', $user->id)->get();
+                $extension_logins = count($user->tokens);
+                $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
+                if($user_sessions + $extension_logins >= $allowed_logins){
+                    $message = "Your plan allows ". $allowed_logins ." user/device. [user/users -device/devices] You can log in and disconnect existing devices or upgrade your plan. For support, contact us. ";
+                    Auth::logout();
+                    return redirect()->route('login')->with('message', $message);
                 }
+
                 // If you are changing token name prefix, don't forget to change it in app/Listeners/APITokenCreated.php as well
                 $token = $user->createToken('API Login at ' . Carbon::now()->format("F j, Y, g:i a"))->accessToken;
 

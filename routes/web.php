@@ -8,29 +8,8 @@ use App\Http\Controllers\InstagramAccountController;
 use App\Http\Controllers\InstagramAutomationController;
 use App\Http\Controllers\InstagramTrackingConfigurationController;
 use App\Http\Controllers\KeywordTrackingController;
-use App\Mail\TestMail;
-use App\Models\User;
-use App\Repositories\FacebookAutomationRepository;
-use App\Services\InstagramService;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-// use App\Services\SendGridService;
-
-// Route::get('testemail', function(){
-//     try{
-//         Mail::to('goodblessnoman@gmail.com')->send(new TestMail());
-//     }catch(Exception $e){
-//         dd($e->getMessage());
-//     }
-// });
-
-// Route::get('test_pro_plan_sendgrid', function(){
-//     $sGS = new SendGridService;
-//     $user = Auth::user();
-//     $sGS->addUserToMarketingList($user, "10 GAa Upgraded to PRO");
-// });
 
 
 

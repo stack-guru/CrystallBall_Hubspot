@@ -36,7 +36,8 @@ class PricePlan extends Model
         'has_notifications', 'has_chrome_extension', 'has_google_data_studio',
         'has_microsoft_power_bi', 'google_analytics_property_count',
         'yearly_discount_percent', 'badge_text',
-        'sort_rank', 'custom_plan_code'
+        'sort_rank', 'custom_plan_code',
+        'users_devices_count'
     ];
 
     protected $hidden = [
