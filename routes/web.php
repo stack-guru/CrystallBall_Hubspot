@@ -8,6 +8,7 @@ use App\Http\Controllers\InstagramAccountController;
 use App\Http\Controllers\InstagramAutomationController;
 use App\Http\Controllers\InstagramTrackingConfigurationController;
 use App\Http\Controllers\KeywordTrackingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -105,6 +106,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
     Route::group(['prefix' => 'settings'], function () {
         Route::view('/', 'ui/app');
         Route::view('support', 'ui/app');
+        Route::view('/devices', 'ui/app');
 
         Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store'])->name('settings.google-account.redirect.store');
@@ -169,6 +171,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
 
         Route::get('user_total_annotations', [AnnotationController::class, 'user_total_annotations']);
 
+
         Route::get('get-search-engine-list', [\App\Http\Controllers\DataForSeoController::class, 'getSearchEngineList']);
         Route::get('get-locations-list', [\App\Http\Controllers\DataForSeoController::class, 'getLocationList']);
         Route::get('search-locations-list', [\App\Http\Controllers\DataForSeoController::class, 'searchLocationList']);
@@ -216,6 +219,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
         });
 
         Route::group(['prefix' => 'settings'], function () {
+            Route::get('user-active-devices', [UserController::class, 'getUserActiveDevices']);
+            Route::post('disconnect-user-device', [UserController::class, 'disconnectUserDevice']);
+
             Route::get('price-plan-detail', [PricePlanController::class, 'customPricePlanDetailsByCode']);
 
             Route::post('price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');

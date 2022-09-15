@@ -18,6 +18,7 @@ import ChangePassword from './components/settings/ChangePassword';
 import PaymentHistory from './components/settings/pricingPlans/PaymentHistory';
 import GoogleAccountIndex from './components/settings/googleAccount/GoogleAccountIndex';
 import FacebookAccounts from './components/settings/facebookaccounts/FacebookAccountsIndex';
+import UserDevices from './components/settings/devices/UserDevicesIndex';
 import DataSourceIndex from "./components/DataSource/DataSourceIndex";
 import IndexAPIKey from './components/apiKey/IndexAPIKey';
 import CreatePayment from './components/settings/pricingPlans/CreatePayment';
@@ -180,6 +181,9 @@ class Main extends React.Component {
                             </Route>
                             <Route exact path="/settings/facebook-accounts" refresh={true}>
                                 <FacebookAccounts user={this.state.user} reloadUser={this.loadUser} />
+                            </Route>
+                            <Route exact path="/settings/devices" refresh={true}>
+                                <UserDevices user={this.state.user} reloadUser={this.loadUser} />
                             </Route>
                             <Route exact path="/settings/support" refresh={true}>
                                 <SupportIndex user={this.state.user} />

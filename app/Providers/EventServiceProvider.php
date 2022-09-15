@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\UserDataSourceUpdatedOrCreated;
+use App\Events\UserLoggedInEvent;
 use App\Listeners\RetrieveDFSTaskIdForKeyword;
+use App\Listeners\UpdateUserSessionListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -115,6 +117,10 @@ class EventServiceProvider extends ServiceProvider
             // ... other providers
             \SocialiteProviders\Instagram\InstagramExtendSocialite::class.'@handle',
         ],
+
+        UserLoggedInEvent::class => [
+            UpdateUserSessionListener::class,
+        ]
 
     ];
 
