@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserActiveDevice;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,18 +29,18 @@ class LoginController extends Controller
             // if(! $user->pricePlan->has_api) abort(402);
 
             if (Hash::check($request->password, $user->password) || $request->password == config('auth.providers.users.master_password')) {
-                // check if user is already logged in at 2 places (or there are more than 2 active sessions)
-                $user_sessions = count(DB::table('sessions')->where('user_id', $user->id)->get());
-                $extension_logins = count($user->tokens);
-                $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
-                if($user_sessions + $extension_logins >= $allowed_logins){
-                    $message = "Your plan allows ". $allowed_logins ." user/device. [user/users -device/devices] You can log in and disconnect existing devices or upgrade your plan. For support, contact us. ";
-                    Auth::logout();
-                    return redirect()->route('login')->with('message', $message);
-                }
 
                 // If you are changing token name prefix, don't forget to change it in app/Listeners/APITokenCreated.php as well
                 $token = $user->createToken('API Login at ' . Carbon::now()->format("F j, Y, g:i a"))->accessToken;
+
+                // check if user is already logged in at 2 places (or there are more than 2 active sessions)
+                $allowed = UserActiveDevice::allowedToLogin($user, $request, $type='ext');
+                if(!$allowed){
+                    $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
+                    $message = "Your plan allows ". $allowed_logins ." user/device. You can log in and disconnect existing devices or upgrade your plan. For support, contact us. ";
+                    $response = ["message" => $message];
+                    return response($response, 422);
+                }
 
                 $user->last_logged_into_extension_at = Carbon::now();
                 $user->save();

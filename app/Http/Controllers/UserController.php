@@ -8,6 +8,7 @@ use App\Mail\DailyUserStatsMail;
 use App\Mail\UserInviteMail;
 use App\Models\PricePlanSubscription;
 use App\Models\User;
+use App\Models\UserActiveDevice;
 use App\Models\UserGaAccount;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -266,6 +267,40 @@ class UserController extends Controller
             Log::error($e->getMessage());
         }
         
+    }
+
+    public function getUserActiveDevices(Request $request)
+    {
+        return response()->json([
+            'user_active_devices_browsers' => UserActiveDevice::where('user_id', Auth::id())->where('is_extension', false)->get(),
+            'user_active_devices_extensions' => UserActiveDevice::where('user_id', Auth::id())->where('is_extension', true)->get(),
+        ]);
+    }
+
+    public function disconnectUserDevice(Request $request)
+    {
+        $request->validate([
+            'device_id' => 'required',
+        ]);
+        $UserActiveDevice = UserActiveDevice::find($request->device_id);
+        if($UserActiveDevice){
+            if($UserActiveDevice->is_extension){
+                $access_token_id = DB::table('oauth_access_tokens')->where('user_id', Auth::id())->where('id', $UserActiveDevice->access_token_id);
+                if($access_token_id->first()){
+                    $access_token_id->delete();
+                }
+            }else{
+                $session_id = DB::table('sessions')->where('user_id', Auth::id())->where('id', $UserActiveDevice->session_id);
+                if($session_id->first()){
+                    $session_id->delete();
+                }
+            }
+            $UserActiveDevice->delete();
+        }
+        return response()->json([
+            'user_active_devices_browsers' => UserActiveDevice::where('user_id', Auth::id())->where('is_extension', false)->get(),
+            'user_active_devices_extensions' => UserActiveDevice::where('user_id', Auth::id())->where('is_extension', true)->get(),
+        ]);
     }
 
 }

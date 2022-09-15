@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserActiveDevice;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -87,16 +88,6 @@ class LoginController extends Controller
             }
         }
 
-        // check if user is already logged in at 2 places (or there are more than 2 active sessions)
-        $user_sessions = count(DB::table('sessions')->where('user_id', $user->id)->get());
-        $extension_logins = count($user->tokens);
-        $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
-        if($user_sessions + $extension_logins >= $allowed_logins){
-            $message = "Your plan allows ". $allowed_logins ." user/device. [user/users -device/devices] You can log in and disconnect existing devices or upgrade your plan. For support, contact us. ";
-            Auth::logout();
-            return redirect()->route('login')->with('message', $message);
-        }
-
         // get team accounts
         $user_parent = User::find($user->user_id);
         if ($user_parent) {
@@ -104,6 +95,15 @@ class LoginController extends Controller
                 Auth::logout();
                 return redirect()->route('upgrade-plan-team');
             }
+        }
+
+        // check if user is already logged in at 2 places (or there are more than 2 active sessions)
+        $allowed = UserActiveDevice::allowedToLogin($user, $request, $type='web');
+        if(!$allowed){
+            $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
+            $message = "Your plan allows ". $allowed_logins ." user/device. You can log in and disconnect existing devices or upgrade your plan. For support, contact us. ";
+            Auth::logout();
+            return redirect()->route('login')->with('message', $message);
         }
 
         $today = Carbon::now();
