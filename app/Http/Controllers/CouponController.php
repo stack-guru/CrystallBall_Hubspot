@@ -18,7 +18,7 @@ class CouponController extends Controller
         // check if coupon is expired
         if($coupon){
             if($coupon->expires_at <= today()){
-                return Response::make(['message' => 'Coupon expired.'], 404);
+                return Response::make(['message' => 'Coupon expired.'], 422);
             }
         }
         if (!$coupon) {
