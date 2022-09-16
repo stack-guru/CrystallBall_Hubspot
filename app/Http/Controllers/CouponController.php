@@ -15,6 +15,12 @@ class CouponController extends Controller
         ]);
 
         $coupon = Coupon::where('code', $request->query('coupon_code'))->first();
+        // check if coupon is expired
+        if($coupon){
+            if($coupon->expires_at <= today()){
+                return Response::make(['message' => 'Coupon expired.'], 404);
+            }
+        }
         if (!$coupon) {
             return Response::make(['message' => 'Invalid coupon code.'], 404);
         }
