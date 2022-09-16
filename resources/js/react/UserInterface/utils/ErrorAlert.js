@@ -7,7 +7,7 @@ export default function ErrorAlert(props) {
             if (props.errors.message !== undefined) {
                 return (
                     <div className="alert alert-danger" role="alert">
-                        <p className="alert-heading"> {props.errors.message}</p>
+                        <div className="alert-heading"> {props.errors.message}</div>
                         <ul>
                             {
                                 Object.keys((errors)).map((field, fi) => {
