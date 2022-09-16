@@ -821,7 +821,7 @@ a
                             {/*
                                 Search Engine Position Tracking
                             */}
-                            <div className="col-md-6 mt-2">
+                            {/* <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between"
                                      style={{minHeight: "180px"}}>
                                     <div>
@@ -900,7 +900,7 @@ a
 
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
 
                             {/*<div className="col-md-6 mt-2">*/}
@@ -1020,7 +1020,24 @@ a
                                                     <input type="checkbox"
                                                            onClick={e => {
                                                                e.preventDefault()
-                                                               swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                               const accountNotLinkedHtml = '' +
+                                                                    '<div class="">' +
+                                                                    '<img src="/images/banners/social_automations_banner.jpg" class="img-fluid">' +
+                                                                    '</div>'
+
+                                                                swal.fire({
+                                                                    html: accountNotLinkedHtml,
+                                                                    width: 700,
+                                                                    customClass: {
+                                                                        popup: 'bg-light-red pb-5',
+                                                                        htmlContainer: 'm-0',
+                                                                    },
+                                                                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                                                    confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                                                                }).then(value => {
+                                                                    this.setState({redirectTo: "/settings/price-plans"});
+                                                                });
                                                            }}
                                                            name="is_ds_anomolies_detection_enabled"
                                                     />
@@ -1039,7 +1056,7 @@ a
                                 </div>
                             </div>
 
-                            {/* 
+                            {/*
                                 INSTAGRAM AUTOMATION
                             */}
 
@@ -1051,11 +1068,11 @@ a
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
-                                                        Instagram Tracking 
+                                                        Instagram Tracking
                                                         <UserAnnotationColorPicker
                                                             name="instagram_tracking"
                                                             value={this.state.userAnnotationColors.instagram_tracking}
-                                                            updateCallback={this.updateUserAnnotationColors} 
+                                                            updateCallback={this.updateUserAnnotationColors}
                                                         />
                                                         <img className="hint-button-2" src="/images/info-logo.png"/>
                                                     </small>
@@ -1087,7 +1104,7 @@ a
                                         </div>
                                 </div>
                             </div> */}
-                            
+
                             <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between"
                                      style={{minHeight: "180px"}}>
@@ -1111,7 +1128,24 @@ a
                                                     <input type="checkbox"
                                                            onClick={e => {
                                                                e.preventDefault()
-                                                               swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                               const accountNotLinkedHtml = '' +
+                                                                    '<div class="">' +
+                                                                    '<img src="/images/banners/social_automations_banner.jpg" class="img-fluid">' +
+                                                                    '</div>'
+
+                                                                swal.fire({
+                                                                    html: accountNotLinkedHtml,
+                                                                    width: 700,
+                                                                    customClass: {
+                                                                        popup: 'bg-light-red pb-5',
+                                                                        htmlContainer: 'm-0',
+                                                                    },
+                                                                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                                                    confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                                                                }).then(value => {
+                                                                    this.setState({redirectTo: "/settings/price-plans"});
+                                                                });
                                                            }}
                                                            name="is_ds_anomolies_detection_enabled"
                                                     />
@@ -1131,7 +1165,7 @@ a
                                 </div>
                             </div>
 
-                            
+
 
                             {/*
                                 Google ads history changes section
@@ -1197,7 +1231,7 @@ a
                             </div>
 
 
-                            
+
                             <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between"
                                      style={{minHeight: "180px"}}>
@@ -1224,7 +1258,24 @@ a
                                                         // onChange={this.serviceStatusHandler}
                                                            onClick={e => {
                                                                e.preventDefault()
-                                                               swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                               const accountNotLinkedHtml = '' +
+                                                                    '<div class="">' +
+                                                                    '<img src="/images/banners/social_automations_banner.jpg" class="img-fluid">' +
+                                                                    '</div>'
+
+                                                                swal.fire({
+                                                                    html: accountNotLinkedHtml,
+                                                                    width: 700,
+                                                                    customClass: {
+                                                                        popup: 'bg-light-red pb-5',
+                                                                        htmlContainer: 'm-0',
+                                                                    },
+                                                                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                                                    confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                                                                }).then(value => {
+                                                                    this.setState({redirectTo: "/settings/price-plans"});
+                                                                });
                                                                // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
 
                                                                // }
@@ -1274,10 +1325,24 @@ a
                                                         // onChange={this.serviceStatusHandler}
                                                            onClick={e => {
                                                                e.preventDefault()
-                                                               swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                               // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
+                                                               const accountNotLinkedHtml = '' +
+                                                                    '<div class="">' +
+                                                                    '<img src="/images/banners/social_automations_banner.jpg" class="img-fluid">' +
+                                                                    '</div>'
 
-                                                               // }
+                                                                swal.fire({
+                                                                    html: accountNotLinkedHtml,
+                                                                    width: 700,
+                                                                    customClass: {
+                                                                        popup: 'bg-light-red pb-5',
+                                                                        htmlContainer: 'm-0',
+                                                                    },
+                                                                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                                                    confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                                                                }).then(value => {
+                                                                    this.setState({redirectTo: "/settings/price-plans"});
+                                                                });
                                                            }}
                                                            name="is_ds_anomolies_detection_enabled"
                                                     />
@@ -1324,10 +1389,26 @@ a
                                                         // onChange={this.serviceStatusHandler}
                                                            onClick={e => {
                                                                e.preventDefault()
-                                                               swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
-                                                               // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
+                                                               // swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                               const accountNotLinkedHtml = '' +
+                                                                    '<div class="">' +
+                                                                    '<img src="/images/banners/social_automations_banner.jpg" class="img-fluid">' +
+                                                                    '</div>'
 
-                                                               // }
+                                                                swal.fire({
+                                                                    html: accountNotLinkedHtml,
+                                                                    width: 700,
+                                                                    customClass: {
+                                                                        popup: 'bg-light-red pb-5',
+                                                                        htmlContainer: 'm-0',
+                                                                    },
+                                                                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                                                    confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                                                                }).then(value => {
+                                                                    this.setState({redirectTo: "/settings/price-plans"});
+                                                                });
+                                                               
                                                            }}
                                                            name="is_ds_anomolies_detection_enabled"
                                                     />
@@ -1348,7 +1429,7 @@ a
                                 </div>
                             </div>
 
-                            
+
 
 
                             {/*
@@ -1455,47 +1536,64 @@ a
                                 Keyword Tracking section
                             */}
 
-                            {/*<div className="col-md-6 mt-2">*/}
-                            {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
-                            {/*        <div>*/}
-                            {/*            <div className="d-flex mt-2 justify-content-between "*/}
-                            {/*                id="web-monitoring-data-source-section">*/}
-                            {/*                <div className="px-2">*/}
-                            {/*                    <h2>*/}
-                            {/*                        <small>*/}
-                            {/*                            Keyword Tracking <UserAnnotationColorPicker name="keyword_tracking"*/}
-                            {/*                                value={this.state.userAnnotationColors.keyword_tracking}*/}
-                            {/*                                updateCallback={this.updateUserAnnotationColors} />*/}
-                            {/*                            <img className="hint-button-2" src="/images/info-logo.png" />*/}
-                            {/*                        </small>*/}
-                            {/*                    </h2>*/}
-                            {/*                </div>*/}
+                            <div className="col-md-6 mt-2">
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
+                                    <div>
+                                        <div className="d-flex mt-2 justify-content-between "
+                                           id="web-monitoring-data-source-section">
+                                           <div className="px-2">
+                                               <h2>
+                                                   <small>
+                                                       Keyword Tracking <UserAnnotationColorPicker name="keyword_tracking"
+                                                           value={this.state.userAnnotationColors.keyword_tracking}
+                                                           updateCallback={this.updateUserAnnotationColors} />
+                                                       <img className="hint-button-2" src="/images/info-logo.png" />
+                                                   </small>
+                                               </h2>
+                                           </div>
 
-                            {/*                <div className="px-2">*/}
-                            {/*                    Deactive*/}
-                            {/*                    <label className="trigger switch">*/}
-                            {/*                        <input type="checkbox"*/}
-                            {/*                            onClick={e => {*/}
-                            {/*                                e.preventDefault()*/}
-                            {/*                                swal.fire('This feature is coming soon. Stay tuned!', '', 'info');*/}
-                            {/*                            }}*/}
-                            {/*                            name="is_ds_budget_tracking_enabled"*/}
-                            {/*                        />*/}
-                            {/*                        <span className={`slider round`} />*/}
-                            {/*                    </label>*/}
-                            {/*                </div>*/}
-                            {/*            </div>*/}
-                            {/*            <div className="px-2">*/}
-                            {/*                <div className="list-wrapper">*/}
-                            {/*                </div>*/}
-                            {/*                <div className='text-center mt-2'>*/}
-                            {/*                    <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />*/}
-                            {/*                </div>*/}
-                            {/*            </div>*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
+                                            <div className="px-2">
+                                                Deactive
+                                                <label className="trigger switch">
+                                                    <input type="checkbox"
+                                                        onClick={e => {
+                                                            e.preventDefault()
+                                                            // swal.fire('This feature is coming soon. Stay tuned!', '', 'info');
+                                                            const accountNotLinkedHtml = '' +
+                                                                '<div class="">' +
+                                                                '<img src="/images/banners/rank_tracking_banner.jpg" class="img-fluid">' +
+                                                                '</div>'
 
+                                                            swal.fire({
+                                                                html: accountNotLinkedHtml,
+                                                                width: 700,
+                                                                customClass: {
+                                                                    popup: 'bg-light-red pb-5',
+                                                                    htmlContainer: 'm-0',
+                                                                },
+                                                                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                                                confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                                                            }).then(value => {
+                                                                this.setState({redirectTo: "/settings/price-plans"});
+                                                            });
+                                                        }}
+                                                        name="is_ds_budget_tracking_enabled"
+                                                    />
+                                                    <span className={`slider round`} />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                            </div>
+                                            <div className='text-center mt-2'>
+                                                <img src='images/comingsoon.png' className='img-fluid w-40' style={{ maxWidth: "150px" }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -1744,7 +1842,7 @@ a
             } else if (e.target.name == 'is_ds_keyword_tracking_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
                 this.updateUserService(e);
-            } 
+            }
             if (e.target.name == 'is_ds_instagram_tracking_enabled' && e.target.checked) {
                 if (this.state.userInstagramAccountsExists) {
                     this.sectionToggler('instagram_tracking')
@@ -1764,7 +1862,7 @@ a
             } else if (e.target.name == 'is_ds_instagram_tracking_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
                 this.updateUserService(e);
-            } 
+            }
             if (e.target.name == 'is_ds_facebook_tracking_enabled' && e.target.checked) {
 
                 if (this.state.userFacebookAccountsExists) {
