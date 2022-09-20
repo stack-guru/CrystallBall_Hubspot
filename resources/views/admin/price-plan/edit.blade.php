@@ -75,11 +75,13 @@
                             <input type="number" name="yearly_discount_percent" id="yearly_discount_percent" value="{{old('yearly_discount_percent',$pricePlan->yearly_discount_percent)}}" class="form-control" step="0.01" />
                         </div>
 
-                        <div class="form-group">
-                            <label>Custom Plan Code</label>
-                            <input type="text" name="custom_plan_code" id="custom_plan_code" class="form-control" value="{{ $pricePlan->custom_plan_code }}" readonly />
-                            <small>Send this URL to your user: <span class="text-primary" style="cursor: copy;" onclick="window.prompt('Copy to clipboard: Ctrl+C, Enter', this.innerText);">{{ url('settings/custom-price-plan/' . $pricePlan->custom_plan_code) }}</span></small>
-                        </div>
+                        @if ($pricePlan->custom_plan_code)
+                            <div class="form-group">
+                                <label>Custom Plan Code</label>
+                                <input type="text" name="custom_plan_code" id="custom_plan_code" class="form-control" value="{{ $pricePlan->custom_plan_code }}" readonly />
+                                <small>Send this URL to your user: <span class="text-primary" style="cursor: copy;" onclick="window.prompt('Copy to clipboard: Ctrl+C, Enter', this.innerText);">{{ url('settings/custom-price-plan/' . $pricePlan->custom_plan_code) }}</span></small>
+                            </div>
+                        @endif
 
                         <div class="form-group">
                             <label>Has manual add?</label>
