@@ -378,20 +378,17 @@ class AnnotationController extends Controller
         // Add limit for annotations if the price plan is limited in annotations count
         if ($user->pricePlan->annotations_count > 0) {
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
-        }
-
-
-        // Added unaware pagination for chrome extension
-        if ($request->has('pageNumber') && $request->has('pageSize')) {
-            $pageNumber = $request->has('pageNumber');
-            $pageSize = $request->has('pageSize');
-
-            // skip = offset
-            // take = limit
-            $annotations = DB::take($pageSize)->skip($pageSize * ($pageNumber - 1))->select($annotationsQuery);
         } else {
-            $annotations = DB::select($annotationsQuery);
+            // Check if the user is requesting pagination
+            if ($request->has('pageNumber') && $request->has('pageSize')) {
+                $pageNumber = $request->has('pageNumber');
+                $pageSize = $request->has('pageSize');
+
+                $annotationsQuery .= " LIMIT " . ($pageSize * ($pageNumber - 1)) . ', ' . $pageSize;
+            }
         }
+
+        $annotations = DB::select($annotationsQuery);
 
         return [
             'annotations' => $annotations,
