@@ -386,7 +386,9 @@ class AnnotationController extends Controller
             $pageNumber = $request->has('pageNumber');
             $pageSize = $request->has('pageSize');
 
-            $annotations = DB::limit($pageSize)->offset($pageSize * ($pageNumber - 1))->select($annotationsQuery);
+            // skip = offset
+            // take = limit
+            $annotations = DB::take($pageSize)->skip($pageSize * ($pageNumber - 1))->select($annotationsQuery);
         } else {
             $annotations = DB::select($annotationsQuery);
         }
