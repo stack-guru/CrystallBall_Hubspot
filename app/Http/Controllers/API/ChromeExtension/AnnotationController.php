@@ -381,8 +381,8 @@ class AnnotationController extends Controller
         } else {
             // Check if the user is requesting pagination
             if ($request->has('pageNumber') && $request->has('pageSize')) {
-                $pageNumber = $request->has('pageNumber');
-                $pageSize = $request->has('pageSize');
+                $pageNumber = $request->pageNumber;
+                $pageSize = $request->pageSize;
 
                 $annotationsQuery .= " LIMIT " . ($pageSize * ($pageNumber - 1)) . ', ' . $pageSize;
             }
@@ -393,7 +393,6 @@ class AnnotationController extends Controller
         return [
             'annotations' => $annotations,
             'user_annotation_color' => $user->userAnnotationColor,
-
         ];
     }
 
