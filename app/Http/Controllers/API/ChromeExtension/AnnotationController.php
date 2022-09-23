@@ -241,7 +241,10 @@ class AnnotationController extends Controller
     {
         $this->validate($request, [
             'startDate' => 'required',
-            'endDate' => 'required'
+            'endDate' => 'required',
+
+            'pageNumber' => 'nullable|numeric|required_with:pageSize|min:1',
+            'pageSize' => 'nullable|numeric|required_with:pageNumber|min:1|max:100',
         ]);
 
         $user = Auth::user();
@@ -377,7 +380,16 @@ class AnnotationController extends Controller
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
         }
 
-        $annotations = DB::select($annotationsQuery);
+
+        // Added unaware pagination for chrome extension
+        if ($request->has('pageNumber') && $request->has('pageSize')) {
+            $pageNumber = $request->has('pageNumber');
+            $pageSize = $request->has('pageSize');
+
+            $annotations = DB::limit($pageSize)->offset($pageSize * ($pageNumber - 1))->select($annotationsQuery);
+        } else {
+            $annotations = DB::select($annotationsQuery);
+        }
 
         return [
             'annotations' => $annotations,
