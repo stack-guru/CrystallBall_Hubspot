@@ -7,26 +7,26 @@
             "label": "Pull, Merge and Deploy To Development",
             "type": "shell",
             "windows": {
-                "command": "git checkout ${input:branchName}; git pull origin ${input:branchName}; git checkout development; git merge ${input:branchName}; git checkout ${input:branchName}; git push origin development"
+                "command": "git checkout ${input:branchName}; git pull origin ${input:branchName}; git checkout development; git pull origin development; git merge ${input:branchName}; git checkout ${input:branchName}; git push origin development"
             },
             "linux": {
-                "command": "git checkout ${input:branchName} && git pull origin ${input:branchName} && git checkout development && git merge ${input:branchName} && git checkout ${input:branchName} && git push origin development"
+                "command": "git checkout ${input:branchName} && git pull origin ${input:branchName} && git checkout development && git pull origin development && git merge ${input:branchName} && git checkout ${input:branchName} && git push origin development"
             },
             "osx": {
-                "command": "git checkout ${input:branchName} && git pull origin ${input:branchName} && git checkout development && git merge ${input:branchName} && git checkout ${input:branchName} && git push origin development"
+                "command": "git checkout ${input:branchName} && git pull origin ${input:branchName} && git checkout development && git pull origin development && git merge ${input:branchName} && git checkout ${input:branchName} && git push origin development"
             }
         },
         {
             "label": "Pull, Merge and Deploy To Production",
             "type": "shell",
             "windows": {
-                "command": "git checkout master; git merge development; git checkout ${input:branchName}; git push origin master"
+                "command": "git checkout master; git pull origin master; git merge development; git checkout ${input:branchName}; git push origin master"
             },
             "linux": {
-                "command": "git checkout master && git merge development && git checkout ${input:branchName} && git push origin master"
+                "command": "git checkout master && git pull origin master && git merge development && git checkout ${input:branchName} && git push origin master"
             },
             "osx": {
-                "command": "git checkout master && git merge development && git checkout ${input:branchName} && git push origin master"
+                "command": "git checkout master && git pull origin master && git merge development && git checkout ${input:branchName} && git push origin master"
             }
         },
         {

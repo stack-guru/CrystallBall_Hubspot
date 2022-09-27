@@ -241,7 +241,10 @@ class AnnotationController extends Controller
     {
         $this->validate($request, [
             'startDate' => 'required',
-            'endDate' => 'required'
+            'endDate' => 'required',
+
+            'pageNumber' => 'nullable|numeric|required_with:pageSize|min:1',
+            'pageSize' => 'nullable|numeric|required_with:pageNumber|min:1|max:100',
         ]);
 
         $user = Auth::user();
@@ -375,6 +378,14 @@ class AnnotationController extends Controller
         // Add limit for annotations if the price plan is limited in annotations count
         if ($user->pricePlan->annotations_count > 0) {
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
+        } else {
+            // Check if the user is requesting pagination
+            if ($request->has('pageNumber') && $request->has('pageSize')) {
+                $pageNumber = $request->pageNumber;
+                $pageSize = $request->pageSize;
+
+                $annotationsQuery .= " LIMIT " . ($pageSize * ($pageNumber - 1)) . ', ' . $pageSize;
+            }
         }
 
         $annotations = DB::select($annotationsQuery);
@@ -382,7 +393,6 @@ class AnnotationController extends Controller
         return [
             'annotations' => $annotations,
             'user_annotation_color' => $user->userAnnotationColor,
-
         ];
     }
 
