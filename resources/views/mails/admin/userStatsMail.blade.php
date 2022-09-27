@@ -60,6 +60,7 @@
                                                 <th>New Paying Users Yesterday</th>
                                                 <th>Number Of Actions</th>
                                                 <th>Total Payments This Month</th>
+                                                <th>Total Payments Previous Month</th>
                                             </tr>
                                         </thead>
 
