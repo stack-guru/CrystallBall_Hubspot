@@ -61,6 +61,7 @@
                                                 <th>Number Of Actions</th>
                                                 <th>Total Payments This Month</th>
                                                 <th>Total Payments Previous Month</th>
+                                                <th>Monthly Returning Revenue(MMR)</th>
                                             </tr>
                                         </thead>
 
@@ -86,6 +87,9 @@
                                                 </td>
                                                 <td>
                                                     {{ @$data['total_payments_previous_month'] }}
+                                                </td>
+                                                <td>
+                                                    {{ @$data['mmr'] }}
                                                 </td>
                                             </tr>
                                         </tbody>

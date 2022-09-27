@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Requests\UserRequest;
 use App\Mail\DailyUserStatsMail;
 use App\Mail\UserInviteMail;
+use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
 use App\Models\User;
 use App\Models\UserActiveDevice;
@@ -239,6 +240,7 @@ class UserController extends Controller
         $number_of_actions_count = $this->number_of_actions_count();
         $total_payments_this_month = $this->total_payments_this_month();
         $total_payments_previous_month = $this->total_payments_previous_month();
+        $mmr = $this->mmr();
 
         $data = [
             'active_users_yesterday' => $active_users_yesterday,
@@ -256,6 +258,7 @@ class UserController extends Controller
             'number_of_actions_count' => $number_of_actions_count,
             'total_payments_this_month' => $total_payments_this_month,
             'total_payments_previous_month' => $total_payments_previous_month,
+            'mmr' => $mmr,
         ];
 
         try {
@@ -364,5 +367,24 @@ class UserController extends Controller
 
     }
 
+    public function mmr()
+    {
+        
+        $pricePlanSubscriptions = PricePlanSubscription::where('app_sumo_invoice_item_uuid', null)->get();
+        
+        $total = 0;
+
+        foreach ($pricePlanSubscriptions as $pricePlanSubscription) {
+            if ($pricePlanSubscription->plan_duration == PricePlan::ANNUALLY) {
+                $total = $total + ((float)$pricePlanSubscription->charged_price/12);
+            }
+            elseif($pricePlanSubscription->plan_duration == PricePlan::MONTHLY){
+                $total = $total + (float)$pricePlanSubscription->charged_price;
+            }
+        }
+
+        return $total;
+
+    }
 
 }
