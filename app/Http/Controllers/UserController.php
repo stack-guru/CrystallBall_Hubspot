@@ -254,6 +254,7 @@ class UserController extends Controller
             'new_paying_users_yesterday' => $new_paying_users_yesterday,
             'new_paying_users_yesterday_count' => $new_paying_users_yesterday_count,
             'number_of_actions_count' => $number_of_actions_count,
+            'total_payments_this_month' => $total_payments_this_month,
             'total_payments_previous_month' => $total_payments_previous_month,
         ];
 
