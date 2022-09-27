@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Requests\UserRequest;
 use App\Mail\DailyUserStatsMail;
 use App\Mail\UserInviteMail;
+use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
 use App\Models\User;
 use App\Models\UserActiveDevice;
@@ -227,7 +228,7 @@ class UserController extends Controller
         $last_week_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(7)->format('Y-m-d'))->count();
         $current_month_registration_count = User::where('created_at', '>=', Carbon::now()->startOfMonth()->format('Y-m-d'))->count();
         $previous_month_registration_count = User::where('created_at', '>=', Carbon::now()->subMonth(1)->startOfMonth()->format('Y-m-d'))->where('created_at', '<=', Carbon::now()->subMonth(1)->endOfMonth()->format('Y-m-d'))->count();
-        
+
         $new_paying_users_yesterday = PricePlanSubscription::with('user', 'user.lastPricePlanSubscription', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
         foreach ($new_paying_users_yesterday as $key => $new_paying_user_yesterday) {
             if($new_paying_user_yesterday->user->created_at <= Carbon::now()->subDay(1)->format('Y-m-d')){
@@ -235,6 +236,11 @@ class UserController extends Controller
             }
         }
         $new_paying_users_yesterday_count = $new_paying_users_yesterday->count();
+
+        $number_of_actions_count = $this->number_of_actions_count();
+        $total_payments_this_month = $this->total_payments_this_month();
+        $total_payments_previous_month = $this->total_payments_previous_month();
+        $mmr = $this->mmr();
 
         $data = [
             'active_users_yesterday' => $active_users_yesterday,
@@ -249,14 +255,16 @@ class UserController extends Controller
             'previous_month_registration_count' => $previous_month_registration_count,
             'new_paying_users_yesterday' => $new_paying_users_yesterday,
             'new_paying_users_yesterday_count' => $new_paying_users_yesterday_count,
+            'number_of_actions_count' => $number_of_actions_count,
+            'total_payments_this_month' => $total_payments_this_month,
+            'total_payments_previous_month' => $total_payments_previous_month,
+            'mmr' => $mmr,
         ];
-
-        Log::alert($data);
 
         try {
             Mail::to(
                 [
-                    'fernando@app2you.co.il', 
+                    'fernando@app2you.co.il',
                     'eric@crystalballinsight.com',
                     'shechter@gmail.com',
                     'galchet@gmail.com',
@@ -266,7 +274,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
-        
+
     }
 
     public function getUserActiveDevices(Request $request)
@@ -301,6 +309,82 @@ class UserController extends Controller
             'user_active_devices_browsers' => UserActiveDevice::where('user_id', Auth::id())->where('is_extension', false)->get(),
             'user_active_devices_extensions' => UserActiveDevice::where('user_id', Auth::id())->where('is_extension', true)->get(),
         ]);
+    }
+
+    public function number_of_actions_count()
+    {
+        $users  = User::with([
+            'pricePlan',
+            'lastPopupOpenedChromeExtensionLog',
+            'lastAnnotationButtonClickedChromeExtensionLog',
+        ])
+            ->withCount('yesterdayApiAnnotationCreatedLogs')
+            ->withCount('yesterdayNotificationLogs')
+            ->withCount('yesterdayLoginLogs')
+            ->orderBy('created_at', 'DESC')->get();
+
+        $count = 0;
+
+        foreach($users as $user){
+            $count = $count + (int)count($user->lastPopupOpenedChromeExtensionLog ?? []);
+            $count = $count + (int)count($user->lastAnnotationButtonClickedChromeExtensionLog ?? []);
+            $count = $count + (int)$user->yesterday_api_annotation_created_logs_count;
+            $count = $count + (int)$user->yesterday_notification_logs_count;
+            $count = $count + (int)$user->yesterday_login_logs_count;
+        }
+
+        return $count;
+
+    }
+
+    public function total_payments_this_month()
+    {
+
+        $pricePlanSubscriptions = PricePlanSubscription::where('app_sumo_invoice_item_uuid', null)->where('created_at', '>=', Carbon::now()->subDays(30))->get();
+
+        $total = 0;
+
+        foreach ($pricePlanSubscriptions as $pricePlanSubscription) {
+            $total = $total + (float)$pricePlanSubscription->charged_price;
+        }
+
+        return $total;
+
+    }
+
+    public function total_payments_previous_month()
+    {
+
+        $pricePlanSubscriptions = PricePlanSubscription::where('app_sumo_invoice_item_uuid', null)->where('created_at', '>=', Carbon::now()->subDays(60))->where('created_at', '<=', Carbon::now()->subDays(30))->get();
+
+        $total = 0;
+
+        foreach ($pricePlanSubscriptions as $pricePlanSubscription) {
+            $total = $total + (float)$pricePlanSubscription->charged_price;
+        }
+
+        return $total;
+
+    }
+
+    public function mmr()
+    {
+        
+        $pricePlanSubscriptions = PricePlanSubscription::where('app_sumo_invoice_item_uuid', null)->get();
+        
+        $total = 0;
+
+        foreach ($pricePlanSubscriptions as $pricePlanSubscription) {
+            if ($pricePlanSubscription->plan_duration == PricePlan::ANNUALLY) {
+                $total = $total + ((float)$pricePlanSubscription->charged_price/12);
+            }
+            elseif($pricePlanSubscription->plan_duration == PricePlan::MONTHLY){
+                $total = $total + (float)$pricePlanSubscription->charged_price;
+            }
+        }
+
+        return $total;
+
     }
 
 }
