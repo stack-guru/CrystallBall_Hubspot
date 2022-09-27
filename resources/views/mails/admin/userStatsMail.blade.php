@@ -54,35 +54,17 @@
                                     <table class="table table-borderd table-striped" style="min-height: 200px;">
                                         <thead>
                                             <tr>
-                                                <th>Active Users Yesterday</th>
-                                                <th>Active Users 30 Days</th>
-                                                <th>Active Users 60 Days</th>
-                                                <th>Active Users 90 Days</th>
-                                                <th>Total Registrations</th>
                                                 <th>Yesterday Registrations</th>
                                                 <th>Current Month Registrations</th>
                                                 <th>Previous Month Registrations</th>
                                                 <th>New Paying Users Yesterday</th>
+                                                <th>Number Of Actions</th>
+                                                <th>Total Payments This Month</th>
                                             </tr>
                                         </thead>
-    
+
                                         <tbody>
                                             <tr>
-                                                <td>
-                                                    {{ @$data['active_users_yesterday'] }}
-                                                </td>
-                                                <td>
-                                                    {{ @$data['active_users_in_30_days'] }}
-                                                </td>
-                                                <td>
-                                                    {{ @$data['active_users_in_60_days'] }}
-                                                </td>
-                                                <td>
-                                                    {{ @$data['active_users_in_90_days'] }}
-                                                </td>
-                                                <td>
-                                                    {{ @$data['total_registration_count'] }}
-                                                </td>
                                                 <td>
                                                     {{ @$data['yesterday_registration_count'] }}
                                                 </td>
@@ -95,12 +77,21 @@
                                                 <td>
                                                     {{ @$data['new_paying_users_yesterday_count'] }}
                                                 </td>
+                                                <td>
+                                                    {{ @$data['number_of_actions_count'] }}
+                                                </td>
+                                                <td>
+                                                    {{ @$data['total_payments_this_month'] }}
+                                                </td>
+                                                <td>
+                                                    {{ @$data['total_payments_previous_month'] }}
+                                                </td>
                                             </tr>
                                         </tbody>
-    
+
                                     </table>
                                 </div>
-                                
+
 
                                 <div class="my-5">
                                     <h3>Users Registered Yesterday</h3>
@@ -112,7 +103,7 @@
                                                     <th>Email</th>
                                                 </tr>
                                             </thead>
-    
+
                                             <tbody>
                                                 @if (isset($data['yesterday_registration_users']))
                                                     @foreach ($data['yesterday_registration_users'] as $email=>$name)
@@ -132,12 +123,12 @@
                                                         </td>
                                                     </tr>
                                                 @endif
-    
+
                                             </tbody>
-    
+
                                         </table>
                                     </div>
-                                    
+
                                 </div>
 
 
@@ -153,7 +144,7 @@
                                                     <th>Charged Price</th>
                                                 </tr>
                                             </thead>
-    
+
                                             <tbody>
                                                 @if (isset($data['new_paying_users_yesterday']))
                                                     @foreach ($data['new_paying_users_yesterday'] as $price_plan_sub)
@@ -189,12 +180,12 @@
                                                         </td>
                                                     </tr>
                                                 @endif
-    
+
                                             </tbody>
-    
+
                                         </table>
                                     </div>
-                                    
+
                                 </div>
 
 

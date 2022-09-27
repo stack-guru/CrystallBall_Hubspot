@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -30,6 +31,7 @@ class DailyUserStatsMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.admin.userStatsMail')->subject('Daily Stats Crystal Ball');
+        $yesterday_date = Carbon::yesterday()->format('d-m-y');
+        return $this->view('mails.admin.userStatsMail')->subject('Daily Stats Crystal Ball - ' . $yesterday_date);
     }
 }
