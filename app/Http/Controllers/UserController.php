@@ -267,10 +267,10 @@ class UserController extends Controller
                     // 'goodblessnoman@gmail.com',
                     // 'hamzait2017@gmail.com',
                     'fernando@app2you.co.il',
-                    // 'eric@crystalballinsight.com',
-                    // 'shechter@gmail.com',
-                    // 'galchet@gmail.com',
-                    // 'meglash@upstartideas.com',
+                    'eric@crystalballinsight.com',
+                    'shechter@gmail.com',
+                    'galchet@gmail.com',
+                    'meglash@upstartideas.com',
                 ]
             )->send(new DailyUserStatsMail($data));
         } catch (\Exception $e) {
