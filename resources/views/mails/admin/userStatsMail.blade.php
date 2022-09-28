@@ -61,7 +61,7 @@
                                                 <th>Number Of Actions</th>
                                                 <th>Total Payments This Month</th>
                                                 <th>Total Payments Previous Month</th>
-                                                <th>Monthly Returning Revenue(MMR)</th>
+                                                <th>MMR</th>
                                             </tr>
                                         </thead>
 
@@ -80,7 +80,7 @@
                                                     {{ @$data['new_paying_users_yesterday_count'] }}
                                                 </td>
                                                 <td>
-                                                    {{ @$data['number_of_actions_count'] }}
+                                                    {{-- {{ @$data['number_of_actions_count'] }} --}}
                                                 </td>
                                                 <td>
                                                     {{ @$data['total_payments_this_month'] }}
