@@ -328,8 +328,8 @@ class UserController extends Controller
         $count = 0;
 
         foreach($users as $user){
-            $count = $count + ($user->lastPopupOpenedChromeExtensionLog->isNotEmpty() ? (int)$user->lastPopupOpenedChromeExtensionLog->count() : 0);
-            $count = $count + ($user->lastAnnotationButtonClickedChromeExtensionLog->isNotEmpty() ? (int)$user->lastAnnotationButtonClickedChromeExtensionLog->count() : 0);
+            $count = $count + ($user->lastPopupOpenedChromeExtensionLog ? (int)$user->lastPopupOpenedChromeExtensionLog->count() : 0);
+            $count = $count + ($user->lastAnnotationButtonClickedChromeExtensionLog ? (int)$user->lastAnnotationButtonClickedChromeExtensionLog->count() : 0);
             $count = $count + (int)$user->yesterday_api_annotation_created_logs_count;
             $count = $count + (int)$user->yesterday_notification_logs_count;
             $count = $count + (int)$user->yesterday_login_logs_count;
