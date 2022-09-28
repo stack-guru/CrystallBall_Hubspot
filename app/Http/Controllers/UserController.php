@@ -377,15 +377,17 @@ class UserController extends Controller
         $total = 0;
 
         foreach ($pricePlanSubscriptions as $pricePlanSubscription) {
-            if ($pricePlanSubscription->plan_duration == PricePlan::ANNUALLY) {
-                $total = $total + ((float)$pricePlanSubscription->charged_price/12);
-            }
-            elseif($pricePlanSubscription->plan_duration == PricePlan::MONTHLY){
-                $total = $total + (float)$pricePlanSubscription->charged_price;
+            if ($pricePlanSubscription->expires_at >= Carbon::now()) {
+                if ($pricePlanSubscription->plan_duration == PricePlan::ANNUALLY) {
+                    $total = $total + ((float)$pricePlanSubscription->charged_price/12);
+                }
+                elseif($pricePlanSubscription->plan_duration == PricePlan::MONTHLY){
+                    $total = $total + (float)$pricePlanSubscription->charged_price;
+                }
             }
         }
 
-        return $total;
+        return round($total, 2);
 
     }
 
