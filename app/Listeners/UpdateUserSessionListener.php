@@ -45,25 +45,25 @@ class UpdateUserSessionListener
             }
         }
         
-        try{
-            UserActiveDevice::create([
-                'user_id' => $user->id,
+        // try{
+        //     UserActiveDevice::create([
+        //         'user_id' => $user->id,
                 
-                'browser_name' => Browser::browserName(),
-                'platform_name' => Browser::platformFamily(),
-                'device_type' => Browser::platformName(),
+        //         'browser_name' => Browser::browserName(),
+        //         'platform_name' => Browser::platformFamily(),
+        //         'device_type' => Browser::platformName(),
     
-                'is_extension' => ($event_type == 'ext') ? true : false,
-                'ip' => $request->ip(),
+        //         'is_extension' => ($event_type == 'ext') ? true : false,
+        //         'ip' => $request->ip(),
     
-                'session_id' => Session::getId() ?? null,
-                'access_token_id' => $access_token_id,
+        //         'session_id' => Session::getId() ?? null,
+        //         'access_token_id' => $access_token_id,
     
-            ]);
-        }
-        catch(Exception $ex){
-            info(print_r($ex->getMessage()));
-        }
+        //     ]);
+        // }
+        // catch(Exception $ex){
+        //     info(print_r($ex->getMessage()));
+        // }
         
     }
 }
