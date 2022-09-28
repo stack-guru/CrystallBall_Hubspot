@@ -821,7 +821,7 @@ a
                             {/*
                                 Search Engine Position Tracking
                             */}
-                            {/* <div className="col-md-6 mt-2">
+                            <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between"
                                      style={{minHeight: "180px"}}>
                                     <div>
@@ -900,7 +900,7 @@ a
 
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
 
 
                             {/*<div className="col-md-6 mt-2">*/}
@@ -1536,7 +1536,7 @@ a
                                 Keyword Tracking section
                             */}
 
-                            <div className="col-md-6 mt-2">
+                            {/* <div className="col-md-6 mt-2">
                                 <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
                                         <div className="d-flex mt-2 justify-content-between "
@@ -1593,7 +1593,7 @@ a
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>

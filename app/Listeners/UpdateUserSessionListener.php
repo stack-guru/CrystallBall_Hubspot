@@ -6,6 +6,7 @@ use App\Models\UserActiveDevice;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Browser;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -44,21 +45,25 @@ class UpdateUserSessionListener
             }
         }
         
-
-        UserActiveDevice::create([
-            'user_id' => $user->id,
-            
-            'browser_name' => Browser::browserName(),
-            'platform_name' => Browser::platformFamily(),
-            'device_type' => Browser::platformName(),
-
-            'is_extension' => ($event_type == 'ext') ? true : false,
-            'ip' => $request->ip(),
-
-            'session_id' => Session::getId() ?? null,
-            'access_token_id' => $access_token_id,
-
-        ]);
+        // try{
+        //     UserActiveDevice::create([
+        //         'user_id' => $user->id,
+                
+        //         'browser_name' => Browser::browserName(),
+        //         'platform_name' => Browser::platformFamily(),
+        //         'device_type' => Browser::platformName(),
+    
+        //         'is_extension' => ($event_type == 'ext') ? true : false,
+        //         'ip' => $request->ip(),
+    
+        //         'session_id' => Session::getId() ?? null,
+        //         'access_token_id' => $access_token_id,
+    
+        //     ]);
+        // }
+        // catch(Exception $ex){
+        //     info(print_r($ex->getMessage()));
+        // }
         
     }
 }
