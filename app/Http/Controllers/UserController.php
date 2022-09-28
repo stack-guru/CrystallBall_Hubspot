@@ -264,9 +264,9 @@ class UserController extends Controller
         try {
             Mail::to(
                 [
-                    'goodblessnoman@gmail.com',
-                    'hamzait2017@gmail.com',
-                    // 'fernando@app2you.co.il',
+                    // 'goodblessnoman@gmail.com',
+                    // 'hamzait2017@gmail.com',
+                    'fernando@app2you.co.il',
                     // 'eric@crystalballinsight.com',
                     // 'shechter@gmail.com',
                     // 'galchet@gmail.com',
