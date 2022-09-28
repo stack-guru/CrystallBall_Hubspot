@@ -75,7 +75,7 @@ class WebMonitorDown extends Notification
             ->subject("Website Monitoring: " . $this->webMonitor->name . "  is currently DOWN. ")
             ->greeting('Hi ' . $notifiable->name . ',')
             ->line('The monitor ' . $this->webMonitor->name . ' (' . $this->webMonitor->url . ')  is currently DOWN. ')
-            ->line('You should check the issue right away! [ERROR]')
+            ->line('You should check the issue right away!')
             ->line('Event timestamp: ' . Carbon::now() . '')
             ->line(config('app.name') . ' will alert you when it is back up. ');
     }
@@ -89,7 +89,7 @@ class WebMonitorDown extends Notification
             ->web()
             ->sound('default')
             ->link($this->webMonitor->url)
-            ->title("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is currently DOWN. You should check the issue right away! [ERROR]")
+            ->title("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is currently DOWN. You should check the issue right away!")
             ->body("Event timestamp: " . Carbon::now());
     }
 
@@ -98,6 +98,6 @@ class WebMonitorDown extends Notification
         $this->logNotificationTrigger($notifiable->id, $this->webMonitor->id, get_class(), 'Twilio');
 
         return (new TwilioSmsMessage())
-            ->content("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is currently DOWN. You should check the issue right away! [ERROR]\nEvent timestamp: " . Carbon::now());
+            ->content("The monitor " . $this->webMonitor->name . " (" . $this->webMonitor->url . ")  is currently DOWN. You should check the issue right away!\nEvent timestamp: " . Carbon::now());
     }
 }
