@@ -61,7 +61,7 @@
                                                 <th>Number Of Actions</th>
                                                 <th>Total Payments This Month</th>
                                                 <th>Total Payments Previous Month</th>
-                                                <th>MMR</th>
+                                                <th>MRR</th>
                                             </tr>
                                         </thead>
 
