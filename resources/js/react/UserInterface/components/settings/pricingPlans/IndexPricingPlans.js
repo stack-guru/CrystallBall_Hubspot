@@ -246,7 +246,13 @@ export default class IndexPricingPlans extends React.Component {
                                                             <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'automation-hint-' + pricePlan.id} target={"automation-feature-hint-" + pricePlan.id} toggle={() => { this.setState({ showHintFor: null }) }} onClick={() => { this.changeShownHint(null) }}>
                                                                 <PopoverHeader>{pricePlan.name}</PopoverHeader>
                                                                 <PopoverBody>
-                                                                    Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count} Credits<br />
+                                                              
+                                                                    {
+                                                                        pricePlan.keyword_tracking_count == -1 ?
+                                                                            null
+                                                                            : <span>Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count} Credits<br /></span>
+                                                                    }
+                                                                    
                                                                     Website Monitoring: {pricePlan.web_monitor_count} URLs<br />
                                                                     Weather Alerts: {pricePlan.owm_city_count == 0 ? 'Unlimited' : pricePlan.owm_city_count} cities<br />
                                                                     News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : pricePlan.google_alert_keyword_count} keywords<br />
