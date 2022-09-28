@@ -342,7 +342,7 @@ class UserController extends Controller
     public function total_payments_this_month()
     {
 
-        $pricePlanSubscriptions = PricePlanSubscription::where('app_sumo_invoice_item_uuid', null)->where('created_at', '>=', Carbon::now()->subDays(30))->get();
+        $pricePlanSubscriptions = PricePlanSubscription::where('app_sumo_invoice_item_uuid', null)->where('created_at', '>=', Carbon::now()->firstOfMonth())->get();
 
         $total = 0;
 
@@ -357,7 +357,7 @@ class UserController extends Controller
     public function total_payments_previous_month()
     {
 
-        $pricePlanSubscriptions = PricePlanSubscription::where('app_sumo_invoice_item_uuid', null)->where('created_at', '>=', Carbon::now()->subDays(60))->where('created_at', '<=', Carbon::now()->subDays(30))->get();
+        $pricePlanSubscriptions = PricePlanSubscription::where('app_sumo_invoice_item_uuid', null)->where('created_at', '>=', Carbon::now()->subMonth(1)->firstOfMonth())->where('created_at', '<=', Carbon::now()->subMonth(1)->lastOfMonth())->get();
 
         $total = 0;
 
