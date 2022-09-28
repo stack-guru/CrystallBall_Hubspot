@@ -112,11 +112,12 @@ export default class IndexPricingPlans extends React.Component {
                                 <h2 className="gaa-title">{userRegistrationOffer ? 'Limited Time Offer' : 'Choose Your Plan'}</h2>
                             </div>
                             <div className="col-2 text-right" style={{ color: '#1a98f0', paddingTop: '12px' }}>
-                                {this.state.pricePlans.length ?
+                                Yearly - SAVE 20%
+                                {/* {this.state.pricePlans.length ?
                                     (userRegistrationOffer ?
                                         'Yearly' :
                                         'Yearly - SAVE ' + parseFloat(this.state.pricePlans[0].yearly_discount_percent).toFixed(0) + '%')
-                                    : null}
+                                    : null} */}
                             </div>
                             <div className="col-1" style={{ paddingTop: '10px' }}>
                                 <label className="trigger switch">
