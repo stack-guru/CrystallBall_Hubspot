@@ -91,7 +91,7 @@ class LoginController extends Controller
         // get team accounts
         $user_parent = User::find($user->user_id);
         if ($user_parent) {
-            if( $user_parent->pricePlan->code == 'Trial' || $user_parent->pricePlan->code == 'Free' || $user_parent->pricePlan->code == 'Basic'){
+            if($user_parent->pricePlan->code == 'Trial Ended' || $user_parent->pricePlan->code == 'free new' || $user_parent->pricePlan->code == 'Trial' || $user_parent->pricePlan->code == 'Free' || $user_parent->pricePlan->code == 'Basic'){
                 Auth::logout();
                 return redirect()->route('upgrade-plan-team');
             }
