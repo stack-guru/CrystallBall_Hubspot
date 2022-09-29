@@ -54,7 +54,7 @@
                                     <table class="table table-borderd table-striped" style="min-height: 200px;">
                                         <thead>
                                             <tr>
-                                                <th>Yesterday Registrations</th>
+                                                <th>Registrations Yesterday</th>
                                                 <th>Current Month Registrations</th>
                                                 <th>Previous Month Registrations</th>
                                                 <th>New Paying Users Yesterday</th>
@@ -83,13 +83,19 @@
                                                     {{-- {{ @$data['number_of_actions_count'] }} --}}
                                                 </td>
                                                 <td>
-                                                    {{ @$data['total_payments_this_month'] }}
+                                                    @if (isset($data['total_payments_this_month']))
+                                                        ${{ @$data['total_payments_this_month'] }}    
+                                                    @endif
                                                 </td>
                                                 <td>
-                                                    {{ @$data['total_payments_previous_month'] }}
+                                                    @if (isset($data['total_payments_previous_month']))
+                                                        ${{ @$data['total_payments_previous_month'] }}    
+                                                    @endif
                                                 </td>
                                                 <td>
-                                                    {{ @$data['mmr'] }}
+                                                    @if (isset($data['mmr']))
+                                                        ${{ @$data['mmr'] }}    
+                                                    @endif
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -99,7 +105,7 @@
 
 
                                 <div class="my-5">
-                                    <h3>Users Registered Yesterday</h3>
+                                    <h3>New Users Who Registered Yesterday</h3>
                                     <div style="overflow-x:auto;">
                                         <table class="table table-borderd table-striped">
                                             <thead>
@@ -174,7 +180,9 @@
                                                                 @endif
                                                             </td>
                                                             <td>
-                                                                {{ $price_plan_sub->charged_price ?? '' }}
+                                                                @if ($price_plan_sub->charged_price)
+                                                                    ${{ $price_plan_sub->charged_price }}
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                     @endforeach
