@@ -66,15 +66,22 @@ class Sidebar extends React.Component {
 
     render() {
         return (
-            <div className="sidebar-inner OSXscroll" >
+            <div className="sidebar-inner OSXscroll">
                 <div className="sidebar-logo bg-white">
                     <div className="peers ai-c fxw-nw">
                         <div className="peer peer-greed">
                             <a className="sidebar-link td-n" href="/">
                                 <div className="peers ai-c fxw-nw">
                                     <div className="peer">
-                                        <div className="logo d-flex justify-content-center align-items-center" style={{ minHeight: 65 }}>
-                                            <CompanyLogo width="40px" height="40px" alt="" />
+                                        <div
+                                            className="logo d-flex justify-content-center align-items-center"
+                                            style={{ minHeight: 65 }}
+                                        >
+                                            <CompanyLogo
+                                                width="40px"
+                                                height="40px"
+                                                alt=""
+                                            />
                                         </div>
                                     </div>
                                     <div className="peer peer-greed ">
@@ -85,8 +92,9 @@ class Sidebar extends React.Component {
                         </div>
                         <div className="peer">
                             <div className="mobile-toggle sidebar-toggle">
-                                <a href={null} className="td-n" type="button"><i
-                                    className="ti-arrow-circle-left"></i></a>
+                                <a href={null} className="td-n" type="button">
+                                    <i className="ti-arrow-circle-left"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -115,101 +123,143 @@ class Sidebar extends React.Component {
                         </Link>
                     </li> */}
                     <li className="nav-item gaa-menu-item">
-                        <Link to="/annotation" >
-                            <span className="sidebar-link" >
+                        <Link to="/annotation">
+                            <span className="sidebar-link">
                                 <span className="icon-holder">
-                                    <img src="/images/svg/annotation-icon.svg" width="25px" height="25px" />
+                                    <img
+                                        src="/images/svg/annotation-icon.svg"
+                                        width="25px"
+                                        height="25px"
+                                    />
                                 </span>
                                 <span className="title">Annotations</span>
                             </span>
                         </Link>
                     </li>
-                    {
-                        this.props.user.user_level == 'admin' || this.props.user.user_level == 'team' ?
-                            <li className="nav-item gaa-menu-item">
-                                <Link to="/annotation/create">
-                                    <span className="sidebar-link" >
-                                        <span className="icon-holder">
-                                            <img src="/images/svg/addition-icon.svg" width="25px" height="25px" />
-                                        </span>
-                                        <span className="title">Add Annotation</span>
+                    {this.props.user.user_level == "admin" ||
+                    this.props.user.user_level == "team" ? (
+                        <li className="nav-item gaa-menu-item">
+                            <Link to="/annotation/create">
+                                <span className="sidebar-link">
+                                    <span className="icon-holder">
+                                        <img
+                                            src="/images/svg/addition-icon.svg"
+                                            width="25px"
+                                            height="25px"
+                                        />
                                     </span>
-                                </Link>
-                            </li>
-                            : null
-                    }
-                    {
-                        this.props.user.user_level == 'admin' || this.props.user.user_level == 'team' ?
-                            <li className="nav-item gaa-menu-item">
-                                <Link to="/annotation/upload">
-                                    <span className="sidebar-link" >
-                                        <span className="icon-holder">
-                                            <img src="/images/svg/upload-icon.svg" width="25px" height="25px" />
-                                        </span>
-                                        <span className="title">CSV Upload</span>
+                                    <span className="title">
+                                        Add Annotation
                                     </span>
-                                </Link>
-                            </li>
-                            : null
-                    }
+                                </span>
+                            </Link>
+                        </li>
+                    ) : null}
+                    {this.props.user.user_level == "admin" ||
+                    this.props.user.user_level == "team" ? (
+                        <li className="nav-item gaa-menu-item">
+                            <Link to="/annotation/upload">
+                                <span className="sidebar-link">
+                                    <span className="icon-holder">
+                                        <img
+                                            src="/images/svg/upload-icon.svg"
+                                            width="25px"
+                                            height="25px"
+                                        />
+                                    </span>
+                                    <span className="title">CSV Upload</span>
+                                </span>
+                            </Link>
+                        </li>
+                    ) : null}
                     <li className="nav-item gaa-menu-item">
-                        <Link to="/data-source" >
-                            <span className="sidebar-link" >
+                        <Link to="/data-source">
+                            <span className="sidebar-link">
                                 <span className="icon-holder">
-                                    <img src="/images/svg/automation-icon.svg" width="25px" height="25px" />
+                                    <img
+                                        src="/images/svg/automation-icon.svg"
+                                        width="25px"
+                                        height="25px"
+                                    />
                                 </span>
                                 <span className="title">Automations</span>
                             </span>
                         </Link>
                     </li>
                     <li className="nav-item gaa-menu-item">
-                        <Link to="/integrations" >
-                            <span className="sidebar-link" >
+                        <Link to="/integrations">
+                            <span className="sidebar-link">
                                 <span className="icon-holder">
-                                    <img src="/images/svg/integration-icon.svg" width="25px" height="25px" />
+                                    <img
+                                        src="/images/svg/integration-icon.svg"
+                                        width="25px"
+                                        height="25px"
+                                    />
                                 </span>
                                 <span className="title">Integrations</span>
                             </span>
                         </Link>
                     </li>
                     <li className="nav-item gaa-menu-item">
-                        <Link to="/analytics-and-business-intelligence" >
-                            <span className="sidebar-link" >
+                        <Link to="/analytics-and-business-intelligence">
+                            <span className="sidebar-link">
                                 <span className="icon-holder">
-                                    <img src="/images/svg/analytics-and-business-intelligence-icon.svg" width="25px" height="25px" />
+                                    <img
+                                        src="/images/svg/analytics-and-business-intelligence-icon.svg"
+                                        width="25px"
+                                        height="25px"
+                                    />
                                 </span>
-                                <span className="title">Analytics &amp; BI tools</span>
+                                <span className="title">
+                                    Analytics &amp; BI tools
+                                </span>
                             </span>
                         </Link>
                     </li>
                     <li className="nav-item gaa-menu-item">
-                        <Link to="/api-key" >
-                            <span className="sidebar-link" >
+                        <Link to="/api-key">
+                            <span className="sidebar-link">
                                 <span className="icon-holder">
-                                    <img src="/images/svg/key-icon.svg" width="25px" height="25px" />
+                                    <img
+                                        src="/images/svg/key-icon.svg"
+                                        width="25px"
+                                        height="25px"
+                                    />
                                 </span>
                                 <span className="title ">API Keys</span>
                             </span>
                         </Link>
                     </li>
                     <li className="nav-item gaa-menu-item">
-                        <Link to="/notifications" >
-                            <span className="sidebar-link" >
+                        <Link to="/notifications">
+                            <span className="sidebar-link">
                                 <span className="icon-holder">
-                                    <img src="/images/svg/notification-icon.svg" width="25px" height="25px" />
+                                    <img
+                                        src="/images/svg/notification-icon.svg"
+                                        width="25px"
+                                        height="25px"
+                                    />
                                 </span>
                                 <span className="title ">Notifications</span>
                             </span>
                         </Link>
                     </li>
 
-
                     <li className="nav-item gaa-menu-item setting-menu-item dropdown">
-                        <a aria-expanded="false" data-target="#settings" aria-controls="settings" data-toggle="collapse"
-                            className="dropdown-toggle" >
+                        <a
+                            aria-expanded="false"
+                            data-target="#settings"
+                            aria-controls="settings"
+                            data-toggle="collapse"
+                            className="dropdown-toggle"
+                        >
                             <div className="wrapper sidebar-link">
                                 <span className="icon-holder">
-                                    <img src="/images/svg/settings-icon.svg" width="25px" height="25px" />
+                                    <img
+                                        src="/images/svg/settings-icon.svg"
+                                        width="25px"
+                                        height="25px"
+                                    />
                                 </span>
                                 <span className="title">Settings</span>
                                 <span className="arrow">
@@ -217,63 +267,116 @@ class Sidebar extends React.Component {
                                 </span>
                             </div>
                         </a>
-                        <div className="collapse dropdown-menu setting-menu-content " id="settings ">
-                            <ul className="list-unstyled" >
-                                {
-                                    this.props.user.user_level == 'admin' || this.props.user.user_level == 'team' ?
-                                        <React.Fragment>
-                                            <li className="nav-item dropdown">
-                                                <Link to="/settings/google-account" className="sidebar-link" >
-                                                    <span className="nav-link">Add Analytics Accounts</span>
-                                                </Link>
-                                            </li>
-                                            <li className="nav-item dropdown">
-                                                <Link to="/settings/facebook-accounts" className="sidebar-link" >
-                                                    <span className="nav-link">Facebook Accounts</span>
-                                                </Link>
-                                            </li>
-                                            <li className="nav-item dropdown">
-                                                <Link to="/settings/user" className="sidebar-link" >
-                                                    <span className="nav-link">Manage Users</span>
-                                                </Link>
-                                            </li>
-                                            {/* <li className="nav-item dropdown">
-                                                <Link to="/settings/devices" className="sidebar-link" >
-                                                    <span className="nav-link">Manage Devices</span>
-                                                </Link>
-                                            </li> */}
-                                            <li className="nav-item dropdown">
-                                                <Link to="/settings/price-plans" className="sidebar-link">
-                                                    <span className="nav-link">Plans</span>
-                                                </Link>
-                                            </li>
-                                            <li className="nav-item dropdown">
-                                                <Link to="/settings/payment-history" className="sidebar-link">
-                                                    <span className="nav-link">Payment History</span>
-                                                </Link>
-                                            </li>
-                                            <li className="nav-item dropdown">
-                                                <div className="sidebar-link nav-link">
-                                                    <a href="/documentation" target="_blank">API Documentation</a>
-                                                </div>
-                                            </li>
-                                        </React.Fragment>
-                                        : null
-                                }
+                        <div
+                            className="collapse dropdown-menu setting-menu-content "
+                            id="settings "
+                        >
+                            <ul className="list-unstyled">
+                                {this.props.user.user_level == "admin" ||
+                                this.props.user.user_level == "team" ? (
+                                    <React.Fragment>
+                                        <li className="nav-item dropdown">
+                                            <Link
+                                                to="/settings/google-account"
+                                                className="sidebar-link"
+                                            >
+                                                <span className="nav-link">
+                                                    Add Analytics Accounts
+                                                </span>
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item dropdown">
+                                            <Link
+                                                to="/settings/facebook-accounts"
+                                                className="sidebar-link"
+                                            >
+                                                <span className="nav-link">
+                                                    Facebook Accounts
+                                                </span>
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item dropdown">
+                                            <Link
+                                                to="/settings/user"
+                                                className="sidebar-link"
+                                            >
+                                                <span className="nav-link">
+                                                    Manage Users
+                                                </span>
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item dropdown">
+                                            <Link
+                                                to="/settings/devices"
+                                                className="sidebar-link"
+                                            >
+                                                <span className="nav-link">
+                                                    Manage Devices
+                                                </span>
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item dropdown">
+                                            <Link
+                                                to="/settings/price-plans"
+                                                className="sidebar-link"
+                                            >
+                                                <span className="nav-link">
+                                                    Plans
+                                                </span>
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item dropdown">
+                                            <Link
+                                                to="/settings/payment-history"
+                                                className="sidebar-link"
+                                            >
+                                                <span className="nav-link">
+                                                    Payment History
+                                                </span>
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item dropdown">
+                                            <div className="sidebar-link nav-link">
+                                                <a
+                                                    href="/documentation"
+                                                    target="_blank"
+                                                >
+                                                    API Documentation
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </React.Fragment>
+                                ) : null}
                                 <li className="nav-item dropdown">
-                                    <Link to="/settings/change-password" className="sidebar-link">
-                                        <span className="nav-link ">Profile</span>
+                                    <Link
+                                        to="/settings/change-password"
+                                        className="sidebar-link"
+                                    >
+                                        <span className="nav-link ">
+                                            Profile
+                                        </span>
                                     </Link>
                                 </li>
                                 <li className="nav-item dropdown">
-
                                     <div className="sidebar-link nav-link">
-                                        <a href="#" onClick={(e) => { e.preventDefault(); this.props.toggleInterfaceTour(true); }}>Take a Tour</a>
+                                        <a
+                                            href="#"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                this.props.toggleInterfaceTour(
+                                                    true
+                                                );
+                                            }}
+                                        >
+                                            Take a Tour
+                                        </a>
                                     </div>
                                 </li>
                                 <li className="nav-item dropdown">
                                     <div className="sidebar-link nav-link">
-                                        <Link to="/settings/support" >Support</Link>
+                                        <Link to="/settings/support">
+                                            Support
+                                        </Link>
                                     </div>
                                 </li>
                             </ul>
@@ -291,7 +394,7 @@ class Sidebar extends React.Component {
                     </a>
                 </div> */}
             </div>
-        )
+        );
     }
 }
 export default Sidebar;
