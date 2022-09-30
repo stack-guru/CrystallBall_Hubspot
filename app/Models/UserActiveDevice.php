@@ -12,18 +12,30 @@ class UserActiveDevice extends Model
     use HasFactory;
 
     protected $guarded = [];
+    
     public static function allowedToLogin($user, $request, $type='web'){
-        $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
-        $active_sessions_of_user = self::query()->where('user_id', $user->id)->get()->count();
+        // if logging-in from same browser as before
+        $b_name = Browser::browserName();
+        $b_p_f = Browser::platformFamily();
+        $b_p_n = Browser::platformName();
+        $ip = $request->ip();
 
-        if($active_sessions_of_user >= $allowed_logins){
-            return false;
+        $devices = UserActiveDevice::where('user_id', $user->id)->get();
+        foreach ($devices as $device) {
+            if ($device->browser_name == $b_name && $device->platform_name == $b_p_f && $device->device_type == $b_p_n && $device->ip == $ip) {
+                return true;
+            }
         }
 
+        $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
+        $active_sessions_of_user = self::query()->where('user_id', $user->id)->get()->count();
+        if ($active_sessions_of_user >= $allowed_logins) {
+            return false;
+        }
         // create new active device
         UserLoggedInEvent::dispatch($user, $request, $type);
-
         return true;
+
     }
 
 }
