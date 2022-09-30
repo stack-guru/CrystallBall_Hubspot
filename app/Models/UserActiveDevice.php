@@ -6,6 +6,7 @@ use App\Events\UserLoggedInEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use DeviceDetector\Parser\Client\Browser;
 
 class UserActiveDevice extends Model
 {
