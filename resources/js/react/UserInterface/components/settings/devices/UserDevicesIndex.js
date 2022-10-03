@@ -42,7 +42,7 @@ export default class FacebookAccountsIndex extends React.Component {
                 <div className="container p-5">
                     <div className="row ml-0 mr-0 my-5">
                         <div className="col-12">
-                            <h2 className="heading-section gaa-title">Manage your active devices/sessions</h2>
+                            <h2 className="heading-section gaa-title">Manage your active devices</h2>
                             <p>
                                 <span>
                                     <b>Plan: </b> {this.state.user.price_plan.name}
