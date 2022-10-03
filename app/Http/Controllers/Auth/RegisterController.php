@@ -163,6 +163,26 @@ class RegisterController extends Controller
                 $user->email_verified_at = Carbon::now();
                 $user->save();
 
+                // add device/browser
+                try {
+                    UserActiveDevice::create([
+                        'user_id' => $user->id,
+
+                        'browser_name' => Browser::browserName(),
+                        'platform_name' => Browser::platformFamily(),
+                        'device_type' => Browser::platformName(),
+
+                        'is_extension' => false,
+                        'ip' => request()->ip(),
+
+                        'session_id' => Session::getId() ?? null,
+                        'access_token_id' => null,
+
+                    ]);
+                } catch (Exception $ex) {
+                    info(print_r($ex->getMessage()));
+                }
+
                 event(new \Illuminate\Auth\Events\Registered($user));
 
                 // Auth::login($user);
