@@ -14,3 +14,4 @@ yarn-error.log
 /.vscode
 /nbproject/private/
 /public/.DS_Store
+/.phpintel
