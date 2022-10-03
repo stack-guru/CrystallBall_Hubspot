@@ -64,6 +64,7 @@ export default class FacebookAccountsIndex extends React.Component {
                                 <table className="table table-hover gaa-hover table-bordered">
                                     <thead>
                                         <tr>
+                                            <th width="20%">Email Account</th>
                                             <th width="20%">Browser Name</th>
                                             <th width="20%">Device Name</th>
                                             <th width="20%">Device Type</th>
@@ -75,6 +76,9 @@ export default class FacebookAccountsIndex extends React.Component {
                                         {
                                             this.state.user_active_devices.map(user_active_device => {
                                                 return <tr key={user_active_device.id}>
+                                                    <td>
+                                                        {user_active_device.user.name}
+                                                    </td>
                                                     <td>
                                                         {user_active_device.browser_name}
                                                     </td>
@@ -110,6 +114,7 @@ export default class FacebookAccountsIndex extends React.Component {
                                 <table className="table table-hover gaa-hover table-bordered">
                                     <thead>
                                         <tr>
+                                            <th width="20%">Email Account</th>
                                             <th width="20%">Browser Name</th>
                                             <th width="20%">Device Name</th>
                                             <th width="20%">Device Type</th>
@@ -121,6 +126,9 @@ export default class FacebookAccountsIndex extends React.Component {
                                     {
                                         this.state.user_active_devices_extensions.map(user_active_device => {
                                             return <tr key={user_active_device.id}>
+                                                <td>
+                                                    {user_active_device.user.name}
+                                                </td>
                                                 <td>
                                                     {user_active_device.browser_name}
                                                 </td>
