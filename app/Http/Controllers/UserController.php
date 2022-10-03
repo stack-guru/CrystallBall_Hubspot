@@ -282,8 +282,8 @@ class UserController extends Controller
     public function getUserActiveDevices(Request $request)
     {
         return response()->json([
-            'user_active_devices_browsers' => UserActiveDevice::where('user_id', Auth::id())->where('is_extension', false)->get(),
-            'user_active_devices_extensions' => UserActiveDevice::where('user_id', Auth::id())->where('is_extension', true)->get(),
+            'user_active_devices_browsers' => UserActiveDevice::with('user')->where('user_id', Auth::id())->where('is_extension', false)->get(),
+            'user_active_devices_extensions' => UserActiveDevice::with('user')->where('user_id', Auth::id())->where('is_extension', true)->get(),
         ]);
     }
 

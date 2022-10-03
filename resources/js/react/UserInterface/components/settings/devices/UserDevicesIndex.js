@@ -44,8 +44,13 @@ export default class FacebookAccountsIndex extends React.Component {
                         <div className="col-12">
                             <h2 className="heading-section gaa-title">Manage your active devices/sessions</h2>
                             <p>
-                                <b>Credits: </b> {this.state.devices_count}/{this.state.user.price_plan.users_devices_count} <br />
-                                <b>Email: </b> {this.state.user.email}
+                                <span>
+                                    <b>Plan: </b> {this.state.user.price_plan.name}
+                                </span>
+                                <span className='mx-2'>-</span>
+                                <span>
+                                    <b>Users Credits: </b> {this.state.devices_count}/{this.state.user.price_plan.users_devices_count}
+                                </span>
                             </p>
                         </div>
                     </div>
@@ -64,6 +69,7 @@ export default class FacebookAccountsIndex extends React.Component {
                                 <table className="table table-hover gaa-hover table-bordered">
                                     <thead>
                                         <tr>
+                                            <th width="20%">Email Account</th>
                                             <th width="20%">Browser Name</th>
                                             <th width="20%">Device Name</th>
                                             <th width="20%">Device Type</th>
@@ -75,6 +81,9 @@ export default class FacebookAccountsIndex extends React.Component {
                                         {
                                             this.state.user_active_devices.map(user_active_device => {
                                                 return <tr key={user_active_device.id}>
+                                                    <td>
+                                                        {user_active_device.user.email}
+                                                    </td>
                                                     <td>
                                                         {user_active_device.browser_name}
                                                     </td>
@@ -110,6 +119,7 @@ export default class FacebookAccountsIndex extends React.Component {
                                 <table className="table table-hover gaa-hover table-bordered">
                                     <thead>
                                         <tr>
+                                            <th width="20%">Email Account</th>
                                             <th width="20%">Browser Name</th>
                                             <th width="20%">Device Name</th>
                                             <th width="20%">Device Type</th>
@@ -121,6 +131,9 @@ export default class FacebookAccountsIndex extends React.Component {
                                     {
                                         this.state.user_active_devices_extensions.map(user_active_device => {
                                             return <tr key={user_active_device.id}>
+                                                <td>
+                                                    {user_active_device.user.email}
+                                                </td>
                                                 <td>
                                                     {user_active_device.browser_name}
                                                 </td>
