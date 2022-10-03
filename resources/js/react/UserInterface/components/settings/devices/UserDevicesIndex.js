@@ -63,7 +63,7 @@ export default class FacebookAccountsIndex extends React.Component {
                     <div className="row ml-0 mr-0 pb-2 mb-5">
                         <div className="col-12">
                             <h4>
-                                Active Browser Sessions
+                                Active Browsers
                             </h4>
                             <div className="table-responsive">
                                 <table className="table table-hover gaa-hover table-bordered">
@@ -113,7 +113,7 @@ export default class FacebookAccountsIndex extends React.Component {
                     <div className="row ml-0 mt-5 pt-2 mr-0">
                         <div className="col-12">
                             <h4>
-                                Active Extension Sessions
+                                Active Extensions
                             </h4>
                             <div className="table-responsive">
                                 <table className="table table-hover gaa-hover table-bordered">
