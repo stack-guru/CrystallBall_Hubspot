@@ -200,9 +200,9 @@ export default class IndexPricingPlans extends React.Component {
                                                 {
                                                     pricePlan.user_per_ga_account_count == 0 ?
                                                         <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited Users</li>
-                                                        : (pricePlan.user_per_ga_account_count == 1 ?
-                                                            <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to 1 User</li>
-                                                            : <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to {pricePlan.user_per_ga_account_count} Users</li>)
+                                                        : (pricePlan.user_per_ga_account_count >= 1 ?
+                                                            <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to {pricePlan.user_per_ga_account_count} User(s)</li>
+                                                            : '')
                                                 }
                                                 {
                                                     pricePlan.ga_account_count == 0 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited GA accounts</li>
