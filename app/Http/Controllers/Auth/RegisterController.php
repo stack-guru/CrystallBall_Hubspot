@@ -196,7 +196,7 @@ class RegisterController extends Controller
         else{
             // check if user is already logged in at 2 places (or there are more than 2 active sessions)
             Auth::login($user);
-            $allowed = UserActiveDevice::allowedToLogin($user, $request, $type='web');
+            $allowed = UserActiveDevice::allowedToLogin($user, request(), $type='web');
             if(!$allowed){
                 $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
                 $message = "Your plan allows ". $allowed_logins ." user/device. You can log in and disconnect existing devices or upgrade your plan. For support, contact us. ";
