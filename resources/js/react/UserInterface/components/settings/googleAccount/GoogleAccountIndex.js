@@ -51,6 +51,7 @@ export default class GoogleAccountIndex extends React.Component {
                 autoRedirectDelay = 10000;
                 this.fetchGSCSites(searchParams.get('google_account_id'))
                 this.fetchGAAccounts(searchParams.get('google_account_id'))
+                history.pushState({}, null, "/settings/google-account");
             }
         }
 
