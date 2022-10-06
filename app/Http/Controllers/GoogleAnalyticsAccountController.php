@@ -20,65 +20,74 @@ class GoogleAnalyticsAccountController extends Controller
     public function fetch(GoogleAccount $googleAccount)
     {
         $user = Auth::user();
+
         if ($googleAccount->user_id !== $user->id) {
             abort(404, 'Unable to find Google Analytics account with the given id.');
         }
 
-        $gAS = new GoogleAnalyticsService;
-        $googleAnalyticsAccounts = $gAS->getConnectedAccounts($googleAccount);
-//        if ($googleAnalyticsAccounts === false) {
-//            abort(response()->json(['message' => "Unable to fetch google analytics accounts. Possibly no google analytics account exists or access removed by user."], 422));
-//        }
+        try{
 
-        $savedGoogleAnalyticAccountIds = GoogleAnalyticsAccount::select('ga_id')->ofCurrentUser()->orderBy('ga_id')->get()->pluck('ga_id')->toArray();
+            $gAS = new GoogleAnalyticsService;
+                    $googleAnalyticsAccounts = $gAS->getConnectedAccounts($googleAccount);
+            //        if ($googleAnalyticsAccounts === false) {
+            //            abort(response()->json(['message' => "Unable to fetch google analytics accounts. Possibly no google analytics account exists or access removed by user."], 422));
+            //        }
 
-        if(!empty($googleAnalyticsAccounts)){
-            foreach ($googleAnalyticsAccounts as $index => $googleAnalyticsAccount) {
-                if (!in_array($googleAnalyticsAccount['id'], $savedGoogleAnalyticAccountIds)) {
-                    $nGAA = new GoogleAnalyticsAccount;
-                    $nGAA->ga_id = $googleAnalyticsAccount['id'];
-                    $nGAA->name = $googleAnalyticsAccount['name'];
-                    $nGAA->self_link = $googleAnalyticsAccount['selfLink'];
-                    $nGAA->permissions = json_encode($googleAnalyticsAccount['permissions']);
-                    $nGAA->ga_created = new \DateTime($googleAnalyticsAccount['created']);
-                    $nGAA->ga_updated = new \DateTime($googleAnalyticsAccount['updated']);
-                    $nGAA->property_type = $googleAnalyticsAccount['childLink']['type'];
-                    $nGAA->property_href = $googleAnalyticsAccount['childLink']['href'];
-                    $nGAA->google_account_id = $googleAccount->id;
-                    $nGAA->user_id = $user->id;
-                    $nGAA->save();
-                }
-            }
-        }
+            $savedGoogleAnalyticAccountIds = GoogleAnalyticsAccount::select('ga_id')->ofCurrentUser()->orderBy('ga_id')->get()->pluck('ga_id')->toArray();
 
-        $googleAnalyticsAccouts = $user->googleAnalyticsAccounts;
-        if(!empty($googleAnalyticsAccouts)){
-            foreach ($googleAnalyticsAccouts as $googleAnalyticsAccount) {
-                $googleAnalyticsProperties = $gAS->getAccountUAProperties($googleAccount, $googleAnalyticsAccount);
-                $savedGoogleAnalyticPropertyIds = GoogleAnalyticsProperty::select('property_id')->ofCurrentUser()->orderBy('property_id')->get()->pluck('property_id')->toArray();
-                if ($googleAnalyticsProperties != false) {
-                    foreach ($googleAnalyticsProperties as $index => $googleAnalyticsProperty) {
-                        if (!in_array($googleAnalyticsProperty['id'], $savedGoogleAnalyticPropertyIds)) {
-                            $gAP = $this->saveGoogleAnalyticsUAPropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user);
-                            FetchGAMetricsAndDimensionsJob::dispatch($gAP, '2021-01-01', Carbon::yesterday()->format('Y-m-d'));
-                        }
-                    }
-                }
-
-                $googleAnalyticsProperties = $gAS->getAccountGA4Properties($googleAccount, $googleAnalyticsAccount);
-                $savedGoogleAnalyticPropertyIds = GoogleAnalyticsProperty::select('property_id')->ofCurrentUser()->orderBy('property_id')->get()->pluck('property_id')->toArray();
-                if ($googleAnalyticsProperties != false) {
-                    foreach ($googleAnalyticsProperties as $index => $googleAnalyticsProperty) {
-                        if (!in_array(explode('/', $googleAnalyticsProperty['name'])[1], $savedGoogleAnalyticPropertyIds)) {
-                            $gAP = $this->saveGoogleAnalyticsGA4PropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user);
-                            FetchGAMetricsAndDimensionsJob::dispatch($gAP, '2021-01-01', Carbon::yesterday()->format('Y-m-d'));
-                        }
+            if(!empty($googleAnalyticsAccounts)){
+                foreach ($googleAnalyticsAccounts as $index => $googleAnalyticsAccount) {
+                    if (!in_array($googleAnalyticsAccount['id'], $savedGoogleAnalyticAccountIds)) {
+                        $nGAA = new GoogleAnalyticsAccount;
+                        $nGAA->ga_id = $googleAnalyticsAccount['id'];
+                        $nGAA->name = $googleAnalyticsAccount['name'];
+                        $nGAA->self_link = $googleAnalyticsAccount['selfLink'];
+                        $nGAA->permissions = json_encode($googleAnalyticsAccount['permissions']);
+                        $nGAA->ga_created = new \DateTime($googleAnalyticsAccount['created']);
+                        $nGAA->ga_updated = new \DateTime($googleAnalyticsAccount['updated']);
+                        $nGAA->property_type = $googleAnalyticsAccount['childLink']['type'];
+                        $nGAA->property_href = $googleAnalyticsAccount['childLink']['href'];
+                        $nGAA->google_account_id = $googleAccount->id;
+                        $nGAA->user_id = $user->id;
+                        $nGAA->save();
                     }
                 }
             }
 
+            $googleAnalyticsAccouts = $user->googleAnalyticsAccounts;
+            if(!empty($googleAnalyticsAccouts)){
+                foreach ($googleAnalyticsAccouts as $googleAnalyticsAccount) {
+                    $googleAnalyticsProperties = $gAS->getAccountUAProperties($googleAccount, $googleAnalyticsAccount);
+                    $savedGoogleAnalyticPropertyIds = GoogleAnalyticsProperty::select('property_id')->ofCurrentUser()->orderBy('property_id')->get()->pluck('property_id')->toArray();
+                    if ($googleAnalyticsProperties != false) {
+                        foreach ($googleAnalyticsProperties as $index => $googleAnalyticsProperty) {
+                            if (!in_array($googleAnalyticsProperty['id'], $savedGoogleAnalyticPropertyIds)) {
+                                $gAP = $this->saveGoogleAnalyticsUAPropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user);
+                                FetchGAMetricsAndDimensionsJob::dispatch($gAP, '2021-01-01', Carbon::yesterday()->format('Y-m-d'));
+                            }
+                        }
+                    }
+
+                    $googleAnalyticsProperties = $gAS->getAccountGA4Properties($googleAccount, $googleAnalyticsAccount);
+                    $savedGoogleAnalyticPropertyIds = GoogleAnalyticsProperty::select('property_id')->ofCurrentUser()->orderBy('property_id')->get()->pluck('property_id')->toArray();
+                    if ($googleAnalyticsProperties != false) {
+                        foreach ($googleAnalyticsProperties as $index => $googleAnalyticsProperty) {
+                            if (!in_array(explode('/', $googleAnalyticsProperty['name'])[1], $savedGoogleAnalyticPropertyIds)) {
+                                $gAP = $this->saveGoogleAnalyticsGA4PropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user);
+                                FetchGAMetricsAndDimensionsJob::dispatch($gAP, '2021-01-01', Carbon::yesterday()->format('Y-m-d'));
+                            }
+                        }
+                    }
+                }
+            }
+
+        }catch(Exception $exception){
+
+            return ['success' => false];
+
         }
 
+        
         return ['success' => true];
     }
 
