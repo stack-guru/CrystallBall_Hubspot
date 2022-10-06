@@ -32,10 +32,13 @@ class TriggerZapierWebHooks
     public function handle(AnnotationCreated $event)
     {
         $user = $event->annotation->user;
-        $userWebhooks = UserWebhook::where('user_id', $user->id)->get();
+        if(isset($user)){
+            $userWebhooks = UserWebhook::where('user_id', $user->id)->get();
 
-        foreach ($userWebhooks as $userWebhook) {
-            RunZapierHookForCreatedAnnotation::dispatch($event->annotation->withoutRelations(), $userWebhook);
+            foreach ($userWebhooks as $userWebhook) {
+                RunZapierHookForCreatedAnnotation::dispatch($event->annotation->withoutRelations(), $userWebhook);
+            }
         }
+        
     }
 }
