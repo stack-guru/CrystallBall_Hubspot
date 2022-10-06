@@ -50,7 +50,7 @@ class GoogleAdwordsService  extends GoogleAPIService
 
         $simpleXML = simplexml_load_string($response->body());
 
-        if (!$simpleXML->table->row->count()) {
+        if (!isset($simpleXML->table->row)) {
             return false;
         }
 

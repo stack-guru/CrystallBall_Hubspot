@@ -27,7 +27,7 @@ class AnnotationCreated
         $this->annotation = $annotation;
 
         $user = $annotation->user;
-        if ($user->isPricePlanAnnotationLimitReached(true)) {
+        if (isset($user) && $user->isPricePlanAnnotationLimitReached(true)) {
             event(new AnnotationsLimitReached($user));
         }
     }
