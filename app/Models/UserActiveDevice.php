@@ -13,7 +13,7 @@ class UserActiveDevice extends Model
     use HasFactory;
 
     protected $guarded = [];
-    
+
     public static function allowedToLogin($user, $request, $type='web'){
         // if logging-in from same browser as before
         $b_name = Browser::browserName();
@@ -29,13 +29,41 @@ class UserActiveDevice extends Model
         }
 
         $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
-        $active_sessions_of_user = self::query()->where('user_id', $user->id)->get()->count();
-        if ($active_sessions_of_user >= $allowed_logins) {
+
+        // if user is not allowed to login
+        if ($allowed_logins == -1){
             return false;
         }
-        // create new active device
-        UserLoggedInEvent::dispatch($user, $request, $type);
-        return true;
+        // if unlimited logins are allowed
+        else if ($allowed_logins == 0){
+            return true;
+        }
+
+        $allowed_browsers_count = $allowed_logins;
+        $allowed_extensions_count = $allowed_logins;
+
+        $active_browsers_count = self::query()->where('user_id', $user->id)->where('is_extension', false)->get()->count();
+        $active_extensions_count = self::query()->where('user_id', $user->id)->where('is_extension', true)->get()->count();
+
+        if ($type == 'web'){
+            if ($active_browsers_count < $allowed_browsers_count){
+                UserLoggedInEvent::dispatch($user, $request, $type);
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        if ($type == 'ext'){
+            if ($active_extensions_count < $allowed_extensions_count){
+                UserLoggedInEvent::dispatch($user, $request, $type);
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
 
     }
 
