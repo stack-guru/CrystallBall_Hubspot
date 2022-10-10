@@ -51,6 +51,7 @@ class UserActiveDevice extends Model
         $active_browsers_count = self::query()->where('user_id', $user->id)->where('is_extension', false)->get()->count();
         $active_extensions_count = self::query()->where('user_id', $user->id)->where('is_extension', true)->get()->count();
 
+
         if ($type == 'web'){
             if ($active_browsers_count < $allowed_browsers_count){
                 UserLoggedInEvent::dispatch($user, $request, $type);
@@ -62,6 +63,8 @@ class UserActiveDevice extends Model
         }
 
         if ($type == 'ext'){
+            info('active extension count:'.$active_extensions_count);
+            info('allowed extension count:'.$allowed_extensions_count);
             if ($active_extensions_count < $allowed_extensions_count){
                 UserLoggedInEvent::dispatch($user, $request, $type);
                 return true;
