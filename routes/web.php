@@ -13,13 +13,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('revoke_tokens', function (){
-    $users = \App\Models\User::all();
-    foreach ($users as $user){
-        $user->tokens()->delete();
-    }
-    return "done";
-});
+//Route::get('revoke_tokens', function (){
+//    $users = \App\Models\User::all();
+//    foreach ($users as $user){
+//        $user->tokens()->delete();
+//    }
+//    return "done";
+//});
 
 
 
