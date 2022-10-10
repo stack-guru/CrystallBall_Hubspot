@@ -14,7 +14,7 @@ class UserActiveDevice extends Model
 
     protected $guarded = [];
 
-    public static function allowedToLogin($user, $request, $type='web'){
+    public static function allowedToLogin($user, $request, $type){
         // if logging-in from same browser as before
         info('checking if user if allowed to login');
         $b_name = Browser::browserName();
@@ -74,6 +74,8 @@ class UserActiveDevice extends Model
                 return false;
             }
         }
+
+        info('incorrect type: '.$type);
 
     }
 
