@@ -168,7 +168,7 @@ export default class UserDevicesIndex extends React.Component {
         HttpClient.get('/settings/user-active-devices').then(resp => {
             this.setState({ user_active_devices: resp.data.user_active_devices_browsers, isBusy: false });
             this.setState({ user_active_devices_extensions: resp.data.user_active_devices_extensions, isBusy: false });
-            this.setState({ devices_count: resp.data.user_active_devices_extensions.length + resp.data.user_active_devices_browsers.length, isBusy: false });
+            this.setState({ devices_count: resp.data.user_active_devices_browsers.length, isBusy: false });
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
