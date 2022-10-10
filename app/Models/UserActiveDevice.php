@@ -21,10 +21,10 @@ class UserActiveDevice extends Model
         $b_p_f = Browser::platformFamily();
         $b_p_n = Browser::platformName();
         $ip = $request->ip();
-        info(print_r($b_name));
-        info(print_r($b_p_f));
-        info(print_r($b_p_n));
-        info(print_r($ip));
+        info($b_name);
+        info($b_p_f);
+        info($b_p_n);
+        info($ip);
 
 
         $devices = UserActiveDevice::where('user_id', $user->id)->get();
