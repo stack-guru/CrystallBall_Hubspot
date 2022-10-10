@@ -6,7 +6,7 @@ import HttpClient from '../../../utils/HttpClient';
 import ErrorAlert from '../../../utils/ErrorAlert'
 
 
-export default class FacebookAccountsIndex extends React.Component {
+export default class UserDevicesIndex extends React.Component {
 
     constructor(props) {
         super(props);
@@ -189,13 +189,14 @@ export default class FacebookAccountsIndex extends React.Component {
 
 
     disconnectUserDevice(device_id) {
-        this.setState({ isBusy: true })
         let params = {
             device_id: device_id
         }
         HttpClient.post('/settings/disconnect-user-device', params).then(resp => {
-            this.setState({ user_active_devices: resp.data.user_active_devices_browsers, isBusy: false });
-            this.setState({ user_active_devices_extensions: resp.data.user_active_devices_extensions, isBusy: false });
+            this.setState({ user_active_devices: resp.data.user_active_devices_browsers });
+            this.setState({ user_active_devices_extensions: resp.data.user_active_devices_extensions });
+            swal.fire('Success', "Device is disconnected", 'success');
+
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
