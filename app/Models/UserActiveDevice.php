@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Browser;
-use Illuminate\Support\Facades\Log;
 
 class UserActiveDevice extends Model
 {
@@ -15,18 +14,12 @@ class UserActiveDevice extends Model
 
     protected $guarded = [];
 
-    public static function allowedToLogin($user, $request, $type='web'){
-        Log::info('checking if user is allowed to login');
+    public static function allowedToLogin($user, $request, $type='web'){z
         // if logging-in from same browser as before
         $b_name = Browser::browserName();
         $b_p_f = Browser::platformFamily();
         $b_p_n = Browser::platformName();
         $ip = $request->ip();
-        Log::info(print_r($b_name));
-        Log::info(print_r($b_p_f));
-        Log::info(print_r($b_p_n));
-        Log::info(print_r($ip));
-
 
         $devices = UserActiveDevice::where('user_id', $user->id)->get();
         foreach ($devices as $device) {
