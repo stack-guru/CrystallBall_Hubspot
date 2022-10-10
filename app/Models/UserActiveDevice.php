@@ -16,29 +16,36 @@ class UserActiveDevice extends Model
 
     public static function allowedToLogin($user, $request, $type){
         // if logging-in from same browser as before
-        info('checking if user if allowed to login');
         $b_name = Browser::browserName();
         $b_p_f = Browser::platformFamily();
         $b_p_n = Browser::platformName();
         $ip = $request->ip();
-        info($b_name);
-        info($b_p_f);
-        info($b_p_n);
-        info($ip);
 
+        $browsers = self::query()->where('user_id', $user->id)->where('is_extension', false)->get();
+        $extensions = self::query()->where('user_id', $user->id)->where('is_extension', true)->get();
 
-        $devices = UserActiveDevice::where('user_id', $user->id)->get();
-        foreach ($devices as $device) {
-            if ($device->browser_name == $b_name && $device->platform_name == $b_p_f && $device->device_type == $b_p_n && $device->ip == $ip) {
-                return true;
+        // check if user has logged in from same browser or extension
+        // in that case we dont need to check the credits
+
+        if ($type == 'web'){
+            foreach ($browsers as $browser) {
+                if ($browser->browser_name == $b_name && $browser->platform_name == $b_p_f && $browser->device_type == $b_p_n && $browser->ip == $ip) {
+                    return true;
+                }
+            }
+        }
+        else if($type == 'ext'){
+            foreach ($extensions as $extension) {
+                if ($extension->browser_name == $b_name && $extension->platform_name == $b_p_f && $extension->device_type == $b_p_n && $extension->ip == $ip) {
+                    return true;
+                }
             }
         }
 
+        // user has not logged in before
+        // now check credits if user can login
+
         $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
-
-        info('allowed logins: '.$allowed_logins);
-        info('type is : '.$type);
-
 
         // if user is not allowed to login
         if ($allowed_logins == -1){
@@ -58,6 +65,7 @@ class UserActiveDevice extends Model
 
         if ($type == 'web'){
             if ($active_browsers_count < $allowed_browsers_count){
+                // this event creates new database entry for user devices
                 UserLoggedInEvent::dispatch($user, $request, $type);
                 return true;
             }
@@ -65,12 +73,10 @@ class UserActiveDevice extends Model
                 return false;
             }
         }
-        info('type is : '.$type);
 
         if ($type == 'ext'){
-            info('active extension count:'.$active_extensions_count);
-            info('allowed extension count:'.$allowed_extensions_count);
             if ($active_extensions_count < $allowed_extensions_count){
+                // this event creates new database entry for user extensions
                 UserLoggedInEvent::dispatch($user, $request, $type);
                 return true;
             }
@@ -78,8 +84,6 @@ class UserActiveDevice extends Model
                 return false;
             }
         }
-
-        info('incorrect type: '.$type);
 
     }
 

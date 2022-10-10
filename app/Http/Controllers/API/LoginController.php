@@ -35,8 +35,6 @@ class LoginController extends Controller
 
 //                 check if user is already logged in at 2 places (or there are more than 2 active sessions)
                  $allowed = UserActiveDevice::allowedToLogin($user, $request, 'ext');
-                info('allowed or not : ');
-                info($allowed);
 
                 if(!$allowed){
                      $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
