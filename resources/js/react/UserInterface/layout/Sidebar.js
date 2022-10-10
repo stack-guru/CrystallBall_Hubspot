@@ -53,7 +53,7 @@ class Sidebar extends React.Component {
                 cancelButtonText: 'No',
                 dangerMode: true,
             }).then(value => {
-                // save state 
+                // save state
                 localStorage.setItem('analytics_popup_showed', 'true');
                 if (value.isConfirmed) {
                     window.location.href = '/analytics';
@@ -305,7 +305,7 @@ class Sidebar extends React.Component {
                                                 </span>
                                             </Link>
                                         </li>
-                                        {/*<li className="nav-item dropdown">
+                                        <li className="nav-item dropdown">
                                             <Link
                                                 to="/settings/devices"
                                                 className="sidebar-link"
@@ -314,7 +314,7 @@ class Sidebar extends React.Component {
                                                     Manage Devices
                                                 </span>
                                             </Link>
-                                        </li>*/}
+                                        </li>
                                         <li className="nav-item dropdown">
                                             <Link
                                                 to="/settings/price-plans"
