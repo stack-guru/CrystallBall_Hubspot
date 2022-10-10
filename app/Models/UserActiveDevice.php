@@ -36,6 +36,10 @@ class UserActiveDevice extends Model
 
         $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
 
+        info('allowed logins: '.$allowed_logins);
+        info('type is : '.$type);
+
+
         // if user is not allowed to login
         if ($allowed_logins == -1){
             return false;
