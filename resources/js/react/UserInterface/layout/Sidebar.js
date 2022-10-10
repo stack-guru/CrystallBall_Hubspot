@@ -305,16 +305,16 @@ class Sidebar extends React.Component {
                                                 </span>
                                             </Link>
                                         </li>
-                                        <li className="nav-item dropdown">
-                                            <Link
-                                                to="/settings/devices"
-                                                className="sidebar-link"
-                                            >
-                                                <span className="nav-link">
-                                                    Manage Devices
-                                                </span>
-                                            </Link>
-                                        </li>
+                                        {/*<li className="nav-item dropdown">*/}
+                                        {/*    <Link*/}
+                                        {/*        to="/settings/devices"*/}
+                                        {/*        className="sidebar-link"*/}
+                                        {/*    >*/}
+                                        {/*        <span className="nav-link">*/}
+                                        {/*            Manage Devices*/}
+                                        {/*        </span>*/}
+                                        {/*    </Link>*/}
+                                        {/*</li>*/}
                                         <li className="nav-item dropdown">
                                             <Link
                                                 to="/settings/price-plans"

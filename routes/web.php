@@ -13,6 +13,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Route::get('revoke_tokens', function (){
+    $users = \App\Models\User::all();
+    foreach ($users as $user){
+        $user->tokens()->delete();
+    }
+    return "done";
+});
+
 
 
 /*
@@ -106,7 +114,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
     Route::view('notifications', 'ui/app');
     Route::view('analytics-and-business-intelligence', 'ui/app');
 
-    
+
 
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
@@ -125,7 +133,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
         Route::view('payment-detail/create', 'ui/app');
         Route::view('price-plans', 'ui/app')->name('settings.price-plans');
         Route::view('custom-price-plan/{code}', 'ui/app')->name('settings.custom-price-plan');
-        
+
         Route::get('price-plans/payment', [App\Http\Controllers\PaymentController::class, 'show'])->name('settings.price-plan.payment');
         Route::view('payment-history', 'ui/app');
 
