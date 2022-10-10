@@ -14,7 +14,7 @@ class UserActiveDevice extends Model
 
     protected $guarded = [];
 
-    public static function allowedToLogin($user, $request, $type='web'){z
+    public static function allowedToLogin($user, $request, $type='web'){
         // if logging-in from same browser as before
         $b_name = Browser::browserName();
         $b_p_f = Browser::platformFamily();
