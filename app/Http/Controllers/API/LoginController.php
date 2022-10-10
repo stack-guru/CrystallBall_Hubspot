@@ -35,7 +35,10 @@ class LoginController extends Controller
 
 //                 check if user is already logged in at 2 places (or there are more than 2 active sessions)
                  $allowed = UserActiveDevice::allowedToLogin($user, $request, $type='ext');
-                 if(!$allowed){
+                info('allowed or not : ');
+                info(print_r($allowed));
+
+                if(!$allowed){
                      $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
                      $message = "Your plan allows ". $allowed_logins ." user/device. You can log in and disconnect existing devices or upgrade your plan. For support, <a target='_blank' href='mailto:contact@crystalballinsight.com'>contact us</a>.";
                      $response = ["message" => $message];

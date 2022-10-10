@@ -16,10 +16,16 @@ class UserActiveDevice extends Model
 
     public static function allowedToLogin($user, $request, $type='web'){
         // if logging-in from same browser as before
+        info('checking if user if allowed to login');
         $b_name = Browser::browserName();
         $b_p_f = Browser::platformFamily();
         $b_p_n = Browser::platformName();
         $ip = $request->ip();
+        info(print_r($b_name));
+        info(print_r($b_p_f));
+        info(print_r($b_p_n));
+        info(print_r($ip));
+
 
         $devices = UserActiveDevice::where('user_id', $user->id)->get();
         foreach ($devices as $device) {
