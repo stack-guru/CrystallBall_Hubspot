@@ -15,15 +15,16 @@ class GoogleSearchConsoleService extends GoogleAPIService
 
         Log::channel('google')->info("Fetching Sites: ", ['GoogleAccount' => $googleAccount->name]);
         $response = $this->executeRequestWithRefresh($googleAccount, 'get', $url, [], $googleAccount->token);
-        if ($response->body() == "{}\n") {
-            // User don't have any Search Console account
-            Log::channel('google')->error("User does not have Google Search Console account setup.",  ['GoogleAccount' => $googleAccount->name]);
-            return [];
-        }
 
         if ($response == false) {
             Log::channel('google')->error("Unable to refresh access token while accessing Search Console Sites.",  ['GoogleAccount' => $googleAccount->name]);
             return false;
+        }
+
+        if ($response->body() == "{}\n") {
+            // User don't have any Search Console account
+            Log::channel('google')->error("User does not have Google Search Console account setup.",  ['GoogleAccount' => $googleAccount->name]);
+            return [];
         }
 
         $respJson = $response->json();
