@@ -61,6 +61,7 @@ class UserActiveDevice extends Model
                 return false;
             }
         }
+        info('type is : '.$type);
 
         if ($type == 'ext'){
             info('active extension count:'.$active_extensions_count);
