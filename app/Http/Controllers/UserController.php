@@ -297,7 +297,10 @@ class UserController extends Controller
             if($UserActiveDevice->is_extension){
                 $access_token_id = DB::table('oauth_access_tokens')->where('user_id', Auth::id())->where('id', $UserActiveDevice->access_token_id);
                 if($access_token_id->first()){
+                    info('deleting ext record');
                     $access_token_id->delete();
+                    info(print_r($access_token_id));
+                    info('deleted');
                 }
             }else{
                 $session_id = DB::table('sessions')->where('user_id', Auth::id())->where('id', $UserActiveDevice->session_id);
@@ -371,9 +374,9 @@ class UserController extends Controller
 
     public function mmr()
     {
-        
+
         $pricePlanSubscriptions = PricePlanSubscription::where('app_sumo_invoice_item_uuid', null)->get();
-        
+
         $total = 0;
 
         foreach ($pricePlanSubscriptions as $pricePlanSubscription) {
