@@ -19,7 +19,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
     // Chrome Extension
     Route::group(['prefix' => 'v1/chrome-extension', 'as' => 'v1.chrome-extension.'], function () {
 
-        Route::group(['middleware' => ['auth:api']], function () {
+        Route::group(['middleware' => ['auth:api', 'verified']], function () {
 
             Route::get('user', function (Request $request) {
                 return $request->user();
@@ -48,7 +48,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
         Route::post('open-weather-map/alert', 'OWMPushNotificationController@store');
         Route::get('event-sources', 'EventSourceController@index')->name('event-sources.index');
 
-        Route::group(['middleware' => ['auth:api']], function () {
+        Route::group(['middleware' => ['auth:api','verified']], function () {
 
             Route::get('user', function (Request $request) {
                 return $request->user();

@@ -35,26 +35,6 @@
   </div>
 
   <div class="form-label-group">
-    <input type="password" id="inputPassword" class="form-control @error('password') is-invalid @enderror"
-      placeholder="Password" required="" name="password" value="">
-    <label for="inputPassword">Password</label>
-    @error('password')
-      @foreach ($errors->get('password') as $message)
-        <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-        </span>
-      @endforeach
-    @enderror
-  </div>
-
-  <div class="form-label-group">
-    <input type="password" id="inputPasswordConfirmation"
-      class="form-control" placeholder="Password Confirmation"
-      required="" name="password_confirmation" value="">
-    <label for="inputPasswordConfirmation">Password Confirmation</label>
-  </div>
-
-  <div class="form-label-group">
     <div class="form-check">
       <input type="checkbox" class="form-check-input @error('read_confirmation') is-invalid @enderror"
         name="read_confirmation" id="read_confirmation" />
@@ -72,7 +52,7 @@
       <span class="invalid-feedback" role="alert">
         <strong>{{ $message }}</strong>
       </span>
-      @enderror      
+      @enderror
       <div class="g-recaptcha" data-sitekey="{{config('services.recaptcha.client.key')}}" data-callback="gRecaptchaSuccessCallBack" data-expired-callback="gRecaptchaExpireCallBack"></div>
   </div>
 

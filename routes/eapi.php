@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 | This file is to be used for reoutes related to chrome extension
 | every route will have `web` middleware attached to it by default
 | Check RouteServiceProvider for more information
-| 
+|
 |
  */
 
@@ -19,7 +19,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'eapi.', 'middlewar
 
     Route::group(['prefix' => 'v1/chrome-extension', 'as' => 'v1.chrome-extension.'], function () {
 
-        Route::group(['middleware' => ['auth:api']], function () {
+        Route::group(['middleware' => ['auth:api', 'verified']], function () {
 
             Route::get('user', function (Request $request) {
                 return $request->user();
