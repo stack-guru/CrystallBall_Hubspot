@@ -75,11 +75,15 @@ class UserController extends Controller
             $parentUser = User::find($parentUser->user_id);
         }
 
-        if ($parentUser->pricePlan->user_per_ga_account_count == -1) {
+        if ($parentUser->pricePlan->user_per_ga_account_count == -1 || $parentUser->pricePlan->user_per_ga_account_count == 1) {
             return response()->json([
                 'message' => 'Action not allowed in your plan.'
             ], 455);
-        } else if (count($parentUser->users) >= $parentUser->pricePlan->user_per_ga_account_count) {
+        } 
+        // if limit of users has reached
+        // if allowed is 2 that means 1 user can be created
+        // if allowed is 3 that means 2 user can be created ... 
+        else if (count($parentUser->users) >= ($parentUser->pricePlan->user_per_ga_account_count)-1) {
             return response()->json([
                 'message' => 'Your limit has been reached.'
             ], 455);
