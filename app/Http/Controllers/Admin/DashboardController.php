@@ -63,7 +63,9 @@ class DashboardController extends Controller
             ->withCount('last60DaysApiAnnotationCreatedLogs')
             ->withCount('last60DaysNotificationLogs')
             ->withCount('last60DaysLoginLogs')
-            ->orderBy('created_at', 'DESC')->get();
+            ->orderBy('created_at', 'DESC')
+            ->where('name','NOT LIKE','%test%')
+            ->get();
 
         $last60DaysActiveUsers = 0;
 
@@ -92,7 +94,9 @@ class DashboardController extends Controller
             ->withCount('last30DaysApiAnnotationCreatedLogs')
             ->withCount('last30DaysNotificationLogs')
             ->withCount('last30DaysLoginLogs')
-            ->orderBy('created_at', 'DESC')->get();
+            ->orderBy('created_at', 'DESC')
+            ->where('name','NOT LIKE','%test%')
+            ->get();
 
         $last30DaysActiveUsers = 0;
 
@@ -150,7 +154,9 @@ class DashboardController extends Controller
             ->withCount('yesterdayApiAnnotationCreatedLogs')
             ->withCount('yesterdayNotificationLogs')
             ->withCount('yesterdayLoginLogs')
-            ->orderBy('created_at', 'DESC')->get();
+            ->orderBy('created_at', 'DESC')
+            ->where('name','NOT LIKE','%test%')
+            ->get();
 
         $yesterdayActiveUsers = 0;
 
