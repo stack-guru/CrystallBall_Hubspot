@@ -200,9 +200,15 @@ export default class IndexPricingPlans extends React.Component {
                                                 {
                                                     pricePlan.user_per_ga_account_count == 0 ?
                                                         <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited Users</li>
-                                                        : (pricePlan.user_per_ga_account_count >= 2 ?
-                                                            <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to { pricePlan.user_per_ga_account_count == 2 ? <span>{pricePlan.user_per_ga_account_count-1} User</span> : <span>{pricePlan.user_per_ga_account_count-1} Users</span>}</li>
-                                                            : '')
+                                                        : (
+                                                            pricePlan.user_per_ga_account_count == -1  ?
+                                                                <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to 1 User</li>
+                                                            : (
+                                                                pricePlan.user_per_ga_account_count >= 1 ?
+                                                                    <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to {pricePlan.user_per_ga_account_count+1} User</li>
+                                                                    : (<span></span>)
+                                                              )
+                                                          )
                                                 }
                                                 {
                                                     pricePlan.ga_account_count == 0 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited GA accounts</li>
