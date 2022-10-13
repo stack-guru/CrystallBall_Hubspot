@@ -32,7 +32,7 @@ class EmailVerificationMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mails.auth.verify-email', [
+        return $this->subject("[Action Required] Verify your Email")->markdown('mails.auth.verify-email', [
             'user'             => $this->user,
             'verificationLink' => URL::temporarySignedRoute(
                 'verification.verify',

@@ -9,11 +9,11 @@
     @csrf
     <div class="text-center mb-4">
       <img class="mb-4" src="{{ config('app.logo') }}" alt="" width="72" height="72">
-      <h1 class="h3 mb-3 font-weight-normal">{{ config('app.name') }}</h1>
       @if ($verified)
-      <p>Set your password</p>
+      <h4>It's time to set your password</h4>
       @else
-      <p>Confirm your email address</p>
+      <h4>Let's confirm your email</h4>
+      <p>Check your Inbox</p>
       @endif
     </div>
 
@@ -47,13 +47,12 @@
         <label for="inputPasswordConfirmation">Password Confirmation</label>
       </div>
 
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">All set, let's get started</button>
+    @else
+      <div class="mt-4 text-center">
+        <a href="#" onclick="event.preventDefault();document.getElementById('verification-resend-form').submit();">{{ __('Resend') }}</a>
+      </div>
     @endif
-
-    <p class="mt-4">
-      {{ __('If you did not receive the email') }},
-      <a href="#" onclick="event.preventDefault();document.getElementById('verification-resend-form').submit();">{{ __('Click here to request another verification link') }}</a>.
-    </p>
   </form>
 
   <form class="d-none" method="POST" action="{{ route('verification.resend') }}" id="verification-resend-form">
