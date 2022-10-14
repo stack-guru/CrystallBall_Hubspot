@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 //Route::get('revoke_tokens', function (){
 //    $users = \App\Models\User::all();
@@ -20,6 +21,14 @@ use Illuminate\Support\Facades\Route;
 //    }
 //    return "done";
 //});
+
+Route::get('make_users_verifeid', function(){
+    $users = User::all();
+    foreach($users as $user){
+        $user->email_verified_at = now();
+        $user->save();
+    }
+});
 
 
 
