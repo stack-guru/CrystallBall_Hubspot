@@ -59,7 +59,7 @@ class VerificationController extends Controller
     public function show(Request $request)
     {
         $verified = $request->user()->hasVerifiedEmail();
-        return $verified && $request->user()->password != User::EMPTY_PASSWORD
+        return $verified && ($request->user()->password != User::EMPTY_PASSWORD || ($request->user()->password === User::EMPTY_PASSWORD && $request->user()->has_password == false))
                         ? redirect($this->redirectPath())
                         : view('auth.verify', compact('verified'));
     }
@@ -111,7 +111,7 @@ class VerificationController extends Controller
      */
     protected function verified(Request $request)
     {
-        if($request->user()->password === User::EMPTY_PASSWORD){
+        if($request->user()->password === User::EMPTY_PASSWORD && $request->user()->has_password == true){
             return redirect()->route('verification.notice')->with('verified',true);
         }
     }

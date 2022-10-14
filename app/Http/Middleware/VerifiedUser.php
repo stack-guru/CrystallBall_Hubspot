@@ -28,7 +28,7 @@ class VerifiedUser
             : Redirect::guest(URL::route('verification.notice'));
         }
 
-        if($request->user()->password === User::EMPTY_PASSWORD){
+        if($request->user()->has_password == true && $request->user()->password === User::EMPTY_PASSWORD){
             return Redirect::guest(URL::route('verification.notice'));
         }
 
