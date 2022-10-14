@@ -59,10 +59,10 @@
                                                     <span class="badge badge-danger">Phone not verified</span>
                                                 @endif
 
-                                                @if ($user->password != \App\Models\User::EMPTY_PASSWORD)
-                                                    <span class="badge badge-success">Password has been set</span>
-                                                @else
+                                                @if ($user->password == \App\Models\User::EMPTY_PASSWORD && $user->has_password == true)
                                                     <span class="badge badge-danger">Password not set</span>
+                                                @else
+                                                    <span class="badge badge-success">Password has been set</span>
                                                 @endif
                                             </td>
                                             <td>

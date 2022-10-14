@@ -76,7 +76,7 @@ class RegisterController extends Controller
 
                     $user = User::where('email', $value)->first();
                     if ($user) {
-                        if (!$user->hasVerifiedEmail() || $user->password === User::EMPTY_PASSWORD) {
+                        if (!$user->hasVerifiedEmail() || ($user->password === User::EMPTY_PASSWORD && $user->has_password == true)) {
                             Mail::to($user->email)->send(new EmailVerificationMail($user));
                             $fail('The ' . $attribute . ' has already been registered. Please check your email for confirmation!');
                         } else {
@@ -201,6 +201,7 @@ class RegisterController extends Controller
                 $user->price_plan_expiry_date = new \DateTime("+7 days");
                 $user->is_billing_enabled     = false;
                 $user->email_verified_at      = Carbon::now();
+                $user->has_password           = false;
                 $user->save();
 
                 try {
@@ -233,6 +234,11 @@ class RegisterController extends Controller
                 // $this->addGoogleAccount($newUser, $googleAccount, $user);
             }
         } else {
+
+            $user->update([
+                'has_password'      => false,
+                'email_verified_at' => now(),
+            ]);
             // check if user is already logged in at 2 places (or there are more than 2 active sessions)
             Auth::login($user);
             $allowed = UserActiveDevice::allowedToLogin($user, request(), $type = 'web');
