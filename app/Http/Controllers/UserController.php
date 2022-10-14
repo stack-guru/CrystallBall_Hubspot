@@ -83,7 +83,7 @@ class UserController extends Controller
         // if limit of users has reached
         else if (count($parentUser->users) >= ($parentUser->pricePlan->user_per_ga_account_count)) {
             return response()->json([
-                'message' => 'Your limit has been reached.'
+                'message' => 'To add more users, please upgrade your account.'
             ], 455);
         }
 
