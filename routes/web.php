@@ -21,6 +21,14 @@ use Illuminate\Support\Facades\Route;
 //    return "done";
 //});
 
+Route::get('make_users_verifeid', function(){
+    $users = User::all();
+    foreach($users as $user){
+        $user->email_verified_at = now();
+        $user->save();
+    }
+});
+
 
 
 /*
