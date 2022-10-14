@@ -79,7 +79,7 @@ class UserController extends Controller
             return response()->json([
                 'message' => 'Action not allowed in your plan.'
             ], 455);
-        } 
+        }
         // if limit of users has reached
         else if (count($parentUser->users) >= ($parentUser->pricePlan->user_per_ga_account_count)) {
             return response()->json([
@@ -201,7 +201,9 @@ class UserController extends Controller
             ->withCount('last90DaysApiAnnotationCreatedLogs')
             ->withCount('last90DaysNotificationLogs')
             ->withCount('last90DaysLoginLogs')
-            ->orderBy('created_at', 'DESC')->get();
+            ->orderBy('created_at', 'DESC')
+            ->where('name','NOT LIKE','%test%')
+            ->get();
 
         $active_users_in_90_days = 0;
         $last6MonthsActiveUsers = 0;
@@ -224,14 +226,16 @@ class UserController extends Controller
         $active_users_in_30_days =  (new DashboardController())->active_users_in_30_days();
         $active_users_in_60_days =  (new DashboardController())->active_users_in_60_days();
 
-        $total_registration_count = User::count();
-        $yesterday_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->count();
-        $yesterday_registration_users = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get()->pluck('name', 'email')->toArray();
-        $last_week_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(7)->format('Y-m-d'))->count();
-        $current_month_registration_count = User::where('created_at', '>=', Carbon::now()->startOfMonth()->format('Y-m-d'))->count();
-        $previous_month_registration_count = User::where('created_at', '>=', Carbon::now()->subMonth(1)->startOfMonth()->format('Y-m-d'))->where('created_at', '<=', Carbon::now()->subMonth(1)->endOfMonth()->format('Y-m-d'))->count();
+        $total_registration_count = User::where('name','NOT LIKE','%test%')->count();
+        $yesterday_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->where('name','NOT LIKE','%test%')->count();
+        $yesterday_registration_users = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->where('name','NOT LIKE','%test%')->pluck('name', 'email')->toArray();
+        $last_week_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(7)->format('Y-m-d'))->where('name','NOT LIKE','%test%')->count();
+        $current_month_registration_count = User::where('created_at', '>=', Carbon::now()->startOfMonth()->format('Y-m-d'))->where('name','NOT LIKE','%test%')->count();
+        $previous_month_registration_count = User::where('created_at', '>=', Carbon::now()->subMonth(1)->startOfMonth()->format('Y-m-d'))->where('created_at', '<=', Carbon::now()->subMonth(1)->endOfMonth()->format('Y-m-d'))->where('name','NOT LIKE','%test%')->count();
 
-        $new_paying_users_yesterday = PricePlanSubscription::with('user', 'user.lastPricePlanSubscription', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
+        $new_paying_users_yesterday = PricePlanSubscription::whereHas('user',function($query){
+            $query->where('name','NOT LIKE','%test%');
+        })->with('user', 'user.lastPricePlanSubscription', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
         foreach ($new_paying_users_yesterday as $key => $new_paying_user_yesterday) {
             if($new_paying_user_yesterday->user->created_at <= Carbon::now()->subDay(1)->format('Y-m-d')){
                 $new_paying_users_yesterday->forget($key);
@@ -324,7 +328,9 @@ class UserController extends Controller
             ->withCount('yesterdayApiAnnotationCreatedLogs')
             ->withCount('yesterdayNotificationLogs')
             ->withCount('yesterdayLoginLogs')
-            ->orderBy('created_at', 'DESC')->get();
+            ->orderBy('created_at', 'DESC')
+            ->where('name','NOT LIKE','%test%')
+            ->get();
 
         $count = 0;
 
@@ -343,7 +349,9 @@ class UserController extends Controller
     public function total_payments_this_month()
     {
 
-        $pricePlanSubscriptions = PricePlanSubscription::where('app_sumo_invoice_item_uuid', null)->where('created_at', '>=', Carbon::now()->firstOfMonth())->get();
+        $pricePlanSubscriptions = PricePlanSubscription::whereHas('user',function($query){
+            $query->where('name','NOT LIKE','%test%');
+        })->where('app_sumo_invoice_item_uuid', null)->where('created_at', '>=', Carbon::now()->firstOfMonth())->get();
 
         $total = 0;
 
@@ -358,7 +366,9 @@ class UserController extends Controller
     public function total_payments_previous_month()
     {
 
-        $pricePlanSubscriptions = PricePlanSubscription::where('app_sumo_invoice_item_uuid', null)->where('created_at', '>=', Carbon::now()->subMonth(1)->firstOfMonth())->where('created_at', '<=', Carbon::now()->subMonth(1)->lastOfMonth())->get();
+        $pricePlanSubscriptions = PricePlanSubscription::whereHas('user',function($query){
+            $query->where('name','NOT LIKE','%test%');
+        })->where('app_sumo_invoice_item_uuid', null)->where('created_at', '>=', Carbon::now()->subMonth(1)->firstOfMonth())->where('created_at', '<=', Carbon::now()->subMonth(1)->lastOfMonth())->get();
 
         $total = 0;
 
@@ -373,7 +383,10 @@ class UserController extends Controller
     public function mmr()
     {
 
-        $pricePlanSubscriptions = PricePlanSubscription::where('app_sumo_invoice_item_uuid', null)->get();
+        $pricePlanSubscriptions = PricePlanSubscription::whereHas('user',function($query){
+            $query->where('name','NOT LIKE','%test%');
+        })->where('app_sumo_invoice_item_uuid', null)
+        ->get();
 
         $total = 0;
 
