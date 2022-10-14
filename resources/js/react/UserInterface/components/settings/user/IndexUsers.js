@@ -72,7 +72,7 @@ export default class IndexUsers extends Component {
 
                             <div className="row mb-4 ml-3 mr-3">
                                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
-                                    <Link to="/settings/devices" className="btn btn-sm gaa-btn-primary text-white mr-2">Manage Device</Link>
+                                    <Link to="/settings/devices" className="text-primary mr-2">Manage Device</Link>
                                 </div>
                             </div>
 
