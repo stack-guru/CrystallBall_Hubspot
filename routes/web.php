@@ -64,7 +64,10 @@ Route::redirect('/', '/login', 301);
 
 Route::group(['middleware' => ['prevent.cache']], function () {
     Auth::routes(['verify' => true]);
-    Route::post('generate-password',[App\Http\Controllers\Auth\ConfirmPasswordController::class, 'generatePassword'])->name('generate-password');
+    Route::group(['middleware' => ['auth']],function(){
+        Route::post('generate-password',[App\Http\Controllers\Auth\ConfirmPasswordController::class, 'generatePassword'])->name('generate-password');
+        Route::post('logout-and-destroy',[App\Http\Controllers\Auth\RegisterController::class, 'logoutAndDestroy'])->name('logout-and-destroy');
+    });
 });
 
 Route::get('register_chrome', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm']);
