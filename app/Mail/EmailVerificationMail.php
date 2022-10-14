@@ -4,14 +4,11 @@ namespace App\Mail;
 
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\URL;
 
 class EmailVerificationMail extends Mailable
 {
@@ -35,20 +32,16 @@ class EmailVerificationMail extends Mailable
      */
     public function build()
     {
-        return $this->subject(Lang::get('Verify Email Address'))
-            ->html(
-                (new MailMessage)
-                    ->line(Lang::get('Please click the button below to verify your email address.'))
-                    ->action(Lang::get('Verify Email Address'), URL::temporarySignedRoute(
-                        'verification.verify',
-                        Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
-                        [
-                            'id' => $this->user->getKey(),
-                            'hash' => sha1($this->user->getEmailForVerification()),
-                        ]
-                    ))
-                    ->line(Lang::get('If you did not create an account, no further action is required.'))
-                    ->render()
-            );
+        return $this->subject("[Action Required] Verify your Email")->markdown('mails.auth.verify-email', [
+            'user'             => $this->user,
+            'verificationLink' => URL::temporarySignedRoute(
+                'verification.verify',
+                Carbon::now()->addMinutes(Config::get('auth.verification.expire', 5)),
+                [
+                    'id'   => $this->user->getKey(),
+                    'hash' => sha1($this->user->getEmailForVerification()),
+                ]
+            ),
+        ]);
     }
 }

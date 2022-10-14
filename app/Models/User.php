@@ -40,6 +40,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'has_password',
         'price_plan_id',
         'price_plan_expiry_date',
 
@@ -97,6 +98,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
         'trial_ended_at' => 'datetime',
         'data_source_tour_showed_at' => 'datetime',
@@ -119,6 +121,8 @@ class User extends Authenticatable implements MustVerifyEmail
         "last_activated_any_data_source_at" => 'datetime',
         "last_generated_api_token_at" => 'datetime',
         "last_api_called_at" => "datetime",
+
+        "has_password" => 'boolean',
     ];
 
     /**

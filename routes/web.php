@@ -12,6 +12,30 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
+
+//Route::get('revoke_tokens', function (){
+//    $users = \App\Models\User::all();
+//    foreach ($users as $user){
+//        $user->tokens()->delete();
+//    }
+//    return "done";
+//});
+
+Route::get('make_users_verifeid', function(){
+    $users = User::all();
+    foreach($users as $user){
+        $user->email_verified_at = now();
+        $user->save();
+    }
+    return "done";
+});
+
+Route::get('make_users_verifeid_of_no_password', function(){
+    return User::where('password',User::EMPTY_PASSWORD)->update([
+        'has_password' => false
+    ]);
+});
 
 
 
@@ -56,11 +80,15 @@ Route::redirect('/', '/login', 301);
 
 Route::group(['middleware' => ['prevent.cache']], function () {
     Auth::routes(['verify' => true]);
+    Route::group(['middleware' => ['auth']],function(){
+        Route::post('generate-password',[App\Http\Controllers\Auth\ConfirmPasswordController::class, 'generatePassword'])->name('generate-password');
+        Route::post('logout-and-destroy',[App\Http\Controllers\Auth\RegisterController::class, 'logoutAndDestroy'])->name('logout-and-destroy');
+    });
 });
 
 Route::get('register_chrome', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm']);
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth','verified']], function () {
     Route::post('phone/resend', [App\Http\Controllers\Auth\VerificationController::class, 'resendPhone']);
     Route::post('phone/verify', [App\Http\Controllers\Auth\VerificationController::class, 'verifyPhone']);
 });
@@ -80,12 +108,12 @@ Route::view('upgrade-plan-team', 'upgrade-plan-team')->name('upgrade-plan-team')
 
 // AppSumo Routes
 // In middleware auth.identification only identifies user through GET query parameter `identification_code` and logs it in
-Route::group(['prefix' => 'app-sumo', 'as' => 'app-sumo.', 'middleware' => ['auth.identification', 'auth']], function () {
+Route::group(['prefix' => 'app-sumo', 'as' => 'app-sumo.', 'middleware' => ['auth.identification', 'auth', 'verified']], function () {
     Route::get('password', [App\Http\Controllers\AppSumo\AuthController::class, 'showPasswordForm'])->name('password.index');
     Route::put('password', [App\Http\Controllers\AppSumo\AuthController::class, 'updatePassword'])->name('password.update');
 });
 
-Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () {
+Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], function () {
 
     Route::delete('user', [App\Http\Controllers\HomeController::class, 'deleteAccount'])->withoutMiddleware('only.non.empty.password');
 
@@ -106,7 +134,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
     Route::view('notifications', 'ui/app');
     Route::view('analytics-and-business-intelligence', 'ui/app');
 
-    
+
 
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
@@ -125,7 +153,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth']], function () 
         Route::view('payment-detail/create', 'ui/app');
         Route::view('price-plans', 'ui/app')->name('settings.price-plans');
         Route::view('custom-price-plan/{code}', 'ui/app')->name('settings.custom-price-plan');
-        
+
         Route::get('price-plans/payment', [App\Http\Controllers\PaymentController::class, 'show'])->name('settings.price-plan.payment');
         Route::view('payment-history', 'ui/app');
 

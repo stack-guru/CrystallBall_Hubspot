@@ -9,26 +9,26 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Annotation;
 
-class AnnotationCreated
+class RegisteredNewUser
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, SerializesModels;
 
-    public $annotation;
+    /**
+     * The authenticated user.
+     *
+     * @var \Illuminate\Contracts\Auth\Authenticatable
+     */
+    public $user;
 
     /**
      * Create a new event instance.
      *
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @return void
      */
-    public function __construct($annotation)
+    public function __construct($user)
     {
-        $this->annotation = $annotation;
-
-        $user = $annotation->user;
-        if (isset($user) && $user->isPricePlanAnnotationLimitReached(true)) {
-            event(new AnnotationsLimitReached($user));
-        }
+        $this->user = $user;
     }
 }

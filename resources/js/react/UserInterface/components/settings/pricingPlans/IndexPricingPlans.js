@@ -200,16 +200,22 @@ export default class IndexPricingPlans extends React.Component {
                                                 {
                                                     pricePlan.user_per_ga_account_count == 0 ?
                                                         <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited Users</li>
-                                                        : (pricePlan.user_per_ga_account_count >= 1 ?
-                                                            <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to {pricePlan.user_per_ga_account_count} User(s)</li>
-                                                            : '')
+                                                        : (
+                                                            pricePlan.user_per_ga_account_count == -1  ?
+                                                                <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to 1 User</li>
+                                                            : (
+                                                                pricePlan.user_per_ga_account_count >= 1 ?
+                                                                    <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to {pricePlan.user_per_ga_account_count+1} User</li>
+                                                                    : (<span></span>)
+                                                              )
+                                                          )
                                                 }
                                                 {
                                                     pricePlan.ga_account_count == 0 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited GA accounts</li>
                                                         :
-                                                        pricePlan.ga_account_count == 1 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to 1 GA Account</li>
-                                                            :
-                                                            <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>{pricePlan.ga_account_count} GA accounts</li>
+                                                        pricePlan.ga_account_count >= 1 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to { pricePlan.ga_account_count == 1 ? <span>{pricePlan.ga_account_count} GA account</span> : <span>{pricePlan.ga_account_count} GA accounts</span> }</li>
+                                                            : ''
+                                                            
                                                 }
                                                 {/* {
                                                     pricePlan.ga_account_count == 0 ?

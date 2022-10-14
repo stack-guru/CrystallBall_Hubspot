@@ -73,19 +73,20 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'app-sumo.auth' => \App\Http\Middleware\AppSumoAuthenticate::class,
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'auth.identification' => \App\Http\Middleware\IdentificationAuthenticate::class,
-        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'app-sumo.auth'           => \App\Http\Middleware\AppSumoAuthenticate::class,
+        'auth'                    => \App\Http\Middleware\Authenticate::class,
+        'auth.basic'              => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'auth.identification'     => \App\Http\Middleware\IdentificationAuthenticate::class,
+        'cache.headers'           => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'can'                     => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest'                   => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'only.non.empty.password' => \App\Http\Middleware\AllowOnlyNonEmptyPassword::class,
-        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
-        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'cors' => \App\Http\Middleware\CORS::class,
-        'prevent.cache' => \App\Http\Middleware\PreventCache::class,
+        'password.confirm'        => \Illuminate\Auth\Middleware\RequirePassword::class,
+        'signed'                  => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'throttle'                => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        // 'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'verified'                => \App\Http\Middleware\VerifiedUser::class,
+        'cors'                    => \App\Http\Middleware\CORS::class,
+        'prevent.cache'           => \App\Http\Middleware\PreventCache::class,
     ];
 }

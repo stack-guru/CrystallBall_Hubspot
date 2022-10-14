@@ -51,6 +51,7 @@ export default class GoogleAccountIndex extends React.Component {
                 autoRedirectDelay = 10000;
                 this.fetchGSCSites(searchParams.get('google_account_id'))
                 this.fetchGAAccounts(searchParams.get('google_account_id'))
+                history.pushState({}, null, "/settings/google-account");
             }
         }
 
@@ -298,6 +299,7 @@ export default class GoogleAccountIndex extends React.Component {
     fetchGAAccounts(id) {
         this.setState({ isBusy: true });
         return HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
+            console.log(resp)
             toast.success("Accounts fetched.");
             this.setState({ isBusy: false })
             return this.getGAAccounts() && this.getGAProperties();

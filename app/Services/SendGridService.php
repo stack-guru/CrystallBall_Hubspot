@@ -81,8 +81,8 @@ class SendGridService
             ->withBody(json_encode($bodyData), 'application/json')
             ->put("https://api.sendgrid.com/v3/marketing/contacts");
 
-        Log::channel('sendgrid')->info('Adding user to a list:' . $listName, $bodyData);
-        Log::channel('sendgrid')->debug($response->body());
+        // Log::channel('sendgrid')->info('Adding user to a list:' . $listName, $bodyData);
+        // Log::channel('sendgrid')->debug($response->body());
 
         if ($response->status() != 202) {
             return false;
@@ -127,8 +127,8 @@ class SendGridService
             return false;
         }
 
-        Log::channel('sendgrid')->info('Adding bulk users to list:' . $listName, $bodyData);
-        Log::channel('sendgrid')->debug($response->body());
+        // Log::channel('sendgrid')->info('Adding bulk users to list:' . $listName, $bodyData);
+        // Log::channel('sendgrid')->debug($response->body());
 
         return true;
     }
@@ -314,8 +314,8 @@ class SendGridService
             ->withBody(json_encode($bodyData), 'application/json')
             ->put("https://api.sendgrid.com/v3/marketing/contacts");
 
-        Log::channel('sendgrid')->info('Adding user to a list:' . $listName, $bodyData);
-        Log::channel('sendgrid')->debug($response->body());
+        // Log::channel('sendgrid')->info('Adding user to a list:' . $listName, $bodyData);
+        // Log::channel('sendgrid')->debug($response->body());
 
         if ($response->status() != 202) {
             return false;
@@ -356,8 +356,8 @@ class SendGridService
             ->withBody(json_encode($bodyData), 'application/json')
             ->put("https://api.sendgrid.com/v3/marketing/contacts");
 
-        Log::channel('sendgrid')->info('Adding user to a list:' . $listName, $bodyData);
-        Log::channel('sendgrid')->debug($response->body());
+        // Log::channel('sendgrid')->info('Adding user to a list:' . $listName, $bodyData);
+        // Log::channel('sendgrid')->debug($response->body());
 
         if ($response->status() != 202) {
             return false;

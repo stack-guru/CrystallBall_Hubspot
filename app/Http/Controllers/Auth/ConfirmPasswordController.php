@@ -3,8 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Rules\HasLettersNumbers;
+use App\Rules\HasSymbol;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class ConfirmPasswordController extends Controller
 {
@@ -35,6 +41,28 @@ class ConfirmPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['generatePassword']);
+    }
+
+    public function generatePassword(Request $request)
+    {
+        $user = $request->user();
+
+        if($user->password != User::EMPTY_PASSWORD)
+            return redirect($this->redirectPath());
+
+        $this->validate($request, [
+            'password' => ['confirmed', 'required', 'string', 'min:8', new HasSymbol, new HasLettersNumbers]
+        ], [
+            'password.min' => 'Must be at least 8 characters.',
+        ]);
+
+        $user->forceFill([
+            'password' => Hash::make($request->password)
+        ])->save();
+
+        event(new \Illuminate\Auth\Events\Registered($user));
+
+        return redirect($this->redirectPath());
     }
 }
