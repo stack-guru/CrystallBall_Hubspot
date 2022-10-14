@@ -19,12 +19,16 @@ class EventServiceProvider extends ServiceProvider
         \Illuminate\Auth\Events\Registered::class => [
             \App\Listeners\SeedNotificationSetting::class,
             // \Illuminate\Auth\Listeners\SendEmailVerificationNotification::class,
-            \App\Listeners\SendEmailVerificationMail::class,
             \App\Listeners\SeedUserDataSource::class,
             \App\Listeners\AddSampleAnnotation::class,
-            \App\Listeners\SendAdminNewUserEmail::class,
+            // \App\Listeners\SendAdminNewUserEmail::class,
             \App\Listeners\AddUserToSendGridList::class,
             \App\Listeners\CreateUserRegistrationOffer::class,
+        ],
+
+        \App\Events\RegisteredNewUser::class => [
+            \App\Listeners\SendEmailVerificationMail::class,
+            \App\Listeners\SendAdminNewUserEmail::class
         ],
 
         \Illuminate\Auth\Events\Login::class => [

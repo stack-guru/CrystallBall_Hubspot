@@ -24,6 +24,7 @@
                                         <th>Name</th>
                                         <th>Plan (Ending)</th>
                                         <th>Registration Date</th>
+                                        <th>Verification</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -46,10 +47,29 @@
                                                 @endif
                                             </td>
                                             <td>
+                                                @if ($user->email_verified_at)
+                                                    <span class="badge badge-primary">Email verified at {{ $user->email_verified_at->format('Y-m-d') }}</span>
+                                                @else
+                                                    <span class="badge badge-danger">Email not verified</span>
+                                                @endif
+
+                                                @if ($user->phone_verified_at)
+                                                    <span class="badge badge-primary">Phone number verified at {{ $user->phone_verified_at->format('Y-m-d') }}</span>
+                                                @else
+                                                    <span class="badge badge-danger">Phone not verified</span>
+                                                @endif
+
+                                                @if ($user->password != \App\Models\User::EMPTY_PASSWORD)
+                                                    <span class="badge badge-success">Password has been set</span>
+                                                @else
+                                                    <span class="badge badge-danger">Password not set</span>
+                                                @endif
+                                            </td>
+                                            <td>
                                                 <div class="row ml-0 mr-0 d-flex flex-row ">
                                                 <a class="btn btn-primary m-2"
                                                         href="{{ route('admin.user.show', $user->id) }}">Show</a>
-                                                        
+
                                                     <a class="btn btn-primary m-2"
                                                         href="{{ route('admin.user.edit', $user->id) }}">Edit</a>
                                                     <form id="deleteUserForm{{ $user->id }}" method="POST"

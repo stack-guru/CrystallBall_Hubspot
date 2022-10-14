@@ -14,11 +14,13 @@ use App\Rules\ValidateCaptcha;
 use Browser;
 use Exception;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
@@ -52,7 +54,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest')->except(['logoutAndDestroy']);
     }
 
     /**
@@ -89,6 +91,29 @@ class RegisterController extends Controller
         ], [
             'read_confirmation.required' => 'Your confirmation is required.',
         ]);
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new \App\Events\RegisteredNewUser($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+        ? new JsonResponse([], 201)
+        : redirect($this->redirectPath());
     }
 
     /**
@@ -241,5 +266,15 @@ class RegisterController extends Controller
         }
 
         return view('auth.register-google');
+    }
+
+    public function logoutAndDestroy()
+    {
+        $authId = Auth::id();
+        Auth::logout();
+
+        User::where('id', $authId)->delete();
+
+        return Redirect::route('register', ['email' => 1]);
     }
 }

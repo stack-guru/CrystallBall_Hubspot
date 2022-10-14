@@ -50,12 +50,20 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">All set, let's get started</button>
     @else
       <div class="mt-4 text-center">
-        <a href="#" onclick="event.preventDefault();document.getElementById('verification-resend-form').submit();">{{ __('Resend') }}</a>
+        <div>
+            <a href="#" onclick="event.preventDefault();document.getElementById('verification-resend-form').submit();">{{ __('Resend') }}</a>
+        </div>
+        <div>
+            <a href="#" onclick="event.preventDefault();document.getElementById('logout-to-register-page').submit();">{{ __('Wrong Email?') }}</a>
+        </div>
       </div>
     @endif
   </form>
 
   <form class="d-none" method="POST" action="{{ route('verification.resend') }}" id="verification-resend-form">
+    @csrf
+  </form>
+  <form class="d-none" method="POST" action="{{ route('logout-and-destroy') }}" id="logout-to-register-page">
     @csrf
   </form>
 @endsection
