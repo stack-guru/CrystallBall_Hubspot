@@ -1,22 +1,23 @@
 @component('mail::message')
-# Welcome {{ $user->name }}!
 
-Please verify your email address using the code below to complete account setup!
+<p>Welcome {{ $user->name }}!</p>
+<p>
+    Please verify your email address to complete the account setup.
+</p>
 
 @component('mail::button', ['url' => $verificationLink])
 Verify Email Address
 @endcomponent
 
-@component('mail::panel')
-Your Verification link will expire in {{ config('auth.verification.expire',5) }} minutes, so make sure you use it as soon as you can.
-@endcomponent
-
+<p>
+    Your verification link will expire in {{ config('auth.verification.expire',5) }} minutes.
+</p>
 
 Thank you,<br />
 {{ config('app.name') }}<br />
-<hr />
+{{-- <hr />
 <p>
     If you're having trouble clicking the "Verify Email Address" button, copy and paste the URL below into your web browser:
     <a href="{{ $verificationLink }}">{{ $verificationLink }}</a>
-</p>
+</p> --}}
 @endcomponent
