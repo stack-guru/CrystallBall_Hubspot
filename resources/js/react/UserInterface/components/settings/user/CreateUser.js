@@ -6,6 +6,7 @@ import ErrorAlert from '../../../utils/ErrorAlert'
 import HttpClient from '../../../utils/HttpClient'
 import GoogleAnalyticsAccountSelect from "../../../utils/GoogleAnalyticsAccountSelect";
 import UserTeamNameSelect from "../../../utils/UserTeamNameSelect";
+import SpinningLoader from '../../../utils/SpinningLoader'
 
 export default class CreateUser extends Component {
     constructor(props) {
@@ -35,7 +36,8 @@ export default class CreateUser extends Component {
                 team_name: ""
             },
             errors: undefined,
-            redirectTo: null
+            redirectTo: null,
+            loading: false
         });
     }
 
@@ -45,14 +47,17 @@ export default class CreateUser extends Component {
     }
     submitHandler(e) {
         e.preventDefault();
-
+        this.setState({ loading: true });
         HttpClient.post(`/settings/user`, this.state.user)
             .then(response => {
                 toast.success("New user added.");
+                this.setState({ loading: false });
                 this.setState({ redirectTo: "/settings/user" })
             }, (err) => {
+                this.setState({ loading: false });
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
+                this.setState({ loading: false });
                 this.setState({ errors: err });
             });
     }
@@ -141,7 +146,8 @@ export default class CreateUser extends Component {
                             </div>
                             <div className="row ml-0 mr-0 mt-3">
                                 <div className="col-12 text-right pr-0">
-                                    <button type="submit" className="btn gaa-btn-primary btn-fab btn-round" title="submit">Save & Send Invitation</button>
+                                    <button type="submit" disabled={this.state.loading} className="btn gaa-btn-primary btn-fab btn-round" title="submit">
+                                        { this.state.loading ? <SpinningLoader/> : "Save & Send Invitation"} </button>
                                 </div>
                             </div>
                         </form>
