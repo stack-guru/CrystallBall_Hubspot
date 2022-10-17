@@ -15,6 +15,8 @@ class UserActiveDevice extends Model
     protected $guarded = [];
 
     public static function allowedToLogin($user, $request, $type){
+        // temporarily
+        return true;
         // if logging-in from same browser as before
         $b_name = Browser::browserName();
         $b_p_f = Browser::platformFamily();
@@ -61,7 +63,6 @@ class UserActiveDevice extends Model
 
         $active_browsers_count = self::query()->where('user_id', $user->id)->where('is_extension', false)->get()->count();
         $active_extensions_count = self::query()->where('user_id', $user->id)->where('is_extension', true)->get()->count();
-
 
         if ($type == 'web'){
             if ($active_browsers_count < $allowed_browsers_count){
