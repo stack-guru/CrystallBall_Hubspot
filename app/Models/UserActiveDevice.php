@@ -29,14 +29,14 @@ class UserActiveDevice extends Model
 
         if ($type == 'web'){
             foreach ($browsers as $browser) {
-                if ($browser->browser_name == $b_name && $browser->platform_name == $b_p_f && $browser->device_type == $b_p_n && $browser->ip == $ip) {
+                if ($browser->browser_name == $b_name && $browser->platform_name == $b_p_f && $browser->device_type == $b_p_n) {
                     return true;
                 }
             }
         }
         else if($type == 'ext'){
             foreach ($extensions as $extension) {
-                if ($extension->browser_name == $b_name && $extension->platform_name == $b_p_f && $extension->device_type == $b_p_n && $extension->ip == $ip) {
+                if ($extension->browser_name == $b_name && $extension->platform_name == $b_p_f && $extension->device_type == $b_p_n) {
                     return true;
                 }
             }

@@ -84,7 +84,11 @@ export default class IndexUsers extends Component {
                                                 <Link to="/settings/user/create" className="btn btn-sm gaa-btn-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add User</Link>
                                                 :
                                                 <button onClick={() => {
-                                                    swal.fire("Upgrade Your Plan!", "Multiple users are not available in this plan.", "warning");
+                                                    swal.fire(
+                                                        "To add more users, please upgrade your account!",
+                                                        "Multiple users are not available in this plan.",
+                                                        "warning"
+                                                    );
                                                 }} className="btn btn-sm gaa-btn-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add User</button>
                                             }
                                         </div>
