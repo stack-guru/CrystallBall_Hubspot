@@ -12,8 +12,9 @@ const mix = require('laravel-mix');
  */
 
 
- 
-mix.react('resources/js/react/UserInterface/UI.js', 'public/js');
+
+mix.react('resources/js/react/UserInterface/UI.js', 'public/js')
+    .version();
 
 // mix.styles([
 //     'resources/css/bootstrap.css',

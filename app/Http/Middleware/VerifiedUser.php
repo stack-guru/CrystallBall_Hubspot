@@ -6,6 +6,7 @@ use App\Models\User;
 use Closure;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 
@@ -20,6 +21,10 @@ class VerifiedUser
      */
     public function handle(Request $request, Closure $next)
     {
+        if(Auth::guard('admin')->check()){
+            return $next($request);
+        }
+
         if (!$request->user() ||
             ($request->user() instanceof MustVerifyEmail &&
                 !$request->user()->hasVerifiedEmail())) {

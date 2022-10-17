@@ -17,6 +17,7 @@ export default class IndexUsers extends Component {
     }
 
     componentDidMount() {
+        document.title = 'Users';
         HttpClient.get(`/settings/user`)
             .then(response => {
                 this.setState({ users: response.data.users });
