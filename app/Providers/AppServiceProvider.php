@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
             case 'app.crystalballinsight.com':
                 config(['app.name' => 'Crystal Ball', 'app.url' => 'https://app.crystalballinsight.com']);
                 config(['app.icon' => asset('/favicon-cbi.ico'), 'app.logo' => asset('/images/company_logo_cbi.png')]);
-                config(['mail.from' => ['address' => 'contact@crystalballinsight.com', 'name' => 'Crystal Ball']]);
+                config(['mail.from' => ['address' => 'contact@crystalballinsight.com', 'name' => 'Crystal Ball Insight Ltd']]);
                 break;
 
             case 'localhost':
@@ -50,7 +50,7 @@ class AppServiceProvider extends ServiceProvider
             case '127.0.0.1':
                 config(['app.name' => 'Crystal Ball', 'app.url' => 'http://127.0.0.1']);
                 config(['app.icon' => asset('/favicon-cbi.ico'), 'app.logo' => asset('/images/company_logo_cbi.png')]);
-                config(['mail.from' => ['address' => 'contact@crystalballinsight.com', 'name' => 'Crystal Ball']]);
+                config(['mail.from' => ['address' => 'contact@crystalballinsight.com', 'name' => 'Crystal Ball Insight Ltd']]);
                 break;
         }
 

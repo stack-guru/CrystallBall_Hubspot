@@ -22,23 +22,6 @@ use App\Models\User;
 //    return "done";
 //});
 
-Route::get('make_users_verifeid', function(){
-    $users = User::all();
-    foreach($users as $user){
-        $user->email_verified_at = now();
-        $user->save();
-    }
-    return "done";
-});
-
-Route::get('make_users_verifeid_of_no_password', function(){
-    return User::where('password',User::EMPTY_PASSWORD)->update([
-        'has_password' => false
-    ]);
-});
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
