@@ -28,7 +28,7 @@ class LoginListener
     public function handle($event)
     {
         // This if will prevent logging of logins done by admin
-        if(Auth::id())
+        if(Auth::guard('web')->id())
         {
             $loginLog = new LoginLog;
             $loginLog->user_id = Auth::guard('web')->id();
