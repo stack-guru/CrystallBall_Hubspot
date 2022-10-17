@@ -94,7 +94,11 @@ export default class IndexUsers extends Component {
                                             <button
                                                 onClick={() => {
                                                     swal.fire(
+<<<<<<< HEAD
                                                         "To add more users, please upgrade your account!",
+=======
+                                                        "Upgrade Your Plan!",
+>>>>>>> 13.0
                                                         "Multiple users are not available in this plan.",
                                                         "warning"
                                                     );
