@@ -90,8 +90,9 @@ class UserController extends Controller
 
     public function login(User $user)
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
         Auth::guard('web')->loginUsingId($user->id);
+        Auth::setDefaultDriver('web');
         return redirect()->route('annotation.index');
     }
 

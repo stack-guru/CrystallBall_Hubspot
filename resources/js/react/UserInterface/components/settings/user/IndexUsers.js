@@ -17,6 +17,7 @@ export default class IndexUsers extends Component {
     }
 
     componentDidMount() {
+        document.title = 'Users';
         HttpClient.get(`/settings/user`)
             .then(response => {
                 this.setState({ users: response.data.users });
@@ -60,41 +61,63 @@ export default class IndexUsers extends Component {
 
     render() {
         return (
-            <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
+            <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper">
                 <section className="ftco-section" id="inputs">
                     <div className="container-xl p-0">
                         <div className="row ml-0 mr-0 mb-5">
                             <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">Users</h2>
+                                <h2 className="heading-section gaa-title">
+                                    Users
+                                </h2>
                             </div>
                         </div>
                         <div id="annotation-index-container">
-
-                            <div className="row mb-4 ml-3 mr-3">
+                            {/* <div className="row mb-4 ml-3 mr-3">
                                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
                                     <Link to="/settings/devices" className="text-primary mr-2">Manage Device</Link>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            {
-                                this.props.user.user_level == 'admin' ?
-                                    <div className="row mb-4 ml-3 mr-3">
-                                        <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
-                                            {this.props.user.price_plan.user_per_ga_account_count > -1 ?
-                                                <Link to="/settings/user/create" className="btn btn-sm gaa-btn-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add User</Link>
-                                                :
-                                                <button onClick={() => {
-                                                    swal.fire("Upgrade Your Plan!", "Multiple users are not available in this plan.", "warning");
-                                                }} className="btn btn-sm gaa-btn-primary text-white mr-2"><i className=" mr-2 fa fa-plus"></i>Add User</button>
-                                            }
-                                        </div>
+                            {this.props.user.user_level == "admin" ? (
+                                <div className="row mb-4 ml-3 mr-3">
+                                    <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
+                                        {this.props.user.price_plan
+                                            .user_per_ga_account_count > -1 ? (
+                                            <Link
+                                                to="/settings/user/create"
+                                                className="btn btn-sm gaa-btn-primary text-white mr-2"
+                                            >
+                                                <i className=" mr-2 fa fa-plus"></i>
+                                                Add User
+                                            </Link>
+                                        ) : (
+                                            <button
+                                                onClick={() => {
+                                                    swal.fire(
+                                                        "Upgrade Your Plan!",
+                                                        "Multiple users are not available in this plan.",
+                                                        "warning"
+                                                    );
+                                                }}
+                                                className="btn btn-sm gaa-btn-primary text-white mr-2"
+                                            >
+                                                <i className=" mr-2 fa fa-plus"></i>
+                                                Add User
+                                            </button>
+                                        )}
                                     </div>
-                                    : null
-                            }
+                                </div>
+                            ) : null}
 
                             <div className="row mb-4 ml-0 mr-0">
                                 <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right">
-                                    <input name="searchText" value={this.state.searchText} className="form-control" placeholder="Search..." onChange={this.handleChange} />
+                                    <input
+                                        name="searchText"
+                                        value={this.state.searchText}
+                                        className="form-control"
+                                        placeholder="Search..."
+                                        onChange={this.handleChange}
+                                    />
                                 </div>
                             </div>
                             <div className="row ml-0 mr-0">
@@ -112,38 +135,69 @@ export default class IndexUsers extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {
-                                                    this.state.users.filter(this.checkSearchText).map((user) => {
-                                                        return <tr key={user.id} >
-                                                            <td>{user.email}</td>
-                                                            <td>{user.name}</td>
-                                                            <td>{capitalizeFirstLetter(user.user_level)}</td>
-                                                            <td>{user.department}</td>
-                                                            <td>{user.team_name}</td>
-                                                            <td>
-                                                                {
-                                                                    this.props.user.user_level == 'admin' ?
+                                                {this.state.users
+                                                    .filter(
+                                                        this.checkSearchText
+                                                    )
+                                                    .map((user) => {
+                                                        return (
+                                                            <tr key={user.id}>
+                                                                <td>
+                                                                    {user.email}
+                                                                </td>
+                                                                <td>
+                                                                    {user.name}
+                                                                </td>
+                                                                <td>
+                                                                    {capitalizeFirstLetter(
+                                                                        user.user_level
+                                                                    )}
+                                                                </td>
+                                                                <td>
+                                                                    {
+                                                                        user.department
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    {
+                                                                        user.team_name
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    {this.props
+                                                                        .user
+                                                                        .user_level ==
+                                                                    "admin" ? (
                                                                         <React.Fragment>
-                                                                            <Link className="btn gaa-btn-primary btn-sm" to={`/settings/user/${user.id}/edit`}><i className="fa fa-edit"></i></Link>
-                                                                            <button className="btn gaa-btn-danger btn-sm ml-2" onClick={() => this.handleDelete(user.id)}><i className="fa fa-trash"></i></button>
+                                                                            <Link
+                                                                                className="btn gaa-btn-primary btn-sm"
+                                                                                to={`/settings/user/${user.id}/edit`}
+                                                                            >
+                                                                                <i className="fa fa-edit"></i>
+                                                                            </Link>
+                                                                            <button
+                                                                                className="btn gaa-btn-danger btn-sm ml-2"
+                                                                                onClick={() =>
+                                                                                    this.handleDelete(
+                                                                                        user.id
+                                                                                    )
+                                                                                }
+                                                                            >
+                                                                                <i className="fa fa-trash"></i>
+                                                                            </button>
                                                                         </React.Fragment>
-                                                                        : null
-                                                                }
-                                                            </td>
-                                                        </tr>
-                                                    })
-                                                }
-
-
+                                                                    ) : null}
+                                                                </td>
+                                                            </tr>
+                                                        );
+                                                    })}
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
                 </section>
             </div>
         );
