@@ -506,7 +506,8 @@ class AnnotationController extends Controller
                 "description" => $annotation->description,
                 "title" => "NA",
                 "highlighted" => false,
-                "publishDate" => $publishDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
+                // "publishDate" => $publishDate->format('Y-m-d\TH:i:s\Z'), //"2020-08-30T00:00:00.000Z"
+                "publishDate" => $publishDate->format('Y-m-d'), //"2020-08-30
                 "type" => "private",
             ];
         }
