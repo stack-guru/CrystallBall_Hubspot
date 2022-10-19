@@ -27,7 +27,8 @@
         "sentry/sentry-laravel": "^2.10",
         "socialiteproviders/instagram": "^4.1",
         "socialiteproviders/instagram-basic": "^4.1",
-        "ventepos/bluesnap-php": "^0.3.5"
+        "ventepos/bluesnap-php": "^0.3.5",
+        "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
