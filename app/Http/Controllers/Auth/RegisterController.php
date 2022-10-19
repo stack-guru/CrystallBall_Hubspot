@@ -223,6 +223,7 @@ class RegisterController extends Controller
                     info(print_r($ex->getMessage()));
                 }
 
+                event(new \App\Events\RegisteredNewUser($user));
                 event(new \Illuminate\Auth\Events\Registered($user));
 
                 Auth::login($user);

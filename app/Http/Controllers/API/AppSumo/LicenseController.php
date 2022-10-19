@@ -50,6 +50,7 @@ class LicenseController extends Controller
 
                 $this->addPricePlanSubscription(null, $user->id, null, $request->plan_id, 0, null, 0, $request->invoice_item_uuid);
 
+                event(new \App\Events\RegisteredNewUser($user));
                 event(new \Illuminate\Auth\Events\Registered($user));
 
                 return response([
