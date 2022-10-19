@@ -59,8 +59,12 @@
                                                     <span class="badge badge-danger">Phone not verified</span>
                                                 @endif
 
-                                                @if ($user->password == \App\Models\User::EMPTY_PASSWORD && $user->has_password == true)
-                                                    <span class="badge badge-danger">Password not set</span>
+                                                @if ($user->password == \App\Models\User::EMPTY_PASSWORD)
+                                                    @if($user->has_password == true)
+                                                        <span class="badge badge-danger">Password not set</span>
+                                                    @else
+                                                        <span class="badge badge-success">Google Account</span>
+                                                    @endif
                                                 @else
                                                     <span class="badge badge-success">Password has been set</span>
                                                 @endif
