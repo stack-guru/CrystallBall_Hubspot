@@ -59,6 +59,20 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Display DATE TIME format
+    |--------------------------------------------------------------------------
+    |
+    | Here you can specify date time format which displays to end user
+    |
+    */
+    'format' => [
+        'datetime' => "F j, Y, g:i A",
+        'date' => "d-m-Y"
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -169,7 +183,8 @@ return [
          * Package Service Providers...
          */
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
-        
+        Yajra\DataTables\DataTablesServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
