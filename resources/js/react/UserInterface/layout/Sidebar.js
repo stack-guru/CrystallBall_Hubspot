@@ -132,7 +132,7 @@ class Sidebar extends React.Component {
                                         height="25px"
                                     />
                                 </span>
-                                <span className="title">Annotations</span>
+                                <span className="title">All Annotations</span>
                             </span>
                         </Link>
                     </li>
@@ -197,6 +197,20 @@ class Sidebar extends React.Component {
                                     />
                                 </span>
                                 <span className="title">Integrations</span>
+                            </span>
+                        </Link>
+                    </li>
+                    <li className="nav-item gaa-menu-item">
+                        <Link to="/settings/google-account">
+                            <span className="sidebar-link">
+                                <span className="icon-holder">
+                                    <img
+                                        src="/images/svg/properties-01.svg"
+                                        width="25px"
+                                        height="25px"
+                                    />
+                                </span>
+                                <span className="title">Add Properties</span>
                             </span>
                         </Link>
                     </li>
@@ -281,7 +295,7 @@ class Sidebar extends React.Component {
                                                 className="sidebar-link"
                                             >
                                                 <span className="nav-link">
-                                                    Add Analytics Accounts
+                                                    Add Properties/Accounts
                                                 </span>
                                             </Link>
                                         </li>
