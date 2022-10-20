@@ -104,7 +104,7 @@ export default class GoogleAccountIndex extends React.Component {
                 <div className="container p-5">
                     <div className="row ml-0 mr-0">
                         <div className="col-12">
-                            <h2 className="heading-section gaa-title">Connect Multiple GA Accounts</h2>
+                            <h2 className="heading-section gaa-title">Connect Multiple GA Accounts/Properties</h2>
                         </div>
                     </div>
 
