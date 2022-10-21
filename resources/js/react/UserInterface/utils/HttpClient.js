@@ -54,7 +54,21 @@ axiosInst.interceptors.response.use(function (response) {
 
     if (error.response.status === 455) {
         console.log(error);
-        swal.fire("To add more users, please upgrade your account.", "Unprocessible request.", "error");
+        // swal.fire(
+        //     "To add more users, please upgrade your account!",
+        //     "Multiple users are not available in this plan.",
+        //     "warning"
+        // );
+        swal.fire({
+            title: "To add more users, please upgrade your account.",
+            text: "Multiple users are not available in this plan.",
+            customClass: {
+                popup: "py-5",
+            },
+        });
+        // "To add more users, please upgrade your account.",
+        //     "Multiple users are not available in this plan.",
+        //     "error";
     }
 
     return Promise.reject(error);
