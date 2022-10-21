@@ -7,36 +7,48 @@ export default function ErrorAlert(props) {
             if (props.errors.message !== undefined) {
                 return (
                     <div className="alert alert-danger" role="alert">
-                        <div className="alert-heading"> {props.errors.message}</div>
+                        <div className="alert-heading mb-0">
+                            {props.errors.message}
+                        </div>
                         <ul>
-                            {
-                                Object.keys((errors)).map((field, fi) => {
-                                    return (
-                                        <li key={fi}>
-                                            {field}
-                                            <ul>
-                                                {
-                                                    (errors[field]).map((rule, ri) => {
-                                                        return <li key={fi + ri}>{rule}</li>
-                                                    })
-                                                }
-                                            </ul>
-                                        </li>
-                                    )
-                                })
-                            }
+                            {Object.keys(errors).map((field, fi) => {
+                                return (
+                                    <li key={fi}>
+                                        {field}
+                                        <ul>
+                                            {errors[field].map((rule, ri) => {
+                                                return (
+                                                    <li key={fi + ri}>
+                                                        {rule}
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                    </li>
+                                );
+                            })}
                         </ul>
                     </div>
-                )
+                );
             } else {
-                return (<div className="alert alert-danger" role="alert">
-                    <h4 className="alert-heading"><i className="icon fa fa-info"></i> Unknown error occured</h4>
-                </div>);
+                return (
+                    <div className="alert alert-danger" role="alert">
+                        <h4 className="alert-heading mb-0">
+                            <i className="icon fa fa-info"></i> Unknown error
+                            occured
+                        </h4>
+                    </div>
+                );
             }
         } else {
             return (
                 <div className="alert alert-danger" role="alert">
-                    <p className="alert-heading" dangerouslySetInnerHTML={{ __html: props.errors.message }}></p>
+                    <p
+                        className="alert-heading mb-0"
+                        dangerouslySetInnerHTML={{
+                            __html: props.errors.message,
+                        }}
+                    ></p>
                 </div>
             );
         }
