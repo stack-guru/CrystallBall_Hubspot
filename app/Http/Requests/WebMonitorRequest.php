@@ -24,11 +24,11 @@ class WebMonitorRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'url' => 'required|string|active_url',
-            'email_address' => 'nullable|email',
+            'name'             => 'required|string',
+            'url'              => 'required|string|active_url',
+            'email_address'    => 'nullable|email',
             'sms_phone_number' => 'nullable|string',
-            'ga_property_id' => 'nullable|exists:google_analytics_properties,id',
+            'ga_property_id'   => 'nullable|exists:google_analytics_properties,id',
             // 'google_analytics_property_id' => 'nullable|array',
             // 'google_analytics_property_id.*' => 'nullable|exists:google_analytics_properties,id',
         ];

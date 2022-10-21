@@ -23,6 +23,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Email</th>
                                     <th>Name</th>
                                     <th>URL</th>
                                     <th>Uptime Robot ID</th>
@@ -34,6 +35,7 @@
                                 @foreach($webMonitors as $webMonitor)
                                     <tr>
                                         <td>{{ $webMonitor->id }}</td>
+                                        <td>{{ $webMonitor->email_address ?? $webMonitor->user->email }}</td>
                                         <td>{{ $webMonitor->name }}</td>
                                         <td>{{ $webMonitor->url }}</td>
                                         <td>{{ $webMonitor->uptime_robot_id }}</td>
@@ -52,10 +54,10 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> 
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable();
     } );
-</script>   
+</script>
 @endsection

@@ -32,7 +32,8 @@ class WebMonitorController extends Controller
     public function store(WebMonitorRequest $request)
     {
 
-        $pricePlan = Auth::user()->pricePlan;
+        $authUser = Auth::user();
+        $pricePlan = $authUser->pricePlan;
         $webMonitorsCount = WebMonitor::ofCurrentUser()->count();
 
         if ($pricePlan->web_monitor_count <= $webMonitorsCount) {
@@ -45,7 +46,9 @@ class WebMonitorController extends Controller
 
         $webMonitor = new WebMonitor;
         $webMonitor->fill($request->validated());
-        $webMonitor->user_id = Auth::id();
+        $webMonitor->user_id = $authUser->id;
+        $webMonitor->email_address = $authUser->email;
+        $webMonitor->sms_phone_number = $authUser->phone;
 
         $uptimeRobotService = new UptimeRobotService;
 
