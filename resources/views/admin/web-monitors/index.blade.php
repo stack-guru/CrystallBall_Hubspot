@@ -37,7 +37,7 @@
                   @foreach ($webMonitors as $webMonitor)
                     <tr>
                       <td>{{ $webMonitor->id }}</td>
-                      <td>{{ $webMonitor->email_address ?? $webMonitor->user->email }}</td>
+                      <td>{{ $webMonitor->email_address ?? ($webMonitor->user ? $webMonitor->user->email : 'N/A') }}</td>
                       <td>{{ $webMonitor->name }}</td>
                       <td>{{ $webMonitor->url }}</td>
                       <td>{{ $webMonitor->uptime_robot_id }}</td>
