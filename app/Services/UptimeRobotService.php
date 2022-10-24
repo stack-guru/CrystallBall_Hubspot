@@ -75,7 +75,7 @@ class UptimeRobotService
      *
      * param $type // (HTTP, keyword, ping) (1, 3, 4)
      */
-    public function newMonitor($name, $link, $type = 1, $interval = 60)
+    public function newMonitor($name, $link, $type = 1, ?int $interval = null)
     {
         $url = "https://api.uptimerobot.com/v2/newMonitor";
         $bodyData = [
@@ -83,7 +83,7 @@ class UptimeRobotService
             'format' => $this->outputFormat,
             'friendly_name' => $name,
             'url' => $link,
-            'interval' => $interval,
+            'interval' => is_null($interval) ? config('services.uptime_robot.interval') : $interval,
             'type' => $type, //type must be a number
         ];
         $response = Http::post($url, $bodyData);

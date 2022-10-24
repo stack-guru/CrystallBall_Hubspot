@@ -94,6 +94,7 @@ return [
     ],
     'uptime_robot' => [
         'api_key' => env('UPTIME_ROBOT_API_KEY'),
+        'interval' => env('UPTIME_ROBOT_INTERVAL',60)
     ],
 
     'pusher' => [
@@ -151,7 +152,7 @@ return [
         'redirect' => 'https://lukionline.me/socialite/instagram/redirect',
     ],
 
-    'instagrambasic' => [    
+    'instagrambasic' => [
         'client_id' => '5322713981188629',
         'client_secret' => '9a2fd6d6c7c12a8592a1ae1b68613816',
         'redirect' => 'https://lukionline.me/socialite/instagrambasic/redirect',
