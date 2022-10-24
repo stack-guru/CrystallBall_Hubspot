@@ -301,6 +301,10 @@ setting-menu-item.dropdown {
     color: #456287;
 }
 
+.nav-item.gaa-menu-item.dropdown > .dropdown-toggle{
+    cursor: pointer;
+}
+
 /* .link-active {
     color: #1c79d0 !important;
 } */
