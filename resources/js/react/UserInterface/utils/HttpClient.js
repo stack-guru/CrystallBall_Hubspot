@@ -59,13 +59,13 @@ axiosInst.interceptors.response.use(function (response) {
         //     "Multiple users are not available in this plan.",
         //     "warning"
         // );
-        swal.fire({
-            title: "To add more users, please upgrade your account.",
-            text: "Multiple users are not available in this plan.",
-            customClass: {
-                popup: "py-5",
-            },
-        });
+        swal.fire(
+            {
+                icon: 'warning',
+                title: 'To add more users, please upgrade your account',
+                confirmButtonText: "<a href='/settings/price-plans' style='color:white;'> Upgrade </a>"
+            }
+        );
         // "To add more users, please upgrade your account.",
         //     "Multiple users are not available in this plan.",
         //     "error";

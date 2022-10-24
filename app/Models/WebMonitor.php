@@ -25,6 +25,17 @@ class WebMonitor extends Model
 
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @deprecated Use the "casts" property
+     *
+     * @var array
+     */
+    protected $dates = [
+        'last_synced_at'
+    ];
+
     public function scopeOfCurrentUser($query)
     {
         return $query->where('user_id', Auth::id());
