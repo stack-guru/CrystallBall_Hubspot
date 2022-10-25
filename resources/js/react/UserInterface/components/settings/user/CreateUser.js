@@ -51,11 +51,14 @@ export default class CreateUser extends Component {
         HttpClient.post(`/settings/user`, this.state.user)
             .then(response => {
                 toast.success("New user added.");
-                this.setState({ redirectTo: "/settings/user", loading: false });
+                this.setState({ loading: false });
+                this.setState({ redirectTo: "/settings/user" })
             }, (err) => {
-                this.setState({ errors: (err.response).data, loading: false });
+                this.setState({ loading: false });
+                this.setState({ errors: (err.response).data });
             }).catch(err => {
-                this.setState({ errors: err, loading: false });
+                this.setState({ loading: false });
+                this.setState({ errors: err });
             });
     }
 
