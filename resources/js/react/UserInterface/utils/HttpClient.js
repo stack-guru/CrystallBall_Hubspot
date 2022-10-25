@@ -54,21 +54,75 @@ axiosInst.interceptors.response.use(function (response) {
 
     if (error.response.status === 455) {
         console.log(error);
-        // swal.fire(
-        //     "To add more users, please upgrade your account!",
-        //     "Multiple users are not available in this plan.",
-        //     "warning"
-        // );
-        swal.fire(
-            {
-                icon: 'warning',
-                title: 'To add more users, please upgrade your account',
-                confirmButtonText: "<a href='/settings/price-plans' style='color:white;'> Upgrade </a>"
+
+        let features = [
+            [
+                "Chrome Extension",
+                "Data Studio Connector",
+                "Users",
+                "Connect Google Analytics Accounts",
+                "CSV Upload",
+                "API",
+                "Zapier Integrations",
+                "Notifications"
+            ],
+            [
+                "Automations Instagram",
+                "Automations Twitter",
+                "Automations TikTok",
+                "Automations Podcast",
+                "Automations Facebook",
+                "Automations Rank Tracking",
+                "Automations Website Monitoring",
+                "and more...",
+            ]
+        ];
+
+        let featuresHTML = '';
+
+        features.forEach(list => {
+            featuresHTML += '<div class="m-2">';
+            list.forEach(feature => {
+                featuresHTML += '<div class="d-flex">';
+                featuresHTML += '<img src="/images/icons/green-tick-round.png" style="width: 20px;height: 20px;margin: 5px;" >';
+                featuresHTML += `<p>${feature}</p>`;
+                featuresHTML += '</div>';
+            });
+            featuresHTML += '</div>';
+        });
+
+        const accountNotLinkedHtml = '' +
+            '<div>' +
+                '<img src="/images/imgpopup.png" class="img-fluid">' +
+                '<div class="bg-light p-3">' +
+
+                    '<h3  class=" text-black mt-2" style="margin-top:1.5rem!important;margin-right:1.5rem!important;margin-left:1.5rem!important;">To add more users, please Upgrade your account </h3>' +
+
+                    '<p style="line-height:23px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="px-5 text-dark"> Upgrade today to access all the premium features </p>' +
+
+                    '<div class="m-5 p-5 d-flex">' + featuresHTML + '</div>' +
+
+                '</div>' +
+            '</div>';
+        /*
+        * Show new google analytics account popup
+        * */
+        swal.fire({
+            html: accountNotLinkedHtml,
+            width: 700,
+            customClass: {
+                popup: 'bg-light pb-5',
+                htmlContainer: 'm-0',
+            },
+            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+            confirmButtonText: "<a href='/settings/price-plans' style='color:white;'> Upgrade </a>"
+
+        }).then(value => {
+            if (value.isConfirmed) {
+                this.setState({ isPermissionPopupOpened: true });
             }
-        );
-        // "To add more users, please upgrade your account.",
-        //     "Multiple users are not available in this plan.",
-        //     "error";
+        });
+
     }
 
     return Promise.reject(error);
