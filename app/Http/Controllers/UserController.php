@@ -93,6 +93,7 @@ class UserController extends Controller
         $user->user_id = $parentUser->id;
         $user->price_plan_id = $parentUser->price_plan_id;
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
+        $user->email_verified_at = now();
         $user->save();
 
         Mail::to($user)->send(new UserInviteMail($user, $request->password));
