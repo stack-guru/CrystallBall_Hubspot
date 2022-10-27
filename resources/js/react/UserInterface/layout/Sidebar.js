@@ -205,12 +205,26 @@ class Sidebar extends React.Component {
                             <span className="sidebar-link">
                                 <span className="icon-holder">
                                     <img
-                                        src="/images/svg/properties-01.svg"
+                                        src="/images/svg/properties-02.svg"
                                         width="25px"
                                         height="25px"
                                     />
                                 </span>
                                 <span className="title">Add Properties</span>
+                            </span>
+                        </Link>
+                    </li>
+                    <li className="nav-item gaa-menu-item">
+                        <Link to="/settings/user">
+                            <span className="sidebar-link">
+                                <span className="icon-holder">
+                                    <img
+                                        src="/images/svg/teamwork-01.svg"
+                                        width="25px"
+                                        height="25px"
+                                    />
+                                </span>
+                                <span className="title">Manage Users</span>
                             </span>
                         </Link>
                     </li>

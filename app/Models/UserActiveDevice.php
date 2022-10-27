@@ -14,7 +14,9 @@ class UserActiveDevice extends Model
 
     protected $guarded = [];
 
-    public static function allowedToLogin($user, $request, $type){
+    public static function allowedToLogin($user, $request, $type)
+    {
+        // temporarily
         return true;
         // if logging-in from same browser as before
         $b_name = Browser::browserName();
@@ -30,14 +32,14 @@ class UserActiveDevice extends Model
 
         if ($type == 'web'){
             foreach ($browsers as $browser) {
-                if ($browser->browser_name == $b_name && $browser->platform_name == $b_p_f && $browser->device_type == $b_p_n && $browser->ip == $ip) {
+                if ($browser->browser_name == $b_name && $browser->platform_name == $b_p_f && $browser->device_type == $b_p_n) {
                     return true;
                 }
             }
         }
         else if($type == 'ext'){
             foreach ($extensions as $extension) {
-                if ($extension->browser_name == $b_name && $extension->platform_name == $b_p_f && $extension->device_type == $b_p_n && $extension->ip == $ip) {
+                if ($extension->browser_name == $b_name && $extension->platform_name == $b_p_f && $extension->device_type == $b_p_n) {
                     return true;
                 }
             }
@@ -62,7 +64,6 @@ class UserActiveDevice extends Model
 
         $active_browsers_count = self::query()->where('user_id', $user->id)->where('is_extension', false)->get()->count();
         $active_extensions_count = self::query()->where('user_id', $user->id)->where('is_extension', true)->get()->count();
-
 
         if ($type == 'web'){
             if ($active_browsers_count < $allowed_browsers_count){
