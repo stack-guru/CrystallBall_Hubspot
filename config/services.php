@@ -141,8 +141,8 @@ return [
         // 'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
 
         // my test app
-        'client_id' => '417643546831147',
-        'client_secret' => 'af8387d1bf790e75d484e30e4080b4cb',
+        'client_id' => '787240889016012',
+        'client_secret' => 'e051b20870412d826641de7d24f41111',
         'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
     ],
 

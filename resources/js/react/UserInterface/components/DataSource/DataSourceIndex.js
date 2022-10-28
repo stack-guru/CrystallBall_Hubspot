@@ -1603,7 +1603,7 @@ a
                                 Facebook section
                             */}
 
-                            {/* <div className="col-md-6 mt-2">
+                            <div className="col-md-6 mt-2">
                                <div className="d-flex border rounded flex-column justify-content-between"
                                     style={{minHeight: "180px"}}>
                                    <div>
@@ -1648,9 +1648,9 @@ a
 
                                    </div>
                                </div>
-                            </div> */}
+                            </div>
 
-                            <div className="col-md-6 mt-2">
+                            {/* <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{ minHeight: "180px" }}
@@ -1743,7 +1743,7 @@ a
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                             {/*
                                 INSTAGRAM AUTOMATION
