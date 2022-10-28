@@ -49,7 +49,7 @@ axiosInst.interceptors.response.use(function (response) {
 
     if (error.response.status === 422) {
         console.log(error);
-        swal.fire("Error!", "Unprocessible request.", "error");
+        swal.fire("Error!", "The given data was invalid.", "warning");
     }
 
     if (error.response.status === 455) {

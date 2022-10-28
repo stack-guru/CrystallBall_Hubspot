@@ -237,11 +237,11 @@ class UserController extends Controller
         $new_paying_users_yesterday = PricePlanSubscription::whereHas('user',function($query){
             $query->where('name','NOT LIKE','%test%');
         })->with('user', 'user.lastPricePlanSubscription', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
-        foreach ($new_paying_users_yesterday as $key => $new_paying_user_yesterday) {
-            if($new_paying_user_yesterday->user->created_at <= Carbon::now()->subDay(1)->format('Y-m-d')){
-                $new_paying_users_yesterday->forget($key);
-            }
-        }
+        // foreach ($new_paying_users_yesterday as $key => $new_paying_user_yesterday) {
+        //     if($new_paying_user_yesterday->user->created_at <= Carbon::now()->subDay(1)->format('Y-m-d')){
+        //         $new_paying_users_yesterday->forget($key);
+        //     }
+        // }
         $new_paying_users_yesterday_count = $new_paying_users_yesterday->count();
 
         $number_of_actions_count = $this->number_of_actions_count();

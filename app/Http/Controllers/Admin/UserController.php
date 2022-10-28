@@ -110,7 +110,7 @@ class UserController extends Controller
                             </form>
                             <button type="button"
                                 onclick="document.getElementById('loginUserForm<?=$row->id?>').submit()"
-                                class="btn btn-secondary m-2">Impersonate</button>
+                                class="btn btn-secondary m-2">Log</button>
 
                             <form id="makeOwnerUserForm<?=$row->id?>" method="POST"
                                 action="<?=route('admin.user.make-owner', $row->id)?>">

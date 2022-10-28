@@ -140,7 +140,9 @@ export default class CreateAnnotation extends React.Component {
             this.setState({ isBusy: true });
             let fd = new FormData;
             for (var key in this.state.annotation) {
-                if (key !== 'google_analytics_property_id') fd.append(key, this.state.annotation[key]);
+                if (key !== 'google_analytics_property_id') {
+                    fd.append(key, this.state.annotation[key])
+                }
             }
             this.state.annotation.google_analytics_property_id.map(gAA => { fd.append('google_analytics_property_id[]', gAA) })
 
@@ -158,7 +160,7 @@ export default class CreateAnnotation extends React.Component {
                             html: err.response.data.message,
                         });
                     }
-                    loadCategoriesList();
+                    this.loadCategoriesList();
                     this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
 
@@ -181,12 +183,12 @@ export default class CreateAnnotation extends React.Component {
 
         if (!category) {
             isValid = false;
-            errors["category"] = "Please enter your category.";
+            errors["category"] = "Please select category.";
         }
 
         if (!event_name) {
             isValid = false;
-            errors["event_name"] = "Please enter your event_name.";
+            errors["event_name"] = "Please enter your event name.";
         }
 
         // if (!show_at) {
@@ -247,7 +249,12 @@ export default class CreateAnnotation extends React.Component {
                                     <div className="form-group ">
                                         <label htmlFor="category" className="form-control-placeholder">Category *</label>
                                         <AnnotationCategorySelect className="gray_clr" name="category" id="category" value={this.state.annotation.category} categories={this.state.categories} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
+                                        {
+                                            validation.category ?
+                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : ''
+                                        }
                                     </div>
+                                    
                                 </div>
 
                                 <div className="col-lg-3 col-sm-4">
