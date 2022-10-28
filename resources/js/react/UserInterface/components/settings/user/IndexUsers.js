@@ -93,13 +93,34 @@ export default class IndexUsers extends Component {
                                         ) : (
                                             <button
                                                 onClick={() => {
-                                                    swal.fire(
-                                                        {
-                                                            icon: 'warning',
-                                                            title: 'To add more users, please upgrade your account',
-                                                            confirmButtonText: "<a href='/settings/price-plans' style='color:white;'> Upgrade </a>"
-                                                        }
-                                                    );
+                                                    const accountNotLinkedHtml = '' +
+                                                        '<div class="">' +
+                                                        '<img src="/images/banners/user_limit_banner.jpg" class="img-fluid">' +
+                                                        '</div>'
+
+                                                    swal.fire({
+                                                        html: accountNotLinkedHtml,
+                                                        width: 700,
+                                                        customClass: {
+                                                            popup: 'bg-light-red pb-5',
+                                                            htmlContainer: 'm-0',
+                                                        },
+                                                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                                        confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                                                    }).then(value => {
+                                                        window.location.href = "/settings/price-plans";
+                                                        // <Redirect to="/settings/price-plans"/>
+                                                        // this.setState({redirectTo: "/settings/price-plans"});
+                                                    });
+                                                        
+                                                    // swal.fire(
+                                                    //     {
+                                                    //         icon: 'warning',
+                                                    //         title: 'To add more users, please upgrade your account',
+                                                    //         confirmButtonText: "<a href='/settings/price-plans' style='color:white;'> Upgrade </a>"
+                                                    //     }
+                                                    // );
                                                 }}
                                                 className="btn btn-sm gaa-btn-primary text-white mr-2"
                                             >

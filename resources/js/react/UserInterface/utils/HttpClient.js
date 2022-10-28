@@ -59,13 +59,36 @@ axiosInst.interceptors.response.use(function (response) {
         //     "Multiple users are not available in this plan.",
         //     "warning"
         // );
-        swal.fire(
-            {
-                icon: 'warning',
-                title: 'To add more users, please upgrade your account',
-                confirmButtonText: "<a href='/settings/price-plans' style='color:white;'> Upgrade </a>"
-            }
-        );
+
+        const accountNotLinkedHtml = '' +
+            '<div class="">' +
+            '<img src="/images/banners/user_limit_banner.jpg" class="img-fluid">' +
+            '</div>'
+
+        swal.fire({
+            html: accountNotLinkedHtml,
+            width: 700,
+            customClass: {
+                popup: 'bg-light-red pb-5',
+                htmlContainer: 'm-0',
+            },
+            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+            confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+        }).then(value => {
+            window.location.href = "/settings/price-plans";
+            // <Redirect to="/settings/price-plans"/>
+            // this.setState({redirectTo: "/settings/price-plans"});
+        });
+        
+        
+        // swal.fire(
+        //     {
+        //         icon: 'warning',
+        //         title: 'To add more users, please upgrade your account',
+        //         confirmButtonText: "<a href='/settings/price-plans' style='color:white;'> Upgrade </a>"
+        //     }
+        // );
         // "To add more users, please upgrade your account.",
         //     "Multiple users are not available in this plan.",
         //     "error";
