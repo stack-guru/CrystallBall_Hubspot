@@ -83,7 +83,9 @@ export default class DataSourceIndex extends React.Component {
         this.checkUserFacebookAccount();
 
     }
-a
+
+    a
+
     loadUserDataSources(gaPropertyId) {
         if (!this.state.isLoading) {
             this.setState({isLoading: true});
@@ -188,7 +190,7 @@ a
             <div className="container bg-white d-flex flex-column justify-content-center">
                 {/* <DataSourceInterfaceTour isOpen={this.props.showDataSourceTour}
                     toggleShowTour={this.props.toggleDataSourceTour} userId={this.props.user.id} /> */}
-                <LoaderAnimation show={this.state.isLoading} />
+                <LoaderAnimation show={this.state.isLoading}/>
                 <div className="row ml-0 mr-0">
                     <div className="col-4">
                         <h2 className="heading-section gaa-title">
@@ -200,7 +202,7 @@ a
                             value={this.state.ga_property_id}
                             onChangeCallback={(gAP) => {
                                 if (gAP.target.value == "") {
-                                    this.setState({ ga_property_id: null });
+                                    this.setState({ga_property_id: null});
                                     this.loadUserDataSources(null);
                                     this.reloadWebMonitors(null);
                                 } else {
@@ -221,7 +223,7 @@ a
                     </div>
                     <div className="col-3"></div>
                 </div>
-                <ErrorAlert errors={this.state.errors} />
+                <ErrorAlert errors={this.state.errors}/>
                 <div className="row p-2 mt-4 mb-5">
                     <div
                         className="col-md-9 col-sm-12"
@@ -234,7 +236,7 @@ a
                             <div class="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -358,7 +360,7 @@ a
                                         ) : null}
                                         <div className="px-2">
                                             <div className="list-wrapper">
-                                                <p style={{ fontSize: "13px" }}>
+                                                <p style={{fontSize: "13px"}}>
                                                     Keywords:
                                                 </p>
                                                 {this.state.webMonitors
@@ -370,7 +372,7 @@ a
 
                                     <p
                                         className="ds-update-text m-0 pb-3 px-2 text-right"
-                                        style={{ fontSize: "13px" }}
+                                        style={{fontSize: "13px"}}
                                         onClick={() => {
                                             this.sectionToggler("web_monitors");
                                         }}
@@ -390,7 +392,7 @@ a
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -587,7 +589,7 @@ a
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -727,7 +729,7 @@ a
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -851,7 +853,7 @@ a
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -1007,7 +1009,7 @@ a
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -1226,7 +1228,7 @@ a
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -1404,7 +1406,7 @@ a
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -1506,7 +1508,7 @@ a
                                                 .keyword_tracking_count == -1
                                                 ? 0
                                                 : this.props.user.price_plan
-                                                      .keyword_tracking_count}
+                                                    .keyword_tracking_count}
                                         </div>
                                     </div>
                                     <div>
@@ -1603,57 +1605,57 @@ a
                                 Facebook section
                             */}
 
+                            {/*<div className="col-md-6 mt-2">*/}
+                            {/*   <div className="d-flex border rounded flex-column justify-content-between"*/}
+                            {/*        style={{minHeight: "180px"}}>*/}
+                            {/*       <div>*/}
+                            {/*           <div className="d-flex mt-2 justify-content-between "*/}
+                            {/*                id="keyword-tracking-data-source-section">*/}
+                            {/*               <div className="px-2">*/}
+                            {/*                   <h2>*/}
+                            {/*                       <small>*/}
+                            {/*                           Facebook Tracking <UserAnnotationColorPicker*/}
+                            {/*                           name="facebook_tracking"*/}
+                            {/*                           value={this.state.userAnnotationColors.facebook_tracking}*/}
+                            {/*                           updateCallback={this.updateUserAnnotationColors}/>*/}
+                            {/*                           <img className="hint-button-2" src="/images/info-logo.png"/>*/}
+                            {/*                       </small>*/}
+                            {/*                   </h2>*/}
+                            {/*               </div>*/}
+
+                            {/*               <div className="px-2 text-center">*/}
+                            {/*                   {this.state.userServices.is_ds_facebook_tracking_enabled ? "ON" : "OFF"}*/}
+                            {/*                   <label className="trigger switch">*/}
+                            {/*                       <input type="checkbox"*/}
+                            {/*                              checked={this.state.userServices.is_ds_facebook_tracking_enabled}*/}
+                            {/*                              onChange={this.serviceStatusHandler}*/}
+                            {/*                              name="is_ds_facebook_tracking_enabled"*/}
+                            {/*                       />*/}
+                            {/*                       <span*/}
+                            {/*                           className={`slider round ${this.state.userServices.is_ds_facebook_tracking_enabled ? 'animate-pulse' : ''}`}/>*/}
+                            {/*                   </label>*/}
+                            {/*               </div>*/}
+
+                            {/*           </div>*/}
+                            {/*       </div>*/}
+                            {/*       <div>*/}
+                            {/*           <p*/}
+                            {/*               className="ds-update-text m-0 px-2 text-right"*/}
+                            {/*               onClick={() => {*/}
+                            {/*                   this.sectionToggler('facebook_tracking');*/}
+                            {/*               }}*/}
+                            {/*           >*/}
+                            {/*               {this.state.sectionName == "facebook_tracking" ? "Hide" : "Configure"}*/}
+                            {/*           </p>*/}
+
+                            {/*       </div>*/}
+                            {/*   </div>*/}
+                            {/*</div>*/}
+
                             <div className="col-md-6 mt-2">
-                               <div className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}>
-                                   <div>
-                                       <div className="d-flex mt-2 justify-content-between "
-                                            id="keyword-tracking-data-source-section">
-                                           <div className="px-2">
-                                               <h2>
-                                                   <small>
-                                                       Facebook Tracking <UserAnnotationColorPicker
-                                                       name="facebook_tracking"
-                                                       value={this.state.userAnnotationColors.facebook_tracking}
-                                                       updateCallback={this.updateUserAnnotationColors}/>
-                                                       <img className="hint-button-2" src="/images/info-logo.png"/>
-                                                   </small>
-                                               </h2>
-                                           </div>
-
-                                           <div className="px-2 text-center">
-                                               {this.state.userServices.is_ds_facebook_tracking_enabled ? "ON" : "OFF"}
-                                               <label className="trigger switch">
-                                                   <input type="checkbox"
-                                                          checked={this.state.userServices.is_ds_facebook_tracking_enabled}
-                                                          onChange={this.serviceStatusHandler}
-                                                          name="is_ds_facebook_tracking_enabled"
-                                                   />
-                                                   <span
-                                                       className={`slider round ${this.state.userServices.is_ds_facebook_tracking_enabled ? 'animate-pulse' : ''}`}/>
-                                               </label>
-                                           </div>
-
-                                       </div>
-                                   </div>
-                                   <div>
-                                       <p
-                                           className="ds-update-text m-0 px-2 text-right"
-                                           onClick={() => {
-                                               this.sectionToggler('facebook_tracking');
-                                           }}
-                                       >
-                                           {this.state.sectionName == "facebook_tracking" ? "Hide" : "Configure"}
-                                       </p>
-
-                                   </div>
-                               </div>
-                            </div>
-
-                            {/* <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -1743,7 +1745,7 @@ a
                                         </div>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
 
                             {/*
                                 INSTAGRAM AUTOMATION
@@ -1797,7 +1799,7 @@ a
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -1895,7 +1897,7 @@ a
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -1998,7 +2000,7 @@ a
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -2100,7 +2102,7 @@ a
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -2199,7 +2201,7 @@ a
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
+                                    style={{minHeight: "180px"}}
                                 >
                                     <div>
                                         <div
@@ -2593,15 +2595,15 @@ a
                         ) : null}
 
                         {this.state.sectionName == "g_ads_history_change" ? (
-                            <GoogleAdChanges />
+                            <GoogleAdChanges/>
                         ) : null}
 
                         {this.state.sectionName == "facebook_tracking" ? (
-                            <FacebookTracking />
+                            <FacebookTracking/>
                         ) : null}
 
                         {this.state.sectionName == "instagram_tracking" ? (
-                            <InstagramTracking />
+                            <InstagramTracking/>
                         ) : null}
                     </div>
                 </div>

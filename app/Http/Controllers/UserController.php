@@ -63,7 +63,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(UserRequest $request)
@@ -79,8 +79,7 @@ class UserController extends Controller
             return response()->json([
                 'message' => 'Action not allowed in your plan.'
             ], 455);
-        }
-        // if limit of users has reached
+        } // if limit of users has reached
         else if (count($parentUser->users) >= ($parentUser->pricePlan->user_per_ga_account_count)) {
             return response()->json([
                 'message' => 'To add more users, please upgrade your account.'
@@ -119,8 +118,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
     public function update(UserRequest $request, User $user)
@@ -175,7 +174,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
@@ -194,7 +193,7 @@ class UserController extends Controller
 
     public function sendEmailWithUserStatsToAdmin()
     {
-        $users  = User::with([
+        $users = User::with([
             'pricePlan',
             'lastPopupOpenedChromeExtensionLog',
             'lastAnnotationButtonClickedChromeExtensionLog',
@@ -203,7 +202,7 @@ class UserController extends Controller
             ->withCount('last90DaysNotificationLogs')
             ->withCount('last90DaysLoginLogs')
             ->orderBy('created_at', 'DESC')
-            ->where('name','NOT LIKE','%test%')
+            ->where('name', 'NOT LIKE', '%test%')
             ->get();
 
         $active_users_in_90_days = 0;
@@ -223,25 +222,27 @@ class UserController extends Controller
             }
         }
 
-        $active_users_yesterday =  (new DashboardController())->active_users_yesterday();
-        $active_users_in_30_days =  (new DashboardController())->active_users_in_30_days();
-        $active_users_in_60_days =  (new DashboardController())->active_users_in_60_days();
+        $active_users_yesterday = (new DashboardController())->active_users_yesterday();
+        $active_users_in_30_days = (new DashboardController())->active_users_in_30_days();
+        $active_users_in_60_days = (new DashboardController())->active_users_in_60_days();
 
-        $total_registration_count = User::where('name','NOT LIKE','%test%')->count();
-        $yesterday_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->where('name','NOT LIKE','%test%')->count();
-        $yesterday_registration_users = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->where('name','NOT LIKE','%test%')->pluck('name', 'email')->toArray();
-        $last_week_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(7)->format('Y-m-d'))->where('name','NOT LIKE','%test%')->count();
-        $current_month_registration_count = User::where('created_at', '>=', Carbon::now()->startOfMonth()->format('Y-m-d'))->where('name','NOT LIKE','%test%')->count();
-        $previous_month_registration_count = User::where('created_at', '>=', Carbon::now()->subMonth(1)->startOfMonth()->format('Y-m-d'))->where('created_at', '<=', Carbon::now()->subMonth(1)->endOfMonth()->format('Y-m-d'))->where('name','NOT LIKE','%test%')->count();
+        $total_registration_count = User::where('name', 'NOT LIKE', '%test%')->count();
+        $yesterday_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->count();
+        $yesterday_registration_users = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->pluck('name', 'email')->toArray();
+        $last_week_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(7)->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->count();
+        $current_month_registration_count = User::where('created_at', '>=', Carbon::now()->startOfMonth()->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->count();
+        $previous_month_registration_count = User::where('created_at', '>=', Carbon::now()->subMonth(1)->startOfMonth()->format('Y-m-d'))->where('created_at', '<=', Carbon::now()->subMonth(1)->endOfMonth()->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->count();
 
-        $new_paying_users_yesterday = PricePlanSubscription::whereHas('user',function($query){
-            $query->where('name','NOT LIKE','%test%');
+        $new_paying_users_yesterday = PricePlanSubscription::whereHas('user', function ($query) {
+            $query->where('name', 'NOT LIKE', '%test%');
         })->with('user', 'user.lastPricePlanSubscription', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
-        // foreach ($new_paying_users_yesterday as $key => $new_paying_user_yesterday) {
-        //     if($new_paying_user_yesterday->user->created_at <= Carbon::now()->subDay(1)->format('Y-m-d')){
-        //         $new_paying_users_yesterday->forget($key);
-        //     }
-        // }
+        foreach ($new_paying_users_yesterday as $user){
+            $user_total_subs = PricePlanSubscription::where('user_id', $user->user_id)->get();
+            if($user_total_subs->count() > 1){
+                $new_paying_users_yesterday->forget($user->id);
+            }
+        }
+
         $new_paying_users_yesterday_count = $new_paying_users_yesterday->count();
 
         $number_of_actions_count = $this->number_of_actions_count();
@@ -285,7 +286,7 @@ class UserController extends Controller
                     'hamzait2017@gmail.com',
                 ]
             )->send(new DailyUserStatsMail($data));
-            
+
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
@@ -306,15 +307,15 @@ class UserController extends Controller
             'device_id' => 'required',
         ]);
         $UserActiveDevice = UserActiveDevice::find($request->device_id);
-        if($UserActiveDevice){
-            if($UserActiveDevice->is_extension){
+        if ($UserActiveDevice) {
+            if ($UserActiveDevice->is_extension) {
                 $access_token_id = DB::table('oauth_access_tokens')->where('user_id', Auth::id())->where('id', $UserActiveDevice->access_token_id);
-                if($access_token_id->first()){
+                if ($access_token_id->first()) {
                     $access_token_id->delete();
                 }
-            }else{
+            } else {
                 $session_id = DB::table('sessions')->where('user_id', Auth::id())->where('id', $UserActiveDevice->session_id);
-                if($session_id->first()){
+                if ($session_id->first()) {
                     $session_id->delete();
                 }
             }
@@ -327,7 +328,7 @@ class UserController extends Controller
 
     public function number_of_actions_count()
     {
-        $users  = User::with([
+        $users = User::with([
             'pricePlan',
             'lastPopupOpenedChromeExtensionLog',
             'lastAnnotationButtonClickedChromeExtensionLog',
@@ -336,12 +337,12 @@ class UserController extends Controller
             ->withCount('yesterdayNotificationLogs')
             ->withCount('yesterdayLoginLogs')
             ->orderBy('created_at', 'DESC')
-            ->where('name','NOT LIKE','%test%')
+            ->where('name', 'NOT LIKE', '%test%')
             ->get();
 
         $count = 0;
 
-        foreach($users as $user){
+        foreach ($users as $user) {
             $count = $count + ($user->lastPopupOpenedChromeExtensionLog ? (int)$user->lastPopupOpenedChromeExtensionLog->count() : 0);
             $count = $count + ($user->lastAnnotationButtonClickedChromeExtensionLog ? (int)$user->lastAnnotationButtonClickedChromeExtensionLog->count() : 0);
             $count = $count + (int)$user->yesterday_api_annotation_created_logs_count;
@@ -356,8 +357,8 @@ class UserController extends Controller
     public function total_payments_this_month()
     {
 
-        $pricePlanSubscriptions = PricePlanSubscription::whereHas('user',function($query){
-            $query->where('name','NOT LIKE','%test%');
+        $pricePlanSubscriptions = PricePlanSubscription::whereHas('user', function ($query) {
+            $query->where('name', 'NOT LIKE', '%test%');
         })->where('app_sumo_invoice_item_uuid', null)->where('created_at', '>=', Carbon::now()->firstOfMonth())->get();
 
         $total = 0;
@@ -373,8 +374,8 @@ class UserController extends Controller
     public function total_payments_previous_month()
     {
 
-        $pricePlanSubscriptions = PricePlanSubscription::whereHas('user',function($query){
-            $query->where('name','NOT LIKE','%test%');
+        $pricePlanSubscriptions = PricePlanSubscription::whereHas('user', function ($query) {
+            $query->where('name', 'NOT LIKE', '%test%');
         })->where('app_sumo_invoice_item_uuid', null)->where('created_at', '>=', Carbon::now()->subMonth(1)->firstOfMonth())->where('created_at', '<=', Carbon::now()->subMonth(1)->lastOfMonth())->get();
 
         $total = 0;
@@ -390,19 +391,18 @@ class UserController extends Controller
     public function mmr()
     {
 
-        $pricePlanSubscriptions = PricePlanSubscription::whereHas('user',function($query){
-            $query->where('name','NOT LIKE','%test%');
+        $pricePlanSubscriptions = PricePlanSubscription::whereHas('user', function ($query) {
+            $query->where('name', 'NOT LIKE', '%test%');
         })->where('app_sumo_invoice_item_uuid', null)
-        ->get();
+            ->get();
 
         $total = 0;
 
         foreach ($pricePlanSubscriptions as $pricePlanSubscription) {
             if ($pricePlanSubscription->expires_at >= Carbon::now()) {
                 if ($pricePlanSubscription->plan_duration == PricePlan::ANNUALLY) {
-                    $total = $total + ((float)$pricePlanSubscription->charged_price/12);
-                }
-                elseif($pricePlanSubscription->plan_duration == PricePlan::MONTHLY){
+                    $total = $total + ((float)$pricePlanSubscription->charged_price / 12);
+                } elseif ($pricePlanSubscription->plan_duration == PricePlan::MONTHLY) {
                     $total = $total + (float)$pricePlanSubscription->charged_price;
                 }
             }
