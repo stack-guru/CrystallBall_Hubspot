@@ -270,15 +270,15 @@ class UserController extends Controller
         ];
 
         try {
-//            Mail::to(
-//                [
-//                    'fernando@app2you.co.il',
-//                    'eric@crystalballinsight.com',
-//                    'shechter@gmail.com',
-//                    'galchet@gmail.com',
-//                    'meglash@upstartideas.com',
-//                ]
-//            )->send(new DailyUserStatsMail($data));
+            Mail::to(
+                [
+                    'fernando@app2you.co.il',
+                    'eric@crystalballinsight.com',
+                    'shechter@gmail.com',
+                    'galchet@gmail.com',
+                    'meglash@upstartideas.com',
+                ]
+            )->send(new DailyUserStatsMail($data));
 
             Mail::to(
                 [
