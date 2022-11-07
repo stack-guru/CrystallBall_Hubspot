@@ -56,6 +56,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:generate-holiday-notification')->daily();
         $schedule->command('gaa:generate-weather-alert-notification')->daily();
         $schedule->command('gaa:generate-wordpress-update-notification')->daily();
+        //Spotify Podcast data update on daily bases
+        $schedule->command('gaa:spotify-annotation-command')->daily();
+
         // Everyday non critical
         $schedule->command('gaa:fetch-google-analytics-metrics-and-dimensions')->daily();
         $schedule->command('gaa:fetch-google-search-console-sites-statistics')->daily();

@@ -18,6 +18,7 @@ class InstagramService
      */
     public function __construct()
     {
+        Log::debug("message", ['sfsd']);
         $this->facebook = new Facebook([
             'app_id' => config('services.facebook.client_id'),
             'app_secret' => config('services.facebook.client_secret'),
@@ -57,7 +58,7 @@ class InstagramService
         // $response = $this->facebook->get('/17841407061239713/fields=business_discovery.username({ig-username}){username,website,name,ig_id,id,profile_picture_url,biography,follows_count,followers_count,media_count,media{id,caption,like_count,comments_count,timestamp,username,media_product_type,media_type,owner,permalink,media_url,children{media_url}}}', $page_access_token); 
         $response = $this->facebook->get($endpointFormat, $page_access_token); 
         $response->decodeBody();
-
+        Log::debug("message", [$response]);
         $data_array = $response->getDecodedBody();
         dd($data_array);
     }

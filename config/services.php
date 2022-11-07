@@ -158,4 +158,16 @@ return [
         'redirect' => 'https://lukionline.me/socialite/instagrambasic/redirect',
     ],
 
+      /*
+    |--------------------------------------------------------------------------
+    | Spotify Annotation
+    |--------------------------------------------------------------------------
+    |
+    */
+    
+    'spotify_annotation' => [
+        'clientId' => env('CLIENT_ID'),
+        'clientSecret' => env('CLIENT_SECRET')
+    ]
+
 ];

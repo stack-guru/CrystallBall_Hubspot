@@ -67,7 +67,7 @@ export default class UserAnnotationColorPicker extends React.Component {
         return (
             <div style={{ width: '20px', display: 'inline-block' }}>
                 <div onClick={this.handleClick} className="user-annotation-color-picker" style={{ backgroundColor: this.props.value }}>
-                    <div />
+                   <div></div> 
                 </div>
                 {
                     this.state.displayColorPicker ? <div style={{ position: 'absolute', zIndex: '2', }}>

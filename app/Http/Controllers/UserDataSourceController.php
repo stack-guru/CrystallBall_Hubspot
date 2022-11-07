@@ -34,6 +34,7 @@ class UserDataSourceController extends Controller
                     'google_alert_keywords' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'google_alert_keywords')->get(),
                     'wordpress_updates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'wordpress_updates')->get(),
                     'keyword_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'keyword_tracking')->get(),
+                    'spotify_annotation' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_pro[erty_id').$request->query('ga_property_id')->where('ds_code', 'spotify_annotation')->get(),
                 ],
             ];
         }
@@ -47,7 +48,7 @@ class UserDataSourceController extends Controller
                 'google_alert_keywords' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'google_alert_keywords')->get(),
                 'wordpress_updates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'wordpress_updates')->get(),
                 'keyword_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'keyword_tracking')->get(),
-            ],
+                'spotify_annotation' =>UserDataSource::select('id','ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'spotify_annotation'),            ],
         ];
     }
 
