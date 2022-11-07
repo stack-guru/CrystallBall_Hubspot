@@ -227,6 +227,7 @@ class UserController extends Controller
         $active_users_in_60_days = (new DashboardController())->active_users_in_60_days();
 
         $total_registration_count = User::where('name', 'NOT LIKE', '%test%')->count();
+
         $yesterday_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->count();
         $yesterday_registration_users = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->pluck('name', 'email')->toArray();
         $last_week_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(7)->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->count();
