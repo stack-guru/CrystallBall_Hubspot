@@ -135,15 +135,15 @@ return [
     ],
 
     'facebook' => [
-        // client's app
-        // 'client_id' => '1944502855758578',
-        // 'client_secret' => 'edad0b998cc735879f3addeaeb907140',
-        // 'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
+//         client's app
+         'client_id' => '787240889016012',
+         'client_secret' => 'e051b20870412d826641de7d24f41111',
+         'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
 
         // my test app
-        'client_id' => '787240889016012',
-        'client_secret' => 'e051b20870412d826641de7d24f41111',
-        'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
+//        'client_id' => '787240889016012',
+//        'client_secret' => 'e051b20870412d826641de7d24f41111',
+//        'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
     ],
 
     'instagram' => [
