@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\UserActiveDevice;
 use App\Models\UserGaAccount;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -238,10 +239,16 @@ class UserController extends Controller
         $new_paying_users_yesterday_all = PricePlanSubscription::whereHas('user', function ($query) {
             $query->where('name', 'NOT LIKE', '%test%');
         })->with('user', 'user.lastPricePlanSubscription', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
-        foreach ($new_paying_users_yesterday_all as $user){
-            $user_total_subs = PricePlanSubscription::where('user_id', $user->user_id)->count();
-            if($user_total_subs === 1){
-                $new_paying_users_yesterday->push($user);
+        foreach ($new_paying_users_yesterday as $user){
+            try {
+                $user_total_subs = PricePlanSubscription::where('user_id', $user->user_id)->get();
+                if($user_total_subs->count() > 1){
+                    $user_collection_key = $new_paying_users_yesterday->search(function($user_price_plan) use ($user) {return $user_price_plan->user_id == $user->user_id;});
+                    $new_paying_users_yesterday->forget($user_collection_key);
+                }
+            } catch (Exception $ex) {
+                info("Exception occurred!!!");
+                info($ex->getMessage());
             }
         }
 
@@ -273,6 +280,7 @@ class UserController extends Controller
 		Mail::to(
                 [
                     'fernando@app2you.co.il',
+                    'imhamza@outlook.com',
                     // 'eric@crystalballinsight.com',
                     // 'shechter@gmail.com',
                     // 'galchet@gmail.com',
