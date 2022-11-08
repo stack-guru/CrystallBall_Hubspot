@@ -228,7 +228,6 @@ class UserController extends Controller
         $active_users_in_60_days = (new DashboardController())->active_users_in_60_days();
 
         $total_registration_count = User::where('name', 'NOT LIKE', '%test%')->count();
-
         $yesterday_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->count();
         $yesterday_registration_users = User::where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->pluck('name', 'email')->toArray();
         $last_week_registration_count = User::where('created_at', '>=', Carbon::now()->subDay(7)->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->count();
@@ -251,6 +250,8 @@ class UserController extends Controller
             }
         }
 
+        $new_paying_users_yesterday_count = $new_paying_users_yesterday->count();
+
         $number_of_actions_count = $this->number_of_actions_count();
         $total_payments_this_month = $this->total_payments_this_month();
         $total_payments_previous_month = $this->total_payments_previous_month();
@@ -268,7 +269,7 @@ class UserController extends Controller
             'current_month_registration_count' => $current_month_registration_count,
             'previous_month_registration_count' => $previous_month_registration_count,
             'new_paying_users_yesterday' => $new_paying_users_yesterday,
-            'new_paying_users_yesterday_count' => $new_paying_users_yesterday->count(),
+            'new_paying_users_yesterday_count' => $new_paying_users_yesterday_count,
             'number_of_actions_count' => $number_of_actions_count,
             'total_payments_this_month' => $total_payments_this_month,
             'total_payments_previous_month' => $total_payments_previous_month,
@@ -276,7 +277,7 @@ class UserController extends Controller
         ];
 
         try {
-		Mail::to(
+            Mail::to(
                 [
                     'fernando@app2you.co.il',
                     'imhamza@outlook.com',
