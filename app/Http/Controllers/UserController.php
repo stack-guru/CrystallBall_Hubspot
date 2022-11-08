@@ -235,8 +235,7 @@ class UserController extends Controller
         $current_month_registration_count = User::where('created_at', '>=', Carbon::now()->startOfMonth()->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->count();
         $previous_month_registration_count = User::where('created_at', '>=', Carbon::now()->subMonth(1)->startOfMonth()->format('Y-m-d'))->where('created_at', '<=', Carbon::now()->subMonth(1)->endOfMonth()->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->count();
 
-        $new_paying_users_yesterday = collect();
-        $new_paying_users_yesterday_all = PricePlanSubscription::whereHas('user', function ($query) {
+        $new_paying_users_yesterday = PricePlanSubscription::whereHas('user', function ($query) {
             $query->where('name', 'NOT LIKE', '%test%');
         })->with('user', 'user.lastPricePlanSubscription', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
         foreach ($new_paying_users_yesterday as $user){
