@@ -233,17 +233,16 @@ class UserController extends Controller
         $current_month_registration_count = User::where('created_at', '>=', Carbon::now()->startOfMonth()->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->count();
         $previous_month_registration_count = User::where('created_at', '>=', Carbon::now()->subMonth(1)->startOfMonth()->format('Y-m-d'))->where('created_at', '<=', Carbon::now()->subMonth(1)->endOfMonth()->format('Y-m-d'))->where('name', 'NOT LIKE', '%test%')->count();
 
-        $new_paying_users_yesterday = PricePlanSubscription::whereHas('user', function ($query) {
+        $new_paying_users_yesterday = collect();
+        $new_paying_users_yesterday_all = PricePlanSubscription::whereHas('user', function ($query) {
             $query->where('name', 'NOT LIKE', '%test%');
         })->with('user', 'user.lastPricePlanSubscription', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
-        foreach ($new_paying_users_yesterday as $user){
-            $user_total_subs = PricePlanSubscription::where('user_id', $user->user_id)->get();
-            if($user_total_subs->count() > 1){
-                $new_paying_users_yesterday->forget($user->id);
+        foreach ($new_paying_users_yesterday_all as $user){
+            $user_total_subs = PricePlanSubscription::where('user_id', $user->user_id)->count();
+            if($user_total_subs === 1){
+                $new_paying_users_yesterday->push($user);
             }
         }
-
-        $new_paying_users_yesterday_count = $new_paying_users_yesterday->count();
 
         $number_of_actions_count = $this->number_of_actions_count();
         $total_payments_this_month = $this->total_payments_this_month();
@@ -262,7 +261,7 @@ class UserController extends Controller
             'current_month_registration_count' => $current_month_registration_count,
             'previous_month_registration_count' => $previous_month_registration_count,
             'new_paying_users_yesterday' => $new_paying_users_yesterday,
-            'new_paying_users_yesterday_count' => $new_paying_users_yesterday_count,
+            'new_paying_users_yesterday_count' => $new_paying_users_yesterday->count(),
             'number_of_actions_count' => $number_of_actions_count,
             'total_payments_this_month' => $total_payments_this_month,
             'total_payments_previous_month' => $total_payments_previous_month,
@@ -270,7 +269,7 @@ class UserController extends Controller
         ];
 
         try {
-            Mail::to(
+		Mail::to(
                 [
                     'fernando@app2you.co.il',
                     'eric@crystalballinsight.com',
