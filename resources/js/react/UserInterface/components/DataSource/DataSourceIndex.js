@@ -1,28 +1,27 @@
-import React from "react";
-import { toast } from "react-toastify";
-import { Redirect } from "react-router-dom";
-import { UncontrolledPopover, PopoverHeader, PopoverBody } from "reactstrap";
+import React from 'react';
+import {toast} from "react-toastify";
+import {Redirect} from "react-router-dom";
+import {UncontrolledPopover, PopoverHeader, PopoverBody} from 'reactstrap';
 import LoaderAnimation from "../../utils/LoaderAnimation";
 import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";
-import DSRMDatesSelect from "../../utils/DSRMDatesSelect";
-import DSOWMCitiesSelect from "../../utils/DSOWMCitiesSelect";
-import DSOWMEventsSelect from "../../utils/DSOWMEventsSelect";
-import DSGAUDatesSelect from "../../utils/DSGAUDatesSelect";
-import DSGoogleAlertsSelect from "../../utils/DSGoogleAlertsSelect";
-import DSWebMonitorsSelect from "../../utils/DSWebMonitorsSelect";
-import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
-import AddKeyword from "../../utils/AddKeyword";
-import ManageKeywords from "../../utils/ManageKeywords";
-import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
-import ErrorAlert from "../../utils/ErrorAlert";
-import DataSourceInterfaceTour from "../../helpers/DataSourceInterfaceTour";
-import { getCompanyName } from "../../helpers/CommonFunctions";
-import EditKeyword from "../../utils/EditKeyword";
+import DSRMDatesSelect from '../../utils/DSRMDatesSelect';
+import DSOWMCitiesSelect from '../../utils/DSOWMCitiesSelect';
+import DSOWMEventsSelect from '../../utils/DSOWMEventsSelect';
+import DSGAUDatesSelect from '../../utils/DSGAUDatesSelect';
+import DSGoogleAlertsSelect from '../../utils/DSGoogleAlertsSelect';
+import DSWebMonitorsSelect from '../../utils/DSWebMonitorsSelect';
+import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
+import AddKeyword from '../../utils/AddKeyword';
+import ManageKeywords from '../../utils/ManageKeywords';
+import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
+import ErrorAlert from '../../utils/ErrorAlert';
+import DataSourceInterfaceTour from '../../helpers/DataSourceInterfaceTour';
+import {getCompanyName} from '../../helpers/CommonFunctions';
+import EditKeyword from '../../utils/EditKeyword';
 import GoogleAdChanges from "../../utils/GoogleAdChanges";
 import FacebookTracking from "../../utils/FacebookTracking";
 import InstagramTracking from "../../utils/InstagramTracking";
-import SpotifyPodcast from "../../utils/SpotifyPodcast";
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -34,208 +33,158 @@ export default class DataSourceIndex extends React.Component {
             userServices: this.props.user,
             isBusy: false,
             isLoading: false,
-            errors: "",
+            errors: '',
             redirectTo: null,
             showHintFor: null,
-            ga_property_id: "",
+            ga_property_id: '',
             webMonitors: [],
             manage_keyword_show: false,
             dfsKeywords: [],
             totalDfsKeywordCreditsUsed: 0,
             editKeyword: false,
-            editKeyword_keyword_id: "",
-            editKeyword_keyword_configuration_id: "",
+            editKeyword_keyword_id: '',
+            editKeyword_keyword_configuration_id: '',
             userFacebookAccountsExists: false,
             userInstagramAccountsExists: false,
-        };
-        this.userDataSourceAddHandler =
-            this.userDataSourceAddHandler.bind(this);
-        this.userDataSourceDeleteHandler =
-            this.userDataSourceDeleteHandler.bind(this);
+        }
+        this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
+        this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
         this.serviceStatusHandler = this.serviceStatusHandler.bind(this);
 
         this.loadUserDataSources = this.loadUserDataSources.bind(this);
 
-        this.updateUserAnnotationColors =
-            this.updateUserAnnotationColors.bind(this);
-        this.loadUserAnnotationColors =
-            this.loadUserAnnotationColors.bind(this);
+        this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
+        this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
 
         this.sectionToggler = this.sectionToggler.bind(this);
 
         this.reloadWebMonitors = this.reloadWebMonitors.bind(this);
 
-        this.manage_keyword_popup_handler =
-            this.manage_keyword_popup_handler.bind(this);
+        this.manage_keyword_popup_handler = this.manage_keyword_popup_handler.bind(this);
 
         this.keywordAddHandler = this.keywordAddHandler.bind(this);
-        this.loadKeywordTrackingKeywords =
-            this.loadKeywordTrackingKeywords.bind(this);
+        this.loadKeywordTrackingKeywords = this.loadKeywordTrackingKeywords.bind(this);
 
         this.editKeywordToggler = this.editKeywordToggler.bind(this);
-        this.checkUserFacebookAccount =
-            this.checkUserFacebookAccount.bind(this);
+        this.checkUserFacebookAccount = this.checkUserFacebookAccount.bind(this);
         this.updateUserService = this.updateUserService.bind(this);
+
+
     }
 
     componentDidMount() {
-        document.title = "Automation";
-        this.loadUserDataSources("");
+        document.title = 'Automation';
+        this.loadUserDataSources('');
         this.loadUserAnnotationColors();
-        this.reloadWebMonitors("");
+        this.reloadWebMonitors('');
 
         this.loadKeywordTrackingKeywords();
 
         this.checkUserFacebookAccount();
+
     }
+
+    a
 
     loadUserDataSources(gaPropertyId) {
         if (!this.state.isLoading) {
-            this.setState({ isLoading: true });
-            HttpClient.get(
-                `/data-source/user-data-source?ga_property_id=${gaPropertyId}`
-            )
-                .then(
-                    (resp) => {
-                        this.setState({
-                            isLoading: false,
-                            userDataSources: resp.data.user_data_sources,
-                        });
-                    },
-                    (err) => {
-                        this.setState({
-                            isLoading: false,
-                            errors: err.response.data,
-                        });
-                    }
-                )
-                .catch((err) => {
-                    this.setState({ isLoading: false, errors: err });
-                });
+            this.setState({isLoading: true});
+            HttpClient.get(`/data-source/user-data-source?ga_property_id=${gaPropertyId}`).then(resp => {
+                this.setState({isLoading: false, userDataSources: resp.data.user_data_sources});
+            }, (err) => {
+                this.setState({isLoading: false, errors: (err.response).data});
+            }).catch(err => {
+                this.setState({isLoading: false, errors: err});
+            })
         }
     }
 
     loadKeywordTrackingKeywords() {
-        this.setState({ isBusy: true, errors: "" });
-        HttpClient.get(`/data-source/get-keyword-tracking-keywords`)
-            .then(
-                (resp) => {
-                    this.setState({
-                        isLoading: false,
-                        dfsKeywords: resp.data.keywords
-                            ? resp.data.keywords
-                            : [],
-                    });
-                    let total = 0;
-                    this.state.dfsKeywords.map(function (
-                        keyword_instance,
-                        index
-                    ) {
-                        keyword_instance.configurations.map(function (
-                            configuration_instance
-                        ) {
-                            total++;
-                        });
-                    });
-                    this.setState({
-                        totalDfsKeywordCreditsUsed: total,
-                    });
-                },
-                (err) => {
-                    this.setState({
-                        isLoading: false,
-                        errors: err.response.data,
-                    });
-                }
-            )
-            .catch((err) => {
-                this.setState({ isLoading: false, errors: err });
+        this.setState({isBusy: true, errors: ''});
+        HttpClient.get(`/data-source/get-keyword-tracking-keywords`).then(resp => {
+            this.setState({
+                isLoading: false,
+                dfsKeywords: resp.data.keywords ? resp.data.keywords : [],
             });
+            let total = 0;
+            this.state.dfsKeywords.map(function (keyword_instance, index) {
+                keyword_instance.configurations.map(function (configuration_instance) {
+                    total++;
+                });
+            });
+            this.setState({
+                totalDfsKeywordCreditsUsed: total,
+            });
+        }, (err) => {
+            this.setState({isLoading: false, errors: (err.response).data});
+        }).catch(err => {
+            this.setState({isLoading: false, errors: err});
+        })
     }
 
     loadUserAnnotationColors() {
         if (!this.state.isLoading) {
-            this.setState({ isLoading: true });
-            HttpClient.get(`/data-source/user-annotation-color`)
-                .then(
-                    (resp) => {
-                        this.setState({
-                            isLoading: false,
-                            userAnnotationColors:
-                                resp.data.user_annotation_color,
-                        });
-                    },
-                    (err) => {
-                        this.setState({
-                            isLoading: false,
-                            errors: err.response.data,
-                        });
-                    }
-                )
-                .catch((err) => {
-                    this.setState({ isLoading: false, errors: err });
-                });
+            this.setState({isLoading: true});
+            HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
+                this.setState({isLoading: false, userAnnotationColors: resp.data.user_annotation_color});
+            }, (err) => {
+                this.setState({isLoading: false, errors: (err.response).data});
+            }).catch(err => {
+                this.setState({isLoading: false, errors: err});
+            })
         }
     }
 
     updateUserAnnotationColors(userAnnotationColors) {
-        this.setState({ userAnnotationColors: userAnnotationColors });
+        this.setState({userAnnotationColors: userAnnotationColors});
     }
 
     reloadWebMonitors(gaPropertyId) {
-        HttpClient.get(
-            `/data-source/web-monitor?ga_property_id=${gaPropertyId}`
-        )
-            .then(
-                (resp) => {
-                    this.setState({
-                        webMonitors: resp.data.web_monitors,
-                        isBusy: false,
-                    });
-                },
-                (err) => {
-                    this.setState({ isBusy: false });
-                }
-            )
-            .catch((err) => {
-                this.setState({ isBusy: false });
-            });
+        HttpClient.get(`/data-source/web-monitor?ga_property_id=${gaPropertyId}`).then(resp => {
+            this.setState({webMonitors: resp.data.web_monitors, isBusy: false})
+        }, (err) => {
+            this.setState({isBusy: false});
+        }).catch(err => {
+            this.setState({isBusy: false});
+        })
     }
 
     manage_keyword_popup_handler() {
         this.setState({
             manage_keyword_show: false,
-        });
+        })
     }
 
     keywordAddHandler() {
         // reload the component
-        this.sectionToggler("keyword_tracking");
+        this.sectionToggler('keyword_tracking')
         this.loadKeywordTrackingKeywords();
+
     }
 
     editKeywordToggler(keyword_id, keyword_configuration_id) {
         // close popup
-        this.manage_keyword_popup_handler();
+        this.manage_keyword_popup_handler()
 
         // show edit form
         this.setState({
             editKeyword_keyword_id: keyword_id,
-            editKeyword_keyword_configuration_id: keyword_configuration_id,
+            editKeyword_keyword_configuration_id: keyword_configuration_id
         });
 
         this.setState({
-            editKeyword: true,
+            editKeyword: true
         });
 
-        this.sectionToggler("edit_keyword");
+        this.sectionToggler('edit_keyword')
 
         console.log(this.state);
+
+
     }
 
     render() {
-        if (this.state.redirectTo)
-            return <Redirect to={this.state.redirectTo} />;
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo}/>
 
         return (
             <div className="container bg-white d-flex flex-column justify-content-center">
@@ -1218,7 +1167,6 @@ export default class DataSourceIndex extends React.Component {
                                                                                         .open_weather_map_city
                                                                                         .name
                                                                                 }
-
                                                                                 ,{" "}
                                                                                 {
                                                                                     owmc
@@ -1705,248 +1653,6 @@ export default class DataSourceIndex extends React.Component {
                             {/*</div>*/}
 
                             <div className="col-md-6 mt-2">
-                                <div
-                                    className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
-                                >
-                                    <div>
-                                        <div
-                                            className="d-flex mt-2 justify-content-between "
-                                            id="keyword-tracking-data-source-section"
-                                        >
-                                            <div className="px-2">
-                                                <h2>
-                                                    <small>
-                                                        Facebook Tracking{" "}
-                                                        <UserAnnotationColorPicker
-                                                            name="facebook_tracking"
-                                                            value={
-                                                                this.state
-                                                                    .userAnnotationColors
-                                                                    .facebook_tracking
-                                                            }
-                                                            updateCallback={
-                                                                this
-                                                                    .updateUserAnnotationColors
-                                                            }
-                                                        />
-                                                        <img
-                                                            className="hint-button-2"
-                                                            src="/images/info-logo.png"
-                                                        />
-                                                    </small>
-                                                </h2>
-                                            </div>
-
-                                            <div className="px-2 text-center">
-                                                {this.state.userServices
-                                                    .is_ds_facebook_tracking_enabled
-                                                    ? "ON"
-                                                    : "OFF"}
-                                                <label className="trigger switch">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={
-                                                            this.state
-                                                                .userServices
-                                                                .is_ds_facebook_tracking_enabled
-                                                        }
-                                                        onChange={
-                                                            this
-                                                                .serviceStatusHandler
-                                                        }
-                                                        name="is_ds_facebook_tracking_enabled"
-                                                    />
-                                                    <span
-                                                        className={`slider round ${
-                                                            this.state
-                                                                .userServices
-                                                                .is_ds_facebook_tracking_enabled
-                                                                ? "animate-pulse"
-                                                                : ""
-                                                        }`}
-                                                    />
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p
-                                            className="ds-update-text m-0 px-2 text-right"
-                                            onClick={() => {
-                                                this.sectionToggler(
-                                                    "facebook_tracking"
-                                                );
-                                            }}
-                                        >
-                                            {this.state.sectionName ==
-                                            "facebook_tracking"
-                                                ? "Hide"
-                                                : "Configure"}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/*  Spotify Podcast Annotation Start  */}
-
-                            <div className="col-md-6 mt-2">
-                                <div
-                                    className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
-                                >
-                                    <div>
-                                        <div
-                                            className="d-flex mt-2 justify-content-between "
-                                            id="web-monitoring-data-source-section"
-                                        >
-                                            <div className="px-2">
-                                                <h2>
-                                                    <small>
-                                                        Spotify Podcast{" "}
-                                                        <UserAnnotationColorPicker
-                                                            name="spotify_podcast_tracking"
-                                                            value={
-                                                                this.state
-                                                                    .userAnnotationColors
-                                                                    .spotify_podcast_tracking
-                                                            }
-                                                            updateCallback={
-                                                                this
-                                                                    .updateUserAnnotationColors
-                                                            }
-                                                        />
-                                                        <img
-                                                            id="spotify_podcast_tracking"
-                                                            className="hint-button-2"
-                                                            onClick={() => {
-                                                                this.changeShownHint(
-                                                                    "spotify_podcast_tracking"
-                                                                );
-                                                            }}
-                                                            src="/images/info-logo.png"
-                                                        />
-                                                    </small>
-                                                </h2>
-                                            </div>
-                                            <UncontrolledPopover
-                                                trigger="legacy"
-                                                placement="right"
-                                                isOpen={
-                                                    this.state.showHintFor ==
-                                                    "spotify_podcast_tracking"
-                                                }
-                                                target="spotify_podcast_tracking"
-                                                toggle={() => {
-                                                    this.changeShownHint(null);
-                                                }}
-                                            >
-                                                <PopoverHeader>
-                                                    Spotify Podcast
-                                                </PopoverHeader>
-                                                <PopoverBody>
-                                                    Track daily changes of your
-                                                    target keywords in your
-                                                    target area for your
-                                                    business or competitors.
-                                                </PopoverBody>
-                                            </UncontrolledPopover>
-
-                                            <div className="px-2 text-center">
-                                                {this.state.userServices
-                                                    .is_ds_spotify_tracking_enabled
-                                                    ? "ON"
-                                                    : "OFF"}
-                                                <label className="trigger switch">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={
-                                                            this.state
-                                                                .userServices
-                                                                .is_ds_spotify_tracking_enabled
-                                                        }
-                                                        onChange={
-                                                            this
-                                                                .serviceStatusHandler
-                                                        }
-                                                        name="is_ds_spotify_podcast_tracking_enabled"
-                                                    />
-                                                    <span
-                                                        className={`slider round ${
-                                                            this.state
-                                                                .userServices
-                                                                .is_ds_spotify_podcast_tracking_enabled
-                                                                ? "animate-pulse"
-                                                                : ""
-                                                        }`}
-                                                    />
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div className="ml-2">
-                                            Credits:{" "}
-                                            {
-                                                this.state
-                                                    .totalDfsKeywordCreditsUsed
-                                            }
-                                            /
-                                            {this.props.user.price_plan
-                                                .spotify_podcast_tracking_count == -1
-                                                ? 0
-                                                : this.props.user.price_plan
-                                                      .spotify_podcast_tracking_count}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p
-                                            className="ds-update-text m-0 px-2 text-right"
-                                            onClick={() => {
-                                                this.sectionToggler(
-                                                    "spotify_podcast_tracking"
-                                                );
-                                            }}
-                                        >
-                                            {this.state.sectionName ==
-                                            "spotify_podcast_tracking"
-                                                ? "Hide"
-                                                : "Add Keywords"}
-                                        </p>
-                                        <p
-                                            className="ds-update-text m-0 px-2 text-right"
-                                            onClick={() => {
-                                                this.setState({
-                                                    manage_keyword_show: true,
-                                                });
-                                            }}
-                                        >
-                                            Manage Keywords
-                                        </p>
-                                        {this.state.manage_keyword_show ==
-                                        true ? (
-                                            <ManageKeywords
-                                                keywords={
-                                                    this.state.dfsKeywords
-                                                }
-                                                loadKeywordsCallback={
-                                                    this
-                                                        .loadKeywordTrackingKeywords
-                                                }
-                                                editKeywordCallback={
-                                                    this.editKeywordToggler
-                                                }
-                                                closeManageKeywordPopup={
-                                                    this
-                                                        .manage_keyword_popup_handler
-                                                }
-                                            />
-                                        ) : null}
-                                    </div>
-                                </div>
-                            </div>
-                            {/* Spotify Podcast Annotation End */}
-
-                            {/* <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{minHeight: "180px"}}
@@ -2492,7 +2198,6 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
 
-                            {/* Tik Tok Tracking Section */}
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
@@ -2645,7 +2350,7 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Budget Tracking section
                             */}
-                            {/* <div className="col-md-6 mt-2">*/}
+                            {/*<div className="col-md-6 mt-2">*/}
                             {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
                             {/*        <div>*/}
                             {/*            <div className="d-flex mt-2 justify-content-between "*/}
@@ -2771,28 +2476,6 @@ export default class DataSourceIndex extends React.Component {
                                 ds_data={this.state.userDataSources.holidays}
                             />
                         ) : null}
-
-                        {/* Spotify Podcast Start */}
-                        {
-                            // (this.state.sectionName =
-                            //     "spotify_podcast_tracking" &&
-                            //     this.state.userDataSources ? (
-                            //         <SpotifyPodcast
-                            //             onCheckCallback={
-                            //                 this.userDataSourceAddHandler
-                            //             }
-                            //             onUncheckCallback={
-                            //                 this.userDataSourceAddHandler
-                            //             }
-                            //             ds_data={
-                            //                 this.state.userDataSources
-                            //                     .spotify_podcast_event
-                            //             }
-                            //         />
-                            //     ) : null)
-                        }
-                        {/* Spotify Podcast End */}
-
                         {this.state.sectionName == "retail_marketings" &&
                         this.state.userDataSources ? (
                             <DSRMDatesSelect
@@ -2805,8 +2488,6 @@ export default class DataSourceIndex extends React.Component {
                                 }
                             />
                         ) : null}
-
-
                         {this.state.sectionName == "weather_alerts" &&
                         this.state.userDataSources ? (
                             <DSOWMCitiesSelect
@@ -2820,8 +2501,6 @@ export default class DataSourceIndex extends React.Component {
                                 }
                             />
                         ) : null}
-
-                        {/* Website Event Side View Start */}
                         {this.state.sectionName == "open_weather_map_events" &&
                         this.state.userDataSources ? (
                             <DSOWMEventsSelect
@@ -2835,8 +2514,6 @@ export default class DataSourceIndex extends React.Component {
                                 }
                             />
                         ) : null}
-                        {/* Website Event Side View Start */}
-
                         {this.state.sectionName == "google_algorithm_updates" &&
                         this.state.userDataSources ? (
                             <DSGAUDatesSelect
@@ -2850,8 +2527,6 @@ export default class DataSourceIndex extends React.Component {
                                 }
                             />
                         ) : null}
-
-                        {/* News Alert Sideview Start */}
                         {this.state.sectionName == "google_alerts" &&
                         this.state.userDataSources ? (
                             <DSGoogleAlertsSelect
@@ -2865,9 +2540,6 @@ export default class DataSourceIndex extends React.Component {
                                 }
                             />
                         ) : null}
-                        {/* News ALert Sideview End */}
-
-                        {/* Web Monitoring Start */}
                         {this.state.sectionName == "web_monitors" &&
                         this.state.userDataSources ? (
                             <DSWebMonitorsSelect
@@ -2879,7 +2551,6 @@ export default class DataSourceIndex extends React.Component {
                                 reloadWebMonitors={this.reloadWebMonitors}
                             />
                         ) : null}
-                        {/*Web Monitoring End */}
 
                         {/* {
                             this.state.sectionName == 'keyword_tracking' && this.state.userDataSources ?
@@ -2942,223 +2613,130 @@ export default class DataSourceIndex extends React.Component {
 
     checkUserFacebookAccount() {
         // userFacebookAccountsExists
-        this.setState({ isBusy: true });
-        HttpClient.get("/data-source/user-facebook-accounts-exists", {})
-            .then(
-                (resp) => {
-                    if (resp.data.exists) {
-                        this.setState({
-                            isBusy: false,
-                            errors: undefined,
-                            userFacebookAccountsExists: true,
-                        });
-                    }
-                },
-                (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
-                    status = false;
-                },
-                this
-            )
-            .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
-                status = false;
-            });
+        this.setState({isBusy: true});
+        HttpClient.get('/data-source/user-facebook-accounts-exists', {}).then((resp) => {
+            if (resp.data.exists) {
+                this.setState({
+                    isBusy: false,
+                    errors: undefined,
+                    userFacebookAccountsExists: true
+                })
+            }
+        }, (err) => {
+            this.setState({isBusy: false, errors: err.response.data})
+            status = false;
+        }, this).catch(err => {
+            this.setState({isBusy: false, errors: err})
+            status = false;
+        });
 
         // userInstagramAccountsExists
-        this.setState({ isBusy: true });
-        HttpClient.get("/data-source/user-instagram-accounts-exists", {})
-            .then(
-                (resp) => {
-                    if (resp.data.exists) {
-                        this.setState({
-                            isBusy: false,
-                            errors: undefined,
-                            userInstagramAccountsExists: true,
-                        });
-                    }
-                },
-                (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
-                    status = false;
-                },
-                this
-            )
-            .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
-                status = false;
-            });
+        this.setState({isBusy: true});
+        HttpClient.get('/data-source/user-instagram-accounts-exists', {}).then((resp) => {
+            if (resp.data.exists) {
+                this.setState({
+                    isBusy: false,
+                    errors: undefined,
+                    userInstagramAccountsExists: true
+                })
+            }
+        }, (err) => {
+            this.setState({isBusy: false, errors: err.response.data})
+            status = false;
+        }, this).catch(err => {
+            this.setState({isBusy: false, errors: err})
+            status = false;
+        });
     }
 
     updateUserService(e) {
-        HttpClient.post("/userService", {
-            [e.target.name]: e.target.checked ? 1 : 0,
-        })
-            .then(
-                (resp) => {
-                    if (resp.data.user_services[e.target.name] == 1) {
-                        toast.success("Service activated successfully.");
-                        this.setState({
-                            userServices: resp.data.user_services,
-                        });
-                    }
-                    if (resp.data.user_services[e.target.name] == 0) {
-                        this.setState({
-                            userServices: resp.data.user_services,
-                        });
-                        toast.info("Service deactivated successfully.");
-                    }
-                    this.props.reloadUser();
-                },
-                (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
-                    if (err.response.status == 402) {
-                        swal.fire(
-                            "Upgrade to Pro Plan!",
-                            "You have reached your Free 100 credits.",
-                            "warning"
-                        ).then((value) => {
-                            this.setState({
-                                redirectTo: "/settings/price-plans",
-                            });
-                        });
-                    }
-                }
-            )
-            .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
-            });
+
+        HttpClient.post('/userService', {[e.target.name]: e.target.checked ? 1 : 0}).then(resp => {
+            if (resp.data.user_services[e.target.name] == 1) {
+                toast.success("Service activated successfully.");
+                this.setState({userServices: resp.data.user_services})
+            }
+            if (resp.data.user_services[e.target.name] == 0) {
+                this.setState({userServices: resp.data.user_services})
+                toast.info("Service deactivated successfully.");
+            }
+            (this.props.reloadUser)();
+        }, (err) => {
+            this.setState({isBusy: false, errors: (err.response).data});
+            if ((err.response).status == 402) {
+                swal.fire("Upgrade to Pro Plan!", "You have reached your Free 100 credits.", "warning").then(value => {
+                    this.setState({redirectTo: '/settings/price-plans'});
+                })
+            }
+        }).catch(err => {
+            this.setState({isBusy: false, errors: err});
+        });
     }
 
     serviceStatusHandler(e) {
         if (this.props.user.price_plan.has_data_sources) {
+
             e.persist();
-            if (e.target.name == "is_ds_holidays_enabled" && e.target.checked) {
-                this.sectionToggler("holidays");
+            if (e.target.name == 'is_ds_holidays_enabled' && e.target.checked) {
+                this.sectionToggler('holidays')
                 this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_holidays_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_retail_marketing_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("retail_marketings");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_retail_marketing_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_weather_alerts_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("weather_alerts");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_weather_alerts_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_google_alerts_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("google_alerts");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_google_alerts_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_web_monitors_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("web_monitors");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_web_monitors_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_wordpress_updates_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_wordpress_updates_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_google_algorithm_updates_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("google_algorithm_updates");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_google_algorithm_updates_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_keyword_tracking_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("keyword_tracking");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_keyword_tracking_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-        debugger
-            if (
-                e.target.name == "is_ds_spotify_podcast_tracking_enabled" &&
-                e.target.checked
 
-
-            ) {
-                console.log(e.target.checked)
-                this.sectionToggler("spotify_podcast_tracking");
-                this.updateUserService(e);
-                console.log(e)
-            } else if (
-                e.target.name == "is_ds_spotify_podcast_tracking_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
+            } else if (e.target.name == 'is_ds_holidays_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
                 this.updateUserService(e);
             }
-
-            if (
-                e.target.name == "is_ds_instagram_tracking_enabled" &&
-                e.target.checked
-            ) {
+            if (e.target.name == 'is_ds_retail_marketing_enabled' && e.target.checked) {
+                this.sectionToggler('retail_marketings')
+                this.updateUserService(e);
+            } else if (e.target.name == 'is_ds_retail_marketing_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            }
+            if (e.target.name == 'is_ds_weather_alerts_enabled' && e.target.checked) {
+                this.sectionToggler('weather_alerts')
+                this.updateUserService(e);
+            } else if (e.target.name == 'is_ds_weather_alerts_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            }
+            if (e.target.name == 'is_ds_google_alerts_enabled' && e.target.checked) {
+                this.sectionToggler('google_alerts')
+                this.updateUserService(e);
+            } else if (e.target.name == 'is_ds_google_alerts_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            }
+            if (e.target.name == 'is_ds_web_monitors_enabled' && e.target.checked) {
+                this.sectionToggler('web_monitors')
+                this.updateUserService(e);
+            } else if (e.target.name == 'is_ds_web_monitors_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            }
+            if (e.target.name == 'is_ds_wordpress_updates_enabled' && e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            } else if (e.target.name == 'is_ds_wordpress_updates_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            }
+            if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && e.target.checked) {
+                this.sectionToggler('google_algorithm_updates')
+                this.updateUserService(e);
+            } else if (e.target.name == 'is_ds_google_algorithm_updates_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            }
+            if (e.target.name == 'is_ds_keyword_tracking_enabled' && e.target.checked) {
+                this.sectionToggler('keyword_tracking')
+                this.updateUserService(e);
+            } else if (e.target.name == 'is_ds_keyword_tracking_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            }
+            if (e.target.name == 'is_ds_instagram_tracking_enabled' && e.target.checked) {
                 if (this.state.userInstagramAccountsExists) {
-                    this.sectionToggler("instagram_tracking");
+                    this.sectionToggler('instagram_tracking')
                     this.updateUserService(e, this);
                 } else {
                     swal.fire({
@@ -3168,26 +2746,18 @@ export default class DataSourceIndex extends React.Component {
                         showCloseButton: true,
                         title: "Connect with Instagram",
                         text: "Connect your Instagram account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
-                        confirmButtonClass:
-                            "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                        confirmButtonText:
-                            "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-instagram'> </i>" +
-                            "Connect Instagram Account</a>",
-                    });
+                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                        confirmButtonText: "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-instagram'> </i>" + "Connect Instagram Account</a>",
+                    })
                 }
-            } else if (
-                e.target.name == "is_ds_instagram_tracking_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
+            } else if (e.target.name == 'is_ds_instagram_tracking_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
                 this.updateUserService(e);
             }
-            if (
-                e.target.name == "is_ds_facebook_tracking_enabled" &&
-                e.target.checked
-            ) {
+            if (e.target.name == 'is_ds_facebook_tracking_enabled' && e.target.checked) {
+
                 if (this.state.userFacebookAccountsExists) {
-                    this.sectionToggler("facebook_tracking");
+                    this.sectionToggler('facebook_tracking')
                     this.updateUserService(e, this);
                 } else {
                     swal.fire({
@@ -3197,125 +2767,103 @@ export default class DataSourceIndex extends React.Component {
                         showCloseButton: true,
                         title: "Connect with Facebook",
                         text: "Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
-                        confirmButtonClass:
-                            "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                        confirmButtonText:
-                            "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-facebook'> </i>" +
-                            "Connect Facebook Account</a>",
-                    });
+                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                        confirmButtonText: "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-facebook'> </i>" + "Connect Facebook Account</a>",
+                    })
                 }
-            } else if (
-                e.target.name == "is_ds_facebook_tracking_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
+
+            } else if (e.target.name == 'is_ds_facebook_tracking_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
                 this.updateUserService(e);
             }
+
         } else {
-            const accountNotLinkedHtml =
-                "" +
+            const accountNotLinkedHtml = '' +
                 '<div class="">' +
                 '<img src="/images/automation-upgrade-modal.jpg" class="img-fluid">' +
-                "</div>";
+                '</div>'
 
             swal.fire({
                 html: accountNotLinkedHtml,
                 width: 700,
                 customClass: {
-                    popup: "bg-light-red pb-5",
-                    htmlContainer: "m-0",
+                    popup: 'bg-light-red pb-5',
+                    htmlContainer: 'm-0',
                 },
-                confirmButtonClass:
-                    "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                confirmButtonText:
-                    "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
-            }).then((value) => {
-                this.setState({ redirectTo: "/settings/price-plans" });
+                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+            }).then(value => {
+                this.setState({redirectTo: "/settings/price-plans"});
             });
         }
     }
 
     userDataSourceAddHandler(dataSource) {
-        this.setState({ isBusy: true });
+        this.setState({isBusy: true});
         let formData = {
-            ds_code: dataSource.code,
-            ds_name: dataSource.name,
-            country_name: dataSource.country_name,
-            retail_marketing_id: dataSource.retail_marketing_id,
-            open_weather_map_city_id: dataSource.open_weather_map_city_id,
-            spotify_data: dataSource.spotify_data,
-            open_weather_map_event: dataSource.open_weather_map_event,
-            status: dataSource.status,
-            value: dataSource.value,
-            is_enabled: 1,
-            ga_property_id: this.state.ga_property_id,
-        };
-        HttpClient.post("/data-source/user-data-source", formData)
-            .then(
-                (resp) => {
-                    let uds = resp.data.user_data_source;
-                    let ar = this.state.userDataSources[uds.ds_code];
-                    if (uds.ds_code == "google_algorithm_update_dates") {
-                        ar = [uds];
-                    } else {
-                        ar.push(uds);
-                    }
-                    this.setState({
-                        userDataSources: {
-                            ...this.state.userDataSources,
-                            [uds.ds_code]: ar,
-                        },
-                        isBusy: false,
-                        errors: undefined,
-                    });
-                },
-                (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
-                }
-            )
-            .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
-            });
+            'ds_code': dataSource.code,
+            'ds_name': dataSource.name,
+            'country_name': dataSource.country_name,
+            'retail_marketing_id': dataSource.retail_marketing_id,
+            'open_weather_map_city_id': dataSource.open_weather_map_city_id,
+            'open_weather_map_event': dataSource.open_weather_map_event,
+            'status': dataSource.status,
+            'value': dataSource.value,
+            'is_enabled': 1,
+            'ga_property_id': this.state.ga_property_id
+        }
+        HttpClient.post('/data-source/user-data-source', formData).then(resp => {
+            let uds = resp.data.user_data_source;
+            let ar = this.state.userDataSources[uds.ds_code];
+            if (uds.ds_code == 'google_algorithm_update_dates') {
+                ar = [uds];
+            } else {
+                ar.push(uds)
+            }
+            this.setState({
+                userDataSources: {...this.state.userDataSources, [uds.ds_code]: ar},
+                isBusy: false,
+                errors: undefined
+            })
+        }, (err) => {
+            this.setState({isBusy: false, errors: err.response.data})
+        }).catch(err => {
+            this.setState({isBusy: false, errors: err})
+        })
     }
 
     userDataSourceDeleteHandler(userDataSourceId, dsCode) {
-        this.setState({ isBusy: true });
-        HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`)
-            .then(
-                (resp) => {
-                    let ar = this.state.userDataSources[dsCode];
-                    let newAr = ar.filter((a) => a.id != userDataSourceId);
-                    this.setState({
-                        userDataSources: {
-                            ...this.state.userDataSources,
-                            [dsCode]: newAr,
-                        },
-                        isBusy: false,
-                        errors: undefined,
-                    });
-                },
-                (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
-                }
-            )
-            .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
-            });
+        this.setState({isBusy: true});
+        HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`).then(resp => {
+            let ar = this.state.userDataSources[dsCode];
+            let newAr = ar.filter(a => a.id != userDataSourceId)
+            this.setState({
+                userDataSources: {...this.state.userDataSources, [dsCode]: newAr},
+                isBusy: false,
+                errors: undefined
+            })
+        }, (err) => {
+            this.setState({isBusy: false, errors: err.response.data})
+        }).catch(err => {
+            this.setState({isBusy: false, errors: err})
+        })
     }
 
     changeShownHint(obj) {
-        this.setState({ showHintFor: obj });
+        this.setState({showHintFor: obj})
     }
 
     sectionToggler(sectionName) {
         if (null == sectionName) {
-            this.setState({ sectionName: null });
+            this.setState({sectionName: null})
         } else if (this.state.sectionName == sectionName) {
-            this.setState({ sectionName: null });
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            this.setState({sectionName: null})
+            window.scrollTo({top: 0, behavior: 'smooth'});
         } else {
-            this.setState({ sectionName: sectionName });
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            this.setState({sectionName: sectionName});
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
     }
+
 }

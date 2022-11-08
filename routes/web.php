@@ -229,9 +229,6 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('weather-alert/country', [App\Http\Controllers\WeatherAlertController::class, 'uiCountriesIndex']);
             Route::get('weather-alert/city', [App\Http\Controllers\WeatherAlertController::class, 'uiCitiesIndex']);
 
-            //Spotify Route
-            Route::get('spotify-annotation', [App\Http\Controllers\SpotifyController::class,'SpotifyAnnotations']);
-
             Route::post('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'store']);
             Route::get('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'index']);
         });
@@ -270,14 +267,11 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('user', [App\Http\Controllers\UserController::class, 'uiIndex']);
 
             Route::post('support', [App\Http\Controllers\HomeController::class, 'storeSupport']);
-
-
         });
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
 
     });
-
 
     Route::get('/beaming/auth', function () {
         $userID = Auth::id();
