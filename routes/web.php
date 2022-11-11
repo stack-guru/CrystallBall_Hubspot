@@ -14,13 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 
-Route::get('user_email_verify_all', function () {
-    $users = \App\Models\User::all();
-    foreach ($users as $user) {
-        $user->email_verified_at = now();
-        $user->save();
-    }
-    return "done";
+Route::get('test_fb', function () {
+    (new \App\Services\FacebookService())->test();
 });
 
 /*

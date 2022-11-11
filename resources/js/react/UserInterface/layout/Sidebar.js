@@ -313,7 +313,7 @@ class Sidebar extends React.Component {
                                                 </span>
                                             </Link>
                                         </li>
-                                        <li className="nav-item dropdown">
+                                        {/* <li className="nav-item dropdown">
                                             <Link
                                                 to="/settings/facebook-accounts"
                                                 className="sidebar-link"
@@ -322,7 +322,7 @@ class Sidebar extends React.Component {
                                                     Facebook Accounts
                                                 </span>
                                             </Link>
-                                        </li>
+                                        </li> */}
                                         <li className="nav-item dropdown">
                                             <Link
                                                 to="/settings/user"
