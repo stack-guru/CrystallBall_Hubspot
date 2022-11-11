@@ -122,13 +122,18 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Available?</label>
+                            <label>Available <span class="text-muted">(display plan at page)</span>?</label>
                             <input type="checkbox" name="is_available" id="isAvailable" class="form-control" @if($pricePlan->is_available) checked @endif />
                         </div>
 
                         <div class="form-group">
-                            <label>Enabled?</label>
+                            <label>Enabled <span class="text-muted">(user can subscribe)</span>?</label>
                             <input type="checkbox" name="is_enabled" id="isEnabled" class="form-control" @if($pricePlan->is_enabled) checked @endif />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hasAutoBilling">Has Auto Billing <span class="text-muted">(Auto re-subscribe)</span>?</label>
+                            <input type="checkbox" name="has_auto_billing" id="hasAutoBilling" class="form-control" @if($pricePlan->has_auto_billing) checked @endif />
                         </div>
 
                     </div>
