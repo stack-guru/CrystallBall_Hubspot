@@ -37,7 +37,7 @@ class PricePlan extends Model
         'has_microsoft_power_bi', 'google_analytics_property_count',
         'yearly_discount_percent', 'badge_text',
         'sort_rank', 'custom_plan_code',
-        'users_devices_count', 'has_auto_billing'
+        'users_devices_count'
     ];
 
     protected $hidden = [
@@ -61,6 +61,5 @@ class PricePlan extends Model
         'has_microsoft_power_bi' => 'boolean',
 
         'is_available' => 'boolean',
-        'has_auto_billing' => 'boolean',
     ];
 }
