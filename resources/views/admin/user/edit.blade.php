@@ -32,9 +32,9 @@
                             <label for="pricePlanExpiryDate">Price Plan Expiry Date</label>
                             <input  class="form-control" type="date" name="price_plan_expiry_date" id="pricePlanExpiryDate" value="{{ $user->price_plan_expiry_date }}" >
                         </div>
-                        <div class="form-check">
-                            <input type="checkbox" name="is_billing_enabled" id="isBillingEnabled" class="form-check-input" @if($user->is_billing_enabled) checked @endif />
-                            <label class="form-check-label" for="isBillingEnabled">Is billing enabled?</label>
+                        <div class="form-group">
+                            <label>Is billing enabled?</label>
+                            <input type="checkbox" name="is_billing_enabled" id="isBillingEnabled" class="form-control" @if($user->is_billing_enabled) checked @endif />
                         </div>
                     </div>
                     <div class="card-footer">

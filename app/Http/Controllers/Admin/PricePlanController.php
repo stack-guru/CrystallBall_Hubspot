@@ -40,15 +40,15 @@ class PricePlanController extends Controller
     {
         $pricePlan = new PricePlan;
         $pricePlan->fill($request->validated());
-        $pricePlan->has_manual_add         = $request->has_manual_add == 'on';
-        $pricePlan->has_csv_upload         = $request->has_csv_upload == 'on';
-        $pricePlan->has_api                = $request->has_api == 'on';
-        $pricePlan->is_enabled             = $request->is_enabled == 'on';
-        $pricePlan->is_available           = $request->is_available == 'on';
-        $pricePlan->has_integrations       = $request->has_integrations == 'on';
-        $pricePlan->has_data_sources       = $request->has_data_sources == 'on';
-        $pricePlan->has_notifications      = $request->has_notifications == 'on';
-        $pricePlan->has_chrome_extension   = $request->has_chrome_extension == 'on';
+        $pricePlan->has_manual_add = $request->has_manual_add == 'on';
+        $pricePlan->has_csv_upload = $request->has_csv_upload == 'on';
+        $pricePlan->has_api = $request->has_api == 'on';
+        $pricePlan->is_enabled = $request->is_enabled == 'on';
+        $pricePlan->is_available = $request->is_available == 'on';
+        $pricePlan->has_integrations = $request->has_integrations == 'on';
+        $pricePlan->has_data_sources = $request->has_data_sources == 'on';
+        $pricePlan->has_notifications = $request->has_notifications == 'on';
+        $pricePlan->has_chrome_extension = $request->has_chrome_extension == 'on';
         $pricePlan->has_google_data_studio = $request->has_google_data_studio == 'on';
         $pricePlan->has_microsoft_power_bi = $request->has_microsoft_power_bi == 'on';
         $pricePlan->save();
@@ -88,16 +88,15 @@ class PricePlanController extends Controller
     public function update(PricePlanRequest $request, PricePlan $pricePlan)
     {
         $pricePlan->fill($request->validated());
-        $pricePlan->has_manual_add         = $request->has_manual_add == 'on';
-        $pricePlan->has_csv_upload         = $request->has_csv_upload == 'on';
-        $pricePlan->has_api                = $request->has_api == 'on';
-        $pricePlan->is_enabled             = $request->is_enabled == 'on';
-        $pricePlan->is_available           = $request->is_available == 'on';
-        $pricePlan->has_auto_billing       = $request->has_auto_billing == 'on';
-        $pricePlan->has_integrations       = $request->has_integrations == 'on';
-        $pricePlan->has_data_sources       = $request->has_data_sources == 'on';
-        $pricePlan->has_notifications      = $request->has_notifications == 'on';
-        $pricePlan->has_chrome_extension   = $request->has_chrome_extension == 'on';
+        $pricePlan->has_manual_add = $request->has_manual_add == 'on';
+        $pricePlan->has_csv_upload = $request->has_csv_upload == 'on';
+        $pricePlan->has_api = $request->has_api == 'on';
+        $pricePlan->is_enabled = $request->is_enabled == 'on';
+        $pricePlan->is_available = $request->is_available == 'on';
+        $pricePlan->has_integrations = $request->has_integrations == 'on';
+        $pricePlan->has_data_sources = $request->has_data_sources == 'on';
+        $pricePlan->has_notifications = $request->has_notifications == 'on';
+        $pricePlan->has_chrome_extension = $request->has_chrome_extension == 'on';
         $pricePlan->has_google_data_studio = $request->has_google_data_studio == 'on';
         $pricePlan->has_microsoft_power_bi = $request->has_microsoft_power_bi == 'on';
         $pricePlan->save();
@@ -121,14 +120,14 @@ class PricePlanController extends Controller
     public function customPricePlanDetailsByCode(Request $request)
     {
         $request->validate([
-            'code' => 'required',
+            'code' => 'required'
         ]);
         $plan = PricePlan::where('custom_plan_code', $request->code)->first();
-        if ($plan) {
+        if($plan){
             return [
                 'price_plans' => new Collection([$plan]),
             ];
-        } else {
+        }else{
             abort(404, 'Plan not found');
         }
     }
