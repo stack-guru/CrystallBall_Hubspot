@@ -1,7 +1,7 @@
 import React from 'react';
-import {toast} from "react-toastify";
-import {Redirect} from "react-router-dom";
-import {UncontrolledPopover, PopoverHeader, PopoverBody} from 'reactstrap';
+import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
+import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 import LoaderAnimation from "../../utils/LoaderAnimation";
 import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";
@@ -17,7 +17,7 @@ import ManageKeywords from '../../utils/ManageKeywords';
 import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
 import ErrorAlert from '../../utils/ErrorAlert';
 import DataSourceInterfaceTour from '../../helpers/DataSourceInterfaceTour';
-import {getCompanyName} from '../../helpers/CommonFunctions';
+import { getCompanyName } from '../../helpers/CommonFunctions';
 import EditKeyword from '../../utils/EditKeyword';
 import GoogleAdChanges from "../../utils/GoogleAdChanges";
 import FacebookTracking from "../../utils/FacebookTracking";
@@ -68,8 +68,6 @@ export default class DataSourceIndex extends React.Component {
         this.editKeywordToggler = this.editKeywordToggler.bind(this);
         this.checkUserFacebookAccount = this.checkUserFacebookAccount.bind(this);
         this.updateUserService = this.updateUserService.bind(this);
-
-
     }
 
     componentDidMount() {
@@ -81,26 +79,23 @@ export default class DataSourceIndex extends React.Component {
         this.loadKeywordTrackingKeywords();
 
         this.checkUserFacebookAccount();
-
     }
-
-    a
 
     loadUserDataSources(gaPropertyId) {
         if (!this.state.isLoading) {
-            this.setState({isLoading: true});
+            this.setState({ isLoading: true });
             HttpClient.get(`/data-source/user-data-source?ga_property_id=${gaPropertyId}`).then(resp => {
-                this.setState({isLoading: false, userDataSources: resp.data.user_data_sources});
+                this.setState({ isLoading: false, userDataSources: resp.data.user_data_sources });
             }, (err) => {
-                this.setState({isLoading: false, errors: (err.response).data});
+                this.setState({ isLoading: false, errors: (err.response).data });
             }).catch(err => {
-                this.setState({isLoading: false, errors: err});
+                this.setState({ isLoading: false, errors: err });
             })
         }
     }
 
     loadKeywordTrackingKeywords() {
-        this.setState({isBusy: true, errors: ''});
+        this.setState({ isBusy: true, errors: '' });
         HttpClient.get(`/data-source/get-keyword-tracking-keywords`).then(resp => {
             this.setState({
                 isLoading: false,
@@ -116,36 +111,36 @@ export default class DataSourceIndex extends React.Component {
                 totalDfsKeywordCreditsUsed: total,
             });
         }, (err) => {
-            this.setState({isLoading: false, errors: (err.response).data});
+            this.setState({ isLoading: false, errors: (err.response).data });
         }).catch(err => {
-            this.setState({isLoading: false, errors: err});
+            this.setState({ isLoading: false, errors: err });
         })
     }
 
     loadUserAnnotationColors() {
         if (!this.state.isLoading) {
-            this.setState({isLoading: true});
+            this.setState({ isLoading: true });
             HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
-                this.setState({isLoading: false, userAnnotationColors: resp.data.user_annotation_color});
+                this.setState({ isLoading: false, userAnnotationColors: resp.data.user_annotation_color });
             }, (err) => {
-                this.setState({isLoading: false, errors: (err.response).data});
+                this.setState({ isLoading: false, errors: (err.response).data });
             }).catch(err => {
-                this.setState({isLoading: false, errors: err});
+                this.setState({ isLoading: false, errors: err });
             })
         }
     }
 
     updateUserAnnotationColors(userAnnotationColors) {
-        this.setState({userAnnotationColors: userAnnotationColors});
+        this.setState({ userAnnotationColors: userAnnotationColors });
     }
 
     reloadWebMonitors(gaPropertyId) {
         HttpClient.get(`/data-source/web-monitor?ga_property_id=${gaPropertyId}`).then(resp => {
-            this.setState({webMonitors: resp.data.web_monitors, isBusy: false})
+            this.setState({ webMonitors: resp.data.web_monitors, isBusy: false })
         }, (err) => {
-            this.setState({isBusy: false});
+            this.setState({ isBusy: false });
         }).catch(err => {
-            this.setState({isBusy: false});
+            this.setState({ isBusy: false });
         })
     }
 
@@ -177,20 +172,16 @@ export default class DataSourceIndex extends React.Component {
         });
 
         this.sectionToggler('edit_keyword')
-
-        console.log(this.state);
-
-
     }
 
     render() {
-        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo}/>
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
         return (
             <div className="container bg-white d-flex flex-column justify-content-center">
                 {/* <DataSourceInterfaceTour isOpen={this.props.showDataSourceTour}
                     toggleShowTour={this.props.toggleDataSourceTour} userId={this.props.user.id} /> */}
-                <LoaderAnimation show={this.state.isLoading}/>
+                <LoaderAnimation show={this.state.isLoading} />
                 <div className="row ml-0 mr-0">
                     <div className="col-4">
                         <h2 className="heading-section gaa-title">
@@ -202,7 +193,7 @@ export default class DataSourceIndex extends React.Component {
                             value={this.state.ga_property_id}
                             onChangeCallback={(gAP) => {
                                 if (gAP.target.value == "") {
-                                    this.setState({ga_property_id: null});
+                                    this.setState({ ga_property_id: null });
                                     this.loadUserDataSources(null);
                                     this.reloadWebMonitors(null);
                                 } else {
@@ -223,7 +214,7 @@ export default class DataSourceIndex extends React.Component {
                     </div>
                     <div className="col-3"></div>
                 </div>
-                <ErrorAlert errors={this.state.errors}/>
+                <ErrorAlert errors={this.state.errors} />
                 <div className="row p-2 mt-4 mb-5">
                     <div
                         className="col-md-9 col-sm-12"
@@ -236,7 +227,7 @@ export default class DataSourceIndex extends React.Component {
                             <div class="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -323,13 +314,12 @@ export default class DataSourceIndex extends React.Component {
                                                         }
                                                     />
                                                     <span
-                                                        className={`slider round ${
-                                                            this.state
+                                                        className={`slider round ${this.state
                                                                 .userServices
                                                                 .is_ds_web_monitors_enabled
                                                                 ? "animate-pulse"
                                                                 : ""
-                                                        }`}
+                                                            }`}
                                                     />
                                                 </label>
                                             </div>
@@ -360,7 +350,7 @@ export default class DataSourceIndex extends React.Component {
                                         ) : null}
                                         <div className="px-2">
                                             <div className="list-wrapper">
-                                                <p style={{fontSize: "13px"}}>
+                                                <p style={{ fontSize: "13px" }}>
                                                     Keywords:
                                                 </p>
                                                 {this.state.webMonitors
@@ -372,13 +362,13 @@ export default class DataSourceIndex extends React.Component {
 
                                     <p
                                         className="ds-update-text m-0 pb-3 px-2 text-right"
-                                        style={{fontSize: "13px"}}
+                                        style={{ fontSize: "13px" }}
                                         onClick={() => {
                                             this.sectionToggler("web_monitors");
                                         }}
                                     >
                                         {this.state.sectionName ==
-                                        "web_monitors"
+                                            "web_monitors"
                                             ? "Hide"
                                             : "Configure Monitors"}
                                     </p>
@@ -392,7 +382,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -491,13 +481,12 @@ export default class DataSourceIndex extends React.Component {
                                                         }
                                                     />
                                                     <span
-                                                        className={`slider round ${
-                                                            this.state
+                                                        className={`slider round ${this.state
                                                                 .userServices
                                                                 .is_ds_google_alerts_enabled
                                                                 ? "animate-pulse"
                                                                 : ""
-                                                        }`}
+                                                            }`}
                                                     />
                                                 </label>
                                             </div>
@@ -575,7 +564,7 @@ export default class DataSourceIndex extends React.Component {
                                         }}
                                     >
                                         {this.state.sectionName ==
-                                        "google_alerts"
+                                            "google_alerts"
                                             ? "Hide"
                                             : "Choose Keywords"}
                                     </p>
@@ -589,7 +578,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -676,13 +665,12 @@ export default class DataSourceIndex extends React.Component {
                                                         name="is_ds_google_algorithm_updates_enabled"
                                                     />
                                                     <span
-                                                        className={`slider round ${
-                                                            this.state
+                                                        className={`slider round ${this.state
                                                                 .userServices
                                                                 .is_ds_google_algorithm_updates_enabled
                                                                 ? "animate-pulse"
                                                                 : ""
-                                                        }`}
+                                                            }`}
                                                     />
                                                 </label>
                                             </div>
@@ -715,7 +703,7 @@ export default class DataSourceIndex extends React.Component {
                                         }}
                                     >
                                         {this.state.sectionName ==
-                                        "google_algorithm_updates"
+                                            "google_algorithm_updates"
                                             ? "Hide"
                                             : "Confirmed/Unconfirmed"}
                                     </p>
@@ -729,7 +717,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -816,13 +804,12 @@ export default class DataSourceIndex extends React.Component {
                                                         }
                                                     />
                                                     <span
-                                                        className={`slider round ${
-                                                            this.state
+                                                        className={`slider round ${this.state
                                                                 .userServices
                                                                 .is_ds_retail_marketing_enabled
                                                                 ? "animate-pulse"
                                                                 : ""
-                                                        }`}
+                                                            }`}
                                                     />
                                                 </label>
                                             </div>
@@ -839,7 +826,7 @@ export default class DataSourceIndex extends React.Component {
                                         }}
                                     >
                                         {this.state.sectionName ==
-                                        "retail_marketings"
+                                            "retail_marketings"
                                             ? "Hide"
                                             : "Choose Dates"}
                                     </p>
@@ -853,7 +840,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -940,13 +927,12 @@ export default class DataSourceIndex extends React.Component {
                                                         }
                                                     />
                                                     <span
-                                                        className={`slider round ${
-                                                            this.state
+                                                        className={`slider round ${this.state
                                                                 .userServices
                                                                 .is_ds_holidays_enabled
                                                                 ? "animate-pulse"
                                                                 : ""
-                                                        }`}
+                                                            }`}
                                                     />
                                                 </label>
                                             </div>
@@ -1009,7 +995,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -1094,13 +1080,12 @@ export default class DataSourceIndex extends React.Component {
                                                         }
                                                     />
                                                     <span
-                                                        className={`slider round ${
-                                                            this.state
+                                                        className={`slider round ${this.state
                                                                 .userServices
                                                                 .is_ds_weather_alerts_enabled
                                                                 ? "animate-pulse"
                                                                 : ""
-                                                        }`}
+                                                            }`}
                                                     />
                                                 </label>
                                             </div>
@@ -1200,7 +1185,7 @@ export default class DataSourceIndex extends React.Component {
                                             }}
                                         >
                                             {this.state.sectionName ==
-                                            "weather_alerts"
+                                                "weather_alerts"
                                                 ? "Hide"
                                                 : "Choose Cities"}
                                         </p>
@@ -1213,7 +1198,7 @@ export default class DataSourceIndex extends React.Component {
                                             }}
                                         >
                                             {this.state.sectionName ==
-                                            "open_weather_map_events"
+                                                "open_weather_map_events"
                                                 ? "Hide"
                                                 : "Choose Events"}
                                         </p>
@@ -1228,7 +1213,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -1381,13 +1366,12 @@ export default class DataSourceIndex extends React.Component {
                                                         name="is_ds_wordpress_updates_enabled"
                                                     />
                                                     <span
-                                                        className={`slider round ${
-                                                            this.state
+                                                        className={`slider round ${this.state
                                                                 .userServices
                                                                 .is_ds_wordpress_updates_enabled
                                                                 ? "animate-pulse"
                                                                 : ""
-                                                        }`}
+                                                            }`}
                                                     />
                                                 </label>
                                             </div>
@@ -1406,7 +1390,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -1485,13 +1469,12 @@ export default class DataSourceIndex extends React.Component {
                                                         name="is_ds_keyword_tracking_enabled"
                                                     />
                                                     <span
-                                                        className={`slider round ${
-                                                            this.state
+                                                        className={`slider round ${this.state
                                                                 .userServices
                                                                 .is_ds_keyword_tracking_enabled
                                                                 ? "animate-pulse"
                                                                 : ""
-                                                        }`}
+                                                            }`}
                                                     />
                                                 </label>
                                             </div>
@@ -1521,7 +1504,7 @@ export default class DataSourceIndex extends React.Component {
                                             }}
                                         >
                                             {this.state.sectionName ==
-                                            "keyword_tracking"
+                                                "keyword_tracking"
                                                 ? "Hide"
                                                 : "Add Keywords"}
                                         </p>
@@ -1536,7 +1519,7 @@ export default class DataSourceIndex extends React.Component {
                                             Manage Keywords
                                         </p>
                                         {this.state.manage_keyword_show ==
-                                        true ? (
+                                            true ? (
                                             <ManageKeywords
                                                 keywords={
                                                     this.state.dfsKeywords
@@ -1655,7 +1638,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -1799,7 +1782,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -1897,7 +1880,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -2000,7 +1983,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -2102,7 +2085,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -2126,73 +2109,106 @@ export default class DataSourceIndex extends React.Component {
                                                             }
                                                         />
                                                         <img
+                                                            id="anomolies_detection-datasource-hint"
                                                             className="hint-button-2"
+                                                            onClick={() => {
+                                                                this.changeShownHint(
+                                                                    "anomolies_detection"
+                                                                );
+                                                            }}
                                                             src="/images/info-logo.png"
                                                         />
                                                     </small>
                                                 </h2>
+                                                <UncontrolledPopover
+                                                    trigger="legacy"
+                                                    placement="right"
+                                                    isOpen={
+                                                        this.state
+                                                            .showHintFor ==
+                                                        "anomolies_detection"
+                                                    }
+                                                    target="anomolies_detection-datasource-hint"
+                                                    toggle={() => {
+                                                        this.changeShownHint(
+                                                            null
+                                                        );
+                                                    }}
+                                                >
+                                                    <PopoverHeader>
+                                                        Twitter Tracking
+                                                    </PopoverHeader>
+                                                    <PopoverBody>
+                                                        Downtime happens even to
+                                                        the best of us. But it’s
+                                                        important to know it
+                                                        before customers are
+                                                        affected and also keep
+                                                        annotations on your
+                                                        reports. Add your
+                                                        website URL; we will
+                                                        monitor it every 1
+                                                        minute.
+                                                    </PopoverBody>
+                                                </UncontrolledPopover>
                                             </div>
                                             <div className="px-2 text-center">
-                                                {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
-                                                OFF
+                                                {this.state.userServices.is_ds_anomolies_detection_enabled ? "ON" : "OFF"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
-                                                        // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
-                                                        // onChange={this.serviceStatusHandler}
-                                                        onClick={(e) => {
-                                                            e.preventDefault();
-                                                            swal.fire(
-                                                                "This feature is coming soon. Stay tuned!",
-                                                                "",
-                                                                "info"
-                                                            );
-                                                            // const accountNotLinkedHtml =
-                                                            //     "" +
-                                                            //     '<div class="">' +
-                                                            //     '<img src="/images/banners/social_automations_banner.jpg" class="img-fluid">' +
-                                                            //     "</div>";
-
-                                                            // swal.fire({
-                                                            //     html: accountNotLinkedHtml,
-                                                            //     width: 700,
-                                                            //     customClass: {
-                                                            //         popup: "bg-light-red pb-5",
-                                                            //         htmlContainer:
-                                                            //             "m-0",
-                                                            //     },
-                                                            //     confirmButtonClass:
-                                                            //         "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                                            //     confirmButtonText:
-                                                            //         "Upgrade Now" +
-                                                            //         "<i class='ml-2 fa fa-caret-right'> </i>",
-                                                            // }).then((value) => {
-                                                            //     this.setState({
-                                                            //         redirectTo:
-                                                            //             "/settings/price-plans",
-                                                            //     });
-                                                            // });
-                                                        }}
                                                         name="is_ds_anomolies_detection_enabled"
+                                                        onChange={
+                                                            this
+                                                                .serviceStatusHandler
+                                                        }
+                                                        checked={
+                                                            this.state
+                                                                .userServices
+                                                                .is_ds_anomolies_detection_enabled
+                                                        }
                                                     />
-                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} /> */}
                                                     <span
-                                                        className={`slider round`}
+                                                        className={`slider round ${this.state
+                                                                .userServices
+                                                                .is_ds_anomolies_detection_enabled
+                                                                ? "animate-pulse"
+                                                                : ""
+                                                            }`}
                                                     />
                                                 </label>
                                             </div>
                                         </div>
                                         <div className="px-2">
-                                            <div className="list-wrapper"></div>
-                                            <div className="text-center mt-2">
-                                                <img
-                                                    src="images/comingsoon.png"
-                                                    className="img-fluid w-40"
-                                                    style={{
-                                                        maxWidth: "150px",
-                                                    }}
-                                                />
+                                        { this.state.userServices.is_ds_anomolies_detection_enabled ?
+                                            <div className="list-wrapper mt-2">
+                                                <div className="d-flex justify-around">
+                                                    <label className="trigger switch">
+                                                        <input
+                                                            type="checkbox"
+                                                            name=""
+                                                        />
+                                                        <span
+                                                            className={`slider round`}
+                                                        />
+                                                    </label>
+                                                    <span className="ml-2">Tweets</span>
+                                                </div>
+                                                <div className="d-flex justify-around">
+                                                    <label className="trigger switch">
+                                                        <input
+                                                            type="checkbox"
+                                                            name=""
+                                                            disabled
+                                                        />
+                                                        <span
+                                                            className={`slider round`}
+                                                        />
+                                                    </label>
+                                                    <span className="ml-2">Ads</span>
+                                                </div>
                                             </div>
+                                        : null }
                                         </div>
                                     </div>
                                 </div>
@@ -2201,7 +2217,7 @@ export default class DataSourceIndex extends React.Component {
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
-                                    style={{minHeight: "180px"}}
+                                    style={{ minHeight: "180px" }}
                                 >
                                     <div>
                                         <div
@@ -2467,7 +2483,7 @@ export default class DataSourceIndex extends React.Component {
                         id="data-source-detail-container"
                     >
                         {this.state.sectionName == "holidays" &&
-                        this.state.userDataSources ? (
+                            this.state.userDataSources ? (
                             <Countries
                                 onCheckCallback={this.userDataSourceAddHandler}
                                 onUncheckCallback={
@@ -2477,7 +2493,7 @@ export default class DataSourceIndex extends React.Component {
                             />
                         ) : null}
                         {this.state.sectionName == "retail_marketings" &&
-                        this.state.userDataSources ? (
+                            this.state.userDataSources ? (
                             <DSRMDatesSelect
                                 onCheckCallback={this.userDataSourceAddHandler}
                                 onUncheckCallback={
@@ -2489,7 +2505,7 @@ export default class DataSourceIndex extends React.Component {
                             />
                         ) : null}
                         {this.state.sectionName == "weather_alerts" &&
-                        this.state.userDataSources ? (
+                            this.state.userDataSources ? (
                             <DSOWMCitiesSelect
                                 onCheckCallback={this.userDataSourceAddHandler}
                                 onUncheckCallback={
@@ -2502,7 +2518,7 @@ export default class DataSourceIndex extends React.Component {
                             />
                         ) : null}
                         {this.state.sectionName == "open_weather_map_events" &&
-                        this.state.userDataSources ? (
+                            this.state.userDataSources ? (
                             <DSOWMEventsSelect
                                 onCheckCallback={this.userDataSourceAddHandler}
                                 onUncheckCallback={
@@ -2515,7 +2531,7 @@ export default class DataSourceIndex extends React.Component {
                             />
                         ) : null}
                         {this.state.sectionName == "google_algorithm_updates" &&
-                        this.state.userDataSources ? (
+                            this.state.userDataSources ? (
                             <DSGAUDatesSelect
                                 onCheckCallback={this.userDataSourceAddHandler}
                                 onUncheckCallback={
@@ -2528,7 +2544,7 @@ export default class DataSourceIndex extends React.Component {
                             />
                         ) : null}
                         {this.state.sectionName == "google_alerts" &&
-                        this.state.userDataSources ? (
+                            this.state.userDataSources ? (
                             <DSGoogleAlertsSelect
                                 onCheckCallback={this.userDataSourceAddHandler}
                                 onUncheckCallback={
@@ -2541,7 +2557,7 @@ export default class DataSourceIndex extends React.Component {
                             />
                         ) : null}
                         {this.state.sectionName == "web_monitors" &&
-                        this.state.userDataSources ? (
+                            this.state.userDataSources ? (
                             <DSWebMonitorsSelect
                                 onCheckCallback={this.userDataSourceAddHandler}
                                 onUncheckCallback={
@@ -2563,7 +2579,7 @@ export default class DataSourceIndex extends React.Component {
                         } */}
 
                         {this.state.sectionName == "keyword_tracking" &&
-                        this.state.userDataSources ? (
+                            this.state.userDataSources ? (
                             <AddKeyword
                                 used_credits={
                                     this.state.totalDfsKeywordCreditsUsed
@@ -2577,7 +2593,7 @@ export default class DataSourceIndex extends React.Component {
                         ) : null}
 
                         {this.state.sectionName == "edit_keyword" &&
-                        this.state.editKeyword ? (
+                            this.state.editKeyword ? (
                             <EditKeyword
                                 keyword_id={this.state.editKeyword_keyword_id}
                                 total_credits={
@@ -2595,15 +2611,15 @@ export default class DataSourceIndex extends React.Component {
                         ) : null}
 
                         {this.state.sectionName == "g_ads_history_change" ? (
-                            <GoogleAdChanges/>
+                            <GoogleAdChanges />
                         ) : null}
 
                         {this.state.sectionName == "facebook_tracking" ? (
-                            <FacebookTracking/>
+                            <FacebookTracking />
                         ) : null}
 
                         {this.state.sectionName == "instagram_tracking" ? (
-                            <InstagramTracking/>
+                            <InstagramTracking />
                         ) : null}
                     </div>
                 </div>
@@ -2613,7 +2629,7 @@ export default class DataSourceIndex extends React.Component {
 
     checkUserFacebookAccount() {
         // userFacebookAccountsExists
-        this.setState({isBusy: true});
+        this.setState({ isBusy: true });
         HttpClient.get('/data-source/user-facebook-accounts-exists', {}).then((resp) => {
             if (resp.data.exists) {
                 this.setState({
@@ -2623,15 +2639,15 @@ export default class DataSourceIndex extends React.Component {
                 })
             }
         }, (err) => {
-            this.setState({isBusy: false, errors: err.response.data})
+            this.setState({ isBusy: false, errors: err.response.data })
             status = false;
         }, this).catch(err => {
-            this.setState({isBusy: false, errors: err})
+            this.setState({ isBusy: false, errors: err })
             status = false;
         });
 
         // userInstagramAccountsExists
-        this.setState({isBusy: true});
+        this.setState({ isBusy: true });
         HttpClient.get('/data-source/user-instagram-accounts-exists', {}).then((resp) => {
             if (resp.data.exists) {
                 this.setState({
@@ -2641,35 +2657,35 @@ export default class DataSourceIndex extends React.Component {
                 })
             }
         }, (err) => {
-            this.setState({isBusy: false, errors: err.response.data})
+            this.setState({ isBusy: false, errors: err.response.data })
             status = false;
         }, this).catch(err => {
-            this.setState({isBusy: false, errors: err})
+            this.setState({ isBusy: false, errors: err })
             status = false;
         });
     }
 
     updateUserService(e) {
 
-        HttpClient.post('/userService', {[e.target.name]: e.target.checked ? 1 : 0}).then(resp => {
+        HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
             if (resp.data.user_services[e.target.name] == 1) {
                 toast.success("Service activated successfully.");
-                this.setState({userServices: resp.data.user_services})
+                this.setState({ userServices: resp.data.user_services })
             }
             if (resp.data.user_services[e.target.name] == 0) {
-                this.setState({userServices: resp.data.user_services})
+                this.setState({ userServices: resp.data.user_services })
                 toast.info("Service deactivated successfully.");
             }
             (this.props.reloadUser)();
         }, (err) => {
-            this.setState({isBusy: false, errors: (err.response).data});
+            this.setState({ isBusy: false, errors: (err.response).data });
             if ((err.response).status == 402) {
                 swal.fire("Upgrade to Pro Plan!", "You have reached your Free 100 credits.", "warning").then(value => {
-                    this.setState({redirectTo: '/settings/price-plans'});
+                    this.setState({ redirectTo: '/settings/price-plans' });
                 })
             }
         }).catch(err => {
-            this.setState({isBusy: false, errors: err});
+            this.setState({ isBusy: false, errors: err });
         });
     }
 
@@ -2777,6 +2793,25 @@ export default class DataSourceIndex extends React.Component {
                 this.updateUserService(e);
             }
 
+            if (e.target.name == 'is_ds_anomolies_detection_enabled' && e.target.checked) {
+                swal.fire({
+                    customClass: {
+                        htmlContainer: "py-3",
+                    },
+                    showCloseButton: true,
+                    title: "Connect with Twitter",
+                    text: "Connect your Twitter account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                    confirmButtonText: "<a href='/socialite/twitter' target='_blank' class='text-white'><i class='mr-2 fa fa-twitter'> </i>" + "Connect Twitter Account</a>",
+                })
+                this.sectionToggler('anomolies')
+                this.updateUserService(e);
+
+            } else if (e.target.name == 'is_ds_anomolies_detection_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            }
+
         } else {
             const accountNotLinkedHtml = '' +
                 '<div class="">' +
@@ -2794,13 +2829,13 @@ export default class DataSourceIndex extends React.Component {
                 confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
 
             }).then(value => {
-                this.setState({redirectTo: "/settings/price-plans"});
+                this.setState({ redirectTo: "/settings/price-plans" });
             });
         }
     }
 
     userDataSourceAddHandler(dataSource) {
-        this.setState({isBusy: true});
+        this.setState({ isBusy: true });
         let formData = {
             'ds_code': dataSource.code,
             'ds_name': dataSource.name,
@@ -2822,47 +2857,47 @@ export default class DataSourceIndex extends React.Component {
                 ar.push(uds)
             }
             this.setState({
-                userDataSources: {...this.state.userDataSources, [uds.ds_code]: ar},
+                userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar },
                 isBusy: false,
                 errors: undefined
             })
         }, (err) => {
-            this.setState({isBusy: false, errors: err.response.data})
+            this.setState({ isBusy: false, errors: err.response.data })
         }).catch(err => {
-            this.setState({isBusy: false, errors: err})
+            this.setState({ isBusy: false, errors: err })
         })
     }
 
     userDataSourceDeleteHandler(userDataSourceId, dsCode) {
-        this.setState({isBusy: true});
+        this.setState({ isBusy: true });
         HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`).then(resp => {
             let ar = this.state.userDataSources[dsCode];
             let newAr = ar.filter(a => a.id != userDataSourceId)
             this.setState({
-                userDataSources: {...this.state.userDataSources, [dsCode]: newAr},
+                userDataSources: { ...this.state.userDataSources, [dsCode]: newAr },
                 isBusy: false,
                 errors: undefined
             })
         }, (err) => {
-            this.setState({isBusy: false, errors: err.response.data})
+            this.setState({ isBusy: false, errors: err.response.data })
         }).catch(err => {
-            this.setState({isBusy: false, errors: err})
+            this.setState({ isBusy: false, errors: err })
         })
     }
 
     changeShownHint(obj) {
-        this.setState({showHintFor: obj})
+        this.setState({ showHintFor: obj })
     }
 
     sectionToggler(sectionName) {
         if (null == sectionName) {
-            this.setState({sectionName: null})
+            this.setState({ sectionName: null })
         } else if (this.state.sectionName == sectionName) {
-            this.setState({sectionName: null})
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            this.setState({ sectionName: null })
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
-            this.setState({sectionName: sectionName});
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            this.setState({ sectionName: sectionName });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
 

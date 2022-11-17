@@ -8,6 +8,7 @@ use App\Http\Controllers\InstagramAccountController;
 use App\Http\Controllers\InstagramAutomationController;
 use App\Http\Controllers\InstagramTrackingConfigurationController;
 use App\Http\Controllers\KeywordTrackingController;
+use App\Http\Controllers\TwitterController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,6 +78,9 @@ Route::get('socialite/google/redirect', [App\Http\Controllers\Auth\RegisterContr
 
 Route::get('socialite/facebook', [FacebookAutomationController::class, 'redirectFacebook'])->name('facebook.redirect');
 Route::get('socialite/facebook/redirect', [FacebookAutomationController::class, 'callbackFacebook'])->name('facebook.callback');
+
+Route::get('socialite/twitter', [TwitterController::class, 'redirect'])->name('twitter.redirect');
+Route::get('socialite/twitter/redirect', [TwitterController::class, 'callbackt'])->name('twitter.callback');
 
 Route::get('socialite/instagram', [InstagramAutomationController::class, 'redirectInstagram'])->name('instagram.redirect');
 Route::get('socialite/instagram/redirect', [InstagramAutomationController::class, 'callbackInstagram'])->name('instagram.callback');

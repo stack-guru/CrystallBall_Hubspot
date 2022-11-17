@@ -73,7 +73,6 @@ class DataForSeoCommand extends Command
                 }
                 // refresh the Task IDs of all data sources
                 UserDataSourceUpdatedOrCreated::dispatch($data_source);
-                info('event is triggered and queued to update the task id, that wil be processed tommorow');
             }
         }
     }
