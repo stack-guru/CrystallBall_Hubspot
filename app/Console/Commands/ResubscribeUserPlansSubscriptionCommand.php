@@ -89,7 +89,6 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             ->where('price_plan_expiry_date', '<', new \DateTime)
             ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
             ->where('price_plans.price', 0)
-            ->where('price_plans.has_auto_billing', true)
             ->where('price_plans.name', PricePlan::TRIAL)
             ->get();
         $this->comment(count($trialUsers) . " user(s) are currently on " . PricePlan::TRIAL . " plan and will be downgraded.");
@@ -121,7 +120,6 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $updateCount = User::where('price_plan_expiry_date', '<', new \DateTime)
             ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
             ->where('price_plans.price', 0)
-            ->where('price_plans.has_auto_billing', true)
             ->update([
                 'users.price_plan_expiry_date' => $this->nextExpiryDate,
                 'users.is_ds_holidays_enabled' => false,
@@ -145,7 +143,6 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
 
         $users = User::select('users.*')->where('price_plan_expiry_date', '<', new \DateTime)
             ->where('price_plans.price', '<>', 0)
-            ->where('price_plans.has_auto_billing', true)
             ->join('price_plans', 'users.price_plan_id', 'price_plans.id')
             ->with('pricePlan')
             ->with('lastPaymentDetail')
