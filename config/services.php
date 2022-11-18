@@ -158,10 +158,4 @@ return [
         'redirect' => 'https://lukionline.me/socialite/instagrambasic/redirect',
     ],
 
-    'twitter' => [
-        'client_id' => env('TWITTER_CLIENT_ID'),
-        'client_secret' => env('TWITTER_CLIENT_SECRET'),
-        'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
-    ],
-
 ];
