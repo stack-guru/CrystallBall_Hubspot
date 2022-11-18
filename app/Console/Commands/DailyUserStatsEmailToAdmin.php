@@ -39,7 +39,5 @@ class DailyUserStatsEmailToAdmin extends Command
     public function handle()
     {
         (new UserController())->sendEmailWithUserStatsToAdmin();
-
-        $this->info("Send Email to Admin about today's statistics.");
     }
 }
