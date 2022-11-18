@@ -59,13 +59,14 @@ class Kernel extends ConsoleKernel
         // Everyday non critical
         $schedule->command('gaa:fetch-google-analytics-metrics-and-dimensions')->daily();
         $schedule->command('gaa:fetch-google-search-console-sites-statistics')->daily();
+        $schedule->command('gaa:gaa:fetch-instagram-annotations')->daily();
 
         // Every month
         $schedule->command('gaa:send-card-expiry-mail')->monthly();
 
         // run DFS SERP command daily
         $schedule->command('gaa:fetch-wesbite-ranking-dfs')->daily();
-        
+
         // $schedule->command('gaa:execute-facebook-automation')->daily();
         // $schedule->command('gaa:execute-instagram-automation')->daily();
 
