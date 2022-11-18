@@ -161,7 +161,7 @@ return [
     'twitter' => [
         'client_id' => env('TWITTER_CLIENT_ID'),
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
-        'redirect' => 'https://lukionline.me/socialite/twitter/redirect',
+        'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
     ],
 
 ];

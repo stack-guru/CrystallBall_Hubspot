@@ -80,7 +80,7 @@ Route::get('socialite/facebook', [FacebookAutomationController::class, 'redirect
 Route::get('socialite/facebook/redirect', [FacebookAutomationController::class, 'callbackFacebook'])->name('facebook.callback');
 
 Route::get('socialite/twitter', [TwitterController::class, 'redirect'])->name('twitter.redirect');
-Route::get('socialite/twitter/redirect', [TwitterController::class, 'callback'])->name('twitter.callback');
+Route::get('socialite/twitter/redirect', [TwitterController::class, 'callbackt'])->name('twitter.callback');
 
 Route::get('socialite/instagram', [InstagramAutomationController::class, 'redirectInstagram'])->name('instagram.redirect');
 Route::get('socialite/instagram/redirect', [InstagramAutomationController::class, 'callbackInstagram'])->name('instagram.callback');
