@@ -2,17 +2,17 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\UserController;
+use App\Services\SpotifyService;
 use Illuminate\Console\Command;
 
-class DailyUserStatsEmailToAdmin extends Command
+class FetchSpotifyAnnotationsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'gaa:send-admin-user-stats';
+    protected $signature = 'gaa:fetch-instagram-annotations';
 
     /**
      * The console command description.
@@ -22,12 +22,20 @@ class DailyUserStatsEmailToAdmin extends Command
     protected $description = 'Command description';
 
     /**
+     * Spotify HTTP Client Service
+     *
+     * @var SpotifyService
+     */
+    protected $service;
+
+    /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(SpotifyService $service)
     {
+        $this->service = $service;
         parent::__construct();
     }
 
@@ -38,8 +46,8 @@ class DailyUserStatsEmailToAdmin extends Command
      */
     public function handle()
     {
-        (new UserController())->sendEmailWithUserStatsToAdmin();
+        $results = $this->service->getPlaylist("61yLyqdz6hdZiAHMk4Bxxi");
 
-        $this->info("Send Email to Admin about today's statistics.");
+        dd($results);
     }
 }
