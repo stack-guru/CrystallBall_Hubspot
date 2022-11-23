@@ -229,7 +229,7 @@ class AnnotationController extends Controller
         $annotationsQuery .= ") AS TempTable";
 
         // LEFT JOIN to load all properties selected in annotations
-        $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
+        // $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
         // LEFT JOINs to load all property details which are loaded from above statement
         $annotationsQuery .= " LEFT JOIN google_analytics_properties ON annotation_ga_properties.google_analytics_property_id = google_analytics_properties.id";
 
