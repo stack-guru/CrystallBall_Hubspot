@@ -257,6 +257,8 @@ class AnnotationController extends Controller
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
         }
 
+        info(print_r($annotationsQuery));
+
         $annotations = DB::select($annotationsQuery);
 
         return ['annotations' => $annotations];
