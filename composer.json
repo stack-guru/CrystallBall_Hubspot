@@ -13,6 +13,7 @@
         "facebook/graph-sdk": "^5.7",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
+        "graham-campbell/bitbucket": "^8.0",
         "guzzlehttp/guzzle": "~6.0",
         "hisorange/browser-detect": "^4.5",
         "laravel-notification-channels/pusher-push-notifications": "^2.3",

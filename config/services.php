@@ -158,4 +158,10 @@ return [
         'redirect' => 'https://lukionline.me/socialite/instagrambasic/redirect',
     ],
 
+    'bitbucket' => [
+        'client_id' => 'H32keqMBwuy9QhpSMS',
+        'client_secret' => 'VJs4uJxNbEL6JtEkD4LjCPsDj5HFrjcc',
+        'redirect' => 'http://127.0.0.1/socialite/bitbucket/redirect',
+    ],
+
 ];

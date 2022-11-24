@@ -24,7 +24,6 @@ class UserAnnotationColorController extends Controller
         $userId = Auth::id();
 
         $userAnnotationColor = $this->createOrFindRecordForUser($userId);
-
         $userAnnotationColor->fill($request->validated());
         $userAnnotationColor->save();
 
@@ -52,6 +51,7 @@ class UserAnnotationColorController extends Controller
             $userAnnotationColor->google_alerts = '#227c9d';
             $userAnnotationColor->keyword_tracking = '#227c9d';
             $userAnnotationColor->facebook_tracking = '#227c9d';
+            $userAnnotationColor->bitbucket_tracking = '#227c9d';
 
             $userAnnotationColor->save();
         }

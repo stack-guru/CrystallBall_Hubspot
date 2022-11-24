@@ -184,6 +184,7 @@ return [
          */
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        GrahamCampbell\Bitbucket\BitbucketServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -245,6 +246,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Bitbucket' => GrahamCampbell\Bitbucket\Facades\Bitbucket::class,
     ],
 
 ];
