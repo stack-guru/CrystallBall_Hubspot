@@ -44,10 +44,26 @@ class BitbucketAutomationRepository
     public function setupBitbucketAccount($user_token, $expiresIn, $bitbucket_account_id, $email, $avatar, $name)
     {
         $user_bitbucket_account = $this->storeBitbucketAccount($user_token, $expiresIn, $bitbucket_account_id, $email, $avatar, $name); // returns obj
-        // if ($user_bitbucket_account) {
-        //     // store Bitbucket pages and posts
-        //     $this->storeBitbucketPages($user_token, $user_bitbucket_account->id);
-        // }
+        if ($user_bitbucket_account) {
+            // store Bitbucket pages and posts
+            $this->bitbucketService->authenticate($user_bitbucket_account->token);
+        }
+    }
+
+    public function getWorkspaces()
+    {
+        try {
+            $user_bitbucket_accounts = \auth()->user()->bitbucket_accounts;
+            if ($user_bitbucket_accounts->count() > 0) {
+                $this->bitbucketService->authenticate($user_bitbucket_accounts[0]->token);
+                $workspaces = $this->bitbucketService->getWorkspaces();
+            } else {
+                $workspaces = [];
+            }
+        } catch (\Exception $e) {
+            dd($e);
+        }
+        return $workspaces;
     }
 
     /**
@@ -93,14 +109,28 @@ class BitbucketAutomationRepository
      */
     public function userBitbucketAccountsExists(): JsonResponse
     {
-        $user_bitbucket_accounts = \auth()->user()->bitbucket_accounts;
-        if ($user_bitbucket_accounts->count() > 0) {
-            $exists = true;
-        } else {
+        try {
+            $user_bitbucket_accounts = \auth()->user()->bitbucket_accounts;
+            if ($user_bitbucket_accounts->count() > 0) {
+                $this->bitbucketService->authenticate($user_bitbucket_accounts[0]->token);
+
+                if ($this->bitbucketService->getCurrentUser()->show()) {
+                    $exists = true;
+                } else {
+                    $exists = false;
+                }
+
+            } else {
+                $exists = false;
+            }
+            $error = null;
+        } catch (\Exception $e) {
             $exists = false;
+            $error = $e->getMessage();
         }
         return response()->json([
             'exists' => $exists,
+            'error' => $error,
         ]);
     }
 

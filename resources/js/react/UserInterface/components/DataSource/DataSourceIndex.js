@@ -2781,6 +2781,17 @@ export default class DataSourceIndex extends React.Component {
                     errors: undefined,
                     userBitbucketAccountsExists: true
                 })
+            } else if (resp.data.error) {
+                toast.error("BitBucket Error: " + resp.data.error);
+                this.sectionToggler(null)
+                this.updateUserService(
+                    {
+                        target: {
+                            name: 'is_ds_bitbucket_tracking_enabled',
+                            checked: 0
+                        }
+                    }
+                );
             }
         }, (err) => {
             this.setState({ isBusy: false, errors: err.response.data })

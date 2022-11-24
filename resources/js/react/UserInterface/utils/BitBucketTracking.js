@@ -7,9 +7,32 @@ import FacebookPagesSelect from "./FacebookPagesSelect";
 export default class BitbucketTracking extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isBusy: false,
+            errors: "",
+            workspaces: [],
+        };
+
+        this.fetchWorkspaces = this.fetchWorkspaces.bind(this);
     }
 
     componentDidMount() {
+        this.fetchWorkspaces();
+    }
+
+    fetchWorkspaces() {
+        /*
+        * this function will fetch workspaces for given user
+        * */
+        this.setState({isBusy: true})
+        HttpClient.get('/data-source/get-bitbucket-workspaces').then(resp => {
+            console.log(resp);
+
+        }, (err) => {
+            this.setState({isBusy: false, errors: (err.response).data});
+        }).catch(err => {
+            this.setState({isBusy: false, errors: err});
+        });
     }
 
     render() {

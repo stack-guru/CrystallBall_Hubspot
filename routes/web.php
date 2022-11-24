@@ -230,6 +230,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
             Route::post('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'store']);
             Route::get('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'index']);
+
+            // bitbucket workspaces
+            Route::get('get-bitbucket-workspaces', [App\Http\Controllers\BitbucketAutomationController::class, 'getWorkspaces']);
         });
 
         Route::group(['prefix' => 'settings'], function () {

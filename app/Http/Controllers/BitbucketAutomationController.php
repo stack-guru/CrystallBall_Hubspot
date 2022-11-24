@@ -55,4 +55,9 @@ class BitbucketAutomationController extends Controller
         return $this->bitbucketAutomationRepository->userBitbucketAccountsExists();
     }
 
+    public function getWorkspaces()
+    {
+        return $this->bitbucketAutomationRepository->getWorkspaces();
+    }
+
 }
