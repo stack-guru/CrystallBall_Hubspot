@@ -53,14 +53,10 @@ class Annotation extends Model
     {
         $annotationsQuery = "";
         // SELECT annotations from annotations table
-        $annotationsQuery .= "select annotations.added_by, annotations.is_enabled, annotations.`show_at`, annotations.created_at, `annotations`.`id`, annotations.`category`, annotations.`event_name`, annotations.`url`, annotations.`description`, `users`.`name` AS user_name from `annotations` INNER JOIN `users` ON `users`.`id` = `annotations`.`user_id` LEFT JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id` where `annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        $annotationsQuery .= "select annotations.added_by, annotations.is_enabled, annotations.`show_at`, annotations.created_at, `annotations`.`id`, annotations.`category`, annotations.`event_name`, annotations.`url`, annotations.`description`, `users`.`name` AS user_name from `annotations` INNER JOIN `users` ON `users`.`id` = `annotations`.`user_id` where `annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
 
         $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
 
-        // Apply google analytics property filter if the value for filter is provided
-        if ($annotationGAPropertyId && $annotationGAPropertyId !== '*') {
-            $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $annotationGAPropertyId . ") ";
-        }
         // Add holiday annotations if it is enabled in user data source
         if ($user->is_ds_holidays_enabled) {
             $annotationsQuery .= " union ";

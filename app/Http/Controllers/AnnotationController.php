@@ -237,6 +237,10 @@ class AnnotationController extends Controller
         if ($request->query('category') && $request->query('category') !== '') {
             $annotationsQuery .= " WHERE category = '" . $request->query('category') . "'";
         }
+        // Apply google analytics property filter if the value for filter is provided
+        if ($request->query('annotation_ga_property_id') && $request->query('annotation_ga_property_id') !== '*') {
+            $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $request->query('annotation_ga_property_id') . ") ";
+        }
 
         // Apply sort of provided column if it is added in GET request query parameter
         if ($request->query('sortBy') == "added") {
@@ -259,7 +263,7 @@ class AnnotationController extends Controller
 
         $annotations = DB::select($annotationsQuery);
 
-        return ['annotations' => $annotations];
+        return ['annotations' => $annotations, 'query' => $annotationsQuery];
     }
     public function uiShow(Annotation $annotation)
     {
@@ -305,7 +309,7 @@ class AnnotationController extends Controller
         // }
 
         // Checking if given headers contain non-printable  characters
-        foreach($headers as $header){
+        foreach ($headers as $header) {
             if (!ctype_print($header)) {
                 return response()->json(['message' => "Inappropriate character in header: " . json_encode($header)], 422);
             }

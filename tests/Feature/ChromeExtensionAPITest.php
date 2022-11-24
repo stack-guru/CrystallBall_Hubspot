@@ -15,9 +15,11 @@ class ChromeExtensionAPITest extends TestCase
 
     public function testAnnotationsPreviewAPITest()
     {
+        $i = 0;
         do {
             $user = User::where('price_plan_id', PricePlan::where('has_chrome_extension', true)->first()->id)->inRandomOrder()->firstOrFail();
-        } while ($user->annotations()->count() < 1 || $user->userAnnotationColor()->count() < 1);
+            $i++;
+        } while (($user->annotations()->count() < 1 || $user->userAnnotationColor()->count() < 1) && $i < 10);
 
         Passport::actingAs($user);
 

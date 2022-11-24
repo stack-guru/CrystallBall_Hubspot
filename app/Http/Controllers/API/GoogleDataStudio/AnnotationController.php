@@ -38,7 +38,10 @@ class AnnotationController extends Controller
         $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
         $annotationsQuery .= " LEFT JOIN google_analytics_properties ON annotation_ga_properties.google_analytics_property_id = google_analytics_properties.id";
         $annotationsQuery .= " WHERE DATE(`show_at`) BETWEEN '" . $request->query('startDate') . "' AND '" . $request->query('endDate') . "'";
-
+        // Apply google analytics property filter if the value for filter is provided
+        if ($request->query('annotation_ga_property_id') && $request->query('annotation_ga_property_id') !== '*') {
+            $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $request->query('annotation_ga_property_id') . ") ";
+        }
         $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
 
         // Add limit for annotations if the price plan is limited in annotations count

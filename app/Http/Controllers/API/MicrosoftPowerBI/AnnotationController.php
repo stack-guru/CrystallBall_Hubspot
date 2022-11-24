@@ -33,8 +33,15 @@ class AnnotationController extends Controller
         $annotationsQuery = "SELECT TempTable.* FROM (";
         $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('annotation_ga_property_id'), $userIdsArray);
         ////////////////////////////////////////////////////////////////////
-        $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
-
+        $annotationsQuery .= ") AS TempTable";
+        // LEFT JOIN to load all properties selected in annotations
+        $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
+        // Apply google analytics property filter if the value for filter is provided
+        if ($request->query('annotation_ga_property_id') && $request->query('annotation_ga_property_id') !== '*') {
+            $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $request->query('annotation_ga_property_id') . ") ";
+        }
+        $annotationsQuery .= " WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "'";
+        $annotationsQuery .= " ORDER BY show_at ASC";
         // Add limit for annotations if the price plan is limited in annotations count
         if ($user->pricePlan->annotations_count > 0) {
             $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;

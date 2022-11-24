@@ -63,6 +63,12 @@ class AnalyticsController extends Controller
         $annotationsQuery = "SELECT `TempTable`.* FROM (";
         $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('ga_property_id'), $userIdsArray);
         $annotationsQuery .= ") AS TempTable";
+        // LEFT JOIN to load all properties selected in annotations
+        $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
+        // Apply google analytics property filter if the value for filter is provided
+        if ($request->query('ga_property_id') && $request->query('ga_property_id') !== '*') {
+            $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $request->query('ga_property_id') . ") ";
+        }
         $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
 
         // Add limit for annotations if the price plan is limited in annotations count
@@ -138,6 +144,12 @@ class AnalyticsController extends Controller
         $annotationsQuery = "SELECT `TempTable`.* FROM (";
         $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('ga_property_id'), $userIdsArray);
         $annotationsQuery .= ") AS TempTable";
+        // LEFT JOIN to load all properties selected in annotations
+        $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
+        // Apply google analytics property filter if the value for filter is provided
+        if ($request->query('ga_property_id') && $request->query('ga_property_id') !== '*') {
+            $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $request->query('ga_property_id') . ") ";
+        }
         $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
 
         // Add limit for annotations if the price plan is limited in annotations count
