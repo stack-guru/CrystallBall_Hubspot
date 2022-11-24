@@ -24,35 +24,48 @@ export default class BitbucketTracking extends React.Component {
         /*
         * this function will fetch workspaces for given user
         * */
-        this.setState({isBusy: true})
+        this.setState({ isBusy: true })
         HttpClient.get('/data-source/get-bitbucket-workspaces').then(resp => {
-            console.log(resp);
-
+            this.setState({ isBusy: false, workspaces: resp.data.values })
         }, (err) => {
-            this.setState({isBusy: false, errors: (err.response).data});
+            this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            this.setState({isBusy: false, errors: err});
+            this.setState({ isBusy: false, errors: err });
         });
     }
 
     render() {
+        let workspaces = this.state.workspaces;
         return (
             <div className="switch-wrapper">
                 <div className="weather_alert_cities-form">
-                    <h4 className="gaa-text-primary">Configure Facebook</h4>
-                    <label>Select Facebook Pages</label>
+                    <h4 className="gaa-text-primary">Bitbucket Workspaces</h4>
+                    <label>Select Workspaces</label>
 
-
-                    <h5 className="gaa-text-primary"><b>Create Annotation When:</b></h5>
-
-                    <div className="mt-2">
-                        <div className="form-check">
-                            <input className="form-check-input" id='when_new_post_on_facebook' type="checkbox" />
-                            <label className="form-check-label" htmlFor="when_new_post_on_facebook">
-                                New Post On Facebook Page
-                            </label>
-                        </div>
-                    </div>
+                    {
+                        workspaces
+                            ? workspaces.map(workspace => {
+                                if (workspace !== null)
+                                    return (
+                                        <div className="form-check country" key={workspace.uuid}>
+                                            <input
+                                                className="form-check-input"
+                                                checked={workspace.is_private}
+                                                type="checkbox"
+                                                name={workspace.slug}
+                                                id={workspace.uuid}
+                                            />
+                                            <label
+                                                className="form-check-label"
+                                                htmlFor="defaultCheck1"
+                                            >
+                                                {workspace.name}
+                                            </label>
+                                        </div>
+                                    )
+                            })
+                            : <span>No workspace found</span>
+                    }
 
                 </div>
 
