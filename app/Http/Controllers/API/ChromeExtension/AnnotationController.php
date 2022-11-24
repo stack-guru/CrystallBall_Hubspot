@@ -142,6 +142,12 @@ class AnnotationController extends Controller
             $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations`";
         }
         ////////////////////////////////////////////////////////////////////
+
+        if ($user->is_ds_apple_podcast_annotation_enabled && $request->query('show_apple_podcast_annotations') == 'true') {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select id, category, event, podcast_date, url, description from `apple_podcast_annotations` 'System' AS user_name from `google_ads_annotations`";
+        }
+
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
 
         // Add limit for annotations if the price plan is limited in annotations count
@@ -366,6 +372,14 @@ class AnnotationController extends Controller
             $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations`";
         }
         ////////////////////////////////////////////////////////////////////
+
+        // Apple Podcast Annotation Start
+        if ($user->is_ds_apple_podcast_annotation_enabled && $request->query('show_apple_podcast_annotations') == 'true') {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select id, category, event, podcast_date, url, description from `apple_podcast_annotations` 'System' AS user_name from `google_ads_annotations`";
+        }
+        // Apple Podcast Annotation End
+
         $annotationsQuery .= ") AS TempTable ";
 
         // LEFT JOIN to load all properties selected in annotations

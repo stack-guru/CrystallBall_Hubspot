@@ -167,6 +167,18 @@ class HomeController extends Controller
             $user->save();
         }
 
+        if ($request->has('is_ds_apple_podcast_annotation_enabled')) {
+            $user->is_ds_apple_podcast_annotation_enabled = $request->is_ds_apple_podcast_annotation_enabled;
+            if ($request->is_ds_apple_podcast_annotation_enabled) {
+                $this->checkPricePlanLimit($user);
+                $user->last_activated_any_data_source_at = Carbon::now();
+                event(new WebsiteMonitoringActivated($user));
+            } else {
+                event(new WebsiteMonitoringDeactivated($user));
+            }
+            $user->save();
+        }
+
         if ($request->has('is_ds_g_ads_history_change_enabled')) {
             $user->is_ds_g_ads_history_change_enabled = $request->is_ds_g_ads_history_change_enabled;
             $user->save();
