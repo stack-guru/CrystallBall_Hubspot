@@ -231,6 +231,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
             Route::post('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'store']);
             Route::get('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'index']);
+
+            Route::post('apple_podcast_url', [App\Http\Controllers\ApplePodcastController::class,'applePodcastUrl']);
+
         });
 
         Route::group(['prefix' => 'settings'], function () {

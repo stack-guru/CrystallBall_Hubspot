@@ -127,6 +127,11 @@ class Annotation extends Model
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations` WHERE `google_ads_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
         }
+        // Add apple podcast annotations if it is enabled in user data source
+        if ($user->is_ds_apple_podcast_annotation_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event, url, description, 'System' AS user_name from `apple_podcast_annotations` WHERE `apple_podcast_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        }
         return $annotationsQuery;
     }
 }

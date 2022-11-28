@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\ApplePodcastAnnotation;
+use App\Models\ApplePodcastMonitor;
 use App\Models\UserDataSource;
+use Illuminate\Support\Carbon;
 
 class ApplePodcastAnntation extends Command
 {
@@ -40,19 +42,17 @@ class ApplePodcastAnntation extends Command
     public function handle()
     {
 
-        $keywords = UserDataSource::selectRaw("LOWER(value) as lValue")
-        ->where("ds_code","apple_podcast_annotation_id")
-        ->whereNotNull("value")
-        ->orderBy("lValue")
-        ->distinct()
-        ->get()
-        ->pluck("lValue")
-        ->toArray();
-
+        $apMonitors = ApplePodcastMonitor::get();
         $applePodcastService = new ApplePodcastService();
-        foreach($keywords as $keywords){
+        foreach($apMonitors as $monitor){
 
-            $podcastData = $applePodcastService->getAllApplePodcasts($keywords);
+            $url = $monitor->url;
+            $userId = $monitor->user_id;
+            $feedUrl = $monitor->feed_url;
+
+            $podcastData = $applePodcastService->saveApplePodcasts($feedUrl, $url, $userId);
+            $monitor->last_synced_at = Carbon::now();
+            $monitor->save();
             
 
         }

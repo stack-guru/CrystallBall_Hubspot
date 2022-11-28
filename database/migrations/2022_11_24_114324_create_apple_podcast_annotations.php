@@ -15,6 +15,7 @@ class CreateApplePodcastAnnotations extends Migration
     {
         Schema::create('apple_podcast_annotations', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->required()->unsigned();
             $table->string("category")->nullable();
             $table->string("event")->nullable();
             $table->longText("description")->nullable();

@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ApplePodcastAnnotation extends Model
+class ApplePodcastMonitor extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        "name",
         "user_id",
-        "category",
-        "event",
-        "description",
         "url",
-        "podcast_date"
+        "ga_property_id"
     ];
 
-    protected $casts =[
-        "podcast_date" => "date"
+    protected $dates = [
+        'last_synced_at'
     ];
 }
