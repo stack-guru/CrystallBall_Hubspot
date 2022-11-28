@@ -32,6 +32,7 @@ const ApplePodcastConfig = (props) => {
                     previewImage: item.artworkUrl100,
                     collectionName: item.collectionName,
                     collectionId: item.collectionId,
+                    feedUrl: item.feedUrl,
                     collectionViewUrl: item.collectionViewUrl,
                     trackCount: item.trackCount,
                 });
