@@ -92,6 +92,7 @@ export default class DataSourceIndex extends React.Component {
         if (!this.state.isLoading) {
             this.setState({ isLoading: true });
             HttpClient.get(`/data-source/user-data-source?ga_property_id=${gaPropertyId}`).then(resp => {
+                console.log(resp.data.user_data_sources);
                 this.setState({ isLoading: false, userDataSources: resp.data.user_data_sources });
             }, (err) => {
                 this.setState({ isLoading: false, errors: (err.response).data });
@@ -225,7 +226,7 @@ export default class DataSourceIndex extends React.Component {
                     </div>
                     <div className="col-3"></div>
                 </div>
-                <ErrorAlert errors={this.state.errors} />
+                {/* <ErrorAlert errors={this.state.errors} /> */}
                 <div className="row p-2 mt-4 mb-5">
                     <div
                         className="col-md-9 col-sm-12"
@@ -2555,6 +2556,18 @@ export default class DataSourceIndex extends React.Component {
                                                 </label>
                                             </div>
                                         </div>
+                                        <div className="ml-2">
+                                            Credits:{" "}
+                                            {
+                                                this.state.userDataSources.bitbucket_tracking?.length
+                                            }
+                                            /
+                                            {this.props.user.price_plan
+                                                .bitbucket_credits_count == -1
+                                                ? 0
+                                                : this.props.user.price_plan
+                                                    .bitbucket_credits_count}
+                                        </div>
                                     </div>
                                     <div>
                                         {this.state.userServices.is_ds_bitbucket_tracking_enabled ?
@@ -2725,7 +2738,21 @@ export default class DataSourceIndex extends React.Component {
                         ) : null}
 
                         {this.state.sectionName == "bitbucket_tracking" ? (
-                            <BitbucketTracking />
+                            <BitbucketTracking
+                                used_credits={
+                                    this.state.userDataSources.bitbucket_tracking?.length
+                                }
+                                total_credits={
+                                    this.props.user.price_plan.bitbucket_credits_count
+                                }
+                                ds_data={
+                                    this.state.userDataSources.bitbucket_tracking
+                                }
+                                onCheckCallback={this.userDataSourceAddHandler}
+                                onUncheckCallback={
+                                    this.userDataSourceDeleteHandler
+                                }
+                            />
                         ) : null}
                     </div>
                 </div>
@@ -3002,6 +3029,27 @@ export default class DataSourceIndex extends React.Component {
             })
         }, (err) => {
             this.setState({ isBusy: false, errors: err.response.data })
+
+            if (err.response.status === 422) {
+                const accountNotLinkedHtml = '' +
+                    '<div class="">' +
+                    '<img src="/images/automation-upgrade-modal.jpg" class="img-fluid">' +
+                    '</div>'
+
+                swal.fire({
+                    html: accountNotLinkedHtml,
+                    width: 700,
+                    customClass: {
+                        popup: 'bg-light-red pb-5',
+                        htmlContainer: 'm-0',
+                    },
+                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                    confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                }).then(value => {
+                    this.setState({ redirectTo: "/settings/price-plans" });
+                });
+            }
         }).catch(err => {
             this.setState({ isBusy: false, errors: err })
         })

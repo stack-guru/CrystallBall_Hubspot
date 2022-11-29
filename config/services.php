@@ -159,9 +159,9 @@ return [
     ],
 
     'bitbucket' => [
-        'client_id' => 'H32keqMBwuy9QhpSMS',
-        'client_secret' => 'VJs4uJxNbEL6JtEkD4LjCPsDj5HFrjcc',
-        'redirect' => 'http://127.0.0.1/socialite/bitbucket/redirect',
+        'client_id' => env('BITBUCKET_CLIENT_ID'),
+        'client_secret' => env('BITBUCKET_CLIENT_SECRET'),
+        'redirect' => env('BITBUCKET_REDIRECT_URL'),
     ],
 
 ];

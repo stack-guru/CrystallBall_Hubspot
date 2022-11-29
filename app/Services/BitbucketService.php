@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Bitbucket;
-
 class BitbucketService
 {
     private $client;
@@ -28,7 +27,14 @@ class BitbucketService
 
     public function getWorkspaces()
     {
-        $workspaces = $this->client->currentUser()->listWorkspaces();
+        $workspaces = $this->client->currentUser()->listWorkspaces()["values"];
+        $repositories = [];
+        foreach ($workspaces as $key => $workspace) {
+            $repositories = $this->client->repositories()->workspaces($workspace['slug'])->list()['values'];
+
+            $workspaces[$key]['repositories'] = $repositories;
+        }
+
         return $workspaces;
     }
 }

@@ -41,7 +41,7 @@ class BitbucketAutomationController extends Controller
             } else {
                 return redirect()->to('data-source')->with('Account not connected.');
             }
-        } catch (\Exception $exception) {
+        } catch (\Exception$exception) {
             return redirect()->to('data-source')->with($exception->getMessage());
         }
     }
