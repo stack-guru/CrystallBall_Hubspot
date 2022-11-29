@@ -5,16 +5,21 @@ namespace App\Services;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\ApplePodcastAnnotation;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\AdminFailedApplePodcastScriptMail;
 use Goutte\Client;
+use App\Models\Admin;
 
    
 class ApplePodcastService {
 
     //Apple Podcast Searching API
     public function saveApplePodcasts($feedUrl, $url, $userID){
+
+        try {
 
         // if($feedUrl) {
 
@@ -52,9 +57,17 @@ class ApplePodcastService {
                     $annotation->save();
                 }
             });
+            return true;
         // }
 
-        return true;
+        } catch (\Exception $e) {
+            $admin = Admin::first();
+            $message = "Apple Podcast script is crashed. Please have a look into the code to fix!";
+            Mail::to($admin)->send(new AdminFailedApplePodcastScriptMail($admin, $e));
+            Log::error($e);
+            return false;
+        }
+
     
     }
 
