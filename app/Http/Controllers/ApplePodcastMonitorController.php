@@ -80,12 +80,11 @@ class ApplePodcastMonitorController extends Controller
     public function destroy(ApplePodcastMonitor $applePodcastMonitor)
     {
 
-        $uptimeRobotService = new UptimeRobotService;
         $applePodcastMonitor->delete();
 
         return ['success' => true];
     }
-    
+
 
     public function applePodcastUrl (Request $req) {
 
@@ -112,5 +111,5 @@ class ApplePodcastMonitorController extends Controller
         $data = $applePodcastService->saveApplePodcasts($feedUrl, $url, $userID);
         return $data;
     }
- 
+
 }

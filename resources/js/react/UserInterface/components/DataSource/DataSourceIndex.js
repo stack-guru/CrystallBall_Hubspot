@@ -2566,6 +2566,7 @@ export default class DataSourceIndex extends React.Component {
                         this.state.userDataSources ? (
                             <ApplePodcastConfig
                                 setState={this.setState}
+                                sectionToggler={() => this.sectionToggler('apple_podcast')}
                             />
                         ) : null}
                         {this.state.sectionName == "web_monitors" &&
