@@ -69,9 +69,9 @@ export default class CreateAnnotation extends React.Component {
                             });
                         }
                     }
-                    
+
                 }
-                
+
             });
         });
     }
@@ -150,8 +150,9 @@ export default class CreateAnnotation extends React.Component {
                 .then(response => {
                     removeStateFromLocalStorage("CreateAnnotation");
                     toast.success("Annotation added.");
-                    this.setDefaultState();
-                    this.loadCategoriesList();
+                    this.setState({redirectTo: "/annotation"});
+                    // this.setDefaultState();
+                    // this.loadCategoriesList();
                 }, (err) => {
                     if (err.response.status == 402) {
                         swal.fire({
@@ -254,7 +255,7 @@ export default class CreateAnnotation extends React.Component {
                                                 <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : ''
                                         }
                                     </div>
-                                    
+
                                 </div>
 
                                 <div className="col-lg-3 col-sm-4">

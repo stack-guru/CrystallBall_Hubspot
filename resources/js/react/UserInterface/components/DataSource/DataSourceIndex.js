@@ -353,7 +353,10 @@ export default class DataSourceIndex extends React.Component {
                                                         {
                                                             this.props.user
                                                                 .price_plan
-                                                                .web_monitor_count
+                                                                .web_monitor_count > 0 ?
+                                                            this.props.user
+                                                                .price_plan
+                                                                .web_monitor_count : 0
                                                         }
                                                     </p>
                                                 </div>
@@ -523,7 +526,10 @@ export default class DataSourceIndex extends React.Component {
                                                         {
                                                             this.props.user
                                                                 .price_plan
-                                                                .google_alert_keyword_count
+                                                                .google_alert_keyword_count > 0 ?
+                                                            this.props.user
+                                                                .price_plan
+                                                                .google_alert_keyword_count : 0
                                                         }
                                                     </p>
                                                 </div>
@@ -1130,7 +1136,11 @@ export default class DataSourceIndex extends React.Component {
                                                                     this.props
                                                                         .user
                                                                         .price_plan
-                                                                        .owm_city_count
+                                                                        .owm_city_count > 0 ?
+                                                                    this.props
+                                                                        .user
+                                                                        .price_plan
+                                                                        .owm_city_count : 0
                                                                 }
                                                             </p>
                                                         </div>
@@ -2682,7 +2692,7 @@ export default class DataSourceIndex extends React.Component {
         }, (err) => {
             this.setState({isBusy: false, errors: (err.response).data});
             if ((err.response).status == 402) {
-                swal.fire("Upgrade to Pro Plan!", "You have reached your Free 100 credits.", "warning").then(value => {
+                swal.fire("You have reached this plan's limit.", "Please upgrade your plan.", "warning").then(value => {
                     this.setState({redirectTo: '/settings/price-plans'});
                 })
             }

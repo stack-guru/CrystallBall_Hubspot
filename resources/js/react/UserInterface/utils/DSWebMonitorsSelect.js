@@ -71,10 +71,8 @@ export default class DSWebMonitorsSelect extends React.Component {
                 });
                 (this.props.reloadWebMonitors)(this.props.ga_property_id);
             }, (err) => {
-
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-
                 this.setState({ isBusy: false, errors: err });
             })
         }
@@ -110,16 +108,18 @@ export default class DSWebMonitorsSelect extends React.Component {
                                 placeholder="Name"
                                 value={this.state.webMonitor.name}
                                 name="name"
+                                required
                                 onChange={this.handleChange}
                             />
                         </div>
                         <div className="input-group search-input-box mb-3">
                             <input
-                                type="text"
+                                type="url"
                                 className="form-control search-input"
                                 placeholder="https://www.your-domain.com/"
                                 value={this.state.webMonitor.url}
                                 name="url"
+                                required
                                 onChange={this.handleChange}
                             />
                         </div>
