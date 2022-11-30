@@ -12,55 +12,51 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\AdminFailedApplePodcastScriptMail;
 use Goutte\Client;
 use App\Models\Admin;
-
    
 class ApplePodcastService {
+    private $scrappingServerUrl;
+    /**
+     * Initialize the library in your constructor using
+     * your environment, api key, and password
+     */
+    public function __construct()
+    {
+        $this->scrappingServerUrl = config('services.apple_podcast.data_api_url');
+    }
 
-    //Apple Podcast Searching API
+    //Apple Podcast Scrapping API
     public function saveApplePodcasts($feedUrl, $url, $userID){
-
         try {
 
-        // if($feedUrl) {
+            $reqBody = [
+                'podcastUrl' => $url
+            ];
 
-             // $loadXml = simplexml_load_file($feedUrl);
-            // foreach($loadXml->channel->item as $item) {
-            // }
-            
-        // } else {
+            $response = Http::post($this->scrappingServerUrl . '/apple-podcast-episodes', $reqBody);
 
-            $client = new Client ();
-            $crawler = $client->request('GET', $url);
+            if (!$response->successful()) {
+                throw Error('Error while scrapping data');
+                return false;
+            }
 
-            // Start: click on the button to load all the remaining records //
-
-            // $crawler
-
-            // End: click on the button to load all the remaining records //
-
-
-            $crawler->filter('li.tracks__track')->each(function ($node) use ($userID) {
-                $date = $node->filter('time')->attr('datetime');
-                $url = $node->filter('a.link')->attr('href');
-                $title = $node->filter('h2.tracks__track__headline')->text();
-                $description = $node->filter('div.we-truncate')->text();
-                
-                $exist = ApplePodcastAnnotation::where('url', $url)->first();
+            $result = $response['episodesResult'];
+            $length = count($result);
+            for ($i = 0; $i < $length; $i++) {
+                $exist = ApplePodcastAnnotation::where('url', $result[$i]['url'])->first();
                 if (!$exist) {
                     $annotation = new ApplePodcastAnnotation();
                     $annotation->user_id = $userID;
                     $annotation->category = "Apple Podcast";
-                    $annotation->event = $title;
-                    $annotation->description = $description;
-                    $annotation->url = $url;
-                    $annotation->podcast_date = $date;
+                    $annotation->event = $result[$i]['title'];
+                    $annotation->description = $result[$i]['description'];
+                    $annotation->url = $result[$i]['url'];
+                    $annotation->podcast_date = $result[$i]['date'];
                     $annotation->save();
                 }
-            });
+            }
             return true;
-        // }
-
         } catch (\Exception $e) {
+            Log::channel('ApplePodcast Error')->debug($e);
             $admin = Admin::first();
             $message = "Apple Podcast script is crashed. Please have a look into the code to fix!";
             Mail::to($admin)->send(new AdminFailedApplePodcastScriptMail($admin, $e));

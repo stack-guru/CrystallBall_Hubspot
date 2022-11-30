@@ -1,14 +1,17 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
+
 
 import puppeteer from 'puppeteer';
 
 
-const browser = await puppeteer.launch();
+
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors())
 
 
 app.get('/', function(req, res){
@@ -24,7 +27,7 @@ app.post('/apple-podcast-episodes', async (req, res) => {
 
     try {
         console.log(`01: START SCRAPPING EPISODES`)
-        
+        const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.setDefaultNavigationTimeout(0);
         await page.goto(podcastUrl, {timeout: 0});
@@ -89,5 +92,5 @@ app.post('/apple-podcast-episodes', async (req, res) => {
     }
 });
 
-app.listen(3000);
+app.listen(3000, '0.0.0.0');
 console.log('Scrapping server running on port 3000');

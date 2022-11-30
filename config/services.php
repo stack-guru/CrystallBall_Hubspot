@@ -158,4 +158,8 @@ return [
         'redirect' => 'https://lukionline.me/socialite/instagrambasic/redirect',
     ],
 
+    'apple_podcast' => [
+        'data_api_url' => env('APPLE_PODCAST_DATA_API_URL'),
+    ],
+
 ];
