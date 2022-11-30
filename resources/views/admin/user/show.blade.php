@@ -23,6 +23,10 @@
                             {{ $user->pricePlan->name }}
                         </div>
                         <div class="form-group">
+                            <label for="email">Trial Extended: </label>
+                            {{ $user->price_plan_settings && $user->price_plan_settings['extended_trial']['activation_count'] > 0 ? "Yes" : "No" }}
+                        </div>
+                        <div class="form-group">
                             <label for="pricePlanExpiryDate">Price Plan Expiry Date: </label>
                             {{ $user->price_plan_expiry_date }}
                         </div>
