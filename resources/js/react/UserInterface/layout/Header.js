@@ -191,7 +191,7 @@ class header extends React.Component {
                             <li className="notifications">
                                 <div className="no-after">
                                     <Link to="/settings/price-plans" className="btn gaa-btn-primary mr-2">Click here to Upgrade</Link>
-                                    {this.props.user.price_plan.code === 'free new' ?
+                                    {this.props.user.price_plan.code === 'free new' && (!this.props.user.price_plan_settings || this.props.user.price_plan_settings.extended_trial.activation_count < 1) ?
                                     <button onClick={() => {
                                         this.props.extendTrial();
                                     }} className="btn gaa-btn-primary">Extend my Trial</button>
