@@ -17,3 +17,4 @@ yarn-error.log
 /.phpintel/*
 .DS_Store
 /.phpintel/index
+node_app/node_modules
