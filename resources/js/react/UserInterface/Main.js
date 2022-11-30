@@ -64,6 +64,7 @@ class Main extends React.Component {
         this.toggleDataSourceTour = this.toggleDataSourceTour.bind(this);
         this.togglePromotionPopup = this.togglePromotionPopup.bind(this);
         this.toggleTimerPromotionPopup = this.toggleTimerPromotionPopup.bind(this);
+        this.extendTrial = this.extendTrial.bind(this);
     }
 
     // toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
@@ -78,6 +79,18 @@ class Main extends React.Component {
     toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, false, false); }
     togglePromotionPopup() { this.setState({ showPromotionPopup: !this.state.showPromotionPopup }); }
     toggleTimerPromotionPopup() { this.setState({ showTimerPromotionPopup: !this.state.showTimerPromotionPopup }); }
+
+    extendTrial(){
+        HttpClient.post('extend-trial')
+        .then(response => {
+            swal.fire(
+                "Extended",
+                response.data.message,
+                "success"
+            );
+            this.loadUser();
+        });
+    }
 
     render() {
         if (this.state.user == undefined) return null;
@@ -113,7 +126,7 @@ class Main extends React.Component {
                         <UserRegistrationOffer userRegistrationOffer={uRO} show={!!uRO} />
                     </React.Fragment>)}
                     <div className="header navbar">
-                        <Header user={this.state.user} />
+                        <Header user={this.state.user} extendTrial={this.extendTrial} />
                     </div>
                     <main className="main-content bgc-grey-100">
                         <Switch>

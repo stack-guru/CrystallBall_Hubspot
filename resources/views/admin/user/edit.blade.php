@@ -24,7 +24,7 @@
                             <label for="email">Price Plan</label>
                             <select name="price_plan_id" id="pricePlanId" class="form-control">
                                 @foreach($pricePlans as $pricePlan)
-                                    <option value="{{ $pricePlan->id }}" @if($pricePlan->id == $user->price_plan_id) selected @endif>{{ $pricePlan->name}}</option>
+                                    <option value="{{ $pricePlan->id }}" @if($pricePlan->id == $user->price_plan_id) selected @endif>{{ $pricePlan->name}} ({{ $pricePlan->code ? $pricePlan->code : "N/A"}})</option>
                                 @endforeach
                             </select>
                         </div>
