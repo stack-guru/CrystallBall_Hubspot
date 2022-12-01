@@ -20,9 +20,12 @@ const ApplePodcastConfig = (props) => {
     const [existingPodcast, setExisting] = useState([]);
     const [searchResult, setSearchResult] = useState([]);
     const [noResult, setNoResult] = useState("");
+    const [inputVale, setInputVale] = useState("");
 
     const getExistingPodcasts = async () => {
-        HttpClient.get(`/data-source/apple-podcast-monitor?ga_property_id=${props.gaPropertyId}`)
+        HttpClient.get(
+            `/data-source/apple-podcast-monitor?ga_property_id=${props.gaPropertyId}`
+        )
             .then(
                 (result) => {
                     setExisting(result.data.apple_podcast_monitors);
@@ -63,7 +66,7 @@ const ApplePodcastConfig = (props) => {
             setNoResult("");
             const result = await axios.get(
                 `https://itunes.apple.com/search?term=${encodeURIComponent(
-                    ev.target.applePodcastURL.value
+                    inputVale
                 )}&media=podcast&entity=podcast&explicit=Yes&limit=10`
             );
             let sr = [];
@@ -90,6 +93,7 @@ const ApplePodcastConfig = (props) => {
     };
 
     const addAnnotation = async (formData) => {
+        toast.info("Creating Annotations");
         HttpClient.post("/data-source/apple_podcast_url", formData)
             .then(
                 () => {
@@ -106,65 +110,57 @@ const ApplePodcastConfig = (props) => {
     };
     return (
         <div className="switch-wrapper">
-            {existingPodcast.length ? <div>
-                <h4 className="gaa-text-primary">Existing Podcast</h4>
+            <h4 className="gaa-text-primary">Manage Apple Podcast</h4>
+            {existingPodcast.length ? (
                 <div>
-                    <Table size="sm">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {existingPodcast.map((itm) => (
-                                <tr>
-                                    <td className="cb-ap-table-name">
-                                        {itm.name}
-                                    </td>
-                                    <td className="cb-ap-pointer">
-                                        <Button
+                    <div>
+                        {existingPodcast.map((itm, index) => (
+                            <div>
+                                <h5
+                                    style={{ display: "inline-block" }}
+                                    key={itm.id != "" ? itm.id : index}
+                                >
+                                    <span className="badge badge-pill badge-primary m-1 h5">
+                                        {itm.name}{" "}
+                                        <i
+                                            className="fa fa-times"
+                                            data-apple-podcast-name={itm.name}
+                                            data--apple-podcast-id={itm.id}
                                             onClick={() => deletePodcasts(itm)}
-                                            color="danger"
-                                            size="sm"
-                                        >
-                                            DELETE
-                                        </Button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
+                                        ></i>
+                                    </span>
+                                </h5>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>: null}
+            ) : null}
             <div>
-                <h4 className="gaa-text-primary">Add Apple Podcast</h4>
-            </div>
-            <Form onSubmit={getMetaData}>
-                <FormGroup>
-                    <Input
+                <div className="input-group search-input-box mb-3">
+                    <input
                         type="text"
-                        name="applePodcastURL"
-                        id="applePodcastURL"
+                        className="form-control search-input"
                         placeholder="Search or Enter the Podcast URL"
-                        required
+                        value={inputVale}
+                        id="applePodcastURL"
+                        name="applePodcastURL"
+                        onChange={(e) =>
+                            setInputVale(e.target.value.toLowerCase())
+                        }
+                        onKeyUp={(e) => {
+                            if (e.keyCode === 13) {
+                                e.persist();
+                                getMetaData(e);
+                            }
+                        }}
                     />
-                    {noResult && <div>{noResult}</div>}
-                </FormGroup>
+                    <div className="input-group-append">
+                        <i className="ti-plus"></i>
+                    </div>
+                </div>
 
-                <Button type="submit" className="mt-3">
-                    Search
-                </Button>
-                <Button
-                    onClick={() => {
-                        props.sectionToggler();
-                    }}
-                    type="button"
-                    className="mt-3 ml-3"
-                >
-                    Cancel
-                </Button>
-            </Form>
+                {noResult && <div>{noResult}</div>}
+            </div>
             <div className="mt-2">
                 {searchResult.map((t0a) => (
                     <Card className="cb-ap-search-card mb-2" body>
