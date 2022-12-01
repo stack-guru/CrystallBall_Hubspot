@@ -41,7 +41,6 @@ class FetchBitbucketCommits extends Command
      */
     public function handle()
     {
-        print "Notification sent successfully!\n";
         $user_data_sources = UserDataSource::where('ds_code', 'bitbucket_tracking')->get();
         $bitbucketService = new BitbucketService;
 
@@ -73,8 +72,6 @@ class FetchBitbucketCommits extends Command
                     $category = "Bitbucket";
                     $date = $commit['date'];
 
-                    // print $commit;
-                    // print "Event Name: " . $message . "Category: ".$category."\nCommit: " . $hash . ":" . $message . "By: " . $author . "\n";
                     $this->precessResult($user_id, $message, $category, $hash, $author, $date, $link);
                 }
             } catch (Bitbucket\Exception\RuntimeException$e) {
