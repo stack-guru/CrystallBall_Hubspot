@@ -18,21 +18,22 @@ use App\Events\WordPressActivated;
 use App\Events\WordPressDeactivatedManually;
 use App\Mail\AdminUserSuspendedAccount;
 use App\Mail\SupportRequestMail;
-use App\Models\Annotation;
 use App\Models\Admin;
 use App\Models\User;
+use App\Models\UserRegistrationOffer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use App\Models\UserRegistrationOffer;
 
 class HomeController extends Controller
 {
     public function uiUserShow()
     {
+        /**
+         * @var User
+         */
         $user = Auth::user();
         $user->load('pricePlan');
         $user->loadCount('googleAccounts');
@@ -44,11 +45,10 @@ class HomeController extends Controller
                 ]);
         }
 
-
         // $user->annotations_count = $user->getTotalAnnotationsCount(true);
         $user->google_analytics_properties_in_use_count = $user->googleAnalyticsPropertiesInUse()->count();
-        $user->do_require_password_change = ($user->password == User::EMPTY_PASSWORD && !is_null($user->app_sumo_uuid));
-        $user->user_registration_offers =  $user->pricePlan->price == 0 ? UserRegistrationOffer::ofCurrentUser()->alive()->get() : [];
+        $user->do_require_password_change               = ($user->password == User::EMPTY_PASSWORD && !is_null($user->app_sumo_uuid));
+        $user->user_registration_offers                 = $user->pricePlan->price == 0 ? UserRegistrationOffer::ofCurrentUser()->alive()->get() : [];
 
         return ['user' => $user];
     }
@@ -60,9 +60,11 @@ class HomeController extends Controller
     public function deleteAccount(Request $request): RedirectResponse
     {
         $user = Auth::user();
-        if ($user->user) abort(403, 'Only the admin can delete the account.');
+        if ($user->user) {
+            abort(403, 'Only the admin can delete the account.');
+        }
 
-        $user->status = User::STATUS_DELETED;
+        $user->status                = User::STATUS_DELETED;
         $user->status_changed_reason = $request->deletion_reason ?? '';
         $user->save();
 
@@ -87,7 +89,12 @@ class HomeController extends Controller
 
     public function userServices(Request $request)
     {
+        /**
+         * @var User
+         */
         $user = Auth::user();
+
+        $response = [];
 
         if ($request->has('is_ds_holidays_enabled')) {
             $user->is_ds_holidays_enabled = $request->is_ds_holidays_enabled;
@@ -98,8 +105,8 @@ class HomeController extends Controller
             } else {
                 event(new HolidaysDeactivatedManually($user));
             }
-            $user->save();
         }
+
         if ($request->has('is_ds_google_algorithm_updates_enabled')) {
             $user->is_ds_google_algorithm_updates_enabled = $request->is_ds_google_algorithm_updates_enabled;
             if ($request->is_ds_google_algorithm_updates_enabled) {
@@ -109,8 +116,8 @@ class HomeController extends Controller
             } else {
                 event(new GoogleUpdatesDeactivatedManually($user));
             }
-            $user->save();
         }
+
         if ($request->has('is_ds_retail_marketing_enabled')) {
             $user->is_ds_retail_marketing_enabled = $request->is_ds_retail_marketing_enabled;
             if ($request->is_ds_retail_marketing_enabled) {
@@ -120,8 +127,8 @@ class HomeController extends Controller
             } else {
                 event(new RetailMarketingDatesDeactivated($user));
             }
-            $user->save();
         }
+
         if ($request->has('is_ds_weather_alerts_enabled')) {
             $user->is_ds_weather_alerts_enabled = $request->is_ds_weather_alerts_enabled;
             if ($request->is_ds_weather_alerts_enabled) {
@@ -131,8 +138,8 @@ class HomeController extends Controller
             } else {
                 event(new WeatherForCitiesDeactivatedManually($user));
             }
-            $user->save();
         }
+
         if ($request->has('is_ds_google_alerts_enabled')) {
             $user->is_ds_google_alerts_enabled = $request->is_ds_google_alerts_enabled;
             if ($request->is_ds_google_alerts_enabled) {
@@ -142,8 +149,8 @@ class HomeController extends Controller
             } else {
                 event(new GoogleAlertDeactivatedManually($user));
             }
-            $user->save();
         }
+
         if ($request->has('is_ds_wordpress_updates_enabled')) {
             $user->is_ds_wordpress_updates_enabled = $request->is_ds_wordpress_updates_enabled;
             if ($request->is_ds_wordpress_updates_enabled) {
@@ -153,8 +160,8 @@ class HomeController extends Controller
             } else {
                 event(new WordPressDeactivatedManually($user));
             }
-            $user->save();
         }
+
         if ($request->has('is_ds_web_monitors_enabled')) {
             $user->is_ds_web_monitors_enabled = $request->is_ds_web_monitors_enabled;
             if ($request->is_ds_web_monitors_enabled) {
@@ -164,42 +171,56 @@ class HomeController extends Controller
             } else {
                 event(new WebsiteMonitoringDeactivated($user));
             }
-            $user->save();
         }
 
         if ($request->has('is_ds_g_ads_history_change_enabled')) {
             $user->is_ds_g_ads_history_change_enabled = $request->is_ds_g_ads_history_change_enabled;
-            $user->save();
         }
+
         if ($request->has('is_ds_anomolies_detection_enabled')) {
             $user->is_ds_anomolies_detection_enabled = $request->is_ds_anomolies_detection_enabled;
-            $user->save();
         }
+
         if ($request->has('is_ds_budget_tracking_enabled')) {
             $user->is_ds_budget_tracking_enabled = $request->is_ds_budget_tracking_enabled;
-            $user->save();
         }
 
         if ($request->has('is_ds_keyword_tracking_enabled')) {
             $user->is_ds_keyword_tracking_enabled = $request->is_ds_keyword_tracking_enabled;
-            $user->save();
-        }
-        if ($request->has('is_ds_facebook_tracking_enabled')) {
-            $user->is_ds_facebook_tracking_enabled = $request->is_ds_facebook_tracking_enabled;
-            $user->save();
-        }
-        if ($request->has('is_ds_instagram_tracking_enabled')) {
-            $user->is_ds_instagram_tracking_enabled = $request->is_ds_instagram_tracking_enabled;
-            $user->save();
         }
 
-        return ['user_services' => $user];
+        if ($request->has('is_ds_facebook_tracking_enabled')) {
+            $user->is_ds_facebook_tracking_enabled = $request->is_ds_facebook_tracking_enabled;
+        }
+
+        if ($request->has('is_ds_instagram_tracking_enabled')) {
+            $user->is_ds_instagram_tracking_enabled = $request->is_ds_instagram_tracking_enabled;
+        }
+
+        if ($request->has('is_ds_instagram_tracking_enabled')) {
+            $user->is_ds_instagram_tracking_enabled = $request->is_ds_instagram_tracking_enabled;
+        }
+
+        if ($request->has('is_ds_twitter_tracking_enabled')) {
+
+            $response['twitter_accounts'] = $user->twitterAccounts()->count();
+
+            if ($response['twitter_accounts'] > 0) {
+                $user->is_ds_twitter_tracking_enabled = $request->is_ds_twitter_tracking_enabled;
+            }
+
+        }
+
+        $user->save();
+
+        $response['user_services'] = $user;
+        return $response;
     }
 
     public function storeSupport(Request $request)
     {
         $this->validate($request, [
-            'details' => 'required|string',
+            'details'    => 'required|string',
             'attachment' => 'nullable|file',
         ]);
 
@@ -219,7 +240,7 @@ class HomeController extends Controller
         $request->validate([
             'timezone' => 'required',
         ]);
-        $user = Auth::user();
+        $user           = Auth::user();
         $user->timezone = $request->timezone;
         $user->save();
         return response()->json(['success' => 'true', 'message' => 'TimeZone updated successfully'], 200);
@@ -227,7 +248,7 @@ class HomeController extends Controller
 
     public function markDataSourceTourDone(Request $request)
     {
-        $user = Auth::user();
+        $user                             = Auth::user();
         $user->data_source_tour_showed_at = \Carbon\Carbon::now();
         $user->save();
 
@@ -236,7 +257,7 @@ class HomeController extends Controller
 
     public function markGoogleAccountsTourDone(Request $request)
     {
-        $user = Auth::user();
+        $user                                 = Auth::user();
         $user->google_accounts_tour_showed_at = \Carbon\Carbon::now();
         $user->save();
 

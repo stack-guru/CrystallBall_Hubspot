@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPricePlanSettingsColumnToUsersTable extends Migration
+class AddIsDsTwitterTrackingEnabledColumnToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddPricePlanSettingsColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->json('price_plan_settings')->nullable()->after('price_plan_expiry_date');
+            $table->tinyInteger('is_ds_twitter_tracking_enabled')->default(0)->after('is_ds_keyword_tracking_enabled');
         });
     }
 
@@ -26,7 +26,7 @@ class AddPricePlanSettingsColumnToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('price_plan_settings');
+            $table->dropColumn('is_ds_twitter_tracking_enabled');
         });
     }
 }
