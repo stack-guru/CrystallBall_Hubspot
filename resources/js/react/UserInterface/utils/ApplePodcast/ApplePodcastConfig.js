@@ -22,7 +22,7 @@ const ApplePodcastConfig = (props) => {
     const [noResult, setNoResult] = useState("");
 
     const getExistingPodcasts = async () => {
-        HttpClient.get("/data-source/apple-podcast-monitor")
+        HttpClient.get(`/data-source/apple-podcast-monitor?ga_property_id=${props.gaPropertyId}`)
             .then(
                 (result) => {
                     setExisting(result.data.apple_podcast_monitors);
@@ -54,7 +54,7 @@ const ApplePodcastConfig = (props) => {
 
     useEffect(() => {
         getExistingPodcasts();
-    }, []);
+    }, [props.gaPropertyId]);
 
     const getMetaData = async (ev) => {
         ev.preventDefault();
@@ -66,7 +66,7 @@ const ApplePodcastConfig = (props) => {
                     ev.target.applePodcastURL.value
                 )}&media=podcast&entity=podcast&explicit=Yes&limit=10`
             );
-            var sr = [];
+            let sr = [];
             for (const item of result.data?.results) {
                 sr.push({
                     previewImage: item.artworkUrl100,
@@ -75,6 +75,7 @@ const ApplePodcastConfig = (props) => {
                     feedUrl: item.feedUrl,
                     collectionViewUrl: item.collectionViewUrl,
                     trackCount: item.trackCount,
+                    gaPropertyId: props.gaPropertyId || null,
                 });
             }
             setSearchResult(sr);

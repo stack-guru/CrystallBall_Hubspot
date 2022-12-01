@@ -2567,6 +2567,7 @@ export default class DataSourceIndex extends React.Component {
                             <ApplePodcastConfig
                                 setState={this.setState}
                                 sectionToggler={() => this.sectionToggler('apple_podcast')}
+                                gaPropertyId={this.state.ga_property_id}
                             />
                         ) : null}
                         {this.state.sectionName == "web_monitors" &&

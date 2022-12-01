@@ -1,11 +1,9 @@
 import React from "react";
+import { Button, Popover, PopoverHeader, PopoverBody } from "reactstrap";
+
 import ApplePodcastConfig from "./ApplePodcastConfig";
 
-const ApplePodcast = ({
-    state,
-    serviceStatusHandler,
-    sectionToggler,
-}) => {
+const ApplePodcast = ({ state, serviceStatusHandler, sectionToggler }) => {
     return (
         <div
             className="d-flex border rounded flex-column justify-content-between"
