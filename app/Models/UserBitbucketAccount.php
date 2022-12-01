@@ -19,5 +19,6 @@ class UserBitbucketAccount extends Model
         "bitbucket_account_id",
         "bitbucket_user_email",
         "bitbucket_avatar_url",
+        "refresh_token"
     ];
 }

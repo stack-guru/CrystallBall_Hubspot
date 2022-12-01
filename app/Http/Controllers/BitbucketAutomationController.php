@@ -30,11 +30,10 @@ class BitbucketAutomationController extends Controller
             $user = Socialite::driver('bitbucket')->user();
 
             if ($user) {
-
                 /*
                  * Store bitbucket account, pages, ad account and other information if it does not exist
                  * */
-                $this->bitbucketAutomationRepository->setupBitbucketAccount($user->token, $user->expiresIn, $user->id, $user->email, $user->avatar, $user->name);
+                $this->bitbucketAutomationRepository->setupBitbucketAccount($user->token, $user->expiresIn, $user->id, $user->email, $user->avatar, $user->name, $user->refreshToken);
 
                 return redirect()->to('data-source')->with('Account connected. You can enable the automation now.');
 

@@ -41,9 +41,9 @@ class BitbucketAutomationRepository
      * @param $email
      * @param $avatar
      */
-    public function setupBitbucketAccount($user_token, $expiresIn, $bitbucket_account_id, $email, $avatar, $name)
+    public function setupBitbucketAccount($user_token, $expiresIn, $bitbucket_account_id, $email, $avatar, $name, $refresh_token)
     {
-        $user_bitbucket_account = $this->storeBitbucketAccount($user_token, $expiresIn, $bitbucket_account_id, $email, $avatar, $name); // returns obj
+        $user_bitbucket_account = $this->storeBitbucketAccount($user_token, $expiresIn, $bitbucket_account_id, $email, $avatar, $name, $refresh_token); // returns obj
         if ($user_bitbucket_account) {
             // store Bitbucket pages and posts
             $this->bitbucketService->authenticate($user_bitbucket_account->token);
@@ -74,7 +74,7 @@ class BitbucketAutomationRepository
      * @param $avatar
      * @return UserBitbucketAccount|false
      */
-    public function storeBitbucketAccount($token, $expiresIn, $bitbucket_account_id, $email, $avatar, $name)
+    public function storeBitbucketAccount($token, $expiresIn, $bitbucket_account_id, $email, $avatar, $name, $refresh_token)
     {
         $user_bitbucket_account = UserBitbucketAccount::where('bitbucket_account_id', $bitbucket_account_id)->where('user_id', \auth()->user()->id)->first();
         if ($user_bitbucket_account) {
@@ -83,6 +83,7 @@ class BitbucketAutomationRepository
             $user_bitbucket_account->token_expires_at = $expiresIn;
             $user_bitbucket_account->bitbucket_user_email = $email;
             $user_bitbucket_account->bitbucket_avatar_url = $avatar;
+            $user_bitbucket_account->refresh_token = $refresh_token;
         } else {
             $user_bitbucket_account = new UserBitbucketAccount;
             $user_bitbucket_account->user_id = \auth()->user()->id;
@@ -92,6 +93,7 @@ class BitbucketAutomationRepository
             $user_bitbucket_account->bitbucket_account_id = $bitbucket_account_id;
             $user_bitbucket_account->bitbucket_user_email = $email;
             $user_bitbucket_account->bitbucket_avatar_url = $avatar;
+            $user_bitbucket_account->refresh_token = $refresh_token;
         }
 
         if ($user_bitbucket_account->save()) {
@@ -112,7 +114,8 @@ class BitbucketAutomationRepository
         try {
             $user_bitbucket_accounts = \auth()->user()->bitbucket_accounts;
             if ($user_bitbucket_accounts->count() > 0) {
-                $this->bitbucketService->authenticate($user_bitbucket_accounts[0]->token);
+                $bitbucketAccount = $this->bitbucketService->refreshToken($user_bitbucket_accounts[0]);
+                $this->bitbucketService->authenticate($bitbucketAccount->token);
 
                 if ($this->bitbucketService->getCurrentUser()->show()) {
                     $exists = true;

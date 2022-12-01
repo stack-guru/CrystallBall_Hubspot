@@ -35,6 +35,7 @@ class UserDataSourceRequest extends FormRequest
             'value' => 'nullable|string',
             'is_enabled' => 'nullable',
             'ga_property_id' => 'nullable|exists:google_analytics_properties,id',
+            'workspace' => 'nullable|string',
         ];
     }
 }

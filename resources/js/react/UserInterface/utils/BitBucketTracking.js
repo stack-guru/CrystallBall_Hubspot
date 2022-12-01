@@ -43,7 +43,7 @@ export default class BitbucketTracking extends React.Component {
 
     handleClick(e) {
         if (e.target.checked) {
-            (this.props.onCheckCallback)({ code: 'bitbucket_tracking', name: 'Bitbucket tracking', value: e.target.name })
+            (this.props.onCheckCallback)({ code: 'bitbucket_tracking', name: 'Bitbucket tracking', value: e.target.name, workspace: e.target.getAttribute("data-workspace") })
         } else {
             (this.props.onUncheckCallback)(e.target.id, 'bitbucket_tracking')
         }
@@ -83,6 +83,7 @@ export default class BitbucketTracking extends React.Component {
                                                                                 checked={userRepositories.indexOf(repository.slug) !== -1}
                                                                                 type="checkbox"
                                                                                 name={repository.slug}
+                                                                                data-workspace={workspace.slug}
                                                                                 id={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null}
                                                                                 onChange={this.handleClick}
                                                                             />

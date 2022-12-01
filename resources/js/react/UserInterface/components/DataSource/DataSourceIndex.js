@@ -92,7 +92,6 @@ export default class DataSourceIndex extends React.Component {
         if (!this.state.isLoading) {
             this.setState({ isLoading: true });
             HttpClient.get(`/data-source/user-data-source?ga_property_id=${gaPropertyId}`).then(resp => {
-                console.log(resp.data.user_data_sources);
                 this.setState({ isLoading: false, userDataSources: resp.data.user_data_sources });
             }, (err) => {
                 this.setState({ isLoading: false, errors: (err.response).data });
@@ -3012,7 +3011,8 @@ export default class DataSourceIndex extends React.Component {
             'status': dataSource.status,
             'value': dataSource.value,
             'is_enabled': 1,
-            'ga_property_id': this.state.ga_property_id
+            'ga_property_id': this.state.ga_property_id,
+            'workspace': dataSource.workspace
         }
         HttpClient.post('/data-source/user-data-source', formData).then(resp => {
             let uds = resp.data.user_data_source;
