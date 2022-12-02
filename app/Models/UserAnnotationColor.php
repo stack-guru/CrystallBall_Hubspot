@@ -26,5 +26,6 @@ class UserAnnotationColor extends Model
         'keyword_tracking',
         'facebook_tracking',
         'instagram_tracking',
+        'twitter_tracking',
     ];
 }

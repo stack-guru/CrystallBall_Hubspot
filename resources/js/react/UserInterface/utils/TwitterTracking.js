@@ -73,7 +73,7 @@ export default class FacebookTracking extends React.Component {
                 <div className="weather_alert_cities-form">
                     <h4 className="gaa-text-primary">Configure Twitter</h4>
                     <div className="w-100 mb-3">
-                        <p>Apply trigger on all Tweets of connected account timeline</p>
+                        <p>Trigger latest 100 tweets from account timeline</p>
                     </div>
 
                     <h5 className="gaa-text-primary"><b>Create Annotation When:</b></h5>

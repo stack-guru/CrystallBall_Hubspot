@@ -2193,7 +2193,7 @@ export default class DataSourceIndex extends React.Component {
                                                         fontSize: "13px",
                                                     }}
                                                 >
-                                                    Credits: Unlimited
+                                                    Credits: ∞
                                                 </p>
                                             </div>
                                         </div>
