@@ -195,9 +195,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\GoogleAccount');
     }
 
-    public function twitterAccounts()
+    public function twitterAccounts(): HasMany
     {
         return $this->hasMany(UserTwitterAccount::class, 'user_id', 'id');
+    }
+
+    public function twitterTrackingConfiguration(): HasOne
+    {
+        return $this->hasOne(TwitterTrackingConfiguration::class, 'user_id', 'id');
     }
 
     public function googleAnalyticsAccounts()

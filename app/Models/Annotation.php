@@ -122,6 +122,11 @@ class Annotation extends Model
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `instagram_tracking_annotations` WHERE `instagram_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
         }
+        // Add twitter tracking annotations if it is enabled in user data source
+        if ($user->is_ds_twitter_tracking_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select null, 1, show_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `twitter_tracking_annotations` WHERE `twitter_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        }
         // Add google ads annotations if it is enabled in user data source
         if ($user->is_ds_g_ads_history_change_enabled) {
             $annotationsQuery .= " union ";

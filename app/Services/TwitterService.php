@@ -14,29 +14,32 @@ class TwitterService
     private $baseUrl;
 
     /**
-     * @var string
-     */
-    private $token;
-
-    /**
-     * @var string
-     */
-    private $tokenSecret;
-
-    /**
-     * @var string
-     */
-    private $userId;
-
-    /**
      * @var \Illuminate\Http\Client\Factory
      */
     private $httpClient;
 
-    public function __construct(\Illuminate\Http\Client\Factory $http) {
-        $this->baseUrl = "https://api.twitter.com/2/";
+    public function __construct(\Illuminate\Http\Client\Factory$http)
+    {
+        $this->baseUrl    = "https://api.twitter.com/2/";
         $this->httpClient = $http->withToken(config('services.twitter.bearer_token'))
-                                ->baseUrl($this->baseUrl);
+            ->baseUrl($this->baseUrl);
+    }
+
+    /**
+     * Get user by twitter account username (nickname)
+     *
+     * @param string $username
+     * @return array
+     */
+    public function getUserByUsername(string $username): array
+    {
+        $response = $this->httpClient->get("users/by/username/{$username}");
+
+        if ($response->status() != Response::HTTP_OK) {
+            throw new TwitterException("Error Processing Request", Response::HTTP_NOT_IMPLEMENTED);
+        }
+
+        return $response->json('data');
     }
 
     /**
@@ -49,7 +52,7 @@ class TwitterService
     {
         $response = $this->httpClient->get("users/{$id}");
 
-        if($response->status() != Response::HTTP_OK){
+        if ($response->status() != Response::HTTP_OK) {
             throw new TwitterException("Error Processing Request", Response::HTTP_NOT_IMPLEMENTED);
         }
 
@@ -57,16 +60,35 @@ class TwitterService
     }
 
     /**
-     * Get Tweets by twitter account user id with pagination
+     * Get Tweets by twitter account user id
      *
-     * @param string $id
+     * @param string $userId
      * @return array
      */
-    public function getTweetsByUserId(string $id): array
+    public function getTweetsByUserId(string $userId): array
     {
-        $response = $this->httpClient->get("users/{$id}/tweets");
+        $data = [];
 
-        if($response->status() != Response::HTTP_OK){
+        $response = $this->getTweetsByUserIdAndNextToken($userId);
+        $data     = $response['data'];
+
+        return $data;
+    }
+
+    /**
+     * Get Tweets by twitter account user id with pagination
+     *
+     * @param string $userId
+     * @return array
+     */
+    public function getTweetsByUserIdAndNextToken(string $userId, string $token = null): array
+    {
+        $response = $this->httpClient->get("users/{$userId}/tweets", [
+            'tweet.fields' => 'public_metrics',
+            'max_results'  => 100,
+        ]);
+
+        if ($response->status() != Response::HTTP_OK) {
             throw new TwitterException("Error Processing Request", Response::HTTP_NOT_IMPLEMENTED);
         }
 
