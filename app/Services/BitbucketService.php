@@ -59,9 +59,6 @@ class BitbucketService
         foreach ($workspaces as $key => $workspace) {
             $repositories = $this->client->repositories()->workspaces($workspace['slug'])->list()['values'];
             $workspaces[$key]['repositories'] = $repositories;
-            $commits = $this->client->repositories()->workspaces($workspace['slug'])->commits($repositories[0]['slug'])->list()['values'];
-            dd($commits);
-
         }
 
         return $workspaces;
