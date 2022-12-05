@@ -43,6 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'has_password',
         'price_plan_id',
         'price_plan_expiry_date',
+        'price_plan_settings',
 
         'is_ds_holidays_enabled',
         'is_ds_google_algorithm_updates_enabled',
@@ -66,7 +67,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
         'data_source_tour_showed_at',
         'google_accounts_tour_showed_at',
-        'startup_configuration_showed_at'
+        'startup_configuration_showed_at',
+
 
         // app_sumo_uuid
     ];
@@ -101,6 +103,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'phone_verified_at' => 'datetime',
         'price_plan_expiry_date' => 'date',
+        'price_plan_settings' => 'json',
         'last_login_at' => 'datetime',
         'trial_ended_at' => 'datetime',
         'data_source_tour_showed_at' => 'datetime',

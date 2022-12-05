@@ -34,6 +34,7 @@ class UserController extends Controller
                 'phone_verified_at',
                 'password',
                 'has_password',
+                'price_plan_settings',
             ])->with([
                 'pricePlan:id,name',
                 'user:id,email',
@@ -83,6 +84,10 @@ class UserController extends Controller
 
                     } else {
                         $html .= '<span class="badge badge-success">Password has been set</span>';
+                    }
+
+                    if ($row->price_plan_settings && $row->price_plan_settings['extended_trial']['activation_count'] > 0) {
+                        $html .= '<span class="badge badge-info">Trial Extended</span>';
                     }
 
                     return $html;

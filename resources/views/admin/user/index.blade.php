@@ -22,7 +22,7 @@
                   <th>Name</th>
                   <th>Plan (Ending)</th>
                   <th>Registration Date</th>
-                  <th>Verification</th>
+                  <th>Tags</th>
                   <th>Actions</th>
                 </tr>
               </thead>

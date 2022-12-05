@@ -17,7 +17,7 @@ class header extends React.Component {
         HttpClient.get('user_total_annotations')
         .then(response => {
             this.setState({ user_total_annotations: response.data.user_total_annotations });
-        });        
+        });
     }
 
     toggleSidebar(e) {
@@ -179,10 +179,23 @@ class header extends React.Component {
                             </li>
                             : null}
 
+                            {this.props.user.price_plan.code == "free new" ?
+                                <li className="notifications">
+                                    <div className="no-after">
+                                        <p class="trial-countdown mt-4">You are on the Fee Plan</p>
+                                    </div>
+                                </li>
+                                : null}
+
                         {this.props.user.price_plan.price == 0 ?
                             <li className="notifications">
                                 <div className="no-after">
-                                    <Link to="/settings/price-plans" className="btn gaa-btn-primary">Upgrade Now</Link>
+                                    <Link to="/settings/price-plans" className="btn gaa-btn-primary mr-2">Click here to Upgrade</Link>
+                                    {this.props.user.price_plan.code === 'free new' && (!this.props.user.price_plan_settings || this.props.user.price_plan_settings.extended_trial.activation_count < 1) ?
+                                    <button onClick={() => {
+                                        this.props.extendTrial();
+                                    }} className="btn gaa-btn-primary">Extend my Trial</button>
+                                    : null}
                                 </div>
                             </li>
                             : null}
@@ -213,7 +226,7 @@ class header extends React.Component {
                                         </p>
                                     </div>
                                 </li>
-                                
+
                                 <li >
                                     <div className="header-profile-info">
                                         <ProgressBar completed={

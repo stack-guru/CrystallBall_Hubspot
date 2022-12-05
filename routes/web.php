@@ -274,6 +274,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
         });
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
+        Route::post('extend-trial', [App\Http\Controllers\PricePlanController::class, 'extendTrial']);
 
     });
 

@@ -215,7 +215,7 @@ export default class IndexPricingPlans extends React.Component {
                                                         :
                                                         pricePlan.ga_account_count >= 1 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to { pricePlan.ga_account_count == 1 ? <span>{pricePlan.ga_account_count} GA account</span> : <span>{pricePlan.ga_account_count} GA accounts</span> }</li>
                                                             : ''
-                                                            
+
                                                 }
                                                 {/* {
                                                     pricePlan.ga_account_count == 0 ?
@@ -253,16 +253,16 @@ export default class IndexPricingPlans extends React.Component {
                                                             <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'automation-hint-' + pricePlan.id} target={"automation-feature-hint-" + pricePlan.id} toggle={() => { this.setState({ showHintFor: null }) }} onClick={() => { this.changeShownHint(null) }}>
                                                                 <PopoverHeader>{pricePlan.name}</PopoverHeader>
                                                                 <PopoverBody>
-                                                              
+
                                                                     {
                                                                         pricePlan.keyword_tracking_count == -1 ?
                                                                             null
                                                                             : <span>Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count} Credits<br /></span>
                                                                     }
-                                                                    
+
                                                                     Website Monitoring: {pricePlan.web_monitor_count} URLs<br />
-                                                                    Weather Alerts: {pricePlan.owm_city_count == 0 ? 'Unlimited' : pricePlan.owm_city_count} cities<br />
-                                                                    News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : pricePlan.google_alert_keyword_count} keywords<br />
+                                                                    Weather Alerts: {pricePlan.owm_city_count == 0 ? 'Unlimited' : (pricePlan.owm_city_count > 0 ? pricePlan.owm_city_count : 0)} cities<br />
+                                                                    News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : (pricePlan.google_alert_keyword_count > 0 ? pricePlan.google_alert_keyword_count : 0)} keywords<br />
                                                                     Retail Marketing Dates<br />
                                                                     Google Updates<br />
                                                                     WordPress Updates<br />

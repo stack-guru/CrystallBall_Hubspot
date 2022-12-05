@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PricePlanRequest;
 use App\Models\PricePlan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 
 class PricePlanController extends Controller
 {
@@ -55,7 +57,10 @@ class PricePlanController extends Controller
      */
     public function show(PricePlan $pricePlan)
     {
-        if (Auth::user()->user_level !== User::ADMIN) abort(403, 'Only administrators are allowed to view price plan.');
+        if (Auth::user()->user_level !== User::ADMIN) {
+            abort(403, 'Only administrators are allowed to view price plan.');
+        }
+
         return ['price_plan' => $pricePlan];
     }
 
@@ -91,5 +96,38 @@ class PricePlanController extends Controller
     public function destroy(PricePlan $pricePlan)
     {
         //
+    }
+
+    /**
+     * Extend price plan if user on free new plan
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function extendTrial()
+    {
+        $userId = Auth::id();
+        try {
+            User::where('id', $userId)->update([
+                'users.price_plan_id'          => PricePlan::where('name', PricePlan::TRIAL)->first()->id,
+                'users.price_plan_expiry_date' => new \DateTime("+7 days"),
+                'price_plan_settings'          => [
+                    'extended_trial' => [
+                        'activation_count' => 1,
+                        'extended_at'      => now()->toDateTimeString(),
+                    ],
+                ],
+            ]);
+        } catch (\Exception $e) {
+            Log::critical(__METHOD__.":".$e->getMessage(),$e->getTrace());
+            return response()->json([
+                'status' => false,
+                'message' => 'Something Went Wrong'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Trial extended to 7 days more'
+        ], Response::HTTP_ACCEPTED);
     }
 }
