@@ -338,7 +338,7 @@ class IndexAnnotations extends React.Component {
                                                                     <td>{anno.category}</td>
                                                                     <td>{anno.event_name}</td>
                                                                     <td style={{ overflowWrap: "anywhere" }}>
-                                                                        {anno.description.substring(0, 50)}{anno.description.length > 50 ? '...' : null}
+                                                                        {anno.description ? anno.description.substring(0, 50) : null}{anno.description && anno.description.length > 50 ? '...' : null}
                                                                         {(anno.url && anno.url != "https://" && anno.url != "null") ? <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a> : null}
                                                                     </td>
                                                                     <td>

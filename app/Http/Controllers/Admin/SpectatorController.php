@@ -6,6 +6,7 @@ use App\Models\Spectator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SpectatorRequest;
+use App\Models\Permission;
 
 class SpectatorController extends Controller
 {
@@ -52,7 +53,9 @@ class SpectatorController extends Controller
      */
     public function edit(Spectator $spectator)
     {
-        return view('admin/spectator/edit')->with('spectator', $spectator);
+        $spectator->load('permissions');
+        $permissions = Permission::all();
+        return view('admin/spectator/edit', compact('spectator', 'permissions'));
     }
 
     /**
@@ -71,6 +74,7 @@ class SpectatorController extends Controller
             ]);
             $spectator->password = bcrypt($request->password);
         }
+        $spectator->permissions()->sync($request->permissions);
         $spectator->save();
 
         return redirect()->route('admin.spectator.index')->with('success', true);

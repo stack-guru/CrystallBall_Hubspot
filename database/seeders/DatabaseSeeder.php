@@ -29,5 +29,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(NotificationSettingTableSeeder::class);
         $this->call(DataForSeoLocationSeeder::class);
+        $this->call(PermissionSeeder::class);
     }
 }

@@ -39,23 +39,35 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    @php
+                        $permissions = Auth::user()->permissions()->pluck('name');
+                    @endphp
+
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        @guest
-                        @else
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('spectator.dashboard') }}">Dashboard</a>
                         </li>
+
+                        @if($permissions->contains('price-plan-subscription'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('spectator.price-plan-subscription.index') }}">Payment History</a>
                         </li>
+                        @endif
+
+                        @if($permissions->contains('auto-payment-log'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('spectator.auto-payment-log.index') }}">Payment Log</a>
                         </li>
+                        @endif
+
+                        @if($permissions->contains('user-active-report'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('spectator.reports.user-active-report.show') }}">Active User Report</a>
                         </li>
-                        @endguest
+                        @endif
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->

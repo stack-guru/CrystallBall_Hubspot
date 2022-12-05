@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -41,4 +42,11 @@ class Spectator extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Get all of the permissions for the spectator.
+     */
+    public function permissions(): MorphToMany
+    {
+        return $this->morphToMany(Permission::class, 'permissionable','permissionable');
+    }
 }

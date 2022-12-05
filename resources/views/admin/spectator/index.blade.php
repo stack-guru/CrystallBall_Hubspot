@@ -21,6 +21,7 @@
                                 <tr>
                                     <th>Email</th>
                                     <th>Name</th>
+                                    <th>Pages</th>
                                     <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
@@ -30,6 +31,7 @@
                                     <tr>
                                         <td>{{ $spectator->email }}</td>
                                         <td>{{ $spectator->name }}</td>
+                                        <td>{{ $spectator->permissions()->pluck('source')->implode(', ') }}</td>
                                         <td>@if($spectator->created_at){{ $spectator->created_at->format('Y-m-d') }}@endif</td>
                                         <td>
                                             <div class="row ml-0 mr-0 d-flex flex-row ">
@@ -54,10 +56,10 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> 
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable();
     } );
-</script>   
+</script>
 @endsection
