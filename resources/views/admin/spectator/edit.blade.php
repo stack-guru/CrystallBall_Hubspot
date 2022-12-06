@@ -17,6 +17,14 @@
                             <input  class="form-control" type="text" name="name" id="name" value="{{ $spectator->name }}" >
                         </div>
                         <div class="form-group">
+                            <label for="permissions">Permissions</label>
+                            <select name="permissions[]" class="form-control" id="permissions" multiple>
+                                @foreach ($permissions as $permission)
+                                    <option value="{{ $permission->id }}" @if( in_array($permission->id, $spectator->permissions->pluck('id')->toArray() )) selected @endif>{{ $permission->name }} ({{ $permission->source }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="password">Password</label>
                             <input  class="form-control" type="password" name="password" id="password" value="" >
                         </div>
@@ -24,7 +32,7 @@
                             <label for="password_confirmation">Password Confirmation</label>
                             <input  class="form-control" type="password" name="password_confirmation" id="password_confirmation" value="" >
                         </div>
-                        
+
                     </div>
                     <div class="card-footer">
                         <input type="submit" value="Save" class="btn btn-primary" />
