@@ -30,3 +30,9 @@ Please run following commands to run the scrapping server
 2. Please visit https://pptr.dev/ for any issue you face.
 
 
+### Test scrapping server is setup:
+
+Once you run the server on localhost:3000 than try to run this command to make sure that scrapping server is working fine or not. if not please fix the  error of pupeteer.
+
+
+```curl -X POST http://localhost:3000/apple-podcast-episodes -H "Content-Type: application/json" -d '{"podcastUrl": "https://podcasts.apple.com/us/podcast/easy-stories-in-english/id1448201565"}' ```
