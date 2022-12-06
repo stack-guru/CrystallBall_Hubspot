@@ -363,8 +363,8 @@ export default class DataSourceIndex extends React.Component {
                                         ) : null}
                                         <div className="px-2">
                                             <div className="list-wrapper">
-                                                <p style={{fontSize: "13px"}}>
-                                                    Keywords:
+                                                <p style={{ fontSize: "13px" }}>
+                                                    { this.state.webMonitors.length > 0 ? "Keywords:" : ""}
                                                 </p>
                                                 {this.state.webMonitors
                                                     .map((wM) => wM.name)

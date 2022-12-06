@@ -319,7 +319,7 @@ export default class IndexPricingPlans extends React.Component {
                         {
                             this.props.user.price_plan.name != "Free" && this.props.user.is_billing_enabled == 0 ?
                                 <div className="p-5 mt-4 text-center">
-                                    <p>Your account will be automatically downgraded to the Free plan at {this.props.user.price_plan_expiry_date}.<br />
+                                    <p>Your account will be automatically downgraded to the Free plan at {(new Date(this.props.user.price_plan_expiry_date)).getDay() + '-' + (new Date(this.props.user.price_plan_expiry_date)).getMonth() + '-' + (new Date(this.props.user.price_plan_expiry_date)).getFullYear()}.<br />
                                         Upgrade your account to keep enjoying all the features.</p>
                                 </div>
                                 : null
