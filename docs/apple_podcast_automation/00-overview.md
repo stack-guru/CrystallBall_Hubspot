@@ -2,7 +2,7 @@
 
 > ## User story
 >
-> In this automation, we need to add the functionality in our crysalball platform, so that user can have changes for the apple podcast episodes.
+> In this automation, we need to add the functionality in our crystalball platform, so that user can have changes for the apple podcast episodes.
 i.e The [Apple Events (audio)](https://podcasts.apple.com/us/podcast/apple-events-audio/id1473854035?uo=4 "Apple Events (audio)") podcast has some episodes, when user start automation he have all the annotation of existing episodes.
 
 ### Steps to implement
