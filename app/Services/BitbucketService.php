@@ -37,7 +37,7 @@ class BitbucketService
         curl_setopt($ch, CURLOPT_USERPWD, env("BITBUCKET_CLIENT_ID") . ":" . env("BITBUCKET_CLIENT_SECRET"));
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('grant_type' => 'refresh_token', 'refresh_token' => 'zrkgbp8NsEjCkr7PJs')));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('grant_type' => 'refresh_token', 'refresh_token' => $bitbucketAccount->refresh_token)));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
         $return = curl_exec($ch);
