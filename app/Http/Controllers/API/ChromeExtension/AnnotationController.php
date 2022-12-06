@@ -64,14 +64,19 @@ class AnnotationController extends Controller
             $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
             $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
 
-            $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gaPropertyId);
-            if (!$googleAnalyticsProperty->is_in_use) {
-                if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
-                    abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
-                }
-            }
-            $googleAnalyticsProperty->is_in_use = true;
-            $googleAnalyticsProperty->save();
+            // Can't mark a property as in use without price plan restriction because of the rule:
+            // A property that is already in use should not be validated with price plan limits/counts
+            // If we mark properties as in use and don't make sure that the user is under limit, it
+            // will make a loop hole in the implementation of price plan limits.
+
+            // $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gaPropertyId);
+            // if (!$googleAnalyticsProperty->is_in_use) {
+            //     if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
+            //         abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
+            //     }
+            // }
+            // $googleAnalyticsProperty->is_in_use = true;
+            // $googleAnalyticsProperty->save();
         }
 
         if ($user->is_ds_web_monitors_enabled && $request->query('show_website_monitoring') == 'false') {
@@ -288,14 +293,19 @@ class AnnotationController extends Controller
             $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
             $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
 
-            $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gaPropertyId);
-            if (!$googleAnalyticsProperty->is_in_use) {
-                if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
-                    abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
-                }
-            }
-            $googleAnalyticsProperty->is_in_use = true;
-            $googleAnalyticsProperty->save();
+            // Can't mark a property as in use without price plan restriction because of the rule:
+            // A property that is already in use should not be validated with price plan limits/counts
+            // If we mark properties as in use and don't make sure that the user is under limit, it
+            // will make a loop hole in the implementation of price plan limits.
+            
+            // $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gaPropertyId);
+            // if (!$googleAnalyticsProperty->is_in_use) {
+            //     if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
+            //         abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
+            //     }
+            // }
+            // $googleAnalyticsProperty->is_in_use = true;
+            // $googleAnalyticsProperty->save();
         }
 
         if ($user->is_ds_web_monitors_enabled && $request->query('show_website_monitoring') == 'false') {
