@@ -102,6 +102,7 @@ export function calculatePricePlanPrice(price, monthDuration, yearlyDiscountPerc
             if (yearlyDiscountPercent != 0) {
                 discountSum += parseFloat(yearlyDiscountPercent);
             }
+            return parseInt((price) - ((discountSum / 100) * price));
             break;
     }
 

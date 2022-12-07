@@ -127,7 +127,7 @@ class PricePlanController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Trial extended to 7 days more'
+            'message' => 'Trials extended to additional 7 days'
         ], Response::HTTP_ACCEPTED);
     }
 }
