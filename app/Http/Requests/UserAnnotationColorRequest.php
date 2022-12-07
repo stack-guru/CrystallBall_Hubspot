@@ -40,6 +40,7 @@ class UserAnnotationColorRequest extends FormRequest
             'keyword_tracking' => 'nullable|string|max:10',
             'facebook_tracking' => 'nullable|string|max:10',
             'instagram_tracking' => 'nullable|string|max:10',
+            'bitbucket_tracking' => 'nullable|string|max:10',
         ];
     }
 }

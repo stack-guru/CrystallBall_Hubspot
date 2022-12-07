@@ -226,7 +226,7 @@ class Main extends React.Component {
             },
         });
         window.beamsClient = new PusherPushNotifications.Client({
-            instanceId: process.env.MIX_PUSHER_BEAMS_INSTANCE_ID,
+            instanceId: process.env.MIX_PUSHER_BEAMS_INSTANCE_ID || '4d56d4d5-c518-4c90-81ca-9de8913194bc',
         });
     }
 

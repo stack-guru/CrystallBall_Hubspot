@@ -37,7 +37,8 @@ class PricePlan extends Model
         'has_microsoft_power_bi', 'google_analytics_property_count',
         'yearly_discount_percent', 'badge_text',
         'sort_rank', 'custom_plan_code',
-        'users_devices_count'
+        'users_devices_count',
+        'bitbucket_credits_count'
     ];
 
     protected $hidden = [

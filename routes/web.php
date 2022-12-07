@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\Admin\PricePlanController;
 use App\Http\Controllers\AnnotationController;
+use App\Http\Controllers\BitbucketAutomationController;
 use App\Http\Controllers\FacebookAutomationController;
 use App\Http\Controllers\FacebookTrackingConfigurationController;
-use App\Http\Controllers\InstagramAccountController;
 use App\Http\Controllers\InstagramAutomationController;
 use App\Http\Controllers\InstagramTrackingConfigurationController;
 use App\Http\Controllers\KeywordTrackingController;
@@ -12,7 +12,6 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 
 Route::get('test_fb', function () {
     (new \App\Services\FacebookService())->test();
@@ -42,7 +41,6 @@ Route::post('facebookAdsWebhook', [FacebookAutomationController::class, 'faceboo
 
 Route::get('logs4727299@oolkidd9929', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
-
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
@@ -59,15 +57,15 @@ Route::redirect('/', '/login', 301);
 
 Route::group(['middleware' => ['prevent.cache']], function () {
     Auth::routes(['verify' => true]);
-    Route::group(['middleware' => ['auth']],function(){
-        Route::post('generate-password',[App\Http\Controllers\Auth\ConfirmPasswordController::class, 'generatePassword'])->name('generate-password');
-        Route::post('logout-and-destroy',[App\Http\Controllers\Auth\RegisterController::class, 'logoutAndDestroy'])->name('logout-and-destroy');
+    Route::group(['middleware' => ['auth']], function () {
+        Route::post('generate-password', [App\Http\Controllers\Auth\ConfirmPasswordController::class, 'generatePassword'])->name('generate-password');
+        Route::post('logout-and-destroy', [App\Http\Controllers\Auth\RegisterController::class, 'logoutAndDestroy'])->name('logout-and-destroy');
     });
 });
 
 Route::get('register_chrome', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm']);
 
-Route::group(['middleware' => ['auth','verified']], function () {
+Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('phone/resend', [App\Http\Controllers\Auth\VerificationController::class, 'resendPhone']);
     Route::post('phone/verify', [App\Http\Controllers\Auth\VerificationController::class, 'verifyPhone']);
 });
@@ -80,6 +78,9 @@ Route::get('socialite/facebook/redirect', [FacebookAutomationController::class, 
 
 Route::get('socialite/instagram', [InstagramAutomationController::class, 'redirectInstagram'])->name('instagram.redirect');
 Route::get('socialite/instagram/redirect', [InstagramAutomationController::class, 'callbackInstagram'])->name('instagram.callback');
+
+Route::get('socialite/bitbucket', [BitbucketAutomationController::class, 'redirectBitbucket'])->name('bitbucket.redirect');
+Route::get('socialite/bitbucket/redirect', [BitbucketAutomationController::class, 'callbackBitbucket'])->name('bitbucket.callback');
 
 Route::view('documentation', 'documentation');
 Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
@@ -112,8 +113,6 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
     Route::view('api-key', 'ui/app');
     Route::view('notifications', 'ui/app');
     Route::view('analytics-and-business-intelligence', 'ui/app');
-
-
 
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
@@ -186,7 +185,6 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
         Route::get('user_total_annotations', [AnnotationController::class, 'user_total_annotations']);
 
-
         Route::get('get-search-engine-list', [\App\Http\Controllers\DataForSeoController::class, 'getSearchEngineList']);
         Route::get('get-locations-list', [\App\Http\Controllers\DataForSeoController::class, 'getLocationList']);
         Route::get('search-locations-list', [\App\Http\Controllers\DataForSeoController::class, 'searchLocationList']);
@@ -201,6 +199,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
             Route::get('user-facebook-accounts-exists', [FacebookAutomationController::class, 'userFacebookAccountsExists']);
             Route::get('user-instagram-accounts-exists', [InstagramAutomationController::class, 'userInstagramAccountsExists']);
+            Route::get('user-bitbucket-accounts-exists', [BitbucketAutomationController::class, 'userBitbucketAccountsExists']);
 
             Route::get('user-keyword-configurations-for-keyword-tracking', [KeywordTrackingController::class, 'userKeywordConfigurationsTotal']);
 
@@ -231,6 +230,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
             Route::post('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'store']);
             Route::get('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'index']);
+
+            // bitbucket workspaces
+            Route::get('get-bitbucket-workspaces', [App\Http\Controllers\BitbucketAutomationController::class, 'getWorkspaces']);
         });
 
         Route::group(['prefix' => 'settings'], function () {

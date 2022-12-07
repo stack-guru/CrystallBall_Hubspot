@@ -51,6 +51,7 @@ class PricePlanRequest extends FormRequest
             'sort_rank' => 'nullable|numeric',
             'custom_plan_code' => 'nullable',
             'users_devices_count' => 'required',
+            'bitbucket_credits_count' => 'required',
         ];
     }
 }

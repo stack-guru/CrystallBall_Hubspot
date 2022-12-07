@@ -49,7 +49,7 @@ axiosInst.interceptors.response.use(function (response) {
 
     if (error.response.status === 422) {
         console.log(error);
-        swal.fire("Error!", "The given data was invalid.", "warning");
+        // swal.fire("Error!", "The given data was invalid.", "warning");
     }
 
     if (error.response.status === 455) {
@@ -80,8 +80,8 @@ axiosInst.interceptors.response.use(function (response) {
             // <Redirect to="/settings/price-plans"/>
             // this.setState({redirectTo: "/settings/price-plans"});
         });
-        
-        
+
+
         // swal.fire(
         //     {
         //         icon: 'warning',
