@@ -71,6 +71,10 @@
                             <input type="number" value="{{old('users_devices_count', $pricePlan->users_devices_count)}}" name="users_devices_count" id="users_devices_count" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label for="bitbucket_credits_count">Bitbucket Credits count</label>
+                            <input type="number" min="1" name="bitbucket_credits_count" value="{{old('bitbucket_credits_count', $pricePlan->bitbucket_credits_count)}}" id="bitbucket_credits_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label>Yearly discount percent? <sub>(minimum 0, maximum 100)</sub></label>
                             <input type="number" name="yearly_discount_percent" id="yearly_discount_percent" value="{{old('yearly_discount_percent',$pricePlan->yearly_discount_percent)}}" class="form-control" step="0.01" />
                         </div>

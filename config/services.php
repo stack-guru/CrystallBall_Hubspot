@@ -158,4 +158,16 @@ return [
         'redirect' => 'https://lukionline.me/socialite/instagrambasic/redirect',
     ],
 
+    'bitbucket' => [
+        'client_id' => env('BITBUCKET_CLIENT_ID'),
+        'client_secret' => env('BITBUCKET_CLIENT_SECRET'),
+        'redirect' => env('BITBUCKET_REDIRECT_URL'),
+    ],
+
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('GITHUB_REDIRECT_URL'),
+    ],
+
 ];

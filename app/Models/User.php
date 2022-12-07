@@ -3,17 +3,17 @@
 namespace App\Models;
 
 use App\Scopes\ActiveStatusScope;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
+use App\Traits\MustVerifyPhone;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
-use App\Traits\MustVerifyPhone;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -58,6 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_ds_keyword_tracking_enabled',
         'is_ds_facebook_tracking_enabled',
         'is_ds_instagram_tracking_enabled',
+        'is_ds_bitbucket_tracking_enabled',
 
         'user_level',
         'department',
@@ -90,7 +91,7 @@ class User extends Authenticatable implements MustVerifyEmail
         "phone_verification_expiry",
 
         'app_sumo_uuid',
-        'identification_code'
+        'identification_code',
     ];
 
     /**
@@ -297,7 +298,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getAllGroupUserIdsArray($user = null): array
     {
-        if ($user === null) $user = $this;
+        if ($user === null) {
+            $user = $this;
+        }
+
         $userIdsArray = [];
 
         if (!$user->user_id) {
@@ -398,21 +402,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function last60DaysLoginLogs()
     {
         return $this->hasMany('App\Models\LoginLog')
-        ->where('created_at', '>=', Carbon::now()->subDays(60))
+            ->where('created_at', '>=', Carbon::now()->subDays(60))
             ->orderBy('created_at', 'DESC');
     }
 
     public function last30DaysLoginLogs()
     {
         return $this->hasMany('App\Models\LoginLog')
-        ->where('created_at', '>=', Carbon::now()->subDays(30))
+            ->where('created_at', '>=', Carbon::now()->subDays(30))
             ->orderBy('created_at', 'DESC');
     }
 
     public function allTimeLoginLogs()
     {
         return $this->hasMany('App\Models\LoginLog')
-        ->orderBy('created_at', 'DESC');
+            ->orderBy('created_at', 'DESC');
     }
 
     public function last30DaysApiAnnotationCreatedLogs()
@@ -442,7 +446,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function last60DaysApiAnnotationCreatedLogs()
     {
         return $this->hasMany('App\Models\ApiLog')
-        ->where('event_name', ApiLog::ANNOTATION_CREATED)
+            ->where('event_name', ApiLog::ANNOTATION_CREATED)
             ->where('created_at', '>=', Carbon::now()->subDays(60))
             ->orderBy('created_at', 'DESC');
     }
@@ -450,7 +454,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function allTimeApiAnnotationCreatedLogs()
     {
         return $this->hasMany('App\Models\ApiLog')
-        ->where('event_name', ApiLog::ANNOTATION_CREATED)
+            ->where('event_name', ApiLog::ANNOTATION_CREATED)
             ->orderBy('created_at', 'DESC');
     }
 
@@ -521,21 +525,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function last60DaysNotificationLogs()
     {
         return $this->hasMany('App\Models\NotificationLog')
-        ->where('created_at', '>=', Carbon::now()->subDays(60))
+            ->where('created_at', '>=', Carbon::now()->subDays(60))
             ->orderBy('created_at', 'DESC');
     }
 
     public function last30DaysNotificationLogs()
     {
         return $this->hasMany('App\Models\NotificationLog')
-        ->where('created_at', '>=', Carbon::now()->subDays(30))
+            ->where('created_at', '>=', Carbon::now()->subDays(30))
             ->orderBy('created_at', 'DESC');
     }
 
     public function allTimeNotificationLogs()
     {
         return $this->hasMany('App\Models\NotificationLog')
-        ->orderBy('created_at', 'DESC');
+            ->orderBy('created_at', 'DESC');
     }
 
     public function notificationLogs()
@@ -547,7 +551,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\NotificationLog')->where('notification_channel', 'Mail');
     }
-
 
     /*
      * Facebook automation relationships
@@ -569,6 +572,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function instagram_accounts(): HasMany
     {
         return $this->hasMany(InstagramAccount::class, 'user_id');
+    }
+
+    /*
+     * Bitbucket automation relationships
+     * */
+    /**
+     * @return HasMany
+     */
+    public function bitbucket_accounts(): HasMany
+    {
+        return $this->hasMany(UserBitbucketAccount::class, 'user_id');
     }
 
 }
