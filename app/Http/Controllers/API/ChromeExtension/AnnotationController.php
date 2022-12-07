@@ -415,7 +415,7 @@ class AnnotationController extends Controller
             abort(402, "Please upgrade your plan to use Chrome Extension.");
         }
         if ($user->isPricePlanAnnotationLimitReached(true)) {
-            abort(402, "Please upgrade your plan to add more annotations");
+            abort(402, "You have reached the annotations plan's limit.\nPlease go to the dashboard to upgrade your plan.");
         }
 
         $userId = $user->id;
@@ -443,7 +443,7 @@ class AnnotationController extends Controller
                     if (!$googleAnalyticsProperty->is_in_use) {
                         if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
                             DB::rollback();
-                            abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
+                            abort(402, "You have reached the properties plan's limit.\nPlease go to the dashboard to upgrade your plan.");
                         }
                     }
                     $googleAnalyticsProperty->is_in_use = true;
