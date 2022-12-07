@@ -38,7 +38,6 @@ import IndexDashboard from './components/dashboard/IndexDashboard';
 import IndexAnalytics from './components/dashboard/analytics/IndexAnalytics';
 import IndexSearchConsole from './components/dashboard/searchConsole/IndexSearchConsole';
 import SiteRenamedTopNotice from './utils/SiteRenamedTopNotice';
-import { IsDomain } from './helpers/CommonFunctions';
 import PromotionPopup from './utils/PromotionPopup';
 import UserRegistrationOffer from './utils/UserRegistrationOffer';
 import TimerPromotionPopup from './utils/TimerPromotionPopup';
@@ -120,7 +119,7 @@ class Main extends React.Component {
                 </div>
                 {/* <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" /> */}
                 <div className="page-container">
-                    <SiteRenamedTopNotice show={IsDomain('app.gaannotations.com') || IsDomain('localhost')} />
+                    <SiteRenamedTopNotice show={true} />
                     {this.state.user.user_registration_offers.map(uRO => <React.Fragment key={uRO.id}>
                         <TimerPromotionPopup show={this.state.showTimerPromotionPopup} togglePopupCallback={this.toggleTimerPromotionPopup} promotionLink="/settings/price-plans" promotionImage="/images/50-off-24-hours.jpg" userRegistrationOffer={uRO} />
                         <UserRegistrationOffer userRegistrationOffer={uRO} show={!!uRO} />
