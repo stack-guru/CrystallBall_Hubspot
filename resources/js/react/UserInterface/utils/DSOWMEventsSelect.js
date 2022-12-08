@@ -50,18 +50,17 @@ export default class DSOWMEventsSelect extends React.Component {
     }
 
     selectAllShowing(e) {
-        let userOWMEvents = this.props.ds_data.map(ds => ds.open_weather_map_events);
-        this.state.weather_alert_events.map(owmEvent => {
-            if (userOWMEvents.indexOf(owmEvent) == -1) {
-                (this.props.onCheckCallback)({ code: 'open_weather_map_events', name: 'OpenWeatherMapEvent', country_name: null, open_weather_map_event: owmEvent })
-            }
-        })
+        if(e.target.checked){
+            let userOWMEvents = Array.from(new Set(this.props.ds_data.map(ds => ds.open_weather_map_event)));
+            this.state.weather_alert_events.filter(owmEvent=> userOWMEvents.indexOf(owmEvent) == -1).forEach(owmEvent => {
+                    (this.props.onCheckCallback)({ code: 'open_weather_map_events', name: 'OpenWeatherMapEvent', country_name: null, open_weather_map_event: owmEvent })
+            })
+        }
     }
 
     clearAll(e) {
-        let userOWMEvents = this.props.ds_data.map(ds => ds.open_weather_map_event);
         let userDSEvents = this.props.ds_data.map(ds => ds.id);
-        userOWMEvents.map((owmEvent, index) => {
+        userDSEvents.forEach((owmEvent, index) => {
             (this.props.onUncheckCallback)(userDSEvents[index], 'open_weather_map_events')
         })
     }
@@ -103,13 +102,13 @@ export default class DSOWMEventsSelect extends React.Component {
                                         className="form-check-input"
                                         checked={userOWMEvents.indexOf(wAE) !== -1}
                                         type="checkbox"
-                                        id={userOWMEvents.indexOf(wAE) !== -1 ? userDSEvents[userOWMEvents.indexOf(wAE)] : null}
+                                        id={`checkbox-${wAE}`}
                                         onChange={this.handleClick}
                                         open_weather_map_event={wAE}
                                     />
                                     <label
                                         className="form-check-label"
-                                        htmlFor="defaultCheck1"
+                                        htmlFor={`checkbox-${wAE}`}
                                     >
                                         {wAE}
                                     </label>
