@@ -74,7 +74,9 @@ class VerificationController extends Controller
      */
     public function verify(Request $request)
     {
-        Auth::login(User::find($request->route('id')));
+        $user = User::findOrFail($request->route('id'));
+
+        Auth::login($user);
 
         if (! hash_equals((string) $request->route('id'), (string) $request->user()->getKey())) {
             throw new AuthorizationException;
