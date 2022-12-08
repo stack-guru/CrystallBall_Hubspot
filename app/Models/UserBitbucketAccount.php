@@ -9,8 +9,6 @@ class UserBitbucketAccount extends Model
 {
     use HasFactory;
 
-    protected $table = "user_bitbucket_accounts";
-
     protected $fillable = [
         "user_id",
         "name",

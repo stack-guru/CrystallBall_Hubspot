@@ -1552,6 +1552,140 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
 
+                            {/*
+                                Bitbucket Section
+                            */}
+                            <div className="col-md-6 mt-2">
+                                <div
+                                    className="d-flex border rounded flex-column justify-content-between"
+                                    style={{ minHeight: "180px" }}
+                                >
+                                    <div>
+                                        <div
+                                            className="d-flex mt-2 justify-content-between "
+                                            id="web-monitoring-data-source-section"
+                                        >
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Bitbucket Tracking{" "}
+                                                        <UserAnnotationColorPicker
+                                                            name="bitbucket_tracking"
+                                                            value={
+                                                                this.state
+                                                                    .userAnnotationColors
+                                                                    .bitbucket_tracking
+                                                            }
+                                                            updateCallback={
+                                                                this
+                                                                    .updateUserAnnotationColors
+                                                            }
+                                                        />
+                                                        <img
+                                                            id="bitbucket_tracking-datasource-hint"
+                                                            className="hint-button-2"
+                                                            onClick={() => {
+                                                                this.changeShownHint(
+                                                                    "bitbucket_tracking"
+                                                                );
+                                                            }}
+                                                            src="/images/info-logo.png"
+                                                        />
+                                                    </small>
+                                                </h2>
+                                            </div>
+                                            <UncontrolledPopover
+                                                trigger="legacy"
+                                                placement="right"
+                                                isOpen={
+                                                    this.state
+                                                        .showHintFor ==
+                                                    "bitbucket_tracking"
+                                                }
+                                                target="bitbucket_tracking-datasource-hint"
+                                                toggle={() => {
+                                                    this.changeShownHint(
+                                                        null
+                                                    );
+                                                }}
+                                                onClick={() => {
+                                                    this.changeShownHint(
+                                                        null
+                                                    );
+                                                }}
+                                            >
+                                                <PopoverHeader>
+                                                    Bitbucket Tracking
+                                                </PopoverHeader>
+                                                <PopoverBody>
+                                                    Activate Bitbucket and automatically send code deployments to Crystal Ball
+                                                </PopoverBody>
+                                            </UncontrolledPopover>
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices
+                                                    .is_ds_bitbucket_tracking_enabled
+                                                    ? "ON"
+                                                    : "OFF"}
+                                                <label className="trigger switch">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="is_ds_bitbucket_tracking_enabled"
+                                                        onChange={
+                                                            this
+                                                                .serviceStatusHandler
+                                                        }
+                                                        checked={
+                                                            this.state
+                                                                .userServices
+                                                                .is_ds_bitbucket_tracking_enabled
+                                                        }
+                                                    />
+                                                    <span
+                                                        className={`slider round ${this.state
+                                                            .userServices
+                                                            .is_ds_bitbucket_tracking_enabled
+                                                            ? "animate-pulse"
+                                                            : ""
+                                                            }`}
+                                                    />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="ml-2">
+                                            Credits:{" "}
+                                            {
+                                                this.state.userDataSources.bitbucket_tracking?.length
+                                            }
+                                            /
+                                            {this.props.user.price_plan
+                                                .bitbucket_credits_count == -1
+                                                ? 0
+                                                : this.props.user.price_plan
+                                                    .bitbucket_credits_count}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        {this.state.userServices.is_ds_bitbucket_tracking_enabled ?
+                                            <p
+                                                className="ds-update-text m-0 px-2 pb-3 text-right"
+                                                onClick={() => {
+                                                    this.sectionToggler(
+                                                        "bitbucket_tracking"
+                                                    );
+                                                }}
+                                            >
+                                                {this.state.sectionName ==
+                                                    "bitbucket_tracking"
+                                                    ? "Hide"
+                                                    : "Add Respositories"}
+                                            </p>
+                                            :
+                                            <div></div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
                             {/*<div className="col-md-6 mt-2">*/}
                             {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
                             {/*        <div>*/}
@@ -2454,141 +2588,6 @@ export default class DataSourceIndex extends React.Component {
                                     </div>
                                 </div>
                             </div> */}
-
-                            {/*
-                                Bitbucket Section
-                            */}
-
-                            <div className="col-md-6 mt-2">
-                                <div
-                                    className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
-                                >
-                                    <div>
-                                        <div
-                                            className="d-flex mt-2 justify-content-between "
-                                            id="web-monitoring-data-source-section"
-                                        >
-                                            <div className="px-2">
-                                                <h2>
-                                                    <small>
-                                                        Bitbucket Tracking{" "}
-                                                        <UserAnnotationColorPicker
-                                                            name="bitbucket_tracking"
-                                                            value={
-                                                                this.state
-                                                                    .userAnnotationColors
-                                                                    .bitbucket_tracking
-                                                            }
-                                                            updateCallback={
-                                                                this
-                                                                    .updateUserAnnotationColors
-                                                            }
-                                                        />
-                                                        <img
-                                                            id="bitbucket_tracking-datasource-hint"
-                                                            className="hint-button-2"
-                                                            onClick={() => {
-                                                                this.changeShownHint(
-                                                                    "bitbucket_tracking"
-                                                                );
-                                                            }}
-                                                            src="/images/info-logo.png"
-                                                        />
-                                                    </small>
-                                                </h2>
-                                            </div>
-                                            <UncontrolledPopover
-                                                trigger="legacy"
-                                                placement="right"
-                                                isOpen={
-                                                    this.state
-                                                        .showHintFor ==
-                                                    "bitbucket_tracking"
-                                                }
-                                                target="bitbucket_tracking-datasource-hint"
-                                                toggle={() => {
-                                                    this.changeShownHint(
-                                                        null
-                                                    );
-                                                }}
-                                                onClick={() => {
-                                                    this.changeShownHint(
-                                                        null
-                                                    );
-                                                }}
-                                            >
-                                                <PopoverHeader>
-                                                    Bitbucket Tracking
-                                                </PopoverHeader>
-                                                <PopoverBody>
-                                                    Select Repository to check commit updates automation
-                                                </PopoverBody>
-                                            </UncontrolledPopover>
-                                            <div className="px-2 text-center">
-                                                {this.state.userServices
-                                                    .is_ds_bitbucket_tracking_enabled
-                                                    ? "ON"
-                                                    : "OFF"}
-                                                <label className="trigger switch">
-                                                    <input
-                                                        type="checkbox"
-                                                        name="is_ds_bitbucket_tracking_enabled"
-                                                        onChange={
-                                                            this
-                                                                .serviceStatusHandler
-                                                        }
-                                                        checked={
-                                                            this.state
-                                                                .userServices
-                                                                .is_ds_bitbucket_tracking_enabled
-                                                        }
-                                                    />
-                                                    <span
-                                                        className={`slider round ${this.state
-                                                            .userServices
-                                                            .is_ds_bitbucket_tracking_enabled
-                                                            ? "animate-pulse"
-                                                            : ""
-                                                            }`}
-                                                    />
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="ml-2">
-                                            Credits:{" "}
-                                            {
-                                                this.state.userDataSources.bitbucket_tracking?.length
-                                            }
-                                            /
-                                            {this.props.user.price_plan
-                                                .bitbucket_credits_count == -1
-                                                ? 0
-                                                : this.props.user.price_plan
-                                                    .bitbucket_credits_count}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        {this.state.userServices.is_ds_bitbucket_tracking_enabled ?
-                                            <p
-                                                className="ds-update-text m-0 px-2 pb-3 text-right"
-                                                onClick={() => {
-                                                    this.sectionToggler(
-                                                        "bitbucket_tracking"
-                                                    );
-                                                }}
-                                            >
-                                                {this.state.sectionName ==
-                                                    "bitbucket_tracking"
-                                                    ? "Hide"
-                                                    : "Add Respositories"}
-                                            </p>
-                                            :
-                                            <div></div>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -3022,6 +3021,9 @@ export default class DataSourceIndex extends React.Component {
             } else {
                 ar.push(uds)
             }
+
+            if (dataSource.code == 'bitbucket_tracking')
+                toast.success("Repository Connected.");
             this.setState({
                 userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar },
                 isBusy: false,
@@ -3031,9 +3033,20 @@ export default class DataSourceIndex extends React.Component {
             this.setState({ isBusy: false, errors: err.response.data })
 
             if (err.response.status === 422) {
+                let imgSrc = "/images/api-upgrade-modal.jpg";
+                switch (dataSource.code) {
+                    case 'bitbucket_tracking':
+                    case 'github_tracking':
+                        imgSrc = "/images/banners/Repositories-01.svg";
+                        break;
+
+                    default:
+                        imgSrc = "/images/api-upgrade-modal.jpg";
+                        break;
+                }
                 const accountNotLinkedHtml = '' +
                     '<div class="">' +
-                    '<img src="/images/automation-upgrade-modal.jpg" class="img-fluid">' +
+                    '<img src="' + imgSrc + '" class="img-fluid">' +
                     '</div>'
 
                 swal.fire({
@@ -3060,6 +3073,8 @@ export default class DataSourceIndex extends React.Component {
         HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`).then(resp => {
             let ar = this.state.userDataSources[dsCode];
             let newAr = ar.filter(a => a.id != userDataSourceId)
+            if (dsCode == 'bitbucket_tracking')
+                toast.info("Repository Disconnected.");
             this.setState({
                 userDataSources: { ...this.state.userDataSources, [dsCode]: newAr },
                 isBusy: false,
