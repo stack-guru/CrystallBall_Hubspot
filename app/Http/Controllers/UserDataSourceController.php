@@ -35,6 +35,7 @@ class UserDataSourceController extends Controller
                     'wordpress_updates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'wordpress_updates')->get(),
                     'keyword_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'keyword_tracking')->get(),
                     'bitbucket_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'bitbucket_tracking')->get(),
+                    'github_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'github_tracking')->get(),
                 ],
             ];
         }
@@ -49,6 +50,7 @@ class UserDataSourceController extends Controller
                 'wordpress_updates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'wordpress_updates')->get(),
                 'keyword_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'keyword_tracking')->get(),
                 'bitbucket_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'bitbucket_tracking')->get(),
+                'github_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'github_tracking')->get(),
             ],
         ];
     }
@@ -86,6 +88,15 @@ class UserDataSourceController extends Controller
             $dsBitbucketTracking = UserDataSource::where('ds_code', 'bitbucket_tracking')->where('user_id', $user->id)->count();
             $pricePlan = $user->pricePlan;
             if (($pricePlan->bitbucket_credits_count < $dsBitbucketTracking || $pricePlan->bitbucket_credits_count == $dsBitbucketTracking) && $pricePlan->bitbucket_credits_count != 0) {
+                // return response(['message' => "You have reached maximum number (" . $dsCityCount . ") of allowed (" . $pricePlan->owm_city_count . ") cities."], 422);
+                return response(['message' => "You have reached this plan's limit. Please upgrade your plan."], 422);
+            }
+        }
+
+        if ($request->ds_code == 'github_tracking') {
+            $dsGithubTracking = UserDataSource::where('ds_code', 'github_tracking')->where('user_id', $user->id)->count();
+            $pricePlan = $user->pricePlan;
+            if (($pricePlan->github_credits_count < $dsGithubTracking || $pricePlan->github_credits_count == $dsGithubTracking) && $pricePlan->github_credits_count != 0) {
                 // return response(['message' => "You have reached maximum number (" . $dsCityCount . ") of allowed (" . $pricePlan->owm_city_count . ") cities."], 422);
                 return response(['message' => "You have reached this plan's limit. Please upgrade your plan."], 422);
             }

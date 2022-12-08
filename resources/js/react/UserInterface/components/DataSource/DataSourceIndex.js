@@ -23,7 +23,7 @@ import GoogleAdChanges from "../../utils/GoogleAdChanges";
 import FacebookTracking from "../../utils/FacebookTracking";
 import InstagramTracking from "../../utils/InstagramTracking";
 import BitbucketTracking from "../../utils/BitbucketTracking";
-
+import GithubTracking from "../../utils/GithubTracking";
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
         super(props);
@@ -47,7 +47,8 @@ export default class DataSourceIndex extends React.Component {
             editKeyword_keyword_configuration_id: '',
             userFacebookAccountsExists: false,
             userInstagramAccountsExists: false,
-            userBitbucketAccountsExists: false
+            userBitbucketAccountsExists: false,
+            userGithubAccountsExists: false
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
@@ -70,6 +71,7 @@ export default class DataSourceIndex extends React.Component {
         this.editKeywordToggler = this.editKeywordToggler.bind(this);
         this.checkUserFacebookAccount = this.checkUserFacebookAccount.bind(this);
         this.checkUserBitbucketAccount = this.checkUserBitbucketAccount.bind(this);
+        this.checkUserGithubAccount = this.checkUserGithubAccount.bind(this);
         this.updateUserService = this.updateUserService.bind(this);
 
 
@@ -85,6 +87,7 @@ export default class DataSourceIndex extends React.Component {
 
         this.checkUserFacebookAccount();
         this.checkUserBitbucketAccount();
+        this.checkUserGithubAccount();
 
     }
 
@@ -1686,6 +1689,140 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
 
+                            {/*
+                                Github Section
+                            */}
+                            <div className="col-md-6 mt-2">
+                                <div
+                                    className="d-flex border rounded flex-column justify-content-between"
+                                    style={{ minHeight: "180px" }}
+                                >
+                                    <div>
+                                        <div
+                                            className="d-flex mt-2 justify-content-between "
+                                            id="web-monitoring-data-source-section"
+                                        >
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Github Tracking{" "}
+                                                        <UserAnnotationColorPicker
+                                                            name="github_tracking"
+                                                            value={
+                                                                this.state
+                                                                    .userAnnotationColors
+                                                                    .github_tracking
+                                                            }
+                                                            updateCallback={
+                                                                this
+                                                                    .updateUserAnnotationColors
+                                                            }
+                                                        />
+                                                        <img
+                                                            id="github_tracking-datasource-hint"
+                                                            className="hint-button-2"
+                                                            onClick={() => {
+                                                                this.changeShownHint(
+                                                                    "github_tracking"
+                                                                );
+                                                            }}
+                                                            src="/images/info-logo.png"
+                                                        />
+                                                    </small>
+                                                </h2>
+                                            </div>
+                                            <UncontrolledPopover
+                                                trigger="legacy"
+                                                placement="right"
+                                                isOpen={
+                                                    this.state
+                                                        .showHintFor ==
+                                                    "github_tracking"
+                                                }
+                                                target="github_tracking-datasource-hint"
+                                                toggle={() => {
+                                                    this.changeShownHint(
+                                                        null
+                                                    );
+                                                }}
+                                                onClick={() => {
+                                                    this.changeShownHint(
+                                                        null
+                                                    );
+                                                }}
+                                            >
+                                                <PopoverHeader>
+                                                    Github Tracking
+                                                </PopoverHeader>
+                                                <PopoverBody>
+                                                    Activate Github and automatically send code deployments to Crystal Ball
+                                                </PopoverBody>
+                                            </UncontrolledPopover>
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices
+                                                    .is_ds_github_tracking_enabled
+                                                    ? "ON"
+                                                    : "OFF"}
+                                                <label className="trigger switch">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="is_ds_github_tracking_enabled"
+                                                        onChange={
+                                                            this
+                                                                .serviceStatusHandler
+                                                        }
+                                                        checked={
+                                                            this.state
+                                                                .userServices
+                                                                .is_ds_github_tracking_enabled
+                                                        }
+                                                    />
+                                                    <span
+                                                        className={`slider round ${this.state
+                                                            .userServices
+                                                            .is_ds_github_tracking_enabled
+                                                            ? "animate-pulse"
+                                                            : ""
+                                                            }`}
+                                                    />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="ml-2">
+                                            Credits:{" "}
+                                            {
+                                                this.state.userDataSources.github_tracking?.length
+                                            }
+                                            /
+                                            {this.props.user.price_plan
+                                                .github_credits_count == -1
+                                                ? 0
+                                                : this.props.user.price_plan
+                                                    .github_credits_count}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        {this.state.userServices.is_ds_github_tracking_enabled ?
+                                            <p
+                                                className="ds-update-text m-0 px-2 pb-3 text-right"
+                                                onClick={() => {
+                                                    this.sectionToggler(
+                                                        "github_tracking"
+                                                    );
+                                                }}
+                                            >
+                                                {this.state.sectionName ==
+                                                    "github_tracking"
+                                                    ? "Hide"
+                                                    : "Add Respositories"}
+                                            </p>
+                                            :
+                                            <div></div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
                             {/*<div className="col-md-6 mt-2">*/}
                             {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
                             {/*        <div>*/}
@@ -2752,6 +2889,24 @@ export default class DataSourceIndex extends React.Component {
                                 }
                             />
                         ) : null}
+
+                        {this.state.sectionName == "github_tracking" ? (
+                            <GithubTracking
+                                used_credits={
+                                    this.state.userDataSources.github_tracking?.length
+                                }
+                                total_credits={
+                                    this.props.user.price_plan.github_credits_count
+                                }
+                                ds_data={
+                                    this.state.userDataSources.github_tracking
+                                }
+                                onCheckCallback={this.userDataSourceAddHandler}
+                                onUncheckCallback={
+                                    this.userDataSourceDeleteHandler
+                                }
+                            />
+                        ) : null}
                     </div>
                 </div>
             </div>
@@ -2813,6 +2968,37 @@ export default class DataSourceIndex extends React.Component {
                     {
                         target: {
                             name: 'is_ds_bitbucket_tracking_enabled',
+                            checked: 0
+                        }
+                    }
+                );
+            }
+        }, (err) => {
+            this.setState({ isBusy: false, errors: err.response.data })
+            status = false;
+        }, this).catch(err => {
+            this.setState({ isBusy: false, errors: err })
+            status = false;
+        });
+    }
+
+    checkUserGithubAccount() {
+        // userGithubAccountsExists
+        this.setState({ isBusy: true });
+        HttpClient.get('/data-source/user-github-accounts-exists', {}).then((resp) => {
+            if (resp.data.exists) {
+                this.setState({
+                    isBusy: false,
+                    errors: undefined,
+                    userGithubAccountsExists: true
+                })
+            } else if (resp.data.error) {
+                toast.error("Github Error: " + resp.data.error);
+                this.sectionToggler(null)
+                this.updateUserService(
+                    {
+                        target: {
+                            name: 'is_ds_github_tracking_enabled',
                             checked: 0
                         }
                     }
@@ -2976,6 +3162,27 @@ export default class DataSourceIndex extends React.Component {
                 this.updateUserService(e);
             }
 
+            if (e.target.name == 'is_ds_github_tracking_enabled' && e.target.checked) {
+                if (this.state.userGithubAccountsExists) {
+                    this.sectionToggler('github_tracking')
+                    this.updateUserService(e, this);
+                } else {
+                    swal.fire({
+                        customClass: {
+                            htmlContainer: "py-3",
+                        },
+                        showCloseButton: true,
+                        title: "Connect with Github",
+                        text: "Connect your github account to create automatic annotations for commits updated",
+                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                        confirmButtonText: "<a href='/socialite/github' class='text-white'><i class='mr-2 fa fa-github'> </i>" + "Connect Github Account</a>",
+                    })
+                }
+            } else if (e.target.name == 'is_ds_github_tracking_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            }
+
         } else {
             const accountNotLinkedHtml = '' +
                 '<div class="">' +
@@ -3022,7 +3229,7 @@ export default class DataSourceIndex extends React.Component {
                 ar.push(uds)
             }
 
-            if (dataSource.code == 'bitbucket_tracking')
+            if (dataSource.code == 'bitbucket_tracking' || dataSource.code == 'github_tracking')
                 toast.success("Repository Connected.");
             this.setState({
                 userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar },
@@ -3073,7 +3280,7 @@ export default class DataSourceIndex extends React.Component {
         HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`).then(resp => {
             let ar = this.state.userDataSources[dsCode];
             let newAr = ar.filter(a => a.id != userDataSourceId)
-            if (dsCode == 'bitbucket_tracking')
+            if (dsCode == 'bitbucket_tracking' || dsCode == 'github_tracking')
                 toast.info("Repository Disconnected.");
             this.setState({
                 userDataSources: { ...this.state.userDataSources, [dsCode]: newAr },
