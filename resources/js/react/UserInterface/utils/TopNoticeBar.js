@@ -1,15 +1,23 @@
-import React from "react"
+import React from "react";
 
 export default function TopNoticeBar(props) {
     if (!props.show) return null;
 
     return (
-        <div className="notice-top-bar"
+        <div
+            className="notice-top-bar"
             style={{
-                width: '100%', backgroundImage: props.backgroundColor, textAlign: 'center', padding: '5px',
-                top: '0px', left: '0px', position: 'sticky',
-                zIndex: 800
+                width: "100%",
+                backgroundImage: props.backgroundColor,
+                textAlign: "center",
+                padding: "5px",
+                top: "0px",
+                left: "0px",
+                position: "fixed",
+                zIndex: 800,
             }}
-        >{props.content}</div>
-    )
+        >
+            {props.content}
+        </div>
+    );
 }
