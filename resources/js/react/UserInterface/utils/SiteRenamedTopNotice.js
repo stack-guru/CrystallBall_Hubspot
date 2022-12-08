@@ -7,7 +7,7 @@ import TopNoticeBar from './TopNoticeBar';
 export default function SiteRenamedTopNotice(props) {
 
     let gannotations = () => IsDomain('app.gaannotations.com') || IsDomain('localhost') ? <p className="text-white" style={{ marginBottom: '0px' }}>
-            GAannotations is not <a style={{ color: 'white', textDecoration: 'underline' }} href="https://app.crystalballinsight.com">Crystal Ball</a>.
+            GAannotations is now <a style={{ color: 'white', textDecoration: 'underline' }} href="https://app.crystalballinsight.com">Crystal Ball</a>.
         </p> : null;
 
     return (
