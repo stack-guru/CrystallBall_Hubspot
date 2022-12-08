@@ -2469,7 +2469,7 @@ export default class DataSourceIndex extends React.Component {
                                 Bitbucket Section
                             */}
 
-                            <div className="col-md-6 mt-2">
+                            { false ? <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{ minHeight: "180px" }}
@@ -2598,7 +2598,7 @@ export default class DataSourceIndex extends React.Component {
                                         }
                                     </div>
                                 </div>
-                            </div>
+                            </div> : null }
                         </div>
                     </div>
 
