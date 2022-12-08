@@ -93,7 +93,8 @@ export function calculatePricePlanPrice(price, monthDuration, yearlyDiscountPerc
     if (registrationOffer) {
         if (registrationOffer.discount_percent != 0) {
             discountSum = parseFloat(registrationOffer.discount_percent);
-            return parseFloat((price) - ((discountSum / 100) * price)).toFixed(1);
+            // return parseFloat((price) - ((discountSum / 100) * price)).toFixed(1);
+            return parseInt((price) - ((discountSum / 100) * price));
         }
     }
 
@@ -102,11 +103,11 @@ export function calculatePricePlanPrice(price, monthDuration, yearlyDiscountPerc
             if (yearlyDiscountPercent != 0) {
                 discountSum += parseFloat(yearlyDiscountPercent);
             }
-            return parseInt((price) - ((discountSum / 100) * price));
             break;
     }
 
-    return parseFloat((price) - ((discountSum / 100) * price)).toFixed(1);
+    // return parseFloat((price) - ((discountSum / 100) * price)).toFixed(1);
+    return parseInt((price) - ((discountSum / 100) * price));
 }
 
 export function manipulateRegistrationOfferText(text, userRegistrationOffer) {
