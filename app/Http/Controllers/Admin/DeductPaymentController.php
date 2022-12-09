@@ -59,7 +59,7 @@ class DeductPaymentController extends Controller
             return redirect()->route('admin.auto-payment-log.index')->with('success', $responseArr['success']);
         }
 
-        return redirect()->route('admin.auto-payment-log.index')->with('error', $responseArr[0] ?? "Transaction Faild!, try again!");
+        return redirect()->route('admin.auto-payment-log.index')->with('error', $responseArr['message'] ?? "Transaction Faild!, try again!");
         
     }
 
