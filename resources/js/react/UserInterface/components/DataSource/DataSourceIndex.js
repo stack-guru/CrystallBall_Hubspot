@@ -3152,7 +3152,7 @@ export default class DataSourceIndex extends React.Component {
                         },
                         showCloseButton: true,
                         title: "Connect with Bitbucket",
-                        text: "Connect your Bitbucket account to create automatic annotations for commits updated",
+                        text: "Connect your Bitbucket account to create automatic annotations for commits",
                         confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                         confirmButtonText: "<a href='/socialite/bitbucket' class='text-white'><i class='mr-2 fa fa-bitbucket'> </i>" + "Connect Bitbucket Account</a>",
                     })
@@ -3173,7 +3173,7 @@ export default class DataSourceIndex extends React.Component {
                         },
                         showCloseButton: true,
                         title: "Connect with Github",
-                        text: "Connect your github account to create automatic annotations for commits updated",
+                        text: "Connect your github account to create automatic annotations for commits",
                         confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                         confirmButtonText: "<a href='/socialite/github' class='text-white'><i class='mr-2 fa fa-github'> </i>" + "Connect Github Account</a>",
                     })
