@@ -66,7 +66,6 @@ class BlueSnapService
      */
     public function createTransaction($price, $card, $vaultedShopperId = null, $token = null)
     {
-        Log::channel('bluesnap')->info("Deducting charges from: ", ['vaultedShopper' => $vaultedShopperId, 'price' => $price, 'token' => $token, 'card' => $card]);
         $response = Bluesnap\CardTransaction::create([
             // 'creditCard' => [
             //     // 'cardNumber' => $card['cardNumber'],
@@ -85,7 +84,19 @@ class BlueSnapService
             // 'storeCard' => $vaultedShopperId == null,
             'storeCard' => true,
         ]);
-        Log::channel('bluesnap')->info("Deduction attempt: ", (array) $response->data);
+        Log::channel('bluesnap')->info("Transaction event: ", [
+            'request' => [
+                'pfToken' => $token,
+                'amount' => $price,
+                'currency' => 'USD',
+                'recurringTransaction' => 'ECOMMERCE',
+                'cardTransactionType' => 'AUTH_CAPTURE',
+                'vaultedShopperId' => $vaultedShopperId,
+                'storeCard' => true,
+                'card' => $card
+            ],
+            'response' => (array) $response->data
+        ]);
 
         // Bluesnap\Response {#1325 ▼
         //     -_status: "error"
@@ -113,7 +124,6 @@ class BlueSnapService
      */
     public function createVaultedShopper($data)
     {
-        Log::channel('bluesnap')->info("Creating Vaulted Shopper: ", ['firstName' => $data['first_name'], 'lastName' => $data['last_name']]);
         $response = \Bluesnap\VaultedShopper::create([
             'email' => $data['email'],
             'firstName' => $data['first_name'],
@@ -122,6 +132,18 @@ class BlueSnapService
             'city' => $data['city'],
             'address' => $data['billing_address'],
             'zip' => $data['zip_code'],
+        ]);
+        Log::channel('bluesnap')->info("Create Shopper Event: ", [
+            'request' => [
+                'email' => $data['email'],
+                'firstName' => $data['first_name'],
+                'lastName' => $data['last_name'],
+                'country' => strtolower($data['country']),
+                'city' => $data['city'],
+                'address' => $data['billing_address'],
+                'zip' => $data['zip_code'],
+            ],
+            'response' => (array)$response->data
         ]);
 
         if ($response->failed()) {
@@ -133,8 +155,6 @@ class BlueSnapService
                 'vaultedShopperId' => null,
             ];
         }
-        Log::channel('bluesnap')->info("New Shopper Id: " . $response->data->id);
-
 
         $vaulted_shopper = $response->data;
 
@@ -153,9 +173,11 @@ class BlueSnapService
      */
     public function getVaultedShopper($vaulted_shopper_id)
     {
-        Log::channel('bluesnap')->info("Fetching Vaulted Shopper: " . $vaulted_shopper_id);
         $response = \Bluesnap\VaultedShopper::get($vaulted_shopper_id);
-        Log::channel('bluesnap')->info("Fetched Vaulted Shopper: ", (array) $response->data);
+        Log::channel('bluesnap')->info("Fetched Vaulted Shopper Event: ", [
+            'request' => ['vaulted_shopper_id' => $vaulted_shopper_id],
+            'response' => (array) $response->data
+        ]);
 
         if ($response->failed()) {
             $error = $response->data;
@@ -192,9 +214,14 @@ class BlueSnapService
                 ],
             ],
         ];
-        Log::channel('bluesnap')->info("Adding Card to Vaulted Shopper: " . $vaulted_shopper_id, $vaulted_shopper->paymentSources);
         $response = \Bluesnap\VaultedShopper::update($vaulted_shopper_id, $vaulted_shopper);
-        Log::channel('bluesnap')->info("Added Card to Shopper: " . $vaulted_shopper_id, (array) $response->data);
+        Log::channel('bluesnap')->info("Add Card to Shopper Event: ", [
+            'request' => [
+                'vaulted_shopper_id' => $vaulted_shopper_id,
+                'vaulted_shopper' => $vaulted_shopper
+            ],
+            'response' => (array) $response->data
+        ]);
 
         if ($response->failed()) {
             $error = $response->data;
