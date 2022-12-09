@@ -50,12 +50,17 @@ class DeductPaymentController extends Controller
 
         $amount = round($amount, 2);
         $responseArr = $blueSnapService->createTransaction($amount, $card, $paymentDetail->bluesnap_vaulted_shopper_id);
+        
+        if($responseArr['success'] == true){
+            $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user, $paymentDetail->id, $user->price_plan_id, $amount);
+            $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $paymentDetail->id, $paymentDetail->card_number, null, $amount, true);
+    
+    
+            return redirect()->route('admin.auto-payment-log.index')->with('success', $responseArr['success']);
+        }
 
-        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user, $paymentDetail->id, $user->price_plan_id, $amount);
-        $this->addTransactionToLog($user->id, $user->price_plan_id, $pricePlanSubscriptionId, $paymentDetail->id, $paymentDetail->card_number, null, $amount, true);
-
-
-        return redirect()->route('admin.auto-payment-log.index')->with('success', $responseArr['success']);
+        return redirect()->route('admin.auto-payment-log.index')->with('error', (string)$responseArr);
+        
     }
 
     private function addPricePlanSubscription($transactionId, $user, $paymentDetailId, $pricePlanId, $chargedPrice)
