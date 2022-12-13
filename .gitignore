@@ -18,3 +18,4 @@ yarn-error.log
 .DS_Store
 /.phpintel/index
 node_app/node_modules
+node_app/api.rest
