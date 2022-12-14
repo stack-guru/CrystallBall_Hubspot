@@ -201,6 +201,7 @@ export default class DataSourceIndex extends React.Component {
                         <GoogleAnalyticsPropertySelect
                             name="ga_property_id"
                             id="ga_property_id"
+                            currentPricePlan={this.props.user.price_plan}
                             value={this.state.ga_property_id}
                             onChangeCallback={(gAP) => {
                                 if (gAP.target.value == "") {
