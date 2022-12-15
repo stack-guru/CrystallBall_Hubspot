@@ -107,6 +107,11 @@
                                                                         <span class="text-sm badge badge-success">Google Analytics</span>
                                                                     </div>
                                                                 @endif
+                                                                @if ($user->googleAccounts->count() > 0)
+                                                                    <div class="mt-2 text-center">
+                                                                        <small><a href="{{ route('spectator.reports.user-ga-info.show', ['user' => $user->id]) }}" class="text-primary">More info</a></small>
+                                                                    </div>    
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     @endforeach

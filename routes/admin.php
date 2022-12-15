@@ -47,6 +47,7 @@ Route::get('user-startup-configuration', [App\Http\Controllers\Admin\UserStartup
 
 Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
     Route::get('user-active-report', [App\Http\Controllers\Admin\ReportsController::class, 'showUserActiveReport'])->name('user-active-report.show');
+    Route::get('user-ga-info/{user}', [App\Http\Controllers\Admin\ReportsController::class, 'showUserGAInfo'])->name('user-ga-info.show');
 });
 
 Route::get('chrome-extension-log', [App\Http\Controllers\Admin\ChromeExtensionLogController::class, 'index'])->name('chrome-extension-log.index');

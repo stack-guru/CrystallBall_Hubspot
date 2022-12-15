@@ -116,6 +116,11 @@
                                                             </div>
                                                         </div>
                                                     @endforeach
+                                                    @if ($user->googleAccounts->count() > 0)
+                                                        <div class="mt-2 text-center">
+                                                            <small><a href="{{ route('admin.reports.user-ga-info.show', ['user' => $user->id]) }}" class="text-primary">More info</a></small>
+                                                        </div>    
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td>
