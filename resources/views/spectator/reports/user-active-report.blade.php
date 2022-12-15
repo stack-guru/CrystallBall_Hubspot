@@ -20,12 +20,12 @@
                                     <th>User Name</th>
                                     <th>Email</th>
                                     <th>Registration Date</th>
+                                    <th>Plan</th>
                                     <th>Login to the platform</th>
                                     <th>open the extension in last 30 days</th>
                                     <th>click on a red dot on chart</th>
                                     <th>added an annotation via API</th>
                                     <th>gets an email from Notifications feature</th>
-                                    <th>Plan</th>
                                     <th>Active</th>
                                     <th>Added Properties</th>
                                     <th>Any Annotation by property</th>
@@ -45,6 +45,7 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->created_at }}</td>
+                                    <td>{{ @$user->pricePlan->name }}</td>
                                     <td>
                                         {{ $user->last_login_at }} + {{ $user->login_logs_count }}
                                         <a class="btn btn-default btn-sm" href="{{ route('spectator.login-log.index', ['user_id' => $user->id]) }}" target="_blank">More info</a>
@@ -62,7 +63,6 @@
                                         <a class="btn btn-default btn-sm" href="{{ route('spectator.api-log.index', ['user_id' => $user->id]) }}" target="_blank">More info</a>
                                     </td>
                                     <td>{{ $user->email_notification_logs_count }} time(s).</td>
-                                    <td>{{ @$user->pricePlan->name }}</td>
                                     <td>
                                         @if($user->last90_days_popup_opened_chrome_extension_logs_count
                                         || $user->last90_days_annotation_button_clicked_chrome_extension_logs_count
