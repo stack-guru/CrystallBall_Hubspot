@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\PricePlanController;
 use App\Http\Controllers\AnnotationController;
+use App\Http\Controllers\API\ChromeExtension\GoogleAnalyticsPropertyController;
 use App\Http\Controllers\BitbucketAutomationController;
 use App\Http\Controllers\FacebookAutomationController;
 use App\Http\Controllers\FacebookTrackingConfigurationController;
@@ -260,7 +261,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::resource('google-analytics-account', App\Http\Controllers\GoogleAnalyticsAccountController::class)->only(['index', 'destroy']);
             Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);
 
-            Route::resource('google-analytics-property', App\Http\Controllers\GoogleAnalyticsPropertyController::class)->only(['index', 'destroy']);
+            Route::resource('google-analytics-property', GoogleAnalyticsPropertyController::class)->only(['index', 'destroy']);
 
             Route::resource('google-search-console-site', App\Http\Controllers\GoogleSearchConsoleSiteController::class)->only(['index', 'destroy']);
             Route::post('google-search-console-site/google-account/{google_account}', [App\Http\Controllers\GoogleSearchConsoleSiteController::class, 'fetch']);
