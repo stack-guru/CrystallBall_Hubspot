@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\PricePlanController;
 use App\Http\Controllers\AnnotationController;
-use App\Http\Controllers\API\ChromeExtension\GoogleAnalyticsPropertyController;
+use App\Http\Controllers\GoogleAnalyticsPropertyController;
 use App\Http\Controllers\BitbucketAutomationController;
 use App\Http\Controllers\FacebookAutomationController;
 use App\Http\Controllers\FacebookTrackingConfigurationController;

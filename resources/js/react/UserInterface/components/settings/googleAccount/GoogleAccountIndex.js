@@ -219,7 +219,7 @@ export default class GoogleAccountIndex extends React.Component {
                                         {this.state.googleAnalyticsProperties.map(gAP => {
                                             return <tr key={gAP.id}>
                                                 <td>{gAP.id}</td>
-                                                <td>{gAP.google_analytics_account.name}</td>
+                                                <td>{(gAP.google_analytics_account) ? gAP.google_analytics_account.name : '' }</td>
                                                 <td>
                                                     {gAP.name}&nbsp;&nbsp;&nbsp;
                                                     {gAP.is_in_use ? <span className="badge badge-pill badge-success">In use</span> : null}

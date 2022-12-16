@@ -7,7 +7,7 @@ use App\Models\GoogleAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ˘GoogleAnalyticsPropertyController extends Controller
+class GoogleAnalyticsPropertyController extends Controller
 {
     public function index(Request $request)
     {
