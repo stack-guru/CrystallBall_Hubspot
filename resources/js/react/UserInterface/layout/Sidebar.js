@@ -78,8 +78,8 @@ class Sidebar extends React.Component {
                                             style={{ minHeight: 65 }}
                                         >
                                             <CompanyLogo
-                                                width="40px"
-                                                height="40px"
+                                                width="50px"
+                                                height="50px"
                                                 alt=""
                                             />
                                         </div>
