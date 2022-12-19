@@ -55,7 +55,7 @@
             $('#myTable').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    
+                    'csv'                    
                 ],
                 "paging": true
             });
