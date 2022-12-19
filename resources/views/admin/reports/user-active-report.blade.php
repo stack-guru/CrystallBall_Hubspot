@@ -18,6 +18,7 @@
                                     <tr>
                                         <th>User Name</th>
                                         <th>Email</th>
+                                        <th>ScreenShot</th>
                                         <th>Registration Date</th>
                                         <th>Plan</th>
                                         <th>Login to the platform</th>
@@ -49,6 +50,14 @@
                                                 @else
                                                     (Child Users: {{ $user->users_count }})
                                                 @endif
+                                            </td>
+                                            <td class="text-center">
+                                                <i onclick="takeUserAnnotationScreenshot(this)"
+                                                    data-user_id="{{ $user->id }}"
+                                                    class="my-1 btn btn-primary btn-sm fa fa-plus"></i>
+                                                <div class="my-3">
+                                                    {{ $user->last_screenshot_of_report_at ?? 'No previous screenshots' }}
+                                                </div>
                                             </td>
                                             <td>{{ $user->created_at }}</td>
                                             <td>{{ @$user->pricePlan->name }}</td>
@@ -98,19 +107,22 @@
                                             <td>
                                                 <div>
                                                     @foreach ($user->googleAccounts as $key => $googleAccount)
-                                                        <div class="my-1 pb-2" @if(count($user->googleAccounts) > 1 && $key > 0) style="border-top: 1px solid rgba(148, 146, 146, 0.407);" @endif >
+                                                        <div class="my-1 pb-2"
+                                                            @if (count($user->googleAccounts) > 1 && $key > 0) style="border-top: 1px solid rgba(148, 146, 146, 0.407);" @endif>
                                                             <div>
                                                                 <small>{{ $googleAccount->name }}</small>
                                                             </div>
                                                             <div>
                                                                 @if ($googleAccount->hasSearchConsoleScope())
                                                                     <div>
-                                                                        <span class="text-sm badge badge-success">Search Console</span>
+                                                                        <span class="text-sm badge badge-success">Search
+                                                                            Console</span>
                                                                     </div>
                                                                 @endif
                                                                 @if ($googleAccount->hasGoogleAnalyticsScope())
                                                                     <div>
-                                                                        <span class="text-sm badge badge-success">Google Analytics</span>
+                                                                        <span class="text-sm badge badge-success">Google
+                                                                            Analytics</span>
                                                                     </div>
                                                                 @endif
                                                             </div>
@@ -118,8 +130,10 @@
                                                     @endforeach
                                                     @if ($user->googleAccounts->count() > 0)
                                                         <div class="mt-2 text-center">
-                                                            <small><a href="{{ route('admin.reports.user-ga-info.show', ['user' => $user->id]) }}" class="text-primary">More info</a></small>
-                                                        </div>    
+                                                            <small><a
+                                                                    href="{{ route('admin.reports.user-ga-info.show', ['user' => $user->id]) }}"
+                                                                    class="text-primary">More info</a></small>
+                                                        </div>
                                                     @endif
                                                 </div>
                                             </td>
@@ -164,12 +178,18 @@
             </div>
         </div>
     </div>
+
+    @include('admin.reports.user-annotation-list-modal')
+
 @endsection
 
 @section('js')
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable({
@@ -179,6 +199,64 @@
                 ],
                 "paging": true
             });
+        });
+
+        function takeUserAnnotationScreenshot(el) {
+            let user_id = $(el).data('user_id');
+            let url = "{{ route('admin.reports.user-annotation-list.show') }}"
+
+            $.ajax(url, {
+                type: 'GET', // http method
+                data: {
+                    user_id: user_id
+                },
+                success: function(data, status, xhr) {
+                    let html = data.html;
+                    $('#user_annotation_div_modal').html(html)
+                    $('#user_ann_modal').modal('show');
+                },
+                error: function(jqXhr, textStatus, errorMessage) {}
+            });
+        }
+
+        $("#take_screenshot").click(function() {
+            var element = document.getElementById('user-ann-data');
+            var opt = {
+                margin: 1,
+                filename: 'myfile.pdf',
+                image: {
+                    type: 'png',
+                    // quality: 1
+                },
+                html2canvas: {
+                    scale: 1,
+                    scrollY: 0,
+                },
+                jsPDF: {
+                    unit: 'in',
+                    format: 'letter',
+                    orientation: 'landscape'
+                }
+            };
+            html2pdf().set(opt).from(element).save();
+
+            let url = "{{ route('admin.reports.user-annotation-list-view-update') }}"
+            user_id = $(element).data('id')
+
+            $.ajax(url, {
+                type: 'GET', // http method
+                data: {
+                    user_id: user_id
+                },
+                success: function(data, status, xhr) {
+                    let html = data.html;
+                    $('#user_annotation_div_modal').html(html)
+                    $('#user_ann_modal').modal('show');
+                },
+                error: function(jqXhr, textStatus, errorMessage) {}
+            });
+
+
         });
     </script>
 @endsection
