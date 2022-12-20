@@ -11,9 +11,9 @@
             <div class="modal-body">
                 <div id="user_annotation_div_modal"></div>
             </div>
-            <div class="modal-footer">
+            {{-- <div class="modal-footer">
                 <button id="take_screenshot" type="button" class="btn btn-primary">Take ScreenShot</button>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

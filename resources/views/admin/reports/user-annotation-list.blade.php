@@ -7,13 +7,10 @@
             <strong>Total Annotations: </strong> {{ count($annotations) }}
         </div>
         @if ($user->last_screenshot_of_report_at)
-            <strong>Last screenshot at: </strong> {{ $user->last_screenshot_of_report_at }}
+            <strong>Last checked at: </strong> {{ $user->last_screenshot_of_report_at }}
         @else
-            <strong><u>No previous screenshots</u></strong>
+            <strong><u>Not checked previously.</u></strong>
         @endif
-
-        
-    
     </div>
 
     <table id="user-ann-table" class="table table-hover gaa-hover table-bordered">

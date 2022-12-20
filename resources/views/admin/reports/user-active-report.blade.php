@@ -18,7 +18,7 @@
                                     <tr>
                                         <th>User Name</th>
                                         <th>Email</th>
-                                        <th>ScreenShot</th>
+                                        <th>User Annotations</th>
                                         <th>Registration Date</th>
                                         <th>Plan</th>
                                         <th>Login to the platform</th>
@@ -56,7 +56,7 @@
                                                     data-user_id="{{ $user->id }}"
                                                     class="my-1 btn btn-primary btn-sm fa fa-plus"></i>
                                                 <div class="my-3">
-                                                    {{ $user->last_screenshot_of_report_at ?? 'No previous screenshots' }}
+                                                    {{ ($user->last_screenshot_of_report_at) ? 'Last checked at: ' . $user->last_screenshot_of_report_at : 'Not checked previously.' }}
                                                 </div>
                                             </td>
                                             <td>{{ $user->created_at }}</td>
@@ -191,6 +191,7 @@
         integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        
         $(document).ready(function() {
             $('#myTable').DataTable({
                 dom: 'Bfrtip',
@@ -210,53 +211,28 @@
                 data: {
                     user_id: user_id
                 },
+
                 success: function(data, status, xhr) {
                     let html = data.html;
                     $('#user_annotation_div_modal').html(html)
                     $('#user_ann_modal').modal('show');
+                    
+                    // update view time/date
+                    let url = "{{ route('admin.reports.user-annotation-list-view-update') }}"
+
+                    $.ajax(url, {
+                        type: 'GET', // http method
+                        data: {
+                            user_id: user_id
+                        },
+                        success: function(data, status, xhr) {
+                        },
+                        error: function(jqXhr, textStatus, errorMessage) {}
+                    });
                 },
                 error: function(jqXhr, textStatus, errorMessage) {}
             });
         }
 
-        $("#take_screenshot").click(function() {
-            var element = document.getElementById('user-ann-data');
-            var opt = {
-                margin: 1,
-                filename: 'myfile.pdf',
-                image: {
-                    type: 'png',
-                    // quality: 1
-                },
-                html2canvas: {
-                    scale: 1,
-                    scrollY: 0,
-                },
-                jsPDF: {
-                    unit: 'in',
-                    format: 'letter',
-                    orientation: 'landscape'
-                }
-            };
-            html2pdf().set(opt).from(element).save();
-
-            let url = "{{ route('admin.reports.user-annotation-list-view-update') }}"
-            user_id = $(element).data('id')
-
-            $.ajax(url, {
-                type: 'GET', // http method
-                data: {
-                    user_id: user_id
-                },
-                success: function(data, status, xhr) {
-                    let html = data.html;
-                    $('#user_annotation_div_modal').html(html)
-                    $('#user_ann_modal').modal('show');
-                },
-                error: function(jqXhr, textStatus, errorMessage) {}
-            });
-
-
-        });
     </script>
 @endsection
