@@ -247,6 +247,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Bitbucket' => GrahamCampbell\Bitbucket\Facades\Bitbucket::class,
+        'Browsershot' => Spatie\Browsershot\Browsershot::class,
     ],
 
 ];

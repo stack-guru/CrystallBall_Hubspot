@@ -69,6 +69,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'google_accounts_tour_showed_at',
         'startup_configuration_showed_at',
 
+        'last_screenshot_of_report_at',
 
         // app_sumo_uuid
     ];
@@ -128,6 +129,8 @@ class User extends Authenticatable implements MustVerifyEmail
         "last_api_called_at" => "datetime",
 
         "has_password" => 'boolean',
+
+        "last_screenshot_of_report_at" => "datetime",
     ];
 
     /**

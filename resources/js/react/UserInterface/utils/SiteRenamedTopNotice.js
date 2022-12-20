@@ -16,7 +16,7 @@ export default function SiteRenamedTopNotice(props) {
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     { gannotations() } {" "}
                     <p className="text-white" style={{ marginBottom: '0px', marginLeft: '2px', marginRight: '2px', }}>
-                    Need Help? <a style={{ color: 'white', textDecoration: 'underline' }} href="https://calendly.com/petar-crystalball" target="_blank">Book a Demo</a>
+                    Need Help? <a style={{ color: 'white', textDecoration: 'underline' }} href="https://calendly.com/petar-crystalball/30min?back=" target="_blank">Book a Demo</a>
                     </p>
                 </div>
             }
