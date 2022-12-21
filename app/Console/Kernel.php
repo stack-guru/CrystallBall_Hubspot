@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:process-non-installed-extension-users')->everyMinute();
         $schedule->command('gaa:check-monitor-statuses')->everyMinute();
         $schedule->command('gaa:fetch-bitbucket-commits')->everyMinute();
+        $schedule->command('gaa:fetch-github-commits')->everyMinute();
 
         // Every ten minute
         $schedule->command('gaa:send-new-data-sources-email')->everyTenMinutes();

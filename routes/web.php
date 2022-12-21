@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\PricePlanController;
 use App\Http\Controllers\AnnotationController;
 use App\Http\Controllers\GoogleAnalyticsPropertyController;
 use App\Http\Controllers\BitbucketAutomationController;
+use App\Http\Controllers\GithubAutomationController;
 use App\Http\Controllers\FacebookAutomationController;
 use App\Http\Controllers\FacebookTrackingConfigurationController;
 use App\Http\Controllers\InstagramAutomationController;
@@ -82,6 +83,9 @@ Route::get('socialite/instagram/redirect', [InstagramAutomationController::class
 
 Route::get('socialite/bitbucket', [BitbucketAutomationController::class, 'redirectBitbucket'])->name('bitbucket.redirect');
 Route::get('socialite/bitbucket/redirect', [BitbucketAutomationController::class, 'callbackBitbucket'])->name('bitbucket.callback');
+
+Route::get('socialite/github', [GithubAutomationController::class, 'redirectGithub'])->name('github.redirect');
+Route::get('socialite/github/redirect', [GithubAutomationController::class, 'callbackGithub'])->name('github.callback');
 
 Route::view('documentation', 'documentation');
 Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
@@ -201,6 +205,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('user-facebook-accounts-exists', [FacebookAutomationController::class, 'userFacebookAccountsExists']);
             Route::get('user-instagram-accounts-exists', [InstagramAutomationController::class, 'userInstagramAccountsExists']);
             Route::get('user-bitbucket-accounts-exists', [BitbucketAutomationController::class, 'userBitbucketAccountsExists']);
+            Route::get('user-github-accounts-exists', [GithubAutomationController::class, 'userGithubAccountsExists']);
 
             Route::get('user-keyword-configurations-for-keyword-tracking', [KeywordTrackingController::class, 'userKeywordConfigurationsTotal']);
 
@@ -233,7 +238,10 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'index']);
 
             // bitbucket workspaces
-            Route::get('get-bitbucket-workspaces', [App\Http\Controllers\BitbucketAutomationController::class, 'getWorkspaces']);
+            Route::get('get-bitbucket-workspaces', [BitbucketAutomationController::class, 'getWorkspaces']);
+
+            // github repositories
+            Route::get('get-github-repositories', [GithubAutomationController::class, 'getRepositories']);
         });
 
         Route::group(['prefix' => 'settings'], function () {

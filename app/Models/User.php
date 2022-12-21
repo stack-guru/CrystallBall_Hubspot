@@ -59,6 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_ds_facebook_tracking_enabled',
         'is_ds_instagram_tracking_enabled',
         'is_ds_bitbucket_tracking_enabled',
+        'is_ds_github_tracking_enabled',
 
         'user_level',
         'department',
@@ -586,6 +587,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function bitbucket_accounts(): HasMany
     {
         return $this->hasMany(UserBitbucketAccount::class, 'user_id');
+    }
+
+    /*
+     * Github automation relationships
+     * */
+    /**
+     * @return HasMany
+     */
+    public function github_accounts(): HasMany
+    {
+        return $this->hasMany(UserGithubAccount::class, 'user_id');
     }
 
 }

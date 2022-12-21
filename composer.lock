@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec57f1016eb10b11536684b816392ed5",
+    "content-hash": "dc7dcfddc7280bae02b2c29c5a22aefb",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1592,6 +1592,95 @@
             "time": "2022-07-31T08:36:40+00:00"
         },
         {
+            "name": "graham-campbell/github",
+            "version": "v10.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GrahamCampbell/Laravel-GitHub.git",
+                "reference": "3b25fdfd160827cbc103a737fee08f7f113b6923"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-GitHub/zipball/3b25fdfd160827cbc103a737fee08f7f113b6923",
+                "reference": "3b25fdfd160827cbc103a737fee08f7f113b6923",
+                "shasum": ""
+            },
+            "require": {
+                "graham-campbell/bounded-cache": "^1.1 || ^2.0",
+                "graham-campbell/manager": "^4.7",
+                "illuminate/contracts": "^6.0 || ^7.0 || ^8.0 || ^9.0",
+                "illuminate/support": "^6.0 || ^7.0 || ^8.0 || ^9.0",
+                "knplabs/github-api": "3.6.*",
+                "php": "^7.2.5 || ^8.0",
+                "symfony/cache": "^4.3 || ^5.0 || ^6.0"
+            },
+            "require-dev": {
+                "graham-campbell/analyzer": "^3.0",
+                "graham-campbell/testbench": "^5.7",
+                "guzzlehttp/guzzle": "^7.4",
+                "http-interop/http-factory-guzzle": "^1.0",
+                "lcobucci/jwt": "^3.4 || ^4.0",
+                "mockery/mockery": "^1.3.1",
+                "phpunit/phpunit": "^8.5.8 || ^9.3.7"
+            },
+            "suggest": {
+                "lcobucci/jwt": "Allows using the private key authenticator (^3.4 || ^4.0)"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "GrahamCampbell\\GitHub\\GitHubServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GrahamCampbell\\GitHub\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                }
+            ],
+            "description": "GitHub Is A GitHub Bridge For Laravel",
+            "keywords": [
+                "Bridge",
+                "Graham Campbell",
+                "GrahamCampbell",
+                "Laravel GitHub",
+                "Laravel-GitHub",
+                "PHP GitHub API",
+                "framework",
+                "github",
+                "github bridge",
+                "laravel",
+                "php-github-api"
+            ],
+            "support": {
+                "issues": "https://github.com/GrahamCampbell/Laravel-GitHub/issues",
+                "source": "https://github.com/GrahamCampbell/Laravel-GitHub/tree/v10.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/graham-campbell/github",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-05-30T19:59:57+00:00"
+        },
+        {
             "name": "graham-campbell/manager",
             "version": "v4.7.0",
             "source": {
@@ -2275,6 +2364,94 @@
                 "source": "https://github.com/Jean85/pretty-package-versions/tree/2.0.5"
             },
             "time": "2021-10-08T21:21:46+00:00"
+        },
+        {
+            "name": "knplabs/github-api",
+            "version": "v3.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/php-github-api.git",
+                "reference": "7f283177b96eb626e5cf6038d8771859a0af4b02"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/7f283177b96eb626e5cf6038d8771859a0af4b02",
+                "reference": "7f283177b96eb626e5cf6038d8771859a0af4b02",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.2.5 || ^8.0",
+                "php-http/cache-plugin": "^1.7.1",
+                "php-http/client-common": "^2.3",
+                "php-http/discovery": "^1.12",
+                "php-http/httplug": "^2.2",
+                "php-http/multipart-stream-builder": "^1.1.2",
+                "psr/cache": "^1.0|^2.0|^3.0",
+                "psr/http-client-implementation": "^1.0",
+                "psr/http-factory-implementation": "^1.0",
+                "psr/http-message": "^1.0",
+                "symfony/deprecation-contracts": "^2.2|^3.0",
+                "symfony/polyfill-php80": "^1.17"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^7.2",
+                "guzzlehttp/psr7": "^1.7",
+                "http-interop/http-factory-guzzle": "^1.0",
+                "php-http/mock-client": "^1.4.1",
+                "phpstan/extension-installer": "^1.0.5",
+                "phpstan/phpstan": "^0.12.57",
+                "phpstan/phpstan-deprecation-rules": "^0.12.5",
+                "phpunit/phpunit": "^8.5 || ^9.4",
+                "symfony/cache": "^5.1.8",
+                "symfony/phpunit-bridge": "^5.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-2.x": "2.20.x-dev",
+                    "dev-master": "3.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Github\\": "lib/Github/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Thibault Duplessis",
+                    "email": "thibault.duplessis@gmail.com",
+                    "homepage": "http://ornicar.github.com"
+                }
+            ],
+            "description": "GitHub API v3 client",
+            "homepage": "https://github.com/KnpLabs/php-github-api",
+            "keywords": [
+                "api",
+                "gh",
+                "gist",
+                "github"
+            ],
+            "support": {
+                "issues": "https://github.com/KnpLabs/php-github-api/issues",
+                "source": "https://github.com/KnpLabs/php-github-api/tree/v3.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/acrobat",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-03-24T09:08:32+00:00"
         },
         {
             "name": "laravel-notification-channels/pusher-push-notifications",

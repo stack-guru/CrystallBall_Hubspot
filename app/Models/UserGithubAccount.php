@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserBitbucketAccount extends Model
+class UserGithubAccount extends Model
 {
     use HasFactory;
 
@@ -14,9 +14,9 @@ class UserBitbucketAccount extends Model
         "name",
         "token",
         "token_expires_at",
-        "bitbucket_account_id",
-        "bitbucket_user_email",
-        "bitbucket_avatar_url",
+        "github_account_id",
+        "github_user_email",
+        "github_avatar_url",
         "refresh_token"
     ];
 }

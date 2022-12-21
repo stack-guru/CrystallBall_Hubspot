@@ -185,6 +185,7 @@ return [
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         GrahamCampbell\Bitbucket\BitbucketServiceProvider::class,
+        GrahamCampbell\GitHub\GitHubServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -247,7 +248,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Bitbucket' => GrahamCampbell\Bitbucket\Facades\Bitbucket::class,
-        'Browsershot' => Spatie\Browsershot\Browsershot::class,
+        'GitHub' => GrahamCampbell\GitHub\Facades\GitHub::class,
     ],
 
 ];
