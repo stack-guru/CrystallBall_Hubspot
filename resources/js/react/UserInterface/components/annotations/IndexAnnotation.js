@@ -38,6 +38,8 @@ class IndexAnnotations extends React.Component {
         this.handleAllSelection = this.handleAllSelection.bind(this);
         this.handleOneSelection = this.handleOneSelection.bind(this);
         this.handleDeleteSelected = this.handleDeleteSelected.bind(this);
+        this.seeCompleteDescription = this.seeCompleteDescription.bind(this);
+        
     }
     componentDidMount() {
         document.title = "Annotation";
@@ -464,7 +466,7 @@ class IndexAnnotations extends React.Component {
                                                         .filter(
                                                             this.checkSearchText
                                                         )
-                                                        .map((anno) => {
+                                                        .map((anno, idx) => {
                                                             let borderLeftColor =
                                                                 "rgba(0,0,0,.0625)";
                                                             switch (
@@ -612,19 +614,42 @@ class IndexAnnotations extends React.Component {
                                                                                 "anywhere",
                                                                         }}
                                                                     >
-                                                                        {anno.description
+                                                                        {anno.description  && !anno.show_complete_desc
                                                                             ? anno.description.substring(
                                                                                   0,
                                                                                   50
                                                                               )
-                                                                            : null}
+                                                                            : ''}
+                                                                        
                                                                         {anno.description &&
                                                                         anno
                                                                             .description
                                                                             .length >
-                                                                            50
-                                                                            ? "..."
-                                                                            : null}
+                                                                            50 && !anno.show_complete_desc ? (
+                                                                                <div>
+                                                                                    ...
+                                                                                    <a
+                                                                                        style={{ cursor: "pointer" }}
+                                                                                        onClick={()=>{this.seeCompleteDescription(anno, idx)}}
+                                                                                        target="_blank"
+                                                                                        className="ml-1"
+                                                                                    >
+                                                                                        See
+                                                                                        more
+                                                                                    </a>
+                                                                                </div>
+                                                                        ) : ''}
+
+                                                                        {anno.description &&
+                                                                        anno
+                                                                            .description
+                                                                            .length >
+                                                                            50 && anno.show_complete_desc ? (
+                                                                                <div id="">
+                                                                                    {anno.description}
+                                                                                </div>
+                                                                        ) : ''}
+
                                                                         {anno.url &&
                                                                         anno.url !=
                                                                             "https://" &&
@@ -639,7 +664,7 @@ class IndexAnnotations extends React.Component {
                                                                             >
                                                                                 <i className="fa fa-link"></i>
                                                                             </a>
-                                                                        ) : null}
+                                                                        ) : ''}
                                                                     </td>
                                                                     <td>
                                                                         {anno.google_analytics_property_name
@@ -809,6 +834,14 @@ class IndexAnnotations extends React.Component {
             .catch((err) => {
                 this.setState({ isLoading: false, errors: err });
             });
+    }
+    seeCompleteDescription(anno, idx) {
+        anno.show_complete_desc = true
+        let annotations_new = this.state.annotations
+        annotations_new[idx] = anno
+        this.setState({
+            annotations: annotations_new
+        })
     }
 }
 

@@ -1973,6 +1973,11 @@ export default class DataSourceIndex extends React.Component {
                                                                 "",
                                                                 "info"
                                                             );
+                                                            // swal.fire(
+                                                            //     "This feature is coming soon. Stay tuned!",
+                                                            //     "",
+                                                            //     "info"
+                                                            // );
                                                             // const accountNotLinkedHtml =
                                                             //     "" +
                                                             //     '<div class="">' +
@@ -1983,7 +1988,7 @@ export default class DataSourceIndex extends React.Component {
                                                             //     html: accountNotLinkedHtml,
                                                             //     width: 700,
                                                             //     customClass: {
-                                                            //         popup: "bg-light-red pb-5",
+                                                            //         popup: "bg-light-red",
                                                             //         htmlContainer:
                                                             //             "m-0",
                                                             //     },
@@ -2127,7 +2132,7 @@ export default class DataSourceIndex extends React.Component {
                                                             //     html: accountNotLinkedHtml,
                                                             //     width: 700,
                                                             //     customClass: {
-                                                            //         popup: "bg-light-red pb-5",
+                                                            //         popup: "bg-light-red",
                                                             //         htmlContainer:
                                                             //             "m-0",
                                                             //     },
@@ -2331,7 +2336,7 @@ export default class DataSourceIndex extends React.Component {
                                                             //     html: accountNotLinkedHtml,
                                                             //     width: 700,
                                                             //     customClass: {
-                                                            //         popup: "bg-light-red pb-5",
+                                                            //         popup: "bg-light-red",
                                                             //         htmlContainer:
                                                             //             "m-0",
                                                             //     },
@@ -2433,7 +2438,7 @@ export default class DataSourceIndex extends React.Component {
                                                             //     html: accountNotLinkedHtml,
                                                             //     width: 700,
                                                             //     customClass: {
-                                                            //         popup: "bg-light-red pb-5",
+                                                            //         popup: "bg-light-red",
                                                             //         htmlContainer:
                                                             //             "m-0",
                                                             //     },
@@ -2533,7 +2538,7 @@ export default class DataSourceIndex extends React.Component {
                                                             //     html: accountNotLinkedHtml,
                                                             //     width: 700,
                                                             //     customClass: {
-                                                            //         popup: "bg-light-red pb-5",
+                                                            //         popup: "bg-light-red",
                                                             //         htmlContainer:
                                                             //             "m-0",
                                                             //     },
@@ -2710,7 +2715,7 @@ export default class DataSourceIndex extends React.Component {
                                                                 html: accountNotLinkedHtml,
                                                                 width: 700,
                                                                 customClass: {
-                                                                    popup: 'bg-light-red pb-5',
+                                                                    popup: 'bg-light-red',
                                                                     htmlContainer: 'm-0',
                                                                 },
                                                                 confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
@@ -3204,7 +3209,7 @@ export default class DataSourceIndex extends React.Component {
                 html: accountNotLinkedHtml,
                 width: 700,
                 customClass: {
-                    popup: 'bg-light-red pb-5',
+                    popup: 'bg-light-red',
                     htmlContainer: 'm-0',
                 },
                 confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
@@ -3271,7 +3276,7 @@ export default class DataSourceIndex extends React.Component {
                     html: accountNotLinkedHtml,
                     width: 700,
                     customClass: {
-                        popup: 'bg-light-red pb-5',
+                        popup: 'bg-light-red',
                         htmlContainer: 'm-0',
                     },
                     confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
