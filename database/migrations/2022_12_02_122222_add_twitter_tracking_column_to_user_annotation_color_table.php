@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPricePlanSettingsColumnToUsersTable extends Migration
+class AddTwitterTrackingColumnToUserAnnotationColorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddPricePlanSettingsColumnToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->json('price_plan_settings')->nullable()->after('price_plan_expiry_date');
+        Schema::table('user_annotation_colors', function (Blueprint $table) {
+            $table->string('twitter_tracking')->default('#227c9d');
         });
     }
 
@@ -25,8 +25,8 @@ class AddPricePlanSettingsColumnToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('price_plan_settings');
+        Schema::table('user_annotation_colors', function (Blueprint $table) {
+            $table->dropColumn('twitter_tracking');
         });
     }
 }

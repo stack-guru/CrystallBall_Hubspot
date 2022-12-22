@@ -21,13 +21,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public $pushNotificationType = 'users';
 
-    const ADMIN = 'admin';
-    const TEAM = 'team';
+    const ADMIN  = 'admin';
+    const TEAM   = 'team';
     const VIEWER = 'viewer';
 
-    const STATUS_ACTIVE = 'active';
+    const STATUS_ACTIVE    = 'active';
     const STATUS_SUSPENDED = 'suspended';
-    const STATUS_DELETED = 'deleted';
+    const STATUS_DELETED   = 'deleted';
 
     const EMPTY_PASSWORD = '.';
 
@@ -45,22 +45,23 @@ class User extends Authenticatable implements MustVerifyEmail
         'price_plan_expiry_date',
         'price_plan_settings',
 
-        'is_ds_holidays_enabled',
-        'is_ds_google_algorithm_updates_enabled',
-        'is_ds_weather_alerts_enabled',
-        'is_ds_retail_marketing_enabled',
-        'is_ds_google_alerts_enabled',
-        'is_ds_wordpress_updates_enabled',
         'is_ds_web_monitors_enabled',
-        'is_ds_g_ads_history_change_enabled',
-        'is_ds_anomolies_detection_enabled',
-        'is_ds_budget_tracking_enabled',
+        'is_ds_google_alerts_enabled',
+        'is_ds_google_algorithm_updates_enabled',
+        'is_ds_retail_marketing_enabled',
+        'is_ds_holidays_enabled',
+        'is_ds_weather_alerts_enabled',
+        'is_ds_wordpress_updates_enabled',
         'is_ds_keyword_tracking_enabled',
         'is_ds_facebook_tracking_enabled',
         'is_ds_instagram_tracking_enabled',
         'is_ds_bitbucket_tracking_enabled',
         'is_ds_github_tracking_enabled',
         'is_ds_apple_podcast_annotation_enabled',
+        'is_ds_g_ads_history_change_enabled',
+        'is_ds_twitter_tracking_enabled',
+        'is_ds_anomolies_detection_enabled',
+        'is_ds_budget_tracking_enabled',
 
         'user_level',
         'department',
@@ -72,7 +73,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'startup_configuration_showed_at',
 
         'last_screenshot_of_report_at',
-
         // app_sumo_uuid
     ];
 
@@ -103,32 +103,33 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'phone_verified_at' => 'datetime',
-        'price_plan_expiry_date' => 'date',
-        'price_plan_settings' => 'json',
-        'last_login_at' => 'datetime',
-        'trial_ended_at' => 'datetime',
-        'data_source_tour_showed_at' => 'datetime',
-        'google_accounts_tour_showed_at' => 'datetime',
-        'startup_configuration_showed_at' => 'datetime',
+        'email_verified_at'                      => 'datetime',
+        'phone_verified_at'                      => 'datetime',
+        'price_plan_expiry_date'                 => 'date',
+        'price_plan_settings'                    => 'json',
+        'last_login_at'                          => 'datetime',
+        'trial_ended_at'                         => 'datetime',
+        'data_source_tour_showed_at'             => 'datetime',
+        'google_accounts_tour_showed_at'         => 'datetime',
+        'startup_configuration_showed_at'        => 'datetime',
 
-        'is_ds_holidays_enabled' => 'boolean',
+        'is_ds_holidays_enabled'                 => 'boolean',
         'is_ds_google_algorithm_updates_enabled' => 'boolean',
-        'is_ds_retail_marketing_enabled' => 'boolean',
-        'is_ds_weather_alerts_enabled' => 'boolean',
-        'is_ds_google_alerts_enabled' => 'boolean',
-        'is_ds_wordpress_updates_enabled' => 'boolean',
-        'is_ds_web_monitors_enabled' => 'boolean',
-        'is_ds_g_ads_history_change_enabled' => 'boolean',
-        'is_ds_anomolies_detection_enabled' => 'boolean',
-        'is_ds_budget_tracking_enabled' => 'boolean',
-        'is_ds_instagram_tracking_enabled' => 'boolean',
+        'is_ds_retail_marketing_enabled'         => 'boolean',
+        'is_ds_weather_alerts_enabled'           => 'boolean',
+        'is_ds_google_alerts_enabled'            => 'boolean',
+        'is_ds_wordpress_updates_enabled'        => 'boolean',
+        'is_ds_web_monitors_enabled'             => 'boolean',
+        'is_ds_g_ads_history_change_enabled'     => 'boolean',
+        'is_ds_anomolies_detection_enabled'      => 'boolean',
+        'is_ds_budget_tracking_enabled'          => 'boolean',
+        'is_ds_instagram_tracking_enabled'       => 'boolean',
+        'is_ds_twitter_tracking_enabled'         => 'boolean',
 
-        "last_logged_into_extension_at" => 'datetime',
-        "last_activated_any_data_source_at" => 'datetime',
-        "last_generated_api_token_at" => 'datetime',
-        "last_api_called_at" => "datetime",
+        "last_logged_into_extension_at"          => 'datetime',
+        "last_activated_any_data_source_at"      => 'datetime',
+        "last_generated_api_token_at"            => 'datetime',
+        "last_api_called_at"                     => "datetime",
 
         "has_password" => 'boolean',
 
@@ -198,6 +199,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function googleAccounts()
     {
         return $this->hasMany('App\Models\GoogleAccount');
+    }
+
+    public function twitterAccounts(): HasMany
+    {
+        return $this->hasMany(UserTwitterAccount::class, 'user_id', 'id');
+    }
+
+    public function twitterTrackingConfiguration(): HasOne
+    {
+        return $this->hasOne(TwitterTrackingConfiguration::class, 'user_id', 'id');
     }
 
     public function googleAnalyticsAccounts()
@@ -326,7 +337,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getTotalAnnotationsCount($applyLimit)
     {
-        $userIdsArray = $this->getAllGroupUserIdsArray();
+        $userIdsArray  = $this->getAllGroupUserIdsArray();
         $userPricePlan = $this->pricePlan;
 
         $annotationsQuery = "SELECT COUNT(*) AS total_annotations_count FROM (";
@@ -346,7 +357,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isPricePlanAnnotationLimitReached($applyLimit = false): bool
     {
-        $userPricePlan = $this->pricePlan;
+        $userPricePlan    = $this->pricePlan;
         $annotationsCount = $this->getTotalAnnotationsCount($applyLimit);
 
         if ($userPricePlan->annotations_count > 0) {
@@ -368,7 +379,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isPricePlanGoogleAnalyticsPropertyLimitReached(): bool
     {
-        $userPricePlan = $this->pricePlan;
+        $userPricePlan                = $this->pricePlan;
         $googleAnalyticsPropertyCount = $this->getInUseGoogleAnalyticsPropertyCount();
 
         if ($userPricePlan->google_analytics_property_count > 0) {

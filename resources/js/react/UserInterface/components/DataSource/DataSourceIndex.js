@@ -21,6 +21,7 @@ import { getCompanyName } from '../../helpers/CommonFunctions';
 import EditKeyword from '../../utils/EditKeyword';
 import GoogleAdChanges from "../../utils/GoogleAdChanges";
 import FacebookTracking from "../../utils/FacebookTracking";
+import TwitterTracking from "../../utils/TwitterTracking";
 import InstagramTracking from "../../utils/InstagramTracking";
 import BitbucketTracking from "../../utils/BitbucketTracking";
 import GithubTracking from "../../utils/GithubTracking";
@@ -91,6 +92,14 @@ export default class DataSourceIndex extends React.Component {
         this.checkUserBitbucketAccount();
         this.checkUserGithubAccount();
 
+        let alertMessage = new URLSearchParams(window.location.search).get("alertMessage");
+        if(alertMessage){
+            swal.fire({
+                iconHtml: '<img src="/images/svg/twitter.svg">',
+                title: 'Connected',
+                html: alertMessage,
+            });
+        }
     }
 
     loadUserDataSources(gaPropertyId) {
@@ -184,10 +193,6 @@ export default class DataSourceIndex extends React.Component {
         });
 
         this.sectionToggler('edit_keyword')
-
-        console.log(this.state);
-
-
     }
 
     render() {
@@ -237,11 +242,11 @@ export default class DataSourceIndex extends React.Component {
                         className="col-md-9 col-sm-12"
                         id="data-source-page-container"
                     >
-                        <div class="row">
+                        <div className="row">
                             {/*
                                 Website Monitoring Section
                             */}
-                            <div class="col-md-6 mt-2">
+                            <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{ minHeight: "180px" }}
@@ -2406,11 +2411,11 @@ export default class DataSourceIndex extends React.Component {
                                                     <small>
                                                         Twitter Tracking{" "}
                                                         <UserAnnotationColorPicker
-                                                            name="anomolies_detection"
+                                                            name="twitter_tracking"
                                                             value={
                                                                 this.state
                                                                     .userAnnotationColors
-                                                                    .facebook_tracking
+                                                                    .twitter_tracking
                                                             }
                                                             updateCallback={
                                                                 this
@@ -2418,74 +2423,85 @@ export default class DataSourceIndex extends React.Component {
                                                             }
                                                         />
                                                         <img
+                                                            id="twitter_tracking-datasource-hint"
                                                             className="hint-button-2"
+                                                            onClick={() => {
+                                                                this.changeShownHint(
+                                                                    "twitter_tracking"
+                                                                );
+                                                            }}
                                                             src="/images/info-logo.png"
                                                         />
                                                     </small>
                                                 </h2>
+                                                <UncontrolledPopover
+                                                    trigger="legacy"
+                                                    placement="right"
+                                                    isOpen={
+                                                        this.state
+                                                            .showHintFor ==
+                                                        "twitter_tracking"
+                                                    }
+                                                    target="twitter_tracking-datasource-hint"
+                                                    toggle={() => {
+                                                        this.changeShownHint(
+                                                            null
+                                                        );
+                                                    }}
+                                                >
+                                                    <PopoverHeader>
+                                                        Twitter Tracking
+                                                    </PopoverHeader>
+                                                    <PopoverBody>
+                                                        description
+                                                    </PopoverBody>
+                                                </UncontrolledPopover>
                                             </div>
                                             <div className="px-2 text-center">
-                                                {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
-                                                OFF
+                                                {this.state.userServices.is_ds_twitter_tracking_enabled ? "ON" : "OFF"}
                                                 <label className="trigger switch">
                                                     <input
                                                         type="checkbox"
-                                                        // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
-                                                        // onChange={this.serviceStatusHandler}
-                                                        onClick={(e) => {
-                                                            e.preventDefault();
-                                                            swal.fire(
-                                                                "This feature is coming soon. Stay tuned!",
-                                                                "",
-                                                                "info"
-                                                            );
-                                                            // const accountNotLinkedHtml =
-                                                            //     "" +
-                                                            //     '<div class="">' +
-                                                            //     '<img src="/images/banners/social_automations_banner.jpg" class="img-fluid">' +
-                                                            //     "</div>";
-
-                                                            // swal.fire({
-                                                            //     html: accountNotLinkedHtml,
-                                                            //     width: 700,
-                                                            //     customClass: {
-                                                            //         popup: "bg-light-red",
-                                                            //         htmlContainer:
-                                                            //             "m-0",
-                                                            //     },
-                                                            //     confirmButtonClass:
-                                                            //         "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                                            //     confirmButtonText:
-                                                            //         "Upgrade Now" +
-                                                            //         "<i class='ml-2 fa fa-caret-right'> </i>",
-                                                            // }).then((value) => {
-                                                            //     this.setState({
-                                                            //         redirectTo:
-                                                            //             "/settings/price-plans",
-                                                            //     });
-                                                            // });
-                                                        }}
-                                                        name="is_ds_anomolies_detection_enabled"
+                                                        checked={this.state.userServices.is_ds_twitter_tracking_enabled}
+                                                        onChange={this.serviceStatusHandler}
+                                                        name="is_ds_twitter_tracking_enabled"
                                                     />
-                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} /> */}
-                                                    <span
-                                                        className={`slider round`}
-                                                    />
+                                                    <span className={`slider round ${this.state.userServices.is_ds_twitter_tracking_enabled ? 'animate-pulse' : ''}`} />
                                                 </label>
                                             </div>
                                         </div>
                                         <div className="px-2">
-                                            <div className="list-wrapper"></div>
-                                            <div className="text-center mt-2">
-                                                <img
-                                                    src="images/comingsoon.png"
-                                                    className="img-fluid w-40"
+                                            <div className="list-wrapper">
+                                                <p
                                                     style={{
-                                                        maxWidth: "150px",
+                                                        fontSize: "13px",
                                                     }}
-                                                />
+                                                >
+                                                    Credits: ∞
+                                                </p>
                                             </div>
                                         </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                                    <div>
+
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <p
+                                            className="ds-update-text m-0 pb-3 px-2 text-right"
+                                            onClick={() => {
+                                                this.sectionToggler(
+                                                    "twitter_tracking"
+                                                );
+                                            }}
+                                        >
+                                            {this.state.sectionName ==
+                                            "twitter_tracking"
+                                                ? "Hide"
+                                                : "Configure"}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -2900,6 +2916,10 @@ export default class DataSourceIndex extends React.Component {
                             <GoogleAdChanges />
                         ) : null}
 
+                        {this.state.sectionName == "twitter_tracking" ? (
+                            <TwitterTracking/>
+                        ) : null}
+
                         {this.state.sectionName == "facebook_tracking" ? (
                             <FacebookTracking />
                         ) : null}
@@ -3051,16 +3071,44 @@ export default class DataSourceIndex extends React.Component {
 
     updateUserService(e) {
 
-        HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
-            if (resp.data.user_services[e.target.name] == 1) {
-                toast.success("Service activated successfully.");
-                this.setState({ userServices: resp.data.user_services })
+        HttpClient.post('/userService', {[e.target.name]: e.target.checked ? 1 : 0}).then(resp => {
+
+            switch (e.target.name) {
+                case 'is_ds_twitter_tracking_enabled':
+                    if(resp.data.twitter_accounts > 0){
+                        this.setState({userServices: resp.data.user_services})
+                        if (resp.data.user_services[e.target.name] == 1) {
+                            toast.success("Service activated successfully.");
+                        }
+                        if (resp.data.user_services[e.target.name] == 0) {
+                            toast.info("Service deactivated successfully.");
+                        }
+                    }else{
+                        swal.fire({
+                            iconHtml: '<img src="/images/svg/twitter.svg">',
+                            showCloseButton: true,
+                            title: "Connect with Twitter",
+                            text: "Connect your Twitter account to create automatic annotations",
+                            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                            confirmButtonText: "<a href='/socialite/twitter' class='text-white'><i class='mr-2 fa fa-twitter'> </i>" + "Connect twitter Account</a>"
+                        });
+                    }
+                    break;
+
+                default:
+
+                    if (resp.data.user_services[e.target.name] == 1) {
+                        toast.success("Service activated successfully.");
+                    }
+                    if (resp.data.user_services[e.target.name] == 0) {
+                        toast.info("Service deactivated successfully.");
+                    }
+                    this.setState({userServices: resp.data.user_services})
+                    break;
             }
-            if (resp.data.user_services[e.target.name] == 0) {
-                this.setState({ userServices: resp.data.user_services })
-                toast.info("Service deactivated successfully.");
-            }
+
             (this.props.reloadUser)();
+
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
             if ((err.response).status == 402) {
@@ -3225,6 +3273,11 @@ export default class DataSourceIndex extends React.Component {
             } else if (e.target.name == 'is_ds_github_tracking_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
                 this.updateUserService(e);
+            }
+
+            if (e.target.name == 'is_ds_twitter_tracking_enabled') {
+                this.updateUserService(e);
+                this.sectionToggler(e.target.checked ? 'twitter_tracking' : null)
             }
 
         } else {

@@ -10,6 +10,8 @@ use App\Http\Controllers\FacebookTrackingConfigurationController;
 use App\Http\Controllers\InstagramAutomationController;
 use App\Http\Controllers\InstagramTrackingConfigurationController;
 use App\Http\Controllers\KeywordTrackingController;
+use App\Http\Controllers\TwitterController;
+use App\Http\Controllers\TwitterTrackingConfigurationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,6 +79,9 @@ Route::get('socialite/google/redirect', [App\Http\Controllers\Auth\RegisterContr
 
 Route::get('socialite/facebook', [FacebookAutomationController::class, 'redirectFacebook'])->name('facebook.redirect');
 Route::get('socialite/facebook/redirect', [FacebookAutomationController::class, 'callbackFacebook'])->name('facebook.callback');
+
+Route::get('socialite/twitter', [TwitterController::class, 'loginRedirect'])->name('twitter.redirect');
+Route::get('socialite/twitter/redirect', [TwitterController::class, 'loginCallback'])->name('twitter.callback');
 
 Route::get('socialite/instagram', [InstagramAutomationController::class, 'redirectInstagram'])->name('instagram.redirect');
 Route::get('socialite/instagram/redirect', [InstagramAutomationController::class, 'callbackInstagram'])->name('instagram.callback');
@@ -223,6 +228,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
             Route::post('save-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'save']);
             Route::get('get-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'get']);
+
+            Route::post('save-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'save']);
+            Route::get('get-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'get']);
 
             Route::post('save-instagram-tracking-configurations', [InstagramTrackingConfigurationController::class, 'save']);
             Route::get('get-instagram-tracking-configurations', [InstagramTrackingConfigurationController::class, 'get']);

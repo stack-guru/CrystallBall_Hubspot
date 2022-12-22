@@ -27,6 +27,7 @@ class UserAnnotationColor extends Model
         'facebook_tracking',
         'instagram_tracking',
         'bitbucket_tracking',
-        'github_tracking'
+        'github_tracking',
+        'twitter_tracking',
     ];
 }
