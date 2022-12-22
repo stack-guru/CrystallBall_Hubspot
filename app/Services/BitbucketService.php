@@ -28,13 +28,15 @@ class BitbucketService
 
     public function refreshToken(UserBitbucketAccount $bitbucketAccount)
     {
+        $client_id = config('services.bitbucket.client_id');
+        $client_secret = config('services.bitbucket.client_secret');
         $ch = curl_init();
 
         $headers = array();
         $headers[] = 'Content-Type: application/x-www-form-urlencoded';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_URL, 'https://bitbucket.org/site/oauth2/access_token');
-        curl_setopt($ch, CURLOPT_USERPWD, env("BITBUCKET_CLIENT_ID") . ":" . env("BITBUCKET_CLIENT_SECRET"));
+        curl_setopt($ch, CURLOPT_USERPWD, $client_id . ":" . $client_secret);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('grant_type' => 'refresh_token', 'refresh_token' => $bitbucketAccount->refresh_token)));
