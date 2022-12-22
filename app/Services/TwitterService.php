@@ -85,7 +85,7 @@ class TwitterService
     {
         $response = $this->httpClient->get("users/{$userId}/tweets", [
             'tweet.fields' => 'public_metrics',
-            'max_results'  => 100,
+            'max_results'  => 20,
         ]);
 
         if ($response->status() != Response::HTTP_OK) {
