@@ -36,10 +36,10 @@ export default class FacebookTracking extends React.Component {
                 is_tweets_retweets_tracking_on: resp.data.is_tweets_retweets_tracking_on,
                 when_tweet_reach_retweets: resp.data.when_tweet_reach_retweets,
             });
-            document.getElementById('is_tweets_likes_tracking_on_checkbox').checked = resp.data.is_tweets_likes_tracking_on;
-            document.getElementById('when_tweet_reach_likes').value = resp.data.when_tweet_reach_likes;
-            document.getElementById('is_tweets_retweets_tracking_on_checkbox').checked = resp.data.is_tweets_retweets_tracking_on;
-            document.getElementById('when_tweet_reach_retweets').value = resp.data.when_tweet_reach_retweets;
+            document.getElementById('is_tweets_likes_tracking_on_checkbox').checked = resp.data.is_tweets_likes_tracking_on ?? 0;
+            document.getElementById('when_tweet_reach_likes').value = resp.data.when_tweet_reach_likes ?? 0;
+            document.getElementById('is_tweets_retweets_tracking_on_checkbox').checked = resp.data.is_tweets_retweets_tracking_on ?? 0;
+            document.getElementById('when_tweet_reach_retweets').value = resp.data.when_tweet_reach_retweets ?? 0;
 
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
