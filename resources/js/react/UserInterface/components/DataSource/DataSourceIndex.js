@@ -1834,6 +1834,7 @@ export default class DataSourceIndex extends React.Component {
                                         }
                                     </div>
                                 </div>
+                                </div>
                             <div className="col-md-6 mt-2">
                                 <ApplePodcast
                                     state={this.state}
@@ -2944,13 +2945,13 @@ export default class DataSourceIndex extends React.Component {
                         ) : null}
                     </div>
                 </div>
-            </div>
+                </div>
         );
     }
 
     checkUserFacebookAccount() {
         // userFacebookAccountsExists
-        this.setState({ isBusy: true });
+        this.setState({ isBusy: true })
         HttpClient.get('/data-source/user-facebook-accounts-exists', {}).then((resp) => {
             if (resp.data.exists) {
                 this.setState({

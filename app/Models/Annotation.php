@@ -136,6 +136,7 @@ class Annotation extends Model
         if ($user->is_ds_github_tracking_enabled) {
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select null, 1, show_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `github_commit_annotations` WHERE `github_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        }
         // Add apple podcast annotations if it is enabled in user data source
         if ($user->is_ds_apple_podcast_annotation_enabled) {
             $annotationsQuery .= " union ";

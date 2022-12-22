@@ -94,7 +94,7 @@ return [
     ],
     'uptime_robot' => [
         'api_key' => env('UPTIME_ROBOT_API_KEY'),
-        'interval' => env('UPTIME_ROBOT_INTERVAL',60)
+        'interval' => env('UPTIME_ROBOT_INTERVAL', 60)
     ],
 
     'pusher' => [
@@ -135,15 +135,15 @@ return [
     ],
 
     'facebook' => [
-//         client's app
-         'client_id' => '787240889016012',
-         'client_secret' => 'e051b20870412d826641de7d24f41111',
-         'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
+        //         client's app
+        'client_id' => '787240889016012',
+        'client_secret' => 'e051b20870412d826641de7d24f41111',
+        'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
 
         // my test app
-//        'client_id' => '787240889016012',
-//        'client_secret' => 'e051b20870412d826641de7d24f41111',
-//        'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
+        //        'client_id' => '787240889016012',
+        //        'client_secret' => 'e051b20870412d826641de7d24f41111',
+        //        'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
     ],
 
     'instagram' => [
@@ -168,6 +168,8 @@ return [
         'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => env('GITHUB_REDIRECT_URL'),
+    ],
+
     'apple_podcast' => [
         'data_api_url' => env('APPLE_PODCAST_DATA_API_URL'),
     ],
