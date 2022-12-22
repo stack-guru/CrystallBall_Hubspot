@@ -40,6 +40,10 @@ class TwitterTrackingConfigurationController extends Controller
         $authId = Auth::id();
         $config = TwitterTrackingConfiguration::where('user_id', $authId)->first();
 
+        if(!$config){
+            return response()->json([]);
+        }
+
         return response()->json([
             'is_tweets_likes_tracking_on'    => (boolean) ($config->is_tweets_likes_tracking_on ?? false),
             'when_tweet_reach_likes'         => (int) ($config->when_tweet_reach_likes ?? 0),
