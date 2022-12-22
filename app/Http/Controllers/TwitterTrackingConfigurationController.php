@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TwitterTrackingConfiguration;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 class TwitterTrackingConfigurationController extends Controller
@@ -15,9 +16,11 @@ class TwitterTrackingConfigurationController extends Controller
      */
     public function save(Request $request): JsonResponse
     {
+        $userId = Auth::id();
+
         TwitterTrackingConfiguration::updateOrCreate(
             [
-                'user_id' => Auth::user()->id,
+                'user_id' => $userId,
             ],
             [
                 'is_tweets_likes_tracking_on'    => (boolean) $request->is_tweets_likes_tracking_on,
@@ -26,6 +29,10 @@ class TwitterTrackingConfigurationController extends Controller
                 'when_tweet_reach_retweets'      => (int) $request->when_tweet_reach_retweets,
             ]
         );
+
+        Artisan::call('gaa:create-annotations-of-twitter', [
+            'user' => $userId,
+        ]);
 
         return response()->json([
             'message' => 'Settings Updated',
@@ -40,7 +47,7 @@ class TwitterTrackingConfigurationController extends Controller
         $authId = Auth::id();
         $config = TwitterTrackingConfiguration::where('user_id', $authId)->first();
 
-        if(!$config){
+        if (!$config) {
             return response()->json([]);
         }
 

@@ -1957,6 +1957,116 @@ export default class DataSourceIndex extends React.Component {
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
+                                                        Twitter Tracking{" "}
+                                                        <UserAnnotationColorPicker
+                                                            name="twitter_tracking"
+                                                            value={
+                                                                this.state
+                                                                    .userAnnotationColors
+                                                                    .twitter_tracking
+                                                            }
+                                                            updateCallback={
+                                                                this
+                                                                    .updateUserAnnotationColors
+                                                            }
+                                                        />
+                                                        <img
+                                                            id="twitter_tracking-datasource-hint"
+                                                            className="hint-button-2"
+                                                            onClick={() => {
+                                                                this.changeShownHint(
+                                                                    "twitter_tracking"
+                                                                );
+                                                            }}
+                                                            src="/images/info-logo.png"
+                                                        />
+                                                    </small>
+                                                </h2>
+                                                <UncontrolledPopover
+                                                    trigger="legacy"
+                                                    placement="right"
+                                                    isOpen={
+                                                        this.state
+                                                            .showHintFor ==
+                                                        "twitter_tracking"
+                                                    }
+                                                    target="twitter_tracking-datasource-hint"
+                                                    toggle={() => {
+                                                        this.changeShownHint(
+                                                            null
+                                                        );
+                                                    }}
+                                                >
+                                                    <PopoverHeader>
+                                                        Twitter Tracking
+                                                    </PopoverHeader>
+                                                    <PopoverBody>
+                                                        description
+                                                    </PopoverBody>
+                                                </UncontrolledPopover>
+                                            </div>
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices.is_ds_twitter_tracking_enabled ? "ON" : "OFF"}
+                                                <label className="trigger switch">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={this.state.userServices.is_ds_twitter_tracking_enabled}
+                                                        onChange={this.serviceStatusHandler}
+                                                        name="is_ds_twitter_tracking_enabled"
+                                                    />
+                                                    <span className={`slider round ${this.state.userServices.is_ds_twitter_tracking_enabled ? 'animate-pulse' : ''}`} />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                                <p
+                                                    style={{
+                                                        fontSize: "13px",
+                                                    }}
+                                                >
+                                                    Credits: ∞
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                                    <div>
+
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <p
+                                            className="ds-update-text m-0 pb-3 px-2 text-right"
+                                            onClick={() => {
+                                                this.sectionToggler(
+                                                    "twitter_tracking"
+                                                );
+                                            }}
+                                        >
+                                            {this.state.sectionName ==
+                                            "twitter_tracking"
+                                                ? "Hide"
+                                                : "Configure"}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6 mt-2">
+                                <div
+                                    className="d-flex border rounded flex-column justify-content-between"
+                                    style={{ minHeight: "180px" }}
+                                >
+                                    <div>
+                                        <div
+                                            className="d-flex mt-2 justify-content-between "
+                                            id="web-monitoring-data-source-section"
+                                        >
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
                                                         Facebook Tracking{" "}
                                                         <UserAnnotationColorPicker
                                                             name="anomolies_detection"
@@ -2392,116 +2502,6 @@ export default class DataSourceIndex extends React.Component {
                                                 />
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col-md-6 mt-2">
-                                <div
-                                    className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
-                                >
-                                    <div>
-                                        <div
-                                            className="d-flex mt-2 justify-content-between "
-                                            id="web-monitoring-data-source-section"
-                                        >
-                                            <div className="px-2">
-                                                <h2>
-                                                    <small>
-                                                        Twitter Tracking{" "}
-                                                        <UserAnnotationColorPicker
-                                                            name="twitter_tracking"
-                                                            value={
-                                                                this.state
-                                                                    .userAnnotationColors
-                                                                    .twitter_tracking
-                                                            }
-                                                            updateCallback={
-                                                                this
-                                                                    .updateUserAnnotationColors
-                                                            }
-                                                        />
-                                                        <img
-                                                            id="twitter_tracking-datasource-hint"
-                                                            className="hint-button-2"
-                                                            onClick={() => {
-                                                                this.changeShownHint(
-                                                                    "twitter_tracking"
-                                                                );
-                                                            }}
-                                                            src="/images/info-logo.png"
-                                                        />
-                                                    </small>
-                                                </h2>
-                                                <UncontrolledPopover
-                                                    trigger="legacy"
-                                                    placement="right"
-                                                    isOpen={
-                                                        this.state
-                                                            .showHintFor ==
-                                                        "twitter_tracking"
-                                                    }
-                                                    target="twitter_tracking-datasource-hint"
-                                                    toggle={() => {
-                                                        this.changeShownHint(
-                                                            null
-                                                        );
-                                                    }}
-                                                >
-                                                    <PopoverHeader>
-                                                        Twitter Tracking
-                                                    </PopoverHeader>
-                                                    <PopoverBody>
-                                                        description
-                                                    </PopoverBody>
-                                                </UncontrolledPopover>
-                                            </div>
-                                            <div className="px-2 text-center">
-                                                {this.state.userServices.is_ds_twitter_tracking_enabled ? "ON" : "OFF"}
-                                                <label className="trigger switch">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={this.state.userServices.is_ds_twitter_tracking_enabled}
-                                                        onChange={this.serviceStatusHandler}
-                                                        name="is_ds_twitter_tracking_enabled"
-                                                    />
-                                                    <span className={`slider round ${this.state.userServices.is_ds_twitter_tracking_enabled ? 'animate-pulse' : ''}`} />
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="px-2">
-                                            <div className="list-wrapper">
-                                                <p
-                                                    style={{
-                                                        fontSize: "13px",
-                                                    }}
-                                                >
-                                                    Credits: ∞
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div className="px-2">
-                                            <div className="list-wrapper">
-                                                    <div>
-
-                                                    </div>
-                                            </div>
-                                        </div>
-
-                                        <p
-                                            className="ds-update-text m-0 pb-3 px-2 text-right"
-                                            onClick={() => {
-                                                this.sectionToggler(
-                                                    "twitter_tracking"
-                                                );
-                                            }}
-                                        >
-                                            {this.state.sectionName ==
-                                            "twitter_tracking"
-                                                ? "Hide"
-                                                : "Configure"}
-                                        </p>
                                     </div>
                                 </div>
                             </div>

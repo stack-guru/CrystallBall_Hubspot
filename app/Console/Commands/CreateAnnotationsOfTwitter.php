@@ -19,7 +19,7 @@ class CreateAnnotationsOfTwitter extends Command
      *
      * @var string
      */
-    protected $signature = 'gaa:create-annotations-of-twitter';
+    protected $signature = 'gaa:create-annotations-of-twitter {user?}';
 
     /**
      * The console command description.
@@ -56,6 +56,15 @@ class CreateAnnotationsOfTwitter extends Command
         $this->twitterTrackingRepository = $twitterTrackingRepository;
     }
 
+    private function getUserId()
+    {
+        try {
+            return (int) $this->argument('user');
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
     /**
      * Execute the console command.
      *
@@ -63,10 +72,17 @@ class CreateAnnotationsOfTwitter extends Command
      */
     public function handle()
     {
+
+        $userId = $this->getUserId();
         $users = User::with(['twitterAccounts:id,user_id,account_id', 'twitterTrackingConfiguration'])
             ->whereHas('twitterAccounts')
             ->whereHas('twitterTrackingConfiguration')
             ->where('is_ds_twitter_tracking_enabled', true)
+            ->where(function($query) use ($userId){
+                if($userId){
+                    $query->where('id', $userId);
+                }
+            })
             ->get();
 
         $this->output->progressStart($users->count());
