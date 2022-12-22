@@ -168,6 +168,8 @@ return [
         'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => env('GITHUB_REDIRECT_URL'),
+    'apple_podcast' => [
+        'data_api_url' => env('APPLE_PODCAST_DATA_API_URL'),
     ],
 
 ];

@@ -60,6 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_ds_instagram_tracking_enabled',
         'is_ds_bitbucket_tracking_enabled',
         'is_ds_github_tracking_enabled',
+        'is_ds_apple_podcast_annotation_enabled',
 
         'user_level',
         'department',

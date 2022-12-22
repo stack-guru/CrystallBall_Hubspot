@@ -242,6 +242,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
             // github repositories
             Route::get('get-github-repositories', [GithubAutomationController::class, 'getRepositories']);
+            Route::post('apple_podcast_url', [App\Http\Controllers\ApplePodcastMonitorController::class,'applePodcastUrl']);
+            Route::resource('apple-podcast-monitor', App\Http\Controllers\ApplePodcastMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
+
         });
 
         Route::group(['prefix' => 'settings'], function () {

@@ -25,6 +25,7 @@
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "mrkatz/laravel-goutte": "dev-master",
         "rap2hpoutre/laravel-log-viewer": "^2.2",
         "sentry/sentry-laravel": "^2.10",
         "socialiteproviders/instagram": "^4.1",
