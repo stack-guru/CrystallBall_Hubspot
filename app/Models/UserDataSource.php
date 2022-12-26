@@ -67,6 +67,7 @@ class UserDataSource extends Model
         $user->is_ds_weather_alerts_enabled = false;
         $user->is_ds_wordpress_updates_enabled = false;
         $user->is_ds_web_monitors_enabled = false;
+        $user->is_ds_shopify_annotation_enabled = false;
         $user->save();
     }
 

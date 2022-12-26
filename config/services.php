@@ -170,4 +170,8 @@ return [
         'redirect' => env('GITHUB_REDIRECT_URL'),
     ],
 
+    'shopify' => [
+        'data_api_url' => env('SHOPIFY_DATA_API_URL'),
+    ],
+
 ];

@@ -132,6 +132,11 @@ class Annotation extends Model
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select null, 1, show_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `bitbucket_commit_annotations` WHERE `bitbucket_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
         }
+        // Add shopify annotations if it is enabled in user data source
+        if ($user->is_ds_shopify_annotation_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event, url, description, 'System' AS user_name from `shopify_annotations` WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        }
         return $annotationsQuery;
     }
 }

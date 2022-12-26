@@ -33,7 +33,7 @@ class PricePlan extends Model
         'has_csv_upload', 'has_api', 'is_enabled', 'has_integrations', "has_data_sources",
         'ga_account_count', 'user_per_ga_account_count', 'short_description',
         'web_monitor_count', 'owm_city_count', 'google_alert_keyword_count', 'keyword_tracking_count',
-        'has_notifications', 'has_chrome_extension', 'has_google_data_studio',
+        'shopify_monitor_count', 'has_notifications', 'has_chrome_extension', 'has_google_data_studio',
         'has_microsoft_power_bi', 'google_analytics_property_count',
         'yearly_discount_percent', 'badge_text',
         'sort_rank', 'custom_plan_code',

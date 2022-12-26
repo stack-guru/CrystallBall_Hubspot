@@ -59,6 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_ds_facebook_tracking_enabled',
         'is_ds_instagram_tracking_enabled',
         'is_ds_bitbucket_tracking_enabled',
+        'is_ds_shopify_annotation_enabled',
 
         'user_level',
         'department',

@@ -234,6 +234,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
             // bitbucket workspaces
             Route::get('get-bitbucket-workspaces', [App\Http\Controllers\BitbucketAutomationController::class, 'getWorkspaces']);
+
+            Route::post('shopify_url', [App\Http\Controllers\ShopifyMonitorController::class,'shopifyUrl']);
+            Route::resource('shopify-monitor', App\Http\Controllers\ShopifyMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
         });
 
         Route::group(['prefix' => 'settings'], function () {
