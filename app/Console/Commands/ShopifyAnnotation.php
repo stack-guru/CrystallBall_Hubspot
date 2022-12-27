@@ -46,7 +46,6 @@ class ShopifyAnnotationCommand extends Command
         $sMonitors = ShopifyMonitor::get();
         $shopifyService = new ShopifyService();
         foreach($sMonitors as $monitor){
-
             $url = $monitor->url;
             $userId = $monitor->user_id;
 

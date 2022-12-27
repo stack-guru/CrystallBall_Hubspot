@@ -16,6 +16,7 @@ class CreateShopifyAnnotations extends Migration
         Schema::create('shopify_annotations', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->required()->unsigned();
+            $table->bigInteger('product_id')->required()->unsigned();
             $table->string("category")->nullable();
             $table->string("title")->nullable();
             $table->longText("handle")->nullable();

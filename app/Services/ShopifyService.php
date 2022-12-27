@@ -15,7 +15,7 @@ use App\Models\Admin;
 class ShopifyService {
     public function __construct()
     {
-        $this->shopifyUrl = config('services.shopify.data_api_url');
+
     }
 
     //Shopify API
@@ -35,7 +35,6 @@ class ShopifyService {
             $output = json_decode(curl_exec($ch));
 
             $products = $output->products;
-
             foreach($products as $product) {
                 $annotation = new ShopifyAnnotation();
                 $annotation->user_id = $userID;
@@ -47,6 +46,7 @@ class ShopifyService {
                 $annotation->vendor = $product->vendor;
                 $annotation->product_type = $product->product_type;
                 $annotation->save();
+                var_dump($product);
             }
 
             // close curl resource to free up system resources
