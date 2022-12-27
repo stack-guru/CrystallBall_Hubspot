@@ -19,8 +19,8 @@ class CreateShopifyAnnotations extends Migration
             $table->bigInteger('product_id')->required()->unsigned();
             $table->string("category")->nullable();
             $table->string("title")->nullable();
-            $table->longText("handle")->nullable();
-            $table->string("body_html")->nullable();
+            $table->string("handle")->nullable();
+            $table->longText("body_html")->nullable();
             $table->string("vendor")->nullable();
             $table->string("product_type")->nullable();
             $table->date("published_at")->nullable();
