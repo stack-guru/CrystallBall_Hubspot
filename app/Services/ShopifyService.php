@@ -39,6 +39,7 @@ class ShopifyService {
                 $annotation = new ShopifyAnnotation();
                 $annotation->user_id = $userID;
                 $annotation->category = "Shopify Product";
+                $annotation->product_id = $product->product_id;
                 $annotation->title = $product->title;
                 $annotation->handle = $product->handle;
                 $annotation->body_html = $product->body_html;
@@ -46,7 +47,6 @@ class ShopifyService {
                 $annotation->vendor = $product->vendor;
                 $annotation->product_type = $product->product_type;
                 $annotation->save();
-                var_dump($product);
             }
 
             // close curl resource to free up system resources
