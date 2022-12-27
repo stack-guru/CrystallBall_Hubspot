@@ -46,12 +46,10 @@ class ShopifyAnnotationCommand extends Command
         $sMonitors = ShopifyMonitor::get();
         $shopifyService = new ShopifyService();
         foreach($sMonitors as $monitor){
-
             $url = $monitor->url;
             $userId = $monitor->user_id;
-            $feedUrl = $monitor->feed_url;
 
-            $shopifyData = $shopifyService->saveShopifyProducts($feedUrl, $url, $userId);
+            $shopifyData = $shopifyService->saveShopifyProducts($url, $userId);
             $monitor->last_synced_at = Carbon::now();
             $monitor->save();
 

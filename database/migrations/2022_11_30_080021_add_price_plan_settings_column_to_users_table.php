@@ -14,7 +14,7 @@ class AddPricePlanSettingsColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->json('price_plan_settings')->after('price_plan_expiry_date');
+            $table->json('price_plan_settings')->nullable()->after('price_plan_expiry_date');
         });
     }
 

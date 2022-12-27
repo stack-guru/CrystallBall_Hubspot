@@ -14,56 +14,56 @@ return [
     |
      */
 
-    'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
+    'mailgun'          => [
+        'domain'   => env('MAILGUN_DOMAIN'),
+        'secret'   => env('MAILGUN_SECRET'),
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
 
-    'postmark' => [
+    'postmark'         => [
         'token' => env('POSTMARK_TOKEN'),
     ],
 
-    'ses' => [
-        'key' => env('AWS_ACCESS_KEY_ID'),
+    'ses'              => [
+        'key'    => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'bluesnap' => [
+    'bluesnap'         => [
         'environment' => env('BLUESNAP_ENVIRONMENT', 'sandbox'),
-        'api' => [
-            'key' => env('BLUESNAP_API_KEY'),
+        'api'         => [
+            'key'      => env('BLUESNAP_API_KEY'),
             'password' => env('BLUESNAP_API_PASSWORD'),
         ],
-        'client' => [
+        'client'      => [
             'encryption' => [
                 'key' => env('BLUESNAP_CLIENT_ENCRYPTION_KEY'),
             ],
         ],
     ],
 
-    'google' => [
-        'client_id' => env('GOOGLE_CLIENT_ID'),
+    'google'           => [
+        'client_id'     => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => env('GOOGLE_CLIENT_REDIRECT_URI'),
+        'redirect'      => env('GOOGLE_CLIENT_REDIRECT_URI'),
 
-        'calendar' => [
+        'calendar'      => [
             'api_key' => env('GOOGLE_CALENDAR_API_KEY'),
         ],
 
-        'adwords' => [
+        'adwords'       => [
             'developer_token' => env('GOOGLE_ADWORDS_DEVELOPER_TOKEN'),
             'manager_account' => [
-                'customer_id' => env('GOOGLE_ADWORDS_MANAGER_ACCOUNT_CUSTOMER_ID')
-            ]
+                'customer_id' => env('GOOGLE_ADWORDS_MANAGER_ACCOUNT_CUSTOMER_ID'),
+            ],
         ],
 
-        'analytics' => [
+        'analytics'     => [
             'code' => env('GOOGLE_ANALYTICS_CODE'),
         ],
 
-        'tag_manager' => [
+        'tag_manager'   => [
             'code' => env('GOOGLE_TAG_MANAGER_CODE'),
         ],
     ],
@@ -74,88 +74,94 @@ return [
         ],
     ],
 
-    'sendgrid' => [
+    'sendgrid'         => [
         'api' => [
             'key' => env('SL_SENDGRID_API_KEY'),
-            'id' => env('SL_SENDGRID_API_ID'),
+            'id'  => env('SL_SENDGRID_API_ID'),
         ],
     ],
 
-    'visual_crossing' => [
+    'visual_crossing'  => [
         'api' => [
             'key' => env('VISUAL_CROSSING_API_KEY'),
         ],
     ],
 
-    'microsoft' => [
+    'microsoft'        => [
         'clarity' => [
             'code' => env('MICROSOFT_CLARITY_CODE'),
         ],
     ],
-    'uptime_robot' => [
-        'api_key' => env('UPTIME_ROBOT_API_KEY'),
-        'interval' => env('UPTIME_ROBOT_INTERVAL',60)
+    'uptime_robot'     => [
+        'api_key'  => env('UPTIME_ROBOT_API_KEY'),
+        'interval' => env('UPTIME_ROBOT_INTERVAL', 60),
     ],
 
-    'pusher' => [
+    'pusher'           => [
         'beams_instance_id' => env('PUSHER_BEAMS_INSTANCE_ID'),
-        'beams_secret_key' => env('PUSHER_BEAMS_SECRET'),
+        'beams_secret_key'  => env('PUSHER_BEAMS_SECRET'),
     ],
 
-    'hotjar' => [
+    'hotjar'           => [
         'site' => [
             'code' => env('HOTJAR_SITE_CODE'),
         ],
     ],
 
-    'heap_analytics' => [
+    'heap_analytics'   => [
         'property' => [
-            'code' => env('HEAP_ANALYTICS_PROPERTY')
-        ]
+            'code' => env('HEAP_ANALYTICS_PROPERTY'),
+        ],
     ],
 
-    'recaptcha' => [
+    'recaptcha'        => [
         'server' => [
-            'key' => env('RECAPTCHA_SERVER_KEY', '')
+            'key' => env('RECAPTCHA_SERVER_KEY', ''),
         ],
         'client' => [
-            'key' => env('RECAPTCHA_CLIENT_KEY', '')
+            'key' => env('RECAPTCHA_CLIENT_KEY', ''),
         ],
     ],
 
-    'user_back' => [
-        'access_token' => env('USER_BACK_ACCESS_TOKEN', '')
+    'user_back'        => [
+        'access_token' => env('USER_BACK_ACCESS_TOKEN', ''),
     ],
 
-    'first_promoter' => [
+    'first_promoter'   => [
         'api' => [
-            'key' => env('FIRST_PROMOTER_API_KEY')
+            'key' => env('FIRST_PROMOTER_API_KEY'),
         ],
-        'cid' => env('FIRST_PROMOTER_CID')
+        'cid' => env('FIRST_PROMOTER_CID'),
     ],
-
-    'facebook' => [
+    'facebook'         => [
 //         client's app
-         'client_id' => '787240889016012',
-         'client_secret' => 'e051b20870412d826641de7d24f41111',
-         'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
+        'client_id'     => '787240889016012',
+        'client_secret' => 'e051b20870412d826641de7d24f41111',
+        'redirect'      => 'https://lukionline.me/socialite/facebook/redirect',
 
         // my test app
-//        'client_id' => '787240889016012',
-//        'client_secret' => 'e051b20870412d826641de7d24f41111',
-//        'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
+        //        'client_id' => '787240889016012',
+        //        'client_secret' => 'e051b20870412d826641de7d24f41111',
+        //        'redirect' => 'https://lukionline.me/socialite/facebook/redirect',
     ],
 
-    'instagram' => [
-        'client_id' => '417643546831147',
+    'instagram'        => [
+        'client_id'     => '417643546831147',
         'client_secret' => 'af8387d1bf790e75d484e30e4080b4cb',
-        'redirect' => 'https://lukionline.me/socialite/instagram/redirect',
+        'redirect'      => 'https://lukionline.me/socialite/instagram/redirect',
     ],
 
-    'instagrambasic' => [
-        'client_id' => '5322713981188629',
+    'instagrambasic'   => [
+        'client_id'     => '5322713981188629',
         'client_secret' => '9a2fd6d6c7c12a8592a1ae1b68613816',
-        'redirect' => 'https://lukionline.me/socialite/instagrambasic/redirect',
+        'redirect'      => 'https://lukionline.me/socialite/instagrambasic/redirect',
+    ],
+
+    'twitter'          => [
+        'client_id'     => env('TWITTER_CLIENT_ID'),
+        'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'redirect'      => env('TWITTER_CALLBACK_URL', 'https://lukionline.me/socialite/twitter/redirect'),
+        'bearer_token' => env('TWITTER_BEARER_TOKEN'),
     ],
 
     'bitbucket' => [
@@ -172,6 +178,10 @@ return [
 
     'shopify' => [
         'data_api_url' => env('SHOPIFY_DATA_API_URL'),
+    ],
+
+    'apple_podcast' => [
+        'data_api_url' => env('APPLE_PODCAST_DATA_API_URL'),
     ],
 
 ];

@@ -11,26 +11,21 @@ use App\Models\ShopifyAnnotation;
 use Illuminate\Support\Facades\Auth;
 use Goutte\Client;
 use App\Models\Admin;
-   
+
 class ShopifyService {
-    private $scrappingServerUrl;
-    /**
-     * Initialize the library in your constructor using
-     * your environment, api key, and password
-     */
     public function __construct()
     {
-        $this->shopifyUrl = config('services.shopify.data_api_url');
+
     }
 
     //Shopify API
-    public function saveShopifyProducts($feedUrl, $url, $userID){
+    public function saveShopifyProducts($url, $userID){
         try {
 
             $ch = curl_init();
 
             // set url
-            curl_setopt($ch, CURLOPT_URL, $this->shopifyUrl);
+            curl_setopt($ch, CURLOPT_URL, $url . '/products.json');
 
             //return the transfer as a string
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -40,11 +35,11 @@ class ShopifyService {
             $output = json_decode(curl_exec($ch));
 
             $products = $output->products;
-
             foreach($products as $product) {
                 $annotation = new ShopifyAnnotation();
                 $annotation->user_id = $userID;
                 $annotation->category = "Shopify Product";
+                $annotation->product_id = $product->product_id;
                 $annotation->title = $product->title;
                 $annotation->handle = $product->handle;
                 $annotation->body_html = $product->body_html;
@@ -52,18 +47,16 @@ class ShopifyService {
                 $annotation->vendor = $product->vendor;
                 $annotation->product_type = $product->product_type;
                 $annotation->save();
-            } 
+            }
 
             // close curl resource to free up system resources
             curl_close($ch);
             return true;
         } catch (\Exception $e) {
-            Log::channel('ApplePodcast Error')->debug($e);
+            Log::channel('Shopify Error')->debug($e);
             Log::error($e);
             return false;
         }
-
-    
     }
 
 }
