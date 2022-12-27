@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 
 use App\Models\ShopifyAnnotation;
 use Illuminate\Support\Facades\Auth;
-use Goutte\Client;
+use App\Mail\AdminFailedShopifyScriptMail;
 use App\Models\Admin;
 
 class ShopifyService {
@@ -50,8 +50,10 @@ class ShopifyService {
             return true;
         } catch (\Exception $e) {
             Log::channel('Shopify Error')->debug($e);
+            $admin = Admin::first();
+            $message = "Apple Podcast script is crashed. Please have a look into the code to fix!";
+            Mail::to($admin)->send(new AdminFailedShopifyScriptMail($admin, $e));
             Log::error($e);
-            return $e;
         }
     }
 
