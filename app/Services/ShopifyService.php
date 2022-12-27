@@ -13,10 +13,6 @@ use Goutte\Client;
 use App\Models\Admin;
 
 class ShopifyService {
-    public function __construct()
-    {
-
-    }
 
     //Shopify API
     public function saveShopifyProducts($url, $userID){
@@ -39,7 +35,7 @@ class ShopifyService {
                 $annotation = new ShopifyAnnotation();
                 $annotation->user_id = $userID;
                 $annotation->category = "Shopify Product";
-                $annotation->product_id = $product->product_id;
+                $annotation->product_id = $product->id;
                 $annotation->title = $product->title;
                 $annotation->handle = $product->handle;
                 $annotation->body_html = $product->body_html;
