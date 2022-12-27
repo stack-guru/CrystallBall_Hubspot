@@ -150,7 +150,7 @@ class Annotation extends Model
         // Add shopify annotations if it is enabled in user data source
         if ($user->is_ds_shopify_annotation_enabled) {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, title, handle, body_html, 'System' AS user_name from `shopify_annotations` WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, title, handle, body_html, 'Shopify' AS user_name from `shopify_annotations` WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
         }
         return $annotationsQuery;
     }
