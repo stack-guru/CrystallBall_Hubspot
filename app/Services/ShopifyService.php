@@ -31,21 +31,36 @@ class ShopifyService {
             $output = json_decode(curl_exec($ch));
 
             $products = $output->products;
+            $productIDs = [];
             foreach($products as $product) {
-                $exist = ShopifyAnnotation::where('product_id', $product->id)->first();
-                if ($exist) {
+                $productId = $product->id;
+                $productIDs[] = $productId;
+                $annotation = ShopifyAnnotation::where('product_id', $productId)->first();
+                if (!$annotation) {
                     $annotation = new ShopifyAnnotation();
+                    $annotation->category = "New Shopify Product";
+                    $annotation->product_id = $productId;
                     $annotation->user_id = $userID;
-                    $annotation->category = "Shopify Product";
-                    $annotation->product_id = $product->id;
+                    $annotation->published_at = $product->published_at;
+                    $annotation->product_type = $product->product_type;
+                } else {
+                    $annotation->category = "Updated Shopify Product";                    
+                }
+                $saveRecord = !$annotation || ($annotation && $annotation->shopify_updated_at !== $product->updated_at);
+                if ($saveRecord) {
                     $annotation->title = $product->title;
                     $annotation->handle = $product->handle;
                     $annotation->body_html = $product->body_html;
-                    $annotation->published_at = $product->published_at;
                     $annotation->vendor = $product->vendor;
-                    $annotation->product_type = $product->product_type;
+                    $annotation->shopify_updated_at = $product->updated_at;
                     $annotation->save();
                 }
+            }
+
+            $allExistingAnnotations = ShopifyAnnotation::whereNotIn('product_id', $productIDs)->get();
+            foreach($allExistingAnnotations as $product) {
+                $product->category = "Removed Shopify Product";
+                $product->save();
             }
 
             // close curl resource to free up system resources
@@ -55,8 +70,9 @@ class ShopifyService {
             Log::channel('Shopify Error')->debug($e);
             $admin = Admin::first();
             $message = "Apple Podcast script is crashed. Please have a look into the code to fix!";
-            Mail::to($admin)->send(new AdminFailedShopifyScriptMail($admin, $e));
+              // Mail::to($admin)->send(new AdminFailedShopifyScriptMail($admin, $e));
             Log::error($e);
+            return $e;
         }
     }
 

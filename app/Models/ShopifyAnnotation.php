@@ -18,9 +18,11 @@ class ShopifyAnnotation extends Model
         "vendor",
         "product_type",
         "published_at",
+        "shopify_updated_at",
     ];
 
     protected $casts =[
-        "published_at" => "date"
+        "published_at" => "date",
+        "shopify_updated_at" => "date"
     ];
 }
