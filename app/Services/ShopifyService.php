@@ -19,13 +19,13 @@ class ShopifyService {
     }
 
     //Shopify API
-    public function saveShopifyProducts($feedUrl, $url, $userID){
+    public function saveShopifyProducts($url, $userID){
         try {
 
             $ch = curl_init();
 
             // set url
-            curl_setopt($ch, CURLOPT_URL, $this->shopifyUrl);
+            curl_setopt($ch, CURLOPT_URL, $url . '/products.json');
 
             //return the transfer as a string
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

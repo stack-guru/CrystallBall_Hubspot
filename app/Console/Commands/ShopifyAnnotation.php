@@ -49,9 +49,8 @@ class ShopifyAnnotationCommand extends Command
 
             $url = $monitor->url;
             $userId = $monitor->user_id;
-            $feedUrl = $monitor->feed_url;
 
-            $shopifyData = $shopifyService->saveShopifyProducts($feedUrl, $url, $userId);
+            $shopifyData = $shopifyService->saveShopifyProducts($url, $userId);
             $monitor->last_synced_at = Carbon::now();
             $monitor->save();
 
