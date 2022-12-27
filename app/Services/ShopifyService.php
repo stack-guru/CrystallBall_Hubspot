@@ -32,17 +32,20 @@ class ShopifyService {
 
             $products = $output->products;
             foreach($products as $product) {
-                $annotation = new ShopifyAnnotation();
-                $annotation->user_id = $userID;
-                $annotation->category = "Shopify Product";
-                $annotation->product_id = $product->id;
-                $annotation->title = $product->title;
-                $annotation->handle = $product->handle;
-                $annotation->body_html = $product->body_html;
-                $annotation->published_at = $product->published_at;
-                $annotation->vendor = $product->vendor;
-                $annotation->product_type = $product->product_type;
-                $annotation->save();
+                $exist = ShopifyAnnotation::where('product_id', $product->id)->first();
+                if ($exist) {
+                    $annotation = new ShopifyAnnotation();
+                    $annotation->user_id = $userID;
+                    $annotation->category = "Shopify Product";
+                    $annotation->product_id = $product->id;
+                    $annotation->title = $product->title;
+                    $annotation->handle = $product->handle;
+                    $annotation->body_html = $product->body_html;
+                    $annotation->published_at = $product->published_at;
+                    $annotation->vendor = $product->vendor;
+                    $annotation->product_type = $product->product_type;
+                    $annotation->save();
+                }
             }
 
             // close curl resource to free up system resources
