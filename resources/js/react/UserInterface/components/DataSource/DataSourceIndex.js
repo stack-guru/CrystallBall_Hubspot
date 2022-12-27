@@ -26,6 +26,7 @@ import InstagramTracking from "../../utils/InstagramTracking";
 import BitbucketTracking from "../../utils/BitbucketTracking";
 import GithubTracking from "../../utils/GithubTracking";
 import ApplePodcast, { ApplePodcastConfig } from "../../utils/ApplePodcast";
+import ShopifyStore, { ShopifyStoreConfig } from "../../utils/ShopifyStore";
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -2154,6 +2155,16 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
 
+                            <div className="col-md-6 mt-2">
+                                <ShopifyStore
+                                    state={this.state}
+                                    updateUserAnnotationColors={this.updateUserAnnotationColors}
+                                    serviceStatusHandler={this.serviceStatusHandler}
+                                    props={this.props}
+                                    sectionToggler={() => this.sectionToggler('shopify_store')}
+                                />
+                            </div>
+
                             {/*
                                 INSTAGRAM AUTOMATION
                             */}
@@ -2858,6 +2869,14 @@ export default class DataSourceIndex extends React.Component {
                                 gaPropertyId={this.state.ga_property_id}
                             />
                         ) : null}
+                        {this.state.sectionName == "shopify_store" &&
+                        this.state.userDataSources ? (
+                            <ShopifyStoreConfig
+                                setState={this.setState}
+                                sectionToggler={() => this.sectionToggler('shopify_store')}
+                                gaPropertyId={this.state.ga_property_id}
+                            />
+                        ) : null}
                         {this.state.sectionName == "web_monitors" &&
                             this.state.userDataSources ? (
                             <DSWebMonitorsSelect
@@ -3187,6 +3206,13 @@ export default class DataSourceIndex extends React.Component {
                 this.sectionToggler('apple_podcast')
                 this.updateUserService(e);
             } else if (e.target.name == 'is_ds_apple_podcast_annotation_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            }
+            if (e.target.name == 'is_ds_shopify_annotation_enabled' && e.target.checked) {
+                this.sectionToggler('shopify_store')
+                this.updateUserService(e);
+            } else if (e.target.name == 'is_ds_shopify_annotation_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
                 this.updateUserService(e);
             }

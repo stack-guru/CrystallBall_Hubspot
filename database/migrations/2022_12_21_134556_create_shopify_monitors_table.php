@@ -17,7 +17,6 @@ class CreateShopifyMonitorsTable extends Migration
             $table->id();
             $table->string('name')->nullable()->default(null);
             $table->mediumText('url')->required();
-            $table->mediumText('feed_url')->required();
             $table->dateTime('last_synced_at')->nullable();
             $table->bigInteger('ga_property_id')->nullable();
             $table->foreignId("user_id")->required()->constrained()->onDelete('CASCADE');

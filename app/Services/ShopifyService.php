@@ -11,13 +11,8 @@ use App\Models\ShopifyAnnotation;
 use Illuminate\Support\Facades\Auth;
 use Goutte\Client;
 use App\Models\Admin;
-   
+
 class ShopifyService {
-    private $scrappingServerUrl;
-    /**
-     * Initialize the library in your constructor using
-     * your environment, api key, and password
-     */
     public function __construct()
     {
         $this->shopifyUrl = config('services.shopify.data_api_url');
@@ -52,18 +47,16 @@ class ShopifyService {
                 $annotation->vendor = $product->vendor;
                 $annotation->product_type = $product->product_type;
                 $annotation->save();
-            } 
+            }
 
             // close curl resource to free up system resources
             curl_close($ch);
             return true;
         } catch (\Exception $e) {
-            Log::channel('ApplePodcast Error')->debug($e);
+            Log::channel('Shopify Error')->debug($e);
             Log::error($e);
             return false;
         }
-
-    
     }
 
 }

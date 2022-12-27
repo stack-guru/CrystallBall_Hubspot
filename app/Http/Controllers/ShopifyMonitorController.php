@@ -89,26 +89,26 @@ class ShopifyMonitorController extends Controller
     public function shopifyUrl (Request $req) {
 
         $userID = Auth::user()->id;
-        $url = $req->collectionViewUrl;
-        $name = $req->collectionName;
+        $url = $req->shopifyUrl;
+        // $name = $req->collectionName;
         $gaPropertyId = $req->gaPropertyId;
-        $feedUrl = $req->feedUrl;
+        // $feedUrl = $req->feedUrl;
 
         $exist = ShopifyMonitor::where('url', $url)->where('user_id', $userID)->first();
 
         if(!$exist) {
             $monitor = new ShopifyMonitor();
 
-            $monitor->name = $name;
+            // $monitor->name = $name;
             $monitor->url = $url;
-            $monitor->feed_url = $feedUrl;
+            // $monitor->feed_url = $feedUrl;
             $monitor->user_id = $userID;
             $monitor->ga_property_id = $gaPropertyId;
             $monitor->save();
         }
 
         $shopifyService = new ShopifyService();
-        $data = $shopifyService->saveShopifys($feedUrl, $url, $userID);
+        $data = $shopifyService->saveShopifys($url, $userID);
         return $data;
     }
 
