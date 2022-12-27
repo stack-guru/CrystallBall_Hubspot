@@ -134,6 +134,9 @@ class AnnotationController extends Controller
 
         DB::beginTransaction();
         $annotation->fill($request->validated());
+        if ($request->description == 'null') {
+            $annotation->description = null;
+        }
         $annotation->save();
 
         $aGAPs = $annotation->annotationGaProperties;

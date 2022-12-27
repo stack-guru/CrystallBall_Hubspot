@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:process-non-installed-extension-users')->everyMinute();
         $schedule->command('gaa:check-monitor-statuses')->everyMinute();
         $schedule->command('gaa:fetch-bitbucket-commits')->everyMinute();
+        $schedule->command('gaa:fetch-github-commits')->everyMinute();
 
         // Every ten minute
         $schedule->command('gaa:send-new-data-sources-email')->everyTenMinutes();
@@ -58,6 +59,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:generate-weather-alert-notification')->daily();
         $schedule->command('gaa:generate-wordpress-update-notification')->daily();
         $schedule->command('gaa:shopify-annotation')->daily();
+        $schedule->command('gaa:apple-podcast-annotation')->daily();
         // Everyday non critical
         $schedule->command('gaa:fetch-google-analytics-metrics-and-dimensions')->daily();
         $schedule->command('gaa:fetch-google-search-console-sites-statistics')->daily();

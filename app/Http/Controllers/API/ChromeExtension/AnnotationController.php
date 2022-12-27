@@ -151,6 +151,9 @@ class AnnotationController extends Controller
         if ($user->is_ds_shopify_annotation_enabled && $request->query('show_shopify_annotations') == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= "select id, category, event, podcast_date, url, description from `shopify_annotations` 'System' AS user_name from `google_ads_annotations`";
+        if ($user->is_ds_apple_podcast_annotation_enabled && $request->query('show_apple_podcast_annotations') == 'true') {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select id, category, event, podcast_date, url, description from `apple_podcast_annotations` 'System' AS user_name from `google_ads_annotations`";
         }
 
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
@@ -230,7 +233,7 @@ class AnnotationController extends Controller
         }
 
         $showDate = Carbon::parse($annotations[count($annotations) - 1]->show_at);
-        // If annotations are not ending on the request end date then add blank records for 
+        // If annotations are not ending on the request end date then add blank records for
         // each date till end date
         if ($showDate !== $endDate) {
             $nextShowDate = $endDate;
@@ -303,7 +306,7 @@ class AnnotationController extends Controller
             // A property that is already in use should not be validated with price plan limits/counts
             // If we mark properties as in use and don't make sure that the user is under limit, it
             // will make a loop hole in the implementation of price plan limits.
-            
+
             // $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gaPropertyId);
             // if (!$googleAnalyticsProperty->is_in_use) {
             //     if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
@@ -389,6 +392,12 @@ class AnnotationController extends Controller
             $annotationsQuery .= "select id, category, event, shopify_date, url, description from `shopify_annotations` 'System' AS user_name from `google_ads_annotations`";
         }
         // Shopify Annotation End
+        // Apple Podcast Annotation Start
+        if ($user->is_ds_apple_podcast_annotation_enabled && $request->query('show_apple_podcast_annotations') == 'true') {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= "select id, category, event, podcast_date, url, description from `apple_podcast_annotations` 'System' AS user_name from `google_ads_annotations`";
+        }
+        // Apple Podcast Annotation End
 
         $annotationsQuery .= ") AS TempTable ";
 
