@@ -28,13 +28,13 @@ class ShopifyService {
                 $annotation = ShopifyAnnotation::where('product_id', $productId)->first();
                 if (!$annotation) {
                     $annotation = new ShopifyAnnotation();
-                    $annotation->category = "New Shopify Product";
+                    $annotation->category = "New Product";
                     $annotation->product_id = $productId;
                     $annotation->user_id = $userID;
                     $annotation->published_at = $product->published_at;
                     $annotation->product_type = $product->product_type;
                 } else {
-                    $annotation->category = "Updated Shopify Product";                    
+                    $annotation->category = "Updated Product";
                 }
                 $saveRecord = !$annotation || ($annotation && $annotation->shopify_updated_at !== $product->updated_at);
                 if ($saveRecord) {
@@ -49,7 +49,7 @@ class ShopifyService {
 
             $allExistingAnnotations = ShopifyAnnotation::whereNotIn('product_id', $productIDs)->get();
             foreach($allExistingAnnotations as $product) {
-                $product->category = "Removed Shopify Product";
+                $product->category = "Removed Product";
                 $product->save();
             }
 
@@ -57,9 +57,10 @@ class ShopifyService {
             curl_close($ch);
             return true;
         } catch (\Exception $e) {
-            Log::channel('Shopify Error')->debug($e);
+            Log::channel('shopify')->debug($e);
+            $admin = Admin::first();
             $message = "Shopify script is crashed. Please have a look into the code to fix!";
-            Log::error([$e, $message]);
+            Log::error($e);
             return $e;
         }
     }
