@@ -141,6 +141,13 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'shopify' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/shopify.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 3,
+        ],
     ],
 
 ];

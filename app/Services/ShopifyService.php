@@ -67,10 +67,9 @@ class ShopifyService {
             curl_close($ch);
             return true;
         } catch (\Exception $e) {
-            Log::channel('Shopify Error')->debug($e);
+            Log::channel('shopify')->debug($e);
             $admin = Admin::first();
-            $message = "Apple Podcast script is crashed. Please have a look into the code to fix!";
-              // Mail::to($admin)->send(new AdminFailedShopifyScriptMail($admin, $e));
+            $message = "Shopify script is crashed. Please have a look into the code to fix!";
             Log::error($e);
             return $e;
         }
