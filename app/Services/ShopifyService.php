@@ -3,17 +3,10 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Carbon;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-
 use App\Models\ShopifyAnnotation;
-use Illuminate\Support\Facades\Auth;
-use App\Mail\AdminFailedShopifyScriptMail;
-use App\Models\Admin;
 
 class ShopifyService {
-
     //Shopify API
     public function saveShopifyProducts($url, $userID){
         try {
@@ -52,15 +45,9 @@ class ShopifyService {
                 $product->category = "Removed Product";
                 $product->save();
             }
-
-            // close curl resource to free up system resources
-            curl_close($ch);
             return true;
         } catch (\Exception $e) {
             Log::channel('shopify')->debug($e);
-            $admin = Admin::first();
-            $message = "Shopify script is crashed. Please have a look into the code to fix!";
-            Log::error($e);
             return $e;
         }
     }
