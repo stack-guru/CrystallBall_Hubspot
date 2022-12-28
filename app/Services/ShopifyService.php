@@ -38,13 +38,13 @@ class ShopifyService {
                 $annotation = ShopifyAnnotation::where('product_id', $productId)->first();
                 if (!$annotation) {
                     $annotation = new ShopifyAnnotation();
-                    $annotation->category = "New Shopify Product";
+                    $annotation->category = "New Product";
                     $annotation->product_id = $productId;
                     $annotation->user_id = $userID;
                     $annotation->published_at = $product->published_at;
                     $annotation->product_type = $product->product_type;
                 } else {
-                    $annotation->category = "Updated Shopify Product";                    
+                    $annotation->category = "Updated Product";
                 }
                 $saveRecord = !$annotation || ($annotation && $annotation->shopify_updated_at !== $product->updated_at);
                 if ($saveRecord) {
@@ -59,7 +59,7 @@ class ShopifyService {
 
             $allExistingAnnotations = ShopifyAnnotation::whereNotIn('product_id', $productIDs)->get();
             foreach($allExistingAnnotations as $product) {
-                $product->category = "Removed Shopify Product";
+                $product->category = "Removed Product";
                 $product->save();
             }
 
