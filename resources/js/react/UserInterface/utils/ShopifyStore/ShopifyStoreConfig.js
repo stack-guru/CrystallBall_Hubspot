@@ -42,14 +42,14 @@ const ShopifyStoreConfig = (props) => {
             .then(
                 () => {
                     getExistingShopifyStore();
-                    toast.success("Shopify urls deleted successfully.");
+                    toast.success("Shopify url deleted successfully.");
                 },
                 (err) => {
-                    toast.error("Error while delete exists shopify urls.");
+                    toast.error("Error while delete exists shopify url.");
                 }
             )
             .catch((err) => {
-                toast.error("Error while delete exists shopify urls.");
+                toast.error("Error while delete exists shopify url.");
             });
     };
 
