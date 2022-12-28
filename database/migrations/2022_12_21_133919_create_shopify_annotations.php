@@ -24,7 +24,7 @@ class CreateShopifyAnnotations extends Migration
             $table->string("vendor")->nullable();
             $table->string("product_type")->nullable();
             $table->date("published_at")->nullable();
-            $table->date("shopify_updated_at")->nullable();
+            $table->string("shopify_updated_at")->nullable();
             $table->timestamps();
         });
     }

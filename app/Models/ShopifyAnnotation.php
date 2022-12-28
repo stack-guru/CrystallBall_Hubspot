@@ -23,6 +23,5 @@ class ShopifyAnnotation extends Model
 
     protected $casts =[
         "published_at" => "date",
-        "shopify_updated_at" => "date"
     ];
 }
