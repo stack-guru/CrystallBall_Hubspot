@@ -18,19 +18,9 @@ class ShopifyService {
     public function saveShopifyProducts($url, $userID){
         try {
 
-            $ch = curl_init();
+            $response = Http::get($url . '/products.json');
+            $products = $response['products'];
 
-            // set url
-            curl_setopt($ch, CURLOPT_URL, $url . '/products.json');
-
-            //return the transfer as a string
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
-
-            // $output contains the output string
-            $output = json_decode(curl_exec($ch));
-
-            $products = $output->products;
             $productIDs = [];
             foreach($products as $product) {
                 $productId = $product->id;
@@ -68,10 +58,8 @@ class ShopifyService {
             return true;
         } catch (\Exception $e) {
             Log::channel('Shopify Error')->debug($e);
-            $admin = Admin::first();
-            $message = "Apple Podcast script is crashed. Please have a look into the code to fix!";
-              // Mail::to($admin)->send(new AdminFailedShopifyScriptMail($admin, $e));
-            Log::error($e);
+            $message = "Shopify script is crashed. Please have a look into the code to fix!";
+            Log::error([$e, $message]);
             return $e;
         }
     }
