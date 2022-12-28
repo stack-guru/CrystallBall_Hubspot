@@ -16,7 +16,7 @@ class ShopifyService {
 
             $productIDs = [];
             foreach($products as $product) {
-                $productId = $product->id;
+                $productId = $product['id'];
                 $productIDs[] = $productId;
                 $annotation = ShopifyAnnotation::where('product_id', $productId)->first();
                 if (!$annotation) {
@@ -24,18 +24,18 @@ class ShopifyService {
                     $annotation->category = "New Product";
                     $annotation->product_id = $productId;
                     $annotation->user_id = $userID;
-                    $annotation->published_at = $product->published_at;
-                    $annotation->product_type = $product->product_type;
+                    $annotation->published_at = $product['published_at'];
+                    $annotation->product_type = $product['product_type'];
                 } else {
                     $annotation->category = "Updated Product";
                 }
-                $saveRecord = !$annotation || ($annotation && $annotation->shopify_updated_at !== $product->updated_at);
+                $saveRecord = !$annotation || ($annotation && $annotation->shopify_updated_at !== $product['updated_at']);
                 if ($saveRecord) {
-                    $annotation->title = $product->title;
-                    $annotation->handle = $product->handle;
-                    $annotation->body_html = $product->body_html;
-                    $annotation->vendor = $product->vendor;
-                    $annotation->shopify_updated_at = $product->updated_at;
+                    $annotation->title = $product['title'];
+                    $annotation->handle = $product['handle'];
+                    $annotation->body_html = $product['body_html'];
+                    $annotation->vendor = $product['vendor'];
+                    $annotation->shopify_updated_at = $product['updated_at'];
                     $annotation->save();
                 }
             }
