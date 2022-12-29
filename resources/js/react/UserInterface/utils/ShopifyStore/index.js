@@ -3,7 +3,7 @@ import { Button, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 
 import ShopifyStoreConfig from "./ShopifyStoreConfig";
 
-const ShopifyStore = ({ state, serviceStatusHandler, sectionToggler }) => {
+const ShopifyStore = ({ is_ds_shopify_annotation_enabled, sectionName, serviceStatusHandler, sectionToggler }) => {
     return (
         <div
             className="d-flex border rounded flex-column justify-content-between"
@@ -28,24 +28,21 @@ const ShopifyStore = ({ state, serviceStatusHandler, sectionToggler }) => {
                     </div>
 
                     <div className="px-2 text-center">
-                        {state.userServices
-                            .is_ds_shopify_annotation_enabled
+                        {is_ds_shopify_annotation_enabled
                             ? "ON"
                             : "OFF"}
                         <label className="trigger switch">
                             <input
                                 type="checkbox"
                                 checked={
-                                    state.userServices
-                                        .is_ds_shopify_annotation_enabled
+                                    is_ds_shopify_annotation_enabled
                                 }
                                 onChange={serviceStatusHandler}
                                 name="is_ds_shopify_annotation_enabled"
                             />
                             <span
                                 className={`slider round ${
-                                    state.userServices
-                                        .is_ds_shopify_annotation_enabled
+                                    is_ds_shopify_annotation_enabled
                                         ? "animate-pulse"
                                         : ""
                                 }`}
@@ -63,7 +60,7 @@ const ShopifyStore = ({ state, serviceStatusHandler, sectionToggler }) => {
                         sectionToggler();
                     }}
                 >
-                    {state.sectionName == "shopify_store"
+                    {sectionName == "shopify_store"
                         ? "Hide"
                         : "Configure Shopify"}
                 </p>
