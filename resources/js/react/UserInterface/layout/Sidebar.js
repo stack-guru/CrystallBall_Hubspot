@@ -10,8 +10,9 @@ class Sidebar extends React.Component {
         super(props);
         this.state = {
             show: false,
+            isCollapsed: false
         }
-
+        this.toggleSidebar = this.toggleSidebar.bind(this)
     }
 
     componentDidMount() {
@@ -39,6 +40,13 @@ class Sidebar extends React.Component {
             httpRequestWithCredentials: false,
             renumerateIRIElements: false
         })
+
+        let body = document.getElementsByTagName("body")[0];
+        if (body.classList.contains("is-collapsed")) {
+            this.setState({ isCollapsed: true })
+        } else {
+            this.setState({ isCollapsed: false })
+        }
     }
 
     showBetaAlert(ev) {
@@ -71,15 +79,19 @@ class Sidebar extends React.Component {
         let body = document.getElementsByTagName("body")[0];
         if (body.classList.contains("is-collapsed")) {
             body.classList.remove("is-collapsed")
+            this.setState({ isCollapsed: false })
         } else {
             body.classList.add("is-collapsed")
+            this.setState({ isCollapsed: true })
         }
     }
 
     render() {
         return (
             <div className="sidebar-inner OSXscroll d-flex flex-column">
-                <a id="sidebar-toggle" className="desktop-toggle sidebar-toggle text-center d-block btn btn-sm" href="#" onClick={this.toggleSidebar}><i className="ti-angle-right"></i></a>
+                <a id="sidebar-toggle" className="desktop-toggle sidebar-toggle text-center d-block btn btn-sm" href="#" onClick={this.toggleSidebar}>
+                    {this.state.isCollapsed ? <i className="ti-angle-right"></i>: <i className="ti-angle-left"></i>}
+                </a>
                 {/* <div className="sidebar-logo bg-white">
                     <div className="peers ai-c fxw-nw">
                         <div className="peer">
