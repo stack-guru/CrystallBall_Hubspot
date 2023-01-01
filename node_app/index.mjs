@@ -27,7 +27,10 @@ app.post('/apple-podcast-episodes', async (req, res) => {
 
     try {
         console.log(`01: START SCRAPPING EPISODES`)
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            args: ['--no-sandbox'],
+            timeout: 10000,
+        });
         const page = await browser.newPage();
         await page.setDefaultNavigationTimeout(0);
         await page.goto(podcastUrl, {timeout: 0});
@@ -49,7 +52,7 @@ app.post('/apple-podcast-episodes', async (req, res) => {
                 } else {
                     console.log(`04:03 ALL EPISODE LISTED`)
                 }
-                
+
                 hasMoreEpisode = await page.$(showMoreSelector)
                 console.log(`04:04 ALL EPISODE LISTED`)
             } catch (error) {
@@ -59,7 +62,7 @@ app.post('/apple-podcast-episodes', async (req, res) => {
         }
 
         console.log(`05: SCRAPP EPISODES`)
-        
+
         const trackSelector = `.product-hero__tracks ol li.tracks__track`;
 
         const episodesResult = await page.evaluate(trackSelector => {
@@ -71,8 +74,8 @@ app.post('/apple-podcast-episodes', async (req, res) => {
                 const url = track.querySelector('a.link').getAttribute('href')
                 const title = track.querySelector('h2.tracks__track__headline').innerText
                 const description = track.querySelector('div.we-truncate').innerText
-                
-                
+
+
                 return {
                     date,
                     url,
