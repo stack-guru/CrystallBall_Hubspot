@@ -97,7 +97,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.10/dist/sweetalert2.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-
+    <script src='https://unpkg.com/@tanem/svg-injector/dist/svg-injector.umd.production.js'></script>
 </head>
 
 <body class="app is-collapsed">

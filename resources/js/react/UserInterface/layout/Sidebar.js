@@ -17,11 +17,6 @@ class Sidebar extends React.Component {
     componentDidMount() {
         $('.sidebar').hover(
             function () {
-                // if($('.setting-menu-item.dropdown').hasClass('open'))
-                // $('.setting-menu-item.dropdown').addClass('open')
-            },
-
-            function () {
                 if ($('.setting-menu-item.dropdown').hasClass('open')) {
                     $('.setting-menu-item.dropdown').removeClass('open')
                     $('.arrow .t').removeClass('ti-angle-down');
@@ -64,363 +59,148 @@ class Sidebar extends React.Component {
         }
     }
 
+    toggleSidebar(e) {
+        e.preventDefault();
+        let body = document.getElementsByTagName("body")[0];
+        if (body.classList.contains("is-collapsed")) {
+            body.classList.remove("is-collapsed")
+        } else {
+            body.classList.add("is-collapsed")
+        }
+    }
+
     render() {
         return (
-            <div className="sidebar-inner OSXscroll">
-                <div className="sidebar-logo bg-white">
+            <div className="sidebar-inner OSXscroll d-flex flex-column">
+                <a id="sidebar-toggle" className="desktop-toggle sidebar-toggle text-center d-block btn btn-sm" href="#" onClick={this.toggleSidebar}><i className="ti-angle-right"></i></a>
+                {/* <div className="sidebar-logo bg-white">
                     <div className="peers ai-c fxw-nw">
-                        <div className="peer peer-greed">
-                            <a className="sidebar-link td-n" href="/">
-                                <div className="peers ai-c fxw-nw">
-                                    <div className="peer">
-                                        <div
-                                            className="logo d-flex justify-content-center align-items-center"
-                                            style={{ minHeight: 65 }}
-                                        >
-                                            <CompanyLogo
-                                                width="50px"
-                                                height="50px"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="peer peer-greed ">
-                                        <CompanyHeading className="lh-1 logo-text m-0" />
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
                         <div className="peer">
-                            <div className="mobile-toggle sidebar-toggle">
-                                <a href={null} className="td-n" type="button">
-                                    <i className="ti-arrow-circle-left"></i>
-                                </a>
-                            </div>
+                            <div className="mobile-toggle sidebar-toggle"><a href={null} className="td-n" type="button"><i className="ti-arrow-circle-left"></i></a></div>
                         </div>
                     </div>
-                </div>
-                <ul className="sidebar-menu scrollable pos-r ">
-                    {/* <li className="nav-item gaa-menu-item">
-                        <Link to="/analytics" onClick={(ev) => {
-                            this.showBetaAlert(ev)
-                        }}>
-                            <span className="sidebar-link" >
-                                <span className="icon-holder">
-                                    <img src="/images/svg/google-analytics-icon.svg" width="25px" height="25px" />
-                                </span>
-                                <span className="title">Analytics</span>
-                            </span>
-                        </Link>
-                    </li> */}
-                    {/* <li className="nav-item gaa-menu-item">
-                        <Link to="/dashboard/search-console" >
-                            <span className="sidebar-link" >
-                                <span className="icon-holder">
-                                    <img src="/images/svg/google-search-console-icon.svg" width="25px" height="25px" />
-                                </span>
-                                <span className="title">Search Console</span>
-                            </span>
-                        </Link>
-                    </li> */}
-                    <li className="nav-item gaa-menu-item">
-                        <Link to="/annotation">
-                            <span className="sidebar-link">
-                                <span className="icon-holder">
-                                    <img
-                                        src="/images/svg/annotation-icon.svg"
-                                        width="25px"
-                                        height="25px"
-                                    />
-                                </span>
-                                <span className="title">All Annotations</span>
-                            </span>
-                        </Link>
-                    </li>
-                    {this.props.user.user_level == "admin" ||
-                    this.props.user.user_level == "team" ? (
-                        <li className="nav-item gaa-menu-item">
-                            <Link to="/annotation/create">
-                                <span className="sidebar-link">
-                                    <span className="icon-holder">
-                                        <img
-                                            src="/images/svg/addition-icon.svg"
-                                            width="25px"
-                                            height="25px"
-                                        />
-                                    </span>
-                                    <span className="title">
-                                        Add Annotation
-                                    </span>
-                                </span>
-                            </Link>
-                        </li>
-                    ) : null}
-                    {this.props.user.user_level == "admin" ||
-                    this.props.user.user_level == "team" ? (
-                        <li className="nav-item gaa-menu-item">
-                            <Link to="/annotation/upload">
-                                <span className="sidebar-link">
-                                    <span className="icon-holder">
-                                        <img
-                                            src="/images/svg/upload-icon.svg"
-                                            width="25px"
-                                            height="25px"
-                                        />
-                                    </span>
-                                    <span className="title">CSV Upload</span>
-                                </span>
-                            </Link>
-                        </li>
-                    ) : null}
-                    <li className="nav-item gaa-menu-item">
-                        <Link to="/data-source">
-                            <span className="sidebar-link">
-                                <span className="icon-holder">
-                                    <img
-                                        src="/images/svg/automation-icon.svg"
-                                        width="25px"
-                                        height="25px"
-                                    />
-                                </span>
-                                <span className="title">Automations</span>
-                            </span>
-                        </Link>
-                    </li>
-                    <li className="nav-item gaa-menu-item">
-                        <Link to="/integrations">
-                            <span className="sidebar-link">
-                                <span className="icon-holder">
-                                    <img
-                                        src="/images/svg/integration-icon.svg"
-                                        width="25px"
-                                        height="25px"
-                                    />
-                                </span>
-                                <span className="title">Integrations</span>
-                            </span>
-                        </Link>
-                    </li>
-                    <li className="nav-item gaa-menu-item">
-                        <Link to="/settings/google-account">
-                            <span className="sidebar-link">
-                                <span className="icon-holder">
-                                    <img
-                                        src="/images/svg/properties-02.svg"
-                                        width="25px"
-                                        height="25px"
-                                    />
-                                </span>
-                                <span className="title">Add Properties</span>
-                            </span>
-                        </Link>
-                    </li>
-                    <li className="nav-item gaa-menu-item">
-                        <Link to="/settings/user">
-                            <span className="sidebar-link">
-                                <span className="icon-holder">
-                                    <img
-                                        src="/images/svg/teamwork-01.svg"
-                                        width="25px"
-                                        height="25px"
-                                    />
-                                </span>
-                                <span className="title">Manage Users</span>
-                            </span>
-                        </Link>
-                    </li>
-                    <li className="nav-item gaa-menu-item">
-                        <Link to="/analytics-and-business-intelligence">
-                            <span className="sidebar-link">
-                                <span className="icon-holder">
-                                    <img
-                                        src="/images/svg/analytics-and-business-intelligence-icon.svg"
-                                        width="25px"
-                                        height="25px"
-                                    />
-                                </span>
-                                <span className="title">
-                                    Analytics &amp; BI tools
-                                </span>
-                            </span>
-                        </Link>
-                    </li>
-                    <li className="nav-item gaa-menu-item">
-                        <Link to="/api-key">
-                            <span className="sidebar-link">
-                                <span className="icon-holder">
-                                    <img
-                                        src="/images/svg/key-icon.svg"
-                                        width="25px"
-                                        height="25px"
-                                    />
-                                </span>
-                                <span className="title ">API Keys</span>
-                            </span>
-                        </Link>
-                    </li>
-                    <li className="nav-item gaa-menu-item">
-                        <Link to="/notifications">
-                            <span className="sidebar-link">
-                                <span className="icon-holder">
-                                    <img
-                                        src="/images/svg/notification-icon.svg"
-                                        width="25px"
-                                        height="25px"
-                                    />
-                                </span>
-                                <span className="title ">Notifications</span>
-                            </span>
-                        </Link>
-                    </li>
-
-                    <li className="nav-item gaa-menu-item setting-menu-item dropdown">
-                        <a
-                            aria-expanded="false"
-                            data-target="#settings"
-                            aria-controls="settings"
-                            data-toggle="collapse"
-                            className="dropdown-toggle"
-                        >
-                            <div className="wrapper sidebar-link">
-                                <span className="icon-holder">
-                                    <img
-                                        src="/images/svg/settings-icon.svg"
-                                        width="25px"
-                                        height="25px"
-                                    />
-                                </span>
-                                <span className="title">Settings</span>
-                                <span className="arrow">
-                                    <i className="t ti-angle-right"></i>
-                                </span>
-                            </div>
-                        </a>
-                        <div
-                            className="collapse dropdown-menu setting-menu-content "
-                            id="settings "
-                        >
-                            <ul className="list-unstyled">
-                                {this.props.user.user_level == "admin" ||
-                                this.props.user.user_level == "team" ? (
-                                    <React.Fragment>
-                                        <li className="nav-item dropdown">
-                                            <Link
-                                                to="/settings/google-account"
-                                                className="sidebar-link"
-                                            >
-                                                <span className="nav-link">
-                                                    Add Properties/Accounts
-                                                </span>
-                                            </Link>
-                                        </li>
-                                        {/* <li className="nav-item dropdown">
-                                            <Link
-                                                to="/settings/facebook-accounts"
-                                                className="sidebar-link"
-                                            >
-                                                <span className="nav-link">
-                                                    Facebook Accounts
-                                                </span>
-                                            </Link>
-                                        </li> */}
-                                        <li className="nav-item dropdown">
-                                            <Link
-                                                to="/settings/user"
-                                                className="sidebar-link"
-                                            >
-                                                <span className="nav-link">
-                                                    Manage Users
-                                                </span>
-                                            </Link>
-                                        </li>
-                                        {/*<li className="nav-item dropdown">*/}
-                                        {/*    <Link*/}
-                                        {/*        to="/settings/devices"*/}
-                                        {/*        className="sidebar-link"*/}
-                                        {/*    >*/}
-                                        {/*        <span className="nav-link">*/}
-                                        {/*            Manage Devices*/}
-                                        {/*        </span>*/}
-                                        {/*    </Link>*/}
-                                        {/*</li>*/}
-                                        <li className="nav-item dropdown">
-                                            <Link
-                                                to="/settings/price-plans"
-                                                className="sidebar-link"
-                                            >
-                                                <span className="nav-link">
-                                                    Plans
-                                                </span>
-                                            </Link>
-                                        </li>
-                                        <li className="nav-item dropdown">
-                                            <Link
-                                                to="/settings/payment-history"
-                                                className="sidebar-link"
-                                            >
-                                                <span className="nav-link">
-                                                    Payment History
-                                                </span>
-                                            </Link>
-                                        </li>
-                                        <li className="nav-item dropdown">
-                                            <div className="sidebar-link nav-link">
-                                                <a
-                                                    href="/documentation"
-                                                    target="_blank"
-                                                >
-                                                    API Documentation
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </React.Fragment>
-                                ) : null}
-                                <li className="nav-item dropdown">
-                                    <Link
-                                        to="/settings/change-password"
-                                        className="sidebar-link"
-                                    >
-                                        <span className="nav-link ">
-                                            Profile
-                                        </span>
-                                    </Link>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <div className="sidebar-link nav-link">
-                                        <a
-                                            href="#"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                this.props.toggleInterfaceTour(
-                                                    true
-                                                );
-                                            }}
-                                        >
-                                            Take a Tour
-                                        </a>
-                                    </div>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <div className="sidebar-link nav-link">
-                                        <Link to="/settings/support">
-                                            Support
-                                        </Link>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-                {/* <div className="nav-item sidebar-footer  gaa-menu-item gaa-text-danger ">
-                    <a href="https://chrome.google.com/webstore/detail/google-analytics-annotati/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en&authuser=1" target="_blank" id="chrome-extension-download-button">
-                        <span className="sidebar-link gaa-text-danger" >
-                            <span className="icon-holder gaa-text-danger">
-                                <i className="fa fa-cube"></i>
-                            </span>
-                            <span className="title">Chrome Extension</span>
-                        </span>
-                    </a>
                 </div> */}
+                <nav className='flex-grow-1'>
+                    <ul className="sidebar-menu scrollable pos-r border-0">
+                        <li className="nav-item gaa-menu-item">
+                            <Link to="/annotation">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/allAnnotations.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1">All Annotations</span>
+                                </span>
+                            </Link>
+                        </li>
+                        {this.props.user.user_level == "admin" ||
+                        this.props.user.user_level == "team" ? (
+                            <li className="nav-item gaa-menu-item">
+                                <Link to="/annotation/create">
+                                    <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                        <span><img className='inject-me' src='/addAnnotation.svg' width='26' height='26' alt='menu icon'/></span>
+                                        <span className="title flex-grow-1">Add Annotation</span>
+                                    </span>
+                                </Link>
+                            </li>
+                        ) : null}
+                        {this.props.user.user_level == "admin" ||
+                        this.props.user.user_level == "team" ? (
+                            <li className="nav-item gaa-menu-item">
+                                <Link to="/annotation/upload">
+                                    <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                        <span><img className='inject-me' src='/csvUpload.svg' width='26' height='26' alt='menu icon'/></span>
+                                        <span className="title flex-grow-1">CSV Upload</span>
+                                    </span>
+                                </Link>
+                            </li>
+                        ) : null}
+                        <li className="nav-item gaa-menu-item">
+                            <Link to="/data-source">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/appsMarket.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1">Apps Market</span>
+                                </span>
+                            </Link>
+                        </li>
+                        <li className="nav-item gaa-menu-item">
+                            <Link to="/integrations">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/integrations.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1">Integrations</span>
+                                </span>
+                            </Link>
+                        </li>
+                        <li className="nav-item gaa-menu-item">
+                            <Link to="/settings/google-account">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/addProperties.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1">Add Properties</span>
+                                </span>
+                            </Link>
+                        </li>
+                        <li className="nav-item gaa-menu-item">
+                            <Link to="/settings/user">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/manageUsers.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1">Manage Users</span>
+                                </span>
+                            </Link>
+                        </li>
+                        <li className="nav-item gaa-menu-item">
+                            <Link to="/analytics-and-business-intelligence">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/analyticsBiTools.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1">Analytics &amp; BI tools</span>
+                                </span>
+                            </Link>
+                        </li>
+                        <li className="nav-item gaa-menu-item">
+                            <Link to="/api-key">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/apiKeys.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1 ">API Keys</span>
+                                </span>
+                            </Link>
+                        </li>
+                        <li className="nav-item gaa-menu-item">
+                            <Link to="/notifications">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/notifications.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1">Notifications</span>
+                                </span>
+                            </Link>
+                        </li>
+                        <li className="nav-item gaa-menu-item setting-menu-item dropdown">
+                            <a aria-expanded="false" data-target="#settings" aria-controls="settings" data-toggle="collapse collapsed" className="dropdown-toggle">
+                                <div className="wrapper sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/settings.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1">Settings</span>
+                                    <span className="arrow"><i className="t ti-angle-right"></i></span>
+                                </div>
+                            </a>
+                            <div className="collapse dropdown-menu setting-menu-content" id="settings">
+                                <ul className="list-unstyled">
+                                    {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (
+                                        <React.Fragment>
+                                            <li className="nav-item dropdown"><Link to="/settings/google-account" className="sidebar-link"><span className="nav-link">Add Properties/Accounts</span></Link></li>
+                                            <li className="nav-item dropdown"><Link to="/settings/user" className="sidebar-link"><span className="nav-link">Manage Users</span></Link></li>
+                                            <li className="nav-item dropdown"><Link to="/settings/price-plans" className="sidebar-link"><span className="nav-link">Plans</span></Link></li>
+                                            <li className="nav-item dropdown"><Link to="/settings/payment-history" className="sidebar-link"><span className="nav-link">Payment History</span></Link></li>
+                                            <li className="nav-item dropdown"><div className="sidebar-link nav-link"><a href="/documentation" target="_blank">API Documentation</a></div></li>
+                                        </React.Fragment>
+                                    ) : null}
+                                    <li className="nav-item dropdown"><Link to="/settings/change-password" className="sidebar-link"><span className="nav-link">Profile</span></Link></li>
+                                    <li className="nav-item dropdown"><a href="#" onClick={(e) => { e.preventDefault(); this.props.toggleInterfaceTour(true);}}><span className="nav-link">Take a Tour</span></a></li>
+                                    <li className="nav-item dropdown"><Link to="/settings/support" className="sidebar-link"><span className="nav-link">Support</span></Link></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <div className='btn-holder'>
+                    <a className='btn-addAnnotation btn btn-primary d-flex align-items-center justify-content-center' href="#">
+                        <img src='/plus-new.svg' width='16' height='17' alt='plus icon'/>
+                        <span>Add Annotation</span>
+                    </a>
+                </div>
             </div>
         );
     }

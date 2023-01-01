@@ -223,6 +223,13 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
+        const { SVGInjector } = window.SVGInjector
+        SVGInjector(document.getElementsByClassName('inject-me'), {
+            cacheRequests: false,
+            evalScripts: 'once',
+            httpRequestWithCredentials: false,
+            renumerateIRIElements: false
+        })
 
         let loader = document.getElementById("loader");
         loader.classList.remove("fadeOut")
