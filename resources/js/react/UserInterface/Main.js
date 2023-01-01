@@ -42,6 +42,7 @@ import PromotionPopup from './utils/PromotionPopup';
 import UserRegistrationOffer from './utils/UserRegistrationOffer';
 import TimerPromotionPopup from './utils/TimerPromotionPopup';
 import CustomPricePlan from './components/settings/pricingPlans/CustomPricePlan'
+import AppsMarket from './components/AppsMarket/AppsMarket'
 
 class Main extends React.Component {
 
@@ -156,6 +157,9 @@ class Main extends React.Component {
                                 <AnnotationsUpload currentPricePlan={this.state.user.price_plan} />
                             </Route>
                             <Route exact path="/data-source" refresh={true}>
+                                <AppsMarket user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} />
+                            </Route>
+                            <Route exact path="/data-source-old" refresh={true}>
                                 <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} />
                             </Route>
                             <Route exact path="/integrations" refresh={true}>

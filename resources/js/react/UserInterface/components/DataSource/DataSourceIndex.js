@@ -236,24 +236,12 @@ export default class DataSourceIndex extends React.Component {
                 </div>
                 {/* <ErrorAlert errors={this.state.errors} /> */}
                 <div className="row p-2 mt-4 mb-5">
-                    <div
-                        className="col-md-9 col-sm-12"
-                        id="data-source-page-container"
-                    >
+                    <div className="col-md-9 col-sm-12" id="data-source-page-container">
                         <div className="row">
-                            {/*
-                                Website Monitoring Section
-                            */}
                             <div className="col-md-6 mt-2">
-                                <div
-                                    className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
-                                >
+                                <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>
                                     <div>
-                                        <div
-                                            className="d-flex mt-2 justify-content-between"
-                                            id="web-monitoring-data-source-section"
-                                        >
+                                        <div className="d-flex mt-2 justify-content-between" id="web-monitoring-data-source-section">
                                             <div className="px-2">
                                                 <h2>
                                                     <small>
