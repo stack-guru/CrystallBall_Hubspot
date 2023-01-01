@@ -32,6 +32,13 @@ class Sidebar extends React.Component {
             $("body").toggleClass("is-collapsed");
         });
 
+        const { SVGInjector } = window.SVGInjector
+        SVGInjector(document.getElementsByClassName('inject-me'), {
+            cacheRequests: false,
+            evalScripts: 'once',
+            httpRequestWithCredentials: false,
+            renumerateIRIElements: false
+        })
     }
 
     showBetaAlert(ev) {
