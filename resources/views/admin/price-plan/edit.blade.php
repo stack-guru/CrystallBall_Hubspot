@@ -74,6 +74,29 @@
                             <label for="bitbucket_credits_count">Bitbucket Credits count</label>
                             <input type="number" min="1" name="bitbucket_credits_count" value="{{old('bitbucket_credits_count', $pricePlan->bitbucket_credits_count)}}" id="bitbucket_credits_count" class="form-control" />
                         </div>
+
+                        <div class="form-group">
+                            <label for="github_credits_count">Github Credits count</label>
+                            <input type="number" min="1" name="github_credits_count" value="{{old('github_credits_count', $pricePlan->github_credits_count)}}" id="github_credits_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="apple_podcast_monitor_count">Apple Credits count</label>
+                            <input type="number" min="1" name="apple_podcast_monitor_count" value="{{old('apple_podcast_monitor_count', $pricePlan->apple_podcast_monitor_count)}}" id="apple_podcast_monitor_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="aws_credits_count">AWS Credits count</label>
+                            <input type="number" min="1" name="aws_credits_count" value="{{old('aws_credits_count', $pricePlan->aws_credits_count)}}" id="aws_credits_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="linkedin_credits_count">Linkedin Credits count</label>
+                            <input type="number" min="1" name="linkedin_credits_count" value="{{old('linkedin_credits_count', $pricePlan->linkedin_credits_count)}}" id="linkedin_credits_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="twitter_credits_count">Twitter Credits count</label>
+                            <input type="number" min="1" name="twitter_credits_count" value="{{old('twitter_credits_count', $pricePlan->twitter_credits_count)}}" id="twitter_credits_count" class="form-control" />
+                        </div>
+
+
                         <div class="form-group">
                             <label>Yearly discount percent? <sub>(minimum 0, maximum 100)</sub></label>
                             <input type="number" name="yearly_discount_percent" id="yearly_discount_percent" value="{{old('yearly_discount_percent',$pricePlan->yearly_discount_percent)}}" class="form-control" step="0.01" />
