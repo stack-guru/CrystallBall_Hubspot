@@ -28,6 +28,8 @@ import GithubTracking from "../../utils/GithubTracking";
 import ApplePodcast, { ApplePodcastConfig } from "../../utils/ApplePodcast";
 
 import { Container, Row, Col, FormGroup, Input, Label } from "reactstrap";
+import AppsModal from "./AppsModal";
+import WebsiteMonitoring from "./WebsiteMonitoring";
 
 class AppsMarket extends React.Component {
     constructor(props) {
@@ -54,6 +56,7 @@ class AppsMarket extends React.Component {
             userInstagramAccountsExists: false,
             userBitbucketAccountsExists: false,
             userGithubAccountsExists: false,
+            dsKey: "",
         };
         this.userDataSourceAddHandler =
             this.userDataSourceAddHandler.bind(this);
@@ -347,6 +350,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "01",
                                 background: "null",
+                                dsKey: "is_ds_google_alerts_enabled",
                                 enabled:
                                     this.state.userServices
                                         .is_ds_google_alerts_enabled,
@@ -357,6 +361,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "02",
                                 background: "#00749a",
+                                dsKey: "is_ds_wordpress_updates_enabled",
                                 enabled:
                                     this.state.userServices
                                         .is_ds_wordpress_updates_enabled,
@@ -367,6 +372,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "03",
                                 background: "null",
+                                dsKey: "is_ds_keyword_tracking_enabled",
                                 enabled:
                                     this.state.userServices
                                         .is_ds_keyword_tracking_enabled,
@@ -377,6 +383,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "04",
                                 background: "null",
+                                dsKey: "is_ds_weather_alerts_enabled",
                                 enabled:
                                     this.state.userServices
                                         .is_ds_weather_alerts_enabled,
@@ -387,6 +394,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "05",
                                 background: "null",
+                                dsKey: "is_ds_google_algorithm_updates_enabled",
                                 enabled:
                                     this.state.userServices
                                         .is_ds_google_algorithm_updates_enabled,
@@ -397,6 +405,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "06",
                                 background: "null",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "Google Ads",
@@ -405,6 +414,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "07",
                                 background: "#004F9D",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "Facebook Ads",
@@ -414,6 +424,7 @@ class AppsMarket extends React.Component {
                                 id: "08",
                                 background:
                                     "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "Instagram",
@@ -422,6 +433,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "09",
                                 background: "#1DA1F2",
+                                dsKey: "is_ds_twitter_tracking_enabled",
                                 enabled:
                                     this.state.userServices
                                         .is_ds_twitter_tracking_enabled,
@@ -432,6 +444,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "10",
                                 background: "#411442",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "slack",
@@ -440,6 +453,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "11",
                                 background: "#F8761F",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "Hubspot",
@@ -448,6 +462,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "12",
                                 background: "#FF4A00",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "Zapier",
@@ -456,6 +471,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "13",
                                 background: "#006192",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "Linkedin",
@@ -464,6 +480,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "14",
                                 background: "#03363D",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "Zendesk",
@@ -472,6 +489,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "15",
                                 background: "#00A1E0",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "Salesforce",
@@ -480,6 +498,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "16",
                                 background: "#2EBD59",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "Sportfy Podcast",
@@ -488,6 +507,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "17",
                                 background: "null",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "Apple Podcast",
@@ -496,6 +516,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "18",
                                 background: "#FF9900",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "amazoon Podcast",
@@ -504,6 +525,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "19",
                                 background: "#24292F",
+                                dsKey: "is_ds_github_tracking_enabled",
                                 enabled:
                                     this.state.userServices
                                         .is_ds_github_tracking_enabled,
@@ -514,6 +536,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "20",
                                 background: "null",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "Shopify",
@@ -522,6 +545,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "21",
                                 background: "#2E3133",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "WIX.com",
@@ -530,6 +554,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "22",
                                 background: "null",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "ZOHO",
@@ -538,6 +563,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "23",
                                 background: "null",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "YouTube",
@@ -546,6 +572,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "24",
                                 background: "null",
+                                dsKey: "is_ds_retail_marketing_enabled",
                                 enabled:
                                     this.state.userServices
                                         .is_ds_retail_marketing_enabled,
@@ -556,6 +583,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "25",
                                 background: "#253858",
+                                dsKey: "is_ds_bitbucket_tracking_enabled",
                                 enabled:
                                     this.state.userServices
                                         .is_ds_bitbucket_tracking_enabled,
@@ -566,6 +594,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "26",
                                 background: "null",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "Google Tag Manager",
@@ -574,6 +603,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "27",
                                 background: "null",
+                                dsKey: "is_ds_holidays_enabled",
                                 enabled:
                                     this.state.userServices
                                         .is_ds_holidays_enabled,
@@ -584,6 +614,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "28",
                                 background: "null",
+                                dsKey: "is_ds_web_monitors_enabled",
                                 enabled:
                                     this.state.userServices
                                         .is_ds_web_monitors_enabled,
@@ -594,6 +625,7 @@ class AppsMarket extends React.Component {
                             {
                                 id: "29",
                                 background: "#0A0A0A",
+                                dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 brandName: "TikTok",
@@ -602,6 +634,9 @@ class AppsMarket extends React.Component {
                         ].map((item, itemKey) => (
                             <Col xs="3">
                                 <div
+                                    onClick={() => {
+                                        this.setState({ dsKey: item.dsKey });
+                                    }}
                                     className="item"
                                     key={itemKey}
                                     style={{
@@ -694,6 +729,29 @@ class AppsMarket extends React.Component {
             </div>
           </Col> */}
                     </Row>
+                    <AppsModal
+                        isOpen={this.state.dsKey}
+                        toggle={() => {
+                            this.setState({
+                                dsKey: "",
+                            });
+                        }}
+                    >
+                        {this.state.dsKey === "is_ds_web_monitors_enabled" ? (
+                            <WebsiteMonitoring
+                                {...this.state}
+                                {...this.props}
+                                updateUserAnnotationColors={
+                                    this.updateUserAnnotationColors
+                                }
+                                changeShownHint={this.changeShownHint}
+                                sectionToggler={this.sectionToggler}
+                                userDataSourceAddHandler={this.userDataSourceAddHandler}
+                                userDataSourceDeleteHandler={this.userDataSourceDeleteHandler}
+                                reloadWebMonitors={this.reloadWebMonitors}
+                            />
+                        ) : null}
+                    </AppsModal>
                 </Container>
             </div>
         );
