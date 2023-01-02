@@ -182,7 +182,7 @@ class header extends React.Component {
                             {this.props.user.price_plan.code == "free new" ?
                                 <li className="notifications">
                                     <div className="no-after">
-                                        <p class="trial-countdown mt-4">You are on the Fee Plan</p>
+                                        <p class="trial-countdown mt-4">You are on the Free Plan</p>
                                     </div>
                                 </li>
                                 : null}
