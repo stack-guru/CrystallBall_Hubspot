@@ -32,6 +32,7 @@ import AppsModal from "./AppsModal";
 import WebsiteMonitoring from "./WebsiteMonitoring";
 import NewsAlerts from "./NewsAlerts";
 import GoogleUpdates from "./GoogleUpdates";
+import RetailMarketingDates from "./RetailMarketingDates";
 
 class AppsMarket extends React.Component {
     constructor(props) {
@@ -791,6 +792,31 @@ class AppsMarket extends React.Component {
                         ) : this.state.dsKey ===
                           "is_ds_google_algorithm_updates_enabled" ? (
                             <GoogleUpdates
+                                {...this.state}
+                                {...this.props}
+                                updateUserAnnotationColors={
+                                    this.updateUserAnnotationColors
+                                }
+                                serviceStatusHandler={this.serviceStatusHandler}
+                                changeShownHint={this.changeShownHint}
+                                sectionToggler={this.sectionToggler}
+                                userDataSourceAddHandler={
+                                    this.userDataSourceAddHandler
+                                }
+                                userDataSourceDeleteHandler={
+                                    this.userDataSourceDeleteHandler
+                                }
+                                reloadWebMonitors={this.reloadWebMonitors}
+                                loadUserDataSources={this.loadUserDataSources}
+                                updateGAPropertyId={(value) => {
+                                    this.setState({
+                                        ga_property_id: value,
+                                    });
+                                }}
+                            />
+                        ) : this.state.dsKey ===
+                          "is_ds_retail_marketing_enabled" ? (
+                            <RetailMarketingDates
                                 {...this.state}
                                 {...this.props}
                                 updateUserAnnotationColors={
