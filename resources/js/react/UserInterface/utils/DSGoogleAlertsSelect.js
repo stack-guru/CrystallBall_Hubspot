@@ -1,4 +1,5 @@
 import React from 'react';
+import GoogleAnalyticsPropertySelect from './GoogleAnalyticsPropertySelect';
 
 export default class DSGoogleAlertsSelect extends React.Component {
     constructor(props) {
@@ -45,10 +46,35 @@ export default class DSGoogleAlertsSelect extends React.Component {
                         <div className="input-group-append">
                             <i className="ti-plus"></i>
                         </div>
+                        FOR
+                        <GoogleAnalyticsPropertySelect
+                            name="ga_property_id"
+                            id="ga_property_id"
+                            currentPricePlan={this.props.user.price_plan}
+                            value={this.props.ga_property_id}
+                            onChangeCallback={(gAP) => {
+                                if (gAP.target.value == "") {
+                                    this.props.updateGAPropertyId(null);
+                                    this.props.loadUserDataSources(null);
+                                    this.props.reloadWebMonitors(null);
+                                } else {
+                                    this.props.updateGAPropertyId(gAP.target.value);
+                                    this.props.loadUserDataSources(gAP.target.value);
+                                    this.props.reloadWebMonitors(gAP.target.value);
+                                }
+                            }}
+                            components={{
+                                DropdownIndicator: () => null,
+                                IndicatorSeparator: () => null,
+                            }}
+                            placeholder="Select GA Properties"
+                            isClearable={true}
+                        />
+
                     </div>
                     <div className="checkbox-box mt-3">
                         {
-                            this.props.ds_data.map(gAK => {
+                            this.props.ds_data?.map(gAK => {
                                 return (
                                     <button type="button" className="btn gaa-btn-primary m-2" key={gAK.id}
                                         user_data_source_id={gAK.id}
