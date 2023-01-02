@@ -24,46 +24,9 @@ class WebsiteMonitoring extends React.Component {
                                                 .updateUserAnnotationColors
                                         }
                                     />
-                                    <img
-                                        id="web-monitors-datasource-hint"
-                                        className="hint-button-2"
-                                        onClick={() => {
-                                            this.props.changeShownHint(
-                                                "web-monitors"
-                                            );
-                                        }}
-                                        src="/images/info-logo.png"
-                                    />
                                 </h2>
-                                <UncontrolledPopover
-                                    trigger="legacy"
-                                    placement="right"
-                                    isOpen={
-                                        this.props.showHintFor == "web-monitors"
-                                    }
-                                    target="web-monitors-datasource-hint"
-                                    toggle={() => {
-                                        this.props.changeShownHint(null);
-                                    }}
-                                >
-                                    <PopoverHeader>
-                                        Web Monitoring
-                                    </PopoverHeader>
-                                    <PopoverBody>
-                                        Downtime happens even to the best of us.
-                                        But it’s important to know it before
-                                        customers are affected and also keep
-                                        annotations on your reports. Add your
-                                        website URL; we will monitor it every 1
-                                        minute.
-                                    </PopoverBody>
-                                </UncontrolledPopover>
                             </div>
                             <div className="px-2 text-center">
-                                {this.props.userServices
-                                    .is_ds_web_monitors_enabled
-                                    ? "ON"
-                                    : "OFF"}
                                 <label className="trigger switch">
                                     <input
                                         type="checkbox"
@@ -77,12 +40,7 @@ class WebsiteMonitoring extends React.Component {
                                         }
                                     />
                                     <span
-                                        className={`slider round ${
-                                            this.props.userServices
-                                                .is_ds_web_monitors_enabled
-                                                ? "animate-pulse"
-                                                : ""
-                                        }`}
+                                        className={`slider round`}
                                     />
                                 </label>
                             </div>
@@ -140,6 +98,9 @@ class WebsiteMonitoring extends React.Component {
                                 }
                                 ga_property_id={this.props.ga_property_id}
                                 reloadWebMonitors={this.props.reloadWebMonitors}
+                                user={this.props.user}
+                                loadUserDataSources={this.props.loadUserDataSources}
+                                updateGAPropertyId={this.props.updateGAPropertyId}
                             />
 
                 </div>

@@ -123,6 +123,29 @@ export default class DSWebMonitorsSelect extends React.Component {
                                 onChange={this.handleChange}
                             />
                         </div>
+                        <GoogleAnalyticsPropertySelect
+                            name="ga_property_id"
+                            id="ga_property_id"
+                            currentPricePlan={this.props.user.price_plan}
+                            value={this.props.ga_property_id}
+                            onChangeCallback={(gAP) => {
+                                if (gAP.target.value == "") {
+                                    this.props.updateGAPropertyId(null);
+                                    this.props.loadUserDataSources(null);
+                                    this.props.reloadWebMonitors(null);
+                                } else {
+                                    this.props.updateGAPropertyId(gAP.target.value);
+                                    this.props.loadUserDataSources(gAP.target.value);
+                                    this.props.reloadWebMonitors(gAP.target.value);
+                                }
+                            }}
+                            components={{
+                                DropdownIndicator: () => null,
+                                IndicatorSeparator: () => null,
+                            }}
+                            placeholder="Select GA Properties"
+                            isClearable={true}
+                        />
                         <div className="input-group search-input-box mb-3">
                             <button className="btn gaa-btn-primary" type="submit">Create</button>
                         </div>
