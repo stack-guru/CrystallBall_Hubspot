@@ -178,9 +178,6 @@ class HomeController extends Controller
             if ($request->is_ds_apple_podcast_annotation_enabled) {
                 $this->checkPricePlanLimit($user);
                 $user->last_activated_any_data_source_at = Carbon::now();
-                event(new WebsiteMonitoringActivated($user));
-            } else {
-                event(new WebsiteMonitoringDeactivated($user));
             }
             $user->save();
         }
