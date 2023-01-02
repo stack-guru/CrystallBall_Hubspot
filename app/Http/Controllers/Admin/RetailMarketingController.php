@@ -9,6 +9,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 
 class RetailMarketingController extends Controller
 {
@@ -132,12 +134,16 @@ class RetailMarketingController extends Controller
 
         $dateColIndex = array_search('show_at', $headers);
 
+        $viewErrorBag = new ViewErrorBag();
         try {
             DB::beginTransaction();
             $rows = $row = array();
             foreach ($filecontent as $ln => $line) {
+                $messageBag = new MessageBag;
                 $foundRowsCount++;
                 if (strlen($line) < (6 + 7)) {
+                    $messageBag->add($ln + 1, 'Very short line');
+                    $viewErrorBag->put($ln + 1, $messageBag);
                     continue;
                 }
 
@@ -148,6 +154,10 @@ class RetailMarketingController extends Controller
                     try {
                         $date = Carbon::createFromFormat('Y-m-d', $values[$dateColIndex]);
                     } catch (\Exception $e) {
+                        $messageBag->add($ln + 1, "Actual Value: '" . $values[$dateColIndex] . "'");
+                        $messageBag->add($ln + 1, $e->getMessage());
+                        $messageBag->add($ln + 1, $e->getFile());
+                        $viewErrorBag->put($ln + 1, $messageBag);
                         continue;
                     }
                     for ($i = 0; $i < count($headers); $i++) {
@@ -182,7 +192,8 @@ class RetailMarketingController extends Controller
             Log::error($e);
             abort(422, "Error occured while processing your CSV. Please see log for more information.");
         }
-
-        return redirect()->back()->with('success', "Found $foundRowsCount row(s) in the CSV file. $insertedRowsCount row(s) added in database.");
+        // dd($viewErrorBag);
+        return redirect()->back()->with('success', "Found $foundRowsCount row(s) in the CSV file. $insertedRowsCount row(s) added in database.")
+            ->withErrors($viewErrorBag);
     }
 }

@@ -4,11 +4,14 @@ use App\Http\Controllers\Admin\PricePlanController;
 use App\Http\Controllers\AnnotationController;
 use App\Http\Controllers\GoogleAnalyticsPropertyController;
 use App\Http\Controllers\BitbucketAutomationController;
+use App\Http\Controllers\GithubAutomationController;
 use App\Http\Controllers\FacebookAutomationController;
 use App\Http\Controllers\FacebookTrackingConfigurationController;
 use App\Http\Controllers\InstagramAutomationController;
 use App\Http\Controllers\InstagramTrackingConfigurationController;
 use App\Http\Controllers\KeywordTrackingController;
+use App\Http\Controllers\TwitterController;
+use App\Http\Controllers\TwitterTrackingConfigurationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,11 +80,17 @@ Route::get('socialite/google/redirect', [App\Http\Controllers\Auth\RegisterContr
 Route::get('socialite/facebook', [FacebookAutomationController::class, 'redirectFacebook'])->name('facebook.redirect');
 Route::get('socialite/facebook/redirect', [FacebookAutomationController::class, 'callbackFacebook'])->name('facebook.callback');
 
+Route::get('socialite/twitter', [TwitterController::class, 'loginRedirect'])->name('twitter.redirect');
+Route::get('socialite/twitter/redirect', [TwitterController::class, 'loginCallback'])->name('twitter.callback');
+
 Route::get('socialite/instagram', [InstagramAutomationController::class, 'redirectInstagram'])->name('instagram.redirect');
 Route::get('socialite/instagram/redirect', [InstagramAutomationController::class, 'callbackInstagram'])->name('instagram.callback');
 
 Route::get('socialite/bitbucket', [BitbucketAutomationController::class, 'redirectBitbucket'])->name('bitbucket.redirect');
 Route::get('socialite/bitbucket/redirect', [BitbucketAutomationController::class, 'callbackBitbucket'])->name('bitbucket.callback');
+
+Route::get('socialite/github', [GithubAutomationController::class, 'redirectGithub'])->name('github.redirect');
+Route::get('socialite/github/redirect', [GithubAutomationController::class, 'callbackGithub'])->name('github.callback');
 
 Route::view('documentation', 'documentation');
 Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
@@ -201,6 +210,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('user-facebook-accounts-exists', [FacebookAutomationController::class, 'userFacebookAccountsExists']);
             Route::get('user-instagram-accounts-exists', [InstagramAutomationController::class, 'userInstagramAccountsExists']);
             Route::get('user-bitbucket-accounts-exists', [BitbucketAutomationController::class, 'userBitbucketAccountsExists']);
+            Route::get('user-github-accounts-exists', [GithubAutomationController::class, 'userGithubAccountsExists']);
 
             Route::get('user-keyword-configurations-for-keyword-tracking', [KeywordTrackingController::class, 'userKeywordConfigurationsTotal']);
 
@@ -219,6 +229,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::post('save-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'save']);
             Route::get('get-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'get']);
 
+            Route::post('save-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'save']);
+            Route::get('get-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'get']);
+
             Route::post('save-instagram-tracking-configurations', [InstagramTrackingConfigurationController::class, 'save']);
             Route::get('get-instagram-tracking-configurations', [InstagramTrackingConfigurationController::class, 'get']);
 
@@ -233,7 +246,13 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('user-annotation-color', [App\Http\Controllers\UserAnnotationColorController::class, 'index']);
 
             // bitbucket workspaces
-            Route::get('get-bitbucket-workspaces', [App\Http\Controllers\BitbucketAutomationController::class, 'getWorkspaces']);
+            Route::get('get-bitbucket-workspaces', [BitbucketAutomationController::class, 'getWorkspaces']);
+
+            // github repositories
+            Route::get('get-github-repositories', [GithubAutomationController::class, 'getRepositories']);
+            Route::post('apple_podcast_url', [App\Http\Controllers\ApplePodcastMonitorController::class,'applePodcastUrl']);
+            Route::resource('apple-podcast-monitor', App\Http\Controllers\ApplePodcastMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
+
         });
 
         Route::group(['prefix' => 'settings'], function () {

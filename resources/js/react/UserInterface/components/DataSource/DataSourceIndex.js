@@ -21,8 +21,11 @@ import { getCompanyName } from '../../helpers/CommonFunctions';
 import EditKeyword from '../../utils/EditKeyword';
 import GoogleAdChanges from "../../utils/GoogleAdChanges";
 import FacebookTracking from "../../utils/FacebookTracking";
+import TwitterTracking from "../../utils/TwitterTracking";
 import InstagramTracking from "../../utils/InstagramTracking";
-import BitbucketTracking from "../../utils/BitbucketTracking";
+// import BitbucketTracking from "../../utils/BitbucketTracking";
+import GithubTracking from "../../utils/GithubTracking";
+// import ApplePodcast, { ApplePodcastConfig } from "../../utils/ApplePodcast";
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -47,7 +50,8 @@ export default class DataSourceIndex extends React.Component {
             editKeyword_keyword_configuration_id: '',
             userFacebookAccountsExists: false,
             userInstagramAccountsExists: false,
-            userBitbucketAccountsExists: false
+            userBitbucketAccountsExists: false,
+            userGithubAccountsExists: false
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
@@ -70,6 +74,7 @@ export default class DataSourceIndex extends React.Component {
         this.editKeywordToggler = this.editKeywordToggler.bind(this);
         this.checkUserFacebookAccount = this.checkUserFacebookAccount.bind(this);
         this.checkUserBitbucketAccount = this.checkUserBitbucketAccount.bind(this);
+        this.checkUserGithubAccount = this.checkUserGithubAccount.bind(this);
         this.updateUserService = this.updateUserService.bind(this);
 
 
@@ -85,7 +90,16 @@ export default class DataSourceIndex extends React.Component {
 
         this.checkUserFacebookAccount();
         this.checkUserBitbucketAccount();
+        this.checkUserGithubAccount();
 
+        let alertMessage = new URLSearchParams(window.location.search).get("alertMessage");
+        if(alertMessage){
+            swal.fire({
+                iconHtml: '<img src="/images/svg/twitter.svg">',
+                title: 'Connected',
+                html: alertMessage,
+            });
+        }
     }
 
     loadUserDataSources(gaPropertyId) {
@@ -179,10 +193,6 @@ export default class DataSourceIndex extends React.Component {
         });
 
         this.sectionToggler('edit_keyword')
-
-        console.log(this.state);
-
-
     }
 
     render() {
@@ -232,11 +242,11 @@ export default class DataSourceIndex extends React.Component {
                         className="col-md-9 col-sm-12"
                         id="data-source-page-container"
                     >
-                        <div class="row">
+                        <div className="row">
                             {/*
                                 Website Monitoring Section
                             */}
-                            <div class="col-md-6 mt-2">
+                            <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{ minHeight: "180px" }}
@@ -1563,6 +1573,283 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>
 
+                            {/*
+                                Bitbucket Section
+                            */}
+                            {/*<div className="col-md-6 mt-2">
+                                <div
+                                    className="d-flex border rounded flex-column justify-content-between"
+                                    style={{ minHeight: "180px" }}
+                                >
+                                    <div>
+                                        <div
+                                            className="d-flex mt-2 justify-content-between "
+                                            id="web-monitoring-data-source-section"
+                                        >
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Bitbucket Tracking{" "}
+                                                        <UserAnnotationColorPicker
+                                                            name="bitbucket_tracking"
+                                                            value={
+                                                                this.state
+                                                                    .userAnnotationColors
+                                                                    .bitbucket_tracking
+                                                            }
+                                                            updateCallback={
+                                                                this
+                                                                    .updateUserAnnotationColors
+                                                            }
+                                                        />
+                                                        <img
+                                                            id="bitbucket_tracking-datasource-hint"
+                                                            className="hint-button-2"
+                                                            onClick={() => {
+                                                                this.changeShownHint(
+                                                                    "bitbucket_tracking"
+                                                                );
+                                                            }}
+                                                            src="/images/info-logo.png"
+                                                        />
+                                                    </small>
+                                                </h2>
+                                            </div>
+                                            <UncontrolledPopover
+                                                trigger="legacy"
+                                                placement="right"
+                                                isOpen={
+                                                    this.state
+                                                        .showHintFor ==
+                                                    "bitbucket_tracking"
+                                                }
+                                                target="bitbucket_tracking-datasource-hint"
+                                                toggle={() => {
+                                                    this.changeShownHint(
+                                                        null
+                                                    );
+                                                }}
+                                                onClick={() => {
+                                                    this.changeShownHint(
+                                                        null
+                                                    );
+                                                }}
+                                            >
+                                                <PopoverHeader>
+                                                    Bitbucket Tracking
+                                                </PopoverHeader>
+                                                <PopoverBody>
+                                                    Activate Bitbucket and automatically send code deployments to Crystal Ball
+                                                </PopoverBody>
+                                            </UncontrolledPopover>
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices
+                                                    .is_ds_bitbucket_tracking_enabled
+                                                    ? "ON"
+                                                    : "OFF"}
+                                                <label className="trigger switch">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="is_ds_bitbucket_tracking_enabled"
+                                                        onChange={
+                                                            this
+                                                                .serviceStatusHandler
+                                                        }
+                                                        checked={
+                                                            this.state
+                                                                .userServices
+                                                                .is_ds_bitbucket_tracking_enabled
+                                                        }
+                                                    />
+                                                    <span
+                                                        className={`slider round ${this.state
+                                                            .userServices
+                                                            .is_ds_bitbucket_tracking_enabled
+                                                            ? "animate-pulse"
+                                                            : ""
+                                                            }`}
+                                                    />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="ml-2">
+                                            Credits:{" "}
+                                            {
+                                                this.state.userDataSources.bitbucket_tracking?.length
+                                            }
+                                            /
+                                            {this.props.user.price_plan
+                                                .bitbucket_credits_count == -1
+                                                ? 0
+                                                : this.props.user.price_plan
+                                                    .bitbucket_credits_count}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        {this.state.userServices.is_ds_bitbucket_tracking_enabled ?
+                                            <p
+                                                className="ds-update-text m-0 px-2 pb-3 text-right"
+                                                onClick={() => {
+                                                    this.sectionToggler(
+                                                        "bitbucket_tracking"
+                                                    );
+                                                }}
+                                            >
+                                                {this.state.sectionName ==
+                                                    "bitbucket_tracking"
+                                                    ? "Hide"
+                                                    : "Add Respositories"}
+                                            </p>
+                                            :
+                                            <div></div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>*/}
+
+                            {/*
+                                Github Section
+                            */}
+                            {/*<div className="col-md-6 mt-2">
+                                <div
+                                    className="d-flex border rounded flex-column justify-content-between"
+                                    style={{ minHeight: "180px" }}
+                                >
+                                    <div>
+                                        <div
+                                            className="d-flex mt-2 justify-content-between "
+                                            id="web-monitoring-data-source-section"
+                                        >
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Github Tracking{" "}
+                                                        <UserAnnotationColorPicker
+                                                            name="github_tracking"
+                                                            value={
+                                                                this.state
+                                                                    .userAnnotationColors
+                                                                    .github_tracking
+                                                            }
+                                                            updateCallback={
+                                                                this
+                                                                    .updateUserAnnotationColors
+                                                            }
+                                                        />
+                                                        <img
+                                                            id="github_tracking-datasource-hint"
+                                                            className="hint-button-2"
+                                                            onClick={() => {
+                                                                this.changeShownHint(
+                                                                    "github_tracking"
+                                                                );
+                                                            }}
+                                                            src="/images/info-logo.png"
+                                                        />
+                                                    </small>
+                                                </h2>
+                                            </div>
+                                            <UncontrolledPopover
+                                                trigger="legacy"
+                                                placement="right"
+                                                isOpen={
+                                                    this.state
+                                                        .showHintFor ==
+                                                    "github_tracking"
+                                                }
+                                                target="github_tracking-datasource-hint"
+                                                toggle={() => {
+                                                    this.changeShownHint(
+                                                        null
+                                                    );
+                                                }}
+                                                onClick={() => {
+                                                    this.changeShownHint(
+                                                        null
+                                                    );
+                                                }}
+                                            >
+                                                <PopoverHeader>
+                                                    Github Tracking
+                                                </PopoverHeader>
+                                                <PopoverBody>
+                                                    Activate Github and automatically send code deployments to Crystal Ball
+                                                </PopoverBody>
+                                            </UncontrolledPopover>
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices
+                                                    .is_ds_github_tracking_enabled
+                                                    ? "ON"
+                                                    : "OFF"}
+                                                <label className="trigger switch">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="is_ds_github_tracking_enabled"
+                                                        onChange={
+                                                            this
+                                                                .serviceStatusHandler
+                                                        }
+                                                        checked={
+                                                            this.state
+                                                                .userServices
+                                                                .is_ds_github_tracking_enabled
+                                                        }
+                                                    />
+                                                    <span
+                                                        className={`slider round ${this.state
+                                                            .userServices
+                                                            .is_ds_github_tracking_enabled
+                                                            ? "animate-pulse"
+                                                            : ""
+                                                            }`}
+                                                    />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="ml-2">
+                                            Credits:{" "}
+                                            {
+                                                this.state.userDataSources.github_tracking?.length
+                                            }
+                                            /
+                                            {this.props.user.price_plan
+                                                .github_credits_count == -1
+                                                ? 0
+                                                : this.props.user.price_plan
+                                                    .github_credits_count}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        {this.state.userServices.is_ds_github_tracking_enabled ?
+                                            <p
+                                                className="ds-update-text m-0 px-2 pb-3 text-right"
+                                                onClick={() => {
+                                                    this.sectionToggler(
+                                                        "github_tracking"
+                                                    );
+                                                }}
+                                            >
+                                                {this.state.sectionName ==
+                                                    "github_tracking"
+                                                    ? "Hide"
+                                                    : "Add Respositories"}
+                                            </p>
+                                            :
+                                            <div></div>
+                                        }
+                                    </div>
+                                </div>
+                                </div>*/}
+                            {/*<div className="col-md-6 mt-2">
+                                <ApplePodcast
+                                    state={this.state}
+                                    updateUserAnnotationColors={this.updateUserAnnotationColors}
+                                    serviceStatusHandler={this.serviceStatusHandler}
+                                    props={this.props}
+                                    sectionToggler={() => this.sectionToggler('apple_podcast')}
+                                />
+                            </div>*/}
+
                             {/*<div className="col-md-6 mt-2">*/}
                             {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
                             {/*        <div>*/}
@@ -1657,6 +1944,116 @@ export default class DataSourceIndex extends React.Component {
                             {/*   </div>*/}
                             {/*</div>*/}
 
+                            {/*<div className="col-md-6 mt-2">
+                                <div
+                                    className="d-flex border rounded flex-column justify-content-between"
+                                    style={{ minHeight: "180px" }}
+                                >
+                                    <div>
+                                        <div
+                                            className="d-flex mt-2 justify-content-between "
+                                            id="web-monitoring-data-source-section"
+                                        >
+                                            <div className="px-2">
+                                                <h2>
+                                                    <small>
+                                                        Twitter Tracking{" "}
+                                                        <UserAnnotationColorPicker
+                                                            name="twitter_tracking"
+                                                            value={
+                                                                this.state
+                                                                    .userAnnotationColors
+                                                                    .twitter_tracking
+                                                            }
+                                                            updateCallback={
+                                                                this
+                                                                    .updateUserAnnotationColors
+                                                            }
+                                                        />
+                                                        <img
+                                                            id="twitter_tracking-datasource-hint"
+                                                            className="hint-button-2"
+                                                            onClick={() => {
+                                                                this.changeShownHint(
+                                                                    "twitter_tracking"
+                                                                );
+                                                            }}
+                                                            src="/images/info-logo.png"
+                                                        />
+                                                    </small>
+                                                </h2>
+                                                <UncontrolledPopover
+                                                    trigger="legacy"
+                                                    placement="right"
+                                                    isOpen={
+                                                        this.state
+                                                            .showHintFor ==
+                                                        "twitter_tracking"
+                                                    }
+                                                    target="twitter_tracking-datasource-hint"
+                                                    toggle={() => {
+                                                        this.changeShownHint(
+                                                            null
+                                                        );
+                                                    }}
+                                                >
+                                                    <PopoverHeader>
+                                                        Twitter Tracking
+                                                    </PopoverHeader>
+                                                    <PopoverBody>
+                                                        description
+                                                    </PopoverBody>
+                                                </UncontrolledPopover>
+                                            </div>
+                                            <div className="px-2 text-center">
+                                                {this.state.userServices.is_ds_twitter_tracking_enabled ? "ON" : "OFF"}
+                                                <label className="trigger switch">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={this.state.userServices.is_ds_twitter_tracking_enabled}
+                                                        onChange={this.serviceStatusHandler}
+                                                        name="is_ds_twitter_tracking_enabled"
+                                                    />
+                                                    <span className={`slider round ${this.state.userServices.is_ds_twitter_tracking_enabled ? 'animate-pulse' : ''}`} />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                                <p
+                                                    style={{
+                                                        fontSize: "13px",
+                                                    }}
+                                                >
+                                                    Credits: ∞
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="px-2">
+                                            <div className="list-wrapper">
+                                                    <div>
+
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <p
+                                            className="ds-update-text m-0 pb-3 px-2 text-right"
+                                            onClick={() => {
+                                                this.sectionToggler(
+                                                    "twitter_tracking"
+                                                );
+                                            }}
+                                        >
+                                            {this.state.sectionName ==
+                                            "twitter_tracking"
+                                                ? "Hide"
+                                                : "Configure"}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>*/}
+
                             <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
@@ -1702,6 +2099,11 @@ export default class DataSourceIndex extends React.Component {
                                                                 "",
                                                                 "info"
                                                             );
+                                                            // swal.fire(
+                                                            //     "This feature is coming soon. Stay tuned!",
+                                                            //     "",
+                                                            //     "info"
+                                                            // );
                                                             // const accountNotLinkedHtml =
                                                             //     "" +
                                                             //     '<div class="">' +
@@ -1712,7 +2114,7 @@ export default class DataSourceIndex extends React.Component {
                                                             //     html: accountNotLinkedHtml,
                                                             //     width: 700,
                                                             //     customClass: {
-                                                            //         popup: "bg-light-red pb-5",
+                                                            //         popup: "bg-light-red",
                                                             //         htmlContainer:
                                                             //             "m-0",
                                                             //     },
@@ -1856,7 +2258,7 @@ export default class DataSourceIndex extends React.Component {
                                                             //     html: accountNotLinkedHtml,
                                                             //     width: 700,
                                                             //     customClass: {
-                                                            //         popup: "bg-light-red pb-5",
+                                                            //         popup: "bg-light-red",
                                                             //         htmlContainer:
                                                             //             "m-0",
                                                             //     },
@@ -2060,7 +2462,7 @@ export default class DataSourceIndex extends React.Component {
                                                             //     html: accountNotLinkedHtml,
                                                             //     width: 700,
                                                             //     customClass: {
-                                                            //         popup: "bg-light-red pb-5",
+                                                            //         popup: "bg-light-red",
                                                             //         htmlContainer:
                                                             //             "m-0",
                                                             //     },
@@ -2078,105 +2480,6 @@ export default class DataSourceIndex extends React.Component {
                                                             // if (!this.state.userServices.is_ds_anomolies_detection_enabled) {
 
                                                             // }
-                                                        }}
-                                                        name="is_ds_anomolies_detection_enabled"
-                                                    />
-                                                    {/* <span className={`slider round ${this.state.userServices.is_ds_anomolies_detection_enabled ? 'animate-pulse' : ''}`} /> */}
-                                                    <span
-                                                        className={`slider round`}
-                                                    />
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="px-2">
-                                            <div className="list-wrapper"></div>
-                                            <div className="text-center mt-2">
-                                                <img
-                                                    src="images/comingsoon.png"
-                                                    className="img-fluid w-40"
-                                                    style={{
-                                                        maxWidth: "150px",
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col-md-6 mt-2">
-                                <div
-                                    className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
-                                >
-                                    <div>
-                                        <div
-                                            className="d-flex mt-2 justify-content-between "
-                                            id="web-monitoring-data-source-section"
-                                        >
-                                            <div className="px-2">
-                                                <h2>
-                                                    <small>
-                                                        Twitter Tracking{" "}
-                                                        <UserAnnotationColorPicker
-                                                            name="anomolies_detection"
-                                                            value={
-                                                                this.state
-                                                                    .userAnnotationColors
-                                                                    .facebook_tracking
-                                                            }
-                                                            updateCallback={
-                                                                this
-                                                                    .updateUserAnnotationColors
-                                                            }
-                                                        />
-                                                        <img
-                                                            className="hint-button-2"
-                                                            src="/images/info-logo.png"
-                                                        />
-                                                    </small>
-                                                </h2>
-                                            </div>
-                                            <div className="px-2 text-center">
-                                                {/* {this.state.userServices.is_ds_anomolies_detection_enabled ? "Active" : "Deactive"} */}
-                                                OFF
-                                                <label className="trigger switch">
-                                                    <input
-                                                        type="checkbox"
-                                                        // checked={this.state.userServices.is_ds_anomolies_detection_enabled}
-                                                        // onChange={this.serviceStatusHandler}
-                                                        onClick={(e) => {
-                                                            e.preventDefault();
-                                                            swal.fire(
-                                                                "This feature is coming soon. Stay tuned!",
-                                                                "",
-                                                                "info"
-                                                            );
-                                                            // const accountNotLinkedHtml =
-                                                            //     "" +
-                                                            //     '<div class="">' +
-                                                            //     '<img src="/images/banners/social_automations_banner.jpg" class="img-fluid">' +
-                                                            //     "</div>";
-
-                                                            // swal.fire({
-                                                            //     html: accountNotLinkedHtml,
-                                                            //     width: 700,
-                                                            //     customClass: {
-                                                            //         popup: "bg-light-red pb-5",
-                                                            //         htmlContainer:
-                                                            //             "m-0",
-                                                            //     },
-                                                            //     confirmButtonClass:
-                                                            //         "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                                            //     confirmButtonText:
-                                                            //         "Upgrade Now" +
-                                                            //         "<i class='ml-2 fa fa-caret-right'> </i>",
-                                                            // }).then((value) => {
-                                                            //     this.setState({
-                                                            //         redirectTo:
-                                                            //             "/settings/price-plans",
-                                                            //     });
-                                                            // });
                                                         }}
                                                         name="is_ds_anomolies_detection_enabled"
                                                     />
@@ -2262,7 +2565,7 @@ export default class DataSourceIndex extends React.Component {
                                                             //     html: accountNotLinkedHtml,
                                                             //     width: 700,
                                                             //     customClass: {
-                                                            //         popup: "bg-light-red pb-5",
+                                                            //         popup: "bg-light-red",
                                                             //         htmlContainer:
                                                             //             "m-0",
                                                             //     },
@@ -2439,7 +2742,7 @@ export default class DataSourceIndex extends React.Component {
                                                                 html: accountNotLinkedHtml,
                                                                 width: 700,
                                                                 customClass: {
-                                                                    popup: 'bg-light-red pb-5',
+                                                                    popup: 'bg-light-red',
                                                                     htmlContainer: 'm-0',
                                                                 },
                                                                 confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
@@ -2465,141 +2768,6 @@ export default class DataSourceIndex extends React.Component {
                                     </div>
                                 </div>
                             </div> */}
-
-                            {/*
-                                Bitbucket Section
-                            */}
-
-                            { false ? <div className="col-md-6 mt-2">
-                                <div
-                                    className="d-flex border rounded flex-column justify-content-between"
-                                    style={{ minHeight: "180px" }}
-                                >
-                                    <div>
-                                        <div
-                                            className="d-flex mt-2 justify-content-between "
-                                            id="web-monitoring-data-source-section"
-                                        >
-                                            <div className="px-2">
-                                                <h2>
-                                                    <small>
-                                                        Bitbucket Tracking{" "}
-                                                        <UserAnnotationColorPicker
-                                                            name="bitbucket_tracking"
-                                                            value={
-                                                                this.state
-                                                                    .userAnnotationColors
-                                                                    .bitbucket_tracking
-                                                            }
-                                                            updateCallback={
-                                                                this
-                                                                    .updateUserAnnotationColors
-                                                            }
-                                                        />
-                                                        <img
-                                                            id="bitbucket_tracking-datasource-hint"
-                                                            className="hint-button-2"
-                                                            onClick={() => {
-                                                                this.changeShownHint(
-                                                                    "bitbucket_tracking"
-                                                                );
-                                                            }}
-                                                            src="/images/info-logo.png"
-                                                        />
-                                                    </small>
-                                                </h2>
-                                            </div>
-                                            <UncontrolledPopover
-                                                trigger="legacy"
-                                                placement="right"
-                                                isOpen={
-                                                    this.state
-                                                        .showHintFor ==
-                                                    "bitbucket_tracking"
-                                                }
-                                                target="bitbucket_tracking-datasource-hint"
-                                                toggle={() => {
-                                                    this.changeShownHint(
-                                                        null
-                                                    );
-                                                }}
-                                                onClick={() => {
-                                                    this.changeShownHint(
-                                                        null
-                                                    );
-                                                }}
-                                            >
-                                                <PopoverHeader>
-                                                    Bitbucket Tracking
-                                                </PopoverHeader>
-                                                <PopoverBody>
-                                                    Select Repository to check commit updates automation
-                                                </PopoverBody>
-                                            </UncontrolledPopover>
-                                            <div className="px-2 text-center">
-                                                {this.state.userServices
-                                                    .is_ds_bitbucket_tracking_enabled
-                                                    ? "ON"
-                                                    : "OFF"}
-                                                <label className="trigger switch">
-                                                    <input
-                                                        type="checkbox"
-                                                        name="is_ds_bitbucket_tracking_enabled"
-                                                        onChange={
-                                                            this
-                                                                .serviceStatusHandler
-                                                        }
-                                                        checked={
-                                                            this.state
-                                                                .userServices
-                                                                .is_ds_bitbucket_tracking_enabled
-                                                        }
-                                                    />
-                                                    <span
-                                                        className={`slider round ${this.state
-                                                            .userServices
-                                                            .is_ds_bitbucket_tracking_enabled
-                                                            ? "animate-pulse"
-                                                            : ""
-                                                            }`}
-                                                    />
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="ml-2">
-                                            Credits:{" "}
-                                            {
-                                                this.state.userDataSources.bitbucket_tracking?.length
-                                            }
-                                            /
-                                            {this.props.user.price_plan
-                                                .bitbucket_credits_count == -1
-                                                ? 0
-                                                : this.props.user.price_plan
-                                                    .bitbucket_credits_count}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        {this.state.userServices.is_ds_bitbucket_tracking_enabled ?
-                                            <p
-                                                className="ds-update-text m-0 px-2 pb-3 text-right"
-                                                onClick={() => {
-                                                    this.sectionToggler(
-                                                        "bitbucket_tracking"
-                                                    );
-                                                }}
-                                            >
-                                                {this.state.sectionName ==
-                                                    "bitbucket_tracking"
-                                                    ? "Hide"
-                                                    : "Add Respositories"}
-                                            </p>
-                                            :
-                                            <div></div>
-                                        }
-                                    </div>
-                                </div>
-                            </div> : null }
                         </div>
                     </div>
 
@@ -2681,6 +2849,15 @@ export default class DataSourceIndex extends React.Component {
                                 }
                             />
                         ) : null}
+
+                        {/*{this.state.sectionName == "apple_podcast" &&
+                        this.state.userDataSources ? (
+                            <ApplePodcastConfig
+                                setState={this.setState}
+                                sectionToggler={() => this.sectionToggler('apple_podcast')}
+                                gaPropertyId={this.state.ga_property_id}
+                            />
+                        ) : null}*/}
                         {this.state.sectionName == "web_monitors" &&
                             this.state.userDataSources ? (
                             <DSWebMonitorsSelect
@@ -2739,6 +2916,10 @@ export default class DataSourceIndex extends React.Component {
                             <GoogleAdChanges />
                         ) : null}
 
+                        {this.state.sectionName == "twitter_tracking" ? (
+                            <TwitterTracking/>
+                        ) : null}
+
                         {this.state.sectionName == "facebook_tracking" ? (
                             <FacebookTracking />
                         ) : null}
@@ -2747,7 +2928,7 @@ export default class DataSourceIndex extends React.Component {
                             <InstagramTracking />
                         ) : null}
 
-                        {this.state.sectionName == "bitbucket_tracking" ? (
+                        {/*{this.state.sectionName == "bitbucket_tracking" ? (
                             <BitbucketTracking
                                 used_credits={
                                     this.state.userDataSources.bitbucket_tracking?.length
@@ -2763,16 +2944,34 @@ export default class DataSourceIndex extends React.Component {
                                     this.userDataSourceDeleteHandler
                                 }
                             />
+                        ) : null}*/}
+
+                        {this.state.sectionName == "github_tracking" ? (
+                            <GithubTracking
+                                used_credits={
+                                    this.state.userDataSources.github_tracking?.length
+                                }
+                                total_credits={
+                                    this.props.user.price_plan.github_credits_count
+                                }
+                                ds_data={
+                                    this.state.userDataSources.github_tracking
+                                }
+                                onCheckCallback={this.userDataSourceAddHandler}
+                                onUncheckCallback={
+                                    this.userDataSourceDeleteHandler
+                                }
+                            />
                         ) : null}
                     </div>
                 </div>
-            </div>
+                </div>
         );
     }
 
     checkUserFacebookAccount() {
         // userFacebookAccountsExists
-        this.setState({ isBusy: true });
+        this.setState({ isBusy: true })
         HttpClient.get('/data-source/user-facebook-accounts-exists', {}).then((resp) => {
             if (resp.data.exists) {
                 this.setState({
@@ -2839,18 +3038,77 @@ export default class DataSourceIndex extends React.Component {
         });
     }
 
+    checkUserGithubAccount() {
+        // userGithubAccountsExists
+        this.setState({ isBusy: true });
+        HttpClient.get('/data-source/user-github-accounts-exists', {}).then((resp) => {
+            if (resp.data.exists) {
+                this.setState({
+                    isBusy: false,
+                    errors: undefined,
+                    userGithubAccountsExists: true
+                })
+            } else if (resp.data.error) {
+                toast.error("Github Error: " + resp.data.error);
+                this.sectionToggler(null)
+                this.updateUserService(
+                    {
+                        target: {
+                            name: 'is_ds_github_tracking_enabled',
+                            checked: 0
+                        }
+                    }
+                );
+            }
+        }, (err) => {
+            this.setState({ isBusy: false, errors: err.response.data })
+            status = false;
+        }, this).catch(err => {
+            this.setState({ isBusy: false, errors: err })
+            status = false;
+        });
+    }
+
     updateUserService(e) {
 
-        HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
-            if (resp.data.user_services[e.target.name] == 1) {
-                toast.success("Service activated successfully.");
-                this.setState({ userServices: resp.data.user_services })
+        HttpClient.post('/userService', {[e.target.name]: e.target.checked ? 1 : 0}).then(resp => {
+
+            switch (e.target.name) {
+                case 'is_ds_twitter_tracking_enabled':
+                    if(resp.data.twitter_accounts > 0){
+                        this.setState({userServices: resp.data.user_services})
+                        if (resp.data.user_services[e.target.name] == 1) {
+                            toast.success("Service activated successfully.");
+                        }
+                        if (resp.data.user_services[e.target.name] == 0) {
+                            toast.info("Service deactivated successfully.");
+                        }
+                    }else{
+                        swal.fire({
+                            iconHtml: '<img src="/images/svg/twitter.svg">',
+                            showCloseButton: true,
+                            title: "Connect with Twitter",
+                            text: "Connect your Twitter account to create automatic annotations",
+                            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                            confirmButtonText: "<a href='/socialite/twitter' class='text-white'><i class='mr-2 fa fa-twitter'> </i>" + "Connect twitter Account</a>"
+                        });
+                    }
+                    break;
+
+                default:
+
+                    if (resp.data.user_services[e.target.name] == 1) {
+                        toast.success("Service activated successfully.");
+                    }
+                    if (resp.data.user_services[e.target.name] == 0) {
+                        toast.info("Service deactivated successfully.");
+                    }
+                    this.setState({userServices: resp.data.user_services})
+                    break;
             }
-            if (resp.data.user_services[e.target.name] == 0) {
-                this.setState({ userServices: resp.data.user_services })
-                toast.info("Service deactivated successfully.");
-            }
+
             (this.props.reloadUser)();
+
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
             if ((err.response).status == 402) {
@@ -2924,6 +3182,14 @@ export default class DataSourceIndex extends React.Component {
                 this.sectionToggler(null)
                 this.updateUserService(e);
             }
+
+            if (e.target.name == 'is_ds_apple_podcast_annotation_enabled' && e.target.checked) {
+                this.sectionToggler('apple_podcast')
+                this.updateUserService(e);
+            } else if (e.target.name == 'is_ds_apple_podcast_annotation_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            }
             if (e.target.name == 'is_ds_instagram_tracking_enabled' && e.target.checked) {
                 if (this.state.userInstagramAccountsExists) {
                     this.sectionToggler('instagram_tracking')
@@ -2978,7 +3244,7 @@ export default class DataSourceIndex extends React.Component {
                         },
                         showCloseButton: true,
                         title: "Connect with Bitbucket",
-                        text: "Connect your Bitbucket account to create automatic annotations for commits updated",
+                        text: "Connect your Bitbucket account to create automatic annotations for commits",
                         confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                         confirmButtonText: "<a href='/socialite/bitbucket' class='text-white'><i class='mr-2 fa fa-bitbucket'> </i>" + "Connect Bitbucket Account</a>",
                     })
@@ -2986,6 +3252,32 @@ export default class DataSourceIndex extends React.Component {
             } else if (e.target.name == 'is_ds_bitbucket_tracking_enabled' && !e.target.checked) {
                 this.sectionToggler(null)
                 this.updateUserService(e);
+            }
+
+            if (e.target.name == 'is_ds_github_tracking_enabled' && e.target.checked) {
+                if (this.state.userGithubAccountsExists) {
+                    this.sectionToggler('github_tracking')
+                    this.updateUserService(e, this);
+                } else {
+                    swal.fire({
+                        customClass: {
+                            htmlContainer: "py-3",
+                        },
+                        showCloseButton: true,
+                        title: "Connect with Github",
+                        text: "Connect your github account to create automatic annotations for commits",
+                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                        confirmButtonText: "<a href='/socialite/github' class='text-white'><i class='mr-2 fa fa-github'> </i>" + "Connect Github Account</a>",
+                    })
+                }
+            } else if (e.target.name == 'is_ds_github_tracking_enabled' && !e.target.checked) {
+                this.sectionToggler(null)
+                this.updateUserService(e);
+            }
+
+            if (e.target.name == 'is_ds_twitter_tracking_enabled') {
+                this.updateUserService(e);
+                this.sectionToggler(e.target.checked ? 'twitter_tracking' : null)
             }
 
         } else {
@@ -2998,7 +3290,7 @@ export default class DataSourceIndex extends React.Component {
                 html: accountNotLinkedHtml,
                 width: 700,
                 customClass: {
-                    popup: 'bg-light-red pb-5',
+                    popup: 'bg-light-red',
                     htmlContainer: 'm-0',
                 },
                 confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
@@ -3033,6 +3325,9 @@ export default class DataSourceIndex extends React.Component {
             } else {
                 ar.push(uds)
             }
+
+            if (dataSource.code == 'bitbucket_tracking' || dataSource.code == 'github_tracking')
+                toast.success("Repository Connected.");
             this.setState({
                 userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar },
                 isBusy: false,
@@ -3042,16 +3337,27 @@ export default class DataSourceIndex extends React.Component {
             this.setState({ isBusy: false, errors: err.response.data })
 
             if (err.response.status === 422) {
+                let imgSrc = "/images/api-upgrade-modal.jpg";
+                switch (dataSource.code) {
+                    case 'bitbucket_tracking':
+                    case 'github_tracking':
+                        imgSrc = "/images/banners/Repositories-01.svg";
+                        break;
+
+                    default:
+                        imgSrc = "/images/api-upgrade-modal.jpg";
+                        break;
+                }
                 const accountNotLinkedHtml = '' +
                     '<div class="">' +
-                    '<img src="/images/automation-upgrade-modal.jpg" class="img-fluid">' +
+                    '<img src="' + imgSrc + '" class="img-fluid">' +
                     '</div>'
 
                 swal.fire({
                     html: accountNotLinkedHtml,
                     width: 700,
                     customClass: {
-                        popup: 'bg-light-red pb-5',
+                        popup: 'bg-light-red',
                         htmlContainer: 'm-0',
                     },
                     confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
@@ -3071,6 +3377,8 @@ export default class DataSourceIndex extends React.Component {
         HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`).then(resp => {
             let ar = this.state.userDataSources[dsCode];
             let newAr = ar.filter(a => a.id != userDataSourceId)
+            if (dsCode == 'bitbucket_tracking' || dsCode == 'github_tracking')
+                toast.info("Repository Disconnected.");
             this.setState({
                 userDataSources: { ...this.state.userDataSources, [dsCode]: newAr },
                 isBusy: false,
