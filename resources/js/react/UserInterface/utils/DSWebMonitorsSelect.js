@@ -2,6 +2,7 @@ import React from 'react';
 import HttpClient from '../utils/HttpClient'
 import ErrorAlert from '../utils/ErrorAlert';
 import GoogleAnalyticsPropertySelect from './GoogleAnalyticsPropertySelect';
+import { Button, Popover, UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 export default class DSWebMonitorsSelect extends React.Component {
 
@@ -11,7 +12,8 @@ export default class DSWebMonitorsSelect extends React.Component {
             isBusy: false,
             errors: undefined,
             webMonitor: { name: '', url: '', email_address: '', sms_phone_number: '', ga_property_id: '' },
-            webMonitors: []
+            webMonitors: [],
+            activeDeletePopover: null
         }
 
         this.setDefaultState = this.setDefaultState.bind(this);
@@ -155,7 +157,12 @@ export default class DSWebMonitorsSelect extends React.Component {
                             this.state.webMonitors.map(wM => {
                                 return (
                                     <div className="form-check wac mb-2 ml-0 pl-0 mt-3" key={wM.id}>
-                                        <span onClick={() => this.handleDelete(wM.id)} web_monitor_id={wM.id}>X</span>
+                                        <button id={"wM-" + wM.id} type="button" onClick={() => this.setState({activeDeletePopover: wM.id})} >X</button>
+                                        <Popover target={"wM-" + wM.id} isOpen={this.state.activeDeletePopover === wM.id}>
+                                            <PopoverBody web_monitor_id={wM.id}>Are you sure you want to remove "{wM.name}"?.</PopoverBody>
+                                            <button onClick={() => this.handleDelete(wM.id)}>Yes</button>
+                                            <button onClick={() => this.setState({activeDeletePopover: null})}>No</button>
+                                        </Popover>
                                         <label
                                             className="form-check-label ml-1"
                                             htmlFor="defaultCheck1"

@@ -64,7 +64,7 @@ class WebsiteMonitoring extends React.Component {
                                 </div>
                             </div>
                         ) : null}
-                        <div className="px-2">
+                        {/* <div className="px-2">
                             <div className="list-wrapper">
                                 <p style={{ fontSize: "13px" }}>
                                     {this.props.webMonitors.length > 0
@@ -75,7 +75,7 @@ class WebsiteMonitoring extends React.Component {
                                     .map((wM) => wM.name)
                                     .join(", ")}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* <p
