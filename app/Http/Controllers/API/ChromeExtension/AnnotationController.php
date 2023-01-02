@@ -144,13 +144,13 @@ class AnnotationController extends Controller
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_g_ads_history_change_enabled  && $request->query('show_g_ads_history_change_enabled') == 'true') {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations`";
+            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations` WHERE `google_ads_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
         }
         ////////////////////////////////////////////////////////////////////
 
         if ($user->is_ds_apple_podcast_annotation_enabled && $request->query('show_apple_podcast_annotations') == 'true') {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select id, category, event, podcast_date, url, description from `apple_podcast_annotations` 'System' AS user_name from `google_ads_annotations`";
+            $annotationsQuery .= "select id, category, event, podcast_date, url, description, 'System' AS user_name  from `apple_podcast_annotations` WHERE `apple_podcast_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
         }
 
         $annotationsQuery .= ") AS TempTable WHERE DATE(`show_at`) BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "' ORDER BY show_at ASC";
@@ -303,7 +303,7 @@ class AnnotationController extends Controller
             // A property that is already in use should not be validated with price plan limits/counts
             // If we mark properties as in use and don't make sure that the user is under limit, it
             // will make a loop hole in the implementation of price plan limits.
-            
+
             // $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gaPropertyId);
             // if (!$googleAnalyticsProperty->is_in_use) {
             //     if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
@@ -379,14 +379,14 @@ class AnnotationController extends Controller
         ////////////////////////////////////////////////////////////////////
         if ($user->is_ds_g_ads_history_change_enabled  && $request->query('show_g_ads_history_change_enabled') == 'true') {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations`";
+            $annotationsQuery .= "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations` WHERE `google_ads_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
         }
         ////////////////////////////////////////////////////////////////////
 
         // Apple Podcast Annotation Start
         if ($user->is_ds_apple_podcast_annotation_enabled && $request->query('show_apple_podcast_annotations') == 'true') {
             $annotationsQuery .= " union ";
-            $annotationsQuery .= "select id, category, event, podcast_date, url, description from `apple_podcast_annotations` 'System' AS user_name from `google_ads_annotations`";
+            $annotationsQuery .= "select id, category, event, podcast_date, url, description, 'System' AS user_name from `apple_podcast_annotations` WHERE `apple_podcast_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
         }
         // Apple Podcast Annotation End
 
