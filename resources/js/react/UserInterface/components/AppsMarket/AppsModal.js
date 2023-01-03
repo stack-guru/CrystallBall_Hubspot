@@ -3,11 +3,11 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const AppsModal = ({isOpen, toggle, children}) => {
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
-        <ModalBody>
-            {children}
-        </ModalBody>
-      </Modal>
+        <Modal className='apps-modal' isOpen={isOpen} toggle={toggle}>
+            <ModalBody>
+                {children}
+            </ModalBody>
+        </Modal>
     );
 }
 

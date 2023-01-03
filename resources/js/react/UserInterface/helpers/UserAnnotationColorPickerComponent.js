@@ -65,10 +65,8 @@ export default class UserAnnotationColorPicker extends React.Component {
         // });
 
         return (
-            <div style={{ width: '20px', display: 'inline-block' }}>
-                <div onClick={this.handleClick} className="user-annotation-color-picker" style={{ backgroundColor: this.props.value }}>
-                    <div />
-                </div>
+            <>
+                <div onClick={this.handleClick} className="user-annotation-color-picker" style={{ backgroundColor: this.props.value }}></div>
                 {
                     this.state.displayColorPicker ? <div style={{ position: 'absolute', zIndex: '2', }}>
                         <div onClick={this.handleClose} />
@@ -80,9 +78,7 @@ export default class UserAnnotationColorPicker extends React.Component {
                         />
                     </div> : null
                 }
-
-            </div >
-
+            </>
         )
         // return <input className="user-annotation-color-picker" type="color" name={props.name} value={props.value} onInput={(e) => {
         //     HttpClient.post(`/data-source/user-annotation-color`, { [props.name]: e.target.value }).then(resp => {

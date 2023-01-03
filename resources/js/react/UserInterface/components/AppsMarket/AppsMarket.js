@@ -601,9 +601,7 @@ class AppsMarket extends React.Component {
                                 id: "24",
                                 background: "null",
                                 dsKey: "is_ds_retail_marketing_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_retail_marketing_enabled,
+                                enabled:this.state.userServices.is_ds_retail_marketing_enabled,
                                 premium: false,
                                 brandName: "Retail Marketing Dates",
                                 brandLogo: "/retailMarketingDates.svg",
@@ -612,9 +610,7 @@ class AppsMarket extends React.Component {
                                 id: "25",
                                 background: "#253858",
                                 dsKey: "is_ds_bitbucket_tracking_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_bitbucket_tracking_enabled,
+                                enabled:this.state.userServices.is_ds_bitbucket_tracking_enabled,
                                 premium: false,
                                 brandName: "Bitbucket",
                                 brandLogo: "/bitbucket.svg",
@@ -633,9 +629,7 @@ class AppsMarket extends React.Component {
                                 id: "27",
                                 background: "null",
                                 dsKey: "is_ds_holidays_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_holidays_enabled,
+                                enabled:this.state.userServices.is_ds_holidays_enabled,
                                 premium: false,
                                 brandName: "Holidays",
                                 brandLogo: "/holidays.svg",
@@ -644,9 +638,7 @@ class AppsMarket extends React.Component {
                                 id: "28",
                                 background: "null",
                                 dsKey: "is_ds_web_monitors_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_web_monitors_enabled,
+                                enabled: this.state.userServices.is_ds_web_monitors_enabled,
                                 premium: false,
                                 brandName: "Website Monitoring",
                                 brandLogo: "/websiteMonitoring.svg",
@@ -700,72 +692,6 @@ class AppsMarket extends React.Component {
                                 </div>
                             </Col>
                         ))}
-                        {/* <Col xs='3'>
-            <div className='item'>
-              <i class="active fa fa-check-circle"></i>
-              <h3 className='mb-0'>Item Box</h3>
-            </div>
-          </Col>
-          <Col xs='3'>
-            <div className='item'>
-              <i class="active fa fa-check-circle"></i>
-              <h3 className='mb-0'>Item Box</h3>
-            </div>
-          </Col>
-          <Col xs='3'>
-            <div className='item'>
-              <i class="active fa fa-check-circle"></i>
-              <h3 className='mb-0'>Item Box</h3>
-            </div>
-          </Col>
-          <Col xs='3'>
-            <div className='item'>
-              <i class="active fa fa-check-circle"></i>
-              <h3 className='mb-0'>Item Box</h3>
-            </div>
-          </Col>
-          <Col xs='3'>
-            <div className='item'>
-              <i class="active fa fa-check-circle"></i>
-              <h3 className='mb-0'>Item Box</h3>
-            </div>
-          </Col>
-          <Col xs='3'>
-            <div className='item'>
-              <i class="active fa fa-check-circle"></i>
-              <h3 className='mb-0'>Item Box</h3>
-            </div>
-          </Col>
-          <Col xs='3'>
-            <div className='item'>
-              <i class="active fa fa-check-circle"></i>
-              <h3 className='mb-0'>Item Box</h3>
-            </div>
-          </Col>
-          <Col xs='3'>
-            <div className='item'>
-              <i class="active fa fa-check-circle"></i>
-              <h3 className='mb-0'>Item Box</h3>
-            </div>
-          </Col>
-          <Col xs='3'>
-            <div className='item'>
-              <i class="active fa fa-check-circle"></i>
-              <h3 className='mb-0'>Item Box</h3>
-            </div>
-          </Col>
-          <Col xs='3'>
-            <div className='item'>
-              <i class="active fa fa-check-circle"></i>
-              <h3 className='mb-0'>Item Box</h3>
-            </div>
-          </Col>
-          <Col xs='3'>
-            <div className='item'>
-              <i class="active fa fa-check-circle"></i>
-              <h3 className='mb-0'>Item Box</h3>
-            </div>
-          </Col> */}
                     </Row>
                     <AppsModal
                         isOpen={this.state.dsKey}

@@ -1064,6 +1064,7 @@ body {
 .item {
     display: flex;
     height: 106px;
+    cursor: pointer;
     position: relative;
     align-items: center;
     border-radius: 12px;
@@ -1098,6 +1099,80 @@ body {
     background: linear-gradient(90deg, #FF8534 33.33%, #FF630C 100%);
 }
 .btn-premium span { padding-left: 8px; }
+.apps-modal {
+    margin: 90px auto;
+    max-width: 824px;
+}
+.apps-modal .modal-content { padding: 32px; border-radius: 1rem; width: 100%; height: auto; border: 0;}
+.apps-modal .modal-body { padding: 0; }
+.popupContent {}
+.apps-modalHead {
+    display: flex;
+    padding: 0 0 42px;
+    align-items: center;
+    justify-content: space-between;
+}
+.apps-modalHead h2 {
+    margin: 0;
+    color: #333;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 32px;
+}
+.apps-modalHead .user-annotation-color-picker {
+    width: 20px;
+    height: 20px;
+    margin: 0 14px;
+    border-radius: 4px;
+}
+.apps-modalHead .trigger.switch {margin: 0 20px 0 0;}
+.apps-modalHead .text-credits {
+    color: #333;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25px;
+    font-style: normal;
+}
+.apps-modalHead .text-credits span {
+    width: 41px;
+    height: 27px;
+    color: #096DB7;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 2px 8px;
+    line-height: 23px;
+    margin-left: 10px;
+    border-radius: 4px;
+    background: rgba(25, 118, 254, 0.05);
+}
+.apps-modalHead .btn-close{cursor: pointer;}
+.apps-bodyContent {
+    display: flex;
+    flex-direction: column;
+}
+.apps-bodyContent > div {
+    display: flex;
+    margin-bottom: 42px;
+    padding: 24px 20px;
+    border-radius: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+.apps-bodyContent .white-box { box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1); }
+.apps-bodyContent .gray-box {background: #FCFCFC;}
+.modal-newsAlerts {}
+.modal-wordpressUpdates {}
+.modal-rankTracking {}
+.modal-weatherAlerts {}
+.modal-googleUpdates {}
+.modal-twitter {}
+.modal-apple {}
+.modal-github {}
+.modal-retailMrketingDates {}
+.modal-bitbucket {}
+.modal-holidays {}
+.modal-websiteMonitoring {}
 @media screen and (min-width: 1440px) {
     .is-collapsed .sidebar { width: 110px; }
     .is-collapsed .sidebar { width: 110px; }

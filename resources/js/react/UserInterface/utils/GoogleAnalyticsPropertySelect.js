@@ -141,8 +141,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         let aProperties = this.state.aProperties;
         return (
-            <div>
-
+            <>
                 <Select
                     onFocus={this.props.onFocus}
                     loadOptions={this.searchGoogleAnalyticsProperties}
@@ -200,7 +199,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 {
                     this.state.isPermissionPopupOpened ? <GooglePermissionPopup /> : ''
                 }
-            </div>
+            </>
         )
     }
 }
