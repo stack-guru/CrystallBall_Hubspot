@@ -37,6 +37,7 @@ import Holidays from "./Holidays";
 import WeatherAlerts from "./WeatherAlerts";
 import WordpressUpdates from "./WordpressUpdates";
 import RankTracking from "./RankTracking";
+import Bitbucket from "./Bitbucket";
 
 class AppsMarket extends React.Component {
     constructor(props) {
@@ -930,6 +931,31 @@ class AppsMarket extends React.Component {
                                         manage_keyword_show: flag,
                                     });
                                 }}
+                                serviceStatusHandler={this.serviceStatusHandler}
+                                changeShownHint={this.changeShownHint}
+                                sectionToggler={this.sectionToggler}
+                                userDataSourceAddHandler={
+                                    this.userDataSourceAddHandler
+                                }
+                                userDataSourceDeleteHandler={
+                                    this.userDataSourceDeleteHandler
+                                }
+                                reloadWebMonitors={this.reloadWebMonitors}
+                                loadUserDataSources={this.loadUserDataSources}
+                                updateGAPropertyId={(value) => {
+                                    this.setState({
+                                        ga_property_id: value,
+                                    });
+                                }}
+                            />
+                        ) : this.state.dsKey ===
+                          "is_ds_bitbucket_tracking_enabled" ? (
+                            <Bitbucket
+                                {...this.state}
+                                {...this.props}
+                                updateUserAnnotationColors={
+                                    this.updateUserAnnotationColors
+                                }
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}
