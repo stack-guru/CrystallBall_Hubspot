@@ -38,7 +38,11 @@ class PricePlan extends Model
         'yearly_discount_percent', 'badge_text',
         'sort_rank', 'custom_plan_code',
         'users_devices_count',
-        'bitbucket_credits_count'
+        'bitbucket_credits_count',
+        'github_credits_count',
+        'aws_credits_count',
+        'linkedin_credits_count',
+        'twitter_credits_count',
     ];
 
     protected $hidden = [

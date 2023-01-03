@@ -92,7 +92,7 @@ class AnnotationController extends Controller
         if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
             $gaPropertyId = $request->query('google_analytics_property_id');
             $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
-            $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
+            $gAPropertyCriteria = "(`uds`.`ga_property_id` = $gaPropertyId OR $gAPropertyCriteria)";
         }
 
         if ($user->is_ds_web_monitors_enabled && $request->query('show_website_monitoring') == 'false') {
