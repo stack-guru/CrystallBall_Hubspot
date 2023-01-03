@@ -419,6 +419,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "Google Ads",
                                 brandLogo: "/googleAds.svg",
                             },
@@ -428,6 +429,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "Facebook Ads",
                                 brandLogo: "/facebookAds.svg",
                             },
@@ -438,6 +440,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "Instagram",
                                 brandLogo: "/instagram.svg",
                             },
@@ -458,6 +461,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "slack",
                                 brandLogo: "/slack.svg",
                             },
@@ -467,6 +471,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "Hubspot",
                                 brandLogo: "/hubspot.svg",
                             },
@@ -476,6 +481,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "Zapier",
                                 brandLogo: "/zapier.svg",
                             },
@@ -485,6 +491,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "Linkedin",
                                 brandLogo: "/linkedin.svg",
                             },
@@ -494,6 +501,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "Zendesk",
                                 brandLogo: "/zendesk.svg",
                             },
@@ -503,6 +511,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "Salesforce",
                                 brandLogo: "/salesforce.svg",
                             },
@@ -512,6 +521,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "Sportfy Podcast",
                                 brandLogo: "/sportfyPodcast.svg",
                             },
@@ -532,6 +542,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "amazoon Podcast",
                                 brandLogo: "/amazonPodcast.svg",
                             },
@@ -552,6 +563,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "Shopify",
                                 brandLogo: "/shopify.svg",
                             },
@@ -561,6 +573,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "WIX.com",
                                 brandLogo: "/wixCom.svg",
                             },
@@ -570,6 +583,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "ZOHO",
                                 brandLogo: "/zoho.svg",
                             },
@@ -579,6 +593,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "YouTube",
                                 brandLogo: "/youtube.svg",
                             },
@@ -610,6 +625,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "Google Tag Manager",
                                 brandLogo: "/googleTagManager.svg",
                             },
@@ -641,6 +657,7 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
+                                commingSoon: true,
                                 brandName: "TikTok",
                                 brandLogo: "/tiktok.svg",
                             },
@@ -648,7 +665,15 @@ class AppsMarket extends React.Component {
                             <Col xs="3">
                                 <div
                                     onClick={() => {
-                                        this.setState({ dsKey: item.dsKey });
+                                        if(item.commingSoon) {
+                                            swal.fire(
+                                                "This feature is coming soon. Stay tuned!",
+                                                "",
+                                                "info"
+                                            );
+                                        } else {
+                                            this.setState({ dsKey: item.dsKey });
+                                        }
                                     }}
                                     className="item"
                                     key={itemKey}
