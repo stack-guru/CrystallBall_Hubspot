@@ -97,7 +97,6 @@ const ApplePodcastConfig = (props) => {
         HttpClient.post("/data-source/apple_podcast_url", formData)
             .then(
                 () => {
-                    props.sectionToggler();
                     toast.success("Apple Podcast added successfully.");
                 },
                 (err) => {

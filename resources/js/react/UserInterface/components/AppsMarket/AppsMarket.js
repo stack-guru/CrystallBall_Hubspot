@@ -39,6 +39,7 @@ import WordpressUpdates from "./WordpressUpdates";
 import RankTracking from "./RankTracking";
 import Bitbucket from "./Bitbucket";
 import Github from "./Github";
+import Apple from "./Apple";
 
 class AppsMarket extends React.Component {
     constructor(props) {
@@ -516,8 +517,10 @@ class AppsMarket extends React.Component {
                             {
                                 id: "17",
                                 background: "null",
-                                dsKey: "",
-                                enabled: false,
+                                dsKey: "is_ds_apple_podcast_annotation_enabled",
+                                enabled:
+                                    this.state.userServices
+                                        .is_ds_apple_podcast_annotation_enabled,
                                 premium: false,
                                 brandName: "Apple Podcast",
                                 brandLogo: "/applePodcast.svg",
@@ -977,6 +980,31 @@ class AppsMarket extends React.Component {
                         ) : this.state.dsKey ===
                           "is_ds_github_tracking_enabled" ? (
                             <Github
+                                {...this.state}
+                                {...this.props}
+                                updateUserAnnotationColors={
+                                    this.updateUserAnnotationColors
+                                }
+                                serviceStatusHandler={this.serviceStatusHandler}
+                                changeShownHint={this.changeShownHint}
+                                sectionToggler={this.sectionToggler}
+                                userDataSourceAddHandler={
+                                    this.userDataSourceAddHandler
+                                }
+                                userDataSourceDeleteHandler={
+                                    this.userDataSourceDeleteHandler
+                                }
+                                reloadWebMonitors={this.reloadWebMonitors}
+                                loadUserDataSources={this.loadUserDataSources}
+                                updateGAPropertyId={(value) => {
+                                    this.setState({
+                                        ga_property_id: value,
+                                    });
+                                }}
+                            />
+                        ) : this.state.dsKey ===
+                          "is_ds_apple_podcast_annotation_enabled" ? (
+                            <Apple
                                 {...this.state}
                                 {...this.props}
                                 updateUserAnnotationColors={
