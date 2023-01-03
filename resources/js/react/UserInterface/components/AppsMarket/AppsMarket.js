@@ -40,6 +40,7 @@ import RankTracking from "./RankTracking";
 import Bitbucket from "./Bitbucket";
 import Github from "./Github";
 import Apple from "./Apple";
+import Twitter from "./Twitter";
 
 class AppsMarket extends React.Component {
     constructor(props) {
@@ -1005,6 +1006,31 @@ class AppsMarket extends React.Component {
                         ) : this.state.dsKey ===
                           "is_ds_apple_podcast_annotation_enabled" ? (
                             <Apple
+                                {...this.state}
+                                {...this.props}
+                                updateUserAnnotationColors={
+                                    this.updateUserAnnotationColors
+                                }
+                                serviceStatusHandler={this.serviceStatusHandler}
+                                changeShownHint={this.changeShownHint}
+                                sectionToggler={this.sectionToggler}
+                                userDataSourceAddHandler={
+                                    this.userDataSourceAddHandler
+                                }
+                                userDataSourceDeleteHandler={
+                                    this.userDataSourceDeleteHandler
+                                }
+                                reloadWebMonitors={this.reloadWebMonitors}
+                                loadUserDataSources={this.loadUserDataSources}
+                                updateGAPropertyId={(value) => {
+                                    this.setState({
+                                        ga_property_id: value,
+                                    });
+                                }}
+                            />
+                        ) : this.state.dsKey ===
+                          "is_ds_twitter_tracking_enabled" ? (
+                            <Twitter
                                 {...this.state}
                                 {...this.props}
                                 updateUserAnnotationColors={
