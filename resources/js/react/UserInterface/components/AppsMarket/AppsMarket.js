@@ -36,6 +36,7 @@ import RetailMarketingDates from "./RetailMarketingDates";
 import Holidays from "./Holidays";
 import WeatherAlerts from "./WeatherAlerts";
 import WordpressUpdates from "./WordpressUpdates";
+import RankTracking from "./RankTracking";
 
 class AppsMarket extends React.Component {
     constructor(props) {
@@ -899,6 +900,36 @@ class AppsMarket extends React.Component {
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
+                                serviceStatusHandler={this.serviceStatusHandler}
+                                changeShownHint={this.changeShownHint}
+                                sectionToggler={this.sectionToggler}
+                                userDataSourceAddHandler={
+                                    this.userDataSourceAddHandler
+                                }
+                                userDataSourceDeleteHandler={
+                                    this.userDataSourceDeleteHandler
+                                }
+                                reloadWebMonitors={this.reloadWebMonitors}
+                                loadUserDataSources={this.loadUserDataSources}
+                                updateGAPropertyId={(value) => {
+                                    this.setState({
+                                        ga_property_id: value,
+                                    });
+                                }}
+                            />
+                        ) : this.state.dsKey ===
+                          "is_ds_keyword_tracking_enabled" ? (
+                            <RankTracking
+                                {...this.state}
+                                {...this.props}
+                                updateUserAnnotationColors={
+                                    this.updateUserAnnotationColors
+                                }
+                                manageKeywordShow={(flag) => {
+                                    this.setState({
+                                        manage_keyword_show: flag,
+                                    });
+                                }}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}
