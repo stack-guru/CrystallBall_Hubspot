@@ -62,7 +62,7 @@ class AnnotationController extends Controller
         if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
             $gaPropertyId = $request->query('google_analytics_property_id');
             $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
-            $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
+            $gAPropertyCriteria = "(`uds`.`ga_property_id` = $gaPropertyId OR $gAPropertyCriteria)";
 
             // Can't mark a property as in use without price plan restriction because of the rule:
             // A property that is already in use should not be validated with price plan limits/counts
@@ -297,7 +297,7 @@ class AnnotationController extends Controller
         if ($request->query('google_analytics_property_id') && $request->query('google_analytics_property_id') !== '*') {
             $gaPropertyId = $request->query('google_analytics_property_id');
             $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
-            $gAPropertyCriteria = "`uds`.`ga_property_id` = $gaPropertyId";
+            $gAPropertyCriteria = "(`uds`.`ga_property_id` = $gaPropertyId OR $gAPropertyCriteria)";
 
             // Can't mark a property as in use without price plan restriction because of the rule:
             // A property that is already in use should not be validated with price plan limits/counts
