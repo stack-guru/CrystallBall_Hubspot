@@ -43,6 +43,7 @@ class NewsAlerts extends React.Component {
                     user={this.props.user}
                     loadUserDataSources={this.props.loadUserDataSources}
                     updateGAPropertyId={this.props.updateGAPropertyId}
+                    reloadWebMonitors={this.props.reloadWebMonitors}
                 />
             </div>
         );

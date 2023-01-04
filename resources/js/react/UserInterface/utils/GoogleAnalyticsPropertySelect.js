@@ -68,7 +68,6 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     }
 
     onChangeHandler(sOption) {
-        debugger;
         if (sOption == null) {
             this.setState({ aProperties: [{ value: "", label: "All Properties" }] });
             if (this.props.multiple) this.props.onChangeCallback({
@@ -84,7 +83,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             });
             if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Properties" }]);
         } else {
-            sOption = sOption
+            sOption = [sOption]
             if (
                 (this.props.currentPricePlan.google_analytics_property_count < (
                     this.state.allProperties.filter(sO => sO.isInUse).length
