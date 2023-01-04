@@ -16,7 +16,8 @@ export default class BitbucketTracking extends React.Component {
         };
 
         this.fetchWorkspaces = this.fetchWorkspaces.bind(this);
-        this.handleClick = this.handleClick.bind(this)
+        this.handleClick = this.handleClick.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
     }
 
     componentDidMount() {
@@ -51,6 +52,14 @@ export default class BitbucketTracking extends React.Component {
         }
     }
 
+    handleTextChange(e, id) {
+        let value = e.target.value;
+        if (value == '') {
+            value = "Annotation Category";
+        }
+        (this.props.onTextChangeCallback)(id, value);
+    }
+
     render() {
         let workspaces = this.state.workspaces;
         let userRepositories = this.props.ds_data.map(ds => ds.value);
@@ -81,23 +90,32 @@ export default class BitbucketTracking extends React.Component {
                                                                 ? workspace.repositories.map(repository => {
                                                                     if (repository !== null)
                                                                         return (
-                                                                            <div className="form-check country" key={repository.uuid}>
-                                                                                <input
-                                                                                    className="form-check-input"
-                                                                                    checked={userRepositories.indexOf(repository.slug) !== -1}
-                                                                                    type="checkbox"
-                                                                                    name={repository.slug}
-                                                                                    data-workspace={workspace.slug}
-                                                                                    id={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null}
-                                                                                    onChange={this.handleClick}
-                                                                                />
-                                                                                <label
-                                                                                    className="form-check-label"
-                                                                                    htmlFor={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null}
-                                                                                >
-                                                                                    {repository.name}
-                                                                                </label>
+                                                                            <div>
+                                                                                <div className="form-check country" key={repository.uuid}>
+                                                                                    <input
+                                                                                        className="form-check-input"
+                                                                                        checked={userRepositories.indexOf(repository.slug) !== -1}
+                                                                                        type="checkbox"
+                                                                                        name={repository.slug}
+                                                                                        data-workspace={workspace.slug}
+                                                                                        id={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null}
+                                                                                        onChange={this.handleClick}
+                                                                                    />
+                                                                                    <label
+                                                                                        className="form-check-label"
+                                                                                        htmlFor={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null}
+                                                                                    >
+                                                                                        {repository.name}
+                                                                                    </label>
+                                                                                </div>
+                                                                                {
+                                                                                    userRepositories.indexOf(repository.slug) !== -1 &&
+                                                                                    <div>
+                                                                                        <input type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.slug)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.slug)].id)} />
+                                                                                    </div>
+                                                                                }
                                                                             </div>
+
                                                                         )
                                                                 })
                                                                 : <span>No repositories found</span>

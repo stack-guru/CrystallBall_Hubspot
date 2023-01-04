@@ -205,7 +205,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::put('mark-data-source-tour', [App\Http\Controllers\HomeController::class, 'markDataSourceTourDone']);
             Route::put('mark-google-accounts-tour', [App\Http\Controllers\HomeController::class, 'markGoogleAccountsTourDone']);
 
-            Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'destroy']);
+            Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'update', 'destroy']);
 
             Route::get('user-facebook-accounts-exists', [FacebookAutomationController::class, 'userFacebookAccountsExists']);
             Route::get('user-instagram-accounts-exists', [InstagramAutomationController::class, 'userInstagramAccountsExists']);

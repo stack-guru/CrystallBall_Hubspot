@@ -23,7 +23,7 @@ import GoogleAdChanges from "../../utils/GoogleAdChanges";
 import FacebookTracking from "../../utils/FacebookTracking";
 import TwitterTracking from "../../utils/TwitterTracking";
 import InstagramTracking from "../../utils/InstagramTracking";
-// import BitbucketTracking from "../../utils/BitbucketTracking";
+import BitbucketTracking from "../../utils/BitbucketTracking";
 import GithubTracking from "../../utils/GithubTracking";
 // import ApplePodcast, { ApplePodcastConfig } from "../../utils/ApplePodcast";
 
@@ -54,6 +54,7 @@ export default class DataSourceIndex extends React.Component {
             userGithubAccountsExists: false
         }
         this.userDataSourceAddHandler = this.userDataSourceAddHandler.bind(this)
+        this.userDataSourceUpdateHandler = this.userDataSourceUpdateHandler.bind(this)
         this.userDataSourceDeleteHandler = this.userDataSourceDeleteHandler.bind(this)
         this.serviceStatusHandler = this.serviceStatusHandler.bind(this);
 
@@ -93,7 +94,7 @@ export default class DataSourceIndex extends React.Component {
         this.checkUserGithubAccount();
 
         let alertMessage = new URLSearchParams(window.location.search).get("alertMessage");
-        if(alertMessage){
+        if (alertMessage) {
             swal.fire({
                 iconHtml: '<img src="/images/svg/twitter.svg">',
                 title: 'Connected',
@@ -351,9 +352,9 @@ export default class DataSourceIndex extends React.Component {
                                                             this.props.user
                                                                 .price_plan
                                                                 .web_monitor_count > 0 ?
-                                                            this.props.user
-                                                                .price_plan
-                                                                .web_monitor_count : 0
+                                                                this.props.user
+                                                                    .price_plan
+                                                                    .web_monitor_count : 0
                                                         }
                                                     </p>
                                                 </div>
@@ -362,7 +363,7 @@ export default class DataSourceIndex extends React.Component {
                                         <div className="px-2">
                                             <div className="list-wrapper">
                                                 <p style={{ fontSize: "13px" }}>
-                                                    { this.state.webMonitors.length > 0 ? "Keywords:" : ""}
+                                                    {this.state.webMonitors.length > 0 ? "Keywords:" : ""}
                                                 </p>
                                                 {this.state.webMonitors
                                                     .map((wM) => wM.name)
@@ -523,9 +524,9 @@ export default class DataSourceIndex extends React.Component {
                                                             this.props.user
                                                                 .price_plan
                                                                 .google_alert_keyword_count > 0 ?
-                                                            this.props.user
-                                                                .price_plan
-                                                                .google_alert_keyword_count : 0
+                                                                this.props.user
+                                                                    .price_plan
+                                                                    .google_alert_keyword_count : 0
                                                         }
                                                     </p>
                                                 </div>
@@ -1129,10 +1130,10 @@ export default class DataSourceIndex extends React.Component {
                                                                         .user
                                                                         .price_plan
                                                                         .owm_city_count > 0 ?
-                                                                    this.props
-                                                                        .user
-                                                                        .price_plan
-                                                                        .owm_city_count : 0
+                                                                        this.props
+                                                                            .user
+                                                                            .price_plan
+                                                                            .owm_city_count : 0
                                                                 }
                                                             </p>
                                                         </div>
@@ -1562,7 +1563,7 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Bitbucket Section
                             */}
-                            {/*<div className="col-md-6 mt-2">
+                            <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{ minHeight: "180px" }}
@@ -1691,12 +1692,12 @@ export default class DataSourceIndex extends React.Component {
                                         }
                                     </div>
                                 </div>
-                            </div>*/}
+                            </div>
 
                             {/*
                                 Github Section
                             */}
-                            {/*<div className="col-md-6 mt-2">
+                            <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{ minHeight: "180px" }}
@@ -1825,7 +1826,7 @@ export default class DataSourceIndex extends React.Component {
                                         }
                                     </div>
                                 </div>
-                                </div>*/}
+                            </div>
                             {/*<div className="col-md-6 mt-2">
                                 <ApplePodcast
                                     state={this.state}
@@ -2903,7 +2904,7 @@ export default class DataSourceIndex extends React.Component {
                         ) : null}
 
                         {this.state.sectionName == "twitter_tracking" ? (
-                            <TwitterTracking/>
+                            <TwitterTracking />
                         ) : null}
 
                         {this.state.sectionName == "facebook_tracking" ? (
@@ -2914,7 +2915,7 @@ export default class DataSourceIndex extends React.Component {
                             <InstagramTracking />
                         ) : null}
 
-                        {/*{this.state.sectionName == "bitbucket_tracking" ? (
+                        {this.state.sectionName == "bitbucket_tracking" ? (
                             <BitbucketTracking
                                 used_credits={
                                     this.state.userDataSources.bitbucket_tracking?.length
@@ -2929,8 +2930,9 @@ export default class DataSourceIndex extends React.Component {
                                 onUncheckCallback={
                                     this.userDataSourceDeleteHandler
                                 }
+                                onTextChangeCallback={this.userDataSourceUpdateHandler}
                             />
-                        ) : null}*/}
+                        ) : null}
 
                         {this.state.sectionName == "github_tracking" ? (
                             <GithubTracking
@@ -2947,11 +2949,12 @@ export default class DataSourceIndex extends React.Component {
                                 onUncheckCallback={
                                     this.userDataSourceDeleteHandler
                                 }
+                                onTextChangeCallback={this.userDataSourceUpdateHandler}
                             />
                         ) : null}
                     </div>
                 </div>
-                </div>
+            </div>
         );
     }
 
@@ -3057,19 +3060,19 @@ export default class DataSourceIndex extends React.Component {
 
     updateUserService(e) {
 
-        HttpClient.post('/userService', {[e.target.name]: e.target.checked ? 1 : 0}).then(resp => {
+        HttpClient.post('/userService', { [e.target.name]: e.target.checked ? 1 : 0 }).then(resp => {
 
             switch (e.target.name) {
                 case 'is_ds_twitter_tracking_enabled':
-                    if(resp.data.twitter_accounts > 0){
-                        this.setState({userServices: resp.data.user_services})
+                    if (resp.data.twitter_accounts > 0) {
+                        this.setState({ userServices: resp.data.user_services })
                         if (resp.data.user_services[e.target.name] == 1) {
                             toast.success("Service activated successfully.");
                         }
                         if (resp.data.user_services[e.target.name] == 0) {
                             toast.info("Service deactivated successfully.");
                         }
-                    }else{
+                    } else {
                         swal.fire({
                             iconHtml: '<img src="/images/svg/twitter.svg">',
                             showCloseButton: true,
@@ -3089,7 +3092,7 @@ export default class DataSourceIndex extends React.Component {
                     if (resp.data.user_services[e.target.name] == 0) {
                         toast.info("Service deactivated successfully.");
                     }
-                    this.setState({userServices: resp.data.user_services})
+                    this.setState({ userServices: resp.data.user_services })
                     break;
             }
 
@@ -3099,7 +3102,7 @@ export default class DataSourceIndex extends React.Component {
             this.setState({ isBusy: false, errors: (err.response).data });
             if ((err.response).status == 402) {
                 swal.fire("Upgrade to Pro Plan!", "You have reached your Free 100 credits.", "warning").then(value => {
-                    this.setState({redirectTo: '/settings/price-plans'});
+                    this.setState({ redirectTo: '/settings/price-plans' });
                 })
             }
         }).catch(err => {
@@ -3355,6 +3358,30 @@ export default class DataSourceIndex extends React.Component {
             }
         }).catch(err => {
             this.setState({ isBusy: false, errors: err })
+        })
+    }
+
+    userDataSourceUpdateHandler(userDataSourceId, dsName) {
+        this.setState({ isBusy: true });
+        HttpClient.put(`/data-source/user-data-source/${userDataSourceId}`, { 'ds_name': dsName }).then(resp => {
+            let uds = resp.data.user_data_source;
+            let ar = this.state.userDataSources[uds.ds_code];
+            let newAr = ar.map(a => {
+                if (a.id == userDataSourceId) {
+                    return {...a, ds_name: dsName};
+                } else {
+                    return a;
+                }
+            })
+            this.setState({
+                userDataSources: { ...this.state.userDataSources, [uds.ds_code]: newAr },
+                isBusy: false,
+                errors: undefined
+            })
+        }, (err) => {
+            this.setState({ isBusy: true, errors: err.response.data })
+        }).catch(err => {
+            this.setState({ isBusy: true, errors: err })
         })
     }
 
