@@ -44,7 +44,7 @@ export default class DSGAUDatesSelect extends React.Component {
     render() {
 
         return (
-            <div className="switch-wrapper">
+            <div className="apps-bodyContent switch-wrapper">
                 <div className="weather_alert_cities-form">
                     <h4 className="gaa-text-primary">
                         Algorithm Updates

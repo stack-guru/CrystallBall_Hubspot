@@ -77,7 +77,7 @@ export default class DSRMDatesSelect extends React.Component {
         let userDSIds = this.props.ds_data.map(ds => ds.id);
 
         return (
-            <div className="switch-wrapper">
+            <div className="apps-bodyContent switch-wrapper">
 
                 <div className="retail_marketing_dates-form">
                     <h4 className="gaa-text-primary">

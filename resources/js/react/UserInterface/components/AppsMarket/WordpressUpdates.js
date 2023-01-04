@@ -21,38 +21,38 @@ class WordpressUpdates extends React.Component {
                     creditString={null}
                 />
 
-                <div className="input-group" style={{ marginTop: "7px" }}>
-                    <input
-                        type="checkbox"
-                        style={{
-                            position: "absolute",
-                            top: "3px",
-                        }}
-                        onChange={(e) => {
-                            if (e.target.checked) {
-                                this.props.userDataSourceAddHandler({
-                                    code: "wordpress_updates",
-                                    name: "WordpressUpdate",
-                                    country_name: null,
-                                    retail_marketing_id: null,
-                                    value: "last year",
-                                });
-                            } else {
-                                this.props.userDataSourceDeleteHandler(
-                                    this.props.userDataSources
-                                        .wordpress_updates[0].id,
-                                    "wordpress_updates"
-                                );
-                            }
-                        }}
-                        checked={
-                            this.props.userDataSources.wordpress_updates &&
-                            this.props.userDataSources.wordpress_updates
-                                .length > 0
-                        }
-                        name="last_year_only"
-                    />
-                    <h6> &nbsp;&nbsp; Show last year only</h6>
+                <div className="apps-bodyContent">
+                    <div className="white-box">
+                        <div className="checkBoxList">
+                            <label className='themeNewCheckbox d-flex align-items-center justify-content-start' for='last_year_only'>
+                                <input type="checkbox" id='last_year_only' onChange={(e) => {
+                                    if (e.target.checked) {
+                                        this.props.userDataSourceAddHandler({
+                                            code: "wordpress_updates",
+                                            name: "WordpressUpdate",
+                                            country_name: null,
+                                            retail_marketing_id: null,
+                                            value: "last year",
+                                        });
+                                    } else {
+                                        this.props.userDataSourceDeleteHandler(
+                                            this.props.userDataSources
+                                                .wordpress_updates[0].id,
+                                            "wordpress_updates"
+                                        );
+                                    }}}
+                                    checked={
+                                        this.props.userDataSources
+                                            .wordpress_updates &&
+                                        this.props.userDataSources.wordpress_updates
+                                            .length > 0
+                                    }
+                                    name="last_year_only"
+                                />
+                                <span>Show last year only</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

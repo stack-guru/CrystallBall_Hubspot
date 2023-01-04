@@ -1150,13 +1150,13 @@ body {
     display: flex;
     flex-direction: column;
 }
-.apps-bodyContent > div {
+.apps-bodyContent .gray-box,
+.apps-bodyContent .white-box {
     display: flex;
     margin-bottom: 42px;
     padding: 24px 20px;
     border-radius: 16px;
     flex-direction: column;
-    align-items: flex-start;
 }
 .apps-bodyContent > div:last-child { margin: 0; }
 .apps-bodyContent > div h4 {
@@ -1183,6 +1183,7 @@ body {
     line-height: 20px;
     font-style: italic;
 }
+.apps-bodyContent .form-control,
 .themeNewInput {
     height: 44px;
     padding: 5px 1rem;
@@ -1191,7 +1192,7 @@ body {
     border-radius: 8px !important;
     border: 1px solid #bdbdbd;
 }
-.themeNewselect > div {
+.themeNewselect > div:first-child {
     /* padding: 0;
     line-height: 28px !important; */
     min-height: 44px;
@@ -1223,8 +1224,44 @@ body {
     margin-right: 10px;
     border-radius: 50%;
 }
-
-
+.checkBoxList { margin: -6px; }
+.themeNewCheckbox {
+    color: #666;
+    margin: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+}
+.themeNewCheckbox > input{
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid #cacaca;
+}
+.themeNewCheckbox > span { padding-left: 10px; }
+.grid2layout {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: 352px 352px;
+    padding-bottom: 1rem;
+}
+.grid2layout:last-child {padding: 0;}
+.themeNewInputGroup {position: relative;}
+.themeNewInputGroup .themeNewselect > div:first-child,
+.themeNewInputGroup .form-control{ width: 100% !important; }
+.btn-theme {
+    border: 0;
+    width: 75px;
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    color: #FFFFFF;
+    border-radius: 100px;
+    background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%);
+}
 .modal-newsAlerts {}
 .modal-wordpressUpdates {}
 .modal-rankTracking {}

@@ -60,7 +60,7 @@ export default class SearchEngineSelect extends React.Component {
                 id={this.props.id}
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}
-                className="gray_clr w-100"
+                className="gray_clr w-100 themeNewselect"
                 options={this.state.search_engines}
                 placeholder={this.props.placeholder}
             >

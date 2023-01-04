@@ -55,7 +55,7 @@ export default class BitbucketTracking extends React.Component {
         let workspaces = this.state.workspaces;
         let userRepositories = this.props.ds_data.map(ds => ds.value);
         return (
-            <div className="switch-wrapper">
+            <div className="apps-bodyContent switch-wrapper">
                 <div className="weather_alert_cities-form">
                     <h5 className="gaa-text-primary">Bitbucket Commits Tracking</h5>
                     <div className="mb-2">

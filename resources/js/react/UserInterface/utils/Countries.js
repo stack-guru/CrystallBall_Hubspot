@@ -70,7 +70,7 @@ export default class countries extends React.Component {
         let countries = this.state.countries;
         let userCountries = this.props.ds_data.map(ds => ds.country_name);
         return (
-            <div className="switch-wrapper">
+            <div className="apps-bodyContent switch-wrapper">
                 <div className="countries-form">
                     <h4 className="gaa-text-primary">
                         Select Countries for {this.props.sectionTitle}

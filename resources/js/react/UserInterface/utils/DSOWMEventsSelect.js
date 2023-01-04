@@ -70,7 +70,7 @@ export default class DSOWMEventsSelect extends React.Component {
         let userDSEvents = this.props.ds_data.map(ds => ds.id);
 
         return (
-            <div className="switch-wrapper">
+            <div className="apps-bodyContent switch-wrapper">
                 <div className="weather_alert_cities-form">
                     <h4 className="gaa-text-primary">
                         Select Weather Events

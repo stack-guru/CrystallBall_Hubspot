@@ -97,7 +97,7 @@ export default class DSWebMonitorsSelect extends React.Component {
 
     render() {
         return (
-            <div className="switch-wrapper">
+            <div className="apps-bodyContent switch-wrapper">
 
                 <div className="web_monitors-form">
                     <h4 className="gaa-text-primary">Manage Web Monitors</h4>

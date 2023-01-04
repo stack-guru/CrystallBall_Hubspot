@@ -163,7 +163,7 @@ export default class EditKeyword extends React.Component {
 
     render() {
         return (
-            <div className="switch-wrapper">
+            <div className="apps-bodyContent switch-wrapper">
                 <div className="weather_alert_cities-form">
                     <h4 className="gaa-text-primary">Manage keywords</h4>
                     <label>Tracking</label>

@@ -108,7 +108,7 @@ const ApplePodcastConfig = (props) => {
             });
     };
     return (
-        <div className="switch-wrapper">
+        <div className="apps-bodyContent switch-wrapper">
             <h4 className="gaa-text-primary">Manage Apple Podcast</h4>
             {existingPodcast.length ? (
                 <div>

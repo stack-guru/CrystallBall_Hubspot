@@ -83,7 +83,7 @@ export default class LocationSelect extends React.Component {
                 cacheOptions
                 defaultOptions={this.state.locations}
                 value={this.state.selected_option}
-                className="gray_clr w-100"
+                className="gray_clr w-100 themeNewselect"
                 loadOptions={this.loadOptions}
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}
