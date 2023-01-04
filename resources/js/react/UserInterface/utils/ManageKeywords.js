@@ -84,55 +84,33 @@ export default class ManageKeywords extends React.Component {
                 configuration_instance
             ) {
                 return (
-                    <tr className="border-bottom border-top py-2">
-                        <td className="text-left">
-                            <span className="">{keyword_instance.keyword}</span>
-                        </td>
-                        <td className="text-left">
-                            <span className="">
-                                {configuration_instance.url}
-                            </span>
-                        </td>
-                        <td className="text-left">
-                            <span className="">
-                                {configuration_instance.search_engine
-                                    .charAt(0)
-                                    .toUpperCase() +
-                                    configuration_instance.search_engine.slice(
-                                        1
-                                    )}
-                            </span>
-                        </td>
-                        <td className="text-left">
-                            <span className="">
-                                {configuration_instance.location_name}
-                            </span>
-                        </td>
-                        <td className="text-right">
-                            <a
-                                href="#"
-                                onClick={this.editKeyword}
-                                data-configuration_id={
-                                    configuration_instance.id
-                                }
-                                data-keyword_id={keyword_instance.id}
-                                className="btn btn-sm btn-primary text-white mr-1"
-                            >
-                                Edit
-                            </a>
-                            <a
-                                href="#"
-                                onClick={this.deleteKeyword}
-                                data-configuration_id={
-                                    configuration_instance.id
-                                }
-                                data-keyword_id={keyword_instance.id}
-                                className="btn btn-sm btn-danger text-white"
-                            >
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
+                    <>
+                        <tr className="singleRow">
+                            <td className="text-left"><span className="">{keyword_instance.keyword}</span></td>
+                            <td className="text-left"><span className="">{configuration_instance.url}</span></td>
+                            <td className="text-left"><span className="">{configuration_instance.search_engine.charAt(0).toUpperCase() + configuration_instance.search_engine.slice(1)}</span></td>
+                            <td className="text-left"><span className="">{configuration_instance.location_name}</span></td>
+                            <td className="text-right">
+                                <a href="#" onClick={this.editKeyword} data-configuration_id={ configuration_instance.id } data-keyword_id={keyword_instance.id}>
+                                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.35976 19.2701C3.91707 19.2701 3.53798 19.1124 3.22246 18.7969C2.90749 18.4819 2.75 18.103 2.75 17.6604V6.39207C2.75 5.94939 2.90749 5.57029 3.22246 5.25478C3.53798 4.93981 3.91707 4.78232 4.35976 4.78232H11.5433L9.93354 6.39207H4.35976V17.6604H15.628V12.0665L17.2378 10.4567V17.6604C17.2378 18.103 17.0803 18.4819 16.7653 18.7969C16.4498 19.1124 16.0707 19.2701 15.628 19.2701H4.35976ZM13.3543 5.24512L14.5012 6.37195L9.18902 11.6841V12.8311H10.3159L15.6482 7.49878L16.7951 8.62561L11 14.4409H7.57927V11.0201L13.3543 5.24512ZM16.7951 8.62561L13.3543 5.24512L15.3665 3.23293C15.6884 2.91098 16.0742 2.75 16.5239 2.75C16.973 2.75 17.3518 2.91098 17.6604 3.23293L18.7872 4.37988C19.0957 4.68841 19.25 5.06402 19.25 5.50671C19.25 5.94939 19.0957 6.325 18.7872 6.63354L16.7951 8.62561Z" fill="#666666"/>
+                                    </svg>
+                                </a>
+                                <a href="#" onClick={this.deleteKeyword} data-configuration_id={ configuration_instance.id } data-keyword_id={keyword_instance.id}>
+                                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6.70312 18.2188C6.23047 18.2188 5.82599 18.0506 5.48969 17.7143C5.15281 17.3774 4.98438 16.9727 4.98438 16.5V5.32812H4.125V3.60938H8.42188V2.75H13.5781V3.60938H17.875V5.32812H17.0156V16.5C17.0156 16.9727 16.8475 17.3774 16.5112 17.7143C16.1743 18.0506 15.7695 18.2188 15.2969 18.2188H6.70312ZM15.2969 5.32812H6.70312V16.5H15.2969V5.32812ZM8.42188 14.7812H10.1406V7.04688H8.42188V14.7812ZM11.8594 14.7812H13.5781V7.04688H11.8594V14.7812ZM6.70312 5.32812V16.5V5.32812Z" fill="#F44C3D"/>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr className="singleRowNoBorder">
+                            <td className="text-left"></td>
+                            <td className="text-left"></td>
+                            <td className="text-left"></td>
+                            <td className="text-left"></td>
+                            <td className="text-left"></td>
+                        </tr>
+                    </>
                 );
             },
             this);
@@ -140,52 +118,22 @@ export default class ManageKeywords extends React.Component {
         this);
 
         return (
-            <div>
-                {/* <button id='manage_modal_btn' style={{ display: "none"}} type="button" className="btn btn-primary" data-toggle="modal" data-target="#manage_modal"></button> */}
-                {/* <div className="modal fade" id="manage_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false"> */}
-                {/* <div className="modal-dialog modal-lg modal-dialog-centered"  role="document"> */}
-                {/* <div className="modal-content" style={{ height: "90vh" }}> */}
-                {/* <div className="modal-header"> */}
-                <h5 className="modal-title" id="exampleModalLabel">
-                    Manage Keywords
-                </h5>
-                {/* <button type="button" id='close_popup' className="close" data-dismiss="modal" aria-label="Close" onClick={this.closePopup}>
-                                    <span aria-hidden="true">&times;</span>
-                                </button> */}
-                {/* </div> */}
-                {/* <div className="modal-body" style={{ overflow: 'auto' }}> */}
-                <h6 className="">Edit or Delete Keywords</h6>
-                <div className="p-4">
+            <div className='dataTable d-flex flex-column'>
+                <h4>Manage trackers</h4>
+                <div className="dataTableHolder">
                     <table className="table table-responsive">
                         <thead>
                             <tr>
-                                <th width="20%" className="text-left">
-                                    Keyword
-                                </th>
-                                <th width="30%" className="text-left">
-                                    URL
-                                </th>
-                                <th width="20%" className="text-left">
-                                    Search Engine
-                                </th>
-                                <th width="10%" className="text-left">
-                                    Location
-                                </th>
-                                <th width="20%" className="text-right">
-                                    Action
-                                </th>
+                                <th width="20%" className="text-left">Keyword</th>
+                                <th width="30%" className="text-left">URL</th>
+                                <th width="20%" className="text-left">Search Engine</th>
+                                <th width="10%" className="text-left">Location</th>
+                                <th width="20%" className="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>{keywords}</tbody>
                     </table>
                 </div>
-                {/* </div> */}
-                {/* <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal" aria-label="Close" onClick={this.closePopup}>Close</button>
-                            </div> */}
-                {/* </div> */}
-                {/* </div> */}
-                {/* </div> */}
             </div>
         );
     }

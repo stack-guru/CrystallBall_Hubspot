@@ -1192,7 +1192,8 @@ body {
     border-radius: 8px !important;
     border: 1px solid #bdbdbd;
 }
-.themeNewselect > div:first-child {
+.themeNewselect{width: 254px;}
+.themeNewselect > .css-yk16xz-control {
     /* padding: 0;
     line-height: 28px !important; */
     min-height: 44px;
@@ -1202,7 +1203,16 @@ body {
 }
 .apps-bodyContent .white-box { box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1); }
 .apps-bodyContent .gray-box {background: #fcfcfc;}
-.keywordTags {margin: -4px;}
+.input-group-append {
+    right: 14px;
+    top: 14px;
+}
+.keywordTags {
+    margin: -4px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
 .keywordTag {
     border: 0;
     margin: 4px;
@@ -1216,6 +1226,7 @@ body {
     background: #f2f2f2;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 .keywordTag .dot {
     width: 8px;
@@ -1248,7 +1259,7 @@ body {
 }
 .grid2layout:last-child {padding: 0;}
 .themeNewInputGroup {position: relative;}
-.themeNewInputGroup .themeNewselect > div:first-child,
+.themeNewInputGroup .themeNewselect .css-yk16xz-control,
 .themeNewInputGroup .form-control{ width: 100% !important; }
 .btn-theme {
     border: 0;
@@ -1262,6 +1273,36 @@ body {
     border-radius: 100px;
     background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%);
 }
+/* .apps-bodyContent .dataTable h4{margin: 0;} */
+.dataTable {}
+.dataTableHolder {}
+.dataTableHolder .table {
+    border: 0;
+    color: #666;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+}
+.dataTableHolder .table thead tr th {border: 0; padding-bottom: 20px;color: #096db7;}
+.dataTableHolder .table tbody tr {
+}
+.dataTableHolder .table tbody tr td {
+    padding: 12px;
+    margin-bottom: 1rem;
+    border-top: 1px solid #cacaca;
+    border-bottom: 1px solid #cacaca;
+}
+.dataTableHolder .table tbody tr td:first-child{
+    border-radius: 8px 0 0  8px;
+    border-left: 1px solid #cacaca;
+}
+.dataTableHolder .table tbody tr td:last-child {
+    border-radius: 0 8px 8px 0;
+    border-right: 1px solid #cacaca;
+}
+.dataTableHolder .table tbody .singleRowNoBorder td:first-child,
+.dataTableHolder .table tbody .singleRowNoBorder td:last-child,
+.dataTableHolder .table tbody .singleRowNoBorder td{border: 0;}
 .modal-newsAlerts {}
 .modal-wordpressUpdates {}
 .modal-rankTracking {}
