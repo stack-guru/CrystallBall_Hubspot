@@ -159,7 +159,10 @@ export default class DSWebMonitorsSelect extends React.Component {
     }
 
     render() {
-        console.log(`WebsiteMonitoring :: render :: this.props.user`, this.props.user)
+        console.log(
+            `WebsiteMonitoring :: render :: this.props.user`,
+            this.props.user
+        );
 
         return (
             <div className="apps-bodyContent switch-wrapper">
@@ -194,7 +197,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                             </div>
                             <div className="grid2layout">
                                 <GoogleAnalyticsPropertySelect
-                                    className='themeNewselect'
+                                    className="themeNewselect"
                                     name="ga_property_id"
                                     id="ga_property_id"
                                     currentPricePlan={
@@ -299,23 +302,72 @@ export default class DSWebMonitorsSelect extends React.Component {
                         })}
                     </div> */}
 
-                    <div className='gray-box'>
-                    <h4>Active Monitors: <span>(Click to remove)</span></h4>
-                    <div className="d-flex keywordTags">
-                        {
-                            this.state.webMonitors?.map(wM => {
+                    <div className="gray-box">
+                        <h4>
+                            Active Monitors: <span>(Click to remove)</span>
+                        </h4>
+                        <div className="d-flex keywordTags">
+                            {this.state.webMonitors?.map((wM) => {
                                 return (
-                                    <button type="button" className="keywordTag" key={wM.id} user_data_source_id={wM.id} onClick={this.deleteKeyword}>
-                                        <span style={{'background': '#2d9cdb'}} className='dot'></span>
-                                        {wM.name}
-                                        {/* <span className="badge badge-light" user_data_source_id={wM.id}>&times;</span> */}
-                                    </button>
-                                )
-                            })
-                        }
-                    </div>
-                </div>
+                                    <>
+                                        <button
+                                            type="button"
+                                            className="keywordTag"
+                                            key={wM.id}
+                                            id={"wM-" + wM.id}
+                                            user_data_source_id={wM.id}
+                                            onClick={() =>
+                                                this.setState({
+                                                    activeDeletePopover: wM.id,
+                                                })
+                                            }
+                                        >
+                                            <span
+                                                style={{
+                                                    background: "#2d9cdb",
+                                                }}
+                                                className="dot"
+                                            ></span>
+                                            {wM.name}
+                                            {/* <span className="badge badge-light" user_data_source_id={wM.id}>&times;</span> */}
+                                        </button>
 
+                                        <Popover
+                                            placement="top"
+                                            target={"wM-" + wM.id}
+                                            isOpen={
+                                                this.state
+                                                    .activeDeletePopover ===
+                                                wM.id
+                                            }
+                                        >
+                                            <PopoverBody web_monitor_id={wM.id}>
+                                                Are you sure you want to remove
+                                                "{wM.name}"?.
+                                            </PopoverBody>
+                                            <button
+                                                onClick={() =>
+                                                    this.handleDelete(wM.id)
+                                                }
+                                            >
+                                                Yes
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    this.setState({
+                                                        activeDeletePopover:
+                                                            null,
+                                                    })
+                                                }
+                                            >
+                                                No
+                                            </button>
+                                        </Popover>
+                                    </>
+                                );
+                            })}
+                        </div>
+                    </div>
                 </div>
             </div>
         );
