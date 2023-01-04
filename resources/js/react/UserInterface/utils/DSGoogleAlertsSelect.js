@@ -29,42 +29,43 @@ export default class DSGoogleAlertsSelect extends React.Component {
         return (
             <div className='apps-bodyContent'>
                 <div className="white-box">
-                    <h4 className="gaa-text-primary">Manage keywords</h4>
-                    <div className="input-group search-input-box">
-                        <input type="text" className="form-control search-input" placeholder="Add keywords to get alerted" value={this.state.keyword} name="keyword" onChange={(e) => this.setState({ [e.target.name]: e.target.value.toLowerCase() })} onKeyUp={(e) => { if (e.keyCode === 13) { e.persist(); this.addKeyword(e); } }}
+                    <h4>Add keywords:</h4>
+                    <div className='d-flex align-items-center'>
+                        <div className="input-group search-input-box">
+                            <input type="text" className="form-control search-input themeNewInput" placeholder="Add keywords to get alerted" value={this.state.keyword} name="keyword" onChange={(e) => this.setState({ [e.target.name]: e.target.value.toLowerCase() })} onKeyUp={(e) => { if (e.keyCode === 13) { e.persist(); this.addKeyword(e); } }}
+                            />
+                            <div className="input-group-append"><i className="ti-plus"></i></div>
+                        </div>
+                        <span className='betweentext'>for</span>
+                        <GoogleAnalyticsPropertySelect className='themeNewselect' name="ga_property_id" id="ga_property_id" currentPricePlan={this.props.user.price_plan} value={this.props.ga_property_id} onChangeCallback={(gAP) => {
+                                if (gAP.target.value == "") {
+                                    this.props.updateGAPropertyId(null);
+                                    this.props.loadUserDataSources(null);
+                                    this.props.reloadWebMonitors(null);
+                                } else {
+                                    this.props.updateGAPropertyId(gAP.target.value);
+                                    this.props.loadUserDataSources(gAP.target.value);
+                                    this.props.reloadWebMonitors(gAP.target.value);
+                                }
+                            }}
+                            components={{
+                                DropdownIndicator: () => null,
+                                IndicatorSeparator: () => null,
+                            }}
+                            placeholder="Select GA Properties" isClearable={true}
                         />
-                        <div className="input-group-append"><i className="ti-plus"></i></div>
                     </div>
-                    <span>FOR</span>
-                    <GoogleAnalyticsPropertySelect name="ga_property_id" id="ga_property_id" currentPricePlan={this.props.user.price_plan} value={this.props.ga_property_id} onChangeCallback={(gAP) => {
-                            if (gAP.target.value == "") {
-                                this.props.updateGAPropertyId(null);
-                                this.props.loadUserDataSources(null);
-                                this.props.reloadWebMonitors(null);
-                            } else {
-                                this.props.updateGAPropertyId(gAP.target.value);
-                                this.props.loadUserDataSources(gAP.target.value);
-                                this.props.reloadWebMonitors(gAP.target.value);
-                            }
-                        }}
-                        components={{
-                            DropdownIndicator: () => null,
-                            IndicatorSeparator: () => null,
-                        }}
-                        placeholder="Select GA Properties"
-                        isClearable={true}
-                    />
                 </div>
                 <div className='gray-box'>
-                    <div className="checkbox-box mt-3">
+                    <h4>Active keywords: <span>(Click to remove)</span></h4>
+                    <div className="d-flex keywordTags">
                         {
                             this.props.ds_data?.map(gAK => {
                                 return (
-                                    <button type="button" className="btn gaa-btn-primary m-2" key={gAK.id}
-                                        user_data_source_id={gAK.id}
-                                        onClick={this.deleteKeyword}
-                                    >
-                                        {gAK.value} <span className="badge badge-light" user_data_source_id={gAK.id}>&times;</span>
+                                    <button type="button" className="keywordTag" key={gAK.id} user_data_source_id={gAK.id} onClick={this.deleteKeyword}>
+                                        <span style={{'background': '#2d9cdb'}} className='dot'></span>
+                                        {gAK.value}
+                                        {/* <span className="badge badge-light" user_data_source_id={gAK.id}>&times;</span> */}
                                     </button>
                                 )
                             })

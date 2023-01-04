@@ -1157,10 +1157,74 @@ body {
     border-radius: 16px;
     flex-direction: column;
     align-items: flex-start;
-
+}
+.apps-bodyContent > div:last-child { margin: 0; }
+.apps-bodyContent > div h4 {
+    color: #666;
+    display: flex;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+.apps-bodyContent > div h4 span {
+    font-size: 16px;
+    font-weight: 400;
+    color: #a6a6a6;
+    line-height: 20px;
+    padding-left: 5px;
+}
+.apps-bodyContent .betweentext{
+    color: #333;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 0 20px;;
+    line-height: 20px;
+    font-style: italic;
+}
+.themeNewInput {
+    height: 44px;
+    padding: 5px 1rem;
+    width: 254px !important;
+    line-height: 28px !important;
+    border-radius: 8px !important;
+    border: 1px solid #bdbdbd;
+}
+.themeNewselect > div {
+    /* padding: 0;
+    line-height: 28px !important; */
+    min-height: 44px;
+    width: 254px !important;
+    border-radius: 8px !important;
+    border: 1px solid #bdbdbd;
 }
 .apps-bodyContent .white-box { box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1); }
-.apps-bodyContent .gray-box {background: #FCFCFC;}
+.apps-bodyContent .gray-box {background: #fcfcfc;}
+.keywordTags {margin: -4px;}
+.keywordTag {
+    border: 0;
+    margin: 4px;
+    color: #333;
+    display: flex;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 5px 14px;
+    line-height: 20px;
+    border-radius: 30px;
+    background: #f2f2f2;
+    align-items: center;
+    justify-content: center;
+}
+.keywordTag .dot {
+    width: 8px;
+    height: 8px;
+    display: block;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+
 .modal-newsAlerts {}
 .modal-wordpressUpdates {}
 .modal-rankTracking {}
