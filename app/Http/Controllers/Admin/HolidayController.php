@@ -7,6 +7,10 @@ use App\Http\Requests\HolidayRequest;
 use App\Models\Holiday;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class HolidayController extends Controller
 {
@@ -116,7 +120,7 @@ class HolidayController extends Controller
         $headers = str_getcsv($filecontent[0]);
 
         if (count($headers) !== 7) {
-            return redirect()->back()->with('error', 'Invalid number of columns (' . count($headers) . ').');
+            return redirect()->back()->with('error', 'Invalid number of columns (' . count($headers) . '). Exactly 7 expected.');
         }
         foreach ($headers as $header) {
             if (!in_array($header, [
@@ -129,45 +133,62 @@ class HolidayController extends Controller
 
         $dateColIndex = array_search('holiday_date', $headers);
 
-        $rows = $row = array();
-        foreach ($filecontent as $ln => $line) {
-            if (strlen($line) < (6 + 7)) {
-                continue;
-            }
-
-            $row = array();
-            $values = str_getcsv($line);
-
-            if ($headers !== $values && count($values) == count($headers)) {
-                try {
-                    $date = Carbon::createFromFormat('Y-m-d', $values[$dateColIndex]);
-                } catch (\Exception $e) {
+        $viewErrorBag = new ViewErrorBag();
+        try {
+            DB::beginTransaction();
+            $rows = $row = array();
+            foreach ($filecontent as $ln => $line) {
+                $messageBag = new MessageBag;
+                if (strlen($line) < (6 + 7)) {
+                    $messageBag->add($ln + 1, 'Very short line');
+                    $viewErrorBag->put($ln + 1, $messageBag);
                     continue;
-                    // return ['message'=>"Please upload file with '2020-12-31' date format given is $values[$i] on line $ln column $i."];
                 }
-                for ($i = 0; $i < count($headers); $i++) {
-                    if ($headers[$i] == 'holiday_date') {
-                        $row['holiday_date'] = $values[$i];
-                    } else if ($headers[$i] == 'url') {
-                        $row['url'] = $values[$i];
-                    } else {
-                        $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+
+                $row = array();
+                $values = str_getcsv($line);
+
+                if ($headers !== $values && count($values) == count($headers)) {
+                    try {
+                        $date = Carbon::createFromFormat('Y-m-d', $values[$dateColIndex]);
+                    } catch (\Exception $e) {
+                        $messageBag->add($ln + 1, "Actual Value: '" . $values[$dateColIndex] . "'");
+                        $messageBag->add($ln + 1, $e->getMessage());
+                        $messageBag->add($ln + 1, $e->getFile());
+                        $viewErrorBag->put($ln + 1, $messageBag);
+                        continue;
+                        // return ['message'=>"Please upload file with '2020-12-31' date format given is $values[$i] on line $ln column $i."];
                     }
+                    for ($i = 0; $i < count($headers); $i++) {
+                        if ($headers[$i] == 'holiday_date') {
+                            $row['holiday_date'] = $values[$i];
+                        } else if ($headers[$i] == 'url') {
+                            $row['url'] = $values[$i];
+                        } else {
+                            $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+                        }
+                    }
+
+                    array_push($rows, $row);
                 }
 
-                array_push($rows, $row);
+                if (count($rows) > 9000) {
+                    // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (7)
+                    // I obviously rounded it to something human readable
+                    Holiday::insert($rows);
+                    $rows = array();
+                }
             }
 
-            if (count($rows) > 9000) {
-                // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (7)
-                // I obviously rounded it to something human readable
+
+            if (count($rows)) {
                 Holiday::insert($rows);
-                $rows = array();
             }
-        }
-
-        if (count($rows)) {
-            Holiday::insert($rows);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            abort(422, "Error occured while processing your CSV. Please see log for more information.");
         }
 
         return redirect()->back()->with('success', true);

@@ -112,6 +112,21 @@ class UserDataSourceController extends Controller
     }
 
     /**
+     * Update a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, UserDataSource $userDataSource)
+    {
+        $input = $request->all();
+        $userDataSource->ds_name = $input['ds_name'];
+        $userDataSource->save();
+
+        return ['user_data_source' => $userDataSource];
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param \App\Models\UserDataSource $userDataSource

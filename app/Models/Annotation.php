@@ -57,6 +57,10 @@ class Annotation extends Model
 
         $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
 
+        if ($annotationGAPropertyId && $annotationGAPropertyId !== '*') {
+            $gAPropertyCriteria = "(`uds`.`ga_property_id` = $annotationGAPropertyId OR $gAPropertyCriteria)";
+        }
+
         // Add holiday annotations if it is enabled in user data source
         if ($user->is_ds_holidays_enabled) {
             $annotationsQuery .= " union ";

@@ -49,7 +49,7 @@ class LoginController extends Controller
                 $response = ['token' => $token];
                 return response($response, 200);
             } else {
-                $response = ["message" => "Password mismatch"];
+                $response = ["message" => "Invalid password"];
                 return response($response, 422);
             }
         } else {
