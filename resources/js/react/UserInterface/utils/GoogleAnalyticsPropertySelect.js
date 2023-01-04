@@ -68,6 +68,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     }
 
     onChangeHandler(sOption) {
+        debugger;
         if (sOption == null) {
             this.setState({ aProperties: [{ value: "", label: "All Properties" }] });
             if (this.props.multiple) this.props.onChangeCallback({
