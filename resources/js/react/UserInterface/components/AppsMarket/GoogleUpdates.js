@@ -1,43 +1,26 @@
 import React from "react";
 import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
 import DSGAUDatesSelect from "../../utils/DSGAUDatesSelect";
+import ModalHeader from "./common/ModalHeader";
 
 class GoogleUpdates extends React.Component {
     render() {
         return (
             <div className='popupContent modal-googleUpdates'>
-                <div className="px-2">
-                    <h2>
-                        Google Updates{" "}
-                        <UserAnnotationColorPicker
-                            name="google_algorithm_updates"
-                            value={
-                                this.props.userAnnotationColors
-                                    .google_algorithm_updates
-                            }
-                            updateCallback={
-                                this.props
-                                    .updateUserAnnotationColors
-                            }
-                        />
-                    </h2>
-                </div>
-                <div className="px-2 text-center">
-                    <label className="trigger switch">
-                        <input
-                            type="checkbox"
-                            name="is_ds_google_algorithm_updates_enabled"
-                            onChange={
-                                this.props.serviceStatusHandler
-                            }
-                            checked={
-                                this.props.userServices
-                                    .is_ds_google_algorithm_updates_enabled
-                            }
-                        />
-                        <span className={`slider round`} />
-                    </label>
-                </div>
+                <ModalHeader
+                    userAnnotationColors={this.props.userAnnotationColors}
+                    updateUserAnnotationColors={
+                        this.props.updateUserAnnotationColors
+                    }
+                    userServices={this.props.userServices}
+                    serviceStatusHandler={this.props.serviceStatusHandler}
+                    closeModal={this.props.closeModal}
+                    serviceName={"Google Updates"}
+                    colorKeyName={"google_algorithm_updates"}
+                    dsKeyName={"is_ds_google_algorithm_updates_enabled"}
+                    creditString={null}
+                />
+
                 <DSGAUDatesSelect
                     onCheckCallback={this.props.userDataSourceAddHandler}
                     onUncheckCallback={

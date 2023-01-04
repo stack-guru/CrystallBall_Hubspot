@@ -3,60 +3,33 @@ import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerCo
 import AddKeyword from "../../utils/AddKeyword";
 import DSWebMonitorsSelect from "../../utils/DSWebMonitorsSelect";
 import ManageKeywords from "../../utils/ManageKeywords";
+import ModalHeader from "./common/ModalHeader";
 
 class RankTracking extends React.Component {
     render() {
         return (
             <div className='popupContent modal-rankTracking'>
-                <div className="px-2">
-                    <h2>
-                        Rank Tracking{" "}
-                        <UserAnnotationColorPicker
-                            name="keyword_tracking"
-                            value={
-                                this.props.userAnnotationColors
-                                    .keyword_tracking
-                            }
-                            updateCallback={
-                                this.props
-                                    .updateUserAnnotationColors
-                            }
-                        />
-                    </h2>
-                </div>
-                <div className="px-2 text-center">
-                    <label className="trigger switch">
-                        <input
-                            type="checkbox"
-                            name="is_ds_keyword_tracking_enabled"
-                            onChange={
-                                this.props.serviceStatusHandler
-                            }
-                            checked={
-                                this.props.userServices
-                                    .is_ds_keyword_tracking_enabled
-                            }
-                        />
-                        <span className={`slider round`} />
-                    </label>
-                </div>
-                <div className="px-2">
-                    <div className="list-wrapper">
-                        <p
-                            style={{
-                                fontSize: "13px",
-                            }}
-                        >
-                            Credits:{" "}
-                            {this.props.totalDfsKeywordCreditsUsed}/
-                            {this.props.user.price_plan
-                                .keyword_tracking_count == -1
-                                ? 0
-                                : this.props.user.price_plan
-                                        .keyword_tracking_count}
-                        </p>
-                    </div>
-                </div>
+                <ModalHeader
+                    userAnnotationColors={this.props.userAnnotationColors}
+                    updateUserAnnotationColors={
+                        this.props.updateUserAnnotationColors
+                    }
+                    userServices={this.props.userServices}
+                    serviceStatusHandler={this.props.serviceStatusHandler}
+                    closeModal={this.props.closeModal}
+
+                    serviceName={"Rank Tracking"}
+                    colorKeyName={"keyword_tracking"}
+                    dsKeyName={"is_ds_keyword_tracking_enabled"}
+                    creditString={`${this.props.totalDfsKeywordCreditsUsed}/
+                    ${this.props.user.price_plan
+                        .keyword_tracking_count == -1
+                        ? 0
+                        : this.props.user.price_plan
+                                .keyword_tracking_count}`}
+                />
+
+
                 <p className="ds-update-text m-0 px-2 text-right" onClick={() => this.props.manageKeywordShow(true)}>Manage Keywords</p>
                 <AddKeyword
                     used_credits={this.props.totalDfsKeywordCreditsUsed}

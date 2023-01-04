@@ -1,45 +1,28 @@
 import React from "react";
 import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
 import Countries from "../../utils/Countries";
+import ModalHeader from "./common/ModalHeader";
 
 class Holidays extends React.Component {
     render() {
         return (
             <div className='popupContent modal-holidays'>
-                <div>
-                    <div className="px-2">
-                        <h2>
-                        Holidays{" "}
-                            <UserAnnotationColorPicker
-                                name="holidays"
-                                value={
-                                    this.props.userAnnotationColors
-                                        .holidays
-                                }
-                                updateCallback={
-                                    this.props
-                                        .updateUserAnnotationColors
-                                }
-                            />
-                        </h2>
-                    </div>
-                    <div className="px-2 text-center">
-                        <label className="trigger switch">
-                            <input
-                                type="checkbox"
-                                name="is_ds_holidays_enabled"
-                                onChange={
-                                    this.props.serviceStatusHandler
-                                }
-                                checked={
-                                    this.props.userServices
-                                        .is_ds_holidays_enabled
-                                }
-                            />
-                            <span className={`slider round`} />
-                        </label>
-                    </div>
-                </div>
+                <ModalHeader
+                    userAnnotationColors={this.props.userAnnotationColors}
+                    updateUserAnnotationColors={
+                        this.props.updateUserAnnotationColors
+                    }
+                    userServices={this.props.userServices}
+                    serviceStatusHandler={this.props.serviceStatusHandler}
+                    closeModal={this.props.closeModal}
+
+                    serviceName={"Holidays"}
+                    colorKeyName={"holidays"}
+                    dsKeyName={"is_ds_holidays_enabled"}
+                    creditString={null}
+                />
+
+
                 <Countries
                     onCheckCallback={this.props.userDataSourceAddHandler}
                     onUncheckCallback={
