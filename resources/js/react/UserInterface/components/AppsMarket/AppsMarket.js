@@ -705,6 +705,11 @@ class AppsMarket extends React.Component {
                             <WebsiteMonitoring
                                 {...this.state}
                                 {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
@@ -730,6 +735,11 @@ class AppsMarket extends React.Component {
                             <NewsAlerts
                                 {...this.state}
                                 {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
@@ -755,6 +765,11 @@ class AppsMarket extends React.Component {
                             <GoogleUpdates
                                 {...this.state}
                                 {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
@@ -780,6 +795,11 @@ class AppsMarket extends React.Component {
                             <RetailMarketingDates
                                 {...this.state}
                                 {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
@@ -804,6 +824,11 @@ class AppsMarket extends React.Component {
                             <Holidays
                                 {...this.state}
                                 {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
@@ -829,6 +854,11 @@ class AppsMarket extends React.Component {
                             <WeatherAlerts
                                 {...this.state}
                                 {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
@@ -854,6 +884,11 @@ class AppsMarket extends React.Component {
                             <WordpressUpdates
                                 {...this.state}
                                 {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
@@ -879,6 +914,11 @@ class AppsMarket extends React.Component {
                             <RankTracking
                                 {...this.state}
                                 {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
@@ -909,6 +949,11 @@ class AppsMarket extends React.Component {
                             <Bitbucket
                                 {...this.state}
                                 {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
@@ -934,6 +979,11 @@ class AppsMarket extends React.Component {
                             <Github
                                 {...this.state}
                                 {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
@@ -959,6 +1009,11 @@ class AppsMarket extends React.Component {
                             <Apple
                                 {...this.state}
                                 {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
@@ -984,6 +1039,11 @@ class AppsMarket extends React.Component {
                             <Twitter
                                 {...this.state}
                                 {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
