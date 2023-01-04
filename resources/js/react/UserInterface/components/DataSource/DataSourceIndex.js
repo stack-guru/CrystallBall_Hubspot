@@ -23,9 +23,9 @@ import GoogleAdChanges from "../../utils/GoogleAdChanges";
 import FacebookTracking from "../../utils/FacebookTracking";
 import TwitterTracking from "../../utils/TwitterTracking";
 import InstagramTracking from "../../utils/InstagramTracking";
-import BitbucketTracking from "../../utils/BitbucketTracking";
+// import BitbucketTracking from "../../utils/BitbucketTracking";
 import GithubTracking from "../../utils/GithubTracking";
-import ApplePodcast, { ApplePodcastConfig } from "../../utils/ApplePodcast";
+// import ApplePodcast, { ApplePodcastConfig } from "../../utils/ApplePodcast";
 
 export default class DataSourceIndex extends React.Component {
     constructor(props) {
@@ -1562,7 +1562,7 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Bitbucket Section
                             */}
-                            <div className="col-md-6 mt-2">
+                            {/*<div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{ minHeight: "180px" }}
@@ -1691,12 +1691,12 @@ export default class DataSourceIndex extends React.Component {
                                         }
                                     </div>
                                 </div>
-                            </div>
+                            </div>*/}
 
                             {/*
                                 Github Section
                             */}
-                            <div className="col-md-6 mt-2">
+                            {/*<div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{ minHeight: "180px" }}
@@ -1825,8 +1825,8 @@ export default class DataSourceIndex extends React.Component {
                                         }
                                     </div>
                                 </div>
-                                </div>
-                            <div className="col-md-6 mt-2">
+                                </div>*/}
+                            {/*<div className="col-md-6 mt-2">
                                 <ApplePodcast
                                     state={this.state}
                                     updateUserAnnotationColors={this.updateUserAnnotationColors}
@@ -1834,7 +1834,7 @@ export default class DataSourceIndex extends React.Component {
                                     props={this.props}
                                     sectionToggler={() => this.sectionToggler('apple_podcast')}
                                 />
-                            </div>
+                            </div>*/}
 
                             {/*<div className="col-md-6 mt-2">*/}
                             {/*    <div className="d-flex border rounded flex-column justify-content-between" style={{ minHeight: "180px" }}>*/}
@@ -1930,7 +1930,7 @@ export default class DataSourceIndex extends React.Component {
                             {/*   </div>*/}
                             {/*</div>*/}
 
-                            <div className="col-md-6 mt-2">
+                            {/*<div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{ minHeight: "180px" }}
@@ -2038,7 +2038,7 @@ export default class DataSourceIndex extends React.Component {
                                         </p>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*/}
 
                             <div className="col-md-6 mt-2">
                                 <div
@@ -2836,14 +2836,14 @@ export default class DataSourceIndex extends React.Component {
                             />
                         ) : null}
 
-                        {this.state.sectionName == "apple_podcast" &&
+                        {/*{this.state.sectionName == "apple_podcast" &&
                         this.state.userDataSources ? (
                             <ApplePodcastConfig
                                 setState={this.setState}
                                 sectionToggler={() => this.sectionToggler('apple_podcast')}
                                 gaPropertyId={this.state.ga_property_id}
                             />
-                        ) : null}
+                        ) : null}*/}
                         {this.state.sectionName == "web_monitors" &&
                             this.state.userDataSources ? (
                             <DSWebMonitorsSelect
@@ -2914,7 +2914,7 @@ export default class DataSourceIndex extends React.Component {
                             <InstagramTracking />
                         ) : null}
 
-                        {this.state.sectionName == "bitbucket_tracking" ? (
+                        {/*{this.state.sectionName == "bitbucket_tracking" ? (
                             <BitbucketTracking
                                 used_credits={
                                     this.state.userDataSources.bitbucket_tracking?.length
@@ -2930,7 +2930,7 @@ export default class DataSourceIndex extends React.Component {
                                     this.userDataSourceDeleteHandler
                                 }
                             />
-                        ) : null}
+                        ) : null}*/}
 
                         {this.state.sectionName == "github_tracking" ? (
                             <GithubTracking
