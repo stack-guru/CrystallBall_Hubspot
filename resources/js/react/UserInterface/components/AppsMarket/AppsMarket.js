@@ -928,6 +928,7 @@ class AppsMarket extends React.Component {
                                     });
                                 }}
                                 serviceStatusHandler={this.serviceStatusHandler}
+                                editKeywordToggler={this.editKeywordToggler}
                                 changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}
                                 userDataSourceAddHandler={

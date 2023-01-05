@@ -2,6 +2,7 @@ import React from "react";
 import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
 import AddKeyword from "../../utils/AddKeyword";
 import DSWebMonitorsSelect from "../../utils/DSWebMonitorsSelect";
+import EditKeyword from "../../utils/EditKeyword";
 import ManageKeywords from "../../utils/ManageKeywords";
 import ModalHeader from "./common/ModalHeader";
 
@@ -35,50 +36,63 @@ class RankTracking extends React.Component {
                         Manage Keywords
                     </p> */}
                     <div className="white-box">
-                        <AddKeyword
-                            used_credits={this.props.totalDfsKeywordCreditsUsed}
-                            total_credits={
-                                this.props.user.price_plan
-                                    .keyword_tracking_count
-                            }
-                            onAddCallback={this.props.keywordAddHandler}
-                            ga_property_id={this.props.ga_property_id}
-                            reloadWebMonitors={this.props.reloadWebMonitors}
-                            user={this.props.user}
-                            loadUserDataSources={this.props.loadUserDataSources}
-                            updateGAPropertyId={this.props.updateGAPropertyId}
-                        />
+                        {this.props.editKeyword ? (
+                            <EditKeyword
+                                keyword_id={this.props.editKeyword_keyword_id}
+                                total_credits={
+                                    this.props.user.price_plan
+                                        .keyword_tracking_count
+                                }
+                                used_credits={
+                                    this.props.totalDfsKeywordCreditsUsed
+                                }
+                                keyword_configuration_id={
+                                    this.props
+                                        .editKeyword_keyword_configuration_id
+                                }
+                            />
+                        ) : (
+                            <AddKeyword
+                                used_credits={
+                                    this.props.totalDfsKeywordCreditsUsed
+                                }
+                                total_credits={
+                                    this.props.user.price_plan
+                                        .keyword_tracking_count
+                                }
+                                onAddCallback={this.props.keywordAddHandler}
+                                ga_property_id={this.props.ga_property_id}
+                                reloadWebMonitors={this.props.reloadWebMonitors}
+                                user={this.props.user}
+                                loadUserDataSources={
+                                    this.props.loadUserDataSources
+                                }
+                                updateGAPropertyId={
+                                    this.props.updateGAPropertyId
+                                }
+                            />
+                        )}
                     </div>
 
                     {/* {this.props.manage_keyword_show == true ? ( */}
-                    <div className="white-box">
-                        <ManageKeywords
-                            keywords={this.props.dfsKeywords}
-                            loadKeywordsCallback={
-                                this.props.loadKeywordTrackingKeywords
-                            }
-                            editKeywordCallback={this.props.editKeywordToggler}
-                            closeManageKeywordPopup={() => {
-                                this.props.manage_keyword_popup_handler();
-                                this.props.manageKeywordShow(false);
-                            }}
-                        />
-                    </div>
+                    {this.props.editKeyword ? null : (
+                        <div className="white-box">
+                            <ManageKeywords
+                                keywords={this.props.dfsKeywords}
+                                loadKeywordsCallback={
+                                    this.props.loadKeywordTrackingKeywords
+                                }
+                                editKeywordCallback={
+                                    this.props.editKeywordToggler
+                                }
+                                closeManageKeywordPopup={() => {
+                                    this.props.manage_keyword_popup_handler();
+                                    this.props.manageKeywordShow(false);
+                                }}
+                            />
+                        </div>
+                    )}
                     {/* ) : null} */}
-
-                    {this.props.editKeyword ? (
-                        <EditKeyword
-                            keyword_id={this.props.editKeyword_keyword_id}
-                            total_credits={
-                                this.props.user.price_plan
-                                    .keyword_tracking_count
-                            }
-                            used_credits={this.props.totalDfsKeywordCreditsUsed}
-                            keyword_configuration_id={
-                                this.props.editKeyword_keyword_configuration_id
-                            }
-                        />
-                    ) : null}
                 </div>
             </div>
         );
