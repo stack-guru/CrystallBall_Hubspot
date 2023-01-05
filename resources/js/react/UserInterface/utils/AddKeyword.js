@@ -254,18 +254,19 @@ export default class AddKeyword extends React.Component {
                     <div className="themeNewInputGroup">
                         <input type="text" className="form-control" placeholder="Add keywords" name="keywords" id="tracking_keywords" onKeyUp={(e) => {this.addKeyword(e);}}/>
                         <div className="input-group-append"><i className="ti-plus"></i></div>
+
+                        {this.state.keywords.length > 0 ?
+                            <div className="keywordTags pt-3">
+                                {this.state.keywords.length > 0 ? this.state.keywords.map((keyword, index) => {
+                                    return (
+                                            <button type="button" className="keywordTag" key={keyword.id != "" ? keyword.id : index} data-keyword={keyword.keyword} data-keyword_id={keyword.id} onClick={(e) => {this.deleteKeyword(e);}}>{keyword.keyword}</button>
+                                    );})
+                                    : ""
+                                }
+                            </div>
+                        : null}
                     </div>
 
-                    {this.state.keywords.length > 0 ?
-                        <div className="keywordTags">
-                            {this.state.keywords.length > 0 ? this.state.keywords.map((keyword, index) => {
-                                return (
-                                        <button type="button" className="keywordTag" key={keyword.id != "" ? keyword.id : index} data-keyword={keyword.keyword} data-keyword_id={keyword.id} onClick={(e) => {this.deleteKeyword(e);}}>{keyword.keyword}</button>
-                                );})
-                                : ""
-                            }
-                        </div>
-                    : null}
 
                     <div className="themeNewInputGroup">
                         <SearchEngineSelect className="gray_clr" name="search_engine" id="search_engine" selected={{label: '', value: ''}} onChangeCallback={this.changeSearchEngineHandler} placeholder="Select Search Engine" multiple="true"/>
