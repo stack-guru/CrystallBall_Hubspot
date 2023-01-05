@@ -8,73 +8,105 @@ use App\Models\User;
 
 class AnnotationQueryHelper
 {
-    public static function allAnnotationsUnionQueryString(User $user, string $annotationGAPropertyId = null, array $userIdsArray = [])
-    {
+    public static function allAnnotationsUnionQueryString(
+        User $user,
+        string $annotationGAPropertyId = null,
+        array $userIdsArray = [],
+        string $userId = '*',
+        string $showManualAnnotations = 'true',
+        string $showCSVAnnotations = 'true',
+        string $showAPIAnnotations = 'true',
+        string $showWebMonitorings = 'true',
+        string $showHolidays = 'true',
+        string $showRetailMarketingDates = 'true',
+        string $showWeatherAlerts = 'true',
+        string $showGoogleAlerts = 'true',
+        string $showGoogleAlgorithmUpdates = 'true',
+        string $showWordPressUpdates = 'true',
+        string $showKeywordTrackings = 'true',
+        string $showFacebookTrackings = 'true',
+        string $showInstagramTrackings = 'true',
+        string $showTwitterTrackings = 'true',
+        string $showGoogleAdsHistory = 'true',
+        string $showBitBucketTrackings = 'true',
+        string $showGitHubTrackings = 'true',
+        string $showApplePodcasts = 'true'
+    ) {
         $annotationsQuery = "";
         // SELECT annotations from annotations table
-        $annotationsQuery .= self::userAnnotationsQuery($user, $userIdsArray, $annotationGAPropertyId, '*', 'true', 'true', 'true', 'true');
+        $annotationsQuery .= self::userAnnotationsQuery($user, $userIdsArray, $annotationGAPropertyId, $userId, $showWebMonitorings, $showManualAnnotations, $showCSVAnnotations, $showAPIAnnotations);
         // Add web monitor annotations if it is enabled in user data source
-        if ($user->is_ds_web_monitors_enabled) {
+        if ($user->is_ds_web_monitors_enabled && $showWebMonitorings == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::webMonitorQuery($userIdsArray);
         }
+        // Add holidays annotations if it is enabled in user data source
+        if ($user->is_ds_holidays_enabled && $showHolidays == 'true') {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::holidaysQuery($user, $annotationGAPropertyId);
+        }
         // Add retail marketing date annotations if it is enabled in user data source
-        if ($user->is_ds_retail_marketing_enabled) {
+        if ($user->is_ds_retail_marketing_enabled && $showRetailMarketingDates == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::retailMarketingQuery($user, $annotationGAPropertyId);
         }
         // Add weather update annotations if it is enabled in user data source
-        if ($user->is_ds_weather_alerts_enabled) {
+        if ($user->is_ds_weather_alerts_enabled && $showWeatherAlerts == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::openWeatherMapQuery($user, $annotationGAPropertyId);
         }
         // Add google alert annotations if it is enabled in user data source
-        if ($user->is_ds_google_alerts_enabled) {
+        if ($user->is_ds_google_alerts_enabled && $showGoogleAlerts == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::googleAlertsQuery($user, $annotationGAPropertyId);
         }
         // Add wordpress update annotations if it is enabled in user data source
-        if ($user->is_ds_wordpress_updates_enabled) {
+        if ($user->is_ds_wordpress_updates_enabled && $showWordPressUpdates == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::wordPressQuery();
         }
+        // Add Google Algorithm Updates annotations if it is enabled in user data source
+        if ($user->is_ds_google_algorithm_updates_enabled && $showGoogleAlgorithmUpdates == 'true') {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::googleAlgorithmQuery($user);
+        }
         // Add keyword tracking annotations if it is enabled in user data source
-        if ($user->is_ds_keyword_tracking_enabled) {
+        if ($user->is_ds_keyword_tracking_enabled && $showKeywordTrackings == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::keywordTrackingQuery($userIdsArray);
         }
         // Add facebook tracking annotations if it is enabled in user data source
-        if ($user->is_ds_facebook_tracking_enabled) {
+        if ($user->is_ds_facebook_tracking_enabled && $showFacebookTrackings == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::facebookTrackingQuery($userIdsArray);
         }
         // Add instagram tracking annotations if it is enabled in user data source
-        if ($user->is_ds_instagram_tracking_enabled) {
+        if ($user->is_ds_instagram_tracking_enabled && $showInstagramTrackings == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::instagramTrackingQuery($userIdsArray);
         }
         // Add twitter tracking annotations if it is enabled in user data source
-        if ($user->is_ds_twitter_tracking_enabled) {
+        if ($user->is_ds_twitter_tracking_enabled && $showTwitterTrackings == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::twitterTrackingQuery($userIdsArray);
         }
         // Add google ads annotations if it is enabled in user data source
-        if ($user->is_ds_g_ads_history_change_enabled) {
+        if ($user->is_ds_g_ads_history_change_enabled && $showGoogleAdsHistory == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::googleAdsQuery($userIdsArray);
         }
         // Add bitbucket commit tracking annotations if it is enabled in user data source
-        if ($user->is_ds_bitbucket_tracking_enabled) {
+        if ($user->is_ds_bitbucket_tracking_enabled && $showBitBucketTrackings == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::bitbucketCommitQuery($userIdsArray);
         }
         // Add github commit tracking annotations if it is enabled in user data source
-        if ($user->is_ds_github_tracking_enabled) {
+        if ($user->is_ds_github_tracking_enabled && $showGitHubTrackings == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::gitHubCommitQuery($userIdsArray);
         }
         // Add apple podcast annotations if it is enabled in user data source
-        if ($user->is_ds_apple_podcast_annotation_enabled) {
+        if ($user->is_ds_apple_podcast_annotation_enabled && $showApplePodcasts == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::applePodcastQuery($userIdsArray);
         }

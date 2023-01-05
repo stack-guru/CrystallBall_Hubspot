@@ -74,58 +74,31 @@ class AnnotationController extends Controller
 
         $annotationsQuery = "SELECT TempTable.* FROM (";
 
-        ////////////////////////////////////////////////////////////////////
-        $annotationsQuery .= AnnotationQueryHelper::userAnnotationsQuery(
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString(
             $user,
-            $userIdsArray,
             $request->query('google_analytics_property_id'),
+            $userIdsArray,
             $request->query('user_id'),
-            $request->query('show_website_monitoring'),
             $request->query('show_manual_annotations'),
             $request->query('show_csv_annotations'),
-            $request->query('show_api_annotations')
+            $request->query('show_api_annotations'),
+            $request->query('show_website_monitoring'),
+            $request->query('show_holidays'),
+            $request->query('show_retail_marketing_dates'),
+            $request->query('show_weather_alerts'),
+            $request->query('show_news_alerts'),
+            $request->query('show_google_algorithm_updates'),
+            $request->query('show_wordpress_updates'),
+            $request->query('show_keyword_tracking'),
+            $request->query('show_facebook_tracking'),
+            $request->query('show_intagram_tracking'),
+            $request->query('show_twitter_tracking'),
+            $request->query('show_g_ads_history_change_enabled'),
+            $request->query('show_bitbucket_tracking'),
+            $request->query('show_github_tracking'),
+            $request->query('show_apple_podcast_annotations')
         );
-        ////////////////////////////////////////////////////////////////////
-        if ($user->is_ds_google_algorithm_updates_enabled && $request->query('show_google_algorithm_updates') == 'true') {
-            $annotationsQuery .= " union ";
-            $annotationsQuery .= AnnotationQueryHelper::googleAlgorithmQuery($user);
-        }
-        ////////////////////////////////////////////////////////////////////
-        if ($user->is_ds_web_monitors_enabled && $request->query('show_website_monitoring') == 'true') {
-            $annotationsQuery .= " union ";
-            $annotationsQuery .= AnnotationQueryHelper::webMonitorQuery($userIdsArray);
-        }
-        ////////////////////////////////////////////////////////////////////
-        if ($user->is_ds_holidays_enabled && $request->query('show_holidays') == 'true') {
-            $annotationsQuery .= " union ";
-            $annotationsQuery .= AnnotationQueryHelper::holidaysQuery($user, $request->query('google_analytics_property_id'));
-        }
-        ////////////////////////////////////////////////////////////////////
-        if ($user->is_ds_retail_marketing_enabled && $request->query('show_retail_marketing_dates') == 'true') {
-            $annotationsQuery .= " union ";
-            $annotationsQuery .= AnnotationQueryHelper::retailMarketingQuery($user, $request->query('google_analytics_property_id'));
-        }
-        ////////////////////////////////////////////////////////////////////
-        if ($user->is_ds_weather_alerts_enabled && $request->query('show_weather_alerts') == 'true') {
-            $annotationsQuery .= " union ";
-            $annotationsQuery .= AnnotationQueryHelper::openWeatherMapQuery($user, $request->query('google_analytics_property_id'));
-        }
-        ////////////////////////////////////////////////////////////////////
-        if ($user->is_ds_google_alerts_enabled && $request->query('show_news_alerts') == 'true') {
-            $annotationsQuery .= " union ";
-            $annotationsQuery .= AnnotationQueryHelper::googleAlertsQuery($user, $request->query('google_analytics_property_id'));
-        }
-        ////////////////////////////////////////////////////////////////////
-        if ($user->is_ds_wordpress_updates_enabled && $request->query('show_wordpress_updates') == 'true') {
-            $annotationsQuery .= " union ";
-            $annotationsQuery .= AnnotationQueryHelper::wordPressQuery();
-        }
-        ////////////////////////////////////////////////////////////////////
-        if ($user->is_ds_g_ads_history_change_enabled  && $request->query('show_g_ads_history_change_enabled') == 'true') {
-            $annotationsQuery .= " union ";
-            $annotationsQuery .= AnnotationQueryHelper::googleAdsQuery($userIdsArray);
-        }
-        ////////////////////////////////////////////////////////////////////
+
         $annotationsQuery .= ") AS TempTable ORDER BY show_at DESC";
 
         // Add limit for annotations if the price plan is limited in annotations count
