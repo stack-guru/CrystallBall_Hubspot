@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use App\Models\GoogleAnalyticsProperty;
 use App\Models\PricePlan;
 use App\Providers\RouteServiceProvider;
+use App\Helpers\AnnotationQueryHelper;
 
 class AnnotationController extends Controller
 {
@@ -228,7 +229,7 @@ class AnnotationController extends Controller
         $userIdsArray = $user->getAllGroupUserIdsArray();
 
         $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_properties`.`google_analytics_property_id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
-        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('annotation_ga_property_id'), $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $request->query('annotation_ga_property_id'), $userIdsArray);
         $annotationsQuery .= ") AS TempTable";
 
         // LEFT JOIN to load all properties selected in annotations
@@ -448,7 +449,7 @@ class AnnotationController extends Controller
         $userIdsArray = $user->getAllGroupUserIdsArray();
 
         $annotationsQuery = "SELECT DISTINCT `TempTable`.`category` FROM (";
-        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, '*', $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, '*', $userIdsArray);
         $annotationsQuery .= ") AS TempTable";
         $annotationsQuery .= " ORDER BY category";
 
