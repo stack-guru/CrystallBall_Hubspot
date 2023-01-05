@@ -10,7 +10,7 @@ class AnnotationQueryHelper
 {
     public static function allAnnotationsUnionQueryString(
         User $user,
-        string $annotationGAPropertyId = null,
+        string $annotationGAPropertyId = '*',
         array $userIdsArray = [],
         string $userId = '*',
         string $showManualAnnotations = 'true',
@@ -236,41 +236,41 @@ class AnnotationQueryHelper
 
     public static function keywordTrackingQuery(array $userIdsArray)
     {
-        return "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `keyword_tracking_annotations` WHERE `keyword_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select created_at, null, category, event_name, url, description from `keyword_tracking_annotations` WHERE `keyword_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function facebookTrackingQuery(array $userIdsArray)
     {
-        return "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `facebook_tracking_annotations` WHERE `facebook_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select created_at, null, category, event_name, url, description from `facebook_tracking_annotations` WHERE `facebook_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function instagramTrackingQuery(array $userIdsArray)
     {
-        return "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `instagram_tracking_annotations` WHERE `instagram_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select created_at, null, category, event_name, url, description from `instagram_tracking_annotations` WHERE `instagram_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function twitterTrackingQuery(array $userIdsArray)
     {
-        return "select null, 1, show_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `twitter_tracking_annotations` WHERE `twitter_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select created_at, null, category, event_name, url, description from `twitter_tracking_annotations` WHERE `twitter_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function bitbucketCommitQuery(array $userIdsArray)
     {
-        return "select null, 1, show_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `bitbucket_commit_annotations` WHERE `bitbucket_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select created_at, null, category, event_name, url, description from `bitbucket_commit_annotations` WHERE `bitbucket_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function gitHubCommitQuery(array $userIdsArray)
     {
-        return "select null, 1, show_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `github_commit_annotations` WHERE `github_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select created_at, null, category, event_name, url, description from `github_commit_annotations` WHERE `github_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function googleAdsQuery(array $userIdsArray)
     {
-        return "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations` WHERE `google_ads_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select created_at, null, category, event_name, url, description from `google_ads_annotations` WHERE `google_ads_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function applePodcastQuery(array $userIdsArray)
     {
-        return "select id, category, event, podcast_date, url, description, 'System' AS user_name from `apple_podcast_annotations` WHERE `apple_podcast_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select podcast_date, null, category, event, url, description from `apple_podcast_annotations` WHERE `apple_podcast_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 }
