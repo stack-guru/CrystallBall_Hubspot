@@ -201,6 +201,7 @@
                 buttons: [
                     'csv'
                 ],
+                order: [],
                 "paging": true
             });
         });
