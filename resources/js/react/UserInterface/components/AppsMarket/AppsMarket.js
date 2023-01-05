@@ -291,8 +291,8 @@ class AppsMarket extends React.Component {
                                     <i className="fa fa-github"></i>
                                 </span>
                                 <p className="noteText m-0">
-                                    See the changes your <strong>R&D</strong>{" "}
-                                    makes and how they affect your{" "}
+                                    <span className="animate__animated animate__zoomOut animate__infinite animate__delay-2s animate__slow">See the changes your </span><strong>R&D</strong>{" "}
+                                    <span className="animate__animated animate__zoomOut animate__infinite animate__delay-2s animate__slow">makes and how they affect your</span>{" "}
                                     <strong>sales</strong>
                                 </p>
                                 <a href="/" className="btn btn-sm btn-primary">
