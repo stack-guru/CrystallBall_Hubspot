@@ -32,73 +32,14 @@ class WeatherAlerts extends React.Component {
                     }`}
                 />
 
-                <div className="grid2layout">
-                    <div>
-                        <DSOWMEventsSelect
-                            onCheckCallback={
-                                this.props.userDataSourceAddHandler
-                            }
-                            onUncheckCallback={
-                                this.props.userDataSourceDeleteHandler
-                            }
-                            ds_data={
-                                this.props.userDataSources
-                                    .open_weather_map_events
-                            }
-                        />
-
-                        <DSOWMCitiesSelect
-                            onCheckCallback={
-                                this.props.userDataSourceAddHandler
-                            }
-                            onUncheckCallback={
-                                this.props.userDataSourceDeleteHandler
-                            }
-                            ds_data={
-                                this.props.userDataSources
-                                    .open_weather_map_cities
-                            }
-                            ga_property_id={this.props.ga_property_id}
-                            reloadWebMonitors={this.props.reloadWebMonitors}
-                            user={this.props.user}
-                            loadUserDataSources={this.props.loadUserDataSources}
-                            updateGAPropertyId={this.props.updateGAPropertyId}
-                        />
+                <div className="apps-bodyContent grid2layout">
+                    <div className="column">
+                        <DSOWMEventsSelect onCheckCallback={this.props.userDataSourceAddHandler } onUncheckCallback={this.props.userDataSourceDeleteHandler } ds_data={this.props.userDataSources.open_weather_map_events }/>
+                        <DSOWMCitiesSelect onCheckCallback={this.props.userDataSourceAddHandler } onUncheckCallback={this.props.userDataSourceDeleteHandler } ds_data={this.props.userDataSources.open_weather_map_cities } ga_property_id={this.props.ga_property_id} reloadWebMonitors={this.props.reloadWebMonitors} user={this.props.user} loadUserDataSources={this.props.loadUserDataSources} updateGAPropertyId={this.props.updateGAPropertyId}/>
                     </div>
-
-                    <div>
-                        <DSOWMEventsSelect
-                            onCheckCallback={
-                                this.props.userDataSourceAddHandler
-                            }
-                            onUncheckCallback={
-                                this.props.userDataSourceDeleteHandler
-                            }
-                            ds_data={
-                                this.props.userDataSources
-                                    .open_weather_map_events
-                            }
-                            showSelectedOnly={true}
-                        />
-
-                        <DSOWMCitiesSelect
-                            onCheckCallback={
-                                this.props.userDataSourceAddHandler
-                            }
-                            onUncheckCallback={
-                                this.props.userDataSourceDeleteHandler
-                            }
-                            ds_data={
-                                this.props.userDataSources
-                                    .open_weather_map_cities
-                            }
-                            ga_property_id={this.props.ga_property_id}
-                            reloadWebMonitors={this.props.reloadWebMonitors}
-                            user={this.props.user}
-                            loadUserDataSources={this.props.loadUserDataSources}
-                            updateGAPropertyId={this.props.updateGAPropertyId}
-                            showSelectedOnly={true}
-                        />
+                    <div className="column">
+                        <DSOWMEventsSelect onCheckCallback={this.props.userDataSourceAddHandler} onUncheckCallback={this.props.userDataSourceDeleteHandler } ds_data={this.props.userDataSources.open_weather_map_events } showSelectedOnly={true}/>
+                        <DSOWMCitiesSelect onCheckCallback={ this.props.userDataSourceAddHandler } onUncheckCallback={ this.props.userDataSourceDeleteHandler } ds_data={ this.props.userDataSources.open_weather_map_cities } ga_property_id={this.props.ga_property_id} reloadWebMonitors={this.props.reloadWebMonitors} user={this.props.user} loadUserDataSources={this.props.loadUserDataSources} updateGAPropertyId={this.props.updateGAPropertyId} showSelectedOnly={true}/>
                     </div>
                 </div>
             </div>

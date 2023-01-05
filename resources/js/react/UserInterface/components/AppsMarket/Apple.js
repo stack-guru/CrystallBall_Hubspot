@@ -9,9 +9,7 @@ class Apple extends React.Component {
             <div className='popupContent modal-apple'>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
-                    updateUserAnnotationColors={
-                        this.props.updateUserAnnotationColors
-                    }
+                    updateUserAnnotationColors={ this.props.updateUserAnnotationColors }
                     userServices={this.props.userServices}
                     serviceStatusHandler={this.props.serviceStatusHandler}
                     closeModal={this.props.closeModal}
@@ -22,9 +20,7 @@ class Apple extends React.Component {
                     creditString={`TODO`}
                 />
 
-                <ApplePodcastConfig
-                    gaPropertyId={this.props.ga_property_id}
-                />
+                <ApplePodcastConfig gaPropertyId={this.props.ga_property_id}/>
             </div>
         );
     }

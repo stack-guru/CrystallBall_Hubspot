@@ -91,98 +91,27 @@ export default class FacebookTracking extends React.Component {
 
     render() {
         return (
-            <div className="apps-bodyContent switch-wrapper">
-                <div className="weather_alert_cities-form">
-                    <h4 className="gaa-text-primary">Configure Twitter</h4>
-                    <div className="w-100 mb-3">
-                        <p>Trigger latest 100 tweets from account timeline</p>
+            <div className="apps-bodyContent">
+                <div className="white-box">
+                    <h4 className="">Create Annotation When</h4>
+
+                    <div className="checkBoxList d-flex flex-column">
+                        <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor="is_tweets_likes_tracking_on_checkbox">
+                            <input type="checkbox" checked={ this.state.is_tweets_likes_tracking_on } id="is_tweets_likes_tracking_on_checkbox" onChange={(e) => {this.setState({is_tweets_likes_tracking_on: e.target.checked,});}}/>
+                            <span>A Post that raised</span>
+                            <input id="when_tweet_reach_likes" onKeyUp={(e) => {this.setState({ when_tweet_reach_likes: e.target.value, });}} className="themenewCountInput" />
+                            <span>Likes</span>
+                        </label>
+                        <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor="is_tweets_retweets_tracking_on_checkbox">
+                            <input type="checkbox" checked={this.state.is_tweets_retweets_tracking_on} id="is_tweets_retweets_tracking_on_checkbox" onChange={(e) => {this.setState({is_tweets_retweets_tracking_on: e.target.checked,});}}/>
+                            <span>A Post that raised</span>
+                            <input id="when_tweet_reach_retweets" onKeyUp={(e) => { this.setState({ when_tweet_reach_retweets: e.target.value,});}} className="themenewCountInput"/>
+                            <span>Retweets</span>
+                        </label>
                     </div>
-                    <div className="white-box">
-                        <h5 className="gaa-text-primary">
-                            <b>Create Annotation When:</b>
-                        </h5>
 
-                        <div className="mt-2">
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    checked={
-                                        this.state.is_tweets_likes_tracking_on
-                                    }
-                                    id="is_tweets_likes_tracking_on_checkbox"
-                                    onChange={(e) => {
-                                        this.setState({
-                                            is_tweets_likes_tracking_on:
-                                                e.target.checked,
-                                        });
-                                    }}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="is_tweets_likes_tracking_on_checkbox"
-                                >
-                                    A Post that raised
-                                    <input
-                                        id="when_tweet_reach_likes"
-                                        onKeyUp={(e) => {
-                                            this.setState({
-                                                when_tweet_reach_likes:
-                                                    e.target.value,
-                                            });
-                                        }}
-                                        className="d-inline border m-1 mx-3 text-center p-1 w-25"
-                                    />
-                                    Likes
-                                </label>
-                            </div>
-                        </div>
-
-                        <div className="mt-2">
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    checked={
-                                        this.state
-                                            .is_tweets_retweets_tracking_on
-                                    }
-                                    id="is_tweets_retweets_tracking_on_checkbox"
-                                    onChange={(e) => {
-                                        this.setState({
-                                            is_tweets_retweets_tracking_on:
-                                                e.target.checked,
-                                        });
-                                    }}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="is_tweets_retweets_tracking_on_checkbox"
-                                >
-                                    A Post that raised
-                                    <input
-                                        id="when_tweet_reach_retweets"
-                                        onKeyUp={(e) => {
-                                            this.setState({
-                                                when_tweet_reach_retweets:
-                                                    e.target.value,
-                                            });
-                                        }}
-                                        className="d-inline border m-1 mx-3 text-center p-1 w-25"
-                                    />
-                                    Retweets
-                                </label>
-                            </div>
-                        </div>
-
-                        <div className="mt-4">
-                            <button
-                                className="btn btn-success"
-                                onClick={this.onSubmitHandler}
-                            >
-                                Save
-                            </button>
-                        </div>
+                    <div className="mt-4">
+                        <button className="btn-theme" onClick={this.onSubmitHandler}>Save</button>
                     </div>
                 </div>
             </div>

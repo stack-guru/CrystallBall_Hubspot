@@ -64,73 +64,47 @@ export default class BitbucketTracking extends React.Component {
         let workspaces = this.state.workspaces;
         let userRepositories = this.props.ds_data.map(ds => ds.value);
         return (
-            <div className="apps-bodyContent switch-wrapper">
-                <div className="weather_alert_cities-form">
-                    <h5 className="gaa-text-primary">Bitbucket Commits Tracking</h5>
-                    <div className="mb-2">
-                        <strong>
-                            Credits: {this.state.used_credits}/{this.state.total_credits}
-                        </strong>
-                    </div>
-                    <div>
-                        {
-                            this.state.isBusy
-                                ? <div><i className="fa fa-spinner fa-spin mr-1"></i>We are fetching your account, just a moment</div>
-                                : workspaces && workspaces.length > 0
-                                    ? workspaces.map(workspace => {
-                                        if (workspace !== null)
-                                            return (
-                                                <div key={workspace.uuid}>
-                                                    <label>
-                                                        <strong>{workspace.name} Workspace</strong>
-                                                    </label>
-                                                    <div className="checkbox-box ml-1 mb-2">
-                                                        {
-                                                            workspace.repositories && workspace.repositories.length > 0
-                                                                ? workspace.repositories.map(repository => {
-                                                                    if (repository !== null)
-                                                                        return (
-                                                                            <div>
-                                                                                <div className="form-check country" key={repository.uuid}>
-                                                                                    <input
-                                                                                        className="form-check-input"
-                                                                                        checked={userRepositories.indexOf(repository.slug) !== -1}
-                                                                                        type="checkbox"
-                                                                                        name={repository.slug}
-                                                                                        data-workspace={workspace.slug}
-                                                                                        id={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null}
-                                                                                        onChange={this.handleClick}
-                                                                                    />
-                                                                                    <label
-                                                                                        className="form-check-label"
-                                                                                        htmlFor={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null}
-                                                                                    >
-                                                                                        {repository.name}
-                                                                                    </label>
-                                                                                </div>
-                                                                                {
-                                                                                    userRepositories.indexOf(repository.slug) !== -1 &&
-                                                                                    <div>
-                                                                                        <input type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.slug)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.slug)].id)} />
-                                                                                    </div>
-                                                                                }
-                                                                            </div>
+            <div className="apps-bodyContent">
+                <div className='white-box'>
+                    <h5 className="textblue mb-4">Bitbucket Commits Tracking</h5>
+                    <strong>Credits: {this.state.used_credits}/{this.state.total_credits}</strong>
 
-                                                                        )
-                                                                })
-                                                                : <span>No repositories found</span>
+                    {
+                        this.state.isBusy ? <div><i className="fa fa-spinner fa-spin mr-1"></i>We are fetching your account, just a moment</div> : workspaces && workspaces.length > 0 ? workspaces.map(workspace => {
+                            if (workspace !== null)
+                                return (
+                                    <div key={workspace.uuid}>
+                                        <label>
+                                            <strong>{workspace.name} Workspace</strong>
+                                        </label>
+                                        <div className="checkBoxList pt-4">
+                                            {workspace.repositories && workspace.repositories.length > 0 ? workspace.repositories.map(repository => { if (repository !== null)
+                                                return (
+                                                    <>
+                                                        <div className="form-check country" key={repository.uuid}>
+                                                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null}>
+                                                                <input className="form-check-input" checked={userRepositories.indexOf(repository.slug) !== -1} type="checkbox" name={repository.slug} data-workspace={workspace.slug} id={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null} onChange={this.handleClick}/>
+                                                                {repository.name}
+                                                            </label>
+                                                        </div>
+                                                        {
+                                                            userRepositories.indexOf(repository.slug) !== -1 &&
+                                                            <div>
+                                                                <input type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.slug)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.slug)].id)} />
+                                                            </div>
+                                                            
                                                         }
-                                                    </div>
-                                                </div>
-                                            )
-                                    })
-                                    : <span>No workspace found</span>
-                        }
-                    </div>
+                                                    </>
+
+                                                )
+                                            }) : <p className='ml-1 pl-1 mb-0'>No repositories found</p>}
+                                        </div>
+                                    </div>
+                                )
+                        }) : <p className='mb-0'>No workspace found</p>
+                    }
                 </div>
             </div>
-
-
         );
     }
 }

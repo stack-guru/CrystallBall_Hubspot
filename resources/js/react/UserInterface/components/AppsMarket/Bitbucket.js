@@ -9,33 +9,18 @@ class Bitbucket extends React.Component {
             <div className="popupContent modal-bitbucket">
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
-                    updateUserAnnotationColors={
-                        this.props.updateUserAnnotationColors
-                    }
+                    updateUserAnnotationColors={ this.props.updateUserAnnotationColors }
                     userServices={this.props.userServices}
                     serviceStatusHandler={this.props.serviceStatusHandler}
                     closeModal={this.props.closeModal}
                     serviceName={"Bitbucket Tracking"}
                     colorKeyName={"bitbucket_tracking"}
                     dsKeyName={"is_ds_bitbucket_tracking_enabled"}
-                    creditString={`${
-                        this.props.userDataSources.bitbucket_tracking?.length
-                    }
-                    /
-                    ${
-                        this.props.user.price_plan.bitbucket_credits_count == -1
-                            ? 0
-                            : this.props.user.price_plan.bitbucket_credits_count
-                    }`}
-                />
+                    creditString={`${ this.props.userDataSources.bitbucket_tracking?.length } / ${ this.props.user.price_plan.bitbucket_credits_count == -1 ? 0 : this.props.user.price_plan.bitbucket_credits_count }`}/>
 
                 <BitbucketTracking
-                    used_credits={
-                        this.props.userDataSources.bitbucket_tracking?.length
-                    }
-                    total_credits={
-                        this.props.user.price_plan.bitbucket_credits_count
-                    }
+                    used_credits={this.props.userDataSources.bitbucket_tracking?.length}
+                    total_credits={this.props.user.price_plan.bitbucket_credits_count}
                     ds_data={this.props.userDataSources.bitbucket_tracking}
                     onCheckCallback={this.props.userDataSourceAddHandler}
                     onUncheckCallback={this.props.userDataSourceDeleteHandler}

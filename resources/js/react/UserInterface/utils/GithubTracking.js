@@ -65,63 +65,36 @@ export default class GithubTracking extends React.Component {
         let userRepositories = this.props.ds_data.map(ds => ds.value);
 
         return (
-            <div className="apps-bodyContent switch-wrapper">
-                <div className="weather_alert_cities-form">
-                    <h5 className="gaa-text-primary">Github Commits Tracking</h5>
-                    <div className="mb-2">
-                        <strong>
-                            Credits: {this.state.used_credits}/{this.state.total_credits}
-                        </strong>
-                    </div>
-                    <div>
-                        <div>
-                            <label>
-                                <strong>Repositories</strong>
-                            </label>
-                            <div className="checkbox-box ml-1 mb-2">
-                                {
-                                    this.state.isBusy
-                                        ? <div><i className="fa fa-spinner fa-spin mr-1"></i>We are fetching your account, just a moment</div>
-                                        : repositories && repositories.length > 0
-                                            ? repositories.map(repository => {
-                                                if (repository !== null)
-                                                    return (
-                                                        <div>
-                                                            <div className="form-check country" key={repository.id}>
-                                                                <input
-                                                                    className="form-check-input"
-                                                                    checked={userRepositories.indexOf(repository.name) !== -1}
-                                                                    type="checkbox"
-                                                                    name={repository.name}
-                                                                    data-username={repository.owner.login}
-                                                                    id={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null}
-                                                                    onChange={this.handleClick}
-                                                                />
-                                                                <label
-                                                                    className="form-check-label"
-                                                                    htmlFor={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null}
-                                                                >
-                                                                    {repository.full_name}
-                                                                </label>
-                                                            </div>
-                                                            {
-                                                                userRepositories.indexOf(repository.name) !== -1 &&
-                                                                <div>
-                                                                    <input type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.name)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.name)].id)} />
-                                                                </div>
-                                                            }
-                                                        </div>
-                                                    )
-                                            })
-                                            : <span>No repositories found</span>
-                                }
-                            </div>
-                        </div>
+            <div className="apps-bodyContent">
+                <div className='white-box'>
+                    <h5 className="textblue mb-4">Github Commits Tracking</h5>
+                    <strong className='d-block'>Credits: {this.state.used_credits}/{this.state.total_credits}</strong>
+                    <strong className='d-block'>Repositories</strong>
+                    <div className="checkBoxList pt-4">
+                        {
+                            this.state.isBusy ? <div><i className="fa fa-spinner fa-spin mr-1"></i>We are fetching your account, just a moment</div> : repositories && repositories.length > 0 ? repositories.map(repository => {
+                                if (repository !== null)
+                                    return (
+                                        <>
+                                            <div className="form-check country" key={repository.id}>
+                                                <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null}>
+                                                    <input className="form-check-input" checked={userRepositories.indexOf(repository.name) !== -1} type="checkbox" name={repository.name} data-username={repository.owner.login} id={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null} onChange={this.handleClick}/>
+                                                    <span>{repository.full_name}</span>
+                                                </label>
+                                            </div>
+                                            {
+                                                userRepositories.indexOf(repository.name) !== -1 &&
+                                                <div>
+                                                    <input type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.name)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.name)].id)} />
+                                                </div>
+                                            }
+                                        </>
+                                    )
+                            }) : <p className='ml-1 pl-1 mb-0'>No repositories found</p>
+                        }
                     </div>
                 </div>
             </div>
-
-
         );
     }
 }

@@ -108,77 +108,41 @@ const ApplePodcastConfig = (props) => {
             });
     };
     return (
-        <div className="apps-bodyContent switch-wrapper">
-            <h4 className="gaa-text-primary">Manage Apple Podcast</h4>
-            {existingPodcast.length ? (
-                <div>
+        <div className="apps-bodyContent">
+            <div className="white-box">
+                <h4 className='textblue'>Add new podcast</h4>
+
+                {existingPodcast.length ? (
                     <div>
                         {existingPodcast.map((itm, index) => (
-                            <div>
-                                <h5
-                                    style={{ display: "inline-block" }}
-                                    key={itm.id != "" ? itm.id : index}
-                                >
+                                <h5 style={{ display: "inline-block" }} key={itm.id != "" ? itm.id : index}>
                                     <span className="badge badge-pill badge-primary m-1 h5">
                                         {itm.name}{" "}
-                                        <i
-                                            className="fa fa-times"
-                                            data-apple-podcast-name={itm.name}
-                                            data--apple-podcast-id={itm.id}
-                                            onClick={() => deletePodcasts(itm)}
-                                        ></i>
+                                        <i className="fa fa-times" data-apple-podcast-name={itm.name} data--apple-podcast-id={itm.id} onClick={() => deletePodcasts(itm)}></i>
                                     </span>
                                 </h5>
-                            </div>
                         ))}
                     </div>
-                </div>
-            ) : null}
-            <div>
-                <div className="input-group search-input-box mb-3">
-                    <input
-                        type="text"
-                        className="form-control search-input"
-                        placeholder="Search or Enter the Podcast URL"
-                        value={inputVale}
-                        id="applePodcastURL"
-                        name="applePodcastURL"
-                        onChange={(e) =>
-                            setInputVale(e.target.value.toLowerCase())
-                        }
-                        onKeyUp={(e) => {
-                            if (e.keyCode === 13) {
-                                e.persist();
-                                getMetaData(e);
-                            }
-                        }}
-                    />
+                ) : null}
+                <div className="input-group mb-3">
+                    <input type="text" className="form-control search-input" placeholder="Search or Enter the Podcast URL" value={inputVale} id="applePodcastURL" name="applePodcastURL" onChange={(e) => setInputVale(e.target.value.toLowerCase())} onKeyUp={(e) => {if (e.keyCode === 13) { e.persist(); getMetaData(e);}}}/>
                     <div className="input-group-append">
                         <i className="ti-plus"></i>
                     </div>
                 </div>
 
-                {noResult && <div>{noResult}</div>}
-            </div>
-            <div className="mt-2">
-                {searchResult.map((t0a) => (
-                    <Card className="cb-ap-search-card mb-2" body>
-                        <CardImg
-                            top
-                            width="100%"
-                            src={t0a.previewImage}
-                            alt={t0a.collectionName}
-                        />
-                        <CardTitle tag="h5">{t0a.collectionName}</CardTitle>
-                        <CardSubtitle tag="h6" className="mb-0 text-muted">
-                            {t0a.trackCount} episodes
-                        </CardSubtitle>
+                {noResult && <p className='pt-3 mb-0'>{noResult}</p>}
 
-                        <Button onClick={() => addAnnotation(t0a)}>
-                            Create Annotations
-                        </Button>
-                    </Card>
-                ))}
+                <div className="pt-3">
+                    {searchResult.map((t0a) => (
+                        <Card className="cb-ap-search-card mb-2" body>
+                            <CardImg top width="100%" src={t0a.previewImage} alt={t0a.collectionName}/>
+                            <CardTitle tag="h5">{t0a.collectionName}</CardTitle>
+                            <CardSubtitle tag="h6" className="mb-0 text-muted">{t0a.trackCount} episodes</CardSubtitle>
+                            <Button onClick={() => addAnnotation(t0a)}>Create Annotations</Button>
+                        </Card>
+                    ))}
+                </div>
             </div>
         </div>
     );
