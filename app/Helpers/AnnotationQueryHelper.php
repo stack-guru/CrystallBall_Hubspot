@@ -4,10 +4,84 @@ namespace App\Helpers;
 
 use App\Models\UserDataSource;
 use Illuminate\Support\Carbon;
+use App\Models\User;
 
 class AnnotationQueryHelper
 {
-    public static function googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId = '*')
+    public static function allAnnotationsUnionQueryString(User $user, string $annotationGAPropertyId = null, array $userIdsArray = [])
+    {
+        $annotationsQuery = "";
+        // SELECT annotations from annotations table
+        $annotationsQuery .= self::userAnnotationsQuery($user, $userIdsArray, $annotationGAPropertyId, '*', 'true', 'true', 'true', 'true');
+        // Add web monitor annotations if it is enabled in user data source
+        if ($user->is_ds_web_monitors_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::webMonitorQuery($userIdsArray);
+        }
+        // Add retail marketing date annotations if it is enabled in user data source
+        if ($user->is_ds_retail_marketing_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::retailMarketingQuery($user, $annotationGAPropertyId);
+        }
+        // Add weather update annotations if it is enabled in user data source
+        if ($user->is_ds_weather_alerts_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::openWeatherMapQuery($user, $annotationGAPropertyId);
+        }
+        // Add google alert annotations if it is enabled in user data source
+        if ($user->is_ds_google_alerts_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::googleAlertsQuery($user, $annotationGAPropertyId);
+        }
+        // Add wordpress update annotations if it is enabled in user data source
+        if ($user->is_ds_wordpress_updates_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::wordPressQuery();
+        }
+        // Add keyword tracking annotations if it is enabled in user data source
+        if ($user->is_ds_keyword_tracking_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::keywordTrackingQuery($userIdsArray);
+        }
+        // Add facebook tracking annotations if it is enabled in user data source
+        if ($user->is_ds_facebook_tracking_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::facebookTrackingQuery($userIdsArray);
+        }
+        // Add instagram tracking annotations if it is enabled in user data source
+        if ($user->is_ds_instagram_tracking_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::instagramTrackingQuery($userIdsArray);
+        }
+        // Add twitter tracking annotations if it is enabled in user data source
+        if ($user->is_ds_twitter_tracking_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::twitterTrackingQuery($userIdsArray);
+        }
+        // Add google ads annotations if it is enabled in user data source
+        if ($user->is_ds_g_ads_history_change_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::googleAdsQuery($userIdsArray);
+        }
+        // Add bitbucket commit tracking annotations if it is enabled in user data source
+        if ($user->is_ds_bitbucket_tracking_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::bitbucketCommitQuery($userIdsArray);
+        }
+        // Add github commit tracking annotations if it is enabled in user data source
+        if ($user->is_ds_github_tracking_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::gitHubCommitQuery($userIdsArray);
+        }
+        // Add apple podcast annotations if it is enabled in user data source
+        if ($user->is_ds_apple_podcast_annotation_enabled) {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::applePodcastQuery($userIdsArray);
+        }
+        return $annotationsQuery;
+    }
+
+    public static function googleAnalyticsPropertyWhereClause(string $googleAnalyticsPropertyId = null)
     {
         $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
         if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
@@ -17,7 +91,7 @@ class AnnotationQueryHelper
         return $gAPropertyCriteria;
     }
 
-    public static function userAnnotationsQuery($user, $userIdsArray, $googleAnalyticsPropertyId = '*', $userId = '*', $showWebMonitoring = 'false', $showManualAnnotations = 'false', $showCSVAnnotations = 'false', $showAPIAnnotations = 'false')
+    public static function userAnnotationsQuery(User $user, array $userIdsArray, string $googleAnalyticsPropertyId = null, string $userId = '*', string $showWebMonitoring = 'false', string $showManualAnnotations = 'false', string  $showCSVAnnotations = 'false', string $showAPIAnnotations = 'false')
     {
         $annotationsQuery = "";
         $annotationsQuery .= "SELECT DISTINCT DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` FROM `annotations`";
@@ -74,7 +148,7 @@ class AnnotationQueryHelper
         return $annotationsQuery;
     }
 
-    public static function googleAlgorithmQuery($user)
+    public static function googleAlgorithmQuery(User $user)
     {
         $annotationsQuery = "";
         $annotationsQuery .= "select update_date AS show_at, google_algorithm_updates.id, category, event_name, NULL as url, description from `google_algorithm_updates`";
@@ -88,30 +162,30 @@ class AnnotationQueryHelper
         return $annotationsQuery;
     }
 
-    public static function webMonitorQuery($userIdsArray)
+    public static function webMonitorQuery(array $userIdsArray)
     {
         return "select show_at, id, category, event_name, url, description from `web_monitor_annotations` WHERE `web_monitor_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
-    public static function holidaysQuery($user, $googleAnalyticsPropertyId)
+    public static function holidaysQuery(User $user, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
         return "select holiday_date AS show_at, holidays.id, category, event_name, NULL as url, description from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays')";
     }
 
-    public static function retailMarketingQuery($user, $googleAnalyticsPropertyId)
+    public static function retailMarketingQuery(User $user, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
         return "select show_at, retail_marketings.id, category, event_name, NULL as url, description from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings')";
     }
 
-    public static function openWeatherMapQuery($user, $googleAnalyticsPropertyId)
+    public static function openWeatherMapQuery(User $user, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
         return "select alert_date, open_weather_map_alerts.id, open_weather_map_cities.name, description, null, description from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` inner join `open_weather_map_cities` on `open_weather_map_cities`.id = `open_weather_map_alerts`.`open_weather_map_city_id` where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities')";
     }
 
-    public static function googleAlertsQuery($user, $googleAnalyticsPropertyId)
+    public static function googleAlertsQuery(User $user, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
         return "select alert_date, google_alerts.id, 'News Alert', title, google_alerts.url, description from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords' AND DATE(google_alerts.created_at) > DATE(DATE_ADD(uds.created_at, INTERVAL 1 DAY)) )";
@@ -128,12 +202,42 @@ class AnnotationQueryHelper
         return $annotationsQuery;
     }
 
-    public static function googleAdsQuery($userIdsArray)
+    public static function keywordTrackingQuery(array $userIdsArray)
+    {
+        return "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `keyword_tracking_annotations` WHERE `keyword_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+    }
+
+    public static function facebookTrackingQuery(array $userIdsArray)
+    {
+        return "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `facebook_tracking_annotations` WHERE `facebook_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+    }
+
+    public static function instagramTrackingQuery(array $userIdsArray)
+    {
+        return "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `instagram_tracking_annotations` WHERE `instagram_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+    }
+
+    public static function twitterTrackingQuery(array $userIdsArray)
+    {
+        return "select null, 1, show_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `twitter_tracking_annotations` WHERE `twitter_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+    }
+
+    public static function bitbucketCommitQuery(array $userIdsArray)
+    {
+        return "select null, 1, show_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `bitbucket_commit_annotations` WHERE `bitbucket_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+    }
+
+    public static function gitHubCommitQuery(array $userIdsArray)
+    {
+        return "select null, 1, show_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `github_commit_annotations` WHERE `github_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+    }
+
+    public static function googleAdsQuery(array $userIdsArray)
     {
         return "select null, 1, updated_at, created_at, null, category, event_name, url, description, 'System' AS user_name from `google_ads_annotations` WHERE `google_ads_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
-    public static function applePodcastQuery($userIdsArray)
+    public static function applePodcastQuery(array $userIdsArray)
     {
         return "select id, category, event, podcast_date, url, description, 'System' AS user_name from `apple_podcast_annotations` WHERE `apple_podcast_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }

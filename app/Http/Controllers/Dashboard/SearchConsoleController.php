@@ -9,6 +9,7 @@ use App\Models\GoogleSearchConsoleStatistics;
 use App\Models\Annotation;
 use App\Models\GoogleSearchConsoleSite;
 use App\Http\Controllers\Controller;
+use App\Helpers\AnnotationQueryHelper;
 use Illuminate\Support\Carbon;
 
 class SearchConsoleController extends Controller
@@ -61,7 +62,7 @@ class SearchConsoleController extends Controller
         $user = Auth::user();
 
         $annotationsQuery = "SELECT `TempTable`.* FROM (";
-        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('google_search_console_site_id'), $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $request->query('google_search_console_site_id'), $userIdsArray);
         $annotationsQuery .= ") AS TempTable";
         // LEFT JOIN to load all properties selected in annotations
         $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
@@ -144,7 +145,7 @@ class SearchConsoleController extends Controller
             abort(404, "Unable to find Google Search Console Site for the given id.");
         }
         $annotationsQuery = "SELECT `TempTable`.* FROM (";
-        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('google_search_console_site_id'), $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $request->query('google_search_console_site_id'), $userIdsArray);
         $annotationsQuery .= ") AS TempTable";
         // LEFT JOIN to load all properties selected in annotations
         $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
