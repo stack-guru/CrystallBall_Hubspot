@@ -120,8 +120,15 @@ class AppsMarket extends React.Component {
         if (alertMessage) {
             swal.fire({
                 iconHtml: '<img src="/images/svg/twitter.svg">',
+                popup: 'twitterAlert',
+                backdrop: 'twitterAlert',
                 title: "Connected",
                 html: alertMessage,
+                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                customClass: {
+                    popup: 'popupTwitterAlert',
+                    closeButton: 'closeButtonTwitterAlert',
+                }
             });
         }
     }
