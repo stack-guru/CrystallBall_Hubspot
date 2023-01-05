@@ -67,27 +67,26 @@ export default class GithubTracking extends React.Component {
         return (
             <div className="apps-bodyContent">
                 <div className='white-box'>
-                    <h5 className="textblue mb-4">Github Commits Tracking</h5>
-                    <strong className='d-block'>Credits: {this.state.used_credits}/{this.state.total_credits}</strong>
-                    <strong className='d-block'>Repositories</strong>
-                    <div className="checkBoxList pt-4">
+                    {/* <h5 className="textblue mb-4">Github Commits Tracking</h5>
+                    <strong className='d-block'>Credits: {this.state.used_credits}/{this.state.total_credits}</strong> */}
+                    <strong className='d-block mb-4'>Repositories</strong>
+                    <div className="checkBoxList d-flex flex-column">
                         {
                             this.state.isBusy ? <div><i className="fa fa-spinner fa-spin mr-1"></i>We are fetching your account, just a moment</div> : repositories && repositories.length > 0 ? repositories.map(repository => {
                                 if (repository !== null)
                                     return (
                                         <>
                                             <div className="form-check country" key={repository.id}>
-                                                <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null}>
-                                                    <input className="form-check-input" checked={userRepositories.indexOf(repository.name) !== -1} type="checkbox" name={repository.name} data-username={repository.owner.login} id={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null} onChange={this.handleClick}/>
+                                                <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null}>
+                                                    <input checked={userRepositories.indexOf(repository.name) !== -1} type="checkbox" name={repository.name} data-username={repository.owner.login} id={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null} onChange={this.handleClick}/>
                                                     <span>{repository.full_name}</span>
+                                                    {
+                                                        userRepositories.indexOf(repository.name) !== -1 &&
+                                                            <input className="themenewCountInput"  type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.name)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.name)].id)} />
+                                                    }
                                                 </label>
                                             </div>
-                                            {
-                                                userRepositories.indexOf(repository.name) !== -1 &&
-                                                <div>
-                                                    <input type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.name)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.name)].id)} />
-                                                </div>
-                                            }
+
                                         </>
                                     )
                             }) : <p className='ml-1 pl-1 mb-0'>No repositories found</p>
