@@ -17,7 +17,7 @@ class AnnotationQueryHelper
         return $gAPropertyCriteria;
     }
 
-    public static function userAnnotationsQuery($user, $userIdsArray, $googleAnalyticsPropertyId = '*', $userId = '*', $showWebMonitoring = false, $showManualAnnotations = false, $showCSVAnnotations = false, $showAPIAnnotations = false)
+    public static function userAnnotationsQuery($user, $userIdsArray, $googleAnalyticsPropertyId = '*', $userId = '*', $showWebMonitoring = 'false', $showManualAnnotations = 'false', $showCSVAnnotations = 'false', $showAPIAnnotations = 'false')
     {
         $annotationsQuery = "";
         $annotationsQuery .= "SELECT DISTINCT DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` FROM `annotations`";
