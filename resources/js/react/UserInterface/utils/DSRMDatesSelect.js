@@ -114,118 +114,46 @@ export default class DSRMDatesSelect extends React.Component {
         let userDSIds = this.props.ds_data.map((ds) => ds.id);
 
         return (
-            <div className="apps-bodyContent switch-wrapper">
-                <div className="grid2layout">
+            <div className="apps-bodyContent grid2layout">
+                <div className="column">
                     <div className="white-box">
-                        <div className="retail_marketing_dates-form">
-                            <h4 className="gaa-text-primary">
-                                Select Dates for Retail Marketing
-                            </h4>
-                            <div className="input-group search-input-box mb-3">
-                                <input
-                                    type="text"
-                                    className="form-control search-input"
-                                    placeholder="Search"
-                                    value={this.state.searchText}
-                                    name="searchText"
-                                    onChange={(e) =>
-                                        this.setState({
-                                            [e.target.name]: e.target.value,
-                                        })
+                        <h4>Select Dates for Retail Marketing</h4>
+                        <div className="input-group search-input-box mb-3">
+                            <input type="text" className="form-control search-input" placeholder="Search" value={this.state.searchText} name="searchText" onChange={(e) => this.setState({[e.target.name]: e.target.value,})}/>
+                            <div className="input-group-append"><i className="ti-search"></i></div>
+                        </div>
+                        <div className="boxTitleBtn d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start m-0" htmlFor="check-all">
+                                <input type="checkbox" id="check-all" onChange={this.selectAllShowing}/>
+                                <span>Select All</span>
+                            </label>
+                            <span className="btn-clearAll" onClick={this.clearAll}>Clear All</span>
+                        </div>
+                        <div className="checkBoxList">
+                            {retail_marketing_dates
+                                .filter(this.checkSearchText)
+                                .map((rmd) => {
+                                    if (userRMDIds.indexOf(rmd.id) !== -1) {
+                                        return null;
                                     }
-                                />
-                                <div className="input-group-append">
-                                    <i className="ti-search"></i>
-                                </div>
-                            </div>
-                            <div className="d-flex justify-content-between align-items-center border-bottom">
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id="check-all"
-                                        onChange={this.selectAllShowing}
-                                    />
-                                    <label
-                                        className="form-check-label font-weight-bold"
-                                        htmlFor="check-all"
-                                    >
-                                        Select All
-                                    </label>
-                                </div>
-                                <div>
-                                    <p
-                                        className="font-weight-bold cursor m-0"
-                                        onClick={this.clearAll}
-                                    >
-                                        Clear All
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="checkbox-box mt-3">
-                                {retail_marketing_dates
-                                    .filter(this.checkSearchText)
-                                    .map((rmd) => {
-                                        if (userRMDIds.indexOf(rmd.id) !== -1) {
-                                            return null;
-                                        }
-                                        return (
-                                            <div
-                                                className="form-check rmd"
-                                                key={rmd.id}
-                                            >
-                                                <input
-                                                    className="form-check-input"
-                                                    checked={
-                                                        userRMDIds.indexOf(
-                                                            rmd.id
-                                                        ) !== -1
-                                                    }
-                                                    type="checkbox"
-                                                    id={
-                                                        userRMDIds.indexOf(
-                                                            rmd.id
-                                                        ) !== -1
-                                                            ? userDSIds[
-                                                                  userRMDIds.indexOf(
-                                                                      rmd.id
-                                                                  )
-                                                              ]
-                                                            : null
-                                                    }
-                                                    onChange={this.handleClick}
-                                                    retail_marketing_id={rmd.id}
-                                                />
-                                                <label
-                                                    className="form-check-label"
-                                                    htmlFor="defaultCheck1"
-                                                >
-                                                    {rmd.show_at} -{" "}
-                                                    {rmd.event_name}
-                                                </label>
-                                            </div>
-                                        );
-                                    })}
-                            </div>
+                                    return (
+                                        <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="defaultCheck1" key={rmd.id}>
+                                            <input checked={userRMDIds.indexOf(rmd.id) !== -1} type="checkbox" id={userRMDIds.indexOf(rmd.id) !== -1 ? userDSIds[userRMDIds.indexOf(rmd.id)] : null} onChange={this.handleClick} retail_marketing_id={rmd.id}/>
+                                            <span>{rmd.show_at} -{" "}{rmd.event_name}</span>
+                                        </label>
+                                    );
+                                })}
                         </div>
                     </div>
+                </div>
+
+                <div className="column">
                     <div className="gray-box">
-                        <div className="d-flex justify-content-between align-items-center border-bottom">
-                            <div className="form-check">
-                                <label className="form-check-label font-weight-bold">
-                                    Selected Dates{" "}
-                                </label>
-                            </div>
-                            <div>
-                                <p
-                                    className="font-weight-bold cursor m-0"
-                                    onClick={this.clearAll}
-                                >
-                                    Clear All
-                                </p>
-                            </div>
+                        <div className="boxTitleBtn d-flex justify-content-between border-bottom pb-3 mb-3">
+                            <h4 className='mb-0'>Selected Dates{" "}</h4>
+                            <span className="btn-clearAll" onClick={this.clearAll}>Clear All</span>
                         </div>
-                        <div className="checkbox-box mt-3">
+                        <div className="checkBoxList">
                             {retail_marketing_dates
                                 .filter(this.checkSearchText)
                                 .map((rmd) => {
@@ -233,39 +161,10 @@ export default class DSRMDatesSelect extends React.Component {
                                         return null;
                                     }
                                     return (
-                                        <div
-                                            className="form-check rmd"
-                                            key={rmd.id}
-                                        >
-                                            <input
-                                                className="form-check-input"
-                                                checked={
-                                                    userRMDIds.indexOf(
-                                                        rmd.id
-                                                    ) !== -1
-                                                }
-                                                type="checkbox"
-                                                id={
-                                                    userRMDIds.indexOf(
-                                                        rmd.id
-                                                    ) !== -1
-                                                        ? userDSIds[
-                                                              userRMDIds.indexOf(
-                                                                  rmd.id
-                                                              )
-                                                          ]
-                                                        : null
-                                                }
-                                                onChange={this.handleClick}
-                                                retail_marketing_id={rmd.id}
-                                            />
-                                            <label
-                                                className="form-check-label"
-                                                htmlFor="defaultCheck1"
-                                            >
-                                                {rmd.show_at} - {rmd.event_name}
-                                            </label>
-                                        </div>
+                                        <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="defaultCheck1" key={rmd.id}>
+                                            <input checked={userRMDIds.indexOf(rmd.id) !== -1} type="checkbox" id={userRMDIds.indexOf(rmd.id) !== -1 ? userDSIds[userRMDIds.indexOf(rmd.    id)] : null} onChange={this.handleClick} retail_marketing_id={rmd.id}/>
+                                            <span>{rmd.show_at} - {rmd.event_name}</span>
+                                        </label>
                                     );
                                 })}
                         </div>

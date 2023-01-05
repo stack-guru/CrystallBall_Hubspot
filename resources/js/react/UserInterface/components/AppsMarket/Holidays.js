@@ -9,9 +9,7 @@ class Holidays extends React.Component {
             <div className='popupContent modal-holidays'>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
-                    updateUserAnnotationColors={
-                        this.props.updateUserAnnotationColors
-                    }
+                    updateUserAnnotationColors={this.props.updateUserAnnotationColors}
                     userServices={this.props.userServices}
                     serviceStatusHandler={this.props.serviceStatusHandler}
                     closeModal={this.props.closeModal}
@@ -25,9 +23,7 @@ class Holidays extends React.Component {
 
                 <Countries
                     onCheckCallback={this.props.userDataSourceAddHandler}
-                    onUncheckCallback={
-                        this.props.userDataSourceDeleteHandler
-                    }
+                    onUncheckCallback={this.props.userDataSourceDeleteHandler}
                     ds_data={this.props.userDataSources.holidays}
                     ga_property_id={this.props.ga_property_id}
                     user={this.props.user}

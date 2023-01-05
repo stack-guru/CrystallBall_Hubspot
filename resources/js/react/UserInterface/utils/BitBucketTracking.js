@@ -101,7 +101,7 @@ export default class BitbucketTracking extends React.Component {
                                         </div>
                                     </div>
                                 )
-                        }) : <p className='mb-0'>No workspace found</p>
+                        }) : <p className='mb-0 pt-4'>No workspace found</p>
                     }
                 </div>
             </div>

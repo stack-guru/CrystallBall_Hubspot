@@ -96,195 +96,64 @@ export default class countries extends React.Component {
         let countries = this.state.countries;
         let userCountries = this.props.ds_data.map((ds) => ds.country_name);
         return (
-            <div className="apps-bodyContent switch-wrapper">
-                <div className="grid2layout">
+            <div className="apps-bodyContent grid2layout">
+                <div className="column">
                     <div className="white-box">
-                        <div className="countries-form">
-                            <h4 className="gaa-text-primary">
-                                Select Countries for {this.props.sectionTitle}
-                            </h4>
-                            <div className="input-group search-input-box mb-3">
-                                <input
-                                    type="text"
-                                    className="form-control search-input"
-                                    placeholder="Search"
-                                    value={this.state.searchText}
-                                    name="searchText"
-                                    onChange={(e) =>
-                                        this.setState({
-                                            [e.target.name]: e.target.value,
-                                        })
-                                    }
-                                />
-                                <div className="input-group-append">
-                                    <i className="ti-search"></i>
-                                </div>
-                            </div>
-                            <div className="d-flex justify-content-between align-items-center border-bottom">
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id="check-all"
-                                        onChange={this.selectAllShowing}
-                                    />
-                                    <label
-                                        className="form-check-label font-weight-bold"
-                                        htmlFor="check-all"
-                                    >
-                                        Select All
-                                    </label>
-                                </div>
-                                {/* <div>
-                                    <p
-                                        className="font-weight-bold cursor m-0"
-                                        onClick={this.clearAll}
-                                    >
-                                        Clear All
-                                    </p>
-                                </div> */}
-                            </div>
-                            <div className="checkbox-box mt-3">
-                                {countries ? (
-                                    countries.map((country) => {
-                                        if (
-                                            userCountries.indexOf(country) !==
-                                            -1
-                                        ) {
-                                            return null;
-                                        }
-                                        if (country !== null)
-                                            if (
-                                                country
-                                                    .toLowerCase()
-                                                    .indexOf(
-                                                        this.state.searchText
-                                                    ) > -1 ||
-                                                this.state.searchText.length ==
-                                                    0
-                                            )
-                                                return (
-                                                    <div
-                                                        className="form-check country"
-                                                        key={country}
-                                                    >
-                                                        <input
-                                                            className="form-check-input"
-                                                            checked={
-                                                                userCountries.indexOf(
-                                                                    country
-                                                                ) !== -1
-                                                            }
-                                                            type="checkbox"
-                                                            name={country}
-                                                            id={
-                                                                userCountries.indexOf(
-                                                                    country
-                                                                ) !== -1
-                                                                    ? this.props
-                                                                          .ds_data[
-                                                                          userCountries.indexOf(
-                                                                              country
-                                                                          )
-                                                                      ].id
-                                                                    : null
-                                                            }
-                                                            onChange={
-                                                                this.handleClick
-                                                            }
-                                                        />
-                                                        <label
-                                                            className="form-check-label"
-                                                            htmlFor="defaultCheck1"
-                                                        >
-                                                            {country}
-                                                        </label>
-                                                    </div>
-                                                );
-                                    })
-                                ) : (
-                                    <span>No country found</span>
-                                )}
-                            </div>
+                        <h4>Select Countries for {this.props.sectionTitle}</h4>
+                        <div className="input-group mb-3">
+                            <input type="text" className="form-control search-input" placeholder="Search" value={this.state.searchText} name="searchText" onChange={(e) => this.setState({[e.target.name]: e.target.value,})} />
+                            <div className="input-group-append"><i className="ti-search"></i></div>
                         </div>
-                    </div>
-                    <div className="gray-box">
-                        <div className="d-flex justify-content-between align-items-center border-bottom">
-                            <div className="form-check">
-
-                                <label
-                                    className="form-check-label font-weight-bold"
-                                >
-                                    Selected Countries
+                        <div className="d-flex flex-column border-bottom pb-3 mb-3">
+                            <div className="checkBoxList">
+                                <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="check-all">
+                                    <input type="checkbox" id="check-all" onChange={this.selectAllShowing}/>
+                                    <span>Select All</span>
                                 </label>
                             </div>
-                            <div>
-                                <p
-                                    className="font-weight-bold cursor m-0"
-                                    onClick={this.clearAll}
-                                >
-                                    Clear All
-                                </p>
-                            </div>
                         </div>
-                        <div className="checkbox-box mt-3">
+                        <div className="checkBoxList">
                             {countries ? (
                                 countries.map((country) => {
-                                    if (userCountries.indexOf(country) === -1) {
+                                    if ( userCountries.indexOf(country) !== -1) {
                                         return null;
                                     }
                                     if (country !== null)
-                                        if (
-                                            country
-                                                .toLowerCase()
-                                                .indexOf(
-                                                    this.state.searchText
-                                                ) > -1 ||
-                                            this.state.searchText.length == 0
-                                        )
+                                        if (country.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0)
                                             return (
-                                                <div
-                                                    className="form-check country"
-                                                    key={country}
-                                                >
-                                                    <input
-                                                        className="form-check-input"
-                                                        checked={
-                                                            userCountries.indexOf(
-                                                                country
-                                                            ) !== -1
-                                                        }
-                                                        type="checkbox"
-                                                        name={country}
-                                                        id={
-                                                            userCountries.indexOf(
-                                                                country
-                                                            ) !== -1
-                                                                ? this.props
-                                                                      .ds_data[
-                                                                      userCountries.indexOf(
-                                                                          country
-                                                                      )
-                                                                  ].id
-                                                                : null
-                                                        }
-                                                        onChange={
-                                                            this.handleClick
-                                                        }
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="defaultCheck1"
-                                                    >
-                                                        {country}
-                                                    </label>
-                                                </div>
+                                                <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="defaultCheck1" key={country}>
+                                                    <input checked={userCountries.indexOf(country) !== -1} type="checkbox" name={country} id={userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null} onChange={this.handleClick}/>
+                                                    <span>{country}</span>
+                                                </label>
                                             );
                                 })
                             ) : (
                                 <span>No country found</span>
                             )}
                         </div>
+                    </div>
+                </div>
+                <div className="column">
+                    <div className="gray-box">
+                        <div className="boxTitleBtn d-flex justify-content-between">
+                            <h4>Selected Countries</h4>
+                            <span className="btn-clearAll" onClick={this.clearAll}>Clear All</span>
+                        </div>
+                        {countries ? ( countries.map((country) => { if (userCountries.indexOf(country) === -1) { return null; }
+                            if (country !== null)
+                                if (country.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0)
+                                    <div className="checkBoxList">
+                                        return (
+                                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="defaultCheck1" key={country}>
+                                                <input checked={userCountries.indexOf(country) !== -1 } type="checkbox" name={country} id={userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null } onChange={ this.handleClick }/>
+                                                <span>{country}</span>
+                                            </label>
+                                        );
+                                    </div>
+                            })
+                        ) : (
+                            <span>No country found</span>
+                        )}
                     </div>
                 </div>
             </div>

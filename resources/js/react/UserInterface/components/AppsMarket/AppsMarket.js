@@ -1224,14 +1224,13 @@ class AppsMarket extends React.Component {
                                     '<img src="/images/svg/twitter.svg">',
                                     popup: 'twitterAlert',
                                     showCloseButton: true,
-                                    backdrop: 'twitterAlert',
                                     title: "Connect with Twitter",
                                     text: "Connect your Twitter account to create automatic annotations",
                                     confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                                     confirmButtonText: "<a href='/socialite/twitter' class='text-white'><i class='mr-2 fa fa-twitter'> </i>" + "Connect twitter Account</a>",
                                     customClass: {
-                                        popup: 'popupTwitterAlert',
-                                        closeButton: 'closeButtonTwitterAlert',
+                                        popup: 'popupSweetAlert',
+                                        closeButton: 'closeButton',
                                     }
                                 });
                             }

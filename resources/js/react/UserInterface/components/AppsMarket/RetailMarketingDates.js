@@ -10,9 +10,7 @@ class RetailMarketingDates extends React.Component {
             <div className="popupContent modal-retailMrketingDates">
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
-                    updateUserAnnotationColors={
-                        this.props.updateUserAnnotationColors
-                    }
+                    updateUserAnnotationColors={this.props.updateUserAnnotationColors}
                     userServices={this.props.userServices}
                     serviceStatusHandler={this.props.serviceStatusHandler}
                     closeModal={this.props.closeModal}

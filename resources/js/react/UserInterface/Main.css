@@ -1315,7 +1315,9 @@ body {
 .dataTableHolder .table tbody .singleRowNoBorder td:last-child,
 .dataTableHolder .table tbody .singleRowNoBorder td{border: 0;}
 .modal-weatherAlerts .grid2layout{ grid-template-columns: 372px 372px; }
+.modal-holidays .grid2layout .column:first-child,
 .modal-weatherAlerts .grid2layout .column:first-child{  padding-right: 4px; }
+.modal-holidays .grid2layout .column:last-child,
 .modal-weatherAlerts .grid2layout .column:last-child{ padding-left: 4px; }
 .modal-weatherAlerts .grid2layout .column > div:last-child{ margin: 0; }
 .apps-bodyContent > div .textblue {
@@ -1325,6 +1327,7 @@ body {
     line-height: 23px;
 }
 .boxTitleBtn .btn-clearAll {
+    cursor: pointer;
     font-size: 14px;
     color: #f44c3d;
     line-height: 20px;
