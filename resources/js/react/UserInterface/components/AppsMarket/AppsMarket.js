@@ -1236,8 +1236,8 @@ class AppsMarket extends React.Component {
                                     confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                                     confirmButtonText: "<a href='/socialite/twitter' class='text-white'><i class='mr-2 fa fa-twitter'> </i>" + "Connect twitter Account</a>",
                                     customClass: {
-                                        popup: 'popupSweetAlert',
-                                        closeButton: 'closeButton',
+                                        popup: 'popupTwitterAlert',
+                                        closeButton: 'closeButtonTwitterAlert',
                                     }
                                 });
                             }
