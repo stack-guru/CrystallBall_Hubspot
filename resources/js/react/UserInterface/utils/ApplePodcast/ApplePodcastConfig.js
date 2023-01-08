@@ -109,15 +109,32 @@ const ApplePodcastConfig = (props) => {
             });
     };
 
+    function SampleNextArrow(props) {
+        const { className, style, onClick } = props;
+        return (
+            <div className={className} onClick={onClick}>
+                <i className="fa fa-angle-right"></i>
+            </div>
+        );
+    }
+
+    function SamplePrevArrow(props) {
+        const { className, style, onClick } = props;
+        return (
+            <div className={className} onClick={onClick}>
+                <i className="fa fa-angle-left"></i>
+            </div>
+        );
+    }
+
     const settings = {
-        dots: true,
+        speed: 500,
+        dots: false,
         infinite: true,
         slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        speed: 2000,
-        autoplaySpeed: 2000,
-        cssEase: "linear"
+        slidesToScroll: 3,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />
     };
     return (
         <div className="apps-bodyContent">
@@ -148,7 +165,7 @@ const ApplePodcastConfig = (props) => {
                 <div className="pt-3">
                     <Slider {...settings}>
                         {searchResult.map((t0a) => (
-                            <Card className="cb-ap-search-card mb-2" body>
+                            <Card className="cb-ap-search-card apple-card mb-0" body>
                                 <CardImg top width="100%" src={t0a.previewImage} alt={t0a.collectionName}/>
                                 <CardTitle tag="h5">{t0a.collectionName}</CardTitle>
                                 <CardSubtitle tag="h6" className="mb-0 text-muted">{t0a.trackCount} episodes</CardSubtitle>

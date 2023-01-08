@@ -46,7 +46,7 @@ export default class DSGAUDatesSelect extends React.Component {
         return (
             <div className="apps-bodyContent">
                 <h4 className='themeNewTitle'>Select mode:</h4>
-                <div className="status input-group mb-3">
+                <div className="status input-group mb-3 themeNewInputGroup">
                     <select className="form-control" placeholder="Search" value={this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""} name="searchStatus" onChange={this.selectedStatusChanged}>
                         <option value="">Both</option>
                         <option value="unconfirmed">Unconfirmed</option>

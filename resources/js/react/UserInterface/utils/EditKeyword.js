@@ -183,7 +183,7 @@ export default class EditKeyword extends React.Component {
                         </select>
                     </div>
                     <label>Website URL</label>
-                    <div className="input-group mb-3">
+                    <div className="input-group inputWithIcon mb-3 position-relative">
                         <input
                             type="text"
                             className="form-control"
@@ -201,6 +201,7 @@ export default class EditKeyword extends React.Component {
                                 this.setState({ url: val });
                             }}
                         />
+                        <i className="fa fa-link"></i>
                     </div>
                     <label>Keyword</label>
                     <div className="input-group mb-3">

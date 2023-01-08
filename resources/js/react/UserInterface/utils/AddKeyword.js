@@ -248,8 +248,9 @@ export default class AddKeyword extends React.Component {
                             <option value="true">Competitor's website</option>
                         </select>
                     </div>
-                    <div className="themeNewInputGroup">
+                    <div className="themeNewInputGroup inputWithIcon mb-3 position-relative">
                         <input type="text" className="form-control" placeholder="your-company-domain.com" name="url" id="url" onChange={(e) => {this.setState({ url: e.target.value });}}/>
+                        <i className="fa fa-link"></i>
                     </div>
                     <div className="themeNewInputGroup">
                         <input type="text" className="form-control" placeholder="Add keywords" name="keywords" id="tracking_keywords" onKeyUp={(e) => {this.addKeyword(e);}}/>

@@ -156,7 +156,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                     <></>
                 ) : (
                     <>
-                        <div className="input-group mb-3">
+                        <div className="input-group mb-3 themeNewInputGroup">
                             <select className="form-control" placeholder="Search" value={this.state.searchCountry} name="searchCountry" onChange={this.selectedCountryChanged}>
                                 {[
                                     {
@@ -190,7 +190,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                 <div className="d-flex flex-column border-bottom pb-3 mb-3">
                     {this.props.showSelectedOnly ? (
                         <div className="boxTitleBtn d-flex justify-content-between">
-                            <h4 className="mb-0 textblue">Selected Cities</h4>
+                            <h4 className="mb-0">Selected Cities</h4>
                             <span className="btn-clearAll" onClick={this.clearAll}>Clear All</span>
                         </div>
                     ) : (

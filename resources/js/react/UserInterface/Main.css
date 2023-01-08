@@ -1114,9 +1114,13 @@ body {
 .apps-modal {
     margin: 90px auto;
     max-width: 824px;
+    height: calc(100% - 180px);
 }
-.apps-modal .modal-content { padding: 32px; border-radius: 1rem; width: 100%; height: auto; border: 0;}
-.apps-modal .modal-body { padding: 0; }
+.apps-modal .modal-content { padding: 24px; border-radius: 1rem; width: 100%; height: auto; border: 0; height: 100%;}
+.apps-modal .modal-body {
+    padding: 0 8px;
+    overflow-y: scroll;
+}
 .popupContent {}
 .apps-modalHead {
     display: flex;
@@ -1166,6 +1170,7 @@ body {
 .apps-modalHead .btn-close{cursor: pointer;}
 .apps-bodyContent {
     display: flex;
+    margin-bottom: -24px;
     flex-direction: column;
 }
 .apps-bodyContent .gray-box,
@@ -1282,7 +1287,7 @@ body {
     grid-template-columns: 352px 352px;
     padding-bottom: 1rem;
 }
-.grid2layout:last-child {padding: 0;}
+/* .grid2layout:last-child {padding: 0;} */
 .themeNewInputGroup {position: relative;}
 .themeNewInputGroup .themeNewselect .css-yk16xz-control,
 .themeNewInputGroup .form-control{width: 100% !important;}
@@ -1341,7 +1346,7 @@ body {
 .modal-weatherAlerts .grid2layout .column:first-child{  padding-right: 4px; }
 .modal-holidays .grid2layout .column:last-child,
 .modal-weatherAlerts .grid2layout .column:last-child{ padding-left: 4px; }
-.modal-weatherAlerts .grid2layout .column > div:last-child{ margin: 0; }
+/* .modal-weatherAlerts .grid2layout .column > div:last-child{ margin: 0; } */
 .apps-bodyContent > div .textblue {
     color: #096DB7;
     font-weight: 600;
@@ -1471,6 +1476,96 @@ body {
 .bs-popover-top>.arrow:before {
     border-color: transparent;
     filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.16));
+}
+.modal-apple .slick-slider { margin: 0 -8px; }
+.modal-apple .slick-slide { padding: 8px; }
+.apple-card {
+    color: #666;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    border-radius: 8px;
+    padding: 10px 10px 14px;
+    border: 1px solid #e0e0e0;
+}
+.apple-card img{
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+.apple-card h5{
+    font-size: 16px;
+    font-weight: 600;
+    color: #096db7;
+    line-height: 20px;
+}
+.apple-card h6{}
+.apple-card button{
+    border: 0;
+    width: 100%;
+    height: 34px;
+    display: flex;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 12px;
+    text-align: right;
+    line-height: 18px;
+    padding: 8px 16px;
+    border-radius: 34px;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%);
+    box-shadow: 0px 4px 12px rgba(0, 102, 213, 0.1);
+}
+.slick-arrow.slick-prev,
+.slick-arrow.slick-next{
+    z-index: 10;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    font-size: 2rem;
+    color: #096db7;
+    line-height: 20px;
+    background: #fff;
+    border-radius: 42px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
+}
+.slick-arrow .fa,
+.slick-arrow .fa:before {line-height: 20px !important;}
+.slick-prev { left: 0; }
+.slick-next { right: 0; }
+.slick-next:before,
+.slick-prev:before {
+    display: none;
+    color: #096db7;
+}
+.inputWithIcon { position: relative;}
+.inputWithIcon .form-control {
+    z-index: 1;
+    position: relative;
+    padding-right: 55px;
+}
+.inputWithIcon .fa{
+    top: 0;
+    right: 0;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.themeNewTitle, .apps-bodyContent > div h4.collapseable,
+.themeNewTitle, .apps-bodyContent > div h4.collapseable span {
+    color: #096DB7;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 23px;
+    cursor: pointer;
 }
 @media screen and (min-width: 1440px) {
     .is-collapsed .sidebar { width: 110px; }

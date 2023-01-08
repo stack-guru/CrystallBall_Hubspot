@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default class DSOWMEventsSelect extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -95,41 +96,50 @@ export default class DSOWMEventsSelect extends React.Component {
         );
         let userDSEvents = this.props.ds_data.map((ds) => ds.id);
 
+        const [show, setShow] = useState(true);
+
         return (
             <div
                 className={`weather_alert_cities-form ${
                     this.props.showSelectedOnly ? "gray-box" : "white-box"
                 }`}
             >
-                {this.props.showSelectedOnly ? null: <h4 className="textblue">Select Events</h4>}
-                <div className="d-flex flex-column border-bottom pb-3 mb-3">
-                    {this.props.showSelectedOnly ? (
-                        <div className="boxTitleBtn d-flex justify-content-between">
-                            <h4 className="mb-0 textblue">Selected Events</h4>
-                            <span className="btn-clearAll" onClick={this.clearAll}>Clear All</span>
-                        </div>
-                    ) : (
-                        <div className="checkBoxList">
-                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="check-all">
-                                <input type="checkbox" id="check-all" onChange={this.selectAllShowing}/>
-                                <span>Select All</span>
-                            </label>
-                        </div>
-                    )}
-                </div>
-                <div className="checkBoxList">
-                    {this.state.weather_alert_events.map((wAE) => {
-                        if((this.props.showSelectedOnly && userOWMEvents.indexOf(wAE) === -1) || (!this.props.showSelectedOnly && userOWMEvents.indexOf(wAE) !== -1)) {
-                            return null
-                        }
-                        return (
-                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor={`checkbox-${wAE}`} key={wAE}>
-                                <input checked={userOWMEvents.indexOf(wAE) !== -1} type="checkbox" id={`checkbox-${wAE}`} onChange={this.handleClick} open_weather_map_event={wAE}/>
-                                <span>{wAE}</span>
-                            </label>
-                        );
-                    })}
-                </div>
+                {this.props.showSelectedOnly ? null: 
+                    <h4 className="collapseable d-flex justify-content-between" onClick={() => setShow(!show)}>
+                        <span>Select Events</span>
+                        <i className="fa fa-angle-down"></i>
+                    </h4>
+                }
+                { show ? <>
+                    <div className="d-flex flex-column border-bottom pb-3 mb-3">
+                        {this.props.showSelectedOnly ? (
+                            <div className="boxTitleBtn d-flex justify-content-between">
+                                <h4 className="mb-0">Selected Events</h4>
+                                <span className="btn-clearAll" onClick={this.clearAll}>Clear All</span>
+                            </div>
+                        ) : (
+                            <div className="checkBoxList">
+                                <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="check-all">
+                                    <input type="checkbox" id="check-all" onChange={this.selectAllShowing}/>
+                                    <span>Select All</span>
+                                </label>
+                            </div>
+                        )}
+                    </div>
+                    <div className="checkBoxList">
+                        {this.state.weather_alert_events.map((wAE) => {
+                            if((this.props.showSelectedOnly && userOWMEvents.indexOf(wAE) === -1) || (!this.props.showSelectedOnly && userOWMEvents.indexOf(wAE) !== -1)) {
+                                return null
+                            }
+                            return (
+                                <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor={`checkbox-${wAE}`} key={wAE}>
+                                    <input checked={userOWMEvents.indexOf(wAE) !== -1} type="checkbox" id={`checkbox-${wAE}`} onChange={this.handleClick} open_weather_map_event={wAE}/>
+                                    <span>{wAE}</span>
+                                </label>
+                            );
+                        })}
+                    </div>
+                </> : null }
             </div>
         );
     }
