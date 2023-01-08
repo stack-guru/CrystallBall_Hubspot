@@ -15,6 +15,7 @@ import {
     CardSubtitle,
     Table,
 } from "reactstrap";
+import Slider from "react-slick";
 
 const ApplePodcastConfig = (props) => {
     const [existingPodcast, setExisting] = useState([]);
@@ -107,6 +108,17 @@ const ApplePodcastConfig = (props) => {
                 toast.error("Error while adding Apple Podcast.");
             });
     };
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        speed: 2000,
+        autoplaySpeed: 2000,
+        cssEase: "linear"
+    };
     return (
         <div className="apps-bodyContent">
             <div className="white-box">
@@ -134,14 +146,16 @@ const ApplePodcastConfig = (props) => {
                 {noResult && <p className='pt-3 mb-0'>{noResult}</p>}
 
                 <div className="pt-3">
-                    {searchResult.map((t0a) => (
-                        <Card className="cb-ap-search-card mb-2" body>
-                            <CardImg top width="100%" src={t0a.previewImage} alt={t0a.collectionName}/>
-                            <CardTitle tag="h5">{t0a.collectionName}</CardTitle>
-                            <CardSubtitle tag="h6" className="mb-0 text-muted">{t0a.trackCount} episodes</CardSubtitle>
-                            <Button onClick={() => addAnnotation(t0a)}>Create Annotations</Button>
-                        </Card>
-                    ))}
+                    <Slider {...settings}>
+                        {searchResult.map((t0a) => (
+                            <Card className="cb-ap-search-card mb-2" body>
+                                <CardImg top width="100%" src={t0a.previewImage} alt={t0a.collectionName}/>
+                                <CardTitle tag="h5">{t0a.collectionName}</CardTitle>
+                                <CardSubtitle tag="h6" className="mb-0 text-muted">{t0a.trackCount} episodes</CardSubtitle>
+                                <Button onClick={() => addAnnotation(t0a)}>Create Annotations</Button>
+                            </Card>
+                        ))}
+                    </Slider>
                 </div>
             </div>
         </div>

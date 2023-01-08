@@ -363,15 +363,13 @@ class AppsMarket extends React.Component {
 
                         <h3 className="h3-title">Recommended For You</h3>
                     </div>
-                    <Row className="items">
+                    <Row className="items mb-5">
                         {[
                             {
                                 id: "01",
                                 background: "null",
                                 dsKey: "is_ds_google_alerts_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_google_alerts_enabled,
+                                enabled:this.state.userServices.is_ds_google_alerts_enabled,
                                 premium: false,
                                 brandName: "News Alerts",
                                 brandLogo: "/newsAlerts.svg",
@@ -380,20 +378,25 @@ class AppsMarket extends React.Component {
                                 id: "02",
                                 background: "#00749a",
                                 dsKey: "is_ds_wordpress_updates_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_wordpress_updates_enabled,
+                                enabled:this.state.userServices.is_ds_wordpress_updates_enabled,
                                 premium: false,
                                 brandName: "Wordpress",
                                 brandLogo: "/wordpress.svg",
                             },
                             {
+                                id: "30",
+                                background: "null",
+                                dsKey: "is_ds_wordpress_updates_enabled",
+                                enabled:this.state.userServices.is_ds_wordpress_updates_enabled,
+                                premium: false,
+                                brandName: "Wordpress System Core Updates",
+                                brandLogo: "/wordpressSCU.svg",
+                            },
+                            {
                                 id: "03",
                                 background: "null",
                                 dsKey: "is_ds_keyword_tracking_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_keyword_tracking_enabled,
+                                enabled:this.state.userServices.is_ds_keyword_tracking_enabled,
                                 premium: false,
                                 brandName: "Rank Tracking SERP",
                                 brandLogo: "/serp.svg",
@@ -402,9 +405,7 @@ class AppsMarket extends React.Component {
                                 id: "04",
                                 background: "null",
                                 dsKey: "is_ds_weather_alerts_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_weather_alerts_enabled,
+                                enabled:this.state.userServices.is_ds_weather_alerts_enabled,
                                 premium: false,
                                 brandName: "Weather Alerts",
                                 brandLogo: "/weatherAlerts.svg",
@@ -413,9 +414,7 @@ class AppsMarket extends React.Component {
                                 id: "05",
                                 background: "null",
                                 dsKey: "is_ds_google_algorithm_updates_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_google_algorithm_updates_enabled,
+                                enabled:this.state.userServices.is_ds_google_algorithm_updates_enabled,
                                 premium: false,
                                 brandName: "Google Updates",
                                 brandLogo: "/googleUpdates.svg",
@@ -455,9 +454,7 @@ class AppsMarket extends React.Component {
                                 id: "09",
                                 background: "#1DA1F2",
                                 dsKey: "is_ds_twitter_tracking_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_twitter_tracking_enabled,
+                                enabled:this.state.userServices.is_ds_twitter_tracking_enabled,
                                 premium: false,
                                 brandName: "Twitter",
                                 brandLogo: "/twitter.svg",
@@ -536,9 +533,7 @@ class AppsMarket extends React.Component {
                                 id: "17",
                                 background: "null",
                                 dsKey: "is_ds_apple_podcast_annotation_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_apple_podcast_annotation_enabled,
+                                enabled:this.state.userServices.is_ds_apple_podcast_annotation_enabled,
                                 premium: false,
                                 brandName: "Apple Podcast",
                                 brandLogo: "/applePodcast.svg",
@@ -557,9 +552,7 @@ class AppsMarket extends React.Component {
                                 id: "19",
                                 background: "#24292F",
                                 dsKey: "is_ds_github_tracking_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_github_tracking_enabled,
+                                enabled:this.state.userServices.is_ds_github_tracking_enabled,
                                 premium: false,
                                 brandName: "GitHub",
                                 brandLogo: "/github.svg",
@@ -696,6 +689,34 @@ class AppsMarket extends React.Component {
                                             <span>Premium</span>
                                         </span>
                                     ) : null}
+                                </div>
+                            </Col>
+                        ))}
+                    </Row>
+                    <Row className="boxWhite items m-0">
+                        <Col xs='12' className="pt-0 pb-0"><h4>Coming Soon</h4></Col>
+                        {[
+                            {
+                                id: "01",
+                                background: "#f12e45",
+                                dsKey: "is_ds_wordpress_updates_enabled",
+                                enabled:this.state.userServices.is_ds_wordpress_updates_enabled,
+                                premium: false,
+                                brandName: "twilio",
+                                brandLogo: "/twilio.svg",
+                            }
+                        ].map((item, itemKey) => (
+                            <Col xs="3">
+                                <div onClick={() => {
+                                    if(item.commingSoon)
+                                        {swal.fire("This feature is coming soon. Stay tuned!", "", "info");
+                                    } else {
+                                        this.setState({ dsKey: item.dsKey });
+                                    }
+                                }} className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color" : item.background || "#e0e0e0",}}>
+                                    { item.enabled ? (<i class="active fa fa-check-circle"></i>) : null }
+                                    <img src={item.brandLogo} alt={item.brandName} className="svg-inject"/>
+                                    { item.premium ? (<span className="btn-premium"><i className="fa fa-diamond"></i><span>Premium</span></span>) : null }
                                 </div>
                             </Col>
                         ))}
