@@ -44,6 +44,7 @@
         "react-router-dom": "^5.2.0",
         "react-select": "^3.2.0",
         "react-simple-maps": "^2.3.0",
+        "react-slick": "^0.29.0",
         "react-toastify": "^6.2.0",
         "reactour": "^1.18.0",
         "reactstrap": "^8.10.1",
