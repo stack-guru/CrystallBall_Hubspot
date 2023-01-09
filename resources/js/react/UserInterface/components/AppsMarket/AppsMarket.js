@@ -41,6 +41,7 @@ import Bitbucket from "./Bitbucket";
 import Github from "./Github";
 import Apple from "./Apple";
 import Twitter from "./Twitter";
+import Slider from "react-slick";
 
 class AppsMarket extends React.Component {
     constructor(props) {
@@ -120,15 +121,16 @@ class AppsMarket extends React.Component {
         if (alertMessage) {
             swal.fire({
                 iconHtml: '<img src="/images/svg/twitter.svg">',
-                popup: 'twitterAlert',
-                backdrop: 'twitterAlert',
+                popup: "twitterAlert",
+                backdrop: "twitterAlert",
                 title: "Connected",
                 html: alertMessage,
-                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                confirmButtonClass:
+                    "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                 customClass: {
-                    popup: 'popupTwitterAlert',
-                    closeButton: 'closeButtonTwitterAlert',
-                }
+                    popup: "popupTwitterAlert",
+                    closeButton: "closeButtonTwitterAlert",
+                },
             });
         }
     }
@@ -276,6 +278,15 @@ class AppsMarket extends React.Component {
     }
 
     render() {
+        var settings = {
+            className: "",
+            dots: true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            adaptiveHeight: true,
+        };
+
         if (this.state.redirectTo)
             return <Redirect to={this.state.redirectTo} />;
 
@@ -286,19 +297,141 @@ class AppsMarket extends React.Component {
                         <h2 className="pageTitle">Apps Market</h2>
 
                         <div className="pageNote d-flex justify-content-center align-items-center position-relative">
-                            <div className="d-flex align-items-center justify-content-center">
-                                <span className="githubIcon">
-                                    <i className="fa fa-github"></i>
-                                </span>
-                                <p className="noteText m-0">
-                                    <span className="animate__animated animate__zoomOut animate__infinite animate__delay-2s animate__slow">See the changes your </span><strong>R&D</strong>{" "}
-                                    <span className="animate__animated animate__zoomOut animate__infinite animate__delay-2s animate__slow">makes and how they affect your</span>{" "}
-                                    <strong>sales</strong>
-                                </p>
-                                <a href="/" className="btn btn-sm btn-primary">
-                                    Add
-                                </a>
-                            </div>
+                            <Slider {...settings}>
+
+                                {[
+                                    {
+                                        id: "01a",
+                                        background: "null",
+                                        text: "Create annotations directly from Slack or Asana",
+                                        logo: "/zapier-small.svg",
+                                    },
+
+                                    {
+                                        id: "02a",
+                                        background: "null",
+                                        text: "Get the latest updates from Google and harness new SEO opportunities.",
+                                        logo: "/google-small.svg",
+                                    },
+
+                                    {
+                                        id: "03a",
+                                        background: "null",
+                                        text: "Be the first to know that your website is down!",
+                                        logo: "/web-monitoring-small.svg",
+                                    },
+
+                                    {
+                                        id: "04a",
+                                        background: "null",
+                                        text: "Automate your rank tracking to win the SERP game.Automate your rank tracking to win the SERP game.",
+                                        logo: "/SERP-small.svg",
+                                    },
+
+                                    {
+                                        id: "05a",
+                                        background: "null",
+                                        text: "Stay on top! Keep track of mentions of your brand and products.",
+                                        logo: "/news-alert-small.svg",
+                                    },
+
+                                    {
+                                        id: "06a",
+                                        background: "null",
+                                        text: "Weather data to tap into weather-driven patterns of demand and consumer behavior.Weather data to tap into weather-driven patterns of demand and consumer behavior.",
+                                        logo: "/weather-small.svg",
+                                    },
+
+                                    {
+                                        id: "07a",
+                                        background: "null",
+                                        text: "See the changes your R&D makes and how they affect your sales.",
+                                        logo: "/bitbucket-small.svg",
+                                    },
+
+                                    {
+                                        id: "08a",
+                                        background: "null",
+                                        text: "How is the new UI change affect the traffic?",
+                                        logo: "/github-small.svg",
+                                    },
+
+                                    {
+                                        id: "09a",
+                                        background: "null",
+                                        text: "Are your TikTok ads entertaining? Has it become a trend?",
+                                        logo: "/tiktok-small.svg",
+                                    },
+                                    {
+                                        id: "010a",
+                                        background: "null",
+                                        text: "Find the campaign that's right for your goals.",
+                                        logo: "/twitter-small.svg",
+                                    },
+                                    {
+                                        id: "011a",
+                                        background: "null",
+                                        text: "See Facebook ads performance and optimize your social media marketing scheme.",
+                                        logo: "/facebook-small.svg",
+                                    },
+                                    {
+                                        id: "012a",
+                                        background: "null",
+                                        text: "Get heads-ups on your Insta stats and work to improve the clicks.",
+                                        logo: "/instagram-small.svg",
+                                    },
+                                    {
+                                        id: "013a",
+                                        background: "null",
+                                        text: "Get context, display new products, and design updates over your GA4 charts.",
+                                        logo: "/wordPress-small.svg",
+                                    },
+                                    {
+                                        id: "014a",
+                                        background: "null",
+                                        text: "See new product data over GA4 metrics.",
+                                        logo: "/shopify-small.svg",
+                                    },
+                                    {
+                                        id: "015a",
+                                        background: "null",
+                                        text: "Targeting a specific location? Don't miss any local holidays.",
+                                        logo: "/holidays-small.svg",
+                                    },
+                                    {
+                                        id: "015a",
+                                        background: "null",
+                                        text: "Get upfront reminders and advertise on retail marketing dates.",
+                                        logo: "/retails-marketing-dates-small.svg",
+                                    },
+                                ].map((item) => (
+                                    <div className="d-flex align-items-center justify-content-center">
+                                        <span className="githubIcon">
+                                            {/* <i className="fa fa-github"></i> */}
+                                            <img
+                                                src={item.logo}
+                                                alt={item.logo}
+                                                className="svg-inject"
+                                            />
+                                        </span>
+                                        <p className="noteText m-0">
+                                            {item.text}
+                                            {/* <span>See the changes your </span>
+                                        <strong>R&D</strong>{" "}
+                                        <span>
+                                            makes and how they affect your
+                                        </span>{" "}
+                                        <strong>sales</strong> */}
+                                        </p>
+                                        <a
+                                            href="/"
+                                            className="btn btn-sm btn-primary"
+                                        >
+                                            Add
+                                        </a>
+                                    </div>
+                                ))}
+                            </Slider>
                             <a href="/" className="btn-learnmore">
                                 Learn more
                             </a>
@@ -601,7 +734,9 @@ class AppsMarket extends React.Component {
                                 id: "24",
                                 background: "null",
                                 dsKey: "is_ds_retail_marketing_enabled",
-                                enabled:this.state.userServices.is_ds_retail_marketing_enabled,
+                                enabled:
+                                    this.state.userServices
+                                        .is_ds_retail_marketing_enabled,
                                 premium: false,
                                 brandName: "Retail Marketing Dates",
                                 brandLogo: "/retailMarketingDates.svg",
@@ -610,7 +745,9 @@ class AppsMarket extends React.Component {
                                 id: "25",
                                 background: "#253858",
                                 dsKey: "is_ds_bitbucket_tracking_enabled",
-                                enabled:this.state.userServices.is_ds_bitbucket_tracking_enabled,
+                                enabled:
+                                    this.state.userServices
+                                        .is_ds_bitbucket_tracking_enabled,
                                 premium: false,
                                 brandName: "Bitbucket",
                                 brandLogo: "/bitbucket.svg",
@@ -629,7 +766,9 @@ class AppsMarket extends React.Component {
                                 id: "27",
                                 background: "null",
                                 dsKey: "is_ds_holidays_enabled",
-                                enabled:this.state.userServices.is_ds_holidays_enabled,
+                                enabled:
+                                    this.state.userServices
+                                        .is_ds_holidays_enabled,
                                 premium: false,
                                 brandName: "Holidays",
                                 brandLogo: "/holidays.svg",
@@ -638,7 +777,9 @@ class AppsMarket extends React.Component {
                                 id: "28",
                                 background: "null",
                                 dsKey: "is_ds_web_monitors_enabled",
-                                enabled: this.state.userServices.is_ds_web_monitors_enabled,
+                                enabled:
+                                    this.state.userServices
+                                        .is_ds_web_monitors_enabled,
                                 premium: false,
                                 brandName: "Website Monitoring",
                                 brandLogo: "/websiteMonitoring.svg",
@@ -657,14 +798,16 @@ class AppsMarket extends React.Component {
                             <Col xs="3">
                                 <div
                                     onClick={() => {
-                                        if(item.commingSoon) {
+                                        if (item.commingSoon) {
                                             swal.fire(
                                                 "This feature is coming soon. Stay tuned!",
                                                 "",
                                                 "info"
                                             );
                                         } else {
-                                            this.setState({ dsKey: item.dsKey });
+                                            this.setState({
+                                                dsKey: item.dsKey,
+                                            });
                                         }
                                     }}
                                     className="item"
@@ -1249,17 +1392,20 @@ class AppsMarket extends React.Component {
                             } else {
                                 swal.fire({
                                     iconHtml:
-                                    '<img src="/images/svg/twitter.svg">',
-                                    popup: 'twitterAlert',
+                                        '<img src="/images/svg/twitter.svg">',
+                                    popup: "twitterAlert",
                                     showCloseButton: true,
                                     title: "Connect with Twitter",
                                     text: "Connect your Twitter account to create automatic annotations",
-                                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                    confirmButtonText: "<a href='/socialite/twitter' class='text-white'><i class='mr-2 fa fa-twitter'> </i>" + "Connect twitter Account</a>",
+                                    confirmButtonClass:
+                                        "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                    confirmButtonText:
+                                        "<a href='/socialite/twitter' class='text-white'><i class='mr-2 fa fa-twitter'> </i>" +
+                                        "Connect twitter Account</a>",
                                     customClass: {
-                                        popup: 'popupTwitterAlert',
-                                        closeButton: 'closeButtonTwitterAlert',
-                                    }
+                                        popup: "popupTwitterAlert",
+                                        closeButton: "closeButtonTwitterAlert",
+                                    },
                                 });
                             }
                             break;
