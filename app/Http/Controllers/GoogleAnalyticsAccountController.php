@@ -81,7 +81,7 @@ class GoogleAnalyticsAccountController extends Controller
                 }
             }
 
-        }catch(Exception $exception){
+        }catch(\Exception $exception){
 
             return ['success' => false];
 

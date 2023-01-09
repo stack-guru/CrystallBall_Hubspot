@@ -18,8 +18,8 @@
                         <table class="table table-hoved table-bordered" id="myTable">
                             <thead>
                                 <tr>
-                                    <th>IP Address</th>
-                                    <th>Login At</th>
+                                    <th scope="col">IP Address</th>
+                                    <th scope="col">Login At</th>
                                 </tr>
                             </thead>
                             <tbody>

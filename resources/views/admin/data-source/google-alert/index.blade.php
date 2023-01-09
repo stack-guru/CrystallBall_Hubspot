@@ -19,14 +19,14 @@
                      <table class="table table-hover table-responsive-md table-striped mt-5">
                          <thead>
                          <tr>
-                            <th>Keyword</th>
-                            <th>Image</th>
-                            <th>Category</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>URL</th>
-                            <th>Users</th>
-                            <th>Actions</th>
+                            <th scope="col">Keyword</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">URL</th>
+                            <th scope="col">Users</th>
+                            <th scope="col">Actions</th>
                          </tr>
                          </thead>
                          <tbody>

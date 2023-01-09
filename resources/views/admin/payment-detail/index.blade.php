@@ -11,15 +11,15 @@
                     <table class="table table-hover table-bordered ">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Card</th>
-                                <th>Expiry</th>
-                                <th>Name</th>
-                                <th>Billing Address</th>
-                                <th>BlueSnap Vaulted Shopper Id</th>
-                                <th>User</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
+                                <th scope="col">Id</th>
+                                <th scope="col">Card</th>
+                                <th scope="col">Expiry</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Billing Address</th>
+                                <th scope="col">BlueSnap Vaulted Shopper Id</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Created At</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>

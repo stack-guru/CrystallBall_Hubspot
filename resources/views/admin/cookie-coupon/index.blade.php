@@ -16,11 +16,11 @@
                         </div>
                         <table class="table table-hoved table-bordered">
                             <thead>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>URL</th>
-                            <th>Actions</th>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Code</th>
+                            <th scope="col">URL</th>
+                            <th scope="col">Actions</th>
                             </thead>
                             <tbody>
                             @forelse($cookieCoupons as $cookieCoupon)

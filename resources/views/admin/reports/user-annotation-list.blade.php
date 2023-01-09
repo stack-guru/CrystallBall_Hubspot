@@ -17,17 +17,17 @@
 
         <thead id="">
             <tr>
-                <th>Category</th>
-                <th>
+                <th scope="col">Category</th>
+                <th scope="col">
                     Event Name
                 </th>
-                <th>Description</th>
-                <th>Properties</th>
-                <th>Status</th>
-                <th>
+                <th scope="col">Description</th>
+                <th scope="col">Properties</th>
+                <th scope="col">Status</th>
+                <th scope="col">
                     Show At
                 </th>
-                <th>
+                <th scope="col">
                     Added By
                 </th>
             </tr>

@@ -54,14 +54,14 @@
                                     <table class="table table-borderd table-striped" style="min-height: 200px;">
                                         <thead>
                                             <tr>
-                                                <th>Registrations Yesterday</th>
-                                                <th>Current Month Registrations</th>
-                                                <th>Previous Month Registrations</th>
-                                                <th>New Paying Users Yesterday</th>
-                                                <th>Number Of Actions</th>
-                                                <th>Total Payments This Month</th>
-                                                <th>Total Payments Previous Month</th>
-                                                <th>MRR</th>
+                                                <th scope="col">Registrations Yesterday</th>
+                                                <th scope="col">Current Month Registrations</th>
+                                                <th scope="col">Previous Month Registrations</th>
+                                                <th scope="col">New Paying Users Yesterday</th>
+                                                <th scope="col">Number Of Actions</th>
+                                                <th scope="col">Total Payments This Month</th>
+                                                <th scope="col">Total Payments Previous Month</th>
+                                                <th scope="col">MRR</th>
                                             </tr>
                                         </thead>
 
@@ -110,8 +110,8 @@
                                         <table class="table table-borderd table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Email</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Email</th>
                                                 </tr>
                                             </thead>
 
@@ -149,10 +149,10 @@
                                         <table class="table table-borderd table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Email</th>
-                                                    <th>Plan</th>
-                                                    <th>Charged Price</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Plan</th>
+                                                    <th scope="col">Charged Price</th>
                                                 </tr>
                                             </thead>
 

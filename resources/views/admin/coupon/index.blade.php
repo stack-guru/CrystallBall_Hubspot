@@ -16,13 +16,13 @@
                         </div>
                         <table class="table table-hoved table-bordered">
                             <thead>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>Discount Percent</th>
-                            <th>Recurring Count</th>
-                            <th>Expire At</th>
-                            <th>Actions</th>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Code</th>
+                            <th scope="col">Discount Percent</th>
+                            <th scope="col">Recurring Count</th>
+                            <th scope="col">Expire At</th>
+                            <th scope="col">Actions</th>
                             </thead>
                             <tbody>
                             @forelse($coupons as $coupon)

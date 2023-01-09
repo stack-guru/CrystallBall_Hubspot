@@ -72,7 +72,7 @@ export default class UploadAnnotation extends React.Component {
             const formData = new FormData();
             formData.append('csv', document.getElementById('csv').files[0]);
 
-            this.state.google_analytics_property_id.map(gAA => { formData.append('google_analytics_property_id[]', gAA) })
+            this.state.google_analytics_property_id.map((gAA) => { formData.append('google_analytics_property_id[]', gAA) })
 
             formData.append('date_format', this.state.date_format);
             HttpClient({

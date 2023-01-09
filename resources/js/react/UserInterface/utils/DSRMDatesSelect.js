@@ -42,7 +42,7 @@ export default class DSRMDatesSelect extends React.Component {
 
     selectAllShowing(e) {
         let userRMDateIds = this.props.ds_data.map(ds => ds.retail_marketing_id);
-        this.state.retail_marketing_dates.map(rmDate => {
+        this.state.retail_marketing_dates.forEach(rmDate => {
             if (rmDate.event_name.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0) {
                 if (userRMDateIds.indexOf(rmDate.id) == -1) {
                     (this.props.onCheckCallback)({ code: 'retail_marketings', name: 'RetailMarketing', country_name: null, retail_marketing_id: rmDate.id })
@@ -54,7 +54,7 @@ export default class DSRMDatesSelect extends React.Component {
     clearAll(e) {
         let userRMDateIds = this.props.ds_data.map(ds => ds.retail_marketing_id);
         let userDSEvents = this.props.ds_data.map(ds => ds.id);
-        userRMDateIds.map((rmDate, index) => {
+        userRMDateIds.forEach((rmDate, index) => {
             (this.props.onUncheckCallback)(userDSEvents[index], 'retail_marketings')
         })
     }

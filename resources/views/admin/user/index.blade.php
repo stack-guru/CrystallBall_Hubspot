@@ -17,13 +17,13 @@
             <table class="table table-striped table-hover" id="users-datatable">
               <thead>
                 <tr>
-                  <th>Team</th>
-                  <th>Email</th>
-                  <th>Name</th>
-                  <th>Plan (Ending)</th>
-                  <th>Registration Date</th>
-                  <th>Tags</th>
-                  <th>Actions</th>
+                  <th scope="col">Team</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Plan (Ending)</th>
+                  <th scope="col">Registration Date</th>
+                  <th scope="col">Tags</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody></tbody>

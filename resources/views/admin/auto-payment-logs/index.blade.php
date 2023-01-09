@@ -11,17 +11,17 @@
                     <table class="table table-hover table-bordered ">
                         <thead>
                             <tr>
-                                <th>BlueSnap</th>
-                                <th>User</th>
-                                <th>Payment Detail</th>
-                                <th>Price Plan Subscription Transaction</th>
-                                <th>Price Plan</th>
-                                <th>Card</th>
-                                <th>Transaction Message</th>
-                                <th>Charged Price</th>
-                                <th>Was Successful</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
+                                <th scope="col">BlueSnap</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Payment Detail</th>
+                                <th scope="col">Price Plan Subscription Transaction</th>
+                                <th scope="col">Price Plan</th>
+                                <th scope="col">Card</th>
+                                <th scope="col">Transaction Message</th>
+                                <th scope="col">Charged Price</th>
+                                <th scope="col">Was Successful</th>
+                                <th scope="col">Created At</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>

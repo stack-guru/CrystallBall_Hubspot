@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
     @include('helpers/trackingCodesHeader')
@@ -102,7 +102,7 @@
 
 <body class="app is-collapsed">
     @include('helpers/trackingCodesBody')
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ config('services.google.tag_manager.code')}}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ config('services.google.tag_manager.code')}}" height="0" width="0" style="display:none;visibility:hidden" title="google tag manager iframe"></iframe></noscript>
     <div id="loader">
         <div class="spinner"></div>
     </div>

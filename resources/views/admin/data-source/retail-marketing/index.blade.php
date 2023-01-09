@@ -18,13 +18,13 @@
                         <table class="table table-hover table-responsive-md table-striped mt-5">
                             <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Category</th>
-                                <th>Event Name</th>
-                                <th>Description</th>
-                                <th>Url</th>
-                                <th>Show at</th>
-                                <th>Actions</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Event Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Url</th>
+                                <th scope="col">Show at</th>
+                                <th scope="col">Actions</th>
 
                             </tr>
                             </thead>

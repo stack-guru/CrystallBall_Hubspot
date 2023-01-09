@@ -18,9 +18,9 @@
                         <table id="myTable" className="table table-hover gaa-hover table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Analytics Accounts</th>
-                                    <th>Properties &amp; Apps</th>
-                                    <th>Google Account</th>
+                                    <th scope="col">Analytics Accounts</th>
+                                    <th scope="col">Properties &amp; Apps</th>
+                                    <th scope="col">Google Account</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -23,14 +23,14 @@
               <table class="table table-hoved table-bordered" id="myTable">
                 <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>Name</th>
-                    <th>URL</th>
-                    <th>Uptime Robot ID</th>
-                    <th>Last Status</th>
-                    <th>Last Synced At</th>
-                    <th>Action</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">URL</th>
+                    <th scope="col">Uptime Robot ID</th>
+                    <th scope="col">Last Status</th>
+                    <th scope="col">Last Synced At</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>

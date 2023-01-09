@@ -18,9 +18,9 @@
                         <table class="table table-hoved table-bordered" id="myTable">
                             <thead>
                                 <tr>
-                                    <th>Event Name</th>
-                                    <th>IP Address</th>
-                                    <th>Login At</th>
+                                    <th scope="col">Event Name</th>
+                                    <th scope="col">IP Address</th>
+                                    <th scope="col">Login At</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -215,7 +215,7 @@ setting-menu-item.dropdown {
     border-bottom-color: rgba(0, 0, 0, 0.063);
     border-left-color: rgba(0, 0, 0, 0.063);
 
-    border-color: #ec7373;
+    /* border-color: #ec7373; */
 }
 
 .pricing .card.with-badge .card-body span.badge{

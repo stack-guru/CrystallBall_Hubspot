@@ -11,7 +11,7 @@
                     <a href="{{ route('admin.registration-offer.create') }}" class="btn btn-primary">Add</a>
                     <table class="table table-hoved table-bordered">
                         <thead>
-                            <tr><th>Name</th><th>Code</th><th>Heading</th><th>Actions</th></tr>
+                            <tr><th scope="col">Name</th><th scope="col">Code</th><th scope="col">Heading</th><th scope="col">Actions</th></tr>
                         </thead>
                         <tbody>
                             @foreach($registrationOffers as $registrationOffer)
@@ -30,7 +30,7 @@
                             @endforeach
                         </tbody>
                         <tfoot>
-                            <tr><th>Name</th><th>Code</th><th>Heading</th><th>Actions</th></tr>
+                            <tr><th scope="col">Name</th><th scope="col">Code</th><th scope="col">Heading</th><th scope="col">Actions</th></tr>
                         </tfoot>
                     </table>
                 </div>

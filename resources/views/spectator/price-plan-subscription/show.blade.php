@@ -11,14 +11,14 @@
                     <table class="table table-hover table-bordered ">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>User</th>
-                                <th>User email</th>
-                                <th>Coupon / Discount</th>
-                                <th>Amount</th>
-                                <th>Paid at</th>
-                                <th>Next Billing At (Duration)</th>
-                                <th>Plan Price</th>
+                                <th scope="col">Id</th>
+                                <th scope="col">User</th>
+                                <th scope="col">User email</th>
+                                <th scope="col">Coupon / Discount</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Paid at</th>
+                                <th scope="col">Next Billing At (Duration)</th>
+                                <th scope="col">Plan Price</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,11 +39,11 @@
                     <table class="table table-hover table-bordered ">
                         <thead>
                             <tr>
-                                <th>BlueSnap vaulted shopper id</th>
-                                <th>Name</th>
-                                <th>Card end with</th>
-                                <th>Expiry</th>
-                                <th>Address</th>
+                                <th scope="col">BlueSnap vaulted shopper id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Card end with</th>
+                                <th scope="col">Expiry</th>
+                                <th scope="col">Address</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -19,11 +19,11 @@
                         <table class="table table-hoved table-bordered" id="myTable">
                             <thead>
                                 <tr>
-                                    <th>Email</th>
-                                    <th>Name</th>
-                                    <th>Pages</th>
-                                    <th>Created At</th>
-                                    <th>Actions</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Pages</th>
+                                    <th scope="col">Created At</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
