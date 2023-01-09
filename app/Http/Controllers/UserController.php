@@ -135,8 +135,8 @@ class UserController extends Controller
 
         $parentUser = Auth::user();
         $user->user_id = $parentUser->id;
-        $user->price_plan_id = $user->price_plan_id;
-        $user->price_plan_expiry_date = $user->price_plan_expiry_date;
+        $user->price_plan_id = $parentUser->price_plan_id;
+        $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
         $user->save();
 
         $uGAAs = $user->userGaAccounts;

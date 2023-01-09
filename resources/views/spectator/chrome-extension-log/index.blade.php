@@ -15,12 +15,12 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hoved table-bordered" id="myTable">
+                        <table aria-label="Chrome Extension Logs" class="table table-hoved table-bordered" id="myTable">
                             <thead>
                                 <tr>
-                                    <th>Event Name</th>
-                                    <th>IP Address</th>
-                                    <th>Created At</th>
+                                    <th scope="col">Event Name</th>
+                                    <th scope="col">IP Address</th>
+                                    <th scope="col">Created At</th>
                                 </tr>
                             </thead>
                             <tbody>

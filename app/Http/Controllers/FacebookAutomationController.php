@@ -23,13 +23,6 @@ class FacebookAutomationController extends Controller
     public function index()
     {
         return view('ui/app');
-
-        $user = \auth()->user();
-        $user_facebook_accounts = $user->facebook_accounts;
-
-        return response()->json([
-            'facebook_accounts' => $user_facebook_accounts,
-        ]);
     }
 
     public function UIindex()

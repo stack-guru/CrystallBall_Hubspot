@@ -188,12 +188,12 @@
                 <p>None</p>
             <h4>FORM PARAMETERS</h4>
 
-                <table>
+                <table aria-label="Form Parameters">
                     <thead>
                     <tr>
-                        <th>Field</th>
-                        <th>Type</th>
-                        <th>Description</th>
+                        <th scope="col">Field</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
 
 
                     </tr>
@@ -281,12 +281,12 @@
                  </code></pre>
 
                 <h4>QUERY PARAMETERS</h4>
-                <table>
+                <table aria-label="Form Parameters">
                     <thead>
                     <tr>
-                        <th>Field</th>
-                        <th>Type</th>
-                        <th>Description</th>
+                        <th scope="col">Field</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
 
                     </tr>
                     </thead>
@@ -301,12 +301,12 @@
 
                 <h4>FORM PARAMETERS</h4>
 
-                <table>
+                <table aria-label="Form Parameters">
                     <thead>
                     <tr>
-                        <th>Field</th>
-                        <th>Type</th>
-                        <th>Description</th>
+                        <th scope="col">Field</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
 
                     </tr>
                     </thead>
@@ -375,12 +375,12 @@
                  </code></pre>
 
                 <h4>QUERY PARAMETERS</h4>
-                <table>
+                <table aria-label="Form Parameters">
                     <thead>
                     <tr>
-                        <th>Field</th>
-                        <th>Type</th>
-                        <th>Description</th>
+                        <th scope="col">Field</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
 
                     </tr>
                     </thead>

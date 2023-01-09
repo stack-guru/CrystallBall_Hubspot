@@ -13,7 +13,7 @@
   </div>
 
   <div class="form-label-group mb-4 pb-4">
-    <a class="minified-provider mt-3" href="{{ route('socialite.google') }}"><img class="oauth-logo" src="/images/google-logo.png"><span class="minified-provider-name">Sign up with Google</span></a>
+    <a class="minified-provider mt-3" href="{{ route('socialite.google') }}"><img class="oauth-logo" src="/images/google-logo.png" alt="google logo"><span class="minified-provider-name">Sign up with Google</span></a>
   </div>
   <p class="mt-4 pt-4 text-center">OR <a href="{{ route('register', ['email' => true]) }}">Register</a> with Company Email</p>
   <p class="mt-2 text-center">Already have an account? <a href="{{ route('login') }}">Login</a></p>
