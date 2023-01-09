@@ -109,7 +109,7 @@ export default class DSOWMEventsSelect extends React.Component {
                         <i className="fa fa-angle-down"></i>
                     </h4>
                 }
-                { this.state.show ? <>
+                { (this.state.show || this.props.showSelectedOnly) ? <>
                     <div className="d-flex flex-column border-bottom pb-3 mb-3">
                         {this.props.showSelectedOnly ? (
                             <div className="boxTitleBtn d-flex justify-content-between">
