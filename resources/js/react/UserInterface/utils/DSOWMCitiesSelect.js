@@ -1,6 +1,7 @@
 import React from "react";
 import HttpClient from "../utils/HttpClient";
 import ErrorAlert from "../utils/ErrorAlert";
+import Select from "react-select";
 
 export default class DSOWMCitiesSelect extends React.Component {
     constructor(props) {
@@ -94,10 +95,10 @@ export default class DSOWMCitiesSelect extends React.Component {
         });
     }
 
-    selectedCountryChanged(e) {
-        this.setState({ [e.target.name]: e.target.value });
+    selectedCountryChanged(data) {
+        this.setState({ searchCountry: data.value });
         HttpClient.get(
-            `data-source/weather-alert/city?country_code=${e.target.value}`
+            `data-source/weather-alert/city?country_code=${data.value}`
         )
             .then(
                 (resp) => {
@@ -142,9 +143,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                 }`}
             >
                 {this.props.showSelectedOnly ? (
-                    <>
-
-                    </>
+                    <></>
                 ) : (
                     <>
                         <h4 className="textblue">Select Cities</h4>
@@ -157,7 +156,39 @@ export default class DSOWMCitiesSelect extends React.Component {
                 ) : (
                     <>
                         <div className="input-group mb-3 themeNewInputGroup">
-                            <select className="form-control" placeholder="Search" value={this.state.searchCountry} name="searchCountry" onChange={this.selectedCountryChanged}>
+                            <Select
+                                value={this.state.searchCountry}
+                                name="searchCountry"
+                                onChange={this.selectedCountryChanged}
+                                options={[
+                                    {
+                                        value: "",
+                                        label: "Please select country",
+                                        default: true,
+                                    },
+                                    ...this.state.weather_alerts_countries.map(
+                                        (wAC) => {
+                                            return {
+                                                value: wAC.country_code,
+                                                label: (
+                                                    <>
+                                                        <img
+                                                            style={{
+                                                                width: 30,
+                                                                height: 30,
+                                                            }}
+                                                            src={`/flags/${wAC.country_name}.png`}
+                                                        />{" "}
+                                                        {wAC.country_name}
+                                                    </>
+                                                ),
+                                                default: true,
+                                            };
+                                        }
+                                    ),
+                                ]}
+                            />
+                            {/* <select className="form-control" placeholder="Search" value={this.state.searchCountry} name="searchCountry" onChange={this.selectedCountryChanged}>
                                 {[
                                     {
                                         country_name:
@@ -173,14 +204,25 @@ export default class DSOWMCitiesSelect extends React.Component {
                                             <option
                                                 value={wAC.country_code}
                                             >
-                                                {wAC.country_name}
+                                             <img src={`/flags/${wAC.country_name}`} />   {wAC.country_name}
                                             </option>
                                         );
                                     })}
-                            </select>
+                            </select> */}
                         </div>
                         <div className="input-group search-input-box mb-3">
-                            <input type="text" className="form-control search-input" placeholder="Search" value={this.state.searchText} name="searchText" onChange={(e) => this.setState({[e.target.name]: e.target.value,})}/>
+                            <input
+                                type="text"
+                                className="form-control search-input"
+                                placeholder="Search"
+                                value={this.state.searchText}
+                                name="searchText"
+                                onChange={(e) =>
+                                    this.setState({
+                                        [e.target.name]: e.target.value,
+                                    })
+                                }
+                            />
                             <div className="input-group-append">
                                 <i className="ti-search"></i>
                             </div>
@@ -191,27 +233,60 @@ export default class DSOWMCitiesSelect extends React.Component {
                     {this.props.showSelectedOnly ? (
                         <div className="boxTitleBtn d-flex justify-content-between">
                             <h4 className="mb-0">Selected Cities</h4>
-                            <span className="btn-clearAll" onClick={this.clearAll}>Clear All</span>
+                            <span
+                                className="btn-clearAll"
+                                onClick={this.clearAll}
+                            >
+                                Clear All
+                            </span>
                         </div>
                     ) : (
                         <div className="checkBoxList">
-                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="check-all">
-                                <input type="checkbox" id="check-all" onChange={this.selectAllShowing}/>
+                            <label
+                                className="themeNewCheckbox d-flex align-items-center justify-content-start"
+                                htmlFor="check-all"
+                            >
+                                <input
+                                    type="checkbox"
+                                    id="check-all"
+                                    onChange={this.selectAllShowing}
+                                />
                                 <span>Select All</span>
                             </label>
                         </div>
                     )}
                 </div>
                 <div className="checkBoxList">
-                    {this.state.weather_alerts_cities .filter(this.checkSearchText) .map((wAC) => {
-                        return (
-                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="defaultCheck1" key={wAC.id}>
-                                <input checked={userOWMCIds.indexOf(wAC.id) !== -1}
-                                    type="checkbox" id={userOWMCIds.indexOf(wAC.id) !== -1 ? userDSIds[userOWMCIds.indexOf(wAC.id)] : null} onChange={this.handleClick} open_weather_map_city_id={wAC.id}/>
-                                <span>{wAC.name}</span>
-                            </label>
-                        );
-                    })}
+                    {this.state.weather_alerts_cities
+                        .filter(this.checkSearchText)
+                        .map((wAC) => {
+                            return (
+                                <label
+                                    className="themeNewCheckbox d-flex align-items-center justify-content-start"
+                                    htmlFor="defaultCheck1"
+                                    key={wAC.id}
+                                >
+                                    <input
+                                        checked={
+                                            userOWMCIds.indexOf(wAC.id) !== -1
+                                        }
+                                        type="checkbox"
+                                        id={
+                                            userOWMCIds.indexOf(wAC.id) !== -1
+                                                ? userDSIds[
+                                                      userOWMCIds.indexOf(
+                                                          wAC.id
+                                                      )
+                                                  ]
+                                                : null
+                                        }
+                                        onChange={this.handleClick}
+                                        open_weather_map_city_id={wAC.id}
+                                    />
+                                    <span>{wAC.name}</span>
+                                </label>
+                            );
+                        })}
                 </div>
             </div>
         );
