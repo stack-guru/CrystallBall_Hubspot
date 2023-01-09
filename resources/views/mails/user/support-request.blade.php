@@ -1,5 +1,5 @@
 <p>{{ $details }}</p>
-<table border="1">
+<table aria-label="Support Request" border="1">
     <tbody>
         <tr><th scope="col">Name</th><td>{{ $user->name }}</td><th scope="col">Email</th><td>{{ $user->email }}</td></tr>
         <tr><th scope="col">Price Plan</th><td>{{ $user->pricePlan->name }}</td><th scope="col">Plan Expiry Date</th><td>{{ $user->price_plan_expiry_date }}</td></tr>

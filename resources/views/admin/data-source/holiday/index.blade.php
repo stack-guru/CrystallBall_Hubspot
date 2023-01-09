@@ -15,7 +15,7 @@
                 <div class="row ml-0 mr-0 mt-5">
                     <div class="col-12 d-flex flex-column justify-content-center">
                         <h2>Holiday</h2>
-                     <table class="table table-hover table-responsive-md table-striped mt-5">
+                     <table aria-label="Holidays" class="table table-hover table-responsive-md table-striped mt-5">
                          <thead>
                          <tr>
                              <th scope="col">ID</th>

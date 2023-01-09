@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">Payment Details</div>
                 <div class="card-body">
-                    <table class="table table-hover table-bordered ">
+                    <table aria-label="Payment Details" class="table table-hover table-bordered ">
                         <thead>
                             <tr>
                                 <th scope="col">Id</th>

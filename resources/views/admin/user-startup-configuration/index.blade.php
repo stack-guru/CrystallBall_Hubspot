@@ -13,7 +13,7 @@
                 <div class="card-header">Users</div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hoved table-bordered" id="myTable">
+                        <table aria-label="Users" class="table table-hoved table-bordered" id="myTable">
                             <thead>
                                 <tr>
                                     <th scope="col">Email</th>
@@ -27,7 +27,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>
-                                        <table class="table table-bordered table-hover">
+                                        <table aria-label="Startup Configuration Details" class="table table-bordered table-hover">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Step Number</th>

@@ -13,7 +13,7 @@
         @endif
     </div>
 
-    <table id="user-ann-table" class="table table-hover gaa-hover table-bordered">
+    <table aria-label="User Annotations List" id="user-ann-table" class="table table-hover gaa-hover table-bordered">
 
         <thead id="">
             <tr>

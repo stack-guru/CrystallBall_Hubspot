@@ -20,7 +20,7 @@
                         <span class="badge badge-warning">Total Users: {{count($users)}}</span>
                     </div> --}}
             <div class="table-responsive">
-              <table class="table table-hoved table-bordered" id="myTable">
+              <table aria-label="Web Monitors" class="table table-hoved table-bordered" id="myTable">
                 <thead>
                   <tr>
                     <th scope="col">ID</th>

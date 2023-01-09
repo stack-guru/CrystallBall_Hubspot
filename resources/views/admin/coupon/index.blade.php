@@ -14,7 +14,7 @@
 
                             </div>
                         </div>
-                        <table class="table table-hoved table-bordered">
+                        <table aria-label="Coupons" class="table table-hoved table-bordered">
                             <thead>
                             <th scope="col">Id</th>
                             <th scope="col">Name</th>

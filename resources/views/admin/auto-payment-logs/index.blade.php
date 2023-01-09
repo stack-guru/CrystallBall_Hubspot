@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">Auto Payment Logs</div>
                 <div class="card-body">
-                    <table class="table table-hover table-bordered ">
+                    <table aria-label="Auto Payment Logs" class="table table-hover table-bordered ">
                         <thead>
                             <tr>
                                 <th scope="col">BlueSnap</th>

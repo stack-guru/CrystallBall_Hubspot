@@ -14,7 +14,7 @@
                     <div class="card-header">Users</div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hoved table-bordered" id="myTable">
+                            <table aria-label="User Active Report" class="table table-hoved table-bordered" id="myTable">
                                 <thead>
                                     <tr>
                                         <th scope="col">User Name</th>

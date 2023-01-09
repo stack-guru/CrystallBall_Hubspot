@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-header">Payment History</div>
                 <div class="card-body">
-                    <table class="table table-hover table-bordered " id="myTable">
+                    <table aria-label="Payment History" class="table table-hover table-bordered " id="myTable">
                         <thead>
                             <tr>
                                 <th scope="col">Id</th>

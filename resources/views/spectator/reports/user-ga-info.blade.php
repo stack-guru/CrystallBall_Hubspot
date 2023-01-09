@@ -15,7 +15,7 @@
                 <div class="card-header">Users</div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="myTable" className="table table-hover gaa-hover table-bordered">
+                        <table aria-label="User Report" id="myTable" className="table table-hover gaa-hover table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col">Analytics Accounts</th>

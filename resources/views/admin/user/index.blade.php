@@ -14,7 +14,7 @@
             <span class="badge badge-warning float-right">Total Users: <span id="recordsTotal">Loading...</span></span>
           </div>
           <div class="card-body">
-            <table class="table table-striped table-hover" id="users-datatable">
+            <table aria-label="Users" class="table table-striped table-hover" id="users-datatable">
               <thead>
                 <tr>
                   <th scope="col">Team</th>

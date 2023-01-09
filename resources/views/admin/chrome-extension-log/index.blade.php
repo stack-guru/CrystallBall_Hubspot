@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hoved table-bordered" id="myTable">
+                        <table aria-label="Chrome Extension Logs" class="table table-hoved table-bordered" id="myTable">
                             <thead>
                                 <tr>
                                     <th scope="col">Event Name</th>

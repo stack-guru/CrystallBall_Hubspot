@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     <a href="{{ route('admin.price-plan.create') }}" class="btn btn-primary">Add</a>
-                    <table class="table table-hoved table-bordered">
+                    <table aria-label="Price Plans" class="table table-hoved table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">Code</th>

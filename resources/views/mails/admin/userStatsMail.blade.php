@@ -51,7 +51,7 @@
                             <div class="card-body">
                                 <h3 class="">Activity and Traction</h3>
                                 <div style="overflow-x:auto;" style="min-height: 200px;">
-                                    <table class="table table-borderd table-striped" style="min-height: 200px;">
+                                    <table aria-label="Activity and Transaction" class="table table-borderd table-striped" style="min-height: 200px;">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Registrations Yesterday</th>
@@ -107,7 +107,7 @@
                                 <div class="my-5">
                                     <h3>New Users Who Registered Yesterday</h3>
                                     <div style="overflow-x:auto;">
-                                        <table class="table table-borderd table-striped">
+                                        <table aria-label="New Users Who Registered Yesterday" class="table table-borderd table-striped">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Name</th>
@@ -146,7 +146,7 @@
                                 <div class="my-5">
                                     <h3>New Paying Users Yesterday</h3>
                                     <div style="overflow-x:auto;">
-                                        <table class="table table-borderd table-striped">
+                                        <table aria-label="New Paying Users Yesterday" class="table table-borderd table-striped">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Name</th>
