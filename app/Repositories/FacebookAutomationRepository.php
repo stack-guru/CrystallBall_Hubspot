@@ -201,9 +201,9 @@ class FacebookAutomationRepository
                 // get all fb account pages from facebook
                 $facebook_pages_from_facebook = $this->facebookService->getFacebookPages($facebook_account->token);
                 info('Facebook pages from facebook :: ');
-                info(print_r($facebook_pages_from_facebook),1);
+                info(print_r($facebook_pages_from_facebook,1));
                 info('Facebook pages from database :: ');
-                info(print_r($facebook_pages_from_database),1);
+                info(print_r($facebook_pages_from_database,1));
 
                 if ($facebook_pages_from_facebook){
                     foreach ($facebook_pages_from_facebook as $facebook_page_from_facebook) {
@@ -214,7 +214,7 @@ class FacebookAutomationRepository
                                 // get page posts from facebook
                                 $response = $this->facebookService->getFacebookPagePosts($facebook_account->token, $facebook_page_from_database->facebook_page_id);
                                 info('Facebook page posts from facebook :: ');
-                                info(print_r($response),1);
+                                info(print_r($response, 1));
                                 // get page posts from database
                                 $facebook_page_posts_from_database = $facebook_page_from_database->posts;
 
