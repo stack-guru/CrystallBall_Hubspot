@@ -128,7 +128,7 @@ class AppsMarket extends React.Component {
                 confirmButtonClass:
                     "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                 customClass: {
-                    popup: "popupTwitterAlert",
+                    popup: "popupAlert",
                     closeButton: "closeButtonTwitterAlert",
                 },
             });
@@ -278,13 +278,36 @@ class AppsMarket extends React.Component {
     }
 
     render() {
+        function SampleNextArrow(props) {
+            const { className, style, onClick } = props;
+            return (
+                <div className={className} onClick={onClick}>
+                    <i className="fa fa-angle-right"></i>
+                </div>
+            );
+        }
+
+        function SamplePrevArrow(props) {
+            const { className, style, onClick } = props;
+            return (
+                <div className={className} onClick={onClick}>
+                    <i className="fa fa-angle-left"></i>
+                </div>
+            );
+        }
+
         var settings = {
-            className: "",
-            dots: true,
+            fade: true,
+            speed: 500,
+            dots: false,
+            autoplay: true,
             infinite: true,
             slidesToShow: 1,
             slidesToScroll: 1,
             adaptiveHeight: true,
+            className: "themeTextSlider",
+            nextArrow: <SampleNextArrow />,
+            prevArrow: <SamplePrevArrow />
         };
 
         if (this.state.redirectTo)
@@ -296,9 +319,8 @@ class AppsMarket extends React.Component {
                     <div className="pageHeader">
                         <h2 className="pageTitle">Apps Market</h2>
 
-                        <div className="pageNote d-flex justify-content-center align-items-center position-relative">
+                        <div className="pageNote position-relative">
                             <Slider {...settings}>
-
                                 {[
                                     {
                                         id: "01a",
@@ -404,37 +426,15 @@ class AppsMarket extends React.Component {
                                         text: "Get upfront reminders and advertise on retail marketing dates.",
                                         logo: "/retails-marketing-dates-small.svg",
                                     },
-                                ].map((item) => (
-                                    <div className="d-flex align-items-center justify-content-center">
-                                        <span className="githubIcon">
-                                            {/* <i className="fa fa-github"></i> */}
-                                            <img
-                                                src={item.logo}
-                                                alt={item.logo}
-                                                className="svg-inject"
-                                            />
-                                        </span>
-                                        <p className="noteText m-0">
-                                            {item.text}
-                                            {/* <span>See the changes your </span>
-                                        <strong>R&D</strong>{" "}
-                                        <span>
-                                            makes and how they affect your
-                                        </span>{" "}
-                                        <strong>sales</strong> */}
-                                        </p>
-                                        <a
-                                            href="/"
-                                            className="btn btn-sm btn-primary"
-                                        >
-                                            Add
-                                        </a>
-                                    </div>
-                                ))}
+                                ].map((item) => (<div className="d-flex align-items-center justify-content-center">
+                                    <span className="githubIcon flex-shrink-0"><img src={item.logo} alt={item.logo} className="svg-inject" /></span>
+                                    <p className="noteText m-0">{item.text}</p>
+                                    <a href="/" className="btn btn-sm btn-primary flex-shrink-0">Add</a>
+                                </div>))}
                             </Slider>
-                            <a href="/" className="btn-learnmore">
-                                Learn more
-                            </a>
+
+                            <a href="/" className="btn-learnmore">Learn more</a>
+                            {/* <span>See the changes your </span><strong>R&D</strong>{" "}<span>makes and how they affect your</span>{" "}<strong>sales</strong> */}
                         </div>
 
                         <form className="pageFilters d-flex justify-content-between align-items-center">
@@ -496,6 +496,7 @@ class AppsMarket extends React.Component {
 
                         <h3 className="h3-title">Recommended For You</h3>
                     </div>
+
                     <Row className="items mb-5">
                         {[
                             {
@@ -836,6 +837,7 @@ class AppsMarket extends React.Component {
                             </Col>
                         ))}
                     </Row>
+
                     <Row className="boxWhite items m-0">
                         <Col xs='12' className="pt-0 pb-0"><h4>Coming Soon</h4></Col>
                         {[
@@ -864,6 +866,7 @@ class AppsMarket extends React.Component {
                             </Col>
                         ))}
                     </Row>
+
                     <AppsModal
                         isOpen={this.state.dsKey}
                         toggle={() => {
@@ -1391,19 +1394,15 @@ class AppsMarket extends React.Component {
                                 }
                             } else {
                                 swal.fire({
-                                    iconHtml:
-                                        '<img src="/images/svg/twitter.svg">',
+                                    iconHtml: '<img src="/images/svg/twitter.svg">',
                                     popup: "twitterAlert",
                                     showCloseButton: true,
                                     title: "Connect with Twitter",
                                     text: "Connect your Twitter account to create automatic annotations",
-                                    confirmButtonClass:
-                                        "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                    confirmButtonText:
-                                        "<a href='/socialite/twitter' class='text-white'><i class='mr-2 fa fa-twitter'> </i>" +
-                                        "Connect twitter Account</a>",
+                                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                    confirmButtonText: "<a href='/socialite/twitter' class='text-white'><i class='mr-2 fa fa-twitter'> </i>" + "Connect twitter Account</a>",
                                     customClass: {
-                                        popup: "popupTwitterAlert",
+                                        popup: "popupAlert",
                                         closeButton: "closeButtonTwitterAlert",
                                     },
                                 });
@@ -1633,17 +1632,19 @@ class AppsMarket extends React.Component {
                     this.updateUserService(e, this);
                 } else {
                     swal.fire({
-                        customClass: {
-                            htmlContainer: "py-3",
-                        },
+                        iconHtml: '<img src="/bitbucket-small.svg">',
                         showCloseButton: true,
                         title: "Connect with Bitbucket",
                         text: "Connect your Bitbucket account to create automatic annotations for commits",
-                        confirmButtonClass:
-                            "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                        confirmButtonText:
-                            "<a href='/socialite/bitbucket' class='text-white'><i class='mr-2 fa fa-bitbucket'> </i>" +
-                            "Connect Bitbucket Account</a>",
+                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                        confirmButtonText: "<a href='/socialite/bitbucket' class='text-white'><i class='mr-2 fa fa-bitbucket'> </i>" + "Connect Bitbucket Account</a>",
+                        customClass: {
+                            htmlContainer: "py-3",
+                        },
+                        customClass: {
+                            popup: "popupAlert",
+                            closeButton: "closeButtonTwitterAlert",
+                        },
                     });
                 }
             } else if (
@@ -1663,17 +1664,19 @@ class AppsMarket extends React.Component {
                     this.updateUserService(e, this);
                 } else {
                     swal.fire({
-                        customClass: {
-                            htmlContainer: "py-3",
-                        },
+                        iconHtml: '<img src="/github-small.svg">',
                         showCloseButton: true,
                         title: "Connect with Github",
                         text: "Connect your github account to create automatic annotations for commits",
-                        confirmButtonClass:
-                            "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                        confirmButtonText:
-                            "<a href='/socialite/github' class='text-white'><i class='mr-2 fa fa-github'> </i>" +
-                            "Connect Github Account</a>",
+                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                        confirmButtonText: "<a href='/socialite/github' class='text-white'><i class='mr-2 fa fa-github'> </i>" + "Connect Github Account</a>",
+                        customClass: {
+                            htmlContainer: "py-3",
+                        },
+                        customClass: {
+                            popup: "popupAlert",
+                            closeButton: "closeButtonTwitterAlert",
+                        },
                     });
                 }
             } else if (

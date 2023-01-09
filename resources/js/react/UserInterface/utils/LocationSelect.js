@@ -29,14 +29,8 @@ export default class LocationSelect extends React.Component {
                         ...loc,
                         label: (
                             <>
-                                <img
-                                    style={{
-                                        width: 30,
-                                        height: 30,
-                                    }}
-                                    src={`/flags/${loc.label}.png`}
-                                />{" "}
-                                {loc.label}
+                                <span><img style={{ width: 20, height: 20,}} src={`/flags/${loc.label}.png`}/></span>
+                                <span className="pl-2">{loc.label}</span>
                             </>
                         ),
                     }));
@@ -103,7 +97,7 @@ export default class LocationSelect extends React.Component {
                 cacheOptions
                 defaultOptions={this.state.locations}
                 value={this.state.selected_option}
-                className="gray_clr w-100 themeNewselect"
+                className="gray_clr w-100 themeNewInputGroup themeNewselect"
                 loadOptions={this.loadOptions}
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}

@@ -75,19 +75,14 @@ export default class GithubTracking extends React.Component {
                             this.state.isBusy ? <div><i className="fa fa-spinner fa-spin mr-1"></i>We are fetching your account, just a moment</div> : repositories && repositories.length > 0 ? repositories.map(repository => {
                                 if (repository !== null)
                                     return (
-                                        <>
-                                            <div className="form-check country" key={repository.id}>
-                                                <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null}>
-                                                    <input checked={userRepositories.indexOf(repository.name) !== -1} type="checkbox" name={repository.name} data-username={repository.owner.login} id={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null} onChange={this.handleClick}/>
-                                                    <span>{repository.full_name}</span>
-                                                    {
-                                                        userRepositories.indexOf(repository.name) !== -1 &&
-                                                            <input className="themenewCountInput"  type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.name)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.name)].id)} />
-                                                    }
-                                                </label>
-                                            </div>
-
-                                        </>
+                                        <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null} key={repository.id}>
+                                            <input checked={userRepositories.indexOf(repository.name) !== -1} type="checkbox" name={repository.name} data-username={repository.owner.login} id={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null} onChange={this.handleClick}/>
+                                            <span>{repository.full_name}</span>
+                                            {
+                                                userRepositories.indexOf(repository.name) !== -1 &&
+                                                    <input className="themenewCountInput"  type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.name)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.name)].id)} />
+                                            }
+                                        </label>
                                     )
                             }) : <p className='ml-1 pl-1 mb-0'>No repositories found</p>
                         }

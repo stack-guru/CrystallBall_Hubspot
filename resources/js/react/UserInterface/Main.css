@@ -1119,7 +1119,7 @@ body {
 .apps-modal .modal-content { padding: 24px; border-radius: 1rem; width: 100%; height: auto; border: 0; height: 100%;}
 .apps-modal .modal-body {
     padding: 0 8px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .popupContent {}
 .apps-modalHead {
@@ -1377,7 +1377,7 @@ body {
     border: 1px solid #bdbdbd !important;
 }
 .textDark {color: #333;}
-.popupTwitterAlert {
+.popupAlert {
     width: 100%;
     max-width: 624px;
     position: relative;
@@ -1388,7 +1388,7 @@ body {
     right: 0;
     position: absolute;
 }
-.popupTwitterAlert .swal2-icon {
+.popupAlert .swal2-icon {
     border: 0;
     width: 46px;
     height: 46px;
@@ -1397,27 +1397,27 @@ body {
     background-color: #fff;
     display: block !important;
 }
-.popupTwitterAlert .swal2-icon img,
-.popupTwitterAlert .swal2-icon svg{
+.popupAlert .swal2-icon img,
+.popupAlert .swal2-icon svg{
     width: 100%;
     height: auto;
 }
-.popupTwitterAlert .swal2-title {
+.popupAlert .swal2-title {
     font-size: 32px;
     font-weight: 600;
     color: #096DB7;
     line-height: 40px;
     padding: 20px 0 0;
 }
-.popupTwitterAlert .swal2-html-container {
+.popupAlert .swal2-html-container {
     color: #333;
     margin: 2rem 0;
     font-size: 18px;
     line-height: 23px;
     text-align: center;
 }
-.popupTwitterAlert .swal2-actions {margin: 0;}
-.popupTwitterAlert .swal2-actions button{
+.popupAlert .swal2-actions {margin: 0;}
+.popupAlert .swal2-actions button{
     margin: 0;
     color: #fff;
     font-size: 18px;
@@ -1441,7 +1441,8 @@ body {
 .modal-holidays {}
 .modal-websiteMonitoring {}
 
-
+.modal-bitbucket .checkBoxList .themenewCountInput,
+.modal-github .checkBoxList .themenewCountInput {width: 150px !important;}
 .popover {
     border: 0;
     filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.16));
@@ -1548,6 +1549,10 @@ body {
     display: none;
     color: #096db7;
 }
+.themeTextSlider .slick-prev { left: -50px; }
+.themeTextSlider .slick-next { right: -50px; }
+.themeTextSlider .slick-prev,
+.themeTextSlider .slick-next { display: none; }
 .inputWithIcon { position: relative;}
 .inputWithIcon .form-control {
     z-index: 1;

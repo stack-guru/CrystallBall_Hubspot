@@ -241,7 +241,7 @@ export default class AddKeyword extends React.Component {
                 <h4>Add tracker</h4>
                 <div className="grid2layout">
                     {/* <div className="my-1"><strong>Available Credits: {this.state.available_credits}</strong></div> */}
-                    <div className="themeNewInputGroup">
+                    <div className="themeNewInputGroup themeNewselect flex-column">
                         <select className="form-control" id="tracking_of" onChange={(e) => {this.setState({is_url_competitors:e.target.options[e.target.selectedIndex].value,});}}>
                             <option selected disabled>--Select--</option>
                             <option value="false">My website</option>
@@ -269,7 +269,7 @@ export default class AddKeyword extends React.Component {
                     </div>
 
 
-                    <div className="themeNewInputGroup">
+                    <div className="themeNewInputGroup themeNewselect">
                         <SearchEngineSelect className="gray_clr" name="search_engine" id="search_engine" selected={{label: '', value: ''}} onChangeCallback={this.changeSearchEngineHandler} placeholder="Select Search Engine" multiple="true"/>
                     </div>
                     <div className="themeNewInputGroup">
@@ -284,7 +284,7 @@ export default class AddKeyword extends React.Component {
                 <div className="d-flex flex-column">
                     <h4>Threashold to create annotation:</h4>
                     <div className="grid2layout">
-                        <div className="themeNewInputGroup">
+                        <div className="themeNewInputGroup themeNewselect flex-column">
                             <select className="form-control" id="ranking_direction" onChange={(e) => {this.setState({ranking_direction:e.target.options[e.target.selectedIndex].value,});}}>
                                 <option value="" selected disabled>--Select--</option>
                                 <option value="up">Up</option>
