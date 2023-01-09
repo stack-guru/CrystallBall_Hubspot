@@ -191,9 +191,9 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>Field</th>
-                        <th>Type</th>
-                        <th>Description</th>
+                        <th scope="col">Field</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
 
 
                     </tr>
@@ -284,9 +284,9 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>Field</th>
-                        <th>Type</th>
-                        <th>Description</th>
+                        <th scope="col">Field</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
 
                     </tr>
                     </thead>
@@ -304,9 +304,9 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>Field</th>
-                        <th>Type</th>
-                        <th>Description</th>
+                        <th scope="col">Field</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
 
                     </tr>
                     </thead>
@@ -378,9 +378,9 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>Field</th>
-                        <th>Type</th>
-                        <th>Description</th>
+                        <th scope="col">Field</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Description</th>
 
                     </tr>
                     </thead>

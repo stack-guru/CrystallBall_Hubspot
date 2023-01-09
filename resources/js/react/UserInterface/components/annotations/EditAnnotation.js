@@ -117,7 +117,7 @@ export default class EditAnnotation extends React.Component {
             for (var key in this.state.annotation) {
                 if (key !== 'google_analytics_property_id') fd.append(key, this.state.annotation[key]);
             }
-            this.state.annotation.google_analytics_property_id.map(gAP => { fd.append('google_analytics_property_id[]', gAP) })
+            this.state.annotation.google_analytics_property_id.map((gAP) => { fd.append('google_analytics_property_id[]', gAP) })
 
             fd.append('_method', 'PUT');
             HttpClient.post(`/annotation/${this.state.annotation.id}`, fd)

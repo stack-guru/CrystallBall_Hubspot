@@ -13,12 +13,12 @@
                 <div class="card-header">Users</div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hoved table-bordered" id="myTable">
+                        <table aria-label="Users" class="table table-hoved table-bordered" id="myTable">
                             <thead>
                                 <tr>
-                                    <th>Email</th>
-                                    <th>Name</th>
-                                    <th>Configuration Steps</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Configuration Steps</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -27,12 +27,12 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>
-                                        <table class="table table-bordered table-hover">
+                                        <table aria-label="Startup Configuration Details" class="table table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>Step Number</th>
-                                                    <th>Label</th>
-                                                    <th>Value</th>
+                                                    <th scope="col">Step Number</th>
+                                                    <th scope="col">Label</th>
+                                                    <th scope="col">Value</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

@@ -144,7 +144,7 @@ export default class CreateAnnotation extends React.Component {
                     fd.append(key, this.state.annotation[key])
                 }
             }
-            this.state.annotation.google_analytics_property_id.map(gAA => { fd.append('google_analytics_property_id[]', gAA) })
+            this.state.annotation.google_analytics_property_id.map((gAA) => { fd.append('google_analytics_property_id[]', gAA) })
 
             HttpClient.post('/annotation', fd)
                 .then(response => {

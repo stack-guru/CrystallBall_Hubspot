@@ -46,7 +46,7 @@ export default class countries extends React.Component {
 
     selectAllShowing(e) {
         let userCountries = this.props.ds_data.map(ds => ds.country_name);
-        this.state.countries.map(country => {
+        this.state.countries.forEach(country => {
             if (country !== null) if (country.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0) {
                 if (userCountries.indexOf(country) == -1) {
                     (this.props.onCheckCallback)({ code: 'holidays', name: 'Holiday', country_name: country, retail_marketing_id: null })
@@ -57,7 +57,7 @@ export default class countries extends React.Component {
 
     clearAll(e) {
         let userCountries = this.props.ds_data.map(ds => ds.country_name);
-        this.state.countries.map(country => {
+        this.state.countries.forEach(country => {
             if (country !== null) {
                 if (userCountries.indexOf(country) !== -1) {
                     (this.props.onUncheckCallback)(this.props.ds_data[userCountries.indexOf(country)].id, 'holidays')

@@ -13,20 +13,20 @@
             <div class="card">
                 <div class="card-header">Payment History</div>
                 <div class="card-body">
-                    <table class="table table-hover table-bordered " id="myTable">
+                    <table aria-label="Payment History" class="table table-hover table-bordered " id="myTable">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>User</th>
-                                <th>User email</th>
-                                <th>BlueSnap vaulted shopper id</th>
-                                <th>Coupon / Discount</th>
-                                <th>Amount</th>
-                                <th>Paid at</th>
-                                <th>Card end with</th>
-                                <th>Next Billing At (Duration)</th>
-                                <th>Plan Price</th>
-                                <th>Actions</th>
+                                <th scope="col">Id</th>
+                                <th scope="col">User</th>
+                                <th scope="col">User email</th>
+                                <th scope="col">BlueSnap vaulted shopper id</th>
+                                <th scope="col">Coupon / Discount</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Paid at</th>
+                                <th scope="col">Card end with</th>
+                                <th scope="col">Next Billing At (Duration)</th>
+                                <th scope="col">Plan Price</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>

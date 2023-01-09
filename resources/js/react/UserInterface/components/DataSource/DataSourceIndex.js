@@ -123,8 +123,8 @@ export default class DataSourceIndex extends React.Component {
                 dfsKeywords: resp.data.keywords ? resp.data.keywords : [],
             });
             let total = 0;
-            this.state.dfsKeywords.map(function (keyword_instance, index) {
-                keyword_instance.configurations.map(function (configuration_instance) {
+            this.state.dfsKeywords.forEach(function (keyword_instance, index) {
+                keyword_instance.configurations.forEach(function (configuration_instance) {
                     total++;
                 });
             });

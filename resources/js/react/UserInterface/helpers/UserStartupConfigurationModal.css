@@ -10,7 +10,7 @@
 
 #scw-modal{
     font-size: 32pt;
-    font-family: 'Roboto Light';
+    font-family: 'Roboto Light', Tahoma, sans-serif;
 }
 #scw-modal-body{
     min-height: 300px;

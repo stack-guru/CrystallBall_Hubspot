@@ -14,15 +14,15 @@
 
                             </div>
                         </div>
-                        <table class="table table-hoved table-bordered">
+                        <table aria-label="Checklist Items" class="table table-hoved table-bordered">
                             <thead>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Label</th>
-                                <th>Description</th>
-                                <th>URL</th>
-                                <th>Sort Rank</th>
-                                <th>Actions</th>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Label</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">URL</th>
+                                <th scope="col">Sort Rank</th>
+                                <th scope="col">Actions</th>
                             </thead>
                             <tbody>
                             @forelse($checklistItems as $checklistItem)

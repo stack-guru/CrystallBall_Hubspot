@@ -33,7 +33,7 @@ export default class UserStartupConfigurationModal extends Component {
 
     handleSubmit() {
         let formData = new FormData;
-        Object.keys(this.state.stepResponses).map(k => {
+        Object.keys(this.state.stepResponses).forEach(k => {
             const stepResponse = this.state.stepResponses[k];
             formData.append('step_number[]', k);
             formData.append('data_label[]', stepResponse.data_label);
@@ -110,7 +110,7 @@ export default class UserStartupConfigurationModal extends Component {
                     <ModalBody id="scw-modal-body" className="with-background">
                         <center>
                             <h1>Let's build the best experience for you</h1>
-                            <Button style={{ left: '45%' }} className="mt-8" color="primary" onClick={() => { this.recordStepResponse('START', true); this.incrementStep(1) }} className="to-below">Let's Start</Button>
+                            <Button style={{ left: '45%' }} className="mt-8 to-below" color="primary" onClick={() => { this.recordStepResponse('START', true); this.incrementStep(1) }} >Let's Start</Button>
                         </center>
                     </ModalBody>
                 ];

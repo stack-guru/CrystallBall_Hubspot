@@ -15,11 +15,11 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hoved table-bordered" id="myTable">
+                        <table aria-label="Login Logs" class="table table-hoved table-bordered" id="myTable">
                             <thead>
                                 <tr>
-                                    <th>IP Address</th>
-                                    <th>Login At</th>
+                                    <th scope="col">IP Address</th>
+                                    <th scope="col">Login At</th>
                                 </tr>
                             </thead>
                             <tbody>
