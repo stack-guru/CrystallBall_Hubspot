@@ -192,7 +192,8 @@ class FacebookAutomationRepository
 
             // get all fb accounts
             $facebook_accounts = $user->facebook_accounts;
-
+            info('Facebook account :: ');
+            info(print_r($facebook_accounts,1));
             foreach ($facebook_accounts as $facebook_account) {
 
                 // get all fb account pages from database
