@@ -188,7 +188,7 @@
                 <p>None</p>
             <h4>FORM PARAMETERS</h4>
 
-                <table>
+                <table aria-label="Form Parameters">
                     <thead>
                     <tr>
                         <th scope="col">Field</th>
@@ -281,7 +281,7 @@
                  </code></pre>
 
                 <h4>QUERY PARAMETERS</h4>
-                <table>
+                <table aria-label="Form Parameters">
                     <thead>
                     <tr>
                         <th scope="col">Field</th>
@@ -301,7 +301,7 @@
 
                 <h4>FORM PARAMETERS</h4>
 
-                <table>
+                <table aria-label="Form Parameters">
                     <thead>
                     <tr>
                         <th scope="col">Field</th>
@@ -375,7 +375,7 @@
                  </code></pre>
 
                 <h4>QUERY PARAMETERS</h4>
-                <table>
+                <table aria-label="Form Parameters">
                     <thead>
                     <tr>
                         <th scope="col">Field</th>
