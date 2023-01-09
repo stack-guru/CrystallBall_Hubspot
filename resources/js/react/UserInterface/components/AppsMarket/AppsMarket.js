@@ -325,6 +325,7 @@ class AppsMarket extends React.Component {
                                     {
                                         id: "01a",
                                         background: "null",
+                                        commingSoon: true,
                                         text: "Create annotations directly from Slack or Asana",
                                         logo: "/zapier-small.svg",
                                     },
@@ -332,6 +333,7 @@ class AppsMarket extends React.Component {
                                     {
                                         id: "02a",
                                         background: "null",
+                                        dsKey: "is_ds_google_algorithm_updates_enabled",
                                         text: "Get the latest updates from Google and harness new SEO opportunities.",
                                         logo: "/google-small.svg",
                                     },
@@ -339,6 +341,7 @@ class AppsMarket extends React.Component {
                                     {
                                         id: "03a",
                                         background: "null",
+                                        dsKey: "is_ds_web_monitors_enabled",
                                         text: "Be the first to know that your website is down!",
                                         logo: "/web-monitoring-small.svg",
                                     },
@@ -346,6 +349,7 @@ class AppsMarket extends React.Component {
                                     {
                                         id: "04a",
                                         background: "null",
+                                        dsKey: "is_ds_keyword_tracking_enabled",
                                         text: "Automate your rank tracking to win the SERP game.Automate your rank tracking to win the SERP game.",
                                         logo: "/SERP-small.svg",
                                     },
@@ -353,6 +357,7 @@ class AppsMarket extends React.Component {
                                     {
                                         id: "05a",
                                         background: "null",
+                                        dsKey: "is_ds_google_alerts_enabled",
                                         text: "Stay on top! Keep track of mentions of your brand and products.",
                                         logo: "/news-alert-small.svg",
                                     },
@@ -360,6 +365,7 @@ class AppsMarket extends React.Component {
                                     {
                                         id: "06a",
                                         background: "null",
+                                        dsKey: "is_ds_weather_alerts_enabled",
                                         text: "Weather data to tap into weather-driven patterns of demand and consumer behavior.Weather data to tap into weather-driven patterns of demand and consumer behavior.",
                                         logo: "/weather-small.svg",
                                     },
@@ -367,6 +373,7 @@ class AppsMarket extends React.Component {
                                     {
                                         id: "07a",
                                         background: "null",
+                                        dsKey: "is_ds_bitbucket_tracking_enabled",
                                         text: "See the changes your R&D makes and how they affect your sales.",
                                         logo: "/bitbucket-small.svg",
                                     },
@@ -374,6 +381,7 @@ class AppsMarket extends React.Component {
                                     {
                                         id: "08a",
                                         background: "null",
+                                        dsKey: "is_ds_github_tracking_enabled",
                                         text: "How is the new UI change affect the traffic?",
                                         logo: "/github-small.svg",
                                     },
@@ -381,55 +389,75 @@ class AppsMarket extends React.Component {
                                     {
                                         id: "09a",
                                         background: "null",
+                                        commingSoon: true,
                                         text: "Are your TikTok ads entertaining? Has it become a trend?",
                                         logo: "/tiktok-small.svg",
                                     },
                                     {
                                         id: "010a",
                                         background: "null",
+                                        dsKey: "is_ds_twitter_tracking_enabled",
                                         text: "Find the campaign that's right for your goals.",
                                         logo: "/twitter-small.svg",
                                     },
                                     {
                                         id: "011a",
                                         background: "null",
+                                        commingSoon: true,
                                         text: "See Facebook ads performance and optimize your social media marketing scheme.",
                                         logo: "/facebook-small.svg",
                                     },
                                     {
                                         id: "012a",
                                         background: "null",
+                                        commingSoon: true,
                                         text: "Get heads-ups on your Insta stats and work to improve the clicks.",
                                         logo: "/instagram-small.svg",
                                     },
                                     {
                                         id: "013a",
                                         background: "null",
+                                        dsKey: "is_ds_wordpress_updates_enabled",
                                         text: "Get context, display new products, and design updates over your GA4 charts.",
                                         logo: "/wordPress-small.svg",
                                     },
                                     {
                                         id: "014a",
                                         background: "null",
+                                        commingSoon: true,
                                         text: "See new product data over GA4 metrics.",
                                         logo: "/shopify-small.svg",
                                     },
                                     {
                                         id: "015a",
                                         background: "null",
+                                        dsKey: "is_ds_holidays_enabled",
                                         text: "Targeting a specific location? Don't miss any local holidays.",
                                         logo: "/holidays-small.svg",
                                     },
                                     {
                                         id: "015a",
                                         background: "null",
+                                        dsKey: "is_ds_retail_marketing_enabled",
                                         text: "Get upfront reminders and advertise on retail marketing dates.",
                                         logo: "/retails-marketing-dates-small.svg",
                                     },
                                 ].map((item) => (<div className="d-flex align-items-center justify-content-center">
                                     <span className="githubIcon flex-shrink-0"><img src={item.logo} alt={item.logo} className="svg-inject" /></span>
                                     <p className="noteText m-0">{item.text}</p>
-                                    <a href="/" className="btn btn-sm btn-primary flex-shrink-0">Add</a>
+                                    <button onClick={() => {
+                                        if (item.commingSoon) {
+                                            swal.fire(
+                                                "This feature is coming soon. Stay tuned!",
+                                                "",
+                                                "info"
+                                            );
+                                        } else {
+                                            this.setState({
+                                                dsKey: item.dsKey,
+                                            });
+                                        }
+                                    }} className="btn btn-sm btn-primary flex-shrink-0">Add</button>
                                 </div>))}
                             </Slider>
 
