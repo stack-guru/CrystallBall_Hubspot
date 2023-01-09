@@ -35,7 +35,6 @@ class FacebookService
     public function getFacebookPages($user_token)
     {
         try {
-            $response = $this->getRefreshToken($user_token);
 
             $this->facebook->getDefaultAccessToken();
             $response = $this->facebook->get('/me/accounts', $user_token);
@@ -77,7 +76,6 @@ class FacebookService
     {
         try {
 
-            $response = $this->getRefreshToken($user_token);
 
 
             $page_token = $this->getPageAccessTokenByUserToken($page_id, $user_token);
@@ -116,7 +114,6 @@ class FacebookService
     {
         try {
 
-            $response = $this->getRefreshToken($user_token);
 
 
             $page_token_response = $this->facebook->get($page_id . '?fields=access_token', $user_token);
@@ -154,7 +151,7 @@ class FacebookService
     {
         try {
 
-            // $response = $this->getRefreshToken($user_token);
+        
 
 
             $post_impressions = $this->facebook->get($post_id . '/insights/post_impressions', $page_token);
@@ -182,11 +179,11 @@ class FacebookService
         }
     }
 
-    public function getRefreshToken($user_token)
-    {
-        $response = $this->facebook->get('/oauth/access_token?grant_type=fb_exchange_token&fb_exchange_token='.$user_token, $user_token);
-        info('refresh token response');
-        info(print_r($response, 1));
-    }
+    // public function getRefreshToken($user_token)
+    // {
+    //     $response = $this->facebook->get('/oauth/access_token?grant_type=fb_exchange_token&fb_exchange_token='.$user_token, $user_token);
+    //     info('refresh token response');
+    //     info(print_r($response, 1));
+    // }
 
 }
