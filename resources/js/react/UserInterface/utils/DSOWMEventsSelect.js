@@ -33,6 +33,7 @@ export default class DSOWMEventsSelect extends React.Component {
                 "Winter Storm Warning",
             ],
             isBusy: false,
+            show: false,
             errors: "",
         };
 
@@ -96,21 +97,19 @@ export default class DSOWMEventsSelect extends React.Component {
         );
         let userDSEvents = this.props.ds_data.map((ds) => ds.id);
 
-        const [show, setShow] = useState(true);
-
         return (
             <div
                 className={`weather_alert_cities-form ${
                     this.props.showSelectedOnly ? "gray-box" : "white-box"
                 }`}
             >
-                {this.props.showSelectedOnly ? null: 
-                    <h4 className="collapseable d-flex justify-content-between" onClick={() => setShow(!show)}>
+                {this.props.showSelectedOnly ? null:
+                    <h4 className="collapseable d-flex justify-content-between" onClick={() => this.setState({show: !this.state.show})}>
                         <span>Select Events</span>
                         <i className="fa fa-angle-down"></i>
                     </h4>
                 }
-                { show ? <>
+                { this.state.show ? <>
                     <div className="d-flex flex-column border-bottom pb-3 mb-3">
                         {this.props.showSelectedOnly ? (
                             <div className="boxTitleBtn d-flex justify-content-between">
