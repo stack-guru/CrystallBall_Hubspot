@@ -1,42 +1,62 @@
 import React from "react";
-import Creatable, { makeCreatableSelect } from 'react-select/creatable';
-import AsyncSelect from 'react-select/async'
-import CreatableSelect from 'react-select/creatable';
+import Creatable, { makeCreatableSelect } from "react-select/creatable";
+import AsyncSelect from "react-select/async";
+import CreatableSelect from "react-select/creatable";
 
 import HttpClient from "./HttpClient";
 
 export default class LocationSelect extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
             isBusy: false,
-            errors: '',
+            errors: "",
             locations: [],
-            selected_option: ''
-        }
+            selected_option: "",
+        };
 
-        this.onChangeHandler = this.onChangeHandler.bind(this)
-        this.loadOptions = this.loadOptions.bind(this)
-        this.filterLocations = this.filterLocations.bind(this)
+        this.onChangeHandler = this.onChangeHandler.bind(this);
+        this.loadOptions = this.loadOptions.bind(this);
+        this.filterLocations = this.filterLocations.bind(this);
     }
 
     componentDidMount() {
-        this.setState({isBusy: true})
+        this.setState({ isBusy: true });
         HttpClient.get(`/get-locations-list`)
-            .then(response => {
-                this.setState({isBusy: false, locations: response.data.locations});
-            }, (err) => {
-                this.setState({isBusy: false, errors: (err.response).data});
-            }).catch(err => {
-
-            this.setState({isBusy: false, errors: err});
+            .then(
+                (response) => {
+                    let finalLocation = response.data.locations.map((loc) => ({
+                        ...loc,
+                        label: (
+                            <>
+                                <img
+                                    style={{
+                                        width: 30,
+                                        height: 30,
+                                    }}
+                                    src={`/flags/${loc.label}.png`}
+                                />{" "}
+                                {loc.label}
+                            </>
+                        ),
+                    }));
+                    this.setState({
+                        isBusy: false,
+                        locations: finalLocation,
+                    });
+                },
+                (err) => {
+                    this.setState({ isBusy: false, errors: err.response.data });
+                }
+            )
+            .catch((err) => {
+                this.setState({ isBusy: false, errors: err });
             });
 
         if (this.props.selected.value.length > 0) {
             this.setState({
-                'selected_option': this.props.selected
-            });     
+                selected_option: this.props.selected,
+            });
         }
     }
 
@@ -46,37 +66,37 @@ export default class LocationSelect extends React.Component {
         if (is_updated) {
             // update in the selected ui
             this.setState({
-                selected_option: sOption
-            })
+                selected_option: sOption,
+            });
         }
-        
     }
 
     filterLocations(inputValue) {
         return this.state.locations.filter((i) =>
             i.label.toLowerCase().includes(inputValue.toLowerCase())
-        );    
-        
-    };
+        );
+    }
 
     loadOptions(input, loadCallback) {
         if (input.length >= 2) {
-
             HttpClient.get(`/search-locations-list?search_str=` + input)
-                .then(response => {
-                    this.setState({
-                        locations: response.data.locations
-                    });
-                    loadCallback(this.filterLocations(input));
-                }, (err) => {
-                    this.setState({ errors: (err.response).data });
-                }).catch(err => {
+                .then(
+                    (response) => {
+                        this.setState({
+                            locations: response.data.locations,
+                        });
+                        loadCallback(this.filterLocations(input));
+                    },
+                    (err) => {
+                        this.setState({ errors: err.response.data });
+                    }
+                )
+                .catch((err) => {
                     this.setState({ errors: err });
                 });
         }
-        
     }
-    
+
     render() {
         return (
             <AsyncSelect
@@ -88,8 +108,6 @@ export default class LocationSelect extends React.Component {
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}
             />
-        )
+        );
     }
-
-
 }
