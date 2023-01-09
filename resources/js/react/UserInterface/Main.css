@@ -1116,12 +1116,13 @@ body {
     max-width: 824px;
     height: calc(100% - 180px);
 }
-.apps-modal .modal-content { padding: 24px; border-radius: 1rem; width: 100%; height: auto; border: 0; height: 100%;}
+.apps-modal .modal-content { border-radius: 1rem; width: 100%; height: auto; border: 0; height: 100%;}
 .apps-modal .modal-body {
-    padding: 0 8px;
+    padding: 24px 32px;
     overflow-y: auto;
+
 }
-.popupContent {}
+.popupContent { margin: 0 0 24px; }
 .apps-modalHead {
     display: flex;
     padding: 0 0 42px;
@@ -1347,6 +1348,53 @@ body {
 .dataTableHolder .table tbody .singleRowNoBorder td:first-child,
 .dataTableHolder .table tbody .singleRowNoBorder td:last-child,
 .dataTableHolder .table tbody .singleRowNoBorder td{border: 0;}
+.dataTableHolder {text-align: center;}
+.singleRow {
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.tableBody .singleRow {
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border: 1px solid #cacaca;
+}
+.tableHead .singleRow {}
+.tableHead .singleCol {
+    border: 0;
+    color: #096db7;
+    font-weight: 600 !important;
+}
+.tableBody .singleRow:last-child { margin-bottom: 0; }
+.singleRow .singleCol {
+    display: flex;
+    padding: 0 12px;
+    font-size: 14px;
+    line-height: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.colKeyword {
+    flex-grow: 1;
+    justify-content: start !important;
+    border-right: 1px solid #cacaca;
+}
+.colUrl {
+    width: 50px;
+    border-right: 1px solid #cacaca;
+}
+.colSearchEngine {
+    width: 118px;
+    border-right: 1px solid #cacaca;
+}
+.colLocation {
+    width: 124px;
+    border-right: 1px solid #cacaca;
+}
+.colAction {width: 81px;}
+
+
 .modal-weatherAlerts .grid2layout{ grid-template-columns: 372px 372px; }
 .modal-holidays .grid2layout .column:first-child,
 .modal-weatherAlerts .grid2layout .column:first-child{  padding-right: 4px; }

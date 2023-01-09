@@ -248,10 +248,12 @@ export default class AddKeyword extends React.Component {
                             <option value="true">Competitor's website</option>
                         </select>
                     </div>
-                    <div className="themeNewInputGroup inputWithIcon mb-3 position-relative">
+
+                    <div className="themeNewInputGroup inputWithIcon position-relative">
                         <input type="text" className="form-control" placeholder="your-company-domain.com" name="url" id="url" onChange={(e) => {this.setState({ url: e.target.value });}}/>
                         <i className="fa fa-link"></i>
                     </div>
+
                     <div className="themeNewInputGroup">
                         <input type="text" className="form-control" placeholder="Add keywords" name="keywords" id="tracking_keywords" onKeyUp={(e) => {this.addKeyword(e);}}/>
                         <div className="input-group-append"><i className="ti-plus"></i></div>
@@ -268,10 +270,10 @@ export default class AddKeyword extends React.Component {
                         : null}
                     </div>
 
-
                     <div className="themeNewInputGroup themeNewselect">
                         <SearchEngineSelect className="gray_clr" name="search_engine" id="search_engine" selected={{label: '', value: ''}} onChangeCallback={this.changeSearchEngineHandler} placeholder="Select Search Engine" multiple="true"/>
                     </div>
+
                     <div className="themeNewInputGroup">
                         <LocationSelect className="gray_clr" name="country" id="country" selected={{label: '', value: ''}} onChangeCallback={this.changeLocationHandler} placeholder="Select Location" multiple="true"/>
 
@@ -291,6 +293,7 @@ export default class AddKeyword extends React.Component {
                                 <option value="down">Down</option>
                             </select>
                         </div>
+
                         <div className="themeNewInputGroup">
                             <input className="form-control" id="ranking_places" placeholder="Places" type="number" min="0" onChange={(e) => {this.setState({ranking_places: e.target.value,});}}/>
                         </div>
