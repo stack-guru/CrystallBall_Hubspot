@@ -155,7 +155,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                     <></>
                 ) : (
                     <>
-                        <div className="input-group mb-3 themeNewInputGroup">
+                        <div className="input-group mb-3 themeNewInputGroup themeNewselect flex-column">
                             <Select
                                 value={this.state.searchCountry}
                                 name="searchCountry"
@@ -172,14 +172,8 @@ export default class DSOWMCitiesSelect extends React.Component {
                                                 value: wAC.country_code,
                                                 label: (
                                                     <>
-                                                        <img
-                                                            style={{
-                                                                width: 30,
-                                                                height: 30,
-                                                            }}
-                                                            src={`/flags/${wAC.country_name}.png`}
-                                                        />{" "}
-                                                        {wAC.country_name}
+                                                        <span><img style={{width: 20, height: 20,}} src={`/flags/${wAC.country_name}.png`}/></span>
+                                                        <span className="pl-2">{wAC.country_name}</span>
                                                     </>
                                                 ),
                                                 default: true,
