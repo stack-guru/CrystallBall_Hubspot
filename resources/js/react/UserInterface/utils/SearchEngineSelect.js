@@ -23,8 +23,18 @@ export default class SearchEngineSelect extends React.Component {
         this.setState({isBusy: true})
         HttpClient.get(`/get-search-engine-list`)
             .then(response => {
-                this.setState({isBusy: false, search_engines: response.data.search_engines});
-                
+                let finalSearchEngines = response.data.search_engines.map((sen) => ({
+                    ...sen,
+                    label: (
+                        <>
+                            <span><img style={{ width: 20, height: 20,}} src={`/${sen.label}.svg`}/></span>
+                            <span className="pl-2">{sen.label}</span>
+                        </>
+                    ),
+                }));
+
+                this.setState({isBusy: false, search_engines: finalSearchEngines});
+
             }, (err) => {
                 this.setState({isBusy: false, errors: (err.response).data});
             }).catch(err => {
@@ -34,7 +44,7 @@ export default class SearchEngineSelect extends React.Component {
         if (this.props.selected.value.length > 0) {
             this.setState({
                 'selected_option': this.props.selected
-            });   
+            });
         }
     }
 
@@ -48,7 +58,7 @@ export default class SearchEngineSelect extends React.Component {
                 selected_option: sOption
             });
         }
-        
+
     }
 
     render() {
