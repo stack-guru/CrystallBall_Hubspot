@@ -510,7 +510,6 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
-                                commingSoon: true,
                                 brandName: "Google Analytics",
                                 brandLogo: "/googleAnalytics.svg",
                                 url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en'
@@ -521,7 +520,6 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
-                                commingSoon: true,
                                 brandName: "Data Studio",
                                 brandLogo: "/dataStudio.svg",
                                 url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en'
@@ -532,7 +530,6 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
-                                commingSoon: true,
                                 brandName: "Google Ads",
                                 brandLogo: "/googleAds.svg",
                                 url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en'
@@ -543,7 +540,6 @@ class AppsMarket extends React.Component {
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
-                                commingSoon: true,
                                 brandName: "Zapier",
                                 brandLogo: "/zapier.svg",
                                 url: '/integrations'

@@ -22,7 +22,7 @@ class Wordpress extends React.Component {
                 <div className="apps-bodyContent">
                     <div className="white-box">
                         <div className="contentBox">
-                            <p className="mb-0">1. Install our plugin from Plugins market</p>
+                            <p className="mb-0">1. Install our plugin from <a href="https://wordpress.org/plugins/crystal-ball-insight/" target="_blank">Plugins</a> market</p>
                         </div>
                         <div className="contentBox d-flex flex-column">
                             <p className="mb-3">2. Create API Key</p>
