@@ -45,7 +45,7 @@ class AnnotationController extends Controller
 
         $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString(
             $user,
-            $request->query('google_analytics_property_id') ? $request->query('google_analytics_property_id') : 'false',
+            $request->query('google_analytics_property_id') ? $request->query('google_analytics_property_id') : '*',
             $userIdsArray,
             $request->query('user_id') ? $request->query('user_id') : 'false',
             $request->query('show_manual_annotations') ? $request->query('show_manual_annotations') : 'false',
@@ -195,7 +195,7 @@ class AnnotationController extends Controller
 
         $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString(
             $user,
-            $request->query('google_analytics_property_id') ? $request->query('google_analytics_property_id') : 'false',
+            $request->query('google_analytics_property_id') ? $request->query('google_analytics_property_id') : '*',
             $userIdsArray,
             $request->query('user_id') ? $request->query('user_id') : 'false',
             $request->query('show_manual_annotations') ? $request->query('show_manual_annotations') : 'false',
