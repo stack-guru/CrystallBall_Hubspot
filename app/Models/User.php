@@ -343,7 +343,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $annotationsQuery = "SELECT COUNT(*) AS total_annotations_count FROM (";
         $annotationsQuery .= "SELECT TempTable.* FROM (";
-        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($this, '*', $userIdsArray, '*', false);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($this, '*', $userIdsArray, '*', true);
         $annotationsQuery .= ") AS TempTable";
 
         if ($userPricePlan->annotations_count > 0 && $applyLimit) {
