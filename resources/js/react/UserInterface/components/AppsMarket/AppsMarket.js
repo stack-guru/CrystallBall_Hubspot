@@ -447,17 +447,7 @@ class AppsMarket extends React.Component {
                                     <span className="githubIcon flex-shrink-0"><img src={item.logo} alt={item.logo} className="svg-inject" /></span>
                                     <p className="noteText m-0">{item.text}</p>
                                     <button onClick={() => {
-                                        if (item.commingSoon) {
-                                            swal.fire(
-                                                "This feature is coming soon. Stay tuned!",
-                                                "",
-                                                "info"
-                                            );
-                                        } else {
-                                            this.setState({
-                                                dsKey: item.dsKey,
-                                            });
-                                        }
+                                        if (item.commingSoon) { swal.fire("This feature is coming soon. Stay tuned!", "", "info"); } else { this.setState({dsKey: item.dsKey,});}
                                     }} className="btn btn-sm btn-primary flex-shrink-0">Add</button>
                                 </div>))}
                             </Slider>
@@ -468,24 +458,10 @@ class AppsMarket extends React.Component {
 
                         <form className="pageFilters d-flex justify-content-between align-items-center">
                             <FormGroup className="filter-sort position-relative">
-                                <Label
-                                    className="sr-only"
-                                    for="dropdownFilters"
-                                >
-                                    sort by filter
-                                </Label>
+                                <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
                                 <i className="btn-searchIcon left-0">
-                                    <svg
-                                        width="12"
-                                        height="10"
-                                        viewBox="0 0 12 10"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z"
-                                            fill="#666666"
-                                        />
+                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666"/>
                                     </svg>
                                 </i>
                                 <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
@@ -523,9 +499,91 @@ class AppsMarket extends React.Component {
                             </FormGroup>
                         </form>
 
-                        <h3 className="h3-title">Recommended For You</h3>
+                        <h3 className="h3-title">Display on Analytics and BI Tools</h3>
                     </div>
 
+                    <div className="items mb-5">
+                        {[
+                            {
+                                id: "06",
+                                background: "null",
+                                dsKey: "",
+                                enabled: false,
+                                premium: false,
+                                commingSoon: true,
+                                brandName: "Google Ads",
+                                brandLogo: "/googleAds.svg",
+                            },
+                            {
+                                id: "12",
+                                background: "#FF4A00",
+                                dsKey: "",
+                                enabled: false,
+                                premium: false,
+                                commingSoon: true,
+                                brandName: "Zapier",
+                                brandLogo: "/zapier.svg",
+                            },
+                            {
+                                id: "06",
+                                background: "null",
+                                dsKey: "",
+                                enabled: false,
+                                premium: false,
+                                commingSoon: true,
+                                brandName: "Google Ads",
+                                brandLogo: "/googleAds.svg",
+                            },
+                            {
+                                id: "12",
+                                background: "#FF4A00",
+                                dsKey: "",
+                                enabled: false,
+                                premium: false,
+                                commingSoon: true,
+                                brandName: "Zapier",
+                                brandLogo: "/zapier.svg",
+                            }
+                        ].map((item, itemKey) => (
+                            <div
+                                onClick={() => {
+                                    if (item.commingSoon) {
+                                        swal.fire(
+                                            "This feature is coming soon. Stay tuned!",
+                                            "",
+                                            "info"
+                                        );
+                                    } else {
+                                        this.setState({
+                                            dsKey: item.dsKey,
+                                        });
+                                    }
+                                }}
+                                className="item"
+                                key={itemKey}
+                                style={{
+                                    background: item.background || "#fff",
+                                    "border-color":
+                                        item.background || "#e0e0e0",
+                                }}
+                            >
+                                {item.enabled ? (
+                                    <i class="active fa fa-check-circle"></i>
+                                ) : null}
+                                <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width='140' />
+                                {item.premium ? (
+                                    <span className="btn-premium">
+                                        <i className="fa fa-diamond"></i>
+                                        <span>Premium</span>
+                                    </span>
+                                ) : null}
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="pageHeader">
+                        <h3 className="h3-title">Recommended For You</h3>
+                    </div>
                     <div className="items mb-5">
                         {[
                             {
@@ -697,16 +755,6 @@ class AppsMarket extends React.Component {
                                     brandLogo: "/twilio.svg",
                                 },
                                 {
-                                    id: "06",
-                                    background: "null",
-                                    dsKey: "",
-                                    enabled: false,
-                                    premium: false,
-                                    commingSoon: true,
-                                    brandName: "Google Ads",
-                                    brandLogo: "/googleAds.svg",
-                                },
-                                {
                                     id: "07",
                                     background: "#004F9D",
                                     dsKey: "",
@@ -795,16 +843,6 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "Hubspot",
                                     brandLogo: "/hubspot.svg",
-                                },
-                                {
-                                    id: "12",
-                                    background: "#FF4A00",
-                                    dsKey: "",
-                                    enabled: false,
-                                    premium: false,
-                                    commingSoon: true,
-                                    brandName: "Zapier",
-                                    brandLogo: "/zapier.svg",
                                 },
                                 {
                                     id: "13",
