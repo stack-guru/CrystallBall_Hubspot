@@ -351,7 +351,7 @@ class AppsMarket extends React.Component {
                                         id: "04a",
                                         background: "null",
                                         dsKey: "is_ds_keyword_tracking_enabled",
-                                        text: "Automate your rank tracking to win the SERP game.Automate your rank tracking to win the SERP game.",
+                                        text: "Automate your rank tracking to win the SERP game.",
                                         logo: "/SERP-small.svg",
                                     },
 
@@ -367,7 +367,7 @@ class AppsMarket extends React.Component {
                                         id: "06a",
                                         background: "null",
                                         dsKey: "is_ds_weather_alerts_enabled",
-                                        text: "Weather data to tap into weather-driven patterns of demand and consumer behavior.Weather data to tap into weather-driven patterns of demand and consumer behavior.",
+                                        text: "Explore weather-driven patterns of demand and consumer behavior.",
                                         logo: "/weather-small.svg",
                                     },
 
@@ -405,7 +405,7 @@ class AppsMarket extends React.Component {
                                         id: "011a",
                                         background: "null",
                                         commingSoon: true,
-                                        text: "See Facebook ads performance and optimize your social media marketing scheme.",
+                                        text: "See Facebook ads performance and optimize your SM marketing scheme",
                                         logo: "/facebook-small.svg",
                                     },
                                     {
@@ -658,7 +658,7 @@ class AppsMarket extends React.Component {
                                 brandName: "Apple Podcast",
                                 brandLogo: "/applePodcast.svg",
                             },
-                            
+
                             {
                                 id: "19",
                                 background: "#24292F",
