@@ -343,7 +343,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $annotationsQuery = "SELECT COUNT(*) AS total_annotations_count FROM (";
         $annotationsQuery .= "SELECT TempTable.* FROM (";
-        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($this, '*', $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($this, '*', $userIdsArray, '*', false);
         $annotationsQuery .= ") AS TempTable";
 
         if ($userPricePlan->annotations_count > 0 && $applyLimit) {
@@ -612,5 +612,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(UserGithubAccount::class, 'user_id');
     }
-
 }

@@ -79,6 +79,7 @@ class AnnotationController extends Controller
             $request->query('google_analytics_property_id') ? $request->query('google_analytics_property_id') : '*',
             $userIdsArray,
             $request->query('user_id') ? $request->query('user_id') : '*',
+            false,
             $request->query('show_manual_annotations') ? $request->query('show_manual_annotations') : 'false',
             $request->query('show_csv_annotations') ? $request->query('show_csv_annotations') : 'false',
             $request->query('show_api_annotations') ? $request->query('show_api_annotations') : 'false',

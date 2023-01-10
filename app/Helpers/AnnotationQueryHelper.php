@@ -13,6 +13,7 @@ class AnnotationQueryHelper
         string $annotationGAPropertyId = '*',
         array $userIdsArray = [],
         string $userId = '*',
+        bool $showDisabled = false,
         string $showManualAnnotations = 'true',
         string $showCSVAnnotations = 'true',
         string $showAPIAnnotations = 'true',
@@ -34,7 +35,7 @@ class AnnotationQueryHelper
     ) {
         $annotationsQuery = "";
         // SELECT annotations from annotations table
-        $annotationsQuery .= self::userAnnotationsQuery($user, $userIdsArray, $annotationGAPropertyId, $userId, $showWebMonitorings, $showManualAnnotations, $showCSVAnnotations, $showAPIAnnotations);
+        $annotationsQuery .= self::userAnnotationsQuery($user, $userIdsArray, $showDisabled, $annotationGAPropertyId, $userId, $showWebMonitorings, $showManualAnnotations, $showCSVAnnotations, $showAPIAnnotations);
         // Add web monitor annotations if it is enabled in user data source
         if ($user->is_ds_web_monitors_enabled && $showWebMonitorings == 'true') {
             $annotationsQuery .= " union ";
@@ -123,7 +124,7 @@ class AnnotationQueryHelper
         return $gAPropertyCriteria;
     }
 
-    public static function userAnnotationsQuery(User $user, array $userIdsArray, string $googleAnalyticsPropertyId = null, string $userId = '*', string $showWebMonitoring = 'false', string $showManualAnnotations = 'false', string  $showCSVAnnotations = 'false', string $showAPIAnnotations = 'false')
+    public static function userAnnotationsQuery(User $user, array $userIdsArray, $showDisabled = false, string $googleAnalyticsPropertyId = null, string $userId = '*', string $showWebMonitoring = 'false', string $showManualAnnotations = 'false', string  $showCSVAnnotations = 'false', string $showAPIAnnotations = 'false')
     {
         $annotationsQuery = "";
         $annotationsQuery .= "SELECT DISTINCT DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description` FROM `annotations`";
@@ -136,7 +137,7 @@ class AnnotationQueryHelper
         } else {
             $annotationsQuery .= " `annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') ";
         }
-        $annotationsQuery .= " AND `annotations`.`is_enabled` = 1 ";
+        if (!$showDisabled) $annotationsQuery .= " AND `annotations`.`is_enabled` = 1 ";
         $annotationsQuery .= " )";
 
         if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
