@@ -197,7 +197,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                             </div>
                             <div className="grid2layout">
                                 <GoogleAnalyticsPropertySelect
-                                    className="themeNewselect"
+                                    className="themeNewselect themeNewInputGroup"
                                     name="ga_property_id"
                                     id="ga_property_id"
                                     currentPricePlan={

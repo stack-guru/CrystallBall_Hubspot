@@ -36,6 +36,7 @@ import RetailMarketingDates from "./RetailMarketingDates";
 import Holidays from "./Holidays";
 import WeatherAlerts from "./WeatherAlerts";
 import WordpressUpdates from "./WordpressUpdates";
+import Wordpress from "./Wordpress";
 import RankTracking from "./RankTracking";
 import Bitbucket from "./Bitbucket";
 import Github from "./Github";
@@ -525,7 +526,7 @@ class AppsMarket extends React.Component {
                         <h3 className="h3-title">Recommended For You</h3>
                     </div>
 
-                    <Row className="items mb-5">
+                    <div className="items mb-5">
                         {[
                             {
                                 id: "01",
@@ -539,8 +540,8 @@ class AppsMarket extends React.Component {
                             {
                                 id: "02",
                                 background: "#00749a",
-                                dsKey: "is_ds_wordpress_updates_enabled",
-                                enabled:this.state.userServices.is_ds_wordpress_updates_enabled,
+                                dsKey: "is_ds_wordpress_enabled",
+                                enabled:this.state.userServices.is_ds_wordpress_enabled,
                                 premium: false,
                                 brandName: "Wordpress",
                                 brandLogo: "/wordpress.svg",
@@ -582,37 +583,6 @@ class AppsMarket extends React.Component {
                                 brandLogo: "/googleUpdates.svg",
                             },
                             {
-                                id: "06",
-                                background: "null",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "Google Ads",
-                                brandLogo: "/googleAds.svg",
-                            },
-                            {
-                                id: "07",
-                                background: "#004F9D",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "Facebook Ads",
-                                brandLogo: "/facebookAds.svg",
-                            },
-                            {
-                                id: "08",
-                                background:
-                                    "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "Instagram",
-                                brandLogo: "/instagram.svg",
-                            },
-                            {
                                 id: "09",
                                 background: "#1DA1F2",
                                 dsKey: "is_ds_twitter_tracking_enabled",
@@ -622,150 +592,29 @@ class AppsMarket extends React.Component {
                                 brandLogo: "/twitter.svg",
                             },
                             {
-                                id: "10",
-                                background: "#411442",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "slack",
-                                brandLogo: "/slack.svg",
-                            },
-                            {
-                                id: "11",
-                                background: "#F8761F",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "Hubspot",
-                                brandLogo: "/hubspot.svg",
-                            },
-                            {
-                                id: "12",
-                                background: "#FF4A00",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "Zapier",
-                                brandLogo: "/zapier.svg",
-                            },
-                            {
-                                id: "13",
-                                background: "#006192",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "Linkedin",
-                                brandLogo: "/linkedin.svg",
-                            },
-                            {
-                                id: "14",
-                                background: "#03363D",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "Zendesk",
-                                brandLogo: "/zendesk.svg",
-                            },
-                            {
-                                id: "15",
-                                background: "#00A1E0",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "Salesforce",
-                                brandLogo: "/salesforce.svg",
-                            },
-                            {
-                                id: "16",
-                                background: "#2EBD59",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "Sportfy Podcast",
-                                brandLogo: "/sportfyPodcast.svg",
-                            },
-                            {
                                 id: "17",
                                 background: "null",
                                 dsKey: "is_ds_apple_podcast_annotation_enabled",
-                                enabled:this.state.userServices.is_ds_apple_podcast_annotation_enabled,
+                                enabled: this.state.userServices.is_ds_apple_podcast_annotation_enabled,
                                 premium: false,
                                 brandName: "Apple Podcast",
                                 brandLogo: "/applePodcast.svg",
                             },
-                            {
-                                id: "18",
-                                background: "#FF9900",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "amazoon Podcast",
-                                brandLogo: "/amazonPodcast.svg",
-                            },
+                            
                             {
                                 id: "19",
                                 background: "#24292F",
                                 dsKey: "is_ds_github_tracking_enabled",
-                                enabled:this.state.userServices.is_ds_github_tracking_enabled,
+                                enabled: this.state.userServices.is_ds_github_tracking_enabled,
                                 premium: false,
                                 brandName: "GitHub",
                                 brandLogo: "/github.svg",
                             },
                             {
-                                id: "20",
-                                background: "null",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "Shopify",
-                                brandLogo: "/shopify.svg",
-                            },
-                            {
-                                id: "21",
-                                background: "#2E3133",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "WIX.com",
-                                brandLogo: "/wixCom.svg",
-                            },
-                            {
-                                id: "22",
-                                background: "null",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "ZOHO",
-                                brandLogo: "/zoho.svg",
-                            },
-                            {
-                                id: "23",
-                                background: "null",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "YouTube",
-                                brandLogo: "/youtube.svg",
-                            },
-                            {
                                 id: "24",
                                 background: "null",
                                 dsKey: "is_ds_retail_marketing_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_retail_marketing_enabled,
+                                enabled: this.state.userServices.is_ds_retail_marketing_enabled,
                                 premium: false,
                                 brandName: "Retail Marketing Dates",
                                 brandLogo: "/retailMarketingDates.svg",
@@ -774,30 +623,16 @@ class AppsMarket extends React.Component {
                                 id: "25",
                                 background: "#253858",
                                 dsKey: "is_ds_bitbucket_tracking_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_bitbucket_tracking_enabled,
+                                enabled: this.state.userServices.is_ds_bitbucket_tracking_enabled,
                                 premium: false,
                                 brandName: "Bitbucket",
                                 brandLogo: "/bitbucket.svg",
                             },
                             {
-                                id: "26",
-                                background: "null",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "Google Tag Manager",
-                                brandLogo: "/googleTagManager.svg",
-                            },
-                            {
                                 id: "27",
                                 background: "null",
                                 dsKey: "is_ds_holidays_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_holidays_enabled,
+                                enabled: this.state.userServices.is_ds_holidays_enabled,
                                 premium: false,
                                 brandName: "Holidays",
                                 brandLogo: "/holidays.svg",
@@ -806,80 +641,232 @@ class AppsMarket extends React.Component {
                                 id: "28",
                                 background: "null",
                                 dsKey: "is_ds_web_monitors_enabled",
-                                enabled:
-                                    this.state.userServices
-                                        .is_ds_web_monitors_enabled,
+                                enabled: this.state.userServices.is_ds_web_monitors_enabled,
                                 premium: false,
                                 brandName: "Website Monitoring",
                                 brandLogo: "/websiteMonitoring.svg",
                             },
-                            {
-                                id: "29",
-                                background: "#0A0A0A",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                commingSoon: true,
-                                brandName: "TikTok",
-                                brandLogo: "/tiktok.svg",
-                            },
                         ].map((item, itemKey) => (
-                            <Col xs="3">
-                                <div
-                                    onClick={() => {
-                                        if (item.commingSoon) {
-                                            swal.fire(
-                                                "This feature is coming soon. Stay tuned!",
-                                                "",
-                                                "info"
-                                            );
-                                        } else {
-                                            this.setState({
-                                                dsKey: item.dsKey,
-                                            });
-                                        }
-                                    }}
-                                    className="item"
-                                    key={itemKey}
-                                    style={{
-                                        background: item.background || "#fff",
-                                        "border-color":
-                                            item.background || "#e0e0e0",
-                                    }}
-                                >
-                                    {item.enabled ? (
-                                        <i class="active fa fa-check-circle"></i>
-                                    ) : null}
-                                    <img
-                                        src={item.brandLogo}
-                                        alt={item.brandName}
-                                        className="svg-inject"
-                                    />
-                                    {item.premium ? (
-                                        <span className="btn-premium">
-                                            <i className="fa fa-diamond"></i>
-                                            <span>Premium</span>
-                                        </span>
-                                    ) : null}
-                                </div>
-                            </Col>
+                            <div
+                                onClick={() => {
+                                    if (item.commingSoon) {
+                                        swal.fire(
+                                            "This feature is coming soon. Stay tuned!",
+                                            "",
+                                            "info"
+                                        );
+                                    } else {
+                                        this.setState({
+                                            dsKey: item.dsKey,
+                                        });
+                                    }
+                                }}
+                                className="item"
+                                key={itemKey}
+                                style={{
+                                    background: item.background || "#fff",
+                                    "border-color":
+                                        item.background || "#e0e0e0",
+                                }}
+                            >
+                                {item.enabled ? (
+                                    <i class="active fa fa-check-circle"></i>
+                                ) : null}
+                                <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width='140' />
+                                {item.premium ? (
+                                    <span className="btn-premium">
+                                        <i className="fa fa-diamond"></i>
+                                        <span>Premium</span>
+                                    </span>
+                                ) : null}
+                            </div>
                         ))}
-                    </Row>
+                    </div>
 
-                    <Row className="boxWhite items m-0">
-                        <Col xs='12' className="pt-0 pb-0"><h4>Coming Soon</h4></Col>
-                        {[
-                            {
-                                id: "01",
-                                background: "#f12e45",
-                                dsKey: "is_ds_wordpress_updates_enabled",
-                                enabled:this.state.userServices.is_ds_wordpress_updates_enabled,
-                                premium: false,
-                                brandName: "twilio",
-                                brandLogo: "/twilio.svg",
-                            }
-                        ].map((item, itemKey) => (
-                            <Col xs="3">
+                    <div className="boxWhite">
+                        <h4>Coming Soon</h4>
+                        <div className="items">
+                            {[
+                                {
+                                    id: "01",
+                                    background: "#f12e45",
+                                    dsKey: "is_ds_wordpress_updates_enabled",
+                                    enabled:this.state.userServices.is_ds_wordpress_updates_enabled,
+                                    premium: false,
+                                    brandName: "twilio",
+                                    brandLogo: "/twilio.svg",
+                                },
+                                {
+                                    id: "06",
+                                    background: "null",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Google Ads",
+                                    brandLogo: "/googleAds.svg",
+                                },
+                                {
+                                    id: "07",
+                                    background: "#004F9D",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Facebook Ads",
+                                    brandLogo: "/facebookAds.svg",
+                                },
+                                {
+                                    id: "08",
+                                    background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Instagram",
+                                    brandLogo: "/instagram.svg",
+                                },
+                                {
+                                    id: "29",
+                                    background: "#0A0A0A",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "TikTok",
+                                    brandLogo: "/tiktok.svg",
+                                },
+                                {
+                                    id: "26",
+                                    background: "null",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Google Tag Manager",
+                                    brandLogo: "/googleTagManager.svg",
+                                },
+                                {
+                                    id: "23",
+                                    background: "null",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "YouTube",
+                                    brandLogo: "/youtube.svg",
+                                },
+                                {
+                                    id: "22",
+                                    background: "null",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "ZOHO",
+                                    brandLogo: "/zoho.svg",
+                                },
+                                {
+                                    id: "21",
+                                    background: "#2E3133",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "WIX.com",
+                                    brandLogo: "/wixCom.svg",
+                                },
+                                {
+                                    id: "10",
+                                    background: "#411442",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "slack",
+                                    brandLogo: "/slack.svg",
+                                },
+                                {
+                                    id: "11",
+                                    background: "#F8761F",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Hubspot",
+                                    brandLogo: "/hubspot.svg",
+                                },
+                                {
+                                    id: "12",
+                                    background: "#FF4A00",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Zapier",
+                                    brandLogo: "/zapier.svg",
+                                },
+                                {
+                                    id: "13",
+                                    background: "#006192",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Linkedin",
+                                    brandLogo: "/linkedin.svg",
+                                },
+                                {
+                                    id: "14",
+                                    background: "#03363D",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Zendesk",
+                                    brandLogo: "/zendesk.svg",
+                                },
+                                {
+                                    id: "15",
+                                    background: "#00A1E0",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Salesforce",
+                                    brandLogo: "/salesforce.svg",
+                                },
+                                {
+                                    id: "16",
+                                    background: "#2EBD59",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Sportfy Podcast",
+                                    brandLogo: "/sportfyPodcast.svg",
+                                },
+                                {
+                                    id: "18",
+                                    background: "#FF9900",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "amazoon Podcast",
+                                    brandLogo: "/amazonPodcast.svg",
+                                },
+                                {
+                                    id: "20",
+                                    background: "null",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Shopify",
+                                    brandLogo: "/shopify.svg",
+                                },
+                            ].map((item, itemKey) => (
                                 <div onClick={() => {
                                     if(item.commingSoon)
                                         {swal.fire("This feature is coming soon. Stay tuned!", "", "info");
@@ -888,12 +875,12 @@ class AppsMarket extends React.Component {
                                     }
                                 }} className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color" : item.background || "#e0e0e0",}}>
                                     { item.enabled ? (<i class="active fa fa-check-circle"></i>) : null }
-                                    <img src={item.brandLogo} alt={item.brandName} className="svg-inject"/>
+                                    <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width='140' />
                                     { item.premium ? (<span className="btn-premium"><i className="fa fa-diamond"></i><span>Premium</span></span>) : null }
                                 </div>
-                            </Col>
-                        ))}
-                    </Row>
+                            ))}
+                        </div>
+                    </div>
 
                     <AppsModal
                         isOpen={this.state.dsKey}
@@ -1084,6 +1071,36 @@ class AppsMarket extends React.Component {
                         ) : this.state.dsKey ===
                           "is_ds_wordpress_updates_enabled" ? (
                             <WordpressUpdates
+                                {...this.state}
+                                {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
+                                updateUserAnnotationColors={
+                                    this.updateUserAnnotationColors
+                                }
+                                serviceStatusHandler={this.serviceStatusHandler}
+                                changeShownHint={this.changeShownHint}
+                                sectionToggler={this.sectionToggler}
+                                userDataSourceAddHandler={
+                                    this.userDataSourceAddHandler
+                                }
+                                userDataSourceDeleteHandler={
+                                    this.userDataSourceDeleteHandler
+                                }
+                                reloadWebMonitors={this.reloadWebMonitors}
+                                loadUserDataSources={this.loadUserDataSources}
+                                updateGAPropertyId={(value) => {
+                                    this.setState({
+                                        ga_property_id: value,
+                                    });
+                                }}
+                            />
+                        ) : this.state.dsKey ===
+                          "is_ds_wordpress_enabled" ? (
+                            <Wordpress
                                 {...this.state}
                                 {...this.props}
                                 closeModal={() => {
