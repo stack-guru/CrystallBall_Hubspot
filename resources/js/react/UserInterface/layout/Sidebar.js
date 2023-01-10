@@ -235,11 +235,31 @@ class Sidebar extends React.Component {
                         </li>
                     </ul>
                 </nav>
-                <div className='btn-holder'>
-                    <a className='btn-addAnnotation btn btn-primary d-flex align-items-center justify-content-center' href="#">
-                        <img src='/plus-new.svg' width='16' height='17' alt='plus icon'/>
-                        <span>Add Annotation</span>
-                    </a>
+                <div className='btn-holder dropdown-holder'>
+                    <div class="btn-group dropup">
+                        <button type="button" class="btn-addAnnotation btn btn-primary d-flex align-items-center justify-content-center dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <img src='/plus-new.svg' width='16' height='17' alt='plus icon'/>
+                            <span>Add Annotation</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <h4 className='mb-0'>Add Annotation</h4>
+                            <div class="dropdown-divider"></div>
+                            <div className='ropdown-links'>
+                                <a class="dropdown-item" href="#">
+                                    <span><img className='inject-me' src='/manual.svg' width='16' height='16' alt='menu icon'/></span>
+                                    <span className='pl-2'>Manual</span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span><img className='inject-me' src='/appMarket.svg' width='16' height='16' alt='menu icon'/></span>
+                                    <span className='pl-2'>Apps Market</span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span><img className='inject-me' src='/csvUploadd.svg' width='16' height='16' alt='menu icon'/></span>
+                                    <span className='pl-2'>CSV Upload</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
