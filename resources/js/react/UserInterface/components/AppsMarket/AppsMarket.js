@@ -920,6 +920,7 @@ class AppsMarket extends React.Component {
                         </div>
                     </div>
 
+
                     <AppsModal
                         isOpen={this.state.dsKey}
                         toggle={() => {
