@@ -1689,6 +1689,7 @@ body {
     border: 1px solid #bdbdbd;
     padding: 12px 0px 12px 16px;
 }
+.tokenBox { width: 470px; }
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }
     .is-collapsed .sidebar .sidebar-inner .sidebar-menu>li>a .title {display: none;}
