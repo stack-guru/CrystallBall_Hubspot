@@ -511,18 +511,20 @@ class AppsMarket extends React.Component {
                                 enabled: false,
                                 premium: false,
                                 commingSoon: true,
-                                brandName: "Google Ads",
-                                brandLogo: "/googleAds.svg",
+                                brandName: "Google Analytics",
+                                brandLogo: "/googleAnalytics.svg",
+                                url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en'
                             },
                             {
                                 id: "12",
-                                background: "#FF4A00",
+                                background: "null",
                                 dsKey: "",
                                 enabled: false,
                                 premium: false,
                                 commingSoon: true,
-                                brandName: "Zapier",
-                                brandLogo: "/zapier.svg",
+                                brandName: "Data Studio",
+                                brandLogo: "/dataStudio.svg",
+                                url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en'
                             },
                             {
                                 id: "06",
@@ -533,6 +535,7 @@ class AppsMarket extends React.Component {
                                 commingSoon: true,
                                 brandName: "Google Ads",
                                 brandLogo: "/googleAds.svg",
+                                url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en'
                             },
                             {
                                 id: "12",
@@ -543,9 +546,10 @@ class AppsMarket extends React.Component {
                                 commingSoon: true,
                                 brandName: "Zapier",
                                 brandLogo: "/zapier.svg",
+                                url: '/integrations'
                             }
                         ].map((item, itemKey) => (
-                            <div
+                            <a target={'_blank'} href={item.url}
                                 onClick={() => {
                                     if (item.commingSoon) {
                                         swal.fire(
@@ -577,7 +581,7 @@ class AppsMarket extends React.Component {
                                         <span>Premium</span>
                                     </span>
                                 ) : null}
-                            </div>
+                            </a>
                         ))}
                     </div>
 
