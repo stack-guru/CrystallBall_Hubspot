@@ -126,7 +126,7 @@ class Sidebar extends React.Component {
                             <Link to="/annotation">
                                 <span className="sidebar-link d-flex align-items-center justify-content-start">
                                     <span><img className='inject-me' src='/allAnnotations.svg' width='26' height='26' alt='menu icon'/></span>
-                                    <span className="title flex-grow-1">All Annotations</span>
+                                    <span className="title flex-grow-1">Annotations List</span>
                                 </span>
                             </Link>
                         </li>
@@ -141,7 +141,7 @@ class Sidebar extends React.Component {
                                 </Link>
                             </li>
                         ) : null}
-                        {this.props.user.user_level == "admin" ||
+                        {/* {this.props.user.user_level == "admin" ||
                         this.props.user.user_level == "team" ? (
                             <li className="nav-item gaa-menu-item">
                                 <Link to="/annotation/upload">
@@ -151,28 +151,12 @@ class Sidebar extends React.Component {
                                     </span>
                                 </Link>
                             </li>
-                        ) : null}
+                        ) : null} */}
                         <li className="nav-item gaa-menu-item">
                             <Link to="/data-source">
                                 <span className="sidebar-link d-flex align-items-center justify-content-start">
                                     <span><img className='inject-me' src='/appsMarket.svg' width='26' height='26' alt='menu icon'/></span>
                                     <span className="title flex-grow-1">Apps Market</span>
-                                </span>
-                            </Link>
-                        </li>
-                        <li className="nav-item gaa-menu-item">
-                            <Link to="/integrations">
-                                <span className="sidebar-link d-flex align-items-center justify-content-start">
-                                    <span><img className='inject-me' src='/integrations.svg' width='26' height='26' alt='menu icon'/></span>
-                                    <span className="title flex-grow-1">Integrations</span>
-                                </span>
-                            </Link>
-                        </li>
-                        <li className="nav-item gaa-menu-item">
-                            <Link to="/settings/google-account">
-                                <span className="sidebar-link d-flex align-items-center justify-content-start">
-                                    <span><img className='inject-me' src='/addProperties.svg' width='26' height='26' alt='menu icon'/></span>
-                                    <span className="title flex-grow-1">Add Properties</span>
                                 </span>
                             </Link>
                         </li>
@@ -184,22 +168,6 @@ class Sidebar extends React.Component {
                                 </span>
                             </Link>
                         </li>
-                        {/* <li className="nav-item gaa-menu-item">
-                            <Link to="/analytics-and-business-intelligence">
-                                <span className="sidebar-link d-flex align-items-center justify-content-start">
-                                    <span><img className='inject-me' src='/analyticsBiTools.svg' width='26' height='26' alt='menu icon'/></span>
-                                    <span className="title flex-grow-1">Analytics &amp; BI tools</span>
-                                </span>
-                            </Link>
-                        </li> */}
-                        <li className="nav-item gaa-menu-item">
-                            <Link to="/api-key">
-                                <span className="sidebar-link d-flex align-items-center justify-content-start">
-                                    <span><img className='inject-me' src='/apiKeys.svg' width='26' height='26' alt='menu icon'/></span>
-                                    <span className="title flex-grow-1 ">API Keys</span>
-                                </span>
-                            </Link>
-                        </li>
                         <li className="nav-item gaa-menu-item">
                             <Link to="/notifications">
                                 <span className="sidebar-link d-flex align-items-center justify-content-start">
@@ -208,6 +176,40 @@ class Sidebar extends React.Component {
                                 </span>
                             </Link>
                         </li>
+                        {/* <li className="nav-item gaa-menu-item">
+                            <Link to="/integrations">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/integrations.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1">Integrations</span>
+                                </span>
+                            </Link>
+                        </li> */}
+                        {/* <li className="nav-item gaa-menu-item">
+                            <Link to="/settings/google-account">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/addProperties.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1">Add Properties</span>
+                                </span>
+                            </Link>
+                        </li> */}
+
+                        {/* <li className="nav-item gaa-menu-item">
+                            <Link to="/analytics-and-business-intelligence">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/analyticsBiTools.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1">Analytics &amp; BI tools</span>
+                                </span>
+                            </Link>
+                        </li> */}
+                        {/* <li className="nav-item gaa-menu-item">
+                            <Link to="/api-key">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span><img className='inject-me' src='/apiKeys.svg' width='26' height='26' alt='menu icon'/></span>
+                                    <span className="title flex-grow-1 ">API Keys</span>
+                                </span>
+                            </Link>
+                        </li> */}
+
                         <li className="nav-item gaa-menu-item setting-menu-item dropdown">
                             <a aria-expanded="false" data-target="#settings" aria-controls="settings" data-toggle="collapse collapsed" className="dropdown-toggle">
                                 <div className="wrapper sidebar-link d-flex align-items-center justify-content-start">
@@ -220,16 +222,17 @@ class Sidebar extends React.Component {
                                 <ul className="list-unstyled">
                                     {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (
                                         <React.Fragment>
-                                            <li className="nav-item dropdown"><Link to="/settings/google-account" className="sidebar-link"><span className="nav-link">Add Properties/Accounts</span></Link></li>
-                                            <li className="nav-item dropdown"><Link to="/settings/user" className="sidebar-link"><span className="nav-link">Manage Users</span></Link></li>
+                                            {/* <li className="nav-item dropdown"><Link to="/settings/google-account" className="sidebar-link"><span className="nav-link">Add Properties/Accounts</span></Link></li> */}
+                                            {/* <li className="nav-item dropdown"><Link to="/settings/user" className="sidebar-link"><span className="nav-link">Manage Users</span></Link></li> */}
                                             <li className="nav-item dropdown"><Link to="/settings/price-plans" className="sidebar-link"><span className="nav-link">Plans</span></Link></li>
-                                            <li className="nav-item dropdown"><Link to="/settings/payment-history" className="sidebar-link"><span className="nav-link">Payment History</span></Link></li>
-                                            <li className="nav-item dropdown"><div className="sidebar-link nav-link"><a href="/documentation" target="_blank">API Documentation</a></div></li>
+                                            {/* <li className="nav-item dropdown"><Link to="/settings/payment-history" className="sidebar-link"><span className="nav-link">Payment History</span></Link></li> */}
+                                            {/* <li className="nav-item dropdown"><div className="sidebar-link nav-link"><a href="/documentation" target="_blank">API Documentation</a></div></li> */}
                                         </React.Fragment>
                                     ) : null}
-                                    <li className="nav-item dropdown"><Link to="/settings/change-password" className="sidebar-link"><span className="nav-link">Profile</span></Link></li>
-                                    <li className="nav-item dropdown"><a href="#" onClick={(e) => { e.preventDefault(); this.props.toggleInterfaceTour(true);}}><span className="nav-link">Take a Tour</span></a></li>
+                                    <li className="nav-item dropdown"><Link to="/settings/change-password" className="sidebar-link"><span className="nav-link">My Account</span></Link></li>
+                                    <li className="nav-item dropdown"><Link to="/api-key" className="sidebar-link"><span className="nav-link">API Keys</span></Link></li>
                                     <li className="nav-item dropdown"><Link to="/settings/support" className="sidebar-link"><span className="nav-link">Support</span></Link></li>
+                                    <li className="nav-item dropdown"><a href="#" onClick={(e) => { e.preventDefault(); this.props.toggleInterfaceTour(true);}}><span className="nav-link">Take a Tour</span></a></li>
                                 </ul>
                             </div>
                         </li>
@@ -245,18 +248,19 @@ class Sidebar extends React.Component {
                             <h4 className='mb-0'>Add Annotation</h4>
                             <div class="dropdown-divider"></div>
                             <div className='ropdown-links'>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/annotation/create">
                                     <span><img className='inject-me' src='/manual.svg' width='16' height='16' alt='menu icon'/></span>
                                     <span className='pl-2'>Manual</span>
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/data-source">
                                     <span><img className='inject-me' src='/appMarket.svg' width='16' height='16' alt='menu icon'/></span>
                                     <span className='pl-2'>Apps Market</span>
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                {this.props.user.user_level == "admin" ||
+                                    this.props.user.user_level == "team" ? (<a class="dropdown-item" href="/annotation/upload">
                                     <span><img className='inject-me' src='/csvUploadd.svg' width='16' height='16' alt='menu icon'/></span>
                                     <span className='pl-2'>CSV Upload</span>
-                                </a>
+                                </a>) : null}
                             </div>
                         </div>
                     </div>
