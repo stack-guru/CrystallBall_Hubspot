@@ -288,799 +288,576 @@ class IndexAnnotations extends React.Component {
         const categories = this.state.annotationCategories;
 
         return (
-            <div className="container-xl bg-white anno-container d-flex flex-column justify-content-center component-wrapper">
-                <section className="ftco-section" id="inputs">
-                    <div className="container-xl p-0">
-                        <div className="row ml-0 mr-0 mb-1">
-                            <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">
-                                    Annotations
-                                </h2>
+            <div className="annotationPage">
+                <div className="container">
+                    <div className="pageHead">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h2 className="">Annotations</h2>
+                            <div className="d-flex bg-white p-2">
+                                <Link className="" to="/annotation/create"><i className=" mr-2 fa fa-plus"></i></Link>
+                                <Link className="" to="/data-source"><i className=" mr-2 fa fa-plus"></i></Link>
+                                <Link className="" to="/data-source"><i className=" mr-2 fa fa-plus"></i></Link>
                             </div>
                         </div>
-                        <div className="row mb-3 ml-0 mr-0">
-                            <div className="col-sm-12 col-md-9 col-lg-9 text-center text-sm-center text-md-left text-lg-left mb-3"></div>
-                            <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-right text-lg-right">
-                                <Link
-                                    to="/annotation/create"
-                                    className="btn btn-sm gaa-btn-primary text-white float-left w-100 mb-2"
-                                >
-                                    <i className=" mr-2 fa fa-plus"></i>
-                                    <span>Add Manual</span>
-                                </Link>
-                                <Link
-                                    to="/data-source"
-                                    className="btn btn-sm gaa-btn-primary text-white float-left w-100"
-                                >
-                                    Add Automated Annotations
-                                </Link>
-                            </div>
-                        </div>
-                        <div className="row mb-1 ml-0 mr-0">
-                            <div className="col-sm-12 col-md-2 col-lg-2 text-center text-sm-center text-md-left text-lg-left mb-3">
-                                <select
-                                    name="sortBy"
-                                    id="sort-by"
-                                    value={this.state.sortBy}
-                                    className="form-control"
-                                    onChange={this.sort}
-                                >
+
+                        <form className="d-flex justify-content-between align-items-center">
+                            <div className="">
+                                <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
                                     <option value="Null">Sort By</option>
                                     <option value="added">Added</option>
                                     <option value="date">By Date</option>
-                                    <option value="category">
-                                        By Category
-                                    </option>
-                                    <option value="ga-property">
-                                        By GA Property
-                                    </option>
+                                    <option value="category">By Category</option>
+                                    <option value="ga-property">By GA Property</option>
                                 </select>
                                 {this.state.selectedRows.length ? (
-                                    <button
-                                        className="btn btn-danger btn-sm mt-2"
-                                        onClick={this.handleDeleteSelected}
-                                    >
-                                        Delete
-                                    </button>
+                                    <button className="btn btn-danger btn-sm mt-2" onClick={this.handleDeleteSelected}>Delete</button>
                                 ) : null}
                             </div>
 
-                            <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-left text-lg-left">
+                            <div className="">
                                 {this.state.sortBy == "ga-property" ? (
                                     <GoogleAnalyticsPropertySelect
                                         name={"googleAnalyticsProperty"}
                                         id={"googleAnalyticsProperty"}
-                                        value={
-                                            this.state.googleAnalyticsProperty
-                                        }
-                                        onChangeCallback={(e) => {
-                                            this.sortByProperty(e.target.value);
-                                        }}
-                                    />
+                                        value={this.state.googleAnalyticsProperty}
+                                        onChangeCallback={(e) => {this.sortByProperty(e.target.value);}}/>
                                 ) : null}
                                 {this.state.sortBy == "category" ? (
-                                    <select
-                                        name="category"
-                                        id="category"
-                                        value={this.state.category}
-                                        className="form-control"
-                                        onChange={(e) => {
-                                            this.sortByCategory(e.target.value);
-                                        }}
-                                    >
-                                        <option value="select-category">
-                                            Select Category
-                                        </option>
+                                    <select name="category" id="category" value={this.state.category} className="form-control" onChange={(e) => {this.sortByCategory(e.target.value);}}>
+                                        <option value="select-category">Select Category</option>
                                         {categories.map((cats) => (
-                                            <option
-                                                value={cats.category}
-                                                key={cats.category}
-                                            >
-                                                {cats.category}
-                                            </option>
+                                            <option value={cats.category} key={cats.category}>{cats.category}</option>
                                         ))}
                                     </select>
                                 ) : null}
                             </div>
-                            <div className="col-sm-12 col-md-4 col-lg-4  text-center text-sm-center text-md-right text-lg-right"></div>
-                            <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right">
-                                <input
-                                    name="searchText"
-                                    value={this.state.searchText}
-                                    className="form-control float-right m-w-255px"
-                                    placeholder="Search..."
-                                    onChange={this.handleChange}
-                                />
+
+                            <div className="">
+                                <input name="searchText" value={this.state.searchText} className="form-control float-right m-w-255px" placeholder="Search..." onChange={this.handleChange}/>
                             </div>
-                        </div>
 
-                        <div className="container">
-                            <div className="d-flex">
-                                {this.state.isLoading ? (
-                                    <></>
-                                ) : (
-                                    <>
-                                        {this.state.annotations
-                                            .filter(this.checkSearchText)
-                                            .map((anno, idx) => {
-                                                let borderLeftColor =
-                                                    "rgba(0,0,0,.0625)";
+                        </form>
 
-                                                    let selectedIcon = anno.category;
-                                                switch (anno.category) {
-                                                    case "Google Updates":
-                                                        borderLeftColor =
-                                                            this.state
-                                                                .userAnnotationColors
-                                                                .google_algorithm_updates;
+                    </div>
 
-                                                        break;
-                                                    case "Retail Marketing Dates":
-                                                        borderLeftColor =
-                                                            this.state
-                                                                .userAnnotationColors
-                                                                .retail_marketings;
-                                                        break;
-                                                    case "Weather Alert":
-                                                        borderLeftColor =
-                                                            this.state
-                                                                .userAnnotationColors
-                                                                .weather_alerts;
-                                                        break;
-                                                    case "Website Monitoring":
-                                                        borderLeftColor =
-                                                            this.state
-                                                                .userAnnotationColors
-                                                                .web_monitors;
-                                                        break;
-                                                    case "WordPress Updates":
-                                                        borderLeftColor =
-                                                            this.state
-                                                                .userAnnotationColors
-                                                                .wordpress_updates;
-                                                        break;
-                                                    case "News Alert":
-                                                        borderLeftColor =
-                                                            this.state
-                                                                .userAnnotationColors
-                                                                .google_alerts;
-                                                        break;
-                                                }
-                                                switch (anno.added_by) {
-                                                    case "manual":
-                                                        borderLeftColor =
-                                                            "#002e60";
-                                                        break;
-                                                    case "csv-upload":
-                                                        borderLeftColor =
-                                                            this.state
-                                                                .userAnnotationColors
-                                                                .csv;
-                                                        break;
-                                                    case "api":
-                                                        borderLeftColor =
-                                                            this.state
-                                                                .userAnnotationColors
-                                                                .api;
-                                                        break;
-                                                }
-                                                if (
-                                                    anno.category.indexOf(
-                                                        "Holiday"
-                                                    ) !== -1
-                                                )
-                                                    borderLeftColor =
-                                                        this.state
-                                                            .userAnnotationColors
-                                                            .holidays;
+                    {this.state.isLoading ? (
+                        <></>
+                    ) : (
+                        <>
+                            {this.state.annotations
+                                .filter(this.checkSearchText)
+                                .map((anno, idx) => {
+                                    let borderLeftColor = "rgba(0,0,0,.0625)";
+                                    let selectedIcon = anno.category;
 
-                                                const currentDateTime =
-                                                    new Date();
-                                                const annotationDateTime =
-                                                    new Date(anno.show_at);
-                                                const diffTime =
-                                                    annotationDateTime -
-                                                    currentDateTime;
-                                                let rowId = null;
-                                                if (
-                                                    diffTime < 0 &&
-                                                    wasLastAnnotationInFuture ==
-                                                        true
-                                                )
-                                                    rowId =
-                                                        "scrollable-annotation";
-                                                if (diffTime > 0) {
-                                                    wasLastAnnotationInFuture = true;
-                                                } else {
-                                                    wasLastAnnotationInFuture = false;
-                                                }
+                                    switch (anno.category) {
+                                        case "Google Updates":
+                                            borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates;
+                                        break;
+                                        case "Retail Marketing Dates":
+                                            borderLeftColor = this.state.userAnnotationColors.retail_marketings;
+                                        break;
+                                        case "Weather Alert":
+                                            borderLeftColor = this.state.userAnnotationColors.weather_alerts;
+                                        break;
+                                        case "Website Monitoring":
+                                            borderLeftColor = this.state.userAnnotationColors.web_monitors;
+                                        break;
+                                        case "WordPress Updates":
+                                            borderLeftColor = this.state.userAnnotationColors.wordpress_updates;
+                                        break;
+                                        case "News Alert":
+                                            borderLeftColor = this.state.userAnnotationColors.google_alerts;
+                                        break;
+                                    }
+                                    switch (anno.added_by) {
+                                        case "manual":
+                                            borderLeftColor = "#002e60";
+                                        break;
+                                        case "csv-upload":
+                                            borderLeftColor = this.state.userAnnotationColors.csv;
+                                        break;
+                                        case "api":
+                                            borderLeftColor = this.state.userAnnotationColors.api;
+                                        break;
+                                    }
+                                    if (anno.category.indexOf("Holiday") !== -1)
+                                        borderLeftColor = this.state.userAnnotationColors.holidays;
 
-                                                return (
-                                                    <div
-                                                        className={`d-flex ${
-                                                            this.state.selectedRows.includes(
-                                                                anno.id
-                                                            ) &&
-                                                            "record-checked"
-                                                        }`}
-                                                        data-diff-in-milliseconds={
-                                                            diffTime
-                                                        }
-                                                        id={rowId}
-                                                        key={
-                                                            anno.category +
-                                                            anno.event_name +
-                                                            anno.description +
-                                                            anno.url +
-                                                            anno.id
-                                                        }
-                                                        onClick={
-                                                            this
-                                                                .handleOneSelection
-                                                        }
-                                                        data-anno_id={anno.id}
-                                                    >
-                                                        <span><img src={`/${selectedIcon}.svg`} /></span>
-                                                        <div className="description">
-                                                            <p>
-                                                                <span>
-                                                                    {
-                                                                        anno.event_name
-                                                                    }
-                                                                </span>
-                                                                <a href="">
-                                                                    {
-                                                                        anno.category
-                                                                    }
-                                                                </a>
-                                                            </p>
-                                                            <p>
-                                                                {anno.description &&
-                                                                !anno.show_complete_desc
-                                                                    ? anno.description.substring(
-                                                                          0,
-                                                                          50
-                                                                      )
-                                                                    : ""}
-                                                                {anno.description &&
-                                                                anno.description
-                                                                    .length >
-                                                                    50 &&
-                                                                !anno.show_complete_desc ? (
-                                                                    <div>
-                                                                        ...
-                                                                        <a
-                                                                            style={{
-                                                                                cursor: "pointer",
-                                                                            }}
-                                                                            onClick={() => {
-                                                                                this.seeCompleteDescription(
-                                                                                    anno,
-                                                                                    idx
-                                                                                );
-                                                                            }}
-                                                                            target="_blank"
-                                                                            className="ml-1"
-                                                                        >
-                                                                            read
-                                                                            more
-                                                                        </a>
-                                                                    </div>
-                                                                ) : (
-                                                                    ""
-                                                                )}
+                                    const currentDateTime =
+                                        new Date();
+                                    const annotationDateTime =
+                                        new Date(anno.show_at);
+                                    const diffTime =
+                                        annotationDateTime -
+                                        currentDateTime;
+                                    let rowId = null;
+                                    if (
+                                        diffTime < 0 &&
+                                        wasLastAnnotationInFuture ==
+                                            true
+                                    )
+                                        rowId =
+                                            "scrollable-annotation";
+                                    if (diffTime > 0) {
+                                        wasLastAnnotationInFuture = true;
+                                    } else {
+                                        wasLastAnnotationInFuture = false;
+                                    }
 
-                                                                {anno.description &&
-                                                                anno.description
-                                                                    .length >
-                                                                    50 &&
-                                                                anno.show_complete_desc ? (
-                                                                    <div id="">
-                                                                        {
-                                                                            anno.description
-                                                                        }
-                                                                    </div>
-                                                                ) : (
-                                                                    ""
-                                                                )}
+                                    return (
+                                        <div
+                                            className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`}
+                                            data-diff-in-milliseconds={diffTime}
+                                            id={rowId}
+                                            key={ anno.category + anno.event_name + anno.description + anno.url + anno.id }
+                                            onClick={this.handleOneSelection}
+                                            data-anno_id={anno.id}>
 
-                                                                {anno.url &&
-                                                                anno.url !=
-                                                                    "https://" &&
-                                                                anno.url !=
-                                                                    "null" ? (
-                                                                    <a
-                                                                        href={
-                                                                            anno.url
-                                                                        }
-                                                                        target="_blank"
-                                                                        className="ml-1"
-                                                                    >
-                                                                        <i className="fa fa-link"></i>
-                                                                    </a>
-                                                                ) : (
-                                                                    ""
-                                                                )}
-                                                            </p>
-                                                        </div>
-                                                        <ul>
-                                                            <li>
-                                                                <span>
-                                                                    {anno.google_analytics_property_name
-                                                                        ? anno.google_analytics_property_name
-                                                                        : "All Properties"}
-                                                                </span>
-                                                            </li>
-                                                            <li>
-                                                                <time
-                                                                    datetime={moment(
-                                                                        anno.show_at
-                                                                    ).format(
-                                                                        timezoneToDateFormat(
-                                                                            this
-                                                                                .props
-                                                                                .user
-                                                                                .timezone
-                                                                        )
-                                                                    )}
-                                                                >
-                                                                    {moment(
-                                                                        anno.show_at
-                                                                    ).format(
-                                                                        timezoneToDateFormat(
-                                                                            this
-                                                                                .props
-                                                                                .user
-                                                                                .timezone
-                                                                        )
-                                                                    )}
-                                                                </time>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                    <i className="fa fa-chart"></i>
-                                                                    <span>
-                                                                        open
-                                                                        chart
-                                                                    </span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                        <ul>
-                                                            <li>
-                                                                {anno.id ? (
-                                                                    <button
-                                                                        className={
-                                                                            "btn btn-sm" +
-                                                                            (anno.is_enabled
-                                                                                ? " btn-success"
-                                                                                : " btn-danger") +
-                                                                            (this
-                                                                                .state
-                                                                                .isBusy
-                                                                                ? " disabled"
-                                                                                : "")
-                                                                        }
-                                                                        onClick={() =>
-                                                                            this.toggleStatus(
-                                                                                anno.id
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        {anno.is_enabled
-                                                                            ? "On"
-                                                                            : "Off"}
-                                                                        <i className="fa fa-eye"></i>
-                                                                    </button>
-                                                                ) : null}
-                                                            </li>
-                                                            {anno.id ? (
-                                                                <React.Fragment>
-                                                                    <li
-                                                                        type="button"
-                                                                        onClick={() => {
-                                                                            this.deleteAnnotation(
-                                                                                anno.id
-                                                                            );
-                                                                        }}
-                                                                        className="btn btn-sm gaa-btn-danger anno-action-btn text-white m-1"
-                                                                    >
-                                                                        <i className="fa fa-trash"></i>
-                                                                    </li>
-                                                                    <li>
-                                                                        <Link
-                                                                            to={`/annotation/${anno.id}/edit`}
-                                                                            className="btn anno-action-btn btn-sm gaa-btn-primary text-white m-1"
-                                                                            style={{
-                                                                                width: "28.3667px",
-                                                                            }}
-                                                                        >
-                                                                            <i className="fa fa-edit"></i>
-                                                                        </Link>
-                                                                    </li>
-                                                                </React.Fragment>
-                                                            ) : null}
-                                                        </ul>
-                                                    </div>
-                                                );
-                                            })}{" "}
-                                    </>
-                                )}
-                            </div>
-                        </div>
+                                            <span className="annotionRowIcon"><img src={`/${selectedIcon}.svg`} onError={({ currentTarget }) => {currentTarget.onerror = null; currentTarget.src="/annotation-default.svg";}} /></span>
 
-                        <div id="annotation-index-container">
-                            <div className="row ml-0 mr-0">
-                                <div className="col-12">
-                                    <ErrorAlert errors={this.state.errors} />
-                                    <div
-                                        id="annotation-table-container"
-                                        className="table-responsive sticky-header"
-                                    >
-                                        <table className="table table-hover gaa-hover table-bordered">
-                                            <thead id="annotation-table-head">
-                                                <tr>
-                                                    <th>
-                                                        <input
-                                                            type="checkbox"
-                                                            onClick={
-                                                                this
-                                                                    .handleAllSelection
-                                                            }
-                                                        />
-                                                    </th>
-                                                    <th>Category</th>
-                                                    <th
-                                                        style={{
-                                                            width: "25% !important",
-                                                            wordWrap:
-                                                                "break-word",
-                                                            wordBreak:
-                                                                "break-all",
-                                                        }}
-                                                    >
-                                                        Event Name
-                                                    </th>
-                                                    <th>Description</th>
-                                                    <th>Properties</th>
-                                                    <th>Status</th>
-                                                    <th
-                                                        style={{
-                                                            minWidth: "100px",
-                                                        }}
-                                                    >
-                                                        Show At
-                                                    </th>
-                                                    <th
-                                                        style={{
-                                                            minWidth: "100px",
-                                                        }}
-                                                    >
-                                                        Added By
-                                                    </th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="annotation-table-body">
-                                                {this.state.isLoading ? (
-                                                    <tr key={"blank-row"}>
-                                                        <td
-                                                            colSpan="8"
-                                                            className="text-center"
+                                            <div className="description d-flex flex-column flex-shrink-1">
+                                                <p className="titleCategory d-flex align-items-center">
+                                                    <span>{anno.event_name}</span>
+                                                    <a href="">{anno.category}</a>
+                                                    <i className="fa fa-link"></i>
+                                                </p>
+                                                <p className="annotationDesc mb-0 d-flex ">
+                                                    {anno.description &&
+                                                    !anno.show_complete_desc ? anno.description.substring(0, 150) : ""}
+                                                    {anno.description &&
+                                                    anno.description.length > 150 &&
+                                                    !anno.show_complete_desc ? (
+                                                        <span>...<a onClick={() => {this.seeCompleteDescription(anno,idx);}} target="_blank" className="ml-1">Read more</a></span>
+                                                    ) : (
+                                                        ""
+                                                    )}
+
+                                                    {anno.description && anno.description.length > 150 && anno.show_complete_desc ? (
+                                                        <div id="">{anno.description}</div>
+                                                    ) : (
+                                                        ""
+                                                    )}
+
+                                                    {anno.url && anno.url != "https://" && anno.url != "null" ? (
+                                                        <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a>
+                                                    ) : (
+                                                        ""
+                                                    )}
+                                                </p>
+                                            </div>
+
+                                            <div className="flex-grow-1 d-flex justify-content-between align-items-center">
+                                                <ul className="d-flex list-unstyled">
+                                                    <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
+                                                    <li><time datetime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
+                                                    <li><a href="#"><i className="fa fa-chart"></i><span>open chart</span></a></li>
+                                                </ul>
+
+                                                <ul className="d-flex list-unstyled">
+                                                    <li>{anno.id ? (
+                                                        <span className="cursor-pointer" onClick={() => this.toggleStatus(anno.id)}>
+                                                            {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
+                                                        </span>
+                                                        ) : null}
+                                                    </li>
+                                                    <li>
+                                                        <Link to={`/annotation/${anno.id}/edit`} className="">
+                                                            <img src={`icon-edit.svg`} />
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <span className="text-danger" onClick={() => {this.deleteAnnotation(anno.id);}}>
+                                                            <img src={`icon-trash.svg`} />
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    );
+
+                                })}{" "}
+                        </>
+                    )}
+                </div>
+
+                <div className="container-xl bg-white anno-container d-flex flex-column justify-content-center component-wrapper">
+                    <section className="ftco-section" id="inputs">
+                        <div className="container-xl p-0">
+                            <div id="annotation-index-container">
+                                <div className="row ml-0 mr-0">
+                                    <div className="col-12">
+                                        <ErrorAlert errors={this.state.errors} />
+                                        <div
+                                            id="annotation-table-container"
+                                            className="table-responsive sticky-header"
+                                        >
+                                            <table className="table table-hover gaa-hover table-bordered">
+                                                <thead id="annotation-table-head">
+                                                    <tr>
+                                                        <th>
+                                                            <input
+                                                                type="checkbox"
+                                                                onClick={
+                                                                    this
+                                                                        .handleAllSelection
+                                                                }
+                                                            />
+                                                        </th>
+                                                        <th>Category</th>
+                                                        <th
+                                                            style={{
+                                                                width: "25% !important",
+                                                                wordWrap:
+                                                                    "break-word",
+                                                                wordBreak:
+                                                                    "break-all",
+                                                            }}
                                                         >
-                                                            <i className="fa fa-spinner fa-spin fa-pulse fa-3x"></i>
-                                                        </td>
+                                                            Event Name
+                                                        </th>
+                                                        <th>Description</th>
+                                                        <th>Properties</th>
+                                                        <th>Status</th>
+                                                        <th
+                                                            style={{
+                                                                minWidth: "100px",
+                                                            }}
+                                                        >
+                                                            Show At
+                                                        </th>
+                                                        <th
+                                                            style={{
+                                                                minWidth: "100px",
+                                                            }}
+                                                        >
+                                                            Added By
+                                                        </th>
+                                                        <th>Actions</th>
                                                     </tr>
-                                                ) : (
-                                                    this.state.annotations
-                                                        .filter(
-                                                            this.checkSearchText
-                                                        )
-                                                        .map((anno, idx) => {
-                                                            let borderLeftColor =
-                                                                "rgba(0,0,0,.0625)";
-                                                            switch (
-                                                                anno.category
-                                                            ) {
-                                                                case "Google Updates":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .google_algorithm_updates;
-                                                                    break;
-                                                                case "Retail Marketing Dates":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .retail_marketings;
-                                                                    break;
-                                                                case "Weather Alert":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .weather_alerts;
-                                                                    break;
-                                                                case "Website Monitoring":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .web_monitors;
-                                                                    break;
-                                                                case "WordPress Updates":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .wordpress_updates;
-                                                                    break;
-                                                                case "News Alert":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .google_alerts;
-                                                                    break;
-                                                            }
-                                                            switch (
-                                                                anno.added_by
-                                                            ) {
-                                                                case "manual":
-                                                                    borderLeftColor =
-                                                                        "#002e60";
-                                                                    break;
-                                                                case "csv-upload":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .csv;
-                                                                    break;
-                                                                case "api":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .api;
-                                                                    break;
-                                                            }
-                                                            if (
-                                                                anno.category.indexOf(
-                                                                    "Holiday"
-                                                                ) !== -1
+                                                </thead>
+                                                <tbody id="annotation-table-body">
+                                                    {this.state.isLoading ? (
+                                                        <tr key={"blank-row"}>
+                                                            <td
+                                                                colSpan="8"
+                                                                className="text-center"
+                                                            >
+                                                                <i className="fa fa-spinner fa-spin fa-pulse fa-3x"></i>
+                                                            </td>
+                                                        </tr>
+                                                    ) : (
+                                                        this.state.annotations
+                                                            .filter(
+                                                                this.checkSearchText
                                                             )
-                                                                borderLeftColor =
-                                                                    this.state
-                                                                        .userAnnotationColors
-                                                                        .holidays;
+                                                            .map((anno, idx) => {
+                                                                let borderLeftColor =
+                                                                    "rgba(0,0,0,.0625)";
+                                                                switch (
+                                                                    anno.category
+                                                                ) {
+                                                                    case "Google Updates":
+                                                                        borderLeftColor =
+                                                                            this
+                                                                                .state
+                                                                                .userAnnotationColors
+                                                                                .google_algorithm_updates;
+                                                                        break;
+                                                                    case "Retail Marketing Dates":
+                                                                        borderLeftColor =
+                                                                            this
+                                                                                .state
+                                                                                .userAnnotationColors
+                                                                                .retail_marketings;
+                                                                        break;
+                                                                    case "Weather Alert":
+                                                                        borderLeftColor =
+                                                                            this
+                                                                                .state
+                                                                                .userAnnotationColors
+                                                                                .weather_alerts;
+                                                                        break;
+                                                                    case "Website Monitoring":
+                                                                        borderLeftColor =
+                                                                            this
+                                                                                .state
+                                                                                .userAnnotationColors
+                                                                                .web_monitors;
+                                                                        break;
+                                                                    case "WordPress Updates":
+                                                                        borderLeftColor =
+                                                                            this
+                                                                                .state
+                                                                                .userAnnotationColors
+                                                                                .wordpress_updates;
+                                                                        break;
+                                                                    case "News Alert":
+                                                                        borderLeftColor =
+                                                                            this
+                                                                                .state
+                                                                                .userAnnotationColors
+                                                                                .google_alerts;
+                                                                        break;
+                                                                }
+                                                                switch (
+                                                                    anno.added_by
+                                                                ) {
+                                                                    case "manual":
+                                                                        borderLeftColor =
+                                                                            "#002e60";
+                                                                        break;
+                                                                    case "csv-upload":
+                                                                        borderLeftColor =
+                                                                            this
+                                                                                .state
+                                                                                .userAnnotationColors
+                                                                                .csv;
+                                                                        break;
+                                                                    case "api":
+                                                                        borderLeftColor =
+                                                                            this
+                                                                                .state
+                                                                                .userAnnotationColors
+                                                                                .api;
+                                                                        break;
+                                                                }
+                                                                if (
+                                                                    anno.category.indexOf(
+                                                                        "Holiday"
+                                                                    ) !== -1
+                                                                )
+                                                                    borderLeftColor =
+                                                                        this.state
+                                                                            .userAnnotationColors
+                                                                            .holidays;
 
-                                                            const currentDateTime =
-                                                                new Date();
-                                                            const annotationDateTime =
-                                                                new Date(
-                                                                    anno.show_at
-                                                                );
-                                                            const diffTime =
-                                                                annotationDateTime -
-                                                                currentDateTime;
-                                                            let rowId = null;
-                                                            if (
-                                                                diffTime < 0 &&
-                                                                wasLastAnnotationInFuture ==
-                                                                    true
-                                                            )
-                                                                rowId =
-                                                                    "scrollable-annotation";
-                                                            if (diffTime > 0) {
-                                                                wasLastAnnotationInFuture = true;
-                                                            } else {
-                                                                wasLastAnnotationInFuture = false;
-                                                            }
+                                                                const currentDateTime =
+                                                                    new Date();
+                                                                const annotationDateTime =
+                                                                    new Date(
+                                                                        anno.show_at
+                                                                    );
+                                                                const diffTime =
+                                                                    annotationDateTime -
+                                                                    currentDateTime;
+                                                                let rowId = null;
+                                                                if (
+                                                                    diffTime < 0 &&
+                                                                    wasLastAnnotationInFuture ==
+                                                                        true
+                                                                )
+                                                                    rowId =
+                                                                        "scrollable-annotation";
+                                                                if (diffTime > 0) {
+                                                                    wasLastAnnotationInFuture = true;
+                                                                } else {
+                                                                    wasLastAnnotationInFuture = false;
+                                                                }
 
-                                                            return (
-                                                                <tr
-                                                                    data-diff-in-milliseconds={
-                                                                        diffTime
-                                                                    }
-                                                                    id={rowId}
-                                                                    key={
-                                                                        anno.category +
-                                                                        anno.event_name +
-                                                                        anno.description +
-                                                                        anno.url +
-                                                                        anno.id
-                                                                    }
-                                                                >
-                                                                    {/* style={{ borderLeft: `${borderLeftColor} solid 20px` }} */}
-                                                                    <td>
-                                                                        <input
-                                                                            type="checkbox"
-                                                                            className="row_checkbox"
-                                                                            data-anno_id={
-                                                                                anno.id
-                                                                            }
-                                                                            onChange={
-                                                                                this
-                                                                                    .handleOneSelection
-                                                                            }
-                                                                        />
-                                                                    </td>
-                                                                    <td>
-                                                                        {
-                                                                            anno.category
+                                                                return (
+                                                                    <tr
+                                                                        data-diff-in-milliseconds={
+                                                                            diffTime
                                                                         }
-                                                                    </td>
-                                                                    <td>
-                                                                        {
-                                                                            anno.event_name
+                                                                        id={rowId}
+                                                                        key={
+                                                                            anno.category +
+                                                                            anno.event_name +
+                                                                            anno.description +
+                                                                            anno.url +
+                                                                            anno.id
                                                                         }
-                                                                    </td>
-                                                                    <td
-                                                                        style={{
-                                                                            overflowWrap:
-                                                                                "anywhere",
-                                                                        }}
                                                                     >
-                                                                        {anno.description &&
-                                                                        !anno.show_complete_desc
-                                                                            ? anno.description.substring(
-                                                                                  0,
-                                                                                  50
-                                                                              )
-                                                                            : ""}
+                                                                        {/* style={{ borderLeft: `${borderLeftColor} solid 20px` }} */}
+                                                                        <td>
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                className="row_checkbox"
+                                                                                data-anno_id={
+                                                                                    anno.id
+                                                                                }
+                                                                                onChange={
+                                                                                    this
+                                                                                        .handleOneSelection
+                                                                                }
+                                                                            />
+                                                                        </td>
+                                                                        <td>
+                                                                            {
+                                                                                anno.category
+                                                                            }
+                                                                        </td>
+                                                                        <td>
+                                                                            {
+                                                                                anno.event_name
+                                                                            }
+                                                                        </td>
+                                                                        <td
+                                                                            style={{
+                                                                                overflowWrap:
+                                                                                    "anywhere",
+                                                                            }}
+                                                                        >
+                                                                            {anno.description &&
+                                                                            !anno.show_complete_desc
+                                                                                ? anno.description.substring(
+                                                                                    0,
+                                                                                    50
+                                                                                )
+                                                                                : ""}
 
-                                                                        {anno.description &&
-                                                                        anno
-                                                                            .description
-                                                                            .length >
-                                                                            50 &&
-                                                                        !anno.show_complete_desc ? (
-                                                                            <div>
-                                                                                ...
+                                                                            {anno.description &&
+                                                                            anno
+                                                                                .description
+                                                                                .length >
+                                                                                50 &&
+                                                                            !anno.show_complete_desc ? (
+                                                                                <div>
+                                                                                    ...
+                                                                                    <a
+                                                                                        style={{
+                                                                                            cursor: "pointer",
+                                                                                        }}
+                                                                                        onClick={() => {
+                                                                                            this.seeCompleteDescription(
+                                                                                                anno,
+                                                                                                idx
+                                                                                            );
+                                                                                        }}
+                                                                                        target="_blank"
+                                                                                        className="ml-1"
+                                                                                    >
+                                                                                        See
+                                                                                        more
+                                                                                    </a>
+                                                                                </div>
+                                                                            ) : (
+                                                                                ""
+                                                                            )}
+
+                                                                            {anno.description &&
+                                                                            anno
+                                                                                .description
+                                                                                .length >
+                                                                                50 &&
+                                                                            anno.show_complete_desc ? (
+                                                                                <div id="">
+                                                                                    {
+                                                                                        anno.description
+                                                                                    }
+                                                                                </div>
+                                                                            ) : (
+                                                                                ""
+                                                                            )}
+
+                                                                            {anno.url &&
+                                                                            anno.url !=
+                                                                                "https://" &&
+                                                                            anno.url !=
+                                                                                "null" ? (
                                                                                 <a
-                                                                                    style={{
-                                                                                        cursor: "pointer",
-                                                                                    }}
-                                                                                    onClick={() => {
-                                                                                        this.seeCompleteDescription(
-                                                                                            anno,
-                                                                                            idx
-                                                                                        );
-                                                                                    }}
+                                                                                    href={
+                                                                                        anno.url
+                                                                                    }
                                                                                     target="_blank"
                                                                                     className="ml-1"
                                                                                 >
-                                                                                    See
-                                                                                    more
+                                                                                    <i className="fa fa-link"></i>
                                                                                 </a>
-                                                                            </div>
-                                                                        ) : (
-                                                                            ""
-                                                                        )}
-
-                                                                        {anno.description &&
-                                                                        anno
-                                                                            .description
-                                                                            .length >
-                                                                            50 &&
-                                                                        anno.show_complete_desc ? (
-                                                                            <div id="">
-                                                                                {
-                                                                                    anno.description
-                                                                                }
-                                                                            </div>
-                                                                        ) : (
-                                                                            ""
-                                                                        )}
-
-                                                                        {anno.url &&
-                                                                        anno.url !=
-                                                                            "https://" &&
-                                                                        anno.url !=
-                                                                            "null" ? (
-                                                                            <a
-                                                                                href={
-                                                                                    anno.url
-                                                                                }
-                                                                                target="_blank"
-                                                                                className="ml-1"
-                                                                            >
-                                                                                <i className="fa fa-link"></i>
-                                                                            </a>
-                                                                        ) : (
-                                                                            ""
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {anno.google_analytics_property_name
-                                                                            ? anno.google_analytics_property_name
-                                                                            : "All Properties"}
-                                                                    </td>
-                                                                    <td className="text-center">
-                                                                        {anno.id ? (
-                                                                            <button
-                                                                                className={
-                                                                                    "btn btn-sm" +
-                                                                                    (anno.is_enabled
-                                                                                        ? " btn-success"
-                                                                                        : " btn-danger") +
-                                                                                    (this
-                                                                                        .state
-                                                                                        .isBusy
-                                                                                        ? " disabled"
-                                                                                        : "")
-                                                                                }
-                                                                                onClick={() =>
-                                                                                    this.toggleStatus(
-                                                                                        anno.id
-                                                                                    )
-                                                                                }
-                                                                            >
-                                                                                {anno.is_enabled
-                                                                                    ? "On"
-                                                                                    : "Off"}
-                                                                            </button>
-                                                                        ) : null}
-                                                                    </td>
-                                                                    <td>
-                                                                        {moment(
-                                                                            anno.show_at
-                                                                        ).format(
-                                                                            timezoneToDateFormat(
-                                                                                this
-                                                                                    .props
-                                                                                    .user
-                                                                                    .timezone
-                                                                            )
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {anno.event_name ==
-                                                                        "Sample Annotation"
-                                                                            ? getCompanyName()
-                                                                            : anno.user_name}
-                                                                    </td>
-                                                                    <td className="text-center">
-                                                                        {anno.id ? (
-                                                                            <React.Fragment>
+                                                                            ) : (
+                                                                                ""
+                                                                            )}
+                                                                        </td>
+                                                                        <td>
+                                                                            {anno.google_analytics_property_name
+                                                                                ? anno.google_analytics_property_name
+                                                                                : "All Properties"}
+                                                                        </td>
+                                                                        <td className="text-center">
+                                                                            {anno.id ? (
                                                                                 <button
-                                                                                    type="button"
-                                                                                    onClick={() => {
-                                                                                        this.deleteAnnotation(
+                                                                                    className={
+                                                                                        "btn btn-sm" +
+                                                                                        (anno.is_enabled
+                                                                                            ? " btn-success"
+                                                                                            : " btn-danger") +
+                                                                                        (this
+                                                                                            .state
+                                                                                            .isBusy
+                                                                                            ? " disabled"
+                                                                                            : "")
+                                                                                    }
+                                                                                    onClick={() =>
+                                                                                        this.toggleStatus(
                                                                                             anno.id
-                                                                                        );
-                                                                                    }}
-                                                                                    className="btn btn-sm gaa-btn-danger anno-action-btn text-white m-1"
+                                                                                        )
+                                                                                    }
                                                                                 >
-                                                                                    <i className="fa fa-trash"></i>
+                                                                                    {anno.is_enabled
+                                                                                        ? "On"
+                                                                                        : "Off"}
                                                                                 </button>
-                                                                                <Link
-                                                                                    to={`/annotation/${anno.id}/edit`}
-                                                                                    className="btn anno-action-btn btn-sm gaa-btn-primary text-white m-1"
-                                                                                    style={{
-                                                                                        width: "28.3667px",
-                                                                                    }}
-                                                                                >
-                                                                                    <i className="fa fa-edit"></i>
-                                                                                </Link>
-                                                                            </React.Fragment>
-                                                                        ) : null}
-                                                                    </td>
-                                                                </tr>
-                                                            );
-                                                        })
-                                                )}
-                                            </tbody>
-                                        </table>
+                                                                            ) : null}
+                                                                        </td>
+                                                                        <td>
+                                                                            {moment(
+                                                                                anno.show_at
+                                                                            ).format(
+                                                                                timezoneToDateFormat(
+                                                                                    this
+                                                                                        .props
+                                                                                        .user
+                                                                                        .timezone
+                                                                                )
+                                                                            )}
+                                                                        </td>
+                                                                        <td>
+                                                                            {anno.event_name ==
+                                                                            "Sample Annotation"
+                                                                                ? getCompanyName()
+                                                                                : anno.user_name}
+                                                                        </td>
+                                                                        <td className="text-center">
+                                                                            {anno.id ? (
+                                                                                <React.Fragment>
+                                                                                    <button
+                                                                                        type="button"
+                                                                                        onClick={() => {
+                                                                                            this.deleteAnnotation(
+                                                                                                anno.id
+                                                                                            );
+                                                                                        }}
+                                                                                        className="btn btn-sm gaa-btn-danger anno-action-btn text-white m-1"
+                                                                                    >
+                                                                                        <i className="fa fa-trash"></i>
+                                                                                    </button>
+                                                                                    <Link
+                                                                                        to={`/annotation/${anno.id}/edit`}
+                                                                                        className="btn anno-action-btn btn-sm gaa-btn-primary text-white m-1"
+                                                                                        style={{
+                                                                                            width: "28.3667px",
+                                                                                        }}
+                                                                                    >
+                                                                                        <i className="fa fa-edit"></i>
+                                                                                    </Link>
+                                                                                </React.Fragment>
+                                                                            ) : null}
+                                                                        </td>
+                                                                    </tr>
+                                                                );
+                                                            })
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                </div>
             </div>
         );
     }

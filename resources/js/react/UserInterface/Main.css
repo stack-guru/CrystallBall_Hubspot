@@ -1720,6 +1720,66 @@ body {
     box-shadow: 0px 8px 32px -6px rgba(0, 0, 0, 0.14);
 }
 .dropdown-holder .dropup .dropdown-menu.show { transform: translate3d(0, -260px, 0px) !important; }
+.annotionRow {
+    padding: 24px;
+    height: 140px;
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    /* border-left: 4px solid #ffc514; */
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
+}
+.annotionRowIcon {
+    width: 54px;
+    height: 54px;
+    padding: 8px;
+    display: flex;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.12);
+}
+.annotionRow .description{
+    width: 42%;
+    color: #333;
+    font-size: 16px;
+    padding: 0 24px;
+    font-weight: 400;
+}
+.annotionRow .description .titleCategory { margin-bottom: 12px; line-height: 1; }
+.annotionRow .description .titleCategory span,
+.annotionRow .description .titleCategory a{
+    color: #096db7;
+    font-weight: 600;
+}
+.annotionRow .description .titleCategory .fa { margin-left: 10px; font-size: 14px; color: #1976fe; }
+.annotionRow .description .titleCategory span{
+    margin-right: 10px;
+    padding-right: 10px;
+    border-right: 1px solid #096db7;
+}
+.annotionRow .description p.annotationDesc {line-height: 20px;}
+.annotionRow .description p span{ color: #1976fe; }
+.annotionRow ul{
+    color: #666;
+    font-size: 14px;
+    line-height: 18px;
+}
+.annotionRow ul:first-child li{
+    padding: 0 1rem;
+    border-left: 1px solid #e0e0e0;
+}
+.annotionRow ul li{
+    padding: 0 0.5rem;
+    
+}
+.annotionRow ul li .properties {color: #333;}
+.annotionRow ul li time {color: #666;}
+.annotionRow ul li:first-child { border: 0; }
+.annotationPage .pageHead{padding-bottom: 42px;}
+.annotationPage .pageHead form { padding-top: 42px;}
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }
     .is-collapsed .sidebar .sidebar-inner .sidebar-menu>li>a .title {display: none;}
