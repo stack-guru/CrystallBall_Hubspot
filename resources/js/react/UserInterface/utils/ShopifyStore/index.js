@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 
-import ApplePodcastConfig from "./ApplePodcastConfig";
+import ShopifyStoreConfig from "./ShopifyStoreConfig";
 
-const ApplePodcast = ({ sectionName, is_ds_apple_podcast_annotation_enabled, serviceStatusHandler, sectionToggler }) => {
+const ShopifyStore = ({ is_ds_shopify_annotation_enabled, sectionName, serviceStatusHandler, sectionToggler }) => {
     return (
         <div
             className="d-flex border rounded flex-column justify-content-between"
@@ -17,9 +17,9 @@ const ApplePodcast = ({ sectionName, is_ds_apple_podcast_annotation_enabled, ser
                     <div className="px-2">
                         <h2>
                             <small>
-                                Apple Podcast{" "}
+                                Shopify Store{" "}
                                 <img
-                                    id="apple-podcast"
+                                    id="shopify-store"
                                     className="hint-button-2"
                                     src="/images/info-logo.png"
                                 />
@@ -28,21 +28,21 @@ const ApplePodcast = ({ sectionName, is_ds_apple_podcast_annotation_enabled, ser
                     </div>
 
                     <div className="px-2 text-center">
-                        {is_ds_apple_podcast_annotation_enabled
+                        {is_ds_shopify_annotation_enabled
                             ? "ON"
                             : "OFF"}
                         <label className="trigger switch">
                             <input
                                 type="checkbox"
                                 checked={
-                                    is_ds_apple_podcast_annotation_enabled
+                                    is_ds_shopify_annotation_enabled
                                 }
                                 onChange={serviceStatusHandler}
-                                name="is_ds_apple_podcast_annotation_enabled"
+                                name="is_ds_shopify_annotation_enabled"
                             />
                             <span
                                 className={`slider round ${
-                                    is_ds_apple_podcast_annotation_enabled
+                                    is_ds_shopify_annotation_enabled
                                         ? "animate-pulse"
                                         : ""
                                 }`}
@@ -60,14 +60,14 @@ const ApplePodcast = ({ sectionName, is_ds_apple_podcast_annotation_enabled, ser
                         sectionToggler();
                     }}
                 >
-                    {sectionName == "apple_podcast"
+                    {sectionName == "shopify_store"
                         ? "Hide"
-                        : "Configure Podcast"}
+                        : "Configure Shopify"}
                 </p>
             </div>
         </div>
     );
 };
 
-export default ApplePodcast;
-export { ApplePodcastConfig };
+export default ShopifyStore;
+export { ShopifyStoreConfig };

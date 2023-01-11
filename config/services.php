@@ -171,6 +171,10 @@ return [
         'redirect' => env('GITHUB_REDIRECT_URL'),
     ],
 
+    'shopify' => [
+        'data_api_url' => env('SHOPIFY_DATA_API_URL'),
+    ],
+
     'apple_podcast' => [
         'data_api_url' => env('APPLE_PODCAST_DATA_API_URL'),
     ],
