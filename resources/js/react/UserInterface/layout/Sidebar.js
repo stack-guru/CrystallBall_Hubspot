@@ -184,14 +184,14 @@ class Sidebar extends React.Component {
                                 </span>
                             </Link>
                         </li>
-                        <li className="nav-item gaa-menu-item">
+                        {/* <li className="nav-item gaa-menu-item">
                             <Link to="/analytics-and-business-intelligence">
                                 <span className="sidebar-link d-flex align-items-center justify-content-start">
                                     <span><img className='inject-me' src='/analyticsBiTools.svg' width='26' height='26' alt='menu icon'/></span>
                                     <span className="title flex-grow-1">Analytics &amp; BI tools</span>
                                 </span>
                             </Link>
-                        </li>
+                        </li> */}
                         <li className="nav-item gaa-menu-item">
                             <Link to="/api-key">
                                 <span className="sidebar-link d-flex align-items-center justify-content-start">
