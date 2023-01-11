@@ -15,16 +15,16 @@
                 <div class="row ml-0 mr-0 mt-5">
                     <div class="col-12 d-flex flex-column justify-content-center">
                         <h2>Retail Marketing</h2>
-                        <table class="table table-hover table-responsive-md table-striped mt-5">
+                        <table aria-label="Retail Marketing Dates" class="table table-hover table-responsive-md table-striped mt-5">
                             <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Category</th>
-                                <th>Event Name</th>
-                                <th>Description</th>
-                                <th>Url</th>
-                                <th>Show at</th>
-                                <th>Actions</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Event Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Url</th>
+                                <th scope="col">Show at</th>
+                                <th scope="col">Actions</th>
 
                             </tr>
                             </thead>

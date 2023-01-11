@@ -108,6 +108,13 @@ class header extends React.Component {
                                     </span>
                                 </p>
                             </div>
+                            {this.props.user.price_plan.code == "free new" ?
+                                <li className="notifications">
+                                    <div className="no-after">
+                                        <p class="trial-countdown mt-4">You are on the Free Plan</p>
+                                    </div>
+                                </li>
+                                : null}
 
                             <div className="header-profile-info">
                                 <ProgressBar completed={

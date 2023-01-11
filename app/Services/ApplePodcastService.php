@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\AdminFailedApplePodcastScriptMail;
 use Goutte\Client;
 use App\Models\Admin;
-   
+use Error;
+
 class ApplePodcastService {
     private $scrappingServerUrl;
     /**
@@ -35,8 +36,7 @@ class ApplePodcastService {
             $response = Http::post($this->scrappingServerUrl . '/apple-podcast-episodes', $reqBody);
 
             if (!$response->successful()) {
-                throw Error('Error while scrapping data');
-                return false;
+                throw new Error('Error while scrapping data');
             }
 
             $result = $response['episodesResult'];

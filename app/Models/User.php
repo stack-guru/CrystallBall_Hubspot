@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
+use App\Helpers\AnnotationQueryHelper;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -342,7 +343,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $annotationsQuery = "SELECT COUNT(*) AS total_annotations_count FROM (";
         $annotationsQuery .= "SELECT TempTable.* FROM (";
-        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($this, '*', $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($this, '*', $userIdsArray, '*', true);
         $annotationsQuery .= ") AS TempTable";
 
         if ($userPricePlan->annotations_count > 0 && $applyLimit) {
@@ -611,5 +612,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(UserGithubAccount::class, 'user_id');
     }
-
 }

@@ -23,7 +23,7 @@ import GoogleAdChanges from "../../utils/GoogleAdChanges";
 import FacebookTracking from "../../utils/FacebookTracking";
 import TwitterTracking from "../../utils/TwitterTracking";
 import InstagramTracking from "../../utils/InstagramTracking";
-import BitbucketTracking from "../../utils/BitbucketTracking";
+// import BitbucketTracking from "../../utils/BitbucketTracking";
 import GithubTracking from "../../utils/GithubTracking";
 // import ApplePodcast, { ApplePodcastConfig } from "../../utils/ApplePodcast";
 
@@ -124,8 +124,8 @@ export default class DataSourceIndex extends React.Component {
                 dfsKeywords: resp.data.keywords ? resp.data.keywords : [],
             });
             let total = 0;
-            this.state.dfsKeywords.map(function (keyword_instance, index) {
-                keyword_instance.configurations.map(function (configuration_instance) {
+            this.state.dfsKeywords.forEach(function (keyword_instance, index) {
+                keyword_instance.configurations.forEach(function (configuration_instance) {
                     total++;
                 });
             });
@@ -1563,7 +1563,7 @@ export default class DataSourceIndex extends React.Component {
                             {/*
                                 Bitbucket Section
                             */}
-                            <div className="col-md-6 mt-2">
+                            {/*<div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{ minHeight: "180px" }}
@@ -1692,12 +1692,12 @@ export default class DataSourceIndex extends React.Component {
                                         }
                                     </div>
                                 </div>
-                            </div>
+                            </div>*/}
 
                             {/*
                                 Github Section
                             */}
-                            <div className="col-md-6 mt-2">
+                            {/*<div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{ minHeight: "180px" }}
@@ -1826,7 +1826,7 @@ export default class DataSourceIndex extends React.Component {
                                         }
                                     </div>
                                 </div>
-                            </div>
+                                </div>*/}
                             {/*<div className="col-md-6 mt-2">
                                 <ApplePodcast
                                     state={this.state}
@@ -2041,7 +2041,7 @@ export default class DataSourceIndex extends React.Component {
                                 </div>
                             </div>*/}
 
-                            <div className="col-md-6 mt-2">
+                            {/* <div className="col-md-6 mt-2">
                                 <div
                                     className="d-flex border rounded flex-column justify-content-between"
                                     style={{ minHeight: "180px" }}
@@ -2139,6 +2139,53 @@ export default class DataSourceIndex extends React.Component {
                                         </div>
                                     </div>
                                 </div>
+                            </div> */}
+
+                            <div className="col-md-6 mt-2">
+                              <div className="d-flex border rounded flex-column justify-content-between"
+                                   style={{minHeight: "180px"}}>
+                                  <div>
+                                      <div className="d-flex mt-2 justify-content-between "
+                                           id="keyword-tracking-data-source-section">
+                                          <div className="px-2">
+                                              <h2>
+                                                  <small>
+                                                      Facebook Tracking <UserAnnotationColorPicker
+                                                      name="facebook_tracking"
+                                                      value={this.state.userAnnotationColors.facebook_tracking}
+                                                      updateCallback={this.updateUserAnnotationColors}/>
+                                                      <img className="hint-button-2" src="/images/info-logo.png"/>
+                                                  </small>
+                                              </h2>
+                                          </div>
+
+                                          <div className="px-2 text-center">
+                                              {this.state.userServices.is_ds_facebook_tracking_enabled ? "ON" : "OFF"}
+                                              <label className="trigger switch">
+                                                  <input type="checkbox"
+                                                         checked={this.state.userServices.is_ds_facebook_tracking_enabled}
+                                                         onChange={this.serviceStatusHandler}
+                                                         name="is_ds_facebook_tracking_enabled"
+                                                  />
+                                                  <span
+                                                      className={`slider round ${this.state.userServices.is_ds_facebook_tracking_enabled ? 'animate-pulse' : ''}`}/>
+                                              </label>
+                                          </div>
+
+                                      </div>
+                                  </div>
+                                  <div>
+                                      <p
+                                          className="ds-update-text m-0 px-2 text-right"
+                                          onClick={() => {
+                                              this.sectionToggler('facebook_tracking');
+                                          }}
+                                      >
+                                          {this.state.sectionName == "facebook_tracking" ? "Hide" : "Configure"}
+                                      </p>
+
+                                  </div>
+                              </div>
                             </div>
 
                             {/*
@@ -2915,7 +2962,7 @@ export default class DataSourceIndex extends React.Component {
                             <InstagramTracking />
                         ) : null}
 
-                        {this.state.sectionName == "bitbucket_tracking" ? (
+                        {/*{this.state.sectionName == "bitbucket_tracking" ? (
                             <BitbucketTracking
                                 used_credits={
                                     this.state.userDataSources.bitbucket_tracking?.length
@@ -2932,7 +2979,7 @@ export default class DataSourceIndex extends React.Component {
                                 }
                                 onTextChangeCallback={this.userDataSourceUpdateHandler}
                             />
-                        ) : null}
+                        ) : null}*/}
 
                         {this.state.sectionName == "github_tracking" ? (
                             <GithubTracking

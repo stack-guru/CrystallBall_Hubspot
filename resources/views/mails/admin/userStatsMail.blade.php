@@ -51,17 +51,17 @@
                             <div class="card-body">
                                 <h3 class="">Activity and Traction</h3>
                                 <div style="overflow-x:auto;" style="min-height: 200px;">
-                                    <table class="table table-borderd table-striped" style="min-height: 200px;">
+                                    <table aria-label="Activity and Transaction" class="table table-borderd table-striped" style="min-height: 200px;">
                                         <thead>
                                             <tr>
-                                                <th>Registrations Yesterday</th>
-                                                <th>Current Month Registrations</th>
-                                                <th>Previous Month Registrations</th>
-                                                <th>New Paying Users Yesterday</th>
-                                                <th>Number Of Actions</th>
-                                                <th>Total Payments This Month</th>
-                                                <th>Total Payments Previous Month</th>
-                                                <th>MRR</th>
+                                                <th scope="col">Registrations Yesterday</th>
+                                                <th scope="col">Current Month Registrations</th>
+                                                <th scope="col">Previous Month Registrations</th>
+                                                <th scope="col">New Paying Users Yesterday</th>
+                                                <th scope="col">Number Of Actions</th>
+                                                <th scope="col">Total Payments This Month</th>
+                                                <th scope="col">Total Payments Previous Month</th>
+                                                <th scope="col">MRR</th>
                                             </tr>
                                         </thead>
 
@@ -107,11 +107,11 @@
                                 <div class="my-5">
                                     <h3>New Users Who Registered Yesterday</h3>
                                     <div style="overflow-x:auto;">
-                                        <table class="table table-borderd table-striped">
+                                        <table aria-label="New Users Who Registered Yesterday" class="table table-borderd table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Email</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Email</th>
                                                 </tr>
                                             </thead>
 
@@ -146,13 +146,13 @@
                                 <div class="my-5">
                                     <h3>New Paying Users Yesterday</h3>
                                     <div style="overflow-x:auto;">
-                                        <table class="table table-borderd table-striped">
+                                        <table aria-label="New Paying Users Yesterday" class="table table-borderd table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Email</th>
-                                                    <th>Plan</th>
-                                                    <th>Charged Price</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Plan</th>
+                                                    <th scope="col">Charged Price</th>
                                                 </tr>
                                             </thead>
 

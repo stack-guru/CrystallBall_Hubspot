@@ -7,6 +7,7 @@ use App\Services\GithubService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DateTime;
 use App\Models\GithubCommitAnnotation;
+use github\Exception\RuntimeException as GithubRuntimeException;
 
 class FetchGithubCommit extends Command
 {
@@ -68,7 +69,7 @@ class FetchGithubCommit extends Command
 
                     $this->precessResult($user_id, $message, $category, $hash, $author, $date, $link);
                 }
-            } catch (github\Exception\RuntimeException$e) {
+            } catch (GithubRuntimeException $e) {
                 print $e;
             }
 

@@ -9,6 +9,7 @@ use App\Models\GoogleAnalyticsProperty;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\AnnotationQueryHelper;
 
 class ReportsController extends Controller
 {
@@ -65,7 +66,7 @@ class ReportsController extends Controller
         $userIdsArray = $user->getAllGroupUserIdsArray();
 
         $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_properties`.`google_analytics_property_id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
-        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('annotation_ga_property_id'), $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $request->query('annotation_ga_property_id'), $userIdsArray, '*', true);
         $annotationsQuery .= ") AS TempTable";
 
         // LEFT JOIN to load all properties selected in annotations
@@ -111,10 +112,9 @@ class ReportsController extends Controller
     public function userAnnotationListForReportUpdateView(Request $request)
     {
         $user = User::find($request->user_id);
-        if($user){
+        if ($user) {
             $user->last_screenshot_of_report_at = now();
             $user->save();
         }
     }
-
 }

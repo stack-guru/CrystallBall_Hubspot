@@ -7,17 +7,17 @@
                 <div class="row ml-0 mr-0 mt-5">
                     <div class="col-12 d-flex flex-column justify-content-center">
                         <h2>OWM Push Notifications</h2>
-                     <table class="table table-hover table-responsive-md table-striped mt-5">
+                     <table aria-label="Open Weather Map Push Notifications" class="table table-hover table-responsive-md table-striped mt-5">
                          <thead>
                          <tr>
-                             <th>ID</th>
-                             <th>Shape</th>
-                             <th>Event Name</th>
-                             <th>Alert type</th>
-                             <th>Urgency</th>
-                             <th>Severity</th>
-                             <th>Certainty</th>
-                             <th>Actions</th>
+                             <th scope="col">ID</th>
+                             <th scope="col">Shape</th>
+                             <th scope="col">Event Name</th>
+                             <th scope="col">Alert type</th>
+                             <th scope="col">Urgency</th>
+                             <th scope="col">Severity</th>
+                             <th scope="col">Certainty</th>
+                             <th scope="col">Actions</th>
 
                          </tr>
                          </thead>

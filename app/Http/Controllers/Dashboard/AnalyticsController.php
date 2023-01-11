@@ -10,6 +10,7 @@ use App\Models\Annotation;
 use App\Models\GoogleAnalyticsProperty;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
+use App\Helpers\AnnotationQueryHelper;
 
 class AnalyticsController extends Controller
 {
@@ -61,7 +62,7 @@ class AnalyticsController extends Controller
         $user = Auth::user();
 
         $annotationsQuery = "SELECT `TempTable`.* FROM (";
-        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('ga_property_id'), $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $request->query('ga_property_id'), $userIdsArray);
         $annotationsQuery .= ") AS TempTable";
         // LEFT JOIN to load all properties selected in annotations
         $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
@@ -142,7 +143,7 @@ class AnalyticsController extends Controller
             abort(404, "Unable to find Google Analytics Property for the given id.");
         }
         $annotationsQuery = "SELECT `TempTable`.* FROM (";
-        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('ga_property_id'), $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $request->query('ga_property_id'), $userIdsArray);
         $annotationsQuery .= ") AS TempTable";
         // LEFT JOIN to load all properties selected in annotations
         $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";

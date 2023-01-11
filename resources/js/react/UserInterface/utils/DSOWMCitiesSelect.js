@@ -67,10 +67,8 @@ export default class DSOWMCitiesSelect extends React.Component {
     }
 
     selectAllShowing(e) {
-        let userOWMCityIds = this.props.ds_data.map(
-            (ds) => ds.open_weather_map_city_id
-        );
-        this.state.weather_alerts_cities.map((owmCity) => {
+        let userOWMCityIds = this.props.ds_data.forEach(ds => ds.open_weather_map_city_id);
+        this.state.weather_alerts_cities.forEach(owmCity => {
             if (userOWMCityIds.indexOf(owmCity.id) == -1) {
                 this.props.onCheckCallback({
                     code: "open_weather_map_cities",
@@ -83,16 +81,11 @@ export default class DSOWMCitiesSelect extends React.Component {
     }
 
     clearAll(e) {
-        let userOWMCityIds = this.props.ds_data.map(
-            (ds) => ds.open_weather_map_city_id
-        );
-        let userDSEvents = this.props.ds_data.map((ds) => ds.id);
-        userOWMCityIds.map((owmEvent, index) => {
-            this.props.onUncheckCallback(
-                userDSEvents[index],
-                "open_weather_map_cities"
-            );
-        });
+        let userOWMCityIds = this.props.ds_data.map(ds => ds.open_weather_map_city_id);
+        let userDSEvents = this.props.ds_data.map(ds => ds.id);
+        userOWMCityIds.forEach((owmEvent, index) => {
+            (this.props.onUncheckCallback)(userDSEvents[index], 'open_weather_map_cities')
+        })
     }
 
     selectedCountryChanged(data) {
