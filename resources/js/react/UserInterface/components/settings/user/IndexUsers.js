@@ -63,21 +63,18 @@ export default class IndexUsers extends Component {
     render() {
         return (
             <>
-                <div className="annotationPage">
+                <div className="usersPage">
                     <Container>
                         <div className="pageHead">
                             <div className="d-flex justify-content-between align-items-center">
                                 <h2 className="pageTitle m-0">Users</h2>
-                                <Link href="/annotation/create">
-                                    <img className='inject-me' src='/manual.svg' width='16' height='16' alt='menu icon'/>
-                                </Link>
-                                <button type="button" class="btn-addAnnotation btn btn-primary d-flex align-items-center justify-content-center dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src='/plus-new.svg' width='16' height='17' alt='plus icon'/>
+                                <button type="button" class="btn-adduser d-flex align-items-center justify-content-center">
+                                    <i className="fa fa-plus"></i>
                                     <span>Add User</span>
                                 </button>
                             </div>
 
-                            <form className="pageFilters d-flex justify-content-between align-items-center">
+                            {/* <form className="pageFilters d-flex justify-content-between align-items-center">
                                 <FormGroup className="filter-sort position-relative">
                                     <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
                                     <i className="btn-searchIcon left-0">
@@ -121,8 +118,7 @@ export default class IndexUsers extends Component {
                                     <Input name="searchText" value={this.state.searchText} placeholder="Search..." onChange={this.handleChange}/>
                                     <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search"/></button>
                                 </FormGroup>
-
-                            </form>
+                            </form> */}
 
                         </div>
 

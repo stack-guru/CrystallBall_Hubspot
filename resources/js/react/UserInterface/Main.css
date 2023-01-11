@@ -1821,6 +1821,22 @@ body {
     display: block;
 }
 .sidebar-menu .dropdown-menu a:before { display: none; }
+.usersPage { padding: 50px 0; }
+.btn-adduser {
+    display: flex;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1976fe;
+    line-height: 20px;
+    text-align: right;
+    padding: 10px 24px;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 100px;
+    background-color: #fff;
+    border: 2px solid #1976fe;
+}
+.btn-adduser span{ padding-left: 10px;}
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }
     .is-collapsed .sidebar .sidebar-inner .sidebar-menu>li>a .title {display: none;}
