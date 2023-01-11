@@ -120,7 +120,7 @@ class Sidebar extends React.Component {
                         </div>
                     </div>
                 </div> */}
-                <nav className='flex-grow-1'>
+                <nav className='flex-grow-1 overflow-auto'>
                     <ul className="sidebar-menu scrollable pos-r border-0">
                         <li className="nav-item gaa-menu-item">
                             <Link to="/annotation">
@@ -224,15 +224,15 @@ class Sidebar extends React.Component {
                                         <React.Fragment>
                                             {/* <li className="nav-item dropdown"><Link to="/settings/google-account" className="sidebar-link"><span className="nav-link">Add Properties/Accounts</span></Link></li> */}
                                             {/* <li className="nav-item dropdown"><Link to="/settings/user" className="sidebar-link"><span className="nav-link">Manage Users</span></Link></li> */}
-                                            <li className="nav-item dropdown"><Link to="/settings/price-plans" className="sidebar-link"><span className="nav-link">Plans</span></Link></li>
+                                            <li className="nav-item dropdown"><Link to="/settings/price-plans">Plans</Link></li>
                                             {/* <li className="nav-item dropdown"><Link to="/settings/payment-history" className="sidebar-link"><span className="nav-link">Payment History</span></Link></li> */}
                                             {/* <li className="nav-item dropdown"><div className="sidebar-link nav-link"><a href="/documentation" target="_blank">API Documentation</a></div></li> */}
                                         </React.Fragment>
                                     ) : null}
-                                    <li className="nav-item dropdown"><Link to="/settings/change-password" className="sidebar-link"><span className="nav-link">My Account</span></Link></li>
-                                    <li className="nav-item dropdown"><Link to="/api-key" className="sidebar-link"><span className="nav-link">API Keys</span></Link></li>
-                                    <li className="nav-item dropdown"><Link to="/settings/support" className="sidebar-link"><span className="nav-link">Support</span></Link></li>
-                                    <li className="nav-item dropdown"><a href="#" onClick={(e) => { e.preventDefault(); this.props.toggleInterfaceTour(true);}}><span className="nav-link">Take a Tour</span></a></li>
+                                    <li className="nav-item dropdown"><Link to="/settings/change-password">My Account</Link></li>
+                                    <li className="nav-item dropdown"><Link to="/api-key">API Keys</Link></li>
+                                    <li className="nav-item dropdown"><Link to="/settings/support">Support</Link></li>
+                                    <li className="nav-item dropdown"><Link to="#" onClick={(e) => { e.preventDefault(); this.props.toggleInterfaceTour(true);}}>Take a Tour</Link></li>
                                 </ul>
                             </div>
                         </li>

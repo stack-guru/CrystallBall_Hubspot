@@ -568,6 +568,7 @@ setting-menu-item.dropdown {transition: 0.3s ease;}
 }
 
 .sidebar-inner {
+    overflow: visible !important;
     border-right: 1px solid rgba(0, 0, 0, 0.0625);
 }
 
@@ -829,7 +830,10 @@ body {
     font-size: 18px;
     line-height: 1.25;
 }
-.sidebar { top: 119px;}
+.sidebar {
+    top: 119px;
+    overflow: visible;
+}
 .header {width: 100%;}
 .is-collapsed .header {width: 100%;}
 .page-container,
@@ -1806,6 +1810,17 @@ body {
     align-items: center;
 }
 .addAnnotation a:hover { background: #fafafa; }
+.sidebar-menu .dropdown-menu {
+    min-width: 100% !important;
+    padding-left: 95px !important;
+}
+.sidebar-menu .dropdown-menu a {
+    padding: 8px 0;
+    font-size: 18px;
+    color: #002e60;
+    display: block;
+}
+.sidebar-menu .dropdown-menu a:before { display: none; }
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }
     .is-collapsed .sidebar .sidebar-inner .sidebar-menu>li>a .title {display: none;}
