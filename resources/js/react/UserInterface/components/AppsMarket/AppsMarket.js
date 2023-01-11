@@ -547,17 +547,9 @@ class AppsMarket extends React.Component {
                         ].map((item, itemKey) => (
                             <a target={'_blank'} href={item.url}
                                 onClick={() => {
-                                    if (item.commingSoon) {
-                                        swal.fire(
-                                            "This feature is coming soon. Stay tuned!",
-                                            "",
-                                            "info"
-                                        );
-                                    } else {
-                                        this.setState({
-                                            dsKey: item.dsKey,
-                                        });
-                                    }
+                                    this.setState({
+                                        dsKey: item.dsKey,
+                                    });
                                 }}
                                 className="item"
                                 key={itemKey}
@@ -905,13 +897,7 @@ class AppsMarket extends React.Component {
                                     brandLogo: "/shopify.svg",
                                 },
                             ].map((item, itemKey) => (
-                                <div onClick={() => {
-                                    if(item.commingSoon)
-                                        {swal.fire("This feature is coming soon. Stay tuned!", "", "info");
-                                    } else {
-                                        this.setState({ dsKey: item.dsKey });
-                                    }
-                                }} className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color" : item.background || "#e0e0e0",}}>
+                                <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color" : item.background || "#e0e0e0",}}>
                                     { item.enabled ? (<i class="active fa fa-check-circle"></i>) : null }
                                     <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width='140' />
                                     { item.premium ? (<span className="btn-premium"><i className="fa fa-diamond"></i><span>Premium</span></span>) : null }
