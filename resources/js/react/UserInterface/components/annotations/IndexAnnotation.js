@@ -420,6 +420,7 @@ class IndexAnnotations extends React.Component {
                                         <div
                                             className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`}
                                             data-diff-in-milliseconds={diffTime}
+                                            style={{'borderLeftColor': borderLeftColor}}
                                             id={rowId}
                                             key={ anno.category + anno.event_name + anno.description + anno.url + anno.id }
                                             onClick={this.handleOneSelection}
@@ -473,14 +474,10 @@ class IndexAnnotations extends React.Component {
                                                         ) : null}
                                                     </li>
                                                     <li>
-                                                        <Link to={`/annotation/${anno.id}/edit`} className="">
-                                                            <img src={`icon-edit.svg`} />
-                                                        </Link>
+                                                        <Link to={`/annotation/${anno.id}/edit`} className=""><img src={`icon-edit.svg`} /></Link>
                                                     </li>
                                                     <li>
-                                                        <span className="text-danger" onClick={() => {this.deleteAnnotation(anno.id);}}>
-                                                            <img src={`icon-trash.svg`} />
-                                                        </span>
+                                                        <span className="text-danger" onClick={() => {this.deleteAnnotation(anno.id);}}><img src={`icon-trash.svg`} /></span>
                                                     </li>
                                                 </ul>
                                             </div>

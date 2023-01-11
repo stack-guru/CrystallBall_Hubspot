@@ -1028,6 +1028,7 @@ body {
 .pageFilters { padding-bottom: 42px;}
 .filter-sort {width: 250px;}
 .filter-search {width: 290px;}
+.usersPage .form-control,
 .annotationPage .form-control,
 .appMarket .form-control {
     color: #666;
@@ -1048,6 +1049,7 @@ body {
     right: 0;
     z-index: 1;
 }
+.usersPage select.form-control,
 .annotationPage select.form-control,
 .appMarket select.form-control {
     z-index: 2;
@@ -1732,7 +1734,7 @@ body {
     background: #fff;
     border-radius: 8px;
     margin-bottom: 20px;
-    /* border-left: 4px solid #ffc514; */
+    border-left: 4px solid #ffc514;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
 }
 .annotionRowIcon {
@@ -1837,6 +1839,23 @@ body {
     border: 2px solid #1976fe;
 }
 .btn-adduser span{ padding-left: 10px;}
+.dataTableusers .tableHead.singleRow {padding: 0 24px 24px;}
+.dataTableusers .tableBody .singleRow {
+    border: 0;
+    padding: 24px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
+}
+.dataTableusers .singleRow .singleCol{
+    width: 16.667%;
+    flex-shrink: 0;
+    justify-content: start;
+}
+.dataTableusers .singleRow .singleCol:last-child {justify-content: end;}
+.dataTableusers { }
+.usersPage .pageHead{ padding: 0 0 42px; }
+.usersPage .pageFilters{ padding: 42px 0 0; }
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }
     .is-collapsed .sidebar .sidebar-inner .sidebar-menu>li>a .title {display: none;}

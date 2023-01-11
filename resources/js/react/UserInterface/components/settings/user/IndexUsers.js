@@ -80,16 +80,12 @@ export default class IndexUsers extends Component {
                                     <>
                                         {this.props.user.price_plan
                                             .user_per_ga_account_count > -1 ? (
-                                            <Link
-                                                to="/settings/user/create"
-                                                class="btn-adduser d-flex align-items-center justify-content-center"
-                                            >
+                                            <Link to="/settings/user/create" class="btn-adduser d-flex align-items-center justify-content-center">
                                                 <i className="fa fa-plus"></i>
                                                 <span>Add User</span>
                                             </Link>
                                         ) : (
-                                            <button
-                                                onClick={() => {
+                                            <button onClick={() => {
                                                     const accountNotLinkedHtml =
                                                         "" +
                                                         '<div class="">' +
@@ -112,17 +108,8 @@ export default class IndexUsers extends Component {
                                                     }).then((value) => {
                                                         window.location.href =
                                                             "/settings/price-plans";
-                                                        // <Redirect to="/settings/price-plans"/>
-                                                        // this.setState({redirectTo: "/settings/price-plans"});
                                                     });
 
-                                                    // swal.fire(
-                                                    //     {
-                                                    //         icon: 'warning',
-                                                    //         title: 'To add more users, please upgrade your account',
-                                                    //         confirmButtonText: "<a href='/settings/price-plans' style='color:white;'> Upgrade </a>"
-                                                    //     }
-                                                    // );
                                                 }}
                                                 class="btn-adduser d-flex align-items-center justify-content-center"
                                             >
@@ -133,101 +120,63 @@ export default class IndexUsers extends Component {
                                     </>
                                 ) : null}
                             </div>
+
+                            <form className="pageFilters d-flex justify-content-between align-items-center">
+                                <FormGroup className="filter-sort position-relative">
+                                    <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
+                                    <i className="btn-searchIcon left-0">
+                                        <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666"/>
+                                        </svg>
+                                    </i>
+                                    <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                    <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
+                                        <option value="Null">Sort By</option>
+                                        <option value="added">Added</option>
+                                        <option value="date">By Date</option>
+                                        <option value="category">By Category</option>
+                                        <option value="ga-property">By GA Property</option>
+                                    </select>
+                                </FormGroup>
+                                
+
+                                <FormGroup className="filter-search position-relative">
+                                    <Label className="sr-only" for="search">search</Label>
+                                    <Input name="searchText" value={this.state.searchText} placeholder="Search..." onChange={this.handleChange}/>
+                                    <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search"/></button>
+                                </FormGroup>
+                            </form>
                         </div>
 
-                        <div className="dataTable d-flex flex-column">
-                            <h4>Manage Users</h4>
+                        <div className="dataTable dataTableusers d-flex flex-column">
                             <div className="dataTableHolder">
-                                <div className="tableHead singleRow">
-                                    <div className="singleCol colKeyword text-left">
-                                        Email
-                                    </div>
-                                    <div className="singleCol colUrl text-left">
-                                        Name
-                                    </div>
-                                    <div className="singleCol colSearchEngine text-left">
-                                        User Level
-                                    </div>
-                                    <div className="singleCol colLocation text-left">
-                                        Department
-                                    </div>
-                                    <div className="singleCol colLocation text-left">
-                                        Team
-                                    </div>
-                                    <div className="singleCol colAction text-right">
-                                        Actions
-                                    </div>
+                                <div className="tableHead singleRow justify-content-between align-items-center">
+                                    <div className="singleCol text-left">Email</div>
+                                    <div className="singleCol text-left">Name</div>
+                                    <div className="singleCol text-left">User Level</div>
+                                    <div className="singleCol text-left">Department</div>
+                                    <div className="singleCol text-left">Team</div>
+                                    <div className="singleCol text-right">Actions</div>
                                 </div>
                                 <div className="tableBody">
-                                    {this.state.users
-                                        .filter(this.checkSearchText)
-                                        .map((user) => {
-                                            return (
-                                                <>
-                                                    <div
-                                                        key={user.id}
-                                                        className="singleRow"
-                                                    >
-                                                        <div className="singleCol colKeyword text-left">
-                                                            <span>
-                                                                {user.email}
-                                                            </span>
-                                                        </div>
-                                                        <div className="singleCol colUrl text-left">
-                                                            {" "}
-                                                            <span>
-                                                                {user.name}
-                                                            </span>
-                                                        </div>
-                                                        <div className="singleCol colSearchEngine text-left">
-                                                            <span>
-                                                                {capitalizeFirstLetter(
-                                                                    user.user_level
-                                                                )}
-                                                            </span>
-                                                        </div>
-                                                        <div className="singleCol colLocation text-left">
-                                                            <span>
-                                                                {
-                                                                    user.department
-                                                                }
-                                                            </span>
-                                                        </div>
-                                                        <div className="singleCol colAction text-left">
-                                                            <span>
-                                                                {user.team_name}
-                                                            </span>
-                                                        </div>
-                                                        <div className="singleCol colAction text-right">
-                                                            <span>
-                                                                {this.props.user
-                                                                    .user_level ==
-                                                                "admin" ? (
-                                                                    <>
-                                                                        <Link
-                                                                            className="btn gaa-btn-primary btn-sm"
-                                                                            to={`/settings/user/${user.id}/edit`}
-                                                                        >
-                                                                            <i className="fa fa-edit"></i>
-                                                                        </Link>
-                                                                        <button
-                                                                            className="btn gaa-btn-danger btn-sm ml-2"
-                                                                            onClick={() =>
-                                                                                this.handleDelete(
-                                                                                    user.id
-                                                                                )
-                                                                            }
-                                                                        >
-                                                                            <i className="fa fa-trash"></i>
-                                                                        </button>
-                                                                    </>
-                                                                ) : null}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </>
-                                            );
-                                        })}
+                                    {this.state.users.filter(this.checkSearchText).map((user) => {return (
+                                        <div key={user.id} className="singleRow justify-content-between align-items-center">
+                                            <div className="singleCol text-left"><span>{user.email}</span></div>
+                                            <div className="singleCol text-left"><span>{user.name}</span></div>
+                                            <div className="singleCol text-left"><span>{capitalizeFirstLetter(user.user_level)}</span></div>
+                                            <div className="singleCol text-left"><span>{user.department}</span></div>
+                                            <div className="singleCol text-left"><span>{user.team_name}</span></div>
+                                            <div className="singleCol text-right">
+                                                <span>{this.props.user.user_level == "admin" ? (
+                                                        <>
+                                                            <Link to={`/settings/user/${user.id}/edit`}><img src={`/icon-edit.svg`} /></Link>
+                                                            <Link onClick={() => this.handleDelete(user.id)}><img src={`/icon-trash.svg`} /></Link>
+                                                        </>
+                                                    ) : null}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    );})}
                                 </div>
                             </div>
                         </div>
