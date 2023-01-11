@@ -294,160 +294,139 @@ class IndexAnnotations extends React.Component {
                     <div className="container-xl p-0">
                         <div className="row ml-0 mr-0 mb-1">
                             <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">
-                                    Annotations
-                                </h2>
+                                <h2 className="heading-section gaa-title">Annotations</h2>
                             </div>
                         </div>
-                        <div id="annotation-index-container">
-                            <div className="row mb-3 ml-0 mr-0">
-                                <div className="col-sm-12 col-md-9 col-lg-9 text-center text-sm-center text-md-left text-lg-left mb-3"></div>
-                                <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-right text-lg-right">
-                                    <Link
-                                        to="/annotation/create"
-                                        className="btn btn-sm gaa-btn-primary text-white float-left w-100 mb-2"
-                                    >
-                                        <i className=" mr-2 fa fa-plus"></i>Add
-                                        Manual
-                                    </Link>
-                                    <Link
-                                        to="/data-source"
-                                        className="btn btn-sm gaa-btn-primary text-white float-left w-100"
-                                    >
-                                        Add Automated Annotations
-                                    </Link>
-                                </div>
+                        <div className="row mb-3 ml-0 mr-0">
+                            <div className="col-sm-12 col-md-9 col-lg-9 text-center text-sm-center text-md-left text-lg-left mb-3"></div>
+                            <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-right text-lg-right">
+                                <Link to="/annotation/create" className="btn btn-sm gaa-btn-primary text-white float-left w-100 mb-2">
+                                    <i className=" mr-2 fa fa-plus"></i>
+                                    <span>Add Manual</span>
+                                </Link>
+                                <Link to="/data-source" className="btn btn-sm gaa-btn-primary text-white float-left w-100">Add Automated Annotations</Link>
                             </div>
-                            <div className="row mb-1 ml-0 mr-0">
-                                <div className="col-sm-12 col-md-2 col-lg-2 text-center text-sm-center text-md-left text-lg-left mb-3">
-                                    <select
-                                        name="sortBy"
-                                        id="sort-by"
-                                        value={this.state.sortBy}
-                                        className="form-control"
-                                        onChange={this.sort}
-                                    >
-                                        <option value="Null">Sort By</option>
-                                        <option value="added">Added</option>
-                                        <option value="date">By Date</option>
-                                        <option value="category">
-                                            By Category
-                                        </option>
-                                        <option value="ga-property">
-                                            By GA Property
-                                        </option>
-                                        {/* <option value="added-by">By Colour</option> */}
-                                    </select>
-                                    {this.state.selectedRows.length ? (
-                                        <button
-                                            className="btn btn-danger btn-sm mt-2"
-                                            onClick={this.handleDeleteSelected}
-                                        >
-                                            Delete
-                                        </button>
-                                    ) : null}
-                                </div>
-                                <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-left text-lg-left">
-                                    {this.state.sortBy == "ga-property" ? (
-                                        <GoogleAnalyticsPropertySelect
-                                            name={"googleAnalyticsProperty"}
-                                            id={"googleAnalyticsProperty"}
-                                            value={
-                                                this.state
-                                                    .googleAnalyticsProperty
-                                            }
-                                            onChangeCallback={(e) => {
-                                                this.sortByProperty(
-                                                    e.target.value
-                                                );
-                                            }}
-                                        />
-                                    ) : null}
-                                    {this.state.sortBy == "category" ? (
-                                        <select
-                                            name="category"
-                                            id="category"
-                                            value={this.state.category}
-                                            className="form-control"
-                                            onChange={(e) => {
-                                                this.sortByCategory(
-                                                    e.target.value
-                                                );
-                                            }}
-                                        >
-                                            <option value="select-category">
-                                                Select Category
-                                            </option>
-                                            {categories.map((cats) => (
-                                                <option
-                                                    value={cats.category}
-                                                    key={cats.category}
-                                                >
-                                                    {cats.category}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    ) : null}
-                                </div>
-                                <div className="col-sm-12 col-md-4 col-lg-4  text-center text-sm-center text-md-right text-lg-right"></div>
-                                <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right">
-                                    <input
-                                        name="searchText"
-                                        value={this.state.searchText}
-                                        className="form-control float-right m-w-255px"
-                                        placeholder="Search..."
-                                        onChange={this.handleChange}
+                        </div>
+                        <div className="row mb-1 ml-0 mr-0">
+                            <div className="col-sm-12 col-md-2 col-lg-2 text-center text-sm-center text-md-left text-lg-left mb-3">
+                                <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
+                                    <option value="Null">Sort By</option>
+                                    <option value="added">Added</option>
+                                    <option value="date">By Date</option>
+                                    <option value="category">By Category</option>
+                                    <option value="ga-property">By GA Property</option>
+                                </select>
+                                {this.state.selectedRows.length ? (
+                                    <button className="btn btn-danger btn-sm mt-2" onClick={this.handleDeleteSelected}>Delete</button>
+                                ) : null}
+                            </div>
+
+                            <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-left text-lg-left">
+                                {this.state.sortBy == "ga-property" ? (
+                                    <GoogleAnalyticsPropertySelect
+                                        name={"googleAnalyticsProperty"}
+                                        id={"googleAnalyticsProperty"}
+                                        value={
+                                            this.state
+                                                .googleAnalyticsProperty
+                                        }
+                                        onChangeCallback={(e) => {
+                                            this.sortByProperty(
+                                                e.target.value
+                                            );
+                                        }}
                                     />
-                                </div>
+                                ) : null}
+                                {this.state.sortBy == "category" ? (
+                                    <select
+                                        name="category"
+                                        id="category"
+                                        value={this.state.category}
+                                        className="form-control"
+                                        onChange={(e) => {
+                                            this.sortByCategory(
+                                                e.target.value
+                                            );
+                                        }}
+                                    >
+                                        <option value="select-category">
+                                            Select Category
+                                        </option>
+                                        {categories.map((cats) => (
+                                            <option
+                                                value={cats.category}
+                                                key={cats.category}
+                                            >
+                                                {cats.category}
+                                            </option>
+                                        ))}
+                                    </select>
+                                ) : null}
                             </div>
+                            <div className="col-sm-12 col-md-4 col-lg-4  text-center text-sm-center text-md-right text-lg-right"></div>
+                            <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right">
+                                <input
+                                    name="searchText"
+                                    value={this.state.searchText}
+                                    className="form-control float-right m-w-255px"
+                                    placeholder="Search..."
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="container">
+                            <div className='d-flex'>
+                                <span>icon</span>
+                                <div className='description'>
+                                    <p>
+                                        <span>title</span>
+                                        <a href="">website link</a>
+                                    </p>
+                                    <p>
+                                        desctiption text
+                                        <a href="">read more</a>
+                                    </p>
+                                </div>
+                                <ul>
+                                    <li><span>All properties</span></li>
+                                    <li><time datetime='24 Nov, 2022'>24 Nov, 2022</time></li>
+                                    <li>
+                                        <a href="#">
+                                            <i className="fa fa-chart"></i>
+                                            <span>open chart</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li><a href="#"><i className="fa fa-eye"></i></a></li>
+                                    <li><a href="#"><i className="fa fa-edit"></i></a></li>
+                                    <li><a href="#"><i className="fa fa-trash"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div id="annotation-index-container">
+
+                            
+
+
                             <div className="row ml-0 mr-0">
                                 <div className="col-12">
                                     <ErrorAlert errors={this.state.errors} />
-                                    <div
-                                        id="annotation-table-container"
-                                        className="table-responsive sticky-header"
-                                    >
+                                    <div id="annotation-table-container" className="table-responsive sticky-header">
                                         <table className="table table-hover gaa-hover table-bordered">
                                             <thead id="annotation-table-head">
                                                 <tr>
-                                                    <th>
-                                                        <input
-                                                            type="checkbox"
-                                                            onClick={
-                                                                this
-                                                                    .handleAllSelection
-                                                            }
-                                                        />
-                                                    </th>
+                                                    <th><input type="checkbox" onClick={this.handleAllSelection} /></th>
                                                     <th>Category</th>
-                                                    <th
-                                                        style={{
-                                                            width: "25% !important",
-                                                            wordWrap:
-                                                                "break-word",
-                                                            wordBreak:
-                                                                "break-all",
-                                                        }}
-                                                    >
-                                                        Event Name
-                                                    </th>
+                                                    <th style={{width: "25% !important", wordWrap: "break-word", wordBreak: "break-all",}}>Event Name</th>
                                                     <th>Description</th>
                                                     <th>Properties</th>
                                                     <th>Status</th>
-                                                    <th
-                                                        style={{
-                                                            minWidth: "100px",
-                                                        }}
-                                                    >
-                                                        Show At
-                                                    </th>
-                                                    <th
-                                                        style={{
-                                                            minWidth: "100px",
-                                                        }}
-                                                    >
-                                                        Added By
-                                                    </th>
+                                                    <th style={{minWidth: "100px",}}>Show At</th>
+                                                    <th style={{minWidth: "100px",}}>Added By</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
