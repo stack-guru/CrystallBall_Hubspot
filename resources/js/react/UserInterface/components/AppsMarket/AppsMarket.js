@@ -465,11 +465,7 @@ class AppsMarket extends React.Component {
                                     </svg>
                                 </i>
                                 <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                <Input
-                                    type="select"
-                                    name="select"
-                                    id="dropdownFilters"
-                                >
+                                <Input type="select" name="select" id="dropdownFilters">
                                     <option>Sort by</option>
                                     <option>Asending</option>
                                     <option>Desending</option>
@@ -478,23 +474,10 @@ class AppsMarket extends React.Component {
                                 </Input>
                             </FormGroup>
                             <FormGroup className="filter-search position-relative">
-                                <Label className="sr-only" for="search">
-                                    search
-                                </Label>
-                                <Input
-                                    type="search"
-                                    name="search"
-                                    id="search"
-                                    placeholder="with a placeholder"
-                                />
+                                <Label className="sr-only" for="search">search</Label>
+                                <Input type="search" name="search" id="search" placeholder="with a placeholder"/>
                                 <button className="btn-searchIcon">
-                                    <img
-                                        className="d-block"
-                                        src="/search-new.svg"
-                                        width="16"
-                                        height="16"
-                                        alt="Search"
-                                    />
+                                    <img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search"/>
                                 </button>
                             </FormGroup>
                         </form>
