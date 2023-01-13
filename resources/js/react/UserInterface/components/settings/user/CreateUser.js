@@ -65,95 +65,63 @@ export default class CreateUser extends Component {
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
-            <div className="container-xl bg-white  component-wrapper" >
-                <section className="ftco-section" id="buttons">
-                    <div className="container">
-                        <div className="row mb-5">
-                            <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">Add User</h2>
+            <div className="popupContent modal-createUser">
+                <div className="apps-bodyContent">
+                    <form onSubmit={this.submitHandler} id="create-user-form">
+                        <ErrorAlert errors={this.state.errors} />
+                        <div className='grid2layout'>
+                            <div className="themeNewInputStyle">
+                                <input type="text" className="form-control" placeholder='Full name' value={this.state.user.name} onChange={this.changeHandler} id="name" name="name" />
+                            </div>
+
+                            <div className="themeNewInputStyle">
+                                <input type="email" className="form-control" placeholder='Email' value={this.state.user.email} onChange={this.changeHandler} id="email" name="email" />
                             </div>
                         </div>
 
-                        <div className="row">
-                            <div className="col-md-12">
-                                <ErrorAlert errors={this.state.errors} />
+                        <div className='grid2layout'>
+                            <div className="themeNewInputStyle position-relative inputWithIcon">
+                                <span className="fa cursor-pointer"><img src={"/icon-eye-close.svg"}/></span>
+                                <input type="password" className="form-control" placeholder='Password' value={this.state.user.password} onChange={this.changeHandler} id="password" name="password" />
+                            </div>
+
+                            <div className="themeNewInputStyle position-relative inputWithIcon">
+                                <span className="fa cursor-pointer"><img src={"/icon-eye-open.svg"}/></span>
+                                <input type="password" className="form-control" placeholder='Confirm password' value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" />
                             </div>
                         </div>
 
-                        <form onSubmit={this.submitHandler}>
-                            <div className="row">
-
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group">
-                                        <label htmlFor="name" className="form-control-placeholder">Name</label>
-                                        <input type="text" className="form-control" value={this.state.user.name} onChange={this.changeHandler} id="name" name="name" />
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group">
-                                        <label htmlFor="email" className="form-control-placeholder">Email</label>
-                                        <input type="text" className="form-control" value={this.state.user.email} onChange={this.changeHandler} id="email" name="email" />
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group">
-                                        <label htmlFor="password" className="form-control-placeholder">Password</label>
-                                        <input type="password" className="form-control" value={this.state.user.password} onChange={this.changeHandler} id="password" name="password" />
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group">
-                                        <label htmlFor="password_confirmation" className="form-control-placeholder">Password Confirmation</label>
-                                        <input type="password" className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" />
-                                    </div>
-                                </div>
+                        <div className='grid2layout'>
+                            <div className="themeNewInputStyle">
+                                <select name="user_level" className="form-control" placeholder='User level' onChange={this.changeHandler} value={this.state.user.user_level}>
+                                    <option value="admin">Admin</option>
+                                    <option value="team">Team Member</option>
+                                    <option value="viewer">Viewer</option>
+                                </select>
                             </div>
-                            <div className="row mt-4">
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group">
-                                        <label htmlFor="user_level" className="form-control-placeholder">User Level</label>
-                                        <select name="user_level" className="form-control" onChange={this.changeHandler} value={this.state.user.user_level}>
-                                            <option value="admin">Admin</option>
-                                            <option value="team">Team Member</option>
-                                            <option value="viewer">Viewer</option>
-                                        </select>
-                                    </div>
-                                </div>
 
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group ">
-                                        <label htmlFor="department" className="form-control-placeholder">Department</label>
-                                        <input type="text" onChange={this.changeHandler} value={this.state.user.department} className="form-control" id="department" name="department" />
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder">Google Accounts</label>
-                                        <GoogleAnalyticsAccountSelect name="google_analytics_account_id" id="google_analytics_account_id" value={this.state.user.google_analytics_account_id} onChangeCallback={this.changeHandler} placeholder="Select GA Accounts" multiple></GoogleAnalyticsAccountSelect>
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder">Team Name</label>
-                                        <UserTeamNameSelect name="team_name" id="team_name" value={this.state.user.team_name} onChangeCallback={this.changeHandler} placeholder="Select Team or Create"></UserTeamNameSelect>
-                                    </div>
-                                </div>
+                            <div className="themeNewInputStyle">
+                                <input type="text" onChange={this.changeHandler} value={this.state.user.department} className="form-control" placeholder='Department' id="department" name="department"/>
                             </div>
-                            <div className="row ml-0 mr-0 mt-3">
-                                <div className="col-12 text-right pr-0">
-                                    <button type="submit" disabled={this.state.loading} className="btn gaa-btn-primary btn-fab btn-round" title="submit">
-                                        { this.state.loading ? <SpinningLoader/> : "Save & Send Invitation"} </button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
 
-                    </div>
-                </section>
+                        <div className='grid2layout'>
+                            <div className="themeNewInputStyle">
+                                <GoogleAnalyticsAccountSelect name="google_analytics_account_id" id="google_analytics_account_id" value={this.state.user.google_analytics_account_id} onChangeCallback={this.changeHandler} placeholder="Google account" multiple></GoogleAnalyticsAccountSelect>
+                            </div>
+
+                            <div className="themeNewInputStyle">
+                                <UserTeamNameSelect name="team_name" id="team_name" value={this.state.user.team_name} onChangeCallback={this.changeHandler} placeholder="Team"></UserTeamNameSelect>
+                            </div>
+                        </div>
+
+                        <div className='d-flex pt-3'>
+                            <button type="submit" className="btn-cancel mr-3" title="submit">Cancel</button>
+                            <button type="submit" className="btn-theme mr-3" title="submit">Add</button>
+                            <button type="submit" disabled={this.state.loading} className="btn-theme" title="submit">{ this.state.loading ? <SpinningLoader/> : "Save & Send Invitation"}</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         )
     }

@@ -1291,6 +1291,36 @@ class AppsMarket extends React.Component {
                                     });
                                 }}
                             />
+                        ) : this.state.dsKey ===
+                          "is_ds_create_annotation_enabled" ? (
+                            <Twitter
+                                {...this.state}
+                                {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
+                                updateUserAnnotationColors={
+                                    this.updateUserAnnotationColors
+                                }
+                                serviceStatusHandler={this.serviceStatusHandler}
+                                changeShownHint={this.changeShownHint}
+                                sectionToggler={this.sectionToggler}
+                                userDataSourceAddHandler={
+                                    this.userDataSourceAddHandler
+                                }
+                                userDataSourceDeleteHandler={
+                                    this.userDataSourceDeleteHandler
+                                }
+                                reloadWebMonitors={this.reloadWebMonitors}
+                                loadUserDataSources={this.loadUserDataSources}
+                                updateGAPropertyId={(value) => {
+                                    this.setState({
+                                        ga_property_id: value,
+                                    });
+                                }}
+                            />
                         ) : null}
                     </AppsModal>
                 </Container>

@@ -323,32 +323,21 @@ class IndexAnnotations extends React.Component {
                                 ) : null}
                             </FormGroup>
 
-                            <FormGroup>
-                                {this.state.sortBy == "ga-property" ? (
-                                    <GoogleAnalyticsPropertySelect
-                                        name={"googleAnalyticsProperty"}
-                                        id={"googleAnalyticsProperty"}
-                                        value={this.state.googleAnalyticsProperty}
-                                        onChangeCallback={(e) => {this.sortByProperty(e.target.value);}}/>
-                                ) : null}
-                                {this.state.sortBy == "category" ? (
-                                    <select name="category" id="category" value={this.state.category} className="form-control" onChange={(e) => {this.sortByCategory(e.target.value);}}>
-                                        <option value="select-category">Select Category</option>
-                                        {categories.map((cats) => (
-                                            <option value={cats.category} key={cats.category}>{cats.category}</option>
-                                        ))}
+                            <div className="d-flex">
+                                <FormGroup className="extraSelect position-relative">
+                                    <span className="selectIcon"><img src={'/icon-select.svg'}/></span>
+                                    <select name="category" id="category" className="form-control">
+                                        <option value="select-category">Select</option>
                                     </select>
-                                ) : null}
-                            </FormGroup>
+                                </FormGroup>
 
-                            <FormGroup className="filter-search position-relative">
-                                <Label className="sr-only" for="search">search</Label>
-                                <Input name="searchText" value={this.state.searchText} placeholder="Search..." onChange={this.handleChange}/>
-                                <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search"/></button>
-                            </FormGroup>
-
+                                <FormGroup className="filter-search position-relative">
+                                    <Label className="sr-only" for="search">search</Label>
+                                    <Input name="searchText" value={this.state.searchText} placeholder="Search..." onChange={this.handleChange}/>
+                                    <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search"/></button>
+                                </FormGroup>
+                            </div>
                         </form>
-
                     </div>
 
                     {this.state.isLoading ? (
@@ -463,7 +452,7 @@ class IndexAnnotations extends React.Component {
                                                 <ul className="d-flex list-unstyled">
                                                     <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
                                                     <li><time datetime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
-                                                    <li><a href="#"><i className="fa fa-chart"></i><span>open chart</span></a></li>
+                                                    <li><a href="#"><i className="mr-2"><img src={"/icon-chart.svg"}/></i><span>open chart</span></a></li>
                                                 </ul>
 
                                                 <ul className="d-flex list-unstyled">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { Container } from 'reactstrap';
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
 import ErrorAlert from '../../utils/ErrorAlert';
@@ -134,71 +135,68 @@ class IndexAPIKey extends React.Component {
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
-            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
-                <section className="ftco-section " id="inputs" >
-                    <div className="container p-5">
-                        <div className="row mb-5">
-                            <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">API Keys <UserAnnotationColorPicker name="api" value={this.state.userAnnotationColors.api} updateCallback={this.updateUserAnnotationColors} /></h2>
-                                <a className="float-right" href="/documentation" target="_blank">Check documentation</a>
-                            </div>
-                            <div className="col-md-12">
-                                <ErrorAlert errors={this.state.errors} />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-4">
-                                <label>Token Name:</label>
+            <div id="apiKeyPage" className="apiKeyPage pageWrapper">
+                <Container>
+                    <div className="pageHeader apiKeyPageHead d-flex justify-content-between align-items-center">
+                        <h2 className="pageTitle d-flex">API Keys{/* <UserAnnotationColorPicker name="api" value={this.state.userAnnotationColors.api} updateCallback={this.updateUserAnnotationColors} /> */}</h2>
+                        <a className='btn-theme-outline' href="/documentation" target="_blank">
+                            <i><img src={'/icon-document.svg'} alt={'icon'} className="svg-inject" /></i>
+                            <span>See documentation</span>
+                        </a>
+                    </div>
+
+                    <form className='apiKeyForm d-block' onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
+                        <h3>Generate token</h3>
+                        <div className="inputplusbutton d-flex">
+                            <div className="themeNewInputGroup themeNewInputStyle">
                                 <input type="text" className="form-control" name="token_name" onChange={this.handleChange} value={this.state.token_name} />
                             </div>
-                            <div className="col-md-4">
-                                <label>Access Token:</label>
-                                <textarea className="form-control" value={this.state.accessToken} readOnly id="input-access-token" />
-                                <label className="text-danger">Token will only appear here, once.</label>
-                            </div>
-                            <div className="col-md-4">
-                                <br />
-                                <br />
-                                <button className="btn btn-success" onClick={() => { this.generateAPIKey() }}>Generate</button>
-                                <button className="ml-3 btn gaa-btn-primary" onClick={() => { this.copyAccessToken() }}>Copy</button>
-                            </div>
+                            <button className="btn-theme-success" onClick={() => { this.generateAPIKey() }}>Generate</button>
                         </div>
+                        <div className="themeNewInputGroup mb-4 position-relative">
+                            <textarea name="details" className="form-control" placeholder='Generated access token...' value={this.state.accessToken} readOnly id="input-access-token" />
+                            <button className="btn-theme-outline-sm" onClick={() => { this.copyAccessToken() }}>
+                                <i><img src={'/icon-copy.svg'} alt={'icon'} className="svg-inject" /></i>
+                                <span>Copy</span>
+                            </button>
+                        </div>
+                        <div className='alert alert-info border-0'>
+                            <i><img src={'/icon-info.svg'} alt={'icon'} className="svg-inject" /></i>
+                            <span>Message sent successfully. We’ll try to reply as soon as possible.</span>
+                        </div>
+                    </form>
 
-                        <div className="row mt-5">
-                            <div className="col-12">
-                                <table className="table table-hover gaa-hover table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Token Name</th>
-                                            <th>Created At</th>
-                                            <th>Expires At</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.state.apiKeys.map(apiKey => {
-                                            return <tr key={apiKey.id}>
-                                                <td>
-                                                    {apiKey.name}
-                                                </td>
-                                                <td>
-                                                    {moment(apiKey.created_at).format("YYYY-MM-DD")}
-                                                </td>
-                                                <td>
-                                                    {moment(apiKey.expires_at).format("YYYY-MM-DD")}
-                                                </td>
-                                                <td className="text-center">
-                                                    <button className="btn gaa-btn-danger btn-sm" type="button" onClick={this.handleDelete} data-token-id={apiKey.id}><i className="fa fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                        })}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="col-12"></div>
+                    <div className="postKeys">
+                        <h3>Past keys</h3>
+                        <div className="postKeysItems">
+                            {this.state.apiKeys.map(apiKey => {
+                                return (<ul className="postKeyItem" key={apiKey.id}>
+                                    <li className='align-align-items-start'>
+                                        <h6>{apiKey.name}</h6>
+                                        <div class="dropup">
+                                            <button className="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" ariaHaspopup="true" ariaExpanded="false">
+                                                <i><img src={'/icon-elipsis-v.svg'} alt={'icon'} className="svg-inject" /></i>
+                                            </button>
+                                            <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                <a className="text-danger" type="button" onClick={this.handleDelete} data-token-id={apiKey.id}>Delete</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <span>Created At</span>
+                                            <span>{moment(apiKey.created_at).format("YYYY-MM-DD")}</span>
+                                        </span>
+                                        <span>
+                                            <span>Expires At</span>
+                                            <span>{moment(apiKey.expires_at).format("YYYY-MM-DD")}</span>
+                                        </span>
+                                    </li>
+                                </ul>)
+                            })}
                         </div>
                     </div>
-                </section>
+                </Container>
             </div>
         );
     }

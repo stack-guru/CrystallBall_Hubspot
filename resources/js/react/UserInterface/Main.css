@@ -1323,13 +1323,12 @@ body {
 }
 .btn-theme {
     border: 0;
-    width: 75px;
     height: 40px;
-    padding: 10px;
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
     color: #FFFFFF;
+    padding: 10px 2rem;
     border-radius: 100px;
     background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%);
 }
@@ -1730,7 +1729,7 @@ body {
 .dropdown-holder .dropup .dropdown-menu.show { transform: translate3d(0, -260px, 0px) !important; }
 .annotionRow {
     padding: 24px;
-    height: 140px;
+    min-height: 140px;
     background: #fff;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -1785,7 +1784,13 @@ body {
 }
 .annotionRow ul li .properties {color: #333;}
 .annotionRow ul li time {color: #666;}
-.annotionRow ul li:first-child { border: 0; }
+.annotionRow ul li:first-child {border: 0;}
+.annotionRow ul:first-child li:last-child  a {
+    color: #1976fe;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+}
 .annotationPage { padding: 50px 0; }
 .annotationPage .pageHead{padding-bottom: 42px;}
 .annotationPage .pageHead form { padding: 42px 0 0;}
@@ -1856,6 +1861,302 @@ body {
 .dataTableusers { }
 .usersPage .pageHead{ padding: 0 0 42px; }
 .usersPage .pageFilters{ padding: 42px 0 0; }
+
+.pageWrapper { padding: 50px 0; }
+.supportPageHead {padding-bottom: 18px;}
+.supportPageHead h2{margin-bottom: 1rem;}
+.alert {
+    height: 52px;
+    padding: 16px;
+    display: flex;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 19px;
+    align-items: center;
+    flex-direction: row;
+    border-radius: 12px;
+}
+.alert i {margin-right: 10px;}
+.alert-success {
+    color: #00bb4f;
+    background: #f3fff6;
+}
+.alert-info {
+    color: #096db7;
+    background: #f7faff;
+}
+.supportPageHead p{
+    color: #666;
+    font-size: 20px;
+    margin: 0 0 42px;
+    font-weight: 400;
+    line-height: 25px;
+}
+.supportPageHead {}
+.supportForm {max-width: 628px;}
+.apiKeyForm textarea.form-control,
+.supportForm textarea.form-control {
+    padding: 16px;
+    height: 133px;
+    resize: none;
+    color: #666;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #bdbdbd;
+}
+.inputFie {max-width: 342px;}
+.inputFie > span{
+    color: #333;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    padding-bottom: 12px;
+}
+.inputFie > label {
+    margin: 0;
+    height: 44px;
+    display: flex;
+    border-radius: 8px;
+    align-items: center;
+    padding: 6px 6px 6px 15px;
+    border: 1px solid #bdbdbd;
+    justify-content: space-between;
+}
+.inputFie > label > span {
+    display: flex;
+    color: #666;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    align-items: center;
+}
+.inputFie > label > span i {margin-right: 10px;}
+.inputFie > label > label {
+    margin: 0;
+    width: 82px;
+    height: 32px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #096db7;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 6px 16px;
+    border-radius: 8px;
+    position: relative;
+    background: #f0f6ff;
+}
+.inputFie > label > label input[type="file"] {
+    top: -9999;
+    right: -9999;
+    visibility: hidden;
+    position: absolute;
+}
+.supportForm .btn-theme{
+    width: 96px;
+    height: 47px;
+    padding: 12px 28px;
+    box-shadow: 0px 4px 12px rgba(0, 102, 213, 0.1);
+    background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%);
+}
+.apiKeyPage {}
+.apiKeyPageHead { padding-bottom: 60px; }
+.apiKeyPageHead .pageTitle {margin-bottom: 0;}
+.btn-theme-outline {
+    height: 40px;
+    display: flex;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1976fe;
+    line-height: 20px;
+    padding: 10px 24px;
+    align-items: center;
+    border-radius: 100px;
+    border: 2px solid #1976fe;
+}
+.btn-theme-outline i { margin-right: 10px; }
+.apiKeyForm {
+    width: 676px;
+    padding: 24px;
+    display: flex;
+    background: #fff;
+    border-radius: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+.apiKeyForm h3 {
+    color: #666;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23px;
+    margin-bottom: 2rem;
+}
+.inputplusbutton {max-width: 469px; padding-bottom: 24px;}
+.inputplusbutton .themeNewInputGroup {padding-right: 1rem;}
+.themeNewInputStyle .css-yk16xz-control,
+.themeNewInputStyle .css-1pahdxg-control,
+.themeNewInputStyle .form-control{
+    height: 44px;
+    width: 100% !important;
+    font-size: 14px !important;
+    line-height: 28px !important;
+    border-radius: 8px !important;
+    border: 1px solid #bdbdbd;
+}
+.css-26l3qy-menu {font-size: 14px !important;}
+.themeNewInputStyle .form-control {padding: 5px 1rem;}
+.btn-theme-success {
+    border: 0;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 12px 24px;
+    border-radius: 100px;
+    background: #00BB4F;
+    box-shadow: 0px 4px 12px rgba(11, 210, 95, 0.1);
+}
+.btn-theme-outline-sm {
+    width: 85px;
+    height: 34px;
+    display: flex;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1976fe;
+    line-height: 18px;
+    padding: 8px 16px;
+    align-items: center;
+    border-radius: 100px;
+    background-color: #fff;
+    border: 1px solid #1976fe;
+}
+.apiKeyForm .btn-theme-outline-sm {
+    top: 12px;
+    z-index: 2;
+    right: 12px;
+    position: absolute;
+}
+.apiKeyForm {margin-bottom: 80px;}
+.postKeys {}
+.postKeys h3{
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 42px;
+    line-height: 25px;
+    padding: 0 0 1rem;
+    border-bottom: 1px solid #bdbdbd;
+}
+.postKeysItems {
+    gap: 28px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+.postKeyItem {
+    padding: 24px;
+    display: flex;
+    color: #333;
+    font-size: 16px;
+    list-style: none;
+    font-weight: 400;
+    line-height: 20px;
+    background: #fff;
+    border-radius: 8px;
+    flex-direction: column;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
+}
+.postKeyItem li {
+    display: flex;
+    text-align: left;
+    list-style-type: none;
+    justify-content: space-between;
+}
+.postKeyItem li h6 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #096db7;
+    line-height: 20px;
+}
+.postKeyItem li span {
+    display: flex;
+    flex-direction: column;
+}
+.postKeyItem li:last-child{ padding-top: 24px; }
+.postKeyItem li:last-child span:last-child {text-align: right;}
+.postKeyItem li span > span:first-child {
+    color: #666;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+}
+.postKeyItem .dropup .dropdown-toggle {
+    border: 0;
+    background-color: #fff;
+}
+.postKeyItem .dropup .dropdown-toggle:after{display: none;}
+.postKeyItem .dropup .dropdown-menu{
+    border: 0;
+    width: 208px;
+    padding: 12px;
+    font-size: 16px;
+    color: #f44c3d;
+    font-weight: 400;
+    line-height: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.16);
+}
+.postKeyItem .dropup .dropdown-menu a{
+    display: block;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+.btn-cancel {
+    width: 94px;
+    height: 40px;
+    color: #666;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 10px 24px;
+    background: #fff;
+    border-radius: 100px;
+    border: 1px solid #a6a6a6;
+}
+.themeNewInputStyle select.form-control{
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.25em;
+}
+.extraSelect {width: 130px; margin-right: 24px;}
+.extraSelect select{
+    z-index: 1;
+    width: 100%;
+    position: relative;
+    border-radius: 100px !important;
+    padding: 10px 20px 10px 3rem !important;
+}
+.selectIcon {
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    padding-left: 12px;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }
     .is-collapsed .sidebar .sidebar-inner .sidebar-menu>li>a .title {display: none;}

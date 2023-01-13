@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { toast } from 'react-toastify'
+import { Container } from 'reactstrap';
 
 import ErrorAlert from "../../utils/ErrorAlert";
 import HttpClient from "../../utils/HttpClient";
@@ -52,61 +53,40 @@ export default class SupportIndex extends Component {
                 toast.info("Your request has been submitted.");
                 this.setDefaultState();
             }, (err) => {
-
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-
                 this.setState({ isBusy: false, errors: err });
             });
     }
 
     render() {
         return (
-            <div className="container-xl bg-white  d-flex flex-column justify-content-center component-wrapper" >
-                <section className="ftco-section " id="inputs" >
-                    <div className="container p-5">
-                        <div className="row mb-5 mr-0 ml-0">
-                            <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">Get Support</h2>
-                            </div>
-                            <div className="col-md-12">
-                                <ErrorAlert errors={this.state.errors} />
-                            </div>
+            <div id="supportPage" className="supportPage pageWrapper">
+                <Container>
+                    <div className="pageHeader supportPageHead">
+                        <h2 className="pageTitle">Support</h2>
+                        <p>Send any query or questions. We’d be happy to answer them</p>
+                        <ErrorAlert errors={this.state.errors} />
+                        <div className='alert alert-success border-0'>
+                            <i><img src={'/icon-check-success.svg'} alt={'icon'} className="svg-inject" /></i>
+                            <span>Message sent successfully. We’ll try to reply as soon as possible.</span>
                         </div>
-
-                        <form onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
-
-                            <div className="row mr-0 ml-0">
-                                <div className="col-lg-5 col-sm-5">
-                                    <label htmlFor="details" className="form-control-placeholder">Message</label>
-                                    <textarea name="details" className="form-control" rows="6" onChange={this.handleChange} value={this.state.support.details}></textarea>
-                                </div>
-                            </div>
-                            <div className="row mr-0 ml-0 mt-3">
-                                <div className="col-lg-5 col-sm-5">
-                                    <div className="form-group">
-                                        <label htmlFor="attachment" className="form-control-placeholder">Add Attachment</label>
-                                        <br />
-                                        <input type="file" id="attachment" name="attachment" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row ml-0 mr-0  mt-3">
-                                <div className="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <button type="submit" className="btn gaa-btn-primary btn-fab btn-round">
-                                        {!this.state.isBusy ?
-                                            <i className="fa fa-upload mr-1"></i>
-                                            :
-                                            <i className="fa fa-spinner fa-pulse mr-1"></i>
-                                        }
-                                        Send
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-
                     </div>
-                </section>
+
+                    <form className='supportForm' onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
+                        <div className="themeNewInputGroup mb-4">
+                            <textarea name="details" className="form-control" placeholder='Enter your message here...' onChange={this.handleChange} value={this.state.support.details}></textarea>
+                        </div>
+                        <div className="themeNewInputGroup inputFie mb-4">
+                            <span className='d-block'>Attach files (optional)</span>
+                            <label>
+                                <span><i><img src={'/icon-paperclip.svg'} alt={'Paper Clip icon'} className="svg-inject" /></i><span>No file chosen...</span></span>
+                                <label htmlFor="attachment" className="form-control-placeholder">Upload<input type="file" id="attachment" name="attachment" /></label>
+                            </label>
+                        </div>
+                        <button type="submit" className="btn-theme">Send</button>
+                    </form>
+                </Container>
             </div>
         );
     }
