@@ -1,6 +1,5 @@
 import React from "react";
 import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
-import BitbucketTracking from "../../utils/BitbucketTracking";
 import GithubTracking from "../../utils/GithubTracking";
 import ModalHeader from "./common/ModalHeader";
 

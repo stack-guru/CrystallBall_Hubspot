@@ -28,8 +28,8 @@ class Wordpress extends React.Component {
                             <p className="mb-3">2. Create API Key</p>
 
                             <div className="d-flex mb-3 tokenBox">
-                                <div class="themeNewInputGroup">
-                                    <input type="text" class="form-control" id="token_name" placeholder="Token name" />
+                                <div className="themeNewInputGroup">
+                                    <input type="text" className="form-control" id="token_name" placeholder="Token name" />
                                 </div>
                                 <button>Generate</button>
                             </div>

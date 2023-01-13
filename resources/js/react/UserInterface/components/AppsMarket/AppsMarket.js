@@ -23,7 +23,6 @@ import GoogleAdChanges from "../../utils/GoogleAdChanges";
 import FacebookTracking from "../../utils/FacebookTracking";
 import TwitterTracking from "../../utils/TwitterTracking";
 import InstagramTracking from "../../utils/InstagramTracking";
-import BitbucketTracking from "../../utils/BitbucketTracking";
 import GithubTracking from "../../utils/GithubTracking";
 import ApplePodcast, { ApplePodcastConfig } from "../../utils/ApplePodcast";
 
@@ -543,7 +542,7 @@ class AppsMarket extends React.Component {
                                 }}
                             >
                                 {item.enabled ? (
-                                    <i class="active fa fa-check-circle"></i>
+                                    <i className="active fa fa-check-circle"></i>
                                 ) : null}
                                 <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width='140' />
                                 {item.premium ? (
@@ -703,7 +702,7 @@ class AppsMarket extends React.Component {
                                 }}
                             >
                                 {item.enabled ? (
-                                    <i class="active fa fa-check-circle"></i>
+                                    <i className="active fa fa-check-circle"></i>
                                 ) : null}
                                 <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width='140' />
                                 {item.premium ? (
@@ -881,7 +880,7 @@ class AppsMarket extends React.Component {
                                 },
                             ].map((item, itemKey) => (
                                 <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color" : item.background || "#e0e0e0",}}>
-                                    { item.enabled ? (<i class="active fa fa-check-circle"></i>) : null }
+                                    { item.enabled ? (<i className="active fa fa-check-circle"></i>) : null }
                                     <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width='140' />
                                     { item.premium ? (<span className="btn-premium"><i className="fa fa-diamond"></i><span>Premium</span></span>) : null }
                                 </div>

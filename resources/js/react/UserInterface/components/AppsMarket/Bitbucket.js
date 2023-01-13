@@ -1,6 +1,6 @@
 import React from "react";
 import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
-import BitbucketTracking from "../../utils/BitbucketTracking";
+import BitbucketTracking from '../../utils/BitBucketTracking'
 import ModalHeader from "./common/ModalHeader";
 
 class Bitbucket extends React.Component {
