@@ -7,6 +7,7 @@ import ErrorAlert from '../../utils/ErrorAlert';
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 
 import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
+import ModalHeader from '../AppsMarket/common/ModalHeader';
 
 export default class UploadAnnotation extends React.Component {
 
@@ -58,9 +59,9 @@ export default class UploadAnnotation extends React.Component {
                             });
                         }
                     }
-                    
+
                 }
-                
+
             });
         });
     }
@@ -125,13 +126,25 @@ export default class UploadAnnotation extends React.Component {
             <div className="container-xl bg-white component-wrapper" >
                 <section className="ftco-section" id="buttons">
                     <div className="container p-5">
-                        <div className="mb-5">
+                    <ModalHeader
+                        userAnnotationColors={this.state.userAnnotationColors}
+                        updateUserAnnotationColors={this.updateUserAnnotationColors}
+                        userServices={this.state}
+                        serviceStatusHandler={this.updateUserAnnotationColors}
+                        closeModal={() => this.props.togglePopup('')}
+                        serviceName={'Upload annotations using CSV'}
+                        colorKeyName={"csv"}
+                        dsKeyName={"csv"}
+                        creditString={null}
+                    />
+
+                        {/* <div className="mb-5">
                             <div className="col-md-12">
                                 <h2 className="heading-section gaa-title">Upload Annotations <UserAnnotationColorPicker name="csv" value={this.state.userAnnotationColors.csv} updateCallback={this.updateUserAnnotationColors} /><br />
                                     <small>Upload all your annotations using CSV</small>
                                 </h2>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="row ml-0 mr-0">
                             <div className="col-md-12">
                                 <ErrorAlert errors={this.state.errors} />

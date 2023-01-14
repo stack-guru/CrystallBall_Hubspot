@@ -10,8 +10,7 @@ class Sidebar extends React.Component {
         super(props);
         this.state = {
             show: false,
-            isCollapsed: false,
-            showAnnotationPopup: false,
+            isCollapsed: false
         };
         this.toggleSidebar = this.toggleSidebar.bind(this);
     }
@@ -153,7 +152,7 @@ class Sidebar extends React.Component {
                         this.props.user.user_level == "team" ? (
                             <li className="nav-item gaa-menu-item">
                                 <a href="javascript:void(0);"
-                                    onClick={this.props.openCreateAnnotations}>
+                                    onClick={() => this.props.openAnnotationPopup('manual')}>
                                     <span className="sidebar-link d-flex align-items-center justify-content-start">
                                         <span>
                                             <img
@@ -369,7 +368,7 @@ class Sidebar extends React.Component {
                                 <a
                                     class="dropdown-item"
                                     href="javascript:void(0);"
-                                    onClick={this.props.openCreateAnnotations}
+                                    onClick={() => this.props.openAnnotationPopup('manual')}
                                 >
                                     <span>
                                         <img
@@ -398,7 +397,8 @@ class Sidebar extends React.Component {
                                 this.props.user.user_level == "team" ? (
                                     <a
                                         class="dropdown-item"
-                                        href="/annotation/upload"
+                                        href="javascript:void(0);"
+                                        onClick={() => this.props.openAnnotationPopup('upload')}
                                     >
                                         <span>
                                             <img

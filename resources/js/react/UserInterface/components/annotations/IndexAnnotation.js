@@ -296,9 +296,9 @@ class IndexAnnotations extends React.Component {
                             <h2 className="pageTitle m-0">Annotations</h2>
                             <div className="addAnnotation">
                                 <span>Add Annotation:</span>
-                                <a href="javascript:void(0);" onClick={this.props.openCreateAnnotations}><img className='inject-me' src='/manual.svg' width='16' height='16' alt='menu icon'/></a>
+                                <a href="javascript:void(0);" onClick={() => this.props.openAnnotationPopup('manual')}><img className='inject-me' src='/manual.svg' width='16' height='16' alt='menu icon'/></a>
                                 <Link href="/data-source"><img className='inject-me' src='/appMarket.svg' width='16' height='16' alt='menu icon'/></Link>
-                                {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (<Link href="/annotation/upload"><img className='inject-me' src='/csvUploadd.svg' width='16' height='16' alt='menu icon'/></Link>) : null}
+                                {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (<a onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);"><img className='inject-me' src='/csvUploadd.svg' width='16' height='16' alt='menu icon'/></a>) : null}
                             </div>
                         </div>
 

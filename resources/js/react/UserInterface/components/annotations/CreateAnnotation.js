@@ -8,6 +8,7 @@ import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySe
 import AnnotationCategorySelect from '../../utils/AnnotationCategorySelect';
 
 import { loadStateFromLocalStorage, saveStateToLocalStorage, removeStateFromLocalStorage } from '../../helpers/CommonFunctions';
+import ModalHeader from '../AppsMarket/common/ModalHeader';
 
 export default class CreateAnnotation extends React.Component {
 
@@ -212,6 +213,18 @@ export default class CreateAnnotation extends React.Component {
         return (
             <div className="popupContent modal-createAnnotation">
                 <div className="apps-bodyContent">
+                    <ModalHeader
+                        userAnnotationColors={this.state}
+                        updateUserAnnotationColors={() => {}}
+                        userServices={() => {}}
+                        serviceStatusHandler={() => {}}
+                        closeModal={() => this.props.togglePopup('')}
+                        serviceName={'Add annotation manually'}
+                        colorKeyName={"manual_annotation"}
+                        dsKeyName={"manual_annotation"}
+                        creditString={null}
+                    />
+
                     <form onSubmit={this.submitHandler} id="annotation-create-form">
                         <ErrorAlert errors={this.state.errors} />
                         <div className='grid2layout'>
