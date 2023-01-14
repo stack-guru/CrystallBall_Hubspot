@@ -43,6 +43,7 @@ import UserRegistrationOffer from './utils/UserRegistrationOffer';
 import TimerPromotionPopup from './utils/TimerPromotionPopup';
 import CustomPricePlan from './components/settings/pricingPlans/CustomPricePlan'
 import AppsMarket from './components/AppsMarket/AppsMarket'
+import AppsModal from './components/AppsMarket/AppsModal';
 
 class Main extends React.Component {
 
@@ -55,7 +56,8 @@ class Main extends React.Component {
             showInterfaceTour: false,
             showDataSourceTour: false,
             showPromotionPopup: false,
-            showTimerPromotionPopup: false
+            showTimerPromotionPopup: false,
+            showAnnotationPopup: false,
         }
         this.loadUser = this.loadUser.bind(this)
 
@@ -116,7 +118,11 @@ class Main extends React.Component {
                     {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={this.toggleStartupConfiguration} /> */}
                     <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} />
 
-                    <Sidebar user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
+                    <Sidebar openCreateAnnotations={() => {
+                        this.setState({
+                            showAnnotationPopup: true,
+                        });
+                    }} user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
                 </div>
                 {/* <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" /> */}
                 <div className="page-container">
@@ -141,7 +147,11 @@ class Main extends React.Component {
                             </Route>
 
                             <Route exact path="/annotation" refresh={true}>
-                                <IndexAnnotations user={this.state.user} />
+                                <IndexAnnotations openCreateAnnotations={() => {
+                                    this.setState({
+                                        showAnnotationPopup: true,
+                                    });
+                                }}  user={this.state.user} />
                             </Route>
                             <Route exact path="/annotation/create" refresh={true}>
                                 <AnnotationsCreate currentPricePlan={this.state.user.price_plan} />
@@ -221,6 +231,46 @@ class Main extends React.Component {
                     <Footer />
                 </div>
                 {/* <StartupChecklist lastStartupConfigurationShowedAt={this.state.user.startup_configuration_showed_at} /> */}
+
+                <AppsModal
+                    isOpen={this.state.showAnnotationPopup}
+                    toggle={() => {
+                        this.setState({
+                            showAnnotationPopup: false,
+                        });
+                    }}
+                >
+                    <div>
+                        <div className="apps-modalHead">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <div className="d-flex justify-content-start align-items-center">
+                                    <h2>Add Annotation</h2>
+                                </div>
+                                <span
+                                    onClick={() =>
+                                        this.setState({
+                                            showAnnotationPopup: false,
+                                        })
+                                    }
+                                    className="btn-close"
+                                >
+                                    <img
+                                        className="inject-me"
+                                        src="/close-icon.svg"
+                                        width="26"
+                                        height="26"
+                                        alt="menu icon"
+                                    />
+                                </span>
+                            </div>
+                        </div>
+
+                        <AnnotationsCreate
+                            currentPricePlan={this.state.user.price_plan}
+                        />
+                    </div>
+                </AppsModal>
+
             </React.Fragment>
 
         )

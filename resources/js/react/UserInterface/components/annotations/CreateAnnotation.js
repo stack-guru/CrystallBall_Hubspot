@@ -250,7 +250,7 @@ export default class CreateAnnotation extends React.Component {
                         </div>
 
                         <div className='d-flex pt-3'>
-                            <button type="submit" className="btn-cancel mr-3" title="submit">Cancel</button>
+                            {/* <button type="submit" className="btn-cancel mr-3" title="submit">Cancel</button> */}
                             <button type="submit" className="btn-theme" title="submit">Add</button>
 
                         </div>
