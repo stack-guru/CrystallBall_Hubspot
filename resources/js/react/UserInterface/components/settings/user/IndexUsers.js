@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Container, FormGroup, Input, Label } from "reactstrap";
 import { capitalizeFirstLetter } from "../../../helpers/CommonFunctions";
 import HttpClient from "../../../utils/HttpClient";
+import AppsModal from "../../AppsMarket/AppsModal";
+import CreateUser from "./CreateUser";
 
 export default class IndexUsers extends Component {
     constructor(props) {
@@ -11,6 +13,7 @@ export default class IndexUsers extends Component {
         this.state = {
             users: [],
             searchText: "",
+            addUserPopup: false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -80,37 +83,37 @@ export default class IndexUsers extends Component {
                                     <>
                                         {this.props.user.price_plan
                                             .user_per_ga_account_count > -1 ? (
-                                            <Link to="/settings/user/create" class="btn-adduser d-flex align-items-center justify-content-center">
+                                            <a onClick={() => this.setState({ addUserPopup: true })} href="javascript:void(0);" class="btn-adduser d-flex align-items-center justify-content-center">
                                                 <i className="fa fa-plus"></i>
                                                 <span>Add User</span>
-                                            </Link>
+                                            </a>
                                         ) : (
                                             <button onClick={() => {
-                                                    const accountNotLinkedHtml =
-                                                        "" +
-                                                        '<div class="">' +
-                                                        '<img src="/images/banners/user_limit_banner.jpg" class="img-fluid">' +
-                                                        "</div>";
+                                                const accountNotLinkedHtml =
+                                                    "" +
+                                                    '<div class="">' +
+                                                    '<img src="/images/banners/user_limit_banner.jpg" class="img-fluid">' +
+                                                    "</div>";
 
-                                                    swal.fire({
-                                                        html: accountNotLinkedHtml,
-                                                        width: 700,
-                                                        customClass: {
-                                                            popup: "bg-light-red pb-5",
-                                                            htmlContainer:
-                                                                "m-0",
-                                                        },
-                                                        confirmButtonClass:
-                                                            "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                                        confirmButtonText:
-                                                            "Upgrade Now" +
-                                                            "<i class='ml-2 fa fa-caret-right'> </i>",
-                                                    }).then((value) => {
-                                                        window.location.href =
-                                                            "/settings/price-plans";
-                                                    });
+                                                swal.fire({
+                                                    html: accountNotLinkedHtml,
+                                                    width: 700,
+                                                    customClass: {
+                                                        popup: "bg-light-red pb-5",
+                                                        htmlContainer:
+                                                            "m-0",
+                                                    },
+                                                    confirmButtonClass:
+                                                        "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                                    confirmButtonText:
+                                                        "Upgrade Now" +
+                                                        "<i class='ml-2 fa fa-caret-right'> </i>",
+                                                }).then((value) => {
+                                                    window.location.href =
+                                                        "/settings/price-plans";
+                                                });
 
-                                                }}
+                                            }}
                                                 class="btn-adduser d-flex align-items-center justify-content-center"
                                             >
                                                 <i className="fa fa-plus"></i>
@@ -126,7 +129,7 @@ export default class IndexUsers extends Component {
                                     <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
                                     <i className="btn-searchIcon left-0">
                                         <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666"/>
+                                            <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666" />
                                         </svg>
                                     </i>
                                     <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
@@ -138,12 +141,12 @@ export default class IndexUsers extends Component {
                                         <option value="ga-property">By GA Property</option>
                                     </select>
                                 </FormGroup>
-                                
+
 
                                 <FormGroup className="filter-search position-relative">
                                     <Label className="sr-only" for="search">search</Label>
-                                    <Input name="searchText" value={this.state.searchText} placeholder="Search..." onChange={this.handleChange}/>
-                                    <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search"/></button>
+                                    <Input name="searchText" value={this.state.searchText} placeholder="Search..." onChange={this.handleChange} />
+                                    <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search" /></button>
                                 </FormGroup>
                             </form>
                         </div>
@@ -159,28 +162,67 @@ export default class IndexUsers extends Component {
                                     <div className="singleCol text-right">Actions</div>
                                 </div>
                                 <div className="tableBody">
-                                    {this.state.users.filter(this.checkSearchText).map((user) => {return (
-                                        <div key={user.id} className="singleRow justify-content-between align-items-center">
-                                            <div className="singleCol text-left"><span>{user.email}</span></div>
-                                            <div className="singleCol text-left"><span>{user.name}</span></div>
-                                            <div className="singleCol text-left"><span>{capitalizeFirstLetter(user.user_level)}</span></div>
-                                            <div className="singleCol text-left"><span>{user.department}</span></div>
-                                            <div className="singleCol text-left"><span>{user.team_name}</span></div>
-                                            <div className="singleCol text-right">
-                                                <span>{this.props.user.user_level == "admin" ? (
+                                    {this.state.users.filter(this.checkSearchText).map((user) => {
+                                        return (
+                                            <div key={user.id} className="singleRow justify-content-between align-items-center">
+                                                <div className="singleCol text-left"><span>{user.email}</span></div>
+                                                <div className="singleCol text-left"><span>{user.name}</span></div>
+                                                <div className="singleCol text-left"><span>{capitalizeFirstLetter(user.user_level)}</span></div>
+                                                <div className="singleCol text-left"><span>{user.department}</span></div>
+                                                <div className="singleCol text-left"><span>{user.team_name}</span></div>
+                                                <div className="singleCol text-right">
+                                                    <span>{this.props.user.user_level == "admin" ? (
                                                         <>
                                                             <Link to={`/settings/user/${user.id}/edit`}><img src={`/icon-edit.svg`} /></Link>
                                                             <Link onClick={() => this.handleDelete(user.id)}><img src={`/icon-trash.svg`} /></Link>
                                                         </>
                                                     ) : null}
-                                                </span>
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    );})}
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </div>
                     </Container>
+
+                    <AppsModal
+                        isOpen={this.state.addUserPopup}
+                        toggle={() => {
+                            this.setState({
+                                addUserPopup: false,
+                            });
+                        }}
+                    >
+                        <div>
+                            <div className="apps-modalHead">
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <div className="d-flex justify-content-start align-items-center">
+                                        <h2>Add User</h2>
+                                    </div>
+                                    <span
+                                        onClick={() =>
+                                            this.setState({
+                                                addUserPopup: false,
+                                            })
+                                        }
+                                        className="btn-close"
+                                    >
+                                        <img
+                                            className="inject-me"
+                                            src="/close-icon.svg"
+                                            width="26"
+                                            height="26"
+                                            alt="menu icon"
+                                        />
+                                    </span>
+                                </div>
+                            </div>
+
+                            <CreateUser user={this.props.user} />
+                        </div>
+                    </AppsModal>
                 </div>
 
                 {/* <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper">
