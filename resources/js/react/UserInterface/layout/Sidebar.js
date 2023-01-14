@@ -152,7 +152,8 @@ class Sidebar extends React.Component {
                         {this.props.user.user_level == "admin" ||
                         this.props.user.user_level == "team" ? (
                             <li className="nav-item gaa-menu-item">
-                                <Link to="/annotation/create">
+                                <a href="javascript:void(0);"
+                                    onClick={this.props.openCreateAnnotations}>
                                     <span className="sidebar-link d-flex align-items-center justify-content-start">
                                         <span>
                                             <img
@@ -167,7 +168,7 @@ class Sidebar extends React.Component {
                                             Add Annotation
                                         </span>
                                     </span>
-                                </Link>
+                                </a>
                             </li>
                         ) : null}
                         {/* {this.props.user.user_level == "admin" ||
