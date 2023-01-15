@@ -289,7 +289,7 @@ class IndexAnnotations extends React.Component {
         const categories = this.state.annotationCategories;
 
         return (
-            <div className="annotationPage">
+            <div id="annotationPage" className="annotationPage">
                 <Container>
                     <div className="pageHead">
                         <div className="d-flex justify-content-between align-items-center">
