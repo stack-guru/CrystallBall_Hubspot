@@ -46,7 +46,7 @@ export default class PaymentHistory extends React.Component {
                                 <span>Update card</span>
                             </Link>
                         </div>
-                        
+
                         <form className="pageFilters d-flex justify-content-between align-items-center">
                             <FormGroup className="filter-sort position-relative">
                                 <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
@@ -64,7 +64,6 @@ export default class PaymentHistory extends React.Component {
                                     <option value="ga-property">By GA Property</option>
                                 </select>
                             </FormGroup>
-
 
                             <FormGroup className="filter-search position-relative">
                                 <Label className="sr-only" for="search">search</Label>
