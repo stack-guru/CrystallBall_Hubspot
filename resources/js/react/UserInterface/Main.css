@@ -1030,7 +1030,8 @@ body {
 .filter-search {width: 290px;}
 .usersPage .form-control,
 .annotationPage .form-control,
-.appMarket .form-control {
+.appMarket .form-control,
+.paymentHistoryPageHead .form-control {
     color: #666;
     font-size: 16px;
     font-weight: 400;
@@ -1051,7 +1052,8 @@ body {
 }
 .usersPage select.form-control,
 .annotationPage select.form-control,
-.appMarket select.form-control {
+.appMarket select.form-control,
+.paymentHistoryPageHead select.form-control{
     z-index: 2;
     position: relative;
     padding-left: 56px;
@@ -2564,6 +2566,70 @@ body {
     color: #F44C3D;
     background: #FFF7F7;
 }
+.paymentHistoryPageHead {padding-bottom: 54px;}
+.paymentHistoryPageHead .pageFilters {padding: 56px 0 0;}
+.dataTablePaymentHistory .tableBody .singleRow {
+    padding: 24px 12px;
+    background: #fff;
+    border-radius: 8px;
+    border-color: #fff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
+}
+.dataTablePaymentHistory .tableBody .singleRow .singleCol {color: #333;}
+.dataTablePaymentHistory .singleRow .singleCol {
+    font-size: 16px;
+    justify-content: flex-start;
+}
+.dataTablePaymentHistory .singleRow .singleCol:first-child {
+    width: 60px;
+    color: #666;
+}
+.dataTablePaymentHistory .singleRow .singleCol:nth-child(2) { width: 160px; }
+.dataTablePaymentHistory .singleRow .singleCol:last-child,
+.dataTablePaymentHistory .singleRow .singleCol:nth-child(4),
+.dataTablePaymentHistory .singleRow .singleCol:nth-child(5) {width: 150px;}
+.dataTablePaymentHistory .singleRow .singleCol:nth-child(3),
+.dataTablePaymentHistory .singleRow .singleCol:nth-last-child(2) {width: 25%;}
+.dataTablePaymentHistory .singleRow .singleCol:last-child { justify-content: end; }
+.dataTablePaymentHistory .singleRow .singleCol:last-child a {color: #1976fe;}
+.dataTablePaymentHistory .singleRow .singleCol:nth-child(3) {font-weight: 600;}
+.noPaymentHistory {
+    padding: 200px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.noPaymentHistory .alert { margin: 0 0 32px;}
+.noPaymentHistory p{
+    display: flex;
+    color: #666;
+    font-size: 16px;
+    margin: 0 0 42px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: center;
+    padding: 32px 24px;
+    border-radius: 24px;
+    background: #fcfcfc;
+    justify-content: center;
+}
+.noPaymentHistory > i{
+    margin: 0 0 32px;
+    display: flex;
+    justify-content: center;
+}
+.noPaymentHistory > span{
+    color: #333;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.noPaymentHistory a{width: 157px;}
+
+
+
 
 
 
