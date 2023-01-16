@@ -37,14 +37,21 @@ class HomeController extends Controller
         $user = Auth::user();
         $user->load('pricePlan');
         $user->loadCount('googleAccounts');
-
+        $user->show_configuration_message = false;
         if ($user->last_login_at == null) {
             User::where('id', $user->id)
                 ->update([
                     'last_login_at' => new \DateTime,
                 ]);
+            $user->show_configuration_message = true;
         }
-
+        if($user->starterConfigurationChecklist()->count() != $user->userStarterConfigurationChecklist()->count())
+        {
+            $user->starter_configuration_checklist = $user->starterConfigurationChecklist();
+            $user->user_starter_configuration_checklist = $user->userStarterConfigurationChecklist();
+            $user->user_starter_configuration_checklist_count = $user->userStarterConfigurationChecklist()->count();   
+            $user->show_configuration_message = true; 
+        }
         // $user->annotations_count = $user->getTotalAnnotationsCount(true);
         $user->google_analytics_properties_in_use_count = $user->googleAnalyticsPropertiesInUse()->count();
         $user->do_require_password_change               = ($user->password == User::EMPTY_PASSWORD && !is_null($user->app_sumo_uuid));

@@ -14,7 +14,8 @@ export default class UserStartupConfigurationModal extends Component {
             automations: [],
             integrations: [],
             views: [],
-            feedback: ''
+            feedback: '',
+            user: props.user
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.incrementStep = this.incrementStep.bind(this);
@@ -22,15 +23,12 @@ export default class UserStartupConfigurationModal extends Component {
         this.toggleAutomation = this.toggleAutomation.bind(this);
         this.toggleIntegration = this.toggleIntegration.bind(this);
         this.toggleView = this.toggleView.bind(this);
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
-
     handleSubmit() {
         let formData = new FormData;
         Object.keys(this.state.stepResponses).map(k => {
@@ -39,7 +37,6 @@ export default class UserStartupConfigurationModal extends Component {
             formData.append('data_label[]', stepResponse.data_label);
             formData.append('data_value[]', stepResponse.data_value);
         });
-
         HttpClient.post('/user-startup-configuration', formData).then(resp => {
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
@@ -47,15 +44,12 @@ export default class UserStartupConfigurationModal extends Component {
             this.setState({ isBusy: false, errors: err });
         });
     }
-
     toggleModal() {
         this.setState({ isOpen: !this.state.isOpen });
     }
-
     incrementStep(increment = 1) {
         this.setState({ stepNumber: this.state.stepNumber + increment })
     }
-
     recordStepResponse(name, value, stateCallback = () => { }) {
         this.setState({
             stepResponses: {
@@ -68,41 +62,36 @@ export default class UserStartupConfigurationModal extends Component {
             }
         }, stateCallback);
     }
-
     toggleAutomation(automationName) {
         const { automations } = this.state;
-
         if (automations.indexOf(automationName) > -1) {
             this.setState({ automations: automations.filter(a => a !== automationName) });
         } else {
             this.setState({ automations: [...automations, automationName] });
         }
     }
-
     toggleIntegration(integrationName) {
         const { integrations } = this.state;
-
         if (integrations.indexOf(integrationName) > -1) {
             this.setState({ integrations: integrations.filter(a => a !== integrationName) });
         } else {
             this.setState({ integrations: [...integrations, integrationName] });
         }
     }
-
     toggleView(viewName) {
         const { views } = this.state;
-
         if (views.indexOf(viewName) > -1) {
             this.setState({ views: views.filter(a => a !== viewName) });
         } else {
             this.setState({ views: [...views, viewName] });
         }
     }
-
     render() {
-
         const { stepNumber, automations, integrations, views } = this.state;
-
+        const list = [];
+        {this.state.user.starter_configuration_checklist.map(checklist =>
+            list.push(<li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>{checklist.label}</li>)
+        )}
         let modalBodyFooter = undefined;
         switch (stepNumber) {
             case 0:
@@ -110,7 +99,7 @@ export default class UserStartupConfigurationModal extends Component {
                     <ModalBody id="scw-modal-body" className="with-background">
                         <center>
                             <h1>Let's build the best experience for you</h1>
-                            <Button style={{ left: '45%' }} className="mt-8" color="primary" onClick={() => { this.recordStepResponse('START', true); this.incrementStep(1) }} className="to-below">Let's Start</Button>
+                            <Button style={{ left: '45%' }} className="mt-8" color="primary" onClick={() => { this.recordStepResponse('START', true); this.incrementStep(1) }} >Let's Start</Button>
                         </center>
                     </ModalBody>
                 ];
@@ -119,9 +108,19 @@ export default class UserStartupConfigurationModal extends Component {
                 modalBodyFooter = [
                     <ModalBody id="scw-modal-body">
                         <center>
-                            <h1>Do you want to import old annotations from Universal Analytics?</h1>
-                            <Button style={{ left: '40%' }} color="primary" onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', true); this.incrementStep(1) }} className="to-below">Yes</Button>
-                            <Button style={{ right: '40%' }} color="secondary" onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(2) }} className="ml-4 to-below">No</Button>
+                            <div className="row">
+                                <div className="col-3">
+                                    <ul className="fa-ul">
+                                        {list}
+                                    </ul>
+                                </div>
+                                <div className="col-9 text-inline">
+                                    <h1>Connect Google Analytic</h1>
+                                    <a onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', true); this.incrementStep(1) }} href="#"><img src="/images/connect-google-analytics.svg" width="400" height="auto" /></a>
+                                </div>
+                            </div>
+                            {/* <Button style={{ left: '40%' }} color="primary" onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', true); this.incrementStep(1) }} className="to-below">Yes</Button> */}
+                            <Button style={{ right: '10%' }} color="secondary" onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(2) }} className="ml-4 to-below">Skip</Button>
                         </center>
                     </ModalBody>
                     ,
@@ -130,16 +129,23 @@ export default class UserStartupConfigurationModal extends Component {
                 break;
             case 2:
                 modalBodyFooter = [
+                    <ModalBody id="scw-modal-body" className="">
+                        <center>
+                            <h1>Invite Co-worker </h1>
+                            <Button style={{ left: '40%' }} color="primary" onClick={() => { this.recordStepResponse('INVITE_YOUR_TEAM', true); this.incrementStep(1) }} className="to-below">Yes</Button>
+                            <Button style={{ right: '40%' }} color="secondary" onClick={() => { this.recordStepResponse('INVITE_YOUR_TEAM', false); this.incrementStep(1) }} className="ml-4 to-below">No</Button>
+                        </center>
+                    </ModalBody>
+                    ,
+                    <ModalFooter className="border-top-0">
+                    </ModalFooter>
+                ];
+                break;
+            case 3:
+                modalBodyFooter = [
                     <ModalBody id="scw-modal-body">
                         <center>
-                            <h1>What Automation would you like to add?</h1>
-                            <Button color="light" onClick={() => { this.toggleAutomation('WEB_MONITORING'); }} className={"mt-3" + (automations.indexOf('WEB_MONITORING') > -1 ? " active" : "")}>Web Monitoring</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('GOOGLE_ALERT'); }} className={"mt-3 ml-3" + (automations.indexOf('GOOGLE_ALERT') > -1 ? " active" : "")}>News Alert</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('GOOGLE_UPDATES'); }} className={"mt-3 ml-3" + (automations.indexOf('GOOGLE_UPDATES') > -1 ? " active" : "")}>Google Updates</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('RETAIL_MARKETING_DATES'); }} className={"mt-3 ml-3" + (automations.indexOf('RETAIL_MARKETING_DATES') > -1 ? " active" : "")}>Retail Marketing Dates</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('HOLIDAYS'); }} className={"mt-3 ml-3" + (automations.indexOf('HOLIDAYS') > -1 ? " active" : "")}>Holidays</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('WEATHER_ALERTS'); }} className={"mt-3 ml-3" + (automations.indexOf('WEATHER_ALERTS') > -1 ? " active" : "")}>Weather Alerts</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('WORDPRESS_UPDATES'); }} className={"mt-3 ml-3" + (automations.indexOf('WORDPRESS_UPDATES') > -1 ? " active" : "")}>WordPress Updates</Button>
+                            <h1>Install Chrome Extension?</h1> 
                         </center>
                     </ModalBody>
                     ,
@@ -148,11 +154,11 @@ export default class UserStartupConfigurationModal extends Component {
                     </ModalFooter>
                 ];
                 break;
-            case 3:
+            case 4:
                 modalBodyFooter = [
                     <ModalBody id="scw-modal-body">
                         <center>
-                            <h1>What tools would you like to connect?</h1>
+                            <h1>Connect Recommended Apps ?</h1>
                             <Button color="light" onClick={() => { this.toggleIntegration('ADWORDS'); }} className={"mt-3" + (integrations.indexOf('ADWORDS') > -1 ? " active" : "")}><img src="/images/icons/adwords.png" width="20px" height="auto" className="mr-2" /> Google AdWords</Button>
                             <Button color="light" onClick={() => { this.toggleIntegration('MAILCHIMP'); }} className={"mt-3 ml-3" + (integrations.indexOf('MAILCHIMP') > -1 ? " active" : "")}><img src="/images/icons/mailchimp.png" width="20px" height="auto" className="mr-2" /> MailChimp</Button>
                             <Button color="light" onClick={() => { this.toggleIntegration('SHOPIFY'); }} className={"mt-3 ml-3" + (integrations.indexOf('SHOPIFY') > -1 ? " active" : "")}><img src="/images/icons/shopify.png" width="20px" height="auto" className="mr-2" /> Shopify</Button>
@@ -172,66 +178,17 @@ export default class UserStartupConfigurationModal extends Component {
                     </ModalFooter>
                 ];
                 break;
-            case 4:
-                modalBodyFooter = [
-                    <ModalBody id="scw-modal-body">
-                        <center>
-                            <h1>Where would you like to view your annotations?</h1>
-                        </center>
-                        <div className="row">
-                            <div className="col-lg-3 col-sm-4">
-                                <a onClick={() => { this.toggleView('GOOGLE_ANALYTICS'); }} className={"image-button mt-3" + (views.indexOf('GOOGLE_ANALYTICS') > -1 ? " active" : "")}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-analytics.png" />
-                                </a>
-                            </div>
-                            <div className="col-lg-3 col-sm-4">
-                                <a onClick={() => { this.toggleView('GOOGLE_DATA_STUDIO'); }} className={"image-button mt-3" + (views.indexOf('GOOGLE_DATA_STUDIO') > -1 ? " active" : "")}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-data-studio.png" />
-                                </a>
-                            </div>
-                            <div className="col-lg-3 col-sm-4">
-                                <a onClick={() => { this.toggleView('MICROSOFT_POWER_BI'); }} className={"image-button mt-3" + (views.indexOf('MICROSOFT_POWER_BI') > -1 ? " active" : "")}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/microsoft-power-business-intelligence-cs.png" />
-                                </a>
-                            </div>
-                            {/* <div className="col-lg-3 col-sm-4">
-                                <a onClick={() => { this.toggleView('CHROME_EXTENSION'); }} className={"image-button mt-3" + (views.indexOf('CHROME_EXTENSION') > -1 ? " active" : "")}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-analytics.png" />
-                                </a>
-                            </div> */}
-                        </div>
-                    </ModalBody>
-                    ,
-                    <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => { this.recordStepResponse('views', JSON.stringify(this.state.views)); this.incrementStep(1) }} >Next</Button>
-                    </ModalFooter>
-                ];
-                break;
             case 5:
                 modalBodyFooter = [
-                    <ModalBody id="scw-modal-body" className="">
-                        <center>
-                            <h1>Invite your team</h1>
-                            <Button style={{ left: '40%' }} color="primary" onClick={() => { this.recordStepResponse('INVITE_YOUR_TEAM', true); this.incrementStep(1) }} className="to-below">Yes</Button>
-                            <Button style={{ right: '40%' }} color="secondary" onClick={() => { this.recordStepResponse('INVITE_YOUR_TEAM', false); this.incrementStep(1) }} className="ml-4 to-below">No</Button>
-                        </center>
-                    </ModalBody>
-                    ,
-                    <ModalFooter className="border-top-0">
-                    </ModalFooter>
-                ];
-                break;
-            case 6:
-                modalBodyFooter = [
                     <ModalBody id="scw-modal-body">
                         <center>
-                            <h1>Is it something else do you need?</h1>
-                            <textarea name="feedback" value={this.state.feedback} onChange={this.handleChange} className="form-control"></textarea>
+                            <h1>Let's build the best experience for you</h1>
+                            <Button style={{ left: '45%' }} className="mt-8" color="primary" onClick={() => { this.recordStepResponse('feedback', this.state.feedback, this.handleSubmit); this.props.toggleShowTour(); }} >Finish</Button>
                         </center>
                     </ModalBody>
                     ,
                     <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => { this.recordStepResponse('feedback', this.state.feedback, this.handleSubmit); this.props.toggleShowTour(); }}  >Finish</Button>
+                        {/* <Button color="primary" onClick={() => { this.recordStepResponse('feedback', this.state.feedback, this.handleSubmit); this.props.toggleShowTour(); }}  >Finish</Button> */}
                     </ModalFooter>
                 ];
                 break;
