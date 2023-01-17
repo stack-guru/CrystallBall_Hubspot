@@ -2476,7 +2476,6 @@ body {
 .dataTableNotifiction .tableBody .singleRow:last-child {margin-bottom: 0;}
 .dataTableNotifiction .singleRow .singleCol:last-child,
 .dataTableNotifiction .singleRow .singleCol:nth-last-child(2) { align-items: flex-end !important;}
-
 .themeSwitch {
     width: 54px;
     height: 28px;

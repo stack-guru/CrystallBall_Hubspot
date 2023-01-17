@@ -28,8 +28,21 @@
 
 <body>
   @include('helpers/trackingCodesBody')
-  @yield('content')
+  <div class="auth-wrapper">
+    <header id='auth-header' class="auth-header">
+      <div class="container d-flex justify-content-between align-items-center">
+        <strong><a class="d-block" href="/"><img src="/logo-new.svg" width="150" height="44" alt="Crystal Ball"></a></strong>
+        <ul class='auth-nav'>
+          <li><a href=''>Pricing</a></li>
+          <li><a href=''>Login</a></li>
+          <li><a class='btn-theme' href=''>Sign up</a></li>
+        </ul>
+      </div>
+    </header>
+    <main class='auth-main'>
+      @yield('content')
+    </main>
+  </div>
   @yield('javascript')
 </body>
-
 </html>
