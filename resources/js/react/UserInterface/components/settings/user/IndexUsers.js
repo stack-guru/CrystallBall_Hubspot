@@ -125,7 +125,7 @@ export default class IndexUsers extends Component {
                             </div>
 
                             <form className="pageFilters d-flex justify-content-between align-items-center">
-                                <FormGroup className="filter-sort position-relative">
+                                <FormGroup className="filter-sort position-relative form-group">
                                     <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
                                     <i className="btn-searchIcon left-0">
                                         <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">

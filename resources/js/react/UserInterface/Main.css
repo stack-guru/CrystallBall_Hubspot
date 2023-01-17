@@ -1030,7 +1030,8 @@ body {
 .filter-search {width: 290px;}
 .usersPage .form-control,
 .annotationPage .form-control,
-.appMarket .form-control {
+.appMarket .form-control,
+.paymentHistoryPageHead .form-control {
     color: #666;
     font-size: 16px;
     font-weight: 400;
@@ -1051,7 +1052,8 @@ body {
 }
 .usersPage select.form-control,
 .annotationPage select.form-control,
-.appMarket select.form-control {
+.appMarket select.form-control,
+.paymentHistoryPageHead select.form-control{
     z-index: 2;
     position: relative;
     padding-left: 56px;
@@ -1780,7 +1782,7 @@ body {
 }
 .annotionRow ul li{
     padding: 0 0.5rem;
-    
+
 }
 .annotionRow ul li .properties {color: #333;}
 .annotionRow ul li time {color: #666;}
@@ -2564,6 +2566,200 @@ body {
     color: #F44C3D;
     background: #FFF7F7;
 }
+.paymentHistoryPageHead {padding-bottom: 54px;}
+.paymentHistoryPageHead .pageFilters {padding: 56px 0 0;}
+.dataTablePaymentHistory .tableBody .singleRow {
+    padding: 24px 12px;
+    background: #fff;
+    border-radius: 8px;
+    border-color: #fff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
+}
+.dataTablePaymentHistory .tableBody .singleRow .singleCol {color: #333;}
+.dataTablePaymentHistory .singleRow .singleCol {
+    font-size: 16px;
+    justify-content: flex-start;
+}
+.dataTablePaymentHistory .singleRow .singleCol:first-child {
+    width: 60px;
+    color: #666;
+}
+.dataTablePaymentHistory .singleRow .singleCol:nth-child(2) { width: 160px; }
+.dataTablePaymentHistory .singleRow .singleCol:last-child,
+.dataTablePaymentHistory .singleRow .singleCol:nth-child(4),
+.dataTablePaymentHistory .singleRow .singleCol:nth-child(5) {width: 150px;}
+.dataTablePaymentHistory .singleRow .singleCol:nth-child(3),
+.dataTablePaymentHistory .singleRow .singleCol:nth-last-child(2) {width: 25%;}
+.dataTablePaymentHistory .singleRow .singleCol:last-child { justify-content: end; }
+.dataTablePaymentHistory .singleRow .singleCol:last-child a {color: #1976fe;}
+.dataTablePaymentHistory .singleRow .singleCol:nth-child(3) {font-weight: 600;}
+.noPaymentHistory {
+    /* padding: 200px 0; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.noPaymentHistory .alert { margin: 0 0 32px;}
+.noPaymentHistory p{
+    display: flex;
+    color: #666;
+    font-size: 16px;
+    margin: 0 0 42px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: center;
+    padding: 32px 24px;
+    border-radius: 24px;
+    background: #fcfcfc;
+    justify-content: center;
+}
+.noPaymentHistory > i{
+    margin: 0 0 32px;
+    display: flex;
+    justify-content: center;
+}
+.noPaymentHistory > span{
+    color: #333;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.noPaymentHistory a{width: 157px;}
+.profilePageHead {padding: 0 0 42px;}
+.themeTabNav {
+    padding: 0 1.5rem;
+    margin-bottom: 1rem;
+}
+.themeTabNav li {}
+.themeTabNav li a.nav-link {
+    color: #666;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23px;
+    padding: 16px 24px;
+    background: #fff;
+    border-radius: 12px;
+}
+.themeTabNav li a.nav-link.active {
+    color: #096db7;
+    background-color: #f0f6ff;
+}
+.themeTabContent {
+    padding: 42px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+.profileForm {max-width: 342px;}
+.addPhoto {
+    margin: 0;
+    width: 120px;
+    height: 120px;
+    padding: 26px;
+    display: flex;
+    color: #666;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    align-items: center;
+    border-radius: 120px;
+    background: #f7f7f7;
+    flex-direction: column;
+    justify-content: center;
+}
+.addPhoto i { padding: 0 0 6px; }
+.btn-update {
+    top: 0;
+    right: 0;
+    z-index: 2;
+    font-size: 14px;
+    font-weight: 400;
+    color: #1976fe;
+    line-height: 18px;
+    position: absolute;
+    margin: 13px 1rem 13px 0;
+}
+.securityForm p {
+    color: #333;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23px;
+}
+.securityForm h2 {
+    color: #666;
+    font-size: 20px;
+    margin: 0 0 24px;
+    font-weight: 600;
+    line-height: 25px;
+}
+.gridBox {
+    gap: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.gridBox h2 {
+    margin: 0;
+    color: #666;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 0 0 12px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #bdbdbd;
+}
+.gridBox h3 {
+    font-size: 20px;
+    margin: 0 0 1rem;
+    font-weight: 600;
+    color: #096db7;
+    line-height: 25px;
+}
+.gridBox h3 span {color: #666;}
+.gridBox p {
+    color: #333;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0 0 42px;
+    line-height: 23px;
+}
+.gridBox ul {
+    margin: 0;
+    gap: 12px;
+    padding: 0;
+    display: flex;
+    color: #333;
+    font-size: 16px;
+    list-style: none;
+    font-weight: 400;
+    line-height: 20px;
+    list-style-type: none;
+    flex-direction: column;
+}
+.gridBox ul li  span{font-weight: 600;}
+.gridBox .btn-theme {
+    width: 100%;
+    color: #fff;
+    font-size: 18px;
+    margin-top: 42px;
+    font-weight: 600;
+    line-height: 23px;
+    text-align: center;
+    padding: 10px 24px;
+    align-items: center;
+    border-radius: 100px;
+    box-shadow: 0px 4px 12px rgba(40, 126, 252, 0.16);
+    background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%);
+}
+
+
+
+
+
+
+
+
 
 
 
