@@ -243,6 +243,38 @@ export default class DSOWMCitiesSelect extends React.Component {
                         </div>
                     )}
                 </div>
+                    
+                { (this.props.showSelectedOnly) ? <>
+                   
+                    <div className="checkBoxList">
+                        {this.props.ds_data.map((wAC) => {
+                                return (
+                                    <label
+                                        className="themeNewCheckbox d-flex align-items-center justify-content-start"
+                                        htmlFor="defaultCheck1"
+                                        key={wAC.open_weather_map_city_id}
+                                    >
+                                        <input
+                                            checked 
+                                            id={
+                                                userOWMCIds.indexOf(wAC.open_weather_map_city_id) !== -1
+                                                    ? userDSIds[
+                                                        userOWMCIds.indexOf(
+                                                            wAC.open_weather_map_city_id
+                                                        )
+                                                    ]
+                                                    : null
+                                            }
+                                            type="checkbox"
+                                            onChange={this.handleClick}
+                                            open_weather_map_city_id={wAC.open_weather_map_city_id}
+                                        />
+                                        <span>{wAC.open_weather_map_city.name}</span>
+                                    </label>
+                                );
+                            })}
+                    </div>
+                </> : null }
                 <div className="checkBoxList">
                     {this.state.weather_alerts_cities
                         .filter(this.checkSearchText)
