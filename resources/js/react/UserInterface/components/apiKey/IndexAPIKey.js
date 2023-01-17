@@ -151,11 +151,11 @@ class IndexAPIKey extends React.Component {
                             <div className="themeNewInputGroup themeNewInputStyle">
                                 <input placeholder='Token name' type="text" className="form-control" name="token_name" onChange={this.handleChange} value={this.state.token_name} />
                             </div>
-                            <button className="btn-theme-success" onClick={() => { this.generateAPIKey() }}>Generate</button>
+                            <button className="btn-theme-success" onClick={(ev) => {ev.preventDefault(); this.generateAPIKey() }}>Generate</button>
                         </div>
                         <div className="themeNewInputGroup mb-4 position-relative">
                             <textarea name="details" className="form-control" placeholder='Generated access token...' value={this.state.accessToken} readOnly id="input-access-token" />
-                            <button className="btn-theme-outline-sm" onClick={() => { this.copyAccessToken() }}>
+                            <button className="btn-theme-outline-sm" onClick={(ev) => {ev.preventDefault(); this.copyAccessToken() }}>
                                 <i><img src={'/icon-copy.svg'} alt={'icon'} className="svg-inject" /></i>
                                 <span>Copy</span>
                             </button>
