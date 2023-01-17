@@ -85,53 +85,31 @@ export default class PaymentHistory extends React.Component {
                                 <div className="singleCol text-right">&nbsp;</div>
                             </div>
                             <div className="tableBody">
-                                <div className="singleRow align-items-center">
-                                    <div className="singleCol text-left"><span>#4</span></div>
-                                    <div className="singleCol text-left"><span>44125</span></div>
-                                    <div className="singleCol text-left"><span>Pro (Yearly)</span></div>
-                                    <div className="singleCol text-left"><span>79.00 USD</span></div>
-                                    <div className="singleCol text-left"><span>1/7/2022</span></div>
-                                    <div className="singleCol text-left"><span>Card ending with 3124</span></div>
-                                    <div className="singleCol text-right">
-                                        <Link to={`#`} className='d-flex align-items-center'>
-                                            <img src={`/icon-getInvoice.svg`} />
-                                            <span className='pl-2'>Get Invoice</span>
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className="singleRow align-items-center">
-                                    <div className="singleCol text-left"><span>#4</span></div>
-                                    <div className="singleCol text-left"><span>44125</span></div>
-                                    <div className="singleCol text-left"><span>Pro (Yearly)</span></div>
-                                    <div className="singleCol text-left"><span>79.00 USD</span></div>
-                                    <div className="singleCol text-left"><span>1/7/2022</span></div>
-                                    <div className="singleCol text-left"><span>Card ending with 3124</span></div>
-                                    <div className="singleCol text-right">
-                                        <Link to={`#`} className='d-flex align-items-center'>
-                                            <img src={`/icon-getInvoice.svg`} />
-                                            <span className='pl-2'>Get Invoice</span>
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className="singleRow align-items-center">
-                                    <div className="singleCol text-left"><span>#4</span></div>
-                                    <div className="singleCol text-left"><span>44125</span></div>
-                                    <div className="singleCol text-left"><span>Pro (Yearly)</span></div>
-                                    <div className="singleCol text-left"><span>79.00 USD</span></div>
-                                    <div className="singleCol text-left"><span>1/7/2022</span></div>
-                                    <div className="singleCol text-left"><span>Card ending with 3124</span></div>
-                                    <div className="singleCol text-right">
-                                        <Link to={`#`} className='d-flex align-items-center'>
-                                            <img src={`/icon-getInvoice.svg`} />
-                                            <span className='pl-2'>Get Invoice</span>
-                                        </Link>
-                                    </div>
-                                </div>
+                                {
+                                    this.state.pricePlanSubscriptions.map((pricePlanSubscription, index) => (
+                                        <div key={pricePlanSubscription.id} className="singleRow align-items-center">
+                                            <div className="singleCol text-left"><span>{index + 1}</span></div>
+                                            <div className="singleCol text-left"><span>{pricePlanSubscription.transaction_id}</span></div>
+                                            <div className="singleCol text-left"><span>{pricePlanSubscription.price_plan ? pricePlanSubscription.price_plan.name : null}</span></div>
+                                            <div className="singleCol text-left"><span>${pricePlanSubscription.payment_detail ? parseFloat(pricePlanSubscription.charged_price).toFixed(2) : '0'}</span></div>
+                                            <div className="singleCol text-left"><span>
+                                                {moment(pricePlanSubscription.created_at).format("YYYY-MM-DD hh:mm")}
+                                            </span></div>
+                                            <div className="singleCol text-left"><span>Card ending with {pricePlanSubscription.payment_detail ? pricePlanSubscription.payment_detail.card_number : '****'}</span></div>
+                                            <div className="singleCol text-right">
+                                                <Link to={`#`} className='d-flex align-items-center'>
+                                                    <img src={`/icon-getInvoice.svg`} />
+                                                    <span className='pl-2'>Get Invoice</span>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>
 
-                    <div className='noPaymentHistory'>
+                    {/* <div className='noPaymentHistory'>
                         <div className='alert alert-success border-0'>
                             <i><img src={'/icon-check-success.svg'} alt={'icon'} className="svg-inject" /></i>
                             <span>Card ending with “3124” is added successfully.</span>
@@ -145,7 +123,7 @@ export default class PaymentHistory extends React.Component {
                                 <span>Add a card</span>
                             </Link>
                         </div>
-                    </div>
+                    </div> */}
 
 
 
@@ -153,7 +131,7 @@ export default class PaymentHistory extends React.Component {
 
 
 
-                    <div className="table-responsive">
+                    {/* <div className="table-responsive">
                         <table className="table table-hover gaa-hover table-bordered mt-4">
                             <thead>
                                 <tr>
@@ -182,7 +160,7 @@ export default class PaymentHistory extends React.Component {
                                 }
                             </tbody>
                         </table>
-                    </div>
+                    </div> */}
                 </Container>
             </div>
         );
