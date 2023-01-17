@@ -33,7 +33,7 @@
   <div class="py-2 mb-3 d-flex justify-content-center">
       <label class="d-flex align-items justify-content-end serviceCheckBox m-0" for="read_confirmation">
         <input type="checkbox" class="form-check-input @error('read_confirmation') is-invalid @enderror" name="read_confirmation" id="read_confirmation" />
-        <span>Do you agree to our <a href="https://crystalballinsight.com/privacy-policy" target="_blank">Privacy Policy</a>?</span>
+        <span>By signing up, you agree to our <a href="https://crystalballinsight.com/privacy-policy" target="_blank">privacy policy</a></span>
       </label>
       @error('read_confirmation')
       <span class="invalid-feedback" role="alert">
@@ -65,7 +65,7 @@
   </div>
 
   {{-- <a class="btn btn-lg btn-primary btn-block" href="{{ route('login') }}">Login</a> --}}
-  <p>Already have an account? <a href="{{ route('login') }}">Login</a></p>
+  {{-- <p>Already have an account? <a href="{{ route('login') }}">Login</a></p> --}}
 
 </form>
 @endsection

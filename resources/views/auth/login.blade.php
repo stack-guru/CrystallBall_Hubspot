@@ -62,6 +62,6 @@
             </a>
         </div>
         {{-- <a class="btn btn-lg btn-primary btn-block" href="{{ route('register') }}">Register</a> --}}
-        <p>Don't have an account? <a href="{{ route('register') }}">Register</a></p>
+        <p>Don’t have an account? <a href="{{ route('register') }}?email=1">Sign up</a></p>
     </form>
 @endsection
