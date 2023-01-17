@@ -134,10 +134,10 @@ export default class IndexNotificationSettings extends Component {
                                 <span>Update Phone Number</span>
                             </Button>
                         </div>
-                        <div className='alert alert-danger'>
+                        {/* <div className='alert alert-danger'>
                             <i><img src={'/icon-info-red.svg'} alt={'icon'} className="svg-inject" /></i>
                             <span>Message sent successfully. We’ll try to reply as soon as possible.</span>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="dataTable dataTableNotifiction d-flex flex-column">
@@ -149,76 +149,53 @@ export default class IndexNotificationSettings extends Component {
                                 <div className="singleCol text-left">7 Days Before</div>
                             </div>
                             <div className="tableBody">
-                                <div className="singleRow justify-content-between align-items-stretch">
-                                    <div className="singleCol text-left d-flex align-items-center justify-content-start">
-                                        <label className="themeSwitch">
-                                            <input type="checkbox" name="is_enabled" checked/>
-                                            <span className="themeSlider round" />
-                                        </label>
-                                        <span>Website Monitoring</span>
-                                    </div>
-                                    <div className="singleCol text-left d-flex flex-column">
-                                        <label htmlFor='1' className='d-flex align-items justify-content-end serviceCheckBox'>
-                                            <input id='1' name="pushNotifications" type="checkbox" checked/>
-                                            <span>Push</span>
-                                        </label>
-                                        <label htmlFor='2' className='d-flex align-items justify-content-end serviceCheckBox'>
-                                            <input id='2' name="smsNotifications" type="checkbox" checked/>
-                                            <span>SMS</span>
-                                        </label>
-                                        <label htmlFor='3' className='d-flex align-items justify-content-end serviceCheckBox'>
-                                            <input id='3' name="emailNotifications" type="checkbox" checked/>
-                                            <span>Email</span>
-                                        </label>
-                                    </div>
-                                    <div className="singleCol text-left">
-                                        <label htmlFor='4' className='d-flex align-items justify-content-end serviceCheckBox'>
-                                            <input id='4' name="oneDayBefore" type="checkbox" checked/>
-                                            <span>&nbsp;</span>
-                                        </label>
-                                    </div>
-                                    <div className="singleCol text-left">
-                                        <label htmlFor='5' className='d-flex align-items justify-content-end serviceCheckBox'>
-                                            <input id='5' name="sevenDayBefore" type="checkbox" checked/>
-                                            <span>&nbsp;</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="singleRow justify-content-between align-items-stretch">
-                                    <div className="singleCol text-left d-flex align-items-center justify-content-start">
-                                        <label className="themeSwitch">
-                                            <input type="checkbox" name="is_enabled"/>
-                                            <span className="themeSlider round" />
-                                        </label>
-                                        <span>Website Monitoring</span>
-                                    </div>
-                                    <div className="singleCol text-left d-flex flex-column">
-                                        <label htmlFor='6' className='d-flex align-items justify-content-end serviceCheckBox'>
-                                            <input id='6' name="pushNotifications" type="checkbox" />
-                                            <span>Push</span>
-                                        </label>
-                                        <label htmlFor='7' className='d-flex align-items justify-content-end serviceCheckBox'>
-                                            <input id='7' name="smsNotifications" type="checkbox" />
-                                            <span>SMS</span>
-                                        </label>
-                                        <label htmlFor='8' className='d-flex align-items justify-content-end serviceCheckBox'>
-                                            <input id='8' name="emailNotifications" type="checkbox" />
-                                            <span>Email</span>
-                                        </label>
-                                    </div>
-                                    <div className="singleCol text-left">
-                                        <label htmlFor='9' className='d-flex align-items justify-content-end serviceCheckBox'>
-                                            <input id='9' name="oneDayBefore" type="checkbox" />
-                                            <span>&nbsp;</span>
-                                        </label>
-                                    </div>
-                                    <div className="singleCol text-left">
-                                        <label htmlFor='10' className='d-flex align-items justify-content-end serviceCheckBox'>
-                                            <input id='10' name="sevenDayBefore" type="checkbox" />
-                                            <span>&nbsp;</span>
-                                        </label>
-                                    </div>
-                                </div>
+                                {this.state.notification_settings.map(notificationSetting => {
+                                    return (
+                                        <div key={notificationSetting.id} className="singleRow justify-content-between align-items-stretch">
+                                            <div className="singleCol text-left d-flex align-items-center justify-content-start">
+                                                <label className="themeSwitch">
+                                                    <input type="checkbox"
+                                                        checked={notificationSetting.is_enabled}
+                                                        onChange={this.handleChange}
+                                                        notification-setting-id={notificationSetting.id}
+                                                        notification-setting-name={notificationSetting.name}
+                                                        name="is_enabled"
+                                                    />
+                                                    <span className="themeSlider round" />
+                                                </label>
+                                                <span>{notificationSetting.label}</span>
+                                            </div>
+                                            <div className="singleCol text-left d-flex flex-column">
+                                                {notificationSetting.browser_notification_on_event_day !== -1 ? <label className='d-flex align-items justify-content-end serviceCheckBox'>
+                                                    <input name="browser_notification_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.browser_notification_on_event_day} />
+                                                    <span>Push</span>
+                                                </label> : null}
+                                                {notificationSetting.sms_on_event_day !== -1 ? <label className='d-flex align-items justify-content-end serviceCheckBox'>
+                                                    <input name="sms_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.sms_on_event_day} />
+                                                    <span>SMS</span>
+                                                </label>
+                                                    : null}
+                                                {notificationSetting.email_on_event_day !== -1 ? <label className='d-flex align-items justify-content-end serviceCheckBox'>
+                                                    <input name="email_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_on_event_day} />
+                                                    <span>Email</span>
+                                                </label> : null}
+                                            </div>
+                                            <div className="singleCol text-left">
+                                                {notificationSetting.email_one_days_before !== -1 ? <label className='d-flex align-items justify-content-end serviceCheckBox'>
+                                                    <input name="email_one_days_before" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_one_days_before} />
+                                                    <span>&nbsp;</span>
+                                                </label>
+                                                    : null}
+                                            </div>
+                                            <div className="singleCol text-left">
+                                                {notificationSetting.email_seven_days_before !== -1 ? <label className='d-flex align-items justify-content-end serviceCheckBox'>
+                                                    <input name="email_seven_days_before" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_seven_days_before} />
+                                                    <span>&nbsp;</span>
+                                                </label> : null}
+                                            </div>
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>
@@ -234,7 +211,7 @@ export default class IndexNotificationSettings extends Component {
                                 <ChangePhoneModal show={this.state.showChangePhoneModal} toggleCallback={() => { this.setState({ showChangePhoneModal: false, showPhoneVerificationModal: true }); this.props.reloadUser(); }} />
                             </div>
                         </div>
-                        <div className="row ml-0 mr-0">
+                        {/* <div className="row ml-0 mr-0">
                             <div className="col-12">
                                 <div className="table-responsive">
                                     <table className="table table-hover gaa-hover table-borderless text-center">
@@ -284,7 +261,7 @@ export default class IndexNotificationSettings extends Component {
                                 </div>
                             </div>
 
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
