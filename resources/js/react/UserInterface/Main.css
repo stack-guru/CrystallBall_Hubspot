@@ -1782,7 +1782,7 @@ body {
 }
 .annotionRow ul li{
     padding: 0 0.5rem;
-    
+
 }
 .annotionRow ul li .properties {color: #333;}
 .annotionRow ul li time {color: #666;}
@@ -2594,7 +2594,7 @@ body {
 .dataTablePaymentHistory .singleRow .singleCol:last-child a {color: #1976fe;}
 .dataTablePaymentHistory .singleRow .singleCol:nth-child(3) {font-weight: 600;}
 .noPaymentHistory {
-    padding: 200px 0;
+    /* padding: 200px 0; */
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -41,10 +41,10 @@ export default class PaymentHistory extends React.Component {
                     <div className="pageHeader paymentHistoryPageHead">
                         <div className="d-flex justify-content-between">
                             <h2 className="pageTitle mb-0">Payments</h2>
-                            <Link to="/settings/payment-detail/create" className='btn-theme-outline bg-white'>
+                            {this.state.pricePlanSubscriptions.length ? <Link to="/settings/payment-detail/create" className='btn-theme-outline bg-white'>
                                 <i><img src={'/icon-cc.svg'} /></i>
                                 <span>Update card</span>
-                            </Link>
+                            </Link>: null}
                         </div>
 
                         <form className="pageFilters d-flex justify-content-between align-items-center">
@@ -73,7 +73,7 @@ export default class PaymentHistory extends React.Component {
                         </form>
                     </div>
 
-                    <div className="dataTable dataTablePaymentHistory d-flex flex-column">
+                    {this.state.pricePlanSubscriptions.length ? <div className="dataTable dataTablePaymentHistory d-flex flex-column">
                         <div className="dataTableHolder">
                             <div className="tableHead singleRow align-items-center">
                                 <div className="singleCol text-left">&nbsp;</div>
@@ -107,13 +107,11 @@ export default class PaymentHistory extends React.Component {
                                 }
                             </div>
                         </div>
-                    </div>
-
-                    {/* <div className='noPaymentHistory'>
-                        <div className='alert alert-success border-0'>
+                    </div>: <div className='noPaymentHistory'>
+                        {/* <div className='alert alert-success border-0'>
                             <i><img src={'/icon-check-success.svg'} alt={'icon'} className="svg-inject" /></i>
                             <span>Card ending with “3124” is added successfully.</span>
-                        </div>
+                        </div> */}
                         <p>No payment history</p>
                         <i><img src='/card.svg'/></i>
                         <span>Add a credit/debit card to get seamless subscription experience</span>
@@ -123,44 +121,7 @@ export default class PaymentHistory extends React.Component {
                                 <span>Add a card</span>
                             </Link>
                         </div>
-                    </div> */}
-
-
-
-
-
-
-
-                    {/* <div className="table-responsive">
-                        <table className="table table-hover gaa-hover table-bordered mt-4">
-                            <thead>
-                                <tr>
-                                    <th>S#</th>
-                                    <th>Transaction Id</th>
-                                    <th>Plan</th>
-                                    <th>Amount</th>
-                                    <th>Paid At</th>
-                                    <th>Card end with</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    pricePlanSubscriptions.map((pricePlanSubscription, index) => (
-                                        <tr key={pricePlanSubscription.id}>
-                                            <td>{index + 1}</td>
-                                            <td>{pricePlanSubscription.transaction_id}</td>
-                                            <td>{pricePlanSubscription.price_plan ? pricePlanSubscription.price_plan.name : null}</td>
-                                            <td>${pricePlanSubscription.payment_detail ? parseFloat(pricePlanSubscription.charged_price).toFixed(2) : '0'}</td>
-                                            <td>
-                                                {moment(pricePlanSubscription.created_at).format("YYYY-MM-DD")}&nbsp;&nbsp;&nbsp;{moment(pricePlanSubscription.created_at).format("hh:mm")}
-                                            </td>
-                                            <td>****-****-****-{pricePlanSubscription.payment_detail ? pricePlanSubscription.payment_detail.card_number : '****'}</td>
-                                        </tr>
-                                    ))
-                                }
-                            </tbody>
-                        </table>
-                    </div> */}
+                    </div>}
                 </Container>
             </div>
         );

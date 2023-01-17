@@ -305,13 +305,13 @@ export default class ChangePassword extends React.Component {
                         <div class="tab-pane fade" id="pills-payments" role="tabpanel" aria-labelledby="pills-payments-tab">
                             <div className="pageHeader paymentHistoryPageHead d-flex justify-content-between">
                                 <h2 className="pageTitle mb-0">Payments</h2>
-                                <Link to="/settings/payment-detail/create" className='btn-theme-outline bg-white'>
+                                {this.state.pricePlanSubscriptions.length ? <Link to="/settings/payment-detail/create" className='btn-theme-outline bg-white'>
                                     <i><img src={'/icon-cc.svg'} /></i>
                                     <span>Update card</span>
-                                </Link>
+                                </Link> : null}
                             </div>
 
-                            <div className="dataTable dataTablePaymentHistory d-flex flex-column">
+                            {this.state.pricePlanSubscriptions.length ? <div className="dataTable dataTablePaymentHistory d-flex flex-column">
                                 <div className="dataTableHolder">
                                     <div className="tableHead singleRow align-items-center">
                                         <div className="singleCol text-left">&nbsp;</div>
@@ -345,7 +345,21 @@ export default class ChangePassword extends React.Component {
                                         }
                                     </div>
                                 </div>
-                            </div>
+                            </div> : <div className='noPaymentHistory'>
+                                {/* <div className='alert alert-success border-0'>
+                            <i><img src={'/icon-check-success.svg'} alt={'icon'} className="svg-inject" /></i>
+                            <span>Card ending with “3124” is added successfully.</span>
+                        </div> */}
+                                <p>No payment history</p>
+                                <i><img src='/card.svg' /></i>
+                                <span>Add a credit/debit card to get seamless subscription experience</span>
+                                <div className='d-flex justify-content-center'>
+                                    <Link to="/settings/payment-detail/create" className='btn-theme-outline bg-white'>
+                                        <i><img src={'/icon-cc.svg'} /></i>
+                                        <span>Add a card</span>
+                                    </Link>
+                                </div>
+                            </div>}
                         </div>
                     </div>
                 </Container>
