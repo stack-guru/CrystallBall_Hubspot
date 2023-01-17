@@ -108,8 +108,8 @@ export default class IndexPricingPlans extends React.Component {
                         <Row>
                             <Col xs={12} className='d-flex justify-content-center'>
                                 <div className='plansType d-flex'>
-                                    <Button onClick={() => this.setState({ planDuration: 1 })} className={`${this.state.planDuration == 1 ? 'currentPlan': null}`}>Monthly</Button>
-                                    <Button onClick={() => this.setState({ planDuration: 12 })} className={`${this.state.planDuration == 12 ? 'currentPlan': null}`}>Yearly</Button>
+                                    <Button onClick={() => this.setState({ planDuration: 1 })} className={`${this.state.planDuration == 1 ? 'currentPlan' : null}`}>Monthly</Button>
+                                    <Button onClick={() => this.setState({ planDuration: 12 })} className={`${this.state.planDuration == 12 ? 'currentPlan' : null}`}>Yearly</Button>
                                 </div>
                             </Col>
 
@@ -156,33 +156,29 @@ export default class IndexPricingPlans extends React.Component {
                                                     <i><img src={'/tick-green.svg'} /></i>
                                                     <span>{pricePlan.user_per_ga_account_count == 0 ? <>Unlimited Users</> : (pricePlan.user_per_ga_account_count == -1 ? <>Up to 1 User</> : (pricePlan.user_per_ga_account_count >= 1 ? <>Up to {pricePlan.user_per_ga_account_count + 1} User</> : (<></>)))}</span>
                                                 </li>
+
+                                                {pricePlan.has_api ? <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i><span>Annotations API</span></li> : null}
+                                                {pricePlan.has_integrations ? <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i><span>Integrations</span></li> : null}
+                                                {pricePlan.has_notifications ? <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i><span>Notifications</span></li> : null}
                                             </ul>
                                         </div>
 
                                         <div className='planfoot'>
                                             <h4>Credits</h4>
                                             <ul>
-                                                {pricePlan.has_chrome_extension == 1 ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span> Chrome extension</span></li> : null}
-                                                {pricePlan.has_google_data_studio == 1 ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span>Data Studio Connector</span></li> : null}
-                                                {pricePlan.user_per_ga_account_count == 0 ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span>Unlimited Users</span></li> : (pricePlan.user_per_ga_account_count == -1 ? <li className='d-flex align-items-center'>
-                                                        <i><img src={'/tick-green.svg'} /></i><span>Up to 1 User</span></li> : (pricePlan.user_per_ga_account_count >= 1 ? <li className='d-flex align-items-center'>
-                                                            <i><img src={'/tick-green.svg'} /></i><span>Up to {pricePlan.user_per_ga_account_count + 1} User</span></li> : (<span></span>)))}
-                                                {pricePlan.ga_account_count == 0 ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span>Unlimited GA accounts</span></li> : pricePlan.ga_account_count >= 1 ? <li className='d-flex align-items-center'>
-                                                        <i><img src={'/tick-green.svg'} /></i><span>Up to {pricePlan.ga_account_count == 1 ? <span>{pricePlan.ga_account_count} GA account</span> : <span>{pricePlan.ga_account_count} GA accounts</span>}</span></li> : ''}
-                                                {pricePlan.has_manual_add ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span>Manual Annotations</span></li> : null}
 
-                                                {pricePlan.has_csv_upload ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span>CSV Upload</span></li> : null}
+                                                {pricePlan.keyword_tracking_count == -1 ? null : <li>Rank Tracking: <span>{pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count}</span> </li>}
+                                                <li>Website Monitoring: <span>{pricePlan.web_monitor_count}</span></li>
+                                                <li>Weather Alerts: <span>{pricePlan.owm_city_count == 0 ? 'Unlimited' : (pricePlan.owm_city_count > 0 ? pricePlan.owm_city_count : 0)}</span></li>
+                                                <li>News Alerts: <span>{pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : (pricePlan.google_alert_keyword_count > 0 ? pricePlan.google_alert_keyword_count : 0)}</span></li>
+                                                <li>Retail Marketing Dates: <span>∞</span></li>
+                                                <li>Google Updates: <span>∞</span></li>
+                                                <li>WordPress Updates: <span>∞</span></li>
+                                                <li>Holidays: <span>∞</span></li>
 
-                                                {pricePlan.has_api ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span>Annotations API</span></li> : null}
-                                                {pricePlan.has_integrations ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span>Integrations</span></li> : null}
                                                 {/* {pricePlan.has_data_sources ? <li>
                                                     <span className="fa-li"><i className="fa fa-check-circle-o"></i></span>
                                                     Automations
@@ -201,8 +197,7 @@ export default class IndexPricingPlans extends React.Component {
                                                         </PopoverBody>
                                                     </UncontrolledPopover>
                                                 </li> : null} */}
-                                                {pricePlan.has_notifications ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span>Notifications</span></li> : null}
+
                                             </ul>
                                         </div>
                                     </div>
