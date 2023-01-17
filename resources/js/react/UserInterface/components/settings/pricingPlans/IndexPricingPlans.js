@@ -427,7 +427,7 @@ export default class IndexPricingPlans extends React.Component {
                                             </ul>
 
                                             {<>
-                                                this.props.user.price_plan.name == 'Trial' && pricePlan.price == 0 ?
+                                                {this.props.user.price_plan.name == 'Trial' && pricePlan.price == 0 ?
                                                     <span value="subscribed" className="btn mx-auto pp-c-action btn-success text-uppercase mt-auto disabled">Disabled</span>
                                                 :
                                                     this.props.user.price_plan.id == pricePlan.id ? <span value="subscribed" className="btn mx-auto pp-c-action btn-success text-uppercase mt-auto">Subscribed</span>
@@ -436,7 +436,7 @@ export default class IndexPricingPlans extends React.Component {
                                                 :
                                                     pricePlan.is_available == false ? <a href="#" className="btn pp-c-action mx-auto gaa-btn-primary text-uppercase mt-auto disabled">Coming Soon</a>
                                                 :
-                                                    <a href="#" className="btn pp-c-action mx-auto gaa-btn-primary text-uppercase mt-auto" onClick={() => { this.changePricePlan(pricePlan); }}>Subscribe</a>
+                                                    <a href="#" className="btn pp-c-action mx-auto gaa-btn-primary text-uppercase mt-auto" onClick={() => { this.changePricePlan(pricePlan); }}>Subscribe</a>}
                                             </>}
                                         </div>
                                     </div>

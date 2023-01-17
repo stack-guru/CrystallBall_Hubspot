@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { toast } from "react-toastify";
+import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 import HttpClient from "../../utils/HttpClient";
 import TimezoneSelect from "../../utils/TimezoneSelect";
 import ErrorAlert from '../../utils/ErrorAlert';
 import { Button, Container, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 export default class ChangePassword extends React.Component {
 
@@ -176,27 +178,27 @@ export default class ChangePassword extends React.Component {
                             <form className='profileForm personalInfoForm' onSubmit={this.timezoneChangeHandler}>
                                 <div className="themeNewInputStyle mb-4 pb-2">
                                     <label htmlFor='addPhoto' className='addPhoto'>
-                                        <i><img src='/icon-photo.svg'/></i>
+                                        <i><img src='/icon-photo.svg' /></i>
                                         <span>Add photo</span>
                                     </label>
                                 </div>
                                 <div className="themeNewInputStyle mb-3">
-                                    <Input type='text' className="form-control" name='' placeholder='Adil Aijaz' value=''/>
+                                    <Input type='text' className="form-control" name='' placeholder='Adil Aijaz' value='' />
                                 </div>
                                 <div className="themeNewInputStyle mb-3 position-relative">
                                     <a className='btn-update' href='#'>Update</a>
-                                    <Input type='email' className="form-control" name='' placeholder='adilaijaz@gmail.com' value=''/>
+                                    <Input type='email' className="form-control" name='' placeholder='adilaijaz@gmail.com' value='' />
                                 </div>
                                 <div className="themeNewInputStyle position-relative inputWithIcon mb-3">
                                     <i className='fa fa-link'></i>
-                                    <Input type='url' className="form-control" name='' placeholder='https://awesomecompany.com' value=''/>
+                                    <Input type='url' className="form-control" name='' placeholder='https://awesomecompany.com' value='' />
                                 </div>
                                 <div className="themeNewInputStyle mb-3 position-relative">
                                     <a className='btn-update' onClick={this.handlePhoneSubmit} href='javascript:void(0);'>Update</a>
-                                    <input type="text" className="form-control" name="phone" value={this.state.phone} onChange={(e) => {this.setState({ [e.target.name]: e.target.value });}} placeholder="(551) 456-1234"/>
+                                    <input type="text" className="form-control" name="phone" value={this.state.phone} onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} placeholder="(551) 456-1234" />
                                 </div>
                                 <div className="themeNewInputStyle mb-4 pb-2">
-                                    <TimezoneSelect className='form-control' value={this.state.timezone} name='timezone' onChange={(e) => {this.setState({ timezone: e.target.value })}}/>
+                                    <TimezoneSelect className='form-control' value={this.state.timezone} name='timezone' onChange={(e) => { this.setState({ timezone: e.target.value }) }} />
                                 </div>
                                 <Button className='btn-theme'>Update</Button>
                             </form>
@@ -207,7 +209,7 @@ export default class ChangePassword extends React.Component {
                                     <p className='mb-0'>Enable 2-Factor Verification:</p>
                                     <div className="singleCol text-left d-flex align-items-center justify-content-start">
                                         <label className="themeSwitch">
-                                            <input type="checkbox" name="is_enabled" checked/>
+                                            <input type="checkbox" name="is_enabled" checked />
                                             <span className="themeSlider" />
                                         </label>
                                     </div>
@@ -231,32 +233,58 @@ export default class ChangePassword extends React.Component {
                             <div className='gridBox'>
                                 <div className="column">
                                     <h2>Current subscription</h2>
-                                    <h3>Business <span>(Yearly)</span></h3>
-                                    <p>Renew date: 12 Nov, 2024</p>
-                                    <h2>Features in Business plan</h2>
+                                    <h3>{this.props.user.price_plan.name} <span>(Yearly)</span></h3>
+                                    <p>Renew date: {moment(this.props.user.price_plan_expiry_date).format('DD MMM, YYYY')}</p>
+                                    <h2>Features in {this.props.user.price_plan.name} plan</h2>
                                     <ul>
-                                        <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg'/></i>Up to 10 properties</li>
-                                        <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg'/></i>Unlimited Annotations</li>
-                                        <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg'/></i>Up to 11 users</li>
-                                        <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg'/></i>Integrations</li>
-                                        <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg'/></i>Notifications</li>
-                                        <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg'/></i>Annotations API</li>
+
+                                        {this.props.user.price_plan.google_analytics_property_count == 1 ?
+                                            <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i> One Property/Website</li>
+                                            :
+                                            this.props.user.price_plan.google_analytics_property_count > 0 ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i> Up to {this.props.user.price_plan.google_analytics_property_count} Properties</li> : (this.props.user.price_plan.google_analytics_property_count == -1 ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>  No Property Filters</li> : <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>  Unlimited Property Filters</li>)}
+                                        {this.props.user.price_plan.annotations_count > 0 ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i> Up to {this.props.user.price_plan.annotations_count} Annotations</li> : <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i> Unlimited Annotations</li>}
+                                        {this.props.user.price_plan.has_chrome_extension == 1 ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i> Chrome extension</li> : null}
+                                        {this.props.user.price_plan.has_google_data_studio == 1 ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>Data Studio Connector</li> : null}
+                                        {this.props.user.price_plan.user_per_ga_account_count == 0 ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>Unlimited Users</li> : (this.props.user.price_plan.user_per_ga_account_count == -1 ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>Up to 1 User</li> : (this.props.user.price_plan.user_per_ga_account_count >= 1 ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>Up to {this.props.user.price_plan.user_per_ga_account_count + 1} User</li> : (<span></span>)))}
+                                        {this.props.user.price_plan.ga_account_count == 0 ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>Unlimited GA accounts</li> : this.props.user.price_plan.ga_account_count >= 1 ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>Up to {this.props.user.price_plan.ga_account_count == 1 ? <span>{this.props.user.price_plan.ga_account_count} GA account</span> : <span>{this.props.user.price_plan.ga_account_count} GA accounts</span>}</li> : ''}
+                                        {this.props.user.price_plan.has_manual_add ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>Manual Annotations</li> : null}
+
+                                        {this.props.user.price_plan.has_csv_upload ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>CSV Upload</li> : null}
+
+                                        {this.props.user.price_plan.has_api ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>Annotations API</li> : null}
+                                        {this.props.user.price_plan.has_integrations ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>Integrations</li> : null}
+                                        {this.props.user.price_plan.has_data_sources ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>
+                                            Automations
+                                            {/* <img id={"automation-feature-hint-" + this.props.user.price_plan.id} className="hint-button" src="/images/info-logo-grey.png" onClick={() => { this.setState({ showHintFor: 'automation-hint-' + this.props.user.price_plan.id }) }} />
+                                            <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'automation-hint-' + this.props.user.price_plan.id} target={"automation-feature-hint-" + this.props.user.price_plan.id} toggle={() => { this.setState({ showHintFor: null }) }} onClick={() => { this.changeShownHint(null) }}>
+                                                <PopoverHeader>{this.props.user.price_plan.name}</PopoverHeader>
+                                                <PopoverBody>
+                                                    {this.props.user.price_plan.keyword_tracking_count == -1 ? null : <span>Rank Tracking: {this.props.user.price_plan.keyword_tracking_count == 0 ? 'Unlimited' : this.props.user.price_plan.keyword_tracking_count} Credits<br /></span>}
+                                                    Website Monitoring: {this.props.user.price_plan.web_monitor_count} URLs<br />
+                                                    Weather Alerts: {this.props.user.price_plan.owm_city_count == 0 ? 'Unlimited' : (this.props.user.price_plan.owm_city_count > 0 ? this.props.user.price_plan.owm_city_count : 0)} cities<br />
+                                                    News Alerts: {this.props.user.price_plan.google_alert_keyword_count == 0 ? 'Unlimited' : (this.props.user.price_plan.google_alert_keyword_count > 0 ? this.props.user.price_plan.google_alert_keyword_count : 0)} keywords<br />
+                                                    Retail Marketing Dates<br />
+                                                    Google Updates<br />
+                                                    WordPress Updates<br />
+                                                    Holidays<br />
+                                                </PopoverBody>
+                                            </UncontrolledPopover> */}
+                                        </li> : null}
+                                        {this.props.user.price_plan.has_notifications ? <li className='d-flex align-items-center'><i className='pr-2'><img src='/icon-listTick.svg' /></i>Notifications</li> : null}
                                     </ul>
-                                    <button className='btn-theme'>Upgrade membership</button>
+                                        <a href='/settings/price-plans'><Button className='btn-theme'>Upgrade membership</Button></a>
                                 </div>
                                 <div className="column">
-                                    <h2>Features in Business plan</h2>
+                                    <h2>Features in {this.props.user.price_plan.name} plan</h2>
                                     <ul>
-                                        <li>News Alerts: <span>3/5</span></li>
-                                        <li>Website Monitoring: <span>2/3</span></li>
-                                        <li>Website Monitoring: <span>2/3</span></li>
-                                        <li>Weather Alerts: <span>5/5</span></li>
-                                        <li>Weather Alerts: <span>5/5</span></li>
-                                        <li>News Alerts: <span>3/5</span></li>
-                                        <li>Website Monitoring: <span>2/3</span></li>
-                                        <li>Weather Alerts: <span>5/5</span></li>
-                                        <li>Website Monitoring: <span>2/3</span></li>
-                                        <li>Weather Alerts: <span>5/5</span></li>
+                                        {this.props.user.price_plan.keyword_tracking_count == -1 ? null : <li>Rank Tracking: <span>/{this.props.user.price_plan.keyword_tracking_count == 0 ? 'Unlimited' : this.props.user.price_plan.keyword_tracking_count}</span> </li>}
+                                        <li>Website Monitoring: <span>/{this.props.user.price_plan.web_monitor_count}</span></li>
+                                        <li>Weather Alerts: <span>/{this.props.user.price_plan.owm_city_count == 0 ? 'Unlimited' : (this.props.user.price_plan.owm_city_count > 0 ? this.props.user.price_plan.owm_city_count : 0)}</span></li>
+                                        <li>News Alerts: <span>/{this.props.user.price_plan.google_alert_keyword_count == 0 ? 'Unlimited' : (this.props.user.price_plan.google_alert_keyword_count > 0 ? this.props.user.price_plan.google_alert_keyword_count : 0)}</span></li>
+                                        <li>Retail Marketing Dates: <span>∞</span></li>
+                                        <li>Google Updates: <span>∞</span></li>
+                                        <li>WordPress Updates: <span>∞</span></li>
+                                        <li>Holidays: <span>∞</span></li>
                                     </ul>
                                 </div>
                             </div>
