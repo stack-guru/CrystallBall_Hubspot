@@ -149,7 +149,7 @@ class IndexAPIKey extends React.Component {
                         <h3>Generate token</h3>
                         <div className="inputplusbutton d-flex">
                             <div className="themeNewInputGroup themeNewInputStyle">
-                                <input type="text" className="form-control" name="token_name" onChange={this.handleChange} value={this.state.token_name} />
+                                <input placeholder='Token name' type="text" className="form-control" name="token_name" onChange={this.handleChange} value={this.state.token_name} />
                             </div>
                             <button className="btn-theme-success" onClick={() => { this.generateAPIKey() }}>Generate</button>
                         </div>
@@ -162,7 +162,7 @@ class IndexAPIKey extends React.Component {
                         </div>
                         <div className='alert alert-info border-0'>
                             <i><img src={'/icon-info.svg'} alt={'icon'} className="svg-inject" /></i>
-                            <span>Message sent successfully. We’ll try to reply as soon as possible.</span>
+                            <span>The token will appear only once. Make sure to copy it before leaving this page</span>
                         </div>
                     </form>
 
