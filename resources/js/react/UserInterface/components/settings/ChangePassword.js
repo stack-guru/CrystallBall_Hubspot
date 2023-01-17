@@ -192,7 +192,7 @@ export default class ChangePassword extends React.Component {
                                     <Input type='url' className="form-control" name='' placeholder='https://awesomecompany.com' value=''/>
                                 </div>
                                 <div className="themeNewInputStyle mb-3 position-relative">
-                                    <a className='btn-update' href='#'>Update</a>
+                                    <a className='btn-update' onClick={this.handlePhoneSubmit} href='javascript:void(0);'>Update</a>
                                     <input type="text" className="form-control" name="phone" value={this.state.phone} onChange={(e) => {this.setState({ [e.target.name]: e.target.value });}} placeholder="(551) 456-1234"/>
                                 </div>
                                 <div className="themeNewInputStyle mb-4 pb-2">
@@ -202,7 +202,7 @@ export default class ChangePassword extends React.Component {
                             </form>
                         </div>
                         <div class="tab-pane fade" id="pills-security" role="tabpanel" aria-labelledby="pills-security-tab">
-                            <form className='profileForm securityForm' onSubmit={this.timezoneChangeHandler}>
+                            <form className='profileForm securityForm' onSubmit={this.handlePasswordSubmit}>
                                 <div className="themeNewInputStyle mb-3 d-flex justify-content-between align-items-center">
                                     <p className='mb-0'>Enable 2-Factor Verification:</p>
                                     <div className="singleCol text-left d-flex align-items-center justify-content-start">
@@ -328,73 +328,6 @@ export default class ChangePassword extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-
-
-
-
-                    <div className="">
-                        <div className="col-6">
-                            <h3 className="gaa-title">Password</h3>
-                            <div className="row ml-0 mr-0">
-                                <div className="col-md-12">
-                                    <ErrorAlert errors={this.state.errors} />
-                                </div>
-                            </div>
-                            <form onSubmit={this.handlePasswordSubmit}>
-                                <div className="form-group my-3">
-                                    <label htmlFor="">Password</label>
-                                    <input type="password" className="form-control" name="new_password" value={this.state.passwords.new_password} onChange={this.changeHandler} placeholder="New Password" id="" />
-                                    {
-                                        this.state.validation.new_password ?
-                                            <span className="text-danger mt-1">{this.state.validation.new_password}</span> : ''
-                                    }
-                                </div>
-                                <div className="form-group my-3">
-                                    <label htmlFor="">Repeat-Password</label>
-                                    <input type="password" className="form-control" name="new_password_confirmation" value={this.state.passwords.new_password_confirmation} onChange={this.changeHandler} placeholder="Repeat Password" id="" />
-                                    {
-                                        this.state.validation.new_password_confirmation ?
-                                            <span className="text-danger mt-1">{this.state.validation.new_password_confirmation}</span> : ''
-                                    }
-                                </div>
-                                <div className="row ml-0 mr-0 my-3">
-                                    <div className="col-12 text-right p-0">
-                                        <button className="btn gaa-btn-primary">Reset</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div className="col-6">
-                            <h3 className="gaa-title">Phone</h3>
-                            <form onSubmit={this.handlePhoneSubmit}>
-
-
-                                <div className="form-group my-3">
-                                    <label htmlFor="">Phone</label>
-                                    <input type="text" className="form-control" name="phone" value={this.state.phone} onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} placeholder="+XXXXX" id="" />
-                                </div>
-                                <div className="row ml-0 mr-0 my-3">
-                                    <div className="col-12 text-right p-0">
-                                        <button className="btn gaa-btn-primary">Save</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                        <form onSubmit={this.timezoneChangeHandler}>
-                            <div className="form-group my-3">
-                                <TimezoneSelect className='form-control' value={this.state.timezone} name='timezone' onChange={(e) => { this.setState({ timezone: e.target.value }) }} />
-                            </div>
-
-                            <div className="row ml-0 mr-0 my-3">
-                                <div className="col-12 text-right p-0">
-                                    <button className="btn gaa-btn-primary">Change</button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </Container>
             </div>
