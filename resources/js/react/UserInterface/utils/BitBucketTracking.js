@@ -43,13 +43,27 @@ export default class BitbucketTracking extends React.Component {
     }
 
     handleClick(e) {
+        let usedCredits = this.state.used_credits;
         if (e.target.checked) {
-            this.setState({ used_credits: this.state.used_credits + 1 });
+            usedCredits++;
+            // this.setState({ used_credits: this.state.used_credits + 1 });
             (this.props.onCheckCallback)({ code: 'bitbucket_tracking', name: 'Bitbucket tracking', value: e.target.name, workspace: e.target.getAttribute("data-workspace") })
         } else {
-            this.setState({ used_credits: this.state.used_credits - 1 });
+            usedCredits--;
+            // this.setState({ used_credits: this.state.used_credits - 1 });
             (this.props.onUncheckCallback)(e.target.id, 'bitbucket_tracking')
         }
+        
+        let isChecked = false;
+        if( usedCredits > 0 ) isChecked = true;
+
+        this.props.updateTrackingStatus(isChecked)
+        this.props.updateUserService({ target: {
+            name: "is_ds_bitbucket_tracking_enabled",
+            checked: isChecked,
+        }, })
+
+        this.setState({ used_credits: usedCredits })
     }
 
     handleTextChange(e, id) {

@@ -2,11 +2,33 @@ import React from "react";
 import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
 import { ApplePodcastConfig } from "../../utils/ApplePodcast";
 import ModalHeader from "./common/ModalHeader";
+import DescrptionModalNormal from "./common/DescriptionModalNormal";
 
 class Apple extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isRead: false
+        }
+    }
+
+    changeModal() {
+        this.setState({isRead: true})
+    }
+
     render() {
         return (
             <div className='popupContent modal-apple'>
+                { !this.state.isRead && !this.props.userServices['is_ds_apple_podcast_annotation_enabled'] ? 
+                <DescrptionModalNormal
+                    changeModal = {this.changeModal.bind(this)}
+                    serviceName={"Apple Podcast"}
+                    description={""}
+                    userServices={this.props.userServices}
+                    closeModal={this.props.closeModal}
+
+                /> : 
+                <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
                     updateUserAnnotationColors={ this.props.updateUserAnnotationColors }
@@ -21,6 +43,8 @@ class Apple extends React.Component {
                 />
 
                 <ApplePodcastConfig gaPropertyId={this.props.ga_property_id}/>
+                </>
+                }
             </div>
         );
     }

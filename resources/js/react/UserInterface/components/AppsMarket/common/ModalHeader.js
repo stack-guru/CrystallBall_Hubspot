@@ -23,7 +23,7 @@ class ModalHeader extends React.Component {
                                 name={this.props.dsKeyName}
                                 onChange={this.props.serviceStatusHandler}
                                 checked={
-                                    this.props.userServices[this.props.dsKeyName]
+                                    this.props.userServices[this.props.dsKeyName] || this.props.isActiveTracking
                                 }
                             />
                             <span className={`slider round`} />

@@ -4,11 +4,32 @@ import DSOWMCitiesSelect from "../../utils/DSOWMCitiesSelect";
 import DSOWMEventsSelect from "../../utils/DSOWMEventsSelect";
 import DSWebMonitorsSelect from "../../utils/DSWebMonitorsSelect";
 import ModalHeader from "./common/ModalHeader";
+import DescrptionModalNormal from "./common/DescriptionModalNormal";
 
 class WeatherAlerts extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isRead: false
+        }
+    }
+
+    changeModal() {
+        this.setState({isRead: true})
+    }
     render() {
         return (
             <div className="popupContent modal-weatherAlerts">
+                { !this.state.isRead && !this.props.userServices['is_ds_weather_alerts_enabled'] ? 
+                <DescrptionModalNormal
+                    changeModal = {this.changeModal.bind(this)}
+                    serviceName={"Weather Alerts"}
+                    description={"Weather disrupts the operating and financial performance of 70% of businesses worldwide. Add automated annotations for the location you operate"}
+                    userServices={this.props.userServices}
+                    closeModal={this.props.closeModal}
+
+                /> : 
+                <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
                     updateUserAnnotationColors={
@@ -42,6 +63,8 @@ class WeatherAlerts extends React.Component {
                         <DSOWMCitiesSelect onCheckCallback={ this.props.userDataSourceAddHandler } onUncheckCallback={ this.props.userDataSourceDeleteHandler } ds_data={ this.props.userDataSources.open_weather_map_cities } ga_property_id={this.props.ga_property_id} reloadWebMonitors={this.props.reloadWebMonitors} user={this.props.user} loadUserDataSources={this.props.loadUserDataSources} updateGAPropertyId={this.props.updateGAPropertyId} showSelectedOnly={true}/>
                     </div>
                 </div>
+                </>
+                }
             </div>
         );
     }

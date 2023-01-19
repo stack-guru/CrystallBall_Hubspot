@@ -2,11 +2,33 @@ import React from "react";
 import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
 import DSGAUDatesSelect from "../../utils/DSGAUDatesSelect";
 import ModalHeader from "./common/ModalHeader";
+import DescrptionModalNormal from "./common/DescriptionModalNormal";
 
 class WordpressUpdates extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isRead: false
+        }
+    }
+
+    changeModal() {
+        this.setState({isRead: true})
+    }
+
     render() {
         return (
             <div className="popupContent modal-wordpressUpdates">
+                { !this.state.isRead && !this.props.userServices['is_ds_wordpress_updates_enabled'] ? 
+                <DescrptionModalNormal
+                    changeModal = {this.changeModal.bind(this)}
+                    serviceName={"Wordpress Updates"}
+                    description={"WordPress Core Updates Our automated annotation feature will inform you when a new version, Security, or Maintenance Release of WordPress is available."}
+                    userServices={this.props.userServices}
+                    closeModal={this.props.closeModal}
+
+                /> : 
+                <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
                     updateUserAnnotationColors={this.props.updateUserAnnotationColors}
@@ -52,6 +74,8 @@ class WordpressUpdates extends React.Component {
                         </div>
                     </div>
                 </div>
+                </>
+                }
             </div>
         );
     }

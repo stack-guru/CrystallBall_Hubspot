@@ -133,6 +133,13 @@ class AppsMarket extends React.Component {
                 },
             });
         }
+
+        const redirectedRepo = localStorage.getItem("repo");
+        if( !!redirectedRepo ) {
+            toast.success(`${ redirectedRepo } Account is connected. You can enable the automation now.`);
+            // this.setState({ dsKey: `is_ds_${ redirectedRepo.toLowerCase() }_tracking_enabled` });
+            localStorage.removeItem("repo");
+        }
     }
 
     loadUserDataSources(gaPropertyId) {
@@ -1184,6 +1191,8 @@ class AppsMarket extends React.Component {
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
+                                updateUserService={this.updateUserService}
+                                userGithubAccountsExists={this.state.userGithubAccountsExists}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}
@@ -1214,6 +1223,8 @@ class AppsMarket extends React.Component {
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
+                                updateUserService={this.updateUserService}
+                                userGithubAccountsExists={this.state.userGithubAccountsExists}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}

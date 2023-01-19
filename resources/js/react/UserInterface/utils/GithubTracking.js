@@ -43,13 +43,25 @@ export default class GithubTracking extends React.Component {
     }
 
     handleClick(e) {
+        let usedCredits = this.state.used_credits;
         if (e.target.checked) {
-            this.setState({ used_credits: this.state.used_credits + 1 });
+            usedCredits++;
             (this.props.onCheckCallback)({ code: 'github_tracking', name: 'Github tracking', value: e.target.name, workspace: e.target.getAttribute("data-username") })
         } else {
-            this.setState({ used_credits: this.state.used_credits - 1 });
+            usedCredits--;
             (this.props.onUncheckCallback)(e.target.id, 'github_tracking')
         }
+
+        let isChecked = false;
+        if( usedCredits > 0 ) isChecked = true;
+        
+        this.props.updateTrackingStatus(isChecked)
+        this.props.updateUserService({ target: {
+            name: "is_ds_github_tracking_enabled",
+            checked: isChecked,
+        }, })
+
+        this.setState({ used_credits: usedCredits })
     }
 
     handleTextChange(e, id) {
