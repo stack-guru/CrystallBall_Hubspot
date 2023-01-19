@@ -218,7 +218,7 @@ export default class ChangePassword extends React.Component {
                         </div>
                         <div class="tab-pane fade" id="pills-security" role="tabpanel" aria-labelledby="pills-security-tab">
                             <form className='profileForm securityForm' onSubmit={this.handlePasswordSubmit}>
-                                <div className="themeNewInputStyle mb-3 d-flex justify-content-between align-items-center">
+                                {/* <div className="themeNewInputStyle mb-3 d-flex justify-content-between align-items-center">
                                     <p className='mb-0'>Enable 2-Factor Verification:</p>
                                     <div className="singleCol text-left d-flex align-items-center justify-content-start">
                                         <label className="themeSwitch">
@@ -226,7 +226,7 @@ export default class ChangePassword extends React.Component {
                                             <span className="themeSlider" />
                                         </label>
                                     </div>
-                                </div>
+                                </div> */}
                                 <h2>Change password</h2>
                                 <div className="themeNewInputStyle mb-3">
                                     <input type="password" className="form-control" name="currentPassword" value='' placeholder="Current password" id="" />
@@ -335,10 +335,10 @@ export default class ChangePassword extends React.Component {
                                                     </span></div>
                                                     <div className="singleCol text-left"><span>Card ending with {pricePlanSubscription.payment_detail ? pricePlanSubscription.payment_detail.card_number : '****'}</span></div>
                                                     <div className="singleCol text-right">
-                                                        <Link to={`#`} className='d-flex align-items-center'>
+                                                        {/* <Link to={`#`} className='d-flex align-items-center'>
                                                             <img src={`/icon-getInvoice.svg`} />
                                                             <span className='pl-2'>Get Invoice</span>
-                                                        </Link>
+                                                        </Link> */}
                                                     </div>
                                                 </div>
                                             ))

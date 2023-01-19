@@ -97,10 +97,10 @@ export default class PaymentHistory extends React.Component {
                                             </span></div>
                                             <div className="singleCol text-left"><span>Card ending with {pricePlanSubscription.payment_detail ? pricePlanSubscription.payment_detail.card_number : '****'}</span></div>
                                             <div className="singleCol text-right">
-                                                <Link to={`#`} className='d-flex align-items-center'>
+                                                {/* <Link to={`#`} className='d-flex align-items-center'>
                                                     <img src={`/icon-getInvoice.svg`} />
                                                     <span className='pl-2'>Get Invoice</span>
-                                                </Link>
+                                                </Link> */}
                                             </div>
                                         </div>
                                     ))
