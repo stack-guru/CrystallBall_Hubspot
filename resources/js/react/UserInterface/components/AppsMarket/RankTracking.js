@@ -5,11 +5,33 @@ import DSWebMonitorsSelect from "../../utils/DSWebMonitorsSelect";
 import EditKeyword from "../../utils/EditKeyword";
 import ManageKeywords from "../../utils/ManageKeywords";
 import ModalHeader from "./common/ModalHeader";
+import DescrptionModalNormal from "./common/DescriptionModalNormal";
 
 class RankTracking extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isRead: false
+        }
+    }
+
+    changeModal() {
+        this.setState({isRead: true})
+    }
+
     render() {
         return (
             <div className="popupContent modal-rankTracking">
+                { !this.state.isRead && !this.props.userServices['is_ds_keyword_tracking_enabled'] ? 
+                <DescrptionModalNormal
+                    changeModal = {this.changeModal.bind(this)}
+                    serviceName={"Rank Tracking"}
+                    description={"Track daily changes of your target keywords in your target area for your business or competitors."}
+                    userServices={this.props.userServices}
+                    closeModal={this.props.closeModal}
+
+                /> : 
+                <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
                     updateUserAnnotationColors={
@@ -94,6 +116,8 @@ class RankTracking extends React.Component {
                     )}
                     {/* ) : null} */}
                 </div>
+                </>
+                }
             </div>
         );
     }

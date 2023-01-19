@@ -2,11 +2,32 @@ import React from "react";
 import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
 import DSGoogleAlertsSelect from "../../utils/DSGoogleAlertsSelect";
 import ModalHeader from "./common/ModalHeader";
-
+import DescrptionModalNormal from "./common/DescriptionModalNormal";
 class NewsAlerts extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isRead: false
+        }
+    }
+
+    changeModal() {
+        this.setState({isRead: true})
+    }
+
     render() {
         return (
             <div className="popupContent modal-newsAlerts">
+                { !this.state.isRead && !this.props.userServices['is_ds_google_alerts_enabled'] ? 
+                <DescrptionModalNormal
+                    changeModal = {this.changeModal.bind(this)}
+                    serviceName={"News Alerts"}
+                    description={"News Alerts Is a content change detection on the web. Crystal Ball add annotations that match the user's search terms, such as web pages, newspaper articles, blogs, or scientific research. Add keywords like https://www.your-domain.com/, Company Name. The system will search for news once a day at midnight. Annotations for News Alerts will start showing after 48 hours the automation is activated."}
+                    userServices={this.props.userServices}
+                    closeModal={this.props.closeModal}
+
+                /> : 
+                <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
                     updateUserAnnotationColors={
@@ -45,6 +66,8 @@ class NewsAlerts extends React.Component {
                     updateGAPropertyId={this.props.updateGAPropertyId}
                     reloadWebMonitors={this.props.reloadWebMonitors}
                 />
+                </> 
+                }
             </div>
         );
     }

@@ -23,7 +23,7 @@ export default class indexSettings extends React.Component {
     toggleSuspendAccountModal(event) {
         if (this.props.user.user) {
             swal.fire("Unauthorized", "Only the admin can delete the account.", "error");
-        }
+        } 
         else{
             this.setState({ showSuspendAccountModal: !this.state.showSuspendAccountModal });
         }
