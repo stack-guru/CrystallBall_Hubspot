@@ -221,7 +221,7 @@ export default class CreateAnnotation extends React.Component {
                     closeModal={() => this.props.togglePopup('')}
                     serviceName={'Add annotation manually'}
                     colorKeyName={"manual_annotation"}
-                    dsKeyName={"manual_annotation"}
+                    dsKeyName={null}
                     creditString={null}
                 />
                 <div className="apps-bodyContent">

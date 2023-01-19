@@ -327,7 +327,7 @@ class Sidebar extends React.Component {
                                             Support
                                         </Link>
                                     </li>
-                                    <li className="nav-item dropdown">
+                                    {/* <li className="nav-item dropdown">
                                         <Link
                                             to="#"
                                             onClick={(e) => {
@@ -339,7 +339,7 @@ class Sidebar extends React.Component {
                                         >
                                             Take a Tour
                                         </Link>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </li>
