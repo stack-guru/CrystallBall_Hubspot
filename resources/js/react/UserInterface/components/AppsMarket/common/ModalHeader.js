@@ -17,7 +17,7 @@ class ModalHeader extends React.Component {
                             }
                             updateCallback={this.props.updateUserAnnotationColors}
                         />
-                        <label className="trigger switch">
+                        {this.props.dsKeyName ? <label className="trigger switch">
                             <input
                                 type="checkbox"
                                 name={this.props.dsKeyName}
@@ -27,7 +27,7 @@ class ModalHeader extends React.Component {
                                 }
                             />
                             <span className={`slider round`} />
-                        </label>
+                        </label>: null}
 
                         {this.props.creditString ? (
                             <span className="text-credits">

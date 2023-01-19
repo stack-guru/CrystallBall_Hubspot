@@ -1141,6 +1141,7 @@ class AppsMarket extends React.Component {
                                         ga_property_id: value,
                                     });
                                 }}
+                                currentPricePlan={this.props.user.price_plan}
                             />
                         ) : this.state.dsKey ===
                           "is_ds_keyword_tracking_enabled" ? (
@@ -1808,6 +1809,21 @@ class AppsMarket extends React.Component {
                 this.setState({ redirectTo: "/settings/price-plans" });
             });
         }
+
+        if (
+            e.target.name == "is_ds_wordpress_enabled" &&
+            e.target.checked
+        ) {
+            this.sectionToggler("wordpress"); // not sure about the parameter "wordpress", it was old logic
+            this.updateUserService(e);
+        } else if (
+            e.target.name == "is_ds_wordpress_enabled" &&
+            !e.target.checked
+        ) {
+            this.sectionToggler(null);
+            this.updateUserService(e);
+        }
+
     }
 
     userDataSourceAddHandler(dataSource) {

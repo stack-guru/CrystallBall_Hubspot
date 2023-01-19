@@ -6,47 +6,34 @@ const steps = [
     // 1
     {
         position: 'top',
-        content: 'Welcome! Take this quick tour',
+        content: <div className="tourPopupContent d-flex flex-column text-center firstPopUpContent"><h2>Take a small tour</h2><p>This way you can get basic understanding of Crystal Ball</p></div>,
         redirectRoute: null,
-        style: {
-            padding: '60px'
-        }
     },
     // 2
     {
         position: 'top',
         // selector: '#chrome-extension-download-button',
-        content: <div>Make sure to <a href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom" target="_blank">add the extension</a>, pin it and to log in.<br />
-            <img src="/images/walkthrough_step6.gif" width="600px" height="338px" />
-        </div>,
+        content: <div className="tourPopupContent d-flex flex-column secoundPopUpContent"><h2>Make sure to add the extension, <a href='#'>pin it</a> and <a href='#'>log in</a> to get best experience</h2><figure><img src="/images/walkthrough_step6.gif"/></figure></div>,
         redirectRoute: null,
-        style: {
-            width: '75%', height: 'auto', maxWidth: '677px'
-        }
     },
     // 3
     {
         position: 'top',
-        content: <div>We added a Sample Annotation to show you how it looks like, once you go to <a href="https://analytics.google.com/analytics/web/#/" target="_blank">Google Analytics</a>
-            <img src="/images/walkthrough_step7.gif" width="600px" height="338px" />
-        </div>,
+        content: <div className="tourPopupContent d-flex flex-column thirdPopUpContent"><h2>We added a sample annotation to show you how it looks like once you go to <a href="https://analytics.google.com/analytics/web/#/" target="_blank">Google Analytics</a></h2><figure><img src="/images/walkthrough_step7.gif"/></figure></div>,
         redirectRoute: null,
-        style: {
-            width: '50%', height: 'auto', maxWidth: '677px', top: '25px'
-        }
     },
     // 4
     {
         position: 'bottom',
-        selector: '#annotation-index-container',
-        content: 'Here you can see and manage all your annotations',
+        selector: '#annotationPage',
+        content: <div className="tourPopupContent d-flex flex-column fourthPopUpContent"><h2>On this page, you can manage all of your annotations.</h2></div>,
         redirectRoute: '/annotation'
     },
     // 5
     {
         position: 'right',
-        selector: '#data-source-page-container',
-        content: 'Automate annotations for Weather Alerts, Holidays, Google Updates, WordPress Updates, Website Monitoring, News Alerts, and Retail Marketing Dates.',
+        selector: '#appMarket',
+        content: <div className="tourPopupContent d-flex flex-column fifthPopUpContent"><p>Automate annotations for Weather Alerts, Holidays, Google Updates, WordPress Updates, Website Monitoring, News Alerts, and Retail Marketing Dates.</p></div>,
         redirectRoute: '/data-source'
     },
     // 6
@@ -99,6 +86,7 @@ export default class InterfaceTour extends Component {
             <>
                 {this.handleRedirecter()}
                 <Tour
+                    className='tourPopup'
                     getCurrentStep={cS => { if (this.state.currentStep !== cS) this.setState({ currentStep: cS, redirectTo: steps[cS].redirectRoute }) }}
                     steps={steps}
                     isOpen={this.props.isOpen}

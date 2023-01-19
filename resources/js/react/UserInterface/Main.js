@@ -231,79 +231,19 @@ class Main extends React.Component {
                     </main>
                     <Footer />
                 </div>
-                {/* <StartupChecklist lastStartupConfigurationShowedAt={this.state.user.startup_configuration_showed_at} /> */}
 
-                <AppsModal
-                    isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'}
-                    toggle={(mka='') => {
-                        this.setState({
-                            mKeyAnnotation: mka,
-                        });
-                    }}
-                >
-                     <div className="popupContent">
-                     {/* <ModalHeader
-                        // userAnnotationColors={this.props.userAnnotationColors}
-                        // updateUserAnnotationColors={
-                        //     this.props.updateUserAnnotationColors
-                        // }
-                        // userServices={this.props.userServices}
-                        // serviceStatusHandler={this.props.serviceStatusHandler}
-                        closeModal={() =>
-                            this.setState({
-                                mKeyAnnotation: '',
-                            })
-                        }
-                        serviceName={this.state.mKeyAnnotation === 'manual' ? 'Add annotation manually': this.state.mKeyAnnotation === 'upload' ? 'Upload annotations using CSV' : '' }
-                        colorKeyName={"web_monitors"}
-                        dsKeyName={"is_ds_web_monitors_enabled"}
-                        creditString={null}
-                /> */}
-
-                    {/*    <div className="apps-modalHead">
-                            <div className="d-flex justify-content-between align-items-center">
-                                <div className="d-flex justify-content-start align-items-center">
-                                    <h2>{this.state.mKeyAnnotation === 'manual' ? 'Add annotation manually': this.state.mKeyAnnotation === 'upload' ? 'Upload annotations using CSV' : '' }</h2>
-                                </div>
-                                <span
-                                    onClick={() =>
-                                        this.setState({
-                                            mKeyAnnotation: '',
-                                        })
-                                    }
-                                    className="btn-close"
-                                >
-                                    <img
-                                        className="inject-me"
-                                        src="/close-icon.svg"
-                                        width="26"
-                                        height="26"
-                                        alt="menu icon"
-                                    />
-                                </span>
-                            </div>
-                        </div> */}
-
-                        {this.state.mKeyAnnotation === 'manual' ? <AnnotationsCreate
-                            togglePopup={(mka) => {
-                                this.setState({
-                                    mKeyAnnotation: mka,
-                                });
-                            }}
-                            currentPricePlan={this.state.user.price_plan}
-                        /> : this.state.mKeyAnnotation === 'upload' ? <AnnotationsUpload togglePopup={(mka) => {
-                            this.setState({
-                                mKeyAnnotation: mka,
-                            });
-                        }} currentPricePlan={this.state.user.price_plan} /> : null}
-
-
-
-                    </div>
+                {this.state.mKeyAnnotation === 'manual' ?
+                    <AppsModal isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} popupSize={'md'} toggle={(mka='') => {this.setState({mKeyAnnotation: mka,});}}>
+                        <AnnotationsCreate togglePopup={(mka) => {this.setState({mKeyAnnotation: mka,});}} currentPricePlan={this.state.user.price_plan}/>
+                    </AppsModal>
+                :
+                this.state.mKeyAnnotation === 'upload' ?
+                <AppsModal isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka='') => {this.setState({mKeyAnnotation: mka,});}}>
+                    <AnnotationsUpload togglePopup={(mka) => {this.setState({mKeyAnnotation: mka,});}} currentPricePlan={this.state.user.price_plan} />
                 </AppsModal>
-
+                :
+                null}
             </React.Fragment>
-
         )
     }
 

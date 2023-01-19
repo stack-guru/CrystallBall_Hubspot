@@ -33,12 +33,12 @@ class header extends React.Component {
         return (
             <div className="header-container d-flex justify-content-between align-items-center">
                 <strong><a className='d-block' href='/'><img src='/logo-new.svg' width='150' height='44' alt='Crystal Ball'/></a></strong>
-                <form className='form-search'>
+                {/* <form className='form-search'>
                     <fieldset className='position-relative'>
                         <input className="form-control" type="search" placeholder="Search anything..."/>
                         <button className='btn-searchIcon'><img className='d-block' src='/search-new.svg' width='16' height='16' alt='Search'/></button>
                     </fieldset>
-                </form>
+                </form> */}
                 <div className="d-flex align-items-center">
                     {
                         this.props.user.price_plan.name == "Trial" ?

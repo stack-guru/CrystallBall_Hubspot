@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { toast } from 'react-toastify'
 import { Container } from 'reactstrap';
 
 import ErrorAlert from "../../utils/ErrorAlert";
@@ -11,7 +10,8 @@ export default class SupportIndex extends Component {
 
         this.state = {
             support: {
-                details: ''
+                details: '',
+                successMessage: false
             },
             isBusy: false,
             errors: undefined
@@ -47,10 +47,10 @@ export default class SupportIndex extends Component {
         //     url: `/support`, baseURL: "/ui/", method: 'post', headers: { 'Content-Type': 'multipart/form-data' },
         //     data: fD
         // })
-        this.setState({ isBusy: true })
+        this.setState({ isBusy: true, successMessage: false })
         HttpClient.post("/settings/support", fD, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then(response => {
-                toast.info("Your request has been submitted.");
+                this.setState({ successMessage: true })
                 this.setDefaultState();
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
@@ -67,10 +67,10 @@ export default class SupportIndex extends Component {
                         <h2 className="pageTitle">Support</h2>
                         <p>Send any query or questions. We’d be happy to answer them</p>
                         <ErrorAlert errors={this.state.errors} />
-                        <div className='alert alert-success border-0'>
+                        {this.state.successMessage ? <div className='alert alert-success border-0'>
                             <i><img src={'/icon-check-success.svg'} alt={'icon'} className="svg-inject" /></i>
                             <span>Message sent successfully. We’ll try to reply as soon as possible.</span>
-                        </div>
+                        </div> : null}
                     </div>
 
                     <form className='supportForm' onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">

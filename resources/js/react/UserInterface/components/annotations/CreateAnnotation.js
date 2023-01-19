@@ -39,42 +39,42 @@ export default class CreateAnnotation extends React.Component {
         this.checkIfCanCreateAnnotation = this.checkIfCanCreateAnnotation.bind(this)
     }
 
-    checkIfCanCreateAnnotation(){
+    checkIfCanCreateAnnotation() {
         HttpClient.get('user')
-        .then(user_response => {
-            this.setState({
-                user: user_response.data.user
-            })
-            HttpClient.get('user_total_annotations')
-            .then(response => {
-                if( this.state.user.price_plan.code == "free new" || this.state.user.price_plan.code == "Trial"){
-                    if(this.state.user.price_plan.annotations_count == 0){
-                        // unlimited
-                    }else{
-                        if(response.data.user_total_annotations >= this.state.user.price_plan.annotations_count){
-                            let url = document.location.origin + '/images/annotation_limit_reached.jpg';
-                            swal.fire({
-                                html: "<img src='"+url+"' style='width:100%;'>",
-                                width: 700,
-                                customClass: {
-                                    popup: 'custom_bg pb-5',
-                                    htmlContainer: 'm-0',
-                                },
-                                showCloseButton: false,
-                                // title: "You have reached your plan limits!",
-                                // text: "Upgrade your plan to add more annotations.",
-                                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                confirmButtonText: "<a href='#' class='text-white'>Upgrade Now</a>",
-                            }).then(function(){
-                                window.location.href = '/settings/price-plans';
-                            });
+            .then(user_response => {
+                this.setState({
+                    user: user_response.data.user
+                })
+                HttpClient.get('user_total_annotations')
+                    .then(response => {
+                        if (this.state.user.price_plan.code == "free new" || this.state.user.price_plan.code == "Trial") {
+                            if (this.state.user.price_plan.annotations_count == 0) {
+                                // unlimited
+                            } else {
+                                if (response.data.user_total_annotations >= this.state.user.price_plan.annotations_count) {
+                                    let url = document.location.origin + '/images/annotation_limit_reached.jpg';
+                                    swal.fire({
+                                        html: "<img src='" + url + "' style='width:100%;'>",
+                                        width: 700,
+                                        customClass: {
+                                            popup: 'custom_bg pb-5',
+                                            htmlContainer: 'm-0',
+                                        },
+                                        showCloseButton: false,
+                                        // title: "You have reached your plan limits!",
+                                        // text: "Upgrade your plan to add more annotations.",
+                                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                        confirmButtonText: "<a href='#' class='text-white'>Upgrade Now</a>",
+                                    }).then(function () {
+                                        window.location.href = '/settings/price-plans';
+                                    });
+                                }
+                            }
+
                         }
-                    }
 
-                }
-
+                    });
             });
-        });
     }
 
     componentDidMount() {
@@ -88,7 +88,7 @@ export default class CreateAnnotation extends React.Component {
         this.checkIfCanCreateAnnotation();
     }
 
-    loadCategoriesList(){
+    loadCategoriesList() {
         this.setState({ isBusy: true })
         HttpClient.get(`/annotation-categories`)
             .then(response => {
@@ -98,8 +98,8 @@ export default class CreateAnnotation extends React.Component {
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
 
-            this.setState({ isBusy: false, errors: err });
-        });
+                this.setState({ isBusy: false, errors: err });
+            });
     }
 
     setDefaultState() {
@@ -151,7 +151,8 @@ export default class CreateAnnotation extends React.Component {
                 .then(response => {
                     removeStateFromLocalStorage("CreateAnnotation");
                     toast.success("Annotation added.");
-                    this.setState({redirectTo: "/annotation"});
+                    this.setState({ redirectTo: "/annotation" });
+                    this.props.togglePopup('');
                     // this.setDefaultState();
                     // this.loadCategoriesList();
                 }, (err) => {
@@ -212,19 +213,18 @@ export default class CreateAnnotation extends React.Component {
         const validation = this.state.validation;
         return (
             <div className="popupContent modal-createAnnotation">
+                <ModalHeader
+                    userAnnotationColors={this.state}
+                    updateUserAnnotationColors={() => { }}
+                    userServices={() => { }}
+                    serviceStatusHandler={() => { }}
+                    closeModal={() => this.props.togglePopup('')}
+                    serviceName={'Add annotation manually'}
+                    colorKeyName={"manual_annotation"}
+                    dsKeyName={null}
+                    creditString={null}
+                />
                 <div className="apps-bodyContent">
-                    <ModalHeader
-                        userAnnotationColors={this.state}
-                        updateUserAnnotationColors={() => {}}
-                        userServices={() => {}}
-                        serviceStatusHandler={() => {}}
-                        closeModal={() => this.props.togglePopup('')}
-                        serviceName={'Add annotation manually'}
-                        colorKeyName={"manual_annotation"}
-                        dsKeyName={"manual_annotation"}
-                        creditString={null}
-                    />
-
                     <form onSubmit={this.submitHandler} id="annotation-create-form">
                         <ErrorAlert errors={this.state.errors} />
                         <div className='grid2layout'>
@@ -240,7 +240,7 @@ export default class CreateAnnotation extends React.Component {
                         </div>
 
                         <div className="themeNewInputStyle has-danger mb-3">
-                            <input type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control" id="description" name="description" placeholder='Description'/>
+                            <input type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control" id="description" name="description" placeholder='Description' />
                             {validation.description ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : ''}
                         </div>
 
@@ -258,7 +258,7 @@ export default class CreateAnnotation extends React.Component {
                         </div>
                         <div className='grid2layout'>
                             <div className="themeNewInputStyle">
-                                <GoogleAnalyticsPropertySelect name="google_analytics_property_id" id="google_analytics_property_id" className="gray_clr" value={this.state.annotation.google_analytics_property_id} onChangeCallback={this.changeHandler} placeholder="Assign annotation to" components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }} multiple currentPricePlan={this.props.currentPricePlan}/>
+                                <GoogleAnalyticsPropertySelect name="google_analytics_property_id" id="google_analytics_property_id" className="gray_clr" value={this.state.annotation.google_analytics_property_id} onChangeCallback={this.changeHandler} placeholder="Assign annotation to" components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }} multiple currentPricePlan={this.props.currentPricePlan} />
                             </div>
                         </div>
 
