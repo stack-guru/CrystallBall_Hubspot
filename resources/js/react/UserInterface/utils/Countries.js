@@ -130,21 +130,22 @@ export default class countries extends React.Component {
                             <h4>Selected Countries</h4>
                             <span className="btn-clearAll" onClick={this.clearAll}>Clear All</span>
                         </div>
-                        {countries ? ( countries.map((country) => { if (userCountries.indexOf(country) === -1) { return null; }
-                            if (country !== null)
-                                if (country.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0)
-                                    <div className="checkBoxList">
+                        <div className="checkBoxList">
+                            {countries ? ( countries.map((country) => { if (userCountries.indexOf(country) === -1) { return null; }
+                                if (country !== null)
                                         return (
                                             <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="defaultCheck1" key={country}>
                                                 <input checked={userCountries.indexOf(country) !== -1 } type="checkbox" name={country} id={userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null } onChange={ this.handleClick }/>
                                                 <span>{country}</span>
                                             </label>
                                         );
-                                    </div>
-                            })
-                        ) : (
-                            <span>No country found</span>
-                        )}
+                                })
+                            ) : (
+                                
+                                <span>No country found</span>
+                            )}
+                        </div>
+
                     </div>
                 </div>
             </div>
