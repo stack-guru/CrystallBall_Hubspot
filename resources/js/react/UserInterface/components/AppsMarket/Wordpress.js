@@ -2,8 +2,74 @@ import React from "react";
 import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
 import DSGAUDatesSelect from "../../utils/DSGAUDatesSelect";
 import ModalHeader from "./common/ModalHeader";
-
+import HttpClient from '../../utils/HttpClient';
+import { toast } from "react-toastify";
 class Wordpress extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            error: '',
+            apiKeys: [],
+            token_name: '',
+            redirectTo: null,
+            userAnnotationColors: {},
+        }
+        this.generateAPIKey = this.generateAPIKey.bind(this)
+        this.copyAccessToken = this.copyAccessToken.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    copyAccessToken() {
+        let copyText = document.getElementById("input-access-token");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+    }
+
+    handleChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    generateAPIKey() {
+        if (this.props.currentPricePlan.has_api) {
+            if (!this.state.isBusy) {
+                this.setState({ isBusy: true });
+                HttpClient({ url: `/oauth/personal-access-tokens`, baseURL: "/", method: 'post', data: { name: this.state.token_name, scopes: [] } })
+                    .then(response => {
+                        toast.success("Token generated.");
+                        let tokens = this.state.apiKeys;
+                        tokens.push(response.data.token);
+                        this.setState({ isBusy: false, apiKeys: tokens, accessToken: response.data.accessToken })
+                    }, (err) => {
+
+                        this.setState({ isBusy: false, errors: (err.response).data });
+                    }).catch(err => {
+
+                        this.setState({ isBusy: false, errors: err });
+                    });
+            }
+        } else {
+            const accountNotLinkedHtml = '' +
+                '<div class="">' +
+                '<img src="/images/api-upgrade-modal.jpg" class="img-fluid">' +
+                '</div>'
+
+            swal.fire({
+                html: accountNotLinkedHtml,
+                width: 700,
+                customClass: {
+                    popup: 'bg-light-red pb-5',
+                    htmlContainer: 'm-0',
+                },
+                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+            }).then(value => {
+                this.setState({ redirectTo: "/settings/price-plans" });
+            });
+        }
+    }
+
     render() {
         return (
             <div className="popupContent modal-wordpressUpdates">
@@ -27,7 +93,28 @@ class Wordpress extends React.Component {
                         <div className="contentBox d-flex flex-column">
                             <p className="mb-3">2. Create API Key</p>
 
-                            <div className="d-flex mb-3 tokenBox">
+                            <form className='apiKeyForm d-block' onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
+                                <h3>Generate token</h3>
+                                <div className="inputplusbutton d-flex">
+                                    <div className="themeNewInputGroup themeNewInputStyle">
+                                        <input placeholder='Token name' type="text" className="form-control" name="token_name" onChange={this.handleChange} value={this.state.token_name} />
+                                    </div>
+                                    <button className="btn-theme-success" onClick={(ev) => {ev.preventDefault(); this.generateAPIKey() }}>Generate</button>
+                                </div>
+                                <div className="themeNewInputGroup mb-4 position-relative">
+                                    <textarea name="details" className="form-control" placeholder='Generated access token...' value={this.state.accessToken} readOnly id="input-access-token" />
+                                    <button className="btn-theme-outline-sm" onClick={(ev) => {ev.preventDefault(); this.copyAccessToken() }}>
+                                        <i><img src={'/icon-copy.svg'} alt={'icon'} className="svg-inject" /></i>
+                                        <span>Copy</span>
+                                    </button>
+                                </div>
+                                <div className='alert alert-info border-0'>
+                                    <i><img src={'/icon-info.svg'} alt={'icon'} className="svg-inject" /></i>
+                                    <span>The token will appear only once. Make sure to copy it before leaving this page</span>
+                                </div>
+                            </form>
+
+                            {/* <div className="d-flex mb-3 tokenBox">
                                 <div className="themeNewInputGroup">
                                     <input type="text" className="form-control" id="token_name" placeholder="Token name" />
                                 </div>
@@ -40,7 +127,9 @@ class Wordpress extends React.Component {
 
                             <div class="alert alert-info" role="alert">
                                 <p className="mb-0 d-flex flex-column"><span>The token will appear only once. Make sure to copy it before closing this popup</span></p>
-                            </div>
+                            </div> */}
+
+
                         </div>
                         <div className="contentBox">
                             <p className="mb-0">3. Insert API Key in the plugin’s Settings page, and you’re done!</p>
