@@ -10,6 +10,7 @@ import ErrorAlert from "../../utils/ErrorAlert";
 import xor from 'lodash/xor';
 import AppsModal from "../AppsMarket/AppsModal";
 import AnnotationsUpdate from './EditAnnotation';
+import ShowChartAnnotation from './ShowChartAnnotation';
 
 class IndexAnnotations extends React.Component {
     constructor() {
@@ -29,7 +30,8 @@ class IndexAnnotations extends React.Component {
             isLoading: false,
             allAnnotationsSelected: false,
             selectedRows: [],
-            editAnnotationId: ''
+            editAnnotationId: '',
+            showChartAnnotationId: '',
         };
         this.deleteAnnotation = this.deleteAnnotation.bind(this);
         this.toggleStatus = this.toggleStatus.bind(this);
@@ -458,7 +460,12 @@ class IndexAnnotations extends React.Component {
                                                 <ul className="d-flex list-unstyled">
                                                     <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
                                                     <li><time datetime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
-                                                    <li><a href="#"><i className="mr-2"><img src={"/icon-chart.svg"} /></i><span>open chart</span></a></li>
+                                                    <li>
+                                                    <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
+                                                        <i className="mr-2">
+                                                        <img src={"/icon-chart.svg"} /></i><span>open chart</span>
+                                                        </a>
+                                                    </li>
                                                 </ul>
 
                                                 <ul className="d-flex list-unstyled">
@@ -488,6 +495,9 @@ class IndexAnnotations extends React.Component {
                 </Container>
                 <AppsModal isOpen={this.state.editAnnotationId} popupSize={'md'} toggle={() => { this.setState({ editAnnotationId: '' }); }}>
                     <AnnotationsUpdate togglePopup={() => this.setState({editAnnotationId: ''})} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
+                </AppsModal>
+                <AppsModal isOpen={this.state.showChartAnnotationId} popupSize={'md'} toggle={() => { this.setState({ showChartAnnotationId: '' }); }}>
+                    <ShowChartAnnotation togglePopup={() => this.setState({showChartAnnotationId: ''})} showChartAnnotationId={this.state.showChartAnnotationId} currentPricePlan={this.props.user.price_plan} />
                 </AppsModal>
 
             </div>
