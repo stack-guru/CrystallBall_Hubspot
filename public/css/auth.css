@@ -163,7 +163,41 @@
   line-height: 20px;
 }
 .auth-nav li a.btn-theme { color: #fff; }
-
-.signup-slider {
-    background-color: #096DB7;
+.sliderHolder {
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background-color: #096db7;
+}
+.signup-slider {padding: 60px 40px;}
+.signup-slider .slide { height: 480px; }
+.signup-slider .slide h4 {
+  color: #fff;
+  padding: 0 4%;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 28px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.signup-slider .slide img {
+  display: block;
+  margin: 0 auto;
+}
+.signup-slider .slick-dots {
+  left: 0;
+  bottom: 0;
+}
+.signup-slider .slick-dots li {padding: 0 4px;}
+.signup-slider .slick-dots li button{
+  padding: 0;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #096db7;
+}
+.signup-slider .slick-dots li button::before {display: none;}
+.signup-slider .slick-dots li.slick-active button{
+  background: #096db7;
+  border-color: #fff;
 }
