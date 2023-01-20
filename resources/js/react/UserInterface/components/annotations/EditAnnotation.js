@@ -7,6 +7,7 @@ import HttpClient from "../../utils/HttpClient";
 
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 import AnnotationCategorySelect from '../../utils/AnnotationCategorySelect';
+import ModalHeader from '../AppsMarket/common/ModalHeader';
 
 export default class EditAnnotation extends React.Component {
 
@@ -37,9 +38,9 @@ export default class EditAnnotation extends React.Component {
 
     componentDidMount() {
         document.title = 'Edit Annotation'
-        if (this.props.routeParams.match.params.id !== undefined) {
+        if (this.props.editAnnotationId) {
             this.setState({ isBusy: true });
-            HttpClient.get(`/annotation/${this.props.routeParams.match.params.id}`)
+            HttpClient.get(`/annotation/${this.props.editAnnotationId}`)
                 .then(response => {
                     let gAPs = [];
                     if (!response.data.annotation.annotation_ga_properties.length) {
@@ -181,111 +182,113 @@ export default class EditAnnotation extends React.Component {
         const validation = this.state.validation;
         return (
             <div className="container-xl bg-white component-wrapper" >
-                <section className="ftco-section" id="buttons">
-                    <div className="container">
-                        <div className="row mb-5">
-                            <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">Edit Annotation <br />
-                                    <small>Update your annotation details</small>
-                                </h2>
-                            </div>
+                <ModalHeader
+                    userAnnotationColors={null}
+                    updateUserAnnotationColors={null}
+                    userServices={null}
+                    serviceStatusHandler={null}
+                    closeModal={() => this.props.togglePopup('')}
+                    serviceName={'Edit Annotation'}
+                    colorKeyName={null}
+                    dsKeyName={null}
+                    creditString={null}
+                />
+
+                <div className="apps-bodyContent">
+                    <div className="row ml-0 mr-0">
+                        <div className="col-md-12">
+                            <ErrorAlert errors={this.state.errors} />
                         </div>
-
-                        <div className="row ml-0 mr-0">
-                            <div className="col-md-12">
-                                <ErrorAlert errors={this.state.errors} />
-                            </div>
-                        </div>
-
-                        <form onSubmit={this.submitHandler}>
-                            <div className="row">
-
-
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group">
-                                        <label htmlFor="event_name" className="form-control-placeholder">Event Name *</label>
-                                        <input type="text" className="form-control gray_clr" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" placeholder='Name the Annotation' />
-
-                                        {
-                                            validation.event_name ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : null
-                                        }
-
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group ">
-                                        <label htmlFor="category" className="form-control-placeholder">Category *</label>
-                                        <AnnotationCategorySelect className="gray_clr" name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group  has-danger ">
-                                        <label htmlFor="description" className="form-control-placeholder">Description</label>
-                                        <textarea type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control gray_clr" id="description" name="description" placeholder='Add descriptive info'></textarea>
-                                        {
-                                            validation.description ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : null
-                                        }
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group">
-                                        <label htmlFor="url" className="form-control-placeholder">Link</label>
-                                        <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control gray_clr" id="url" name="url" placeholder='https://example.com' />
-
-                                        {
-                                            validation.url ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.url}</span> : null
-                                        }
-
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder">Show on this date</label>
-                                        <input type="date" onChange={this.changeHandler} value={moment(this.state.annotation.show_at).format('YYYY-MM-DD')} className="form-control gray_clr" id="show_at" name="show_at" />
-
-                                        {
-                                            validation.show_at ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.show_at}</span> : null
-                                        }
-
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder">Assign Annotation to:</label>
-                                        <GoogleAnalyticsPropertySelect
-                                            aProperties={this.state.googleAnnotationProperties}
-                                            name="google_analytics_property_id"
-                                            id="google_analytics_property_id"
-                                            className="gray_clr"
-                                            value={this.state.annotation.google_analytics_property_id}
-                                            onChangeCallback={this.changeHandler}
-                                            onChangeCallback2={this.gAPropertyChangeHandler}
-                                            placeholder="Select GA Properties"
-                                            multiple
-                                            currentPricePlan={this.props.currentPricePlan}
-                                        ></GoogleAnalyticsPropertySelect>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div className="row ml-0 mr-0">
-                                <div className="col-12 text-right">
-                                    <button type="submit" className="btn gaa-btn-primary btn-fab btn-round" title="submit">
-                                        {/* <i className="ti-save mr-2"></i> */}
-                                        Save
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-
                     </div>
-                </section>
+
+                    <form onSubmit={this.submitHandler}>
+                        <div className="row">
+
+
+                            <div className="col-lg-3 col-sm-4">
+                                <div className="form-group">
+                                    <label htmlFor="event_name" className="form-control-placeholder">Event Name *</label>
+                                    <input type="text" className="form-control gray_clr" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" placeholder='Name the Annotation' />
+
+                                    {
+                                        validation.event_name ?
+                                            <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : null
+                                    }
+
+                                </div>
+                            </div>
+                            <div className="col-lg-3 col-sm-4">
+                                <div className="form-group ">
+                                    <label htmlFor="category" className="form-control-placeholder">Category *</label>
+                                    <AnnotationCategorySelect className="gray_clr" name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
+                                </div>
+                            </div>
+                            <div className="col-lg-3 col-sm-4">
+                                <div className="form-group  has-danger ">
+                                    <label htmlFor="description" className="form-control-placeholder">Description</label>
+                                    <textarea type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control gray_clr" id="description" name="description" placeholder='Add descriptive info'></textarea>
+                                    {
+                                        validation.description ?
+                                            <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : null
+                                    }
+                                </div>
+                            </div>
+                            <div className="col-lg-3 col-sm-4">
+                                <div className="form-group">
+                                    <label htmlFor="url" className="form-control-placeholder">Link</label>
+                                    <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control gray_clr" id="url" name="url" placeholder='https://example.com' />
+
+                                    {
+                                        validation.url ?
+                                            <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.url}</span> : null
+                                    }
+
+                                </div>
+                            </div>
+
+                            <div className="col-lg-3 col-sm-4">
+                                <div className="form-group ">
+                                    <label htmlFor="show_at" className="form-control-placeholder">Show on this date</label>
+                                    <input type="date" onChange={this.changeHandler} value={moment(this.state.annotation.show_at).format('YYYY-MM-DD')} className="form-control gray_clr" id="show_at" name="show_at" />
+
+                                    {
+                                        validation.show_at ?
+                                            <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.show_at}</span> : null
+                                    }
+
+                                </div>
+                            </div>
+
+                            <div className="col-lg-3 col-sm-4">
+                                <div className="form-group ">
+                                    <label htmlFor="show_at" className="form-control-placeholder">Assign Annotation to:</label>
+                                    <GoogleAnalyticsPropertySelect
+                                        aProperties={this.state.googleAnnotationProperties}
+                                        name="google_analytics_property_id"
+                                        id="google_analytics_property_id"
+                                        className="gray_clr"
+                                        value={this.state.annotation.google_analytics_property_id}
+                                        onChangeCallback={this.changeHandler}
+                                        onChangeCallback2={this.gAPropertyChangeHandler}
+                                        placeholder="Select GA Properties"
+                                        multiple
+                                        currentPricePlan={this.props.currentPricePlan}
+                                    ></GoogleAnalyticsPropertySelect>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className="row ml-0 mr-0">
+                            <div className="col-12 text-right">
+                                <button type="submit" className="btn gaa-btn-primary btn-fab btn-round" title="submit">
+                                    {/* <i className="ti-save mr-2"></i> */}
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
             </div>
         );
     }
