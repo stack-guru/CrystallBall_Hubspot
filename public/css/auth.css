@@ -163,3 +163,7 @@
   line-height: 20px;
 }
 .auth-nav li a.btn-theme { color: #fff; }
+
+.signup-slider {
+    background-color: #096DB7;
+}
