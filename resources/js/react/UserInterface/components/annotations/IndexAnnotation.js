@@ -7,7 +7,7 @@ import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySe
 import { timezoneToDateFormat } from "../../utils/TimezoneTodateFormat";
 import { getCompanyName } from "../../helpers/CommonFunctions";
 import ErrorAlert from "../../utils/ErrorAlert";
-
+import xor from 'lodash/xor';
 class IndexAnnotations extends React.Component {
     constructor() {
         super();
@@ -195,36 +195,38 @@ class IndexAnnotations extends React.Component {
         }
     }
 
-    handleOneSelection(e) {
-        let anno_id = e.target.dataset.anno_id;
+    handleOneSelection(anno_id) {
+        // let anno_id = e.target.dataset.anno_id;
+
+        this.setState({selectedRows: xor(this.state.selectedRows, [anno_id])});
 
         // if input is checked
-        if (e.target.checked) {
+        // if (e.target.checked) {
             // if annotation id is not in the array
-            if (!this.state.selectedRows.includes(anno_id)) {
-                this.state.selectedRows.push(anno_id);
-            }
-        }
+            // if (!this.state.selectedRows.includes(anno_id)) {
+                // this.state.selectedRows.push(anno_id);
+            // }
+        // }
         // if input is not checked, remove the id from array if it exists
-        else {
-            if (this.state.selectedRows.includes(anno_id)) {
-                let rows = this.state.selectedRows;
-                let new_rows = rows.filter((item) => item !== anno_id);
-                this.setState({
-                    selectedRows: new_rows,
-                });
-            }
-        }
+        // else {
+            // if (this.state.selectedRows.includes(anno_id)) {
+            //     let rows = this.state.selectedRows;
+            //     let new_rows = rows.filter((item) => item !== anno_id);
+            //     this.setState({
+            //         selectedRows: new_rows,
+            //     });
+            // }
+        // }
 
-        if (this.state.selectedRows.length > 0) {
-            this.setState({
-                allAnnotationsSelected: true,
-            });
-        } else {
-            this.setState({
-                allAnnotationsSelected: false,
-            });
-        }
+        // if (this.state.selectedRows.length > 0) {
+        //     this.setState({
+        //         allAnnotationsSelected: true,
+        //     });
+        // } else {
+        //     this.setState({
+        //         allAnnotationsSelected: false,
+        //     });
+        // }
     }
 
     handleDeleteSelected() {
@@ -412,7 +414,7 @@ class IndexAnnotations extends React.Component {
                                             style={{'borderLeftColor': borderLeftColor}}
                                             id={rowId}
                                             key={ anno.category + anno.event_name + anno.description + anno.url + anno.id }
-                                            onClick={this.handleOneSelection}
+                                            onClick={() => this.handleOneSelection(anno.id)}
                                             data-anno_id={anno.id}>
 
                                             <span className="annotionRowIcon"><img src={`/${selectedIcon}.svg`} onError={({ currentTarget }) => {currentTarget.onerror = null; currentTarget.src="/annotation-default.svg";}} /></span>
