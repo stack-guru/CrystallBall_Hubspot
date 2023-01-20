@@ -5,6 +5,7 @@ import { capitalizeFirstLetter } from "../../../helpers/CommonFunctions";
 import HttpClient from "../../../utils/HttpClient";
 import AppsModal from "../../AppsMarket/AppsModal";
 import CreateUser from "./CreateUser";
+import EditUser from "./EditUser";
 
 export default class IndexUsers extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ export default class IndexUsers extends Component {
             users: [],
             searchText: "",
             addUserPopup: false,
+            editUserId: '',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -173,7 +175,7 @@ export default class IndexUsers extends Component {
                                                 <div className="singleCol text-right">
                                                     <span>{this.props.user.user_level == "admin" ? (
                                                         <>
-                                                            <Link to={`/settings/user/${user.id}/edit`}><img src={`/icon-edit.svg`} /></Link>
+                                                            <Link onClick={() => this.setState({ editUserId: user.id })}><img src={`/icon-edit.svg`} /></Link>
                                                             <Link onClick={() => this.handleDelete(user.id)}><img src={`/icon-trash.svg`} /></Link>
                                                         </>
                                                     ) : null}
@@ -187,18 +189,32 @@ export default class IndexUsers extends Component {
                         </div>
                     </Container>
 
-                    <AppsModal isOpen={this.state.addUserPopup} popupSize={'md'} toggle={() => {this.setState({addUserPopup: false,});}}>
+                    <AppsModal isOpen={this.state.addUserPopup} popupSize={'md'} toggle={() => { this.setState({ addUserPopup: false, }); }}>
                         <div className="popupContent modal-createUser">
                             <div className="apps-modalHead">
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="d-flex justify-content-start align-items-center"><h2>Add User</h2></div>
-                                    <span onClick={() => this.setState({addUserPopup: false,})} className="btn-close">
-                                        <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon"/>
+                                    <span onClick={() => this.setState({ addUserPopup: false, })} className="btn-close">
+                                        <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" />
                                     </span>
                                 </div>
                             </div>
 
                             <CreateUser user={this.props.user} />
+                        </div>
+                    </AppsModal>
+                    <AppsModal isOpen={this.state.editUserId} popupSize={'md'} toggle={() => { this.setState({ editUserId: '', }); }}>
+                        <div className="popupContent modal-createUser">
+                            <div className="apps-modalHead">
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <div className="d-flex justify-content-start align-items-center"><h2>Edit User</h2></div>
+                                    <span onClick={() => this.setState({ editUserId: '', })} className="btn-close">
+                                        <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" />
+                                    </span>
+                                </div>
+                            </div>
+
+                            <EditUser editUserId={this.state.editUserId} />
                         </div>
                     </AppsModal>
                 </div>
