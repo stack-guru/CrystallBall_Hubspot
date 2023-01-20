@@ -4,17 +4,12 @@
 @section('meta-description', 'Signup to ' . config('app.name') . ' and automate Google Analytics Annotations')
 
 @section('content')
-    <div class='container formAndSlider'>
+    <!-- <div class='container formAndSlider'>
         <div class='row align-items-center m-0'>
             <div class='col-6 p-0'>
                 <form class="form-signin" method="POST" action="{{ route('register') }}">
                 @csrf
-                    <!-- <div class="text-center mb-4">
-                        <img class="mb-4" src="{{ config('app.logo') }}" alt="" width="72" height="72">
-                        <h1 class="h3 mb-3 font-weight-normal">{{config('app.name')}}</h1>
-                    </div> -->
                     <h2>Get started for Free</h2>
-    
                     <div class="themeNewInputStyle mb-3">
                         <input type="text" id="inputName" class="form-control @error('name') is-invalid @enderror" placeholder="Full Name" required="" autofocus="" name="name" value="{{ old('name') }}">
                         @error('name')
@@ -83,7 +78,38 @@
                 </div>
             </div>
         </div>
+    </div> -->
+    <!-- Confirmation email sent! screen Code -->
+    <!-- <div class="container d-flex justify-content-center">
+        <div class="confirmationContent d-flex flex-column text-center">
+            <figure><img src='./icon-confirmation-email.svg'/></figure>
+            <h1>Confirmation email sent!</h1>
+            <p>Click on the confirmation link to verify your email</p>
+            <span>Haven’t received the email yet? <a href=''>Resend</a></span>
+            <em>Or</em>
+            <span class='goback'>Incorrect email? <a href=''>Go back</a></span>
+        </div>
+    </div> -->
 
+    <!-- Uh, oh... screen Code -->
+    <!-- <div class="container d-flex justify-content-center">
+        <div class="confirmationContent d-flex flex-column text-center">
+            <h1>Uh, oh...</h1>
+            <p>It appears that your company already has an active account, <a href='#'>Request an invitation</a> to join the account now.</p>
+            <em>Or</em>
+            <button class='btn-theme-outline'>Create a new Workspace</button>
+            <hr />
+            <span class='goback'>Incorrect email? <a href=''>Go back</a></span>
+        </div>
+    </div> -->
+
+    <!-- Success! screen Code -->
+    <div class="container d-flex justify-content-center">
+        <div class="confirmationContent success d-flex flex-column text-center">
+            <figure><img src='./icon-confirmation-email.svg'/></figure>
+            <h1>Success!</h1>
+            <p>We have sent the account holder an email with your request to join. <a href='#'>Contact Us</a> if you have any query.</p>
+        </div>
     </div>
 @endsection
 
