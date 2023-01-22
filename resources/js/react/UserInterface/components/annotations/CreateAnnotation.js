@@ -232,7 +232,6 @@ export default class CreateAnnotation extends React.Component {
                                 <input type="text" className="form-control" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" placeholder='Event name *' />
                                 {validation.event_name ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : ''}
                             </div>
-
                             <div className="themeNewInputStyle">
                                 <AnnotationCategorySelect className="gray_clr" name="category" id="category" value={this.state.annotation.category} categories={this.state.categories} onChangeCallback={this.changeHandler} placeholder="Category *" />
                                 {validation.category ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : ''}
