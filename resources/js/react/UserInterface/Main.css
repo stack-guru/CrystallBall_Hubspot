@@ -1200,7 +1200,7 @@ body {
 }
 .apps-bodyContent {
     display: flex;
-    margin-bottom: -24px;
+    /* margin-bottom: -24px; */
     flex-direction: column;
 }
 .apps-bodyContent .gray-box,
