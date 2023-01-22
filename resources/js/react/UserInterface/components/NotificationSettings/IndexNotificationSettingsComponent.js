@@ -6,7 +6,7 @@ import HttpClient from "../../utils/HttpClient";
 import PhoneVerificationModal from '../../helpers/PhoneVerificationModal';
 import ChangePhoneModal from '../../helpers/ChangePhoneModal';
 import { getCompanyName } from '../../helpers/CommonFunctions';
-import { Button, Container } from 'reactstrap';
+import { Container } from 'reactstrap';
 
 export default class IndexNotificationSettings extends Component {
 
@@ -129,8 +129,8 @@ export default class IndexNotificationSettings extends Component {
                                 <h2 className="pageTitle mb-0">Notifications</h2>
                                 <p className='mt-3 mb-0'>Set notifications you want to receive for each app</p>
                             </div>
-                            {this.props.user.phone_verified_at == null && this.props.user.phone_number ? <Button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showPhoneVerificationModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Verify now</span></Button> : null}
-                            {this.props.user.phone_number !== null ? <Button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showChangePhoneModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Change Phone Number</span></Button> : <Button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showChangePhoneModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Add Phone Number</span></Button>}
+                            {this.props.user.phone_verified_at == null && this.props.user.phone_number ? <button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showPhoneVerificationModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Verify now</span></button> : null}
+                            {this.props.user.phone_number !== null ? <button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showChangePhoneModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Change Phone Number</span></button> : <button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showChangePhoneModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Add Phone Number</span></button>}
                         </div>
                     </div>
 

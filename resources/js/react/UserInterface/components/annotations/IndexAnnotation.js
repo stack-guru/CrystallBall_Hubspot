@@ -509,7 +509,6 @@ class IndexAnnotations extends React.Component {
                 <AppsModal isOpen={this.state.showChartAnnotationId} popupSize={'null'} toggle={() => { this.setState({ showChartAnnotationId: '' }); }}>
                     <ShowChartAnnotation togglePopup={() => this.setState({showChartAnnotationId: ''})} showChartAnnotationId={this.state.showChartAnnotationId} currentPricePlan={this.props.user.price_plan} />
                 </AppsModal>
-
             </div>
         );
     }

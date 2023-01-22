@@ -2329,10 +2329,12 @@ body {
     background: linear-gradient(90deg, #FF8534 33.33%, #FF630C 100%);
 }
 .apps-modal.md {max-width: 624px;}
+.addCardForm .grid2layout,
 .modal-editAnnotation .grid2layout,
 .modal-createAnnotation .grid2layout,
 .modal-createUser .grid2layout,
 .form-csvUpload .grid2layout {grid-template-columns: 1fr 1fr;}
+.modal-addCard,
 .modal-editAnnotation,
 .modal-createAnnotation,
 .modal-createUser,
@@ -2860,6 +2862,13 @@ body {
 .theme-insights img { display: block; }
 .modal-showChart .contentHead {padding-bottom: 25px;}
 .contentHead .themeNewselect select{ width: 170px !important; }
+.modal-addCard .apps-bodyContent {
+    margin: 0 auto;
+    max-width: 350px;
+}
+
+
+
 
 
 
