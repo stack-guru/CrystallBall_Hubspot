@@ -11,10 +11,9 @@ export default class ShowChartAnnotation extends React.Component {
 
     render() {
         return (
-            <div className="container-xl bg-white component-wrapper" >
-                <div className="apps-bodyContent">
-                  <h1>Chart Popup Here!!!</h1>
-                </div>
+            <div className="popupContent modal-showChart">
+                <div className="apps-modalHead"></div>
+                <div className="apps-bodyContent"></div>
             </div>
         );
     }

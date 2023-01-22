@@ -449,7 +449,7 @@ class AppsMarket extends React.Component {
                                         text: "Get upfront reminders and advertise on retail marketing dates.",
                                         logo: "/retails-marketing-dates-small.svg",
                                     },
-                                ].map((item) => (<div className="d-flex align-items-center justify-content-center">
+                                ].map((item) => (<div className="d-flex align-items-center justify-content-between">
                                     <span className="githubIcon flex-shrink-0"><img src={item.logo} alt={item.logo} className="svg-inject" /></span>
                                     <p className="noteText m-0">{item.text}</p>
                                     <button onClick={() => {
