@@ -50,12 +50,7 @@ class header extends React.Component {
                         null
                     }
 
-                    {
-                        this.props.user.price_plan.code == "free new" ?
-                            <p class="trial-countdown">You are on the Fee Plan</p>
-                        :
-                        null
-                    }
+                    {this.props.user.price_plan.code == "free new" ? <p class="trial-countdown">You are on the Fee Plan</p> : null}
 
                     {
                         this.props.user.price_plan.price == 0 ?
@@ -91,94 +86,50 @@ class header extends React.Component {
                         :
                         null
                     }
-                    <div className="dropdown">
+                    <div className="dropdown user-dropdown">
                         <button type='button' className="dropdown-toggle btn-toggle no-after border-0 bg-transparent bdrs-50p p-0" data-toggle="dropdown">
                             <span className="w-2r bdrs-50p text-center gaa-bg-color m-0" id="acronym-holder" alt="">{this.props.user != undefined ? this.props.user.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}</span>
                         </button>
-                        <div className="dropdown-menu pX-20">
-                            <div className="header-profile-info">
-                                <h4 className="gaa-text-primary"><b>{this.props.user.price_plan.name}</b></h4>
+                        <div className="dropdown-menu">
+                            <div className="dropdownHead">
+                                <Link to="/settings">{/* {this.props.user.name} */}View Profile</Link>
                             </div>
-                            <div className="header-profile-info">
-                                <p className="">Properties in use:
-                                    <span className="float-right gaa-text-primary">
-                                        {this.props.user.google_analytics_properties_in_use_count}
-                                        /
-                                        {this.props.user.price_plan.google_analytics_property_count == -1 ? 0 : (this.props.user.price_plan.google_analytics_property_count == 0 ? "∞" : this.props.user.price_plan.google_analytics_property_count)}
-                                    </span>
-                                </p>
-                            </div>
-                            {this.props.user.price_plan.code == "free new" ?
-                                <li className="notifications">
-                                    <div className="no-after">
-                                        <p class="trial-countdown mt-4">You are on the Free Plan</p>
+
+                            <ul className='dropdownBody'>
+                                <li className='d-flex justify-content-start align-align-items-center'><strong>{this.props.user.price_plan.name}</strong><span>Plan</span></li>
+                                <li className='properties'>
+                                    <div className='d-flex justify-content-between align-align-items-center'>
+                                        <span>Properties in use:</span>
+                                        <span>
+                                            {this.props.user.google_analytics_properties_in_use_count} / {this.props.user.price_plan.google_analytics_property_count == -1 ? 0 : (this.props.user.price_plan.google_analytics_property_count == 0 ? "∞" : this.props.user.price_plan.google_analytics_property_count)}
+                                        </span>
                                     </div>
+
+                                    {this.props.user.price_plan.code == "free new" ? <p class="trial-countdown mt-4">You are on the Free Plan</p> : null}
+
+                                    <ProgressBar completed={this.props.user.price_plan.google_analytics_property_count ? (((this.props.user.google_analytics_properties_in_use_count / this.props.user.price_plan.google_analytics_property_count) * 100) || 10) : 10}/>
                                 </li>
-                                : null}
-
-                            <div className="header-profile-info">
-                                <ProgressBar completed={
-                                    this.props.user.price_plan.google_analytics_property_count ?
-                                        (
-                                            ((this.props.user.google_analytics_properties_in_use_count / this.props.user.price_plan.google_analytics_property_count) * 100) || 10
-                                        )
-                                        : 10
-                                    }
-                                />
-                            </div>
-
-                            <div className="header-profile-info">
-                                <p className="">Annotations:
-                                    <span className="float-right gaa-text-primary">
-                                        { this.state.user_total_annotations }
-                                        /
-                                        {
-                                            (this.props.user.price_plan.annotations_count == 0) ? "∞" : this.props.user.price_plan.annotations_count
-                                        }
-                                    </span>
-                                </p>
-                            </div>
-
-                            <div className="header-profile-info">
-                                {
-                                    (this.props.user.price_plan.code == 'free new' || this.props.user.price_plan.code == 'Trial' || this.props.user.price_plan.code == null) ? <ProgressBar completed={ (this.state.user_total_annotations/this.props.user.price_plan.annotations_count) * 100 } /> : <ProgressBar completed={ 0 } />
-                                }
-                            </div>
-
-                            {
-                                this.props.user.price_plan.price == 0 ?
-                                    <div className="header-profile-info pt-3">
-                                        <Link to="/settings/price-plans" className="btn gaa-btn-primary w-100">Update subscription</Link>
+                                <li className='annotation'>
+                                    <div className='d-flex justify-content-between align-align-items-center'>
+                                        <span>Annotations:</span>
+                                        <span>{ this.state.user_total_annotations } / {(this.props.user.price_plan.annotations_count == 0) ? "∞" : this.props.user.price_plan.annotations_count}</span>
                                     </div>
-                                :
-                                null
-                            }
+                                    {(this.props.user.price_plan.code == 'free new' || this.props.user.price_plan.code == 'Trial' || this.props.user.price_plan.code == null) ? <ProgressBar completed={ (this.state.user_total_annotations/this.props.user.price_plan.annotations_count) * 100 } /> : <ProgressBar completed={ 0 } />}
+                                </li>
+                            </ul>
 
-                            <div className="header-profile-info pt-3">
-                                <p className="gaa-text-primary">
-                                    <Link to="/settings" style={{ color: "black", fontWeight: 'lighter' }}>
-                                        <b>{this.props.user.name}</b>
-                                        <span className="float-right"><i className="fa fa-chevron-right"></i></span>
-                                    </Link>
-                                </p>
+                            <div className='dropdownFoot'>
+                                {this.props.user.price_plan.price == 0 ? <div><Link to='/settings/price-plans'>Update subscription</Link></div> : null}
+
+                                <a className='btn-logout' href={null} onClick={() => document.getElementById('header-logout-form').submit()}>Log out</a>
+                                <form id='header-logout-form' action={'/logout'} method='POST'><input type='hidden' name={'_token'} value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} /></form>
                             </div>
-
-                            <div className="text-center">
-                                <a href={null} onClick={() => document.getElementById("header-logout-form").submit()} className="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                                    <i className="ti-power-off mR-10"></i><span>Log out</span>
-                                </a>
-                                <form id="header-logout-form" action={'/logout'} method="POST">
-                                    <input type="hidden" name={"_token"} value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />
-                                </form>
-                            </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         )
     }
-
 }
 
 
