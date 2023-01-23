@@ -11,7 +11,6 @@
                 action="{{ route('generate-password') }}">
                 @csrf
                 @if ($verified)
-                    <h4>It's time to set your password</h4>
                 @else
                     <figure><img src='/icon-confirmation-email.svg' /></figure>
                     <h1>Confirmation email sent!</h1>
@@ -31,27 +30,30 @@
                 @endif
 
                 @if ($verified)
-                    <div class="form-label-group">
-                        <input type="password" id="inputPassword"
-                            class="form-control @error('password') is-invalid @enderror" placeholder="Password"
-                            required="" name="password" value="">
-                        <label for="inputPassword">Password</label>
-                        @error('password')
-                            @foreach ($errors->get('password') as $message)
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @endforeach
-                        @enderror
-                    </div>
+                    <div class="form-signin">
+                        <h2>Set Your Password</h2>
+                        <div class="themeNewInputStyle mb-3">
+                            <input type="password" id="inputPassword"
+                                class="form-control @error('password') is-invalid @enderror" placeholder="Password"
+                                required="" name="password" value="">
+                            {{-- <label for="inputPassword">Password</label> --}}
+                            @error('password')
+                                @foreach ($errors->get('password') as $message)
+                                    <div class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                @endforeach
+                            @enderror
+                        </div>
 
-                    <div class="form-label-group">
-                        <input type="password" id="inputPasswordConfirmation" class="form-control"
-                            placeholder="Password Confirmation" required="" name="password_confirmation" value="">
-                        <label for="inputPasswordConfirmation">Password Confirmation</label>
-                    </div>
+                        <div class="themeNewInputStyle mb-3">
+                            <input type="password" id="inputPasswordConfirmation" class="form-control"
+                                placeholder="Password Confirmation" required="" name="password_confirmation" value="">
+                            {{-- <label for="inputPasswordConfirmation">Password Confirmation</label> --}}
+                        </div>
 
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">All set, let's get started</button>
+                        <button class="btn-theme" type="submit">All set, let's get started</button>
+                    </div>
                 @else
                     <span>Haven’t received the email yet? <a href='#'
                             onclick="event.preventDefault();document.getElementById('verification-resend-form').submit();">Resend</a></span>
