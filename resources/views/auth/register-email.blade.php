@@ -4,7 +4,7 @@
 @section('meta-description', 'Signup to ' . config('app.name') . ' and automate Google Analytics Annotations')
 
 @section('content')
-    <!-- <div class='container formAndSlider'>
+    <div class='container formAndSlider'>
         <div class='row align-items-center m-0'>
             <div class='col-6 p-0'>
                 <form class="form-signin" method="POST" action="{{ route('register') }}">
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- Confirmation email sent! screen Code -->
     <!-- <div class="container d-flex justify-content-center">
         <div class="confirmationContent d-flex flex-column text-center">
@@ -104,13 +104,13 @@
     </div> -->
 
     <!-- Success! screen Code -->
-    <div class="container d-flex justify-content-center">
+    {{-- <div class="container d-flex justify-content-center">
         <div class="confirmationContent success d-flex flex-column text-center">
             <figure><img src='./icon-confirmation-email.svg'/></figure>
             <h1>Success!</h1>
             <p>We have sent the account holder an email with your request to join. <a href='#'>Contact Us</a> if you have any query.</p>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('javascript')
