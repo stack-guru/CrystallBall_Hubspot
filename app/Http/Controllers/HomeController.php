@@ -242,6 +242,10 @@ class HomeController extends Controller
 
         }
 
+        if ($request->has('is_ds_wordpress_enabled')) {
+            $user->is_ds_wordpress_enabled = $request->is_ds_wordpress_enabled;
+        }
+
         $user->save();
 
         $response['user_services'] = $user;

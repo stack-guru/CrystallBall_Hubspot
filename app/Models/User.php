@@ -75,6 +75,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'startup_configuration_showed_at',
 
         'last_screenshot_of_report_at',
+        'is_ds_wordpress_enabled',
         // app_sumo_uuid
     ];
 
