@@ -70,7 +70,7 @@ class Main extends React.Component {
         this.extendTrial = this.extendTrial.bind(this);
     }
 
-    // toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
+    toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
     toggleInterfaceTour(keepInterfaceTour = false) {
         // If the user has alive registration offers and interface tour is showing
         if (this.state.user.user_registration_offers.length && this.state.showInterfaceTour) {
@@ -111,19 +111,15 @@ class Main extends React.Component {
         if (["/settings/change-password"].indexOf(this.props.location.pathname) == -1 && this.state.user.do_require_password_change == true) {
             return <Redirect to={"/settings/change-password"} />
         }
-
         return (
 
             <React.Fragment>
                 <div className="sidebar">
                     {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={this.toggleStartupConfiguration} /> */}
-                    <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} />
+                    {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} user={this.state.user} /> */}
+                    {/* <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} /> */}
 
-                    <Sidebar openAnnotationPopup={(mka) => {
-                        this.setState({
-                            mKeyAnnotation: mka
-                        });
-                    }} user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
+                    <Sidebar openAnnotationPopup={(mka) => {this.setState({mKeyAnnotation: mka});}} user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
                 </div>
                 {/* <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" /> */}
                 <div className="page-container">
@@ -238,7 +234,7 @@ class Main extends React.Component {
                     </AppsModal>
                 :
                 this.state.mKeyAnnotation === 'upload' ?
-                <AppsModal isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka='') => {this.setState({mKeyAnnotation: mka,});}}>
+                <AppsModal popupSize={'md'} isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka='') => {this.setState({mKeyAnnotation: mka,});}}>
                     <AnnotationsUpload togglePopup={(mka) => {this.setState({mKeyAnnotation: mka,});}} currentPricePlan={this.state.user.price_plan} />
                 </AppsModal>
                 :
@@ -280,7 +276,7 @@ class Main extends React.Component {
                 this.setState({
                     user: response.data.user,
                     // These states were in use when user startup configuration wizard was enabled
-                    // showStartupConfiguration: keepStartupConfiguration ? true : (response.data.user.startup_configuration_showed_at == null),
+                    showStartupConfiguration: response.data.user.show_configuration_message,
                     // showInterfaceTour: keepInterfaceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at == null),
                     // showDataSourceTour: keepDataSourceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at !== null && response.data.user.data_source_tour_showed_at == null),
                     showInterfaceTour: keepInterfaceTour ? true : (response.data.user.last_login_at == null),

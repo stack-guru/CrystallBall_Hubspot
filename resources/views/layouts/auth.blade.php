@@ -17,6 +17,8 @@
   {{--
   <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/floating-labels/"> --}}
 
+  <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
   <!-- Bootstrap core CSS -->
   <link href="{{asset('css/auth.css')}}" rel="stylesheet">
 

@@ -163,3 +163,109 @@
   line-height: 20px;
 }
 .auth-nav li a.btn-theme { color: #fff; }
+.sliderHolder {
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background-color: #096db7;
+}
+.signup-slider {padding: 60px 40px;}
+.signup-slider .slide { height: 480px; }
+.signup-slider .slide h4 {
+  color: #fff;
+  padding: 0 4%;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 28px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.signup-slider .slide img {
+  display: block;
+  margin: 0 auto;
+}
+.signup-slider .slick-dots {
+  left: 0;
+  bottom: 0;
+}
+.signup-slider .slick-dots li {padding: 0 4px;}
+.signup-slider .slick-dots li button{
+  padding: 0;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #096db7;
+}
+.signup-slider .slick-dots li button::before {display: none;}
+.signup-slider .slick-dots li.slick-active button{
+  background: #096db7;
+  border-color: #fff;
+}
+.confirmationContent { max-width: 500px; }
+.confirmationContent figure{margin: 0;}
+.confirmationContent figure img{
+  display: block;
+  margin: 0 auto;
+}
+.confirmationContent h1{
+  color: #096db7;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 40px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.confirmationContent p{
+  color: #333;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 23px;
+  text-align: center;
+  margin-bottom: 42px;
+}
+.confirmationContent span{
+  color: #666666;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 16px 24px;
+  text-align: center;
+  background: #fcfcfc;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+.confirmationContent span a{color: #1976fe;}
+.confirmationContent em{
+  color: #666;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  margin-bottom: 1rem;
+}
+.confirmationContent .goback{
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  font-style: italic;
+  background-color: #fff;
+}
+.confirmationContent .btn-theme-outline{
+  color: #666;
+  width: 270px;
+  height: 47px;
+  margin: 0 auto;
+  font-size: 18px;
+  font-weight: 500;
+  background: #fff;
+  line-height: 23px;
+  text-align: right;
+  padding: 12px 28px;
+  align-items: center;
+  border-radius: 100px;
+  border: 1px solid #a6a6a6;
+}
+.confirmationContent hr {
+  width: 100%;
+  margin: 54px 0 32px;
+  border-top: 1px solid #e0e0e0;
+}

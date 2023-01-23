@@ -3,6 +3,7 @@ import CountryCodeSelect from '../../utils/CountryCodeSelect';
 import ErrorAlert from "../../utils/ErrorAlert";
 import HttpClient from "../../utils/HttpClient"
 import { toast } from "react-toastify";
+import ModalHeader from "../AppsMarket/common/ModalHeader";
 
 export default class CreatePaymentDetail extends Component {
     constructor(props) {
@@ -63,79 +64,49 @@ export default class CreatePaymentDetail extends Component {
 
     render() {
         return (
-            <div className="container-xl bg-white  component-wrapper" >
-                <section className="ftco-section" id="buttons">
-                    <div className="container">
-                        <div className="row mb-5">
-                            <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">
-                                    Add Card<br />
-                                </h2>
+            <div className="modal-addCard">
+                <ModalHeader
+                    userAnnotationColors={null}
+                    updateUserAnnotationColors={null}
+                    userServices={null}
+                    serviceStatusHandler={null}
+                    closeModal={() => this.props.togglePopup('')}
+                    serviceName={'Add Card'}
+                    colorKeyName={null}
+                    dsKeyName={null}
+                    creditString={null}
+                />
+
+                <div className="apps-bodyContent">
+                    <form onSubmit={this.submitHandler} id="addCardForm" className="addCardForm">
+                        <ErrorAlert errors={this.state.errors} />
+                        <div className='grid2layout'>
+                            <div className="themeNewInputStyle">
+                                <input placeholder="First name" type="text" value={this.state.paymentDetail.first_name} onChange={this.changeHandler} className="form-control" id="firstName" name="first_name" />
                             </div>
-                            <div className="col-md-12">
+                            <div className="themeNewInputStyle">
+                                <input placeholder="Last name" type="text" value={this.state.paymentDetail.last_name} onChange={this.changeHandler} className="form-control" id="lastName" name="last_name" />
+                            </div>
+                        </div>
+                        <div className="themeNewInputStyle mb-3">
+                            <input placeholder="Card number" type="text" value={this.state.paymentDetail.card_number} onChange={this.changeHandler} className="form-control" id="cardNumber" name="card_number" />
+                        </div>
+                        <div className='grid2layout'>
+                            <div className="themeNewInputStyle">
+                                {/* <input placeholder="" type="text" value={this.state.paymentDetail.expiry_month} onChange={this.changeHandler} className="form-control" id="expiryMonth" name="expiry_month" /> */}
+                                <input placeholder="Expiry date (mm/yy)" type="text" value={this.state.paymentDetail.expiry_year} onChange={this.changeHandler} className="form-control" id="expiryYear" name="expiry_year" />
+                            </div>
+                            <div className="themeNewInputStyle">
+                                <input placeholder="CVV" type="text" value={this.state.paymentDetail.security_code} onChange={this.changeHandler} className="form-control" id="securityCode" name="security_code" />
                             </div>
                         </div>
 
-                        <div className="row">
-                            <div className="col-md-12">
-                                <ErrorAlert errors={this.state.errors} />
-                            </div>
+                        <div className='d-flex pt-3 d-flex justify-content-center'>
+                            <button type="submit" className="btn-cancel" title="submit">Cencel</button>
+                            <button type="submit" className="btn-theme ml-4" title="submit">Add</button>
                         </div>
-
-                        <form onSubmit={this.submitHandler}>
-                            <div className="row">
-                                <div className="col-3">
-                                    <div className="form-group">
-                                        <label htmlFor="firstName" className="form-control-placeholder">First name</label>
-                                        <input type="text" value={this.state.paymentDetail.first_name} onChange={this.changeHandler} className="form-control" id="firstName" name="first_name" />
-                                    </div>
-                                </div>
-                                <div className="col-3">
-                                    <div className="form-group">
-                                        <label htmlFor="lastName" className="form-control-placeholder">Last name</label>
-                                        <input type="text" value={this.state.paymentDetail.last_name} onChange={this.changeHandler} className="form-control" id="lastName" name="last_name" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-6">
-                                    <div className="form-group ">
-                                        <label htmlFor="cardNumber">Card Number</label>
-                                        <input type="text" value={this.state.paymentDetail.card_number} onChange={this.changeHandler} className="form-control" id="cardNumber" name="card_number" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-2">
-                                    <div className="form-group ">
-                                        <label htmlFor="expiryMonth">Expiry Month</label>
-                                        <input type="text" value={this.state.paymentDetail.expiry_month} onChange={this.changeHandler} className="form-control" id="expiryMonth" name="expiry_month" />
-                                    </div>
-                                </div>
-                                <div className="col-2">
-                                    <div className="form-group ">
-                                        <label htmlFor="expiryYear">Expiry Year</label>
-                                        <input type="text" value={this.state.paymentDetail.expiry_year} onChange={this.changeHandler} className="form-control" id="expiryYear" name="expiry_year" />
-                                    </div>
-                                </div>
-                                <div className="col-2">
-                                    <div className="form-group ">
-                                        <label htmlFor="securityCode">CVV</label>
-                                        <input type="text" value={this.state.paymentDetail.security_code} onChange={this.changeHandler} className="form-control" id="securityCode" name="security_code" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-6 text-right mt-4">
-                                    <button type="submit" className="btn gaa-btn-primary btn-fab btn-round" title="submit">
-                                        <i className="fa fa-plus mr-1"></i>Save
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </section>
+                    </form>
+                </div>
             </div>
         )
     }

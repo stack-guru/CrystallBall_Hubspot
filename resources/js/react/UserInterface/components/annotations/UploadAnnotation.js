@@ -26,8 +26,8 @@ export default class UploadAnnotation extends React.Component {
         this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
         this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
         this.checkIfCanCreateAnnotation = this.checkIfCanCreateAnnotation.bind(this)
-
     }
+
     checkIfCanCreateAnnotation(){
         HttpClient.get('user')
         .then(user_response => {

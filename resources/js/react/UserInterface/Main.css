@@ -1128,17 +1128,21 @@ body {
     background: linear-gradient(90deg, #FF8534 33.33%, #FF630C 100%);
 }
 .btn-premium span { padding-left: 8px; }
+.modal-open .modal,
+.modal { overflow: hidden; }
 .apps-modal {
     margin: 90px auto;
     max-width: 824px;
-    height: calc(100% - 180px);
+    max-height: calc(100% - 180px);
 }
-.apps-modal .modal-content { border-radius: 1rem; width: 100%; height: auto; border: 0; height: 100%;}
-.apps-modal .modal-body {
-    padding: 32px 32px;
+.apps-modal .modal-content {
+    border: 0;
+    width: 100%;
     overflow-y: auto;
-
+    border-radius: 1rem;
+    max-height: calc(100vh - 180px);
 }
+.apps-modal .modal-body { padding: 32px 32px; }
 .popupContent { margin: 0 0 24px; }
 .apps-modalHead {
     display: flex;
@@ -1185,10 +1189,20 @@ body {
     border-radius: 4px;
     background: rgba(25, 118, 254, 0.05);
 }
-.apps-modalHead .btn-close{cursor: pointer;}
+.apps-modal .btn-close,
+.apps-modalHead .btn-close {
+    width: 18px;
+    cursor: pointer;
+}
+.apps-modal .btn-close img,
+.apps-modalHead .btn-close img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
 .apps-bodyContent {
     display: flex;
-    margin-bottom: -24px;
+    /* margin-bottom: -24px; */
     flex-direction: column;
 }
 .apps-bodyContent .gray-box,
@@ -2315,9 +2329,13 @@ body {
     background: linear-gradient(90deg, #FF8534 33.33%, #FF630C 100%);
 }
 .apps-modal.md {max-width: 624px;}
+.addCardForm .grid2layout,
+.modal-editAnnotation .grid2layout,
 .modal-createAnnotation .grid2layout,
 .modal-createUser .grid2layout,
 .form-csvUpload .grid2layout {grid-template-columns: 1fr 1fr;}
+.modal-addCard,
+.modal-editAnnotation,
 .modal-createAnnotation,
 .modal-createUser,
 .modal-csvUpload { margin: 0; }
@@ -2751,12 +2769,103 @@ body {
     box-shadow: 0px 4px 12px rgba(40, 126, 252, 0.16);
     background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%);
 }
-
-
-
-
-
-
+.user-dropdown {}
+.user-dropdown .dropdown-menu{
+    border: 0;
+    padding: 0;
+    color: #333;
+    font-size: 16px;
+    min-width: 220px;
+    line-height: 20px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0px 8px 32px -6px rgba(0, 0, 0, 0.14);
+}
+.dropdownHead {padding: 1rem 1rem 14px;}
+.dropdownHead a { color: #333; }
+.dropdownBody {
+    list-style: none;
+    list-style-type: none;
+    padding: 14px 1rem 4px;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+.dropdownBody li {padding-bottom: 1rem;}
+.dropdownBody li strong {
+    color: #096db7;
+    font-weight: 600;
+    padding-right: 5px;
+}
+.dropdownBody li span {}
+.progressbar-container {
+    border: 0;
+    margin-top: 10px;
+    border-radius: 100px;
+    background: #f0f6ff;
+}
+.progressbar-progress {
+    height: 10px;
+    border-radius: 100px;
+    background: #0bd25f;
+}
+.dropdownFoot { padding: 1rem 1.5rem; }
+.btn-logout:hover,
+.btn-logout {
+    cursor: pointer;
+    color: #F44c3d;
+}
+.modal-showChart { margin: -32px; }
+.modal-showChart .apps-modalHead {
+    padding: 20px 32px;
+    border-radius: 16px 16px 0px 0px;
+    box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.22);
+    background: linear-gradient(180deg, #0380dc 27.57%, #0061d3 100%);
+}
+.modal-showChart .apps-bodyContent {
+    background: #fff;
+    padding: 32px 42px 42px;
+    border-radius: 0px 0px 16px 16px;
+    box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.22);
+}
+.apps-modalFoot { padding-top: 32px; }
+.apps-modalFoot > span {
+    height: 65px;
+    display: flex;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #00bb4f;
+    line-height: 25px;
+    text-align: center;
+    padding: 20px 2rem;
+    align-items: center;
+    margin: 0 -32px -56px;
+    justify-content: center;
+    border-radius: 0px 0px 16px 16px;
+    background: rgba(11, 210, 95, 0.05);
+}
+.modal-showChart { }
+.modal-showChart h3 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 11px;
+    line-height: 23px;
+}
+.modal-showChart p {
+    font-size: 14px;
+    color: #f0f6ff;
+    font-weight: 400;
+    line-height: 18px;
+}
+.theme-insights { margin: 0 1rem 0 0; }
+.theme-insights img { display: block; }
+.modal-showChart .contentHead {padding-bottom: 25px;}
+.contentHead .themeNewselect select{ width: 170px !important; }
+.modal-addCard .apps-bodyContent {
+    margin: 0 auto;
+    max-width: 350px;
+}
 
 
 

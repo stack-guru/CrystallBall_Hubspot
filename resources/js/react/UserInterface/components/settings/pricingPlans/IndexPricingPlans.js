@@ -115,7 +115,7 @@ export default class IndexPricingPlans extends React.Component {
 
 
                             {this.state.pricePlans.map(pricePlan => {
-                                return <Col md={(12 / this.state.pricePlans.length)} className='d-flex flex-column' key={pricePlan.id}>
+                                return <Col md={Math.round(12 / this.state.pricePlans.length)} className='d-flex flex-column my-3' key={pricePlan.id}>
                                     <div className={`plan d-flex flex-column flex-grow-1 ${pricePlan.badge_text && 'bestplan'}`}>
                                         {pricePlan.badge_text ? <Button className='btn-bestplan'>{pricePlan.badge_text}</Button> : null}
 
