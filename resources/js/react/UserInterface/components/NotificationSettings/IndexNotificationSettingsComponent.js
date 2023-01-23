@@ -129,8 +129,8 @@ export default class IndexNotificationSettings extends Component {
                                 <h2 className="pageTitle mb-0">Notifications</h2>
                                 <p className='mt-3 mb-0'>Set notifications you want to receive for each app</p>
                             </div>
-                            {this.props.user.phone_verified_at == null && this.props.user.phone_number ? <button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showPhoneVerificationModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Verify now</span></button> : null}
-                            {this.props.user.phone_number !== null ? <button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showChangePhoneModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Change Phone Number</span></button> : <button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showChangePhoneModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Add Phone Number</span></button>}
+                            {/* {this.props.user.phone_verified_at == null && this.props.user.phone_number ? <button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showPhoneVerificationModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Verify now</span></button> : null} */}
+                            {this.props.user.phone_number !== null ? <button className={`btn-theme-outline bg-white ${this.props.user.phone_verified_at == null ? "show-phone-un-verification-badge" : ""}`} onClick={() => { this.setState({ showChangePhoneModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Update Phone Number</span></button> : <button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showChangePhoneModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Add Phone Number</span></button>}
                         </div>
                     </div>
 
@@ -193,8 +193,8 @@ export default class IndexNotificationSettings extends Component {
                             </div>
                         </div>
                     </div>
-                    <PhoneVerificationModal show={this.state.showPhoneVerificationModal} phoneNumber={this.props.user.phone_number} toggleCallback={() => { this.setState({ showPhoneVerificationModal: !this.state.showPhoneVerificationModal }); this.props.reloadUser(); }} />
-                    <ChangePhoneModal show={this.state.showChangePhoneModal} toggleCallback={() => { this.setState({ showChangePhoneModal: false, showPhoneVerificationModal: true }); this.props.reloadUser(); }} />
+                    {/* <PhoneVerificationModal show={this.state.showPhoneVerificationModal} phoneNumber={this.props.user.phone_number} toggleCallback={() => { this.setState({ showPhoneVerificationModal: !this.state.showPhoneVerificationModal }); this.props.reloadUser(); }} /> */}
+                    <ChangePhoneModal phoneNumber={this.props.user.phone_number} reloadUser={this.props.reloadUser} show={this.state.showChangePhoneModal} toggleCallback={() => { this.setState({ showChangePhoneModal: false, showPhoneVerificationModal: false }); this.props.reloadUser(); }} />
 
                 </Container>
 

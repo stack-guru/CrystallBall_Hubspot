@@ -104,13 +104,13 @@
     </div> -->
 
     <!-- Success! screen Code -->
-    {{-- <div class="container d-flex justify-content-center">
+    <!-- <div class="container d-flex justify-content-center">
         <div class="confirmationContent success d-flex flex-column text-center">
             <figure><img src='./icon-confirmation-email.svg'/></figure>
             <h1>Success!</h1>
             <p>We have sent the account holder an email with your request to join. <a href='#'>Contact Us</a> if you have any query.</p>
         </div>
-    </div> --}}
+    </div> -->
 @endsection
 
 @section('javascript')

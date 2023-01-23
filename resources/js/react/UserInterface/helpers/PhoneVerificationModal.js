@@ -87,7 +87,7 @@ export default class PhoneVerificationModal extends Component {
     render() {
         if (!this.props.show) return null;
         return (
-            <AppsModal isOpen={this.props.show} popupSize={'md'} toggle={this.props.toggle}>
+            <AppsModal isOpen={this.props.show} popupSize={'md'} toggle={this.props.toggleCallback}>
 
                 <h5>Please enter the 6-digit verification code we sent via SMS:</h5>
                 <span>The code sent to {this.props.phoneNumber} is valid for 5 minutes only.</span><br />
