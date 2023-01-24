@@ -70,7 +70,7 @@ export default class CreatePaymentDetail extends Component {
                     updateUserAnnotationColors={null}
                     userServices={null}
                     serviceStatusHandler={null}
-                    closeModal={() => this.props.togglePopup('')}
+                    closeModal={null}
                     serviceName={'Add Card'}
                     colorKeyName={null}
                     dsKeyName={null}
@@ -102,7 +102,7 @@ export default class CreatePaymentDetail extends Component {
                         </div>
 
                         <div className='d-flex pt-3 d-flex justify-content-center'>
-                            <button type="submit" className="btn-cancel" title="submit">Cencel</button>
+                            <button onClick={() => this.props.closePopup('')} type="button" className="btn-cancel" title="submit">Cancel</button>
                             <button type="submit" className="btn-theme ml-4" title="submit">Add</button>
                         </div>
                     </form>
