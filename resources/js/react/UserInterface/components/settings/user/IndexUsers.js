@@ -6,6 +6,7 @@ import HttpClient from "../../../utils/HttpClient";
 import AppsModal from "../../AppsMarket/AppsModal";
 import CreateUser from "./CreateUser";
 import EditUser from "./EditUser";
+import { toast } from 'react-toastify'
 
 export default class IndexUsers extends Component {
     constructor(props) {
