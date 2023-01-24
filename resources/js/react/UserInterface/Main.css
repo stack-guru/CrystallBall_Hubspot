@@ -2867,6 +2867,14 @@ body {
 .theme-insights img { display: block; }
 .modal-showChart .contentHead {padding-bottom: 25px;}
 .contentHead .themeNewselect select{ width: 170px !important; }
+.modal-addCard h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #096db7;
+    line-height: 30px;
+    text-align: center;
+    margin-bottom: 32px;
+}
 .modal-addCard .apps-bodyContent {
     margin: 0 auto;
     max-width: 350px;
