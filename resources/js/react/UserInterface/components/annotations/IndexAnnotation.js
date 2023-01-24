@@ -336,18 +336,17 @@ class IndexAnnotations extends React.Component {
                                     <option value="category">By Category</option>
                                     <option value="ga-property">By GA Property</option>
                                 </select>
-                                {this.state.selectedRows.length ? (
-                                    <button className="btn btn-danger btn-sm mt-2" onClick={this.handleDeleteSelected}>Delete</button>
-                                ) : null}
                             </FormGroup>
 
                             <div className="d-flex">
-                                <FormGroup className="extraSelect position-relative">
-                                    <span className="selectIcon"><img src={'/icon-select.svg'} /></span>
-                                    <select name="category" id="category" className="form-control">
-                                        <option value="select-category">Select</option>
-                                    </select>
-                                </FormGroup>
+                                <button className={`btn-extraSelect position-relative ${this.state.selectedRows.length ? 'active' : ''}`}>
+                                    <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M7.19922 3.00098H18.1992M7.19922 9.00098H18.1992" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M1.80078 8.98566L2.65792 9.84281L4.80078 7.69995" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M3.19922 3.011L3.20922 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <span>Select</span>
+                                </button>
 
                                 <FormGroup className="filter-search position-relative">
                                     <Label className="sr-only" for="search">search</Label>
@@ -356,6 +355,22 @@ class IndexAnnotations extends React.Component {
                                 </FormGroup>
                             </div>
                         </form>
+                        {this.state.selectedRows.length ? (
+                            <div className="btnBox d-flex">
+                                <p className="mb-0">{`${this.state.selectedRows.length} annotations selected`}</p>
+                                <div className="d-flex">
+                                    <button className="btn-cancel">Cancel selection</button>
+                                    <button className="btn-delete d-block align-items-center justify-content-center" onClick={this.handleDeleteSelected}>
+                                        <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.33398 12C1.96732 12 1.65354 11.8696 1.39265 11.6087C1.13132 11.3473 1.00065 11.0333 1.00065 10.6667V2H0.333984V0.666667H3.66732V0H7.66732V0.666667H11.0007V2H10.334V10.6667C10.334 11.0333 10.2035 11.3473 9.94265 11.6087C9.68132 11.8696 9.36732 12 9.00065 12H2.33398ZM9.00065 2H2.33398V10.6667H9.00065V2ZM3.66732 9.33333H5.00065V3.33333H3.66732V9.33333ZM6.33398 9.33333H7.66732V3.33333H6.33398V9.33333ZM2.33398 2V10.6667V2Z" fill="currentColor"/>
+                                        </svg>
+                                        <span>Delete selected</span>
+                                    </button>
+                                </div>
+                            </div>)
+                        :
+                            null
+                        }
                     </div>
 
                     {this.state.isLoading ? (
@@ -424,14 +439,9 @@ class IndexAnnotations extends React.Component {
                                     }
 
                                     return (
-                                        <div
-                                            className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`}
-                                            data-diff-in-milliseconds={diffTime}
-                                            style={{ 'borderLeftColor': borderLeftColor }}
-                                            id={rowId}
-                                            key={anno.category + anno.event_name + anno.description + anno.url + anno.id}
-                                            onClick={() => this.handleOneSelection(anno.id)}
-                                            data-anno_id={anno.id}>
+                                        <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId} key={anno.category + anno.event_name + anno.description + anno.url + anno.id} onClick={() => this.handleOneSelection(anno.id)} data-anno_id={anno.id}>
+
+                                            <span className="checkedIcon"><img src={`/icon-checked.svg`} /></span>
 
                                             <span className="annotionRowIcon"><img src={`/${selectedIcon}.svg`} onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/annotation-default.svg"; }} /></span>
 
@@ -480,18 +490,18 @@ class IndexAnnotations extends React.Component {
 
                                                 <ul className="d-flex list-unstyled">
                                                     <li>{anno.id ? (
-                                                        <span className="cursor-pointer" onClick={() => this.toggleStatus(anno.id)}>
+                                                        <span className="cursor-pointer" onClick={(e) => {e.stopPropagation(); this.toggleStatus(anno.id)}}>
                                                             {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
                                                         </span>
                                                     ) : null}
                                                     </li>
                                                     <li>
-                                                        <span className="cursor-pointer" onClick={() => this.setState({ editAnnotationId: anno.id })}>
+                                                        <span className="cursor-pointer" onClick={(e) => {e.stopPropagation(); this.setState({ editAnnotationId: anno.id })}}>
                                                             <img src={`icon-edit.svg`} />
                                                         </span>
                                                     </li>
                                                     <li>
-                                                        <span className="text-danger" onClick={() => { this.deleteAnnotation(anno.id); }}><img src={`icon-trash.svg`} /></span>
+                                                        <span className="text-danger" onClick={(e) => {e.stopPropagation(); this.deleteAnnotation(anno.id); }}><img src={`icon-trash.svg`} /></span>
                                                     </li>
                                                 </ul>
                                             </div>

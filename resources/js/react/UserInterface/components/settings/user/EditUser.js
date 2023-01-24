@@ -59,84 +59,50 @@ export default class EditUser extends Component {
 
     render() {
         return (
-            <div className="container-xl bg-white  component-wrapper" >
-
-                <div className="row">
-                    <div className="col-md-12">
-                        <ErrorAlert errors={this.state.errors} />
-                    </div>
-                </div>
-
-                <form onSubmit={this.submitHandler}>
-                    <div className="row">
-
-                        <div className="col-lg-3 col-sm-4">
-                            <div className="form-group">
-                                <label htmlFor="name" className="form-control-placeholder">Name</label>
-                                <input type="text" className="form-control" value={this.state.user.name} onChange={this.changeHandler} id="name" name="name" />
-                            </div>
+            <div className="apps-bodyContent">
+                <form onSubmit={this.submitHandler} id="editUserForm">
+                    <ErrorAlert errors={this.state.errors} />
+                    <div className='grid2layout'>
+                        <div className="themeNewInputStyle">
+                            <input placeholder='Full name' type="text" className="form-control" value={this.state.user.name} onChange={this.changeHandler} id="name" name="name" />
                         </div>
-
-                        <div className="col-lg-3 col-sm-4">
-                            <div className="form-group">
-                                <label htmlFor="email" className="form-control-placeholder">Email</label>
-                                <input type="text" className="form-control" value={this.state.user.email} onChange={this.changeHandler} id="email" name="email" />
-                            </div>
-                        </div>
-
-                        <div className="col-lg-3 col-sm-4">
-                            <div className="form-group">
-                                <label htmlFor="password" className="form-control-placeholder">Password</label>
-                                <input type="password" className="form-control" value={this.state.user.password} onChange={this.changeHandler} id="password" name="password" />
-                            </div>
-                        </div>
-
-                        <div className="col-lg-3 col-sm-4">
-                            <div className="form-group">
-                                <label htmlFor="password_confirmation" className="form-control-placeholder">Password Confirmation</label>
-                                <input type="password" className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" />
-                            </div>
+                        <div className="themeNewInputStyle">
+                            <input placeholder='Email' type="text" className="form-control" value={this.state.user.email} onChange={this.changeHandler} id="email" name="email" />
                         </div>
                     </div>
-                    <div className="row mt-4">
-                        <div className="col-lg-3 col-sm-4">
-                            <div className="form-group">
-                                <label htmlFor="user_level" className="form-control-placeholder">User Level</label>
-                                <select name="user_level" className="form-control" onChange={this.changeHandler} value={this.state.user.user_level}>
-                                    <option value="admin">Admin</option>
-                                    <option value="team">Team Member</option>
-                                    <option value="viewer">Viewer</option>
-                                </select>
-                            </div>
+                    <div className='grid2layout'>
+                        <div className="themeNewInputStyle">
+                            <input placeholder='Password' type="password" className="form-control" value={this.state.user.password} onChange={this.changeHandler} id="password" name="password" />
                         </div>
-
-                        <div className="col-lg-3 col-sm-4">
-                            <div className="form-group ">
-                                <label htmlFor="department" className="form-control-placeholder">Department</label>
-                                <input type="text" onChange={this.changeHandler} value={this.state.user.department} className="form-control" id="department" name="department" />
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-sm-4">
-                            <div className="form-group ">
-                                <label htmlFor="show_at" className="form-control-placeholder">Google Accounts</label>
-                                <GoogleAnalyticsAccountSelect name="google_analytics_account_id" id="google_analytics_account_id" value={this.state.user.google_analytics_account_id} onChangeCallback={this.changeHandler} placeholder="Select GA Accounts" multiple></GoogleAnalyticsAccountSelect>
-
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-sm-4">
-                            <div className="form-group ">
-                                <label htmlFor="show_at" className="form-control-placeholder">Team Name</label>
-                                <UserTeamNameSelect name="team_name" id="team_name" value={this.state.user.team_name} onChangeCallback={this.changeHandler} placeholder="Select Team or Create"></UserTeamNameSelect>
-                            </div>
+                        <div className="themeNewInputStyle">
+                            <input placeholder='Confirm password' type="password" className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" />
                         </div>
                     </div>
-                    <div className="row ml-0 mr-0 mt-3">
-                        <div className="col-12 text-right pr-0">
-                            <button type="submit" className="btn gaa-btn-primary btn-fab btn-round" title="submit">Save</button>
+                    <div className='grid2layout'>
+                        <div className="themeNewInputStyle">
+                            <select name="user_level" className="form-control" onChange={this.changeHandler} value={this.state.user.user_level}>
+                                <option value="">User level</option>
+                                <option value="admin">Admin</option>
+                                <option value="team">Team Member</option>
+                                <option value="viewer">Viewer</option>
+                            </select>
                         </div>
+                        <div className="themeNewInputStyle">
+                            <input placeholder='Department' type="text" onChange={this.changeHandler} value={this.state.user.department} className="form-control" id="department" name="department" />
+                        </div>
+                    </div>
+                    <div className='grid2layout'>
+                        <div className="themeNewInputStyle">
+                            <GoogleAnalyticsAccountSelect name="google_analytics_account_id" id="google_analytics_account_id" value={this.state.user.google_analytics_account_id} onChangeCallback={this.changeHandler} placeholder="Select GA Accounts" multiple></GoogleAnalyticsAccountSelect>
+                        </div>
+                        <div className="themeNewInputStyle">
+                            <UserTeamNameSelect name="team_name" id="team_name" value={this.state.user.team_name} onChangeCallback={this.changeHandler} placeholder="Select Team or Create"></UserTeamNameSelect>
+                        </div>
+                    </div>
+                    <div className="d-flex pt-3">
+                        <button type="submit" className="btn-theme" title="submit">Save</button>
                     </div>
                 </form>
-
             </div>
         );
     }

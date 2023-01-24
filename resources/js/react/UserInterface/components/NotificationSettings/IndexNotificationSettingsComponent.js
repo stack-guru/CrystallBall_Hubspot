@@ -193,16 +193,8 @@ export default class IndexNotificationSettings extends Component {
                             </div>
                         </div>
                     </div>
-                    {/* <PhoneVerificationModal show={this.state.showPhoneVerificationModal} phoneNumber={this.props.user.phone_number} toggleCallback={() => { this.setState({ showPhoneVerificationModal: !this.state.showPhoneVerificationModal }); this.props.reloadUser(); }} /> */}
                     <ChangePhoneModal phoneNumber={this.props.user.phone_number} reloadUser={this.props.reloadUser} show={this.state.showChangePhoneModal} toggleCallback={() => { this.setState({ showChangePhoneModal: false, showPhoneVerificationModal: false }); this.props.reloadUser(); }} />
-
                 </Container>
-
-
-                {/* <p>{this.props.user.email_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={this.sendVerificationEmail}>Verify now</button> : null}<strong>Email:</strong> {this.props.user.email} </p>
-                                <p>{this.props.user.phone_verified_at == null && this.props.user.phone_number ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={() => { this.setState({ showPhoneVerificationModal: true }); }}>Verify now</button> : null}<strong>Phone Number:</strong> {this.props.user.phone_number !== null ? this.props.user.phone_number : <button className="btn btn-sm gaa-btn-primary" onClick={() => { this.setState({ showChangePhoneModal: true }); }}>Add Phone Number</button>}</p> */}
-
-
             </div>
         );
     }
