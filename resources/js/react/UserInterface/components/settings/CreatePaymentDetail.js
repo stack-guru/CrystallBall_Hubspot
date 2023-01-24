@@ -65,19 +65,8 @@ export default class CreatePaymentDetail extends Component {
     render() {
         return (
             <div className="modal-addCard">
-                <ModalHeader
-                    userAnnotationColors={null}
-                    updateUserAnnotationColors={null}
-                    userServices={null}
-                    serviceStatusHandler={null}
-                    closeModal={() => this.props.togglePopup('')}
-                    serviceName={'Add Card'}
-                    colorKeyName={null}
-                    dsKeyName={null}
-                    creditString={null}
-                />
-
                 <div className="apps-bodyContent">
+                    <h2>Add payment card</h2>
                     <form onSubmit={this.submitHandler} id="addCardForm" className="addCardForm">
                         <ErrorAlert errors={this.state.errors} />
                         <div className='grid2layout'>
@@ -102,7 +91,7 @@ export default class CreatePaymentDetail extends Component {
                         </div>
 
                         <div className='d-flex pt-3 d-flex justify-content-center'>
-                            <button type="submit" className="btn-cancel" title="submit">Cencel</button>
+                            <button onClick={() => this.props.closePopup('')} type="button" className="btn-cancel" title="submit">Cancel</button>
                             <button type="submit" className="btn-theme ml-4" title="submit">Add</button>
                         </div>
                     </form>

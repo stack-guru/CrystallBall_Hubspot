@@ -8,6 +8,8 @@ import ErrorAlert from '../../utils/ErrorAlert';
 import { Button, Container, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import AppsModal from '../AppsMarket/AppsModal';
+import CreatePaymentDetail from './CreatePaymentDetail';
 
 export default class ChangePassword extends React.Component {
 
@@ -24,6 +26,7 @@ export default class ChangePassword extends React.Component {
             errors: '',
             validation: '',
             pricePlanSubscriptions: [],
+            showPaymentPopup: false
 
         }
         this.changeHandler = this.changeHandler.bind(this);
@@ -305,10 +308,10 @@ export default class ChangePassword extends React.Component {
                         <div class="tab-pane fade" id="pills-payments" role="tabpanel" aria-labelledby="pills-payments-tab">
                             <div className="pageHeader paymentHistoryPageHead d-flex justify-content-between">
                                 <h2 className="pageTitle mb-0">Payments</h2>
-                                {this.state.pricePlanSubscriptions.length ? <Link to="/settings/payment-detail/create" className='btn-theme-outline bg-white'>
+                                {this.state.pricePlanSubscriptions.length ? <a onClick={() => this.setState({ showPaymentPopup: true })} href="javascript:void(0);" className='btn-theme-outline bg-white'>
                                     <i><img src={'/icon-cc.svg'} /></i>
                                     <span>Update card</span>
-                                </Link> : null}
+                                </a> : null}
                             </div>
 
                             {this.state.pricePlanSubscriptions.length ? <div className="dataTable dataTablePaymentHistory d-flex flex-column">
@@ -362,6 +365,10 @@ export default class ChangePassword extends React.Component {
                             </div>}
                         </div>
                     </div>
+
+                    <AppsModal popupSize={'md'} isOpen={this.state.showPaymentPopup} toggle={() => { this.setState({ showPaymentPopup: false }); }}>
+                        <CreatePaymentDetail user={this.props.user} closePopup={() => { this.setState({ showPaymentPopup: false }); }} />
+                    </AppsModal>
                 </Container>
             </div>
         );

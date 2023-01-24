@@ -123,7 +123,6 @@ export default class DSGoogleAlertsSelect extends React.Component {
                                             className="dot"
                                         ></span>
                                         {gAK.value}
-                                        {/* <span className="badge badge-light" user_data_source_id={gAK.id}>&times;</span> */}
                                     </button>
 
                                     <Popover

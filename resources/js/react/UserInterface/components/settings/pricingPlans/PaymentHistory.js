@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, FormGroup, Input, Label } from 'reactstrap';
 import HttpClient from '../../../utils/HttpClient';
+import AppsModal from '../../AppsMarket/AppsModal';
+import CreatePaymentDetail from '../CreatePaymentDetail';
 
 export default class PaymentHistory extends React.Component {
 
@@ -11,6 +13,7 @@ export default class PaymentHistory extends React.Component {
             pricePlanSubscriptions: [],
             isBusy: false,
             errors: '',
+            showPaymentPopup: false
         }
 
     }
@@ -41,10 +44,10 @@ export default class PaymentHistory extends React.Component {
                     <div className="pageHeader paymentHistoryPageHead">
                         <div className="d-flex justify-content-between">
                             <h2 className="pageTitle mb-0">Payments</h2>
-                            {this.state.pricePlanSubscriptions.length ? <Link to="/settings/payment-detail/create" className='btn-theme-outline bg-white'>
+                            {this.state.pricePlanSubscriptions.length ? <a onClick={() => this.setState({ showPaymentPopup: true })} href="javascript:void(0);" className='btn-theme-outline bg-white'>
                                 <i><img src={'/icon-cc.svg'} /></i>
                                 <span>Update card</span>
-                            </Link>: null}
+                            </a> : null}
                         </div>
 
                         <form className="pageFilters d-flex justify-content-between align-items-center">
@@ -107,21 +110,25 @@ export default class PaymentHistory extends React.Component {
                                 }
                             </div>
                         </div>
-                    </div>: <div className='noPaymentHistory'>
+                    </div> : <div className='noPaymentHistory'>
                         {/* <div className='alert alert-success border-0'>
                             <i><img src={'/icon-check-success.svg'} alt={'icon'} className="svg-inject" /></i>
                             <span>Card ending with “3124” is added successfully.</span>
                         </div> */}
                         <p>No payment history</p>
-                        <i><img src='/card.svg'/></i>
+                        <i><img src='/card.svg' /></i>
                         <span>Add a credit/debit card to get seamless subscription experience</span>
                         <div className='d-flex justify-content-center'>
-                            <Link to="/settings/payment-detail/create" className='btn-theme-outline bg-white'>
-                                <i><img src={'/icon-cc.svg'}/></i>
+                            <a onClick={() => this.setState({ showPaymentPopup: true })} href="javascript:void(0);" className='btn-theme-outline bg-white'>
+                                <i><img src={'/icon-cc.svg'} /></i>
                                 <span>Add a card</span>
-                            </Link>
+                            </a>
                         </div>
                     </div>}
+
+                    <AppsModal popupSize={'md'} isOpen={this.state.showPaymentPopup} toggle={() => { this.setState({ showPaymentPopup: false }); }}>
+                        <CreatePaymentDetail user={this.props.user} closePopup={() => { this.setState({ showPaymentPopup: false }); }} />
+                    </AppsModal>
                 </Container>
             </div>
         );
