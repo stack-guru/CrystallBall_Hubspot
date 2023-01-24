@@ -65,19 +65,8 @@ export default class CreatePaymentDetail extends Component {
     render() {
         return (
             <div className="modal-addCard">
-                <ModalHeader
-                    userAnnotationColors={null}
-                    updateUserAnnotationColors={null}
-                    userServices={null}
-                    serviceStatusHandler={null}
-                    closeModal={null}
-                    serviceName={'Add Card'}
-                    colorKeyName={null}
-                    dsKeyName={null}
-                    creditString={null}
-                />
-
                 <div className="apps-bodyContent">
+                    <h2>Add payment card</h2>
                     <form onSubmit={this.submitHandler} id="addCardForm" className="addCardForm">
                         <ErrorAlert errors={this.state.errors} />
                         <div className='grid2layout'>
