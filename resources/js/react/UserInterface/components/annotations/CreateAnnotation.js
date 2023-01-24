@@ -255,7 +255,7 @@ export default class CreateAnnotation extends React.Component {
                                 {validation.show_at ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.show_at}</span> : ''}
                             </div>
                         </div>
-                        <div className='grid2layout'>
+                        <div>
                             <div className="themeNewInputStyle">
                                 <GoogleAnalyticsPropertySelect name="google_analytics_property_id" id="google_analytics_property_id" className="gray_clr" value={this.state.annotation.google_analytics_property_id} onChangeCallback={this.changeHandler} placeholder="Assign annotation to" components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }} multiple currentPricePlan={this.props.currentPricePlan} />
                             </div>

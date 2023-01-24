@@ -147,65 +147,69 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         let aProperties = this.state.aProperties;
         return (
-            <div className="themeNewInputStyle position-relative inputWithIcon">
-                <i class="fa fa-plus"></i>
-                <Select
-                    onFocus={this.props.onFocus}
-                    loadOptions={this.searchGoogleAnalyticsProperties}
-                    noOptionsMessage={() => {
-                        return "Enter chars to search"
-                    }}
-                    className={this.props.className}
-                    name={this.props.name}
-                    disabled={this.props.disabled}
-                    value={this.state.aProperties}
-                    id={this.props.id}
-                    isMulti={this.props.multiple}
-                    isClearable={this.props.isClearable}
-                    onChange={this.onChangeHandler}
-                    options={this.state.allProperties}
-                    isSearchable={true}
-                    placeholder={this.props.placeholder}
-                    components={this.props.components}
-                    onKeyDown={(e) => {
-                        if (!this.state.isAccountLinked) {
-                            const accountNotLinkedHtml = '' +
-                                '<div class="">' +
-                                '<img src="/images/imgpopup.png" class="img-fluid">' +
-                                '<div class="bg-light p-3">' +
-                                '<h1  class=" text-black mt-2 py-4">Let\'s Connect Your Google Account</h1>' +
-                                '<p style="line-height:23px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="px-5 text-dark">' +
-                                'Connect your Google Account to see all your data in one place, be able to filter data by property, see anomalies and analyze your data better.' +
-                                '</p>' +
-                                '<p style="font-size:14px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="text-dark">' +
-                                'We do not share any data from your Google Accounts (<span class="text-primary"><a href="https://www.crystalballinsight.com/privacy-policy" target="_blank">see Privacy Policy</a></span>)' +
-                                '</p>' +
-                                '</div>' +
-                                '</div>'
-                            /*
-                            * Show new google analytics account popup
-                            * */
-                            swal.fire({
-                                html: accountNotLinkedHtml,
-                                width: 700,
-                                customClass: {
-                                    popup: 'bg-light pb-5',
-                                    htmlContainer: 'm-0',
-                                },
-                                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                confirmButtonText: "Connect" + "<i class='ml-2 fa fa-caret-right'> </i>",
+            <>
+                <div className='grid2layout'>
+                    <div className="themeNewInputStyle position-relative inputWithIcon">
+                        <i class="fa fa-plus"></i>
+                        <Select
+                            onFocus={this.props.onFocus}
+                            loadOptions={this.searchGoogleAnalyticsProperties}
+                            noOptionsMessage={() => {
+                                return "Enter chars to search"
+                            }}
+                            className={this.props.className}
+                            name={this.props.name}
+                            disabled={this.props.disabled}
+                            value={this.state.aProperties}
+                            id={this.props.id}
+                            isMulti={this.props.multiple}
+                            isClearable={this.props.isClearable}
+                            onChange={this.onChangeHandler}
+                            options={this.state.allProperties}
+                            isSearchable={true}
+                            placeholder={this.props.placeholder}
+                            components={this.props.components}
+                            onKeyDown={(e) => {
+                                if (!this.state.isAccountLinked) {
+                                    const accountNotLinkedHtml = '' +
+                                        '<div class="">' +
+                                        '<img src="/images/imgpopup.png" class="img-fluid">' +
+                                        '<div class="bg-light p-3">' +
+                                        '<h1  class=" text-black mt-2 py-4">Let\'s Connect Your Google Account</h1>' +
+                                        '<p style="line-height:23px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="px-5 text-dark">' +
+                                        'Connect your Google Account to see all your data in one place, be able to filter data by property, see anomalies and analyze your data better.' +
+                                        '</p>' +
+                                        '<p style="font-size:14px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="text-dark">' +
+                                        'We do not share any data from your Google Accounts (<span class="text-primary"><a href="https://www.crystalballinsight.com/privacy-policy" target="_blank">see Privacy Policy</a></span>)' +
+                                        '</p>' +
+                                        '</div>' +
+                                        '</div>'
+                                    /*
+                                    * Show new google analytics account popup
+                                    * */
+                                    swal.fire({
+                                        html: accountNotLinkedHtml,
+                                        width: 700,
+                                        customClass: {
+                                            popup: 'bg-light pb-5',
+                                            htmlContainer: 'm-0',
+                                        },
+                                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                        confirmButtonText: "Connect" + "<i class='ml-2 fa fa-caret-right'> </i>",
 
-                            }).then(value => {
-                                if (value.isConfirmed) {
-                                    this.setState({ isPermissionPopupOpened: true });
+                                    }).then(value => {
+                                        if (value.isConfirmed) {
+                                            this.setState({ isPermissionPopupOpened: true });
+                                        }
+                                    });
                                 }
-                            });
+                            }}
+                        />
+                        {
+                            this.state.isPermissionPopupOpened ? <GooglePermissionPopup /> : ''
                         }
-                    }}
-                />
-                {
-                    this.state.isPermissionPopupOpened ? <GooglePermissionPopup /> : ''
-                }
+                    </div>
+                </div>
 
                 <div>
                     <h4>
@@ -233,7 +237,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                                         style={{ background: "#2d9cdb" }}
                                         className="dot"
                                     ></span>
-                                    {itm.label}
+                                    <span className="text-truncate" style={{ maxWidth: 150 }}>{itm.label}</span>
                                 </button>
 
                                 <Popover
@@ -269,7 +273,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                         })}
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
 }
