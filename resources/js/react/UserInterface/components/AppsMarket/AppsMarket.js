@@ -30,6 +30,7 @@ import { Container, Row, Col, FormGroup, Input, Label } from "reactstrap";
 import AppsModal from "./AppsModal";
 import WebsiteMonitoring from "./WebsiteMonitoring";
 import NewsAlerts from "./NewsAlerts";
+import Shopify from "./Shopify";
 import GoogleUpdates from "./GoogleUpdates";
 import RetailMarketingDates from "./RetailMarketingDates";
 import Holidays from "./Holidays";
@@ -685,6 +686,15 @@ class AppsMarket extends React.Component {
                                 brandName: "Website Monitoring",
                                 brandLogo: "/websiteMonitoring.svg",
                             },
+                            {
+                                id: "20",
+                                background: "null",
+                                dsKey: "is_ds_shopify_enabled",
+                                enabled:this.state.userServices.is_ds_shopify_enabled,
+                                premium: false,
+                                brandName: "Shopify",
+                                brandLogo: "/shopify.svg",
+                            },
                         ].map((item, itemKey) => (
                             <div
                                 onClick={() => {
@@ -875,16 +885,6 @@ class AppsMarket extends React.Component {
                                     brandName: "amazoon Podcast",
                                     brandLogo: "/amazonPodcast.svg",
                                 },
-                                {
-                                    id: "20",
-                                    background: "null",
-                                    dsKey: "",
-                                    enabled: false,
-                                    premium: false,
-                                    commingSoon: true,
-                                    brandName: "Shopify",
-                                    brandLogo: "/shopify.svg",
-                                },
                             ].map((item, itemKey) => (
                                 <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color" : item.background || "#e0e0e0",}}>
                                     { item.enabled ? (<i className="active fa fa-check-circle"></i>) : null }
@@ -936,6 +936,36 @@ class AppsMarket extends React.Component {
                         ) : this.state.dsKey ===
                           "is_ds_google_alerts_enabled" ? (
                             <NewsAlerts
+                                {...this.state}
+                                {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                    });
+                                }}
+                                updateUserAnnotationColors={
+                                    this.updateUserAnnotationColors
+                                }
+                                serviceStatusHandler={this.serviceStatusHandler}
+                                changeShownHint={this.changeShownHint}
+                                sectionToggler={this.sectionToggler}
+                                userDataSourceAddHandler={
+                                    this.userDataSourceAddHandler
+                                }
+                                userDataSourceDeleteHandler={
+                                    this.userDataSourceDeleteHandler
+                                }
+                                reloadWebMonitors={this.reloadWebMonitors}
+                                loadUserDataSources={this.loadUserDataSources}
+                                updateGAPropertyId={(value) => {
+                                    this.setState({
+                                        ga_property_id: value,
+                                    });
+                                }}
+                            />
+                        )  : this.state.dsKey ===
+                          "is_ds_shopify_enabled" ? (
+                            <Shopify
                                 {...this.state}
                                 {...this.props}
                                 closeModal={() => {
@@ -1613,6 +1643,20 @@ class AppsMarket extends React.Component {
                 this.updateUserService(e);
             } else if (
                 e.target.name == "is_ds_wordpress_updates_enabled" &&
+                !e.target.checked
+            ) {
+                this.sectionToggler(null);
+                this.updateUserService(e);
+            }
+            i
+            if (
+                e.target.name == "is_ds_shopify_enabled" &&
+                e.target.checked
+            ) {
+                this.sectionToggler(null);
+                this.updateUserService(e);
+            } else if (
+                e.target.name == "is_ds_shopify_enabled" &&
                 !e.target.checked
             ) {
                 this.sectionToggler(null);
