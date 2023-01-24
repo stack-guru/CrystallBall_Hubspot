@@ -689,8 +689,8 @@ class AppsMarket extends React.Component {
                             {
                                 id: "20",
                                 background: "null",
-                                dsKey: "is_ds_shopify_enabled",
-                                enabled:this.state.userServices.is_ds_shopify_enabled,
+                                dsKey: "is_ds_shopify_annotation_enabled",
+                                enabled:this.state.userServices.is_ds_shopify_annotation_enabled,
                                 premium: false,
                                 brandName: "Shopify",
                                 brandLogo: "/shopify.svg",
@@ -964,7 +964,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         )  : this.state.dsKey ===
-                          "is_ds_shopify_enabled" ? (
+                          "is_ds_shopify_annotation_enabled" ? (
                             <Shopify
                                 {...this.state}
                                 {...this.props}
@@ -1650,13 +1650,13 @@ class AppsMarket extends React.Component {
             }
             i
             if (
-                e.target.name == "is_ds_shopify_enabled" &&
+                e.target.name == "is_ds_shopify_annotation_enabled" &&
                 e.target.checked
             ) {
                 this.sectionToggler(null);
                 this.updateUserService(e);
             } else if (
-                e.target.name == "is_ds_shopify_enabled" &&
+                e.target.name == "is_ds_shopify_annotation_enabled" &&
                 !e.target.checked
             ) {
                 this.sectionToggler(null);
