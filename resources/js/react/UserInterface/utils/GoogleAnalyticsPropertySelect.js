@@ -5,6 +5,7 @@ import HttpClient from './HttpClient'
 
 import Select from 'react-select';
 import GooglePermissionPopup from './GooglePermissionPopup';
+import { Popover, PopoverBody } from 'reactstrap';
 
 export default class GoogleAnalyticsPropertySelect extends Component {
 
@@ -146,7 +147,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         let aProperties = this.state.aProperties;
         return (
-            <>
+            <div className="themeNewInputStyle position-relative inputWithIcon">
+                <i class="fa fa-plus"></i>
                 <Select
                     onFocus={this.props.onFocus}
                     loadOptions={this.searchGoogleAnalyticsProperties}
@@ -204,7 +206,70 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 {
                     this.state.isPermissionPopupOpened ? <GooglePermissionPopup /> : ''
                 }
-            </>
+
+                <div>
+                    <h4>
+                        Selected properties: <span>(Click to remove)</span>
+                    </h4>
+                    <div className="d-flex keywordTags">
+                        {aProperties.map(itm => {
+                            if (itm.value === "") {
+                                return null;
+                            }
+                            return (<>
+                                <button
+                                    onClick={() =>
+                                        this.setState({
+                                            activeDeletePopover: itm.value,
+                                        })
+                                    }
+                                    id={"gAK-" + itm.value}
+                                    type="button"
+                                    className="keywordTag"
+                                    key={itm.value}
+                                    user_data_source_id={itm.value}
+                                >
+                                    <span
+                                        style={{ background: "#2d9cdb" }}
+                                        className="dot"
+                                    ></span>
+                                    {itm.label}
+                                </button>
+
+                                <Popover
+                                    placement="top"
+                                    target={"gAK-" + itm.value}
+                                    isOpen={
+                                        this.state.activeDeletePopover ===
+                                        itm.value
+                                    }
+                                >
+                                    <PopoverBody web_monitor_id={itm.value}>
+                                        Are you sure you want to remove "
+                                        {itm.label}"?.
+                                    </PopoverBody>
+                                    <button
+                                        onClick={this.deleteKeyword}
+                                        key={itm.value}
+                                        user_data_source_id={itm.value}
+                                    >
+                                        Yes
+                                    </button>
+                                    <button
+                                        onClick={() =>
+                                            this.setState({
+                                                activeDeletePopover: null,
+                                            })
+                                        }
+                                    >
+                                        No
+                                    </button>
+                                </Popover>
+                            </>)
+                        })}
+                    </div>
+                </div>
+            </div>
         )
     }
 }
