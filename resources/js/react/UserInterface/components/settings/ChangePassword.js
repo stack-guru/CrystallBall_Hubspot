@@ -357,10 +357,10 @@ export default class ChangePassword extends React.Component {
                                 <i><img src='/card.svg' /></i>
                                 <span>Add a credit/debit card to get seamless subscription experience</span>
                                 <div className='d-flex justify-content-center'>
-                                    <Link to="/settings/payment-detail/create" className='btn-theme-outline bg-white'>
+                                    <a onClick={() => this.setState({ showPaymentPopup: true })} href="javascript:void(0);" className='btn-theme-outline bg-white'>
                                         <i><img src={'/icon-cc.svg'} /></i>
                                         <span>Add a card</span>
-                                    </Link>
+                                    </a>
                                 </div>
                             </div>}
                         </div>

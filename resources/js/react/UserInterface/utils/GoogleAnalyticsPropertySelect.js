@@ -52,9 +52,15 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 let options = gaps.map(gap => {
                     return {
                         value: gap.id,
-                        label: gap.name + ' ' + gap.google_analytics_account.name,
+                        labelText: gap.name + ' ' + gap.google_analytics_account.name,
                         wasLastDataFetchingSuccessful: gap.was_last_data_fetching_successful,
                         isInUse: gap.is_in_use,
+                        label: (
+                            <div className="d-flex propertyLabel">
+                                <span style={{ background: "#2d9cdb" }} className="dot"></span>
+                                <span className="text-truncate" style={{maxWidth: 150}}>{gap.name + ' ' + gap.google_analytics_account.name}</span>
+                            </div>
+                        )
                     };
                 });
                 callback(options);
@@ -148,7 +154,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         let aProperties = this.state.aProperties;
         return (
             <>
-                <div className='grid2layout'>
+                <div>
                     <div className="themeNewInputStyle position-relative inputWithIcon">
                         <i class="fa fa-plus"></i>
                         <Select
@@ -209,68 +215,69 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                             this.state.isPermissionPopupOpened ? <GooglePermissionPopup /> : ''
                         }
                     </div>
-                </div>
 
-                <div>
-                    <h4>
-                        Selected properties: <span>(Click to remove)</span>
-                    </h4>
-                    <div className="d-flex keywordTags">
-                        {aProperties.map(itm => {
-                            if (itm.value === "") {
-                                return null;
-                            }
-                            return (<>
-                                <button
-                                    onClick={() =>
-                                        this.setState({
-                                            activeDeletePopover: itm.value,
-                                        })
-                                    }
-                                    id={"gAK-" + itm.value}
-                                    type="button"
-                                    className="keywordTag"
-                                    key={itm.value}
-                                    user_data_source_id={itm.value}
-                                >
-                                    <span
-                                        style={{ background: "#2d9cdb" }}
-                                        className="dot"
-                                    ></span>
-                                    <span className="text-truncate" style={{ maxWidth: 150 }}>{itm.label}</span>
-                                </button>
 
-                                <Popover
-                                    placement="top"
-                                    target={"gAK-" + itm.value}
-                                    isOpen={
-                                        this.state.activeDeletePopover ===
-                                        itm.value
-                                    }
-                                >
-                                    <PopoverBody web_monitor_id={itm.value}>
-                                        Are you sure you want to remove "
-                                        {itm.label}"?.
-                                    </PopoverBody>
-                                    <button
-                                        onClick={this.deleteKeyword}
-                                        key={itm.value}
-                                        user_data_source_id={itm.value}
-                                    >
-                                        Yes
-                                    </button>
+                    <div>
+                        {/* <h4>
+                            Selected properties: <span>(Click to remove)</span>
+                        </h4> */}
+                        <div className="d-flex keywordTags mt-3">
+                            {aProperties.map(itm => {
+                                if (itm.value === "") {
+                                    return null;
+                                }
+                                return (<>
                                     <button
                                         onClick={() =>
                                             this.setState({
-                                                activeDeletePopover: null,
+                                                activeDeletePopover: itm.value,
                                             })
                                         }
+                                        id={"gAK-" + itm.value}
+                                        type="button"
+                                        className="keywordTag"
+                                        key={itm.value}
+                                        user_data_source_id={itm.value}
                                     >
-                                        No
+                                        <span
+                                            style={{ background: "#2d9cdb" }}
+                                            className="dot"
+                                        ></span>
+                                        <span className="text-truncate" style={{ maxWidth: 150 }}>{itm.labelText}</span>
                                     </button>
-                                </Popover>
-                            </>)
-                        })}
+
+                                    <Popover
+                                        placement="top"
+                                        target={"gAK-" + itm.value}
+                                        isOpen={
+                                            this.state.activeDeletePopover ===
+                                            itm.value
+                                        }
+                                    >
+                                        <PopoverBody web_monitor_id={itm.value}>
+                                            Are you sure you want to remove "
+                                            {itm.label}"?.
+                                        </PopoverBody>
+                                        <button
+                                            onClick={this.deleteKeyword}
+                                            key={itm.value}
+                                            user_data_source_id={itm.value}
+                                        >
+                                            Yes
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                this.setState({
+                                                    activeDeletePopover: null,
+                                                })
+                                            }
+                                        >
+                                            No
+                                        </button>
+                                    </Popover>
+                                </>)
+                            })}
+                        </div>
                     </div>
                 </div>
             </>

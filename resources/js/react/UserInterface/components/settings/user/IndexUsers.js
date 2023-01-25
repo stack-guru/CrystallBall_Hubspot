@@ -6,6 +6,7 @@ import HttpClient from "../../../utils/HttpClient";
 import AppsModal from "../../AppsMarket/AppsModal";
 import CreateUser from "./CreateUser";
 import EditUser from "./EditUser";
+import { toast } from 'react-toastify'
 
 export default class IndexUsers extends Component {
     constructor(props) {
@@ -20,6 +21,7 @@ export default class IndexUsers extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.checkSearchText = this.checkSearchText.bind(this);
+        this.saveRole = this.saveRole.bind(this);
     }
 
     componentDidMount() {
@@ -53,6 +55,18 @@ export default class IndexUsers extends Component {
             return false;
         }
         return true;
+    }
+
+    saveRole(user_level, user) {
+        user.user_level = user_level
+        HttpClient.put(`/settings/user/${user.id}`, user)
+            .then(response => {
+                toast.success("User updated.");
+            }, (err) => {
+                this.setState({ errors: (err.response).data });
+            }).catch(err => {
+                this.setState({ errors: err });
+            });
     }
 
     handleDelete(id) {
@@ -126,8 +140,8 @@ export default class IndexUsers extends Component {
                                 ) : null}
                             </div>
 
-                            <form className="pageFilters d-flex justify-content-between align-items-center">
-                                <FormGroup className="filter-sort position-relative form-group">
+                            <form className="pageFilters d-flex justify-content-end align-items-center">
+                                {/* <FormGroup className="filter-sort position-relative form-group">
                                     <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
                                     <i className="btn-searchIcon left-0">
                                         <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -142,7 +156,7 @@ export default class IndexUsers extends Component {
                                         <option value="category">By Category</option>
                                         <option value="ga-property">By GA Property</option>
                                     </select>
-                                </FormGroup>
+                                </FormGroup> */}
 
 
                                 <FormGroup className="filter-search position-relative">
@@ -169,7 +183,19 @@ export default class IndexUsers extends Component {
                                             <div key={user.id} className="singleRow justify-content-between align-items-center">
                                                 <div className="singleCol text-left"><span>{user.email}</span></div>
                                                 <div className="singleCol text-left"><span>{user.name}</span></div>
-                                                <div className="singleCol text-left"><span>{capitalizeFirstLetter(user.user_level)}</span></div>
+                                                <div className="singleCol text-left">
+                                                    <span>
+                                                        <div className="themeNewInputStyle">
+                                                            <select name="user_level" className="form-control" onChange={(ev) => this.saveRole(ev.target.value, user)} value={user.user_level}>
+                                                                <option value="">User level</option>
+                                                                <option value="admin">Admin</option>
+                                                                <option value="team">Team Member</option>
+                                                                <option value="viewer">Viewer</option>
+                                                            </select>
+                                                        </div>
+                                                        {/* {capitalizeFirstLetter(user.user_level)} */}
+                                                    </span>
+                                                </div>
                                                 <div className="singleCol text-left"><span>{user.department}</span></div>
                                                 <div className="singleCol text-left"><span>{user.team_name}</span></div>
                                                 <div className="singleCol text-right">

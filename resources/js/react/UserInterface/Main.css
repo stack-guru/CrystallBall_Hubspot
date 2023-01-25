@@ -1293,7 +1293,7 @@ body {
     justify-content: center;
     flex-wrap: wrap;
 }
-.keywordTag .dot {
+.keywordTag .dot, .propertyLabel .dot {
     width: 8px;
     height: 8px;
     display: block;
@@ -1869,6 +1869,9 @@ body {
     border-radius: 8px;
     background: #fff;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
+}
+.dataTableusers .tableBody .singleRow .form-control {
+    padding-left: 1rem;
 }
 .dataTableusers .singleRow .singleCol{
     width: 16.667%;
@@ -3241,6 +3244,19 @@ body {
 
 
 
+.propertyLabel {
+    border: 0;
+    color: #333;
+    display: flex;
+    font-size: 16px;
+    padding: 2px;
+    line-height: 20px;
+    border-radius: 0px;
+    background: transparent;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
 
 
 @media screen and (max-width: 1439px) {
