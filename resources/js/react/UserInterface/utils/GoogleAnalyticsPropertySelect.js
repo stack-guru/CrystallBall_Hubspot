@@ -52,9 +52,15 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 let options = gaps.map(gap => {
                     return {
                         value: gap.id,
-                        label: gap.name + ' ' + gap.google_analytics_account.name,
+                        labelText: gap.name + ' ' + gap.google_analytics_account.name,
                         wasLastDataFetchingSuccessful: gap.was_last_data_fetching_successful,
                         isInUse: gap.is_in_use,
+                        label: (
+                            <div className="d-flex propertyLabel">
+                                <span style={{ background: "#2d9cdb" }} className="dot"></span>
+                                <span className="text-truncate" style={{maxWidth: 150}}>{gap.name + ' ' + gap.google_analytics_account.name}</span>
+                            </div>
+                        )
                     };
                 });
                 callback(options);
@@ -237,7 +243,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                                             style={{ background: "#2d9cdb" }}
                                             className="dot"
                                         ></span>
-                                        <span className="text-truncate" style={{ maxWidth: 150 }}>{itm.label}</span>
+                                        <span className="text-truncate" style={{ maxWidth: 150 }}>{itm.labelText}</span>
                                     </button>
 
                                     <Popover
