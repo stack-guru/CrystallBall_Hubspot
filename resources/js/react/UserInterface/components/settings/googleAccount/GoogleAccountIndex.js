@@ -109,7 +109,7 @@ export default class GoogleAccountIndex extends React.Component {
                         <h3>Google accounts</h3>
                         <div className="accounts googleAccounts">
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img src='/userDP.jpeg' alt='user image' /></figure>
                                 <div className='nameAndEmail'>
                                     <h4>Adil Aijaz</h4>
                                     <span>adilaijaz@gmail.com</span>
@@ -120,7 +120,7 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account reconnect'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img src='/userDP.jpeg' alt='user image' /></figure>
                                 <div className='nameAndEmail'>
                                     <h4>Adil Aijaz <i className='fa fa-exclamation-circle' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></h4>
                                     <span>adilaijaz@gmail.com</span>
@@ -131,7 +131,7 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img src='/userDP.jpeg' alt='user image' /></figure>
                                 <div className='nameAndEmail'>
                                     <h4>Adil Aijaz</h4>
                                     <span>adilaijaz@gmail.com</span>
@@ -147,9 +147,9 @@ export default class GoogleAccountIndex extends React.Component {
                         <h3>Social accounts</h3>
                         <div className="accounts socialAccounts">
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/facebook-small.svg' alt='user image' /></figure>
                                 <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
+                                    <h4>Facebook</h4>
                                     <span>adilaijaz@gmail.com</span>
                                 </div>
                                 <div className='btns'>
@@ -158,9 +158,9 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/twitter-small.svg' alt='user image' /></figure>
                                 <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
+                                    <h4>Twitter</h4>
                                     <span>adilaijaz@gmail.com</span>
                                 </div>
                                 <div className='btns'>
@@ -169,9 +169,9 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/images/icons/adwords.png' alt='user image' /></figure>
                                 <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
+                                    <h4>Google Analytics</h4>
                                     <span>adilaijaz@gmail.com</span>
                                 </div>
                                 <div className='btns'>
@@ -180,9 +180,9 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/instagram-small.svg' alt='user image' /></figure>
                                 <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
+                                    <h4>Instagram</h4>
                                     <span>adilaijaz@gmail.com</span>
                                 </div>
                                 <div className='btns'>
@@ -191,9 +191,9 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/images/icons/adwords.png' alt='user image' /></figure>
                                 <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
+                                    <h4>Google</h4>
                                     <span>adilaijaz@gmail.com</span>
                                 </div>
                                 <div className='btns'>
@@ -202,9 +202,9 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/facebook-small.svg' alt='user image' /></figure>
                                 <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
+                                    <h4>Facebook</h4>
                                     <span>adilaijaz@gmail.com</span>
                                 </div>
                                 <div className='btns'>
@@ -218,19 +218,19 @@ export default class GoogleAccountIndex extends React.Component {
                         <h3>Recommended for you</h3>
                         <div className="accounts recommendedForYour">
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/images/icons/github.png' alt='user image' /></figure>
                                 <div className='nameAndEmail'>
                                     <h4>Connect Github</h4>
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/images/icons/spotify.svg' alt='user image' /></figure>
                                 <div className='nameAndEmail'>
                                     <h4>Connect Spotify</h4>
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/images/icons/adwords.png' alt='user image' /></figure>
                                 <div className='nameAndEmail'>
                                     <h4>Connect Google Analytics</h4>
                                 </div>
@@ -244,7 +244,7 @@ export default class GoogleAccountIndex extends React.Component {
                             <span className='mb-3'>
                                 Go to Analytics accounts
                                 <i className='ml-2'><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M13.3 17.275C13.1 17.075 13.004 16.8333 13.012 16.55C13.0207 16.2667 13.125 16.025 13.325 15.825L16.15 13H5C4.71667 13 4.479 12.904 4.287 12.712C4.09567 12.5207 4 12.2833 4 12C4 11.7167 4.09567 11.479 4.287 11.287C4.479 11.0957 4.71667 11 5 11H16.15L13.3 8.14999C13.1 7.94999 13 7.71232 13 7.43699C13 7.16232 13.1 6.92499 13.3 6.72499C13.5 6.52499 13.7377 6.42499 14.013 6.42499C14.2877 6.42499 14.525 6.52499 14.725 6.72499L19.3 11.3C19.4 11.4 19.471 11.5083 19.513 11.625C19.5543 11.7417 19.575 11.8667 19.575 12C19.575 12.1333 19.5543 12.2583 19.513 12.375C19.471 12.4917 19.4 12.6 19.3 12.7L14.7 17.3C14.5167 17.4833 14.2877 17.575 14.013 17.575C13.7377 17.575 13.5 17.475 13.3 17.275Z" fill="#096DB7"/>
+                                    <path d="M13.3 17.275C13.1 17.075 13.004 16.8333 13.012 16.55C13.0207 16.2667 13.125 16.025 13.325 15.825L16.15 13H5C4.71667 13 4.479 12.904 4.287 12.712C4.09567 12.5207 4 12.2833 4 12C4 11.7167 4.09567 11.479 4.287 11.287C4.479 11.0957 4.71667 11 5 11H16.15L13.3 8.14999C13.1 7.94999 13 7.71232 13 7.43699C13 7.16232 13.1 6.92499 13.3 6.72499C13.5 6.52499 13.7377 6.42499 14.013 6.42499C14.2877 6.42499 14.525 6.52499 14.725 6.72499L19.3 11.3C19.4 11.4 19.471 11.5083 19.513 11.625C19.5543 11.7417 19.575 11.8667 19.575 12C19.575 12.1333 19.5543 12.2583 19.513 12.375C19.471 12.4917 19.4 12.6 19.3 12.7L14.7 17.3C14.5167 17.4833 14.2877 17.575 14.013 17.575C13.7377 17.575 13.5 17.475 13.3 17.275Z" fill="#096DB7" />
                                 </svg></i>
                             </span>
                             <span>link search console to properties and much more...</span>
@@ -294,94 +294,30 @@ export default class GoogleAccountIndex extends React.Component {
                                 <div className="singleCol text-right">&nbsp;</div>
                             </div>
                             <div className="tableBody">
-                                <div className="singleRow justify-content-between align-items-center">
-                                    <div className="singleCol text-left"><span>2214</span></div>
-                                    <div className="singleCol text-left">
-                                        <span className='w-100 d-flex justify-content-start'>Crystall Ball <em className='tag-inuse'><i className='fa fa-check'></i><i>In use</i></em></span>
-                                    </div>
-                                    <div className="singleCol text-left">
-                                        <span className='d-flex justify-content-between w-100'>
-                                            <span>Crystall Ball Inshight</span>
-                                            <i><img src={'/icon-link-green.svg'} /></i>
-                                        </span>
-                                    </div>
-                                    <div className="singleCol text-left d-flex flex-column">
-                                        <div className="themeNewInputStyle position-relative w-100">
-                                            <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                            <select name="" value='' className="form-control selected">
-                                                <option value="Null">Select website</option>
-                                            </select>
-                                            <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
+
+                                {this.state.googleAnalyticsProperties.map(gAP => {
+                                    return <div className="singleRow justify-content-between align-items-center" key={gAP.id}>
+                                        <div className="singleCol text-left"><span>{gAP.id}</span></div>
+                                        <div className="singleCol text-left"><span className='w-100 d-flex justify-content-start'>{(gAP.google_analytics_account) ? gAP.google_analytics_account.name : ''}{gAP.is_in_use ? <em className='tag-inuse'><i className='fa fa-check'></i><i>In use</i></em> : null}</span></div>
+                                        <div className="singleCol text-left">
+                                            <span className='d-flex justify-content-between w-100'>
+                                                <span>{gAP.name}</span>
+                                                {gAP.is_in_use ? <i><img src={'/icon-link-green.svg'} /></i> : <i><img src={'/icon-unlink-red.svg'} /></i>}
+                                            </span>
                                         </div>
-                                    </div>
-                                    <div className="singleCol text-left"><span>Adil Aijaz</span></div>
-                                    <div className="singleCol text-right"><span><Link><img src={`/icon-trash.svg`} /></Link></span></div>
-                                </div>
-                                <div className="singleRow justify-content-between align-items-center">
-                                    <div className="singleCol text-left"><span>2214</span></div>
-                                    <div className="singleCol text-left"><span>Crystall Ball</span></div>
-                                    <div className="singleCol text-left">
-                                        <span className='d-flex justify-content-between w-100'>
-                                            <span>Crystall Ball Inshight</span>
-                                            <i><img src={'/icon-unlink-red.svg'} /></i>
-                                        </span>
-                                    </div>
-                                    <div className="singleCol text-left d-flex flex-column">
-                                        <div className="themeNewInputStyle position-relative w-100">
-                                            <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                            <select name="" value='' className="form-control">
-                                                <option value="Null">Select website</option>
-                                            </select>
-                                            <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
+                                        <div className="singleCol text-left d-flex flex-column">
+                                            <div className="themeNewInputStyle position-relative w-100">
+                                                <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                                <select name="" value='' className="form-control selected">
+                                                    <option value="Null">Select website</option>
+                                                </select>
+                                                <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
+                                            </div>
                                         </div>
+                                        <div className="singleCol text-left"><span>{gAP.google_account.name}</span></div>
+                                        <div className="singleCol text-right"><span><img src={`/icon-trash.svg`} onClick={() => this.handleGAPDelete(gAP.id)} /></span></div>
                                     </div>
-                                    <div className="singleCol text-left"><span>Adil Aijaz</span></div>
-                                    <div className="singleCol text-right"><span><Link><img src={`/icon-trash.svg`} /></Link></span></div>
-                                </div>
-                                <div className="singleRow justify-content-between align-items-center">
-                                    <div className="singleCol text-left"><span>2214</span></div>
-                                    <div className="singleCol text-left">
-                                        <span className='w-100 d-flex justify-content-start'>Crystall Ball <em className='tag-inuse'><i className='fa fa-check'></i><i>In use</i></em></span>
-                                    </div>
-                                    <div className="singleCol text-left">
-                                        <span className='d-flex justify-content-between w-100'>
-                                            <span>Crystall Ball Inshight</span>
-                                            <i><img src={'/icon-link-green.svg'} /></i>
-                                        </span>
-                                    </div>
-                                    <div className="singleCol text-left d-flex flex-column">
-                                        <div className="themeNewInputStyle position-relative w-100">
-                                            <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                            <select name="" value='' className="form-control selected">
-                                                <option value="Null">Select website</option>
-                                            </select>
-                                            <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
-                                        </div>
-                                    </div>
-                                    <div className="singleCol text-left"><span>Adil Aijaz</span></div>
-                                    <div className="singleCol text-right"><span><Link><img src={`/icon-trash.svg`} /></Link></span></div>
-                                </div>
-                                <div className="singleRow justify-content-between align-items-center">
-                                    <div className="singleCol text-left"><span>2214</span></div>
-                                    <div className="singleCol text-left"><span>Crystall Ball</span></div>
-                                    <div className="singleCol text-left">
-                                        <span className='d-flex justify-content-between w-100'>
-                                            <span>Crystall Ball Inshight</span>
-                                            <i><img src={'/icon-unlink-red.svg'} /></i>
-                                        </span>
-                                    </div>
-                                    <div className="singleCol text-left d-flex flex-column">
-                                        <div className="themeNewInputStyle position-relative w-100">
-                                            <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                            <select name="" value='' className="form-control">
-                                                <option value="Null">Select website</option>
-                                            </select>
-                                            <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
-                                        </div>
-                                    </div>
-                                    <div className="singleCol text-left"><span>Adil Aijaz</span></div>
-                                    <div className="singleCol text-right"><span><Link><img src={`/icon-trash.svg`} /></Link></span></div>
-                                </div>
+                                })}
                             </div>
                         </div>
                     </div>
@@ -493,7 +429,7 @@ export default class GoogleAccountIndex extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="row ml-0 mr-0 mt-5">
+                {/* <div className="row ml-0 mr-0 mt-5">
                     <div className="col-12">
                         <div className="table-responsive">
                             <table className="table table-hover gaa-hover table-bordered">
@@ -510,7 +446,7 @@ export default class GoogleAccountIndex extends React.Component {
                                     {this.state.googleAnalyticsProperties.map(gAP => {
                                         return <tr key={gAP.id}>
                                             <td>{gAP.id}</td>
-                                            <td>{(gAP.google_analytics_account) ? gAP.google_analytics_account.name : '' }</td>
+                                            <td>{(gAP.google_analytics_account) ? gAP.google_analytics_account.name : ''}</td>
                                             <td>
                                                 {gAP.name}&nbsp;&nbsp;&nbsp;
                                                 {gAP.is_in_use ? <span className="badge badge-pill badge-success">In use</span> : null}
@@ -523,7 +459,7 @@ export default class GoogleAccountIndex extends React.Component {
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="row ml-0 mr-0 mt-5">
                     <div className="col-12">
                         <div className="table-responsive">
