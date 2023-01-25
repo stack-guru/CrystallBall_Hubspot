@@ -1995,6 +1995,12 @@ body {
     border: 2px solid #1976fe;
 }
 .btn-theme-outline i { margin-right: 10px; }
+.btn-theme-outline:focus,
+.btn-theme-outline:hover {
+    color: #1976fe;
+    border-color: #1976fe;
+}
+:focus {outline: none !important;}
 .apiKeyForm {
     width: 676px;
     padding: 24px;
@@ -2144,6 +2150,11 @@ body {
     background: #fff;
     border-radius: 100px;
     border: 1px solid #a6a6a6;
+}
+.btn-cancel:focus,
+.btn-cancel:hover {
+    color: #666;
+    border-color: #a6a6a6;
 }
 .themeNewInputStyle select.form-control{
     appearance: none;
@@ -2985,6 +2996,250 @@ body {
     border-radius: 8px;
     border: 1px solid #a6a6a6;
 }
+.googleAccountPageHead { padding-bottom: 42px; }
+.googleAccountPageHead h2 { margin-bottom: 40px;}
+.googleAccountPageHead .alert { margin: 0; }
+.accountsHolder {margin-bottom: 40px;}
+.accountsHolder h3{
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 25px;
+    margin-bottom: 40px;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #bdbdbd;
+}
+.accounts {
+    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.account {
+    display: flex;
+    padding: 24px;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 8px;
+    position: relative;
+    align-items: center;
+    border: 1px solid #fff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
+}
+.account.reconnect {
+    border: 1px solid #f44c3d;
+    box-shadow: 0px 3px 10px rgba(246, 78, 96, 0.12);
+}
+.account figure {
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 8px;
+    margin: 0 1.5rem 0 0;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.12);
+}
+.nameAndEmail {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.nameAndEmail h4 {
+    display: flex;
+    font-size: 18px;
+    color: #096db7;
+    font-weight: 600;
+    line-height: 23px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+.nameAndEmail h4 > i {
+    cursor: pointer;
+    color: #f44c3d;
+    margin-left: 10px;
+}
+.nameAndEmail span {
+    color: #666;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+}
+.googleAccounts .account figure {
+    box-shadow: none;
+    border-radius: 50%;
+}
+.recommendedForYour .account {
+    box-shadow: none;
+    border: 1px solid #cacaca;
+}
+.recommendedForYour .nameAndEmail h4 {
+    margin: 0;
+    color: #666;
+}
+.btn-goToAnalyticsAccount span{
+    color: #666;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23px;
+    text-align: center;
+}
+.btn-goToAnalyticsAccount span:first-child{
+    display: flex;
+    font-size: 18px;
+    color: #096db7;
+    font-weight: 600;
+    line-height: 23px;
+    justify-content: center;
+}
+.btn-goToAnalyticsAccount {
+    width: 540px;
+    height: 127px;
+    display: flex;
+    margin: 0 auto;
+    padding: 32px 24px;
+    align-items: center;
+    border-radius: 12px;
+    background: #f0f6ff;
+    flex-direction: column;
+    justify-content: center;
+}
+.btns {
+    top: 0;
+    right: 0;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    padding: 32px 28px;
+    position: absolute;
+    border-radius: 8px;
+    background: #f0f6ff;
+    -webkit-transform: translateX(150%);
+    -moz-transform: translateX(150%);
+    -ms-transform: translateX(150%);
+    -o-transform: translateX(150%);
+    transform: translateX(150%);
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -ms-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
+    transition: all 600ms ease-in-out;
+}
+.account:hover .btns {
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+}
+.btns button {
+    height: 38px;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    padding: 10px 20px;
+    border-radius: 100px;
+    border: 1px solid #666;
+    background-color: transparent;
+}
+.btns button.btn-disconnect {
+    color: #f44c3d;
+    margin-left: 1rem;
+    border: 1px solid #f44c3d;
+}
+.filter-sort select.form-control,
+.filter-search .form-control {
+    z-index: 2;
+    color: #666;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    position: relative;
+    background: transparent;
+    border: 1px solid #bdbdbd;
+    font-family: 'Source Sans Pro';
+    height: calc(1.5em + 0.75rem + 8px);
+}
+.filter-sort select.form-control {
+    padding-left: 56px;
+    padding-right: 56px;
+    -webkit-appearance: none;
+}
+.dataTableAnalyticsAccount {}
+.dataTableAnalyticsAccount .form-control{color: #f44c3d;}
+.dataTableAnalyticsAccount .selected{
+    color: #666;
+    border-color: #0bd25f;
+    padding-left: 40px;
+}
+.dataTableAnalyticsAccount .fa-check-circle{display: none;}
+.dataTableAnalyticsAccount .selected + .fa-check-circle{
+    color: #0bd25f;
+    font-size: 1rem;
+    display: block;
+}
+.dataTableAnalyticsAccount .tableHead {
+    padding-top: 0;
+    padding-bottom: 32px;
+}
+.dataTableAnalyticsAccount .tableHead .singleCol {
+    font-size: 18px;
+    line-height: 23px;
+}
+.dataTableAnalyticsAccount .tableBody .singleRow {
+    border: 0;
+    margin-bottom: 20px;
+    padding: 24px 12px;
+    border-radius: 8px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
+}
+.dataTableAnalyticsAccount .singleRow .singleCol {
+    text-align: left;
+    font-size: 1rem;
+    justify-content: start;
+}
+.dataTableAnalyticsAccount .singleRow .singleCol:first-child {width: 100px;}
+.dataTableAnalyticsAccount .singleRow .singleCol:nth-child(2) {width: 20%;}
+.dataTableAnalyticsAccount .singleRow .singleCol:nth-child(3) {width: 22%;}
+.dataTableAnalyticsAccount .singleRow .singleCol:nth-child(4) {flex-grow: 1;}
+.dataTableAnalyticsAccount .singleRow .singleCol:nth-child(5) {width: 15%;}
+.dataTableAnalyticsAccount .singleRow .singleCol:last-child {
+    width: 60px;
+    justify-content: end;
+}
+.dataTableAnalyticsAccount .tableBody .singleRow .singleCol {color: #333;}
+.tag-inuse {
+    display: flex;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 2px 12px;
+    margin-left: 10px;
+    line-height: 12px;
+    font-style: normal;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 24px;
+    background: #0bd25f;
+}
+.tag-inuse i { font-style: normal; }
+.tag-inuse i:last-child {padding-bottom: 2px;}
+.tag-inuse .fa { margin-right: 6px; font-size: 12px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
