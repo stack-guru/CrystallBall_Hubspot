@@ -28,6 +28,10 @@ class GoogleAnalyticsPropertyController extends Controller
             ];
         }
 
+        $user = Auth::user();
+        $userIdsArray = $user->getAllGroupUserIdsArray();
+        $googleAnalyticsAccountIds = GoogleAnalyticsAccount::whereIn('user_id', $userIdsArray)->get(['id'])->pluck('id')->toArray();
+
         return ['google_analytics_properties' => array_merge(
             [
                 ['id' => '*', 'name' => 'No Filter',  "google_account" => [
@@ -35,7 +39,7 @@ class GoogleAnalyticsPropertyController extends Controller
                     "name" => null
                 ]],
             ],
-            GoogleAnalyticsProperty::whereIn('user_id', Auth::user()->getAllGroupUserIdsArray())->orderBy('name')->with('googleAccount:id,name')->get(['id', 'name', 'google_account_id'])->toArray()
+            GoogleAnalyticsProperty::whereIn('google_analytics_account_id', $googleAnalyticsAccountIds)->orderBy('name')->with('googleAccount:id,name')->get(['id', 'name', 'google_account_id'])->toArray()
         )];
     }
 
