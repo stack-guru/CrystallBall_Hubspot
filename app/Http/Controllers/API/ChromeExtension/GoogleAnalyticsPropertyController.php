@@ -35,7 +35,7 @@ class GoogleAnalyticsPropertyController extends Controller
                     "name" => null
                 ]],
             ],
-            GoogleAnalyticsProperty::ofCurrentUser()->orderBy('name')->with('googleAccount:id,name')->get(['id', 'name', 'google_account_id'])->toArray()
+            GoogleAnalyticsProperty::whereIn('user_id', Auth::user()->getAllGroupUserIdsArray())->orderBy('name')->with('googleAccount:id,name')->get(['id', 'name', 'google_account_id'])->toArray()
         )];
     }
 
