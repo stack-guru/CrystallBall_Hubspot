@@ -109,7 +109,7 @@ export default class GoogleAccountIndex extends React.Component {
                         <h3>Google accounts</h3>
                         <div className="accounts googleAccounts">
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img src='/userDP.jpeg' alt='user image'/></figure>
                                 <div className='nameAndEmail'>
                                     <h4>Adil Aijaz</h4>
                                     <span>adilaijaz@gmail.com</span>
@@ -120,7 +120,7 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account reconnect'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img src='/userDP.jpeg' alt='user image'/></figure>
                                 <div className='nameAndEmail'>
                                     <h4>Adil Aijaz <i className='fa fa-exclamation-circle' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></h4>
                                     <span>adilaijaz@gmail.com</span>
@@ -131,7 +131,7 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img src='/userDP.jpeg' alt='user image'/></figure>
                                 <div className='nameAndEmail'>
                                     <h4>Adil Aijaz</h4>
                                     <span>adilaijaz@gmail.com</span>
@@ -147,9 +147,9 @@ export default class GoogleAccountIndex extends React.Component {
                         <h3>Social accounts</h3>
                         <div className="accounts socialAccounts">
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/facebook-small.svg' alt='user image'/></figure>
                                 <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
+                                    <h4>Facebook</h4>
                                     <span>adilaijaz@gmail.com</span>
                                 </div>
                                 <div className='btns'>
@@ -158,9 +158,9 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/twitter-small.svg' alt='user image'/></figure>
                                 <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
+                                    <h4>Twitter</h4>
                                     <span>adilaijaz@gmail.com</span>
                                 </div>
                                 <div className='btns'>
@@ -169,9 +169,9 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/images/icons/adwords.png' alt='user image'/></figure>
                                 <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
+                                    <h4>Google Analytics</h4>
                                     <span>adilaijaz@gmail.com</span>
                                 </div>
                                 <div className='btns'>
@@ -180,9 +180,9 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/instagram-small.svg' alt='user image'/></figure>
                                 <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
+                                    <h4>Instagram</h4>
                                     <span>adilaijaz@gmail.com</span>
                                 </div>
                                 <div className='btns'>
@@ -191,9 +191,9 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/images/icons/adwords.png' alt='user image'/></figure>
                                 <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
+                                    <h4>Google</h4>
                                     <span>adilaijaz@gmail.com</span>
                                 </div>
                                 <div className='btns'>
@@ -202,9 +202,9 @@ export default class GoogleAccountIndex extends React.Component {
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/facebook-small.svg' alt='user image'/></figure>
                                 <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
+                                    <h4>Facebook</h4>
                                     <span>adilaijaz@gmail.com</span>
                                 </div>
                                 <div className='btns'>
@@ -218,19 +218,19 @@ export default class GoogleAccountIndex extends React.Component {
                         <h3>Recommended for you</h3>
                         <div className="accounts recommendedForYour">
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/images/icons/github.png' alt='user image'/></figure>
                                 <div className='nameAndEmail'>
                                     <h4>Connect Github</h4>
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/images/icons/spotify.svg' alt='user image'/></figure>
                                 <div className='nameAndEmail'>
                                     <h4>Connect Spotify</h4>
                                 </div>
                             </div>
                             <div className='account'>
-                                <figure><img src='/userDP.png' alt='user image'/></figure>
+                                <figure><img className='socialImage' src='/images/icons/adwords.png' alt='user image'/></figure>
                                 <div className='nameAndEmail'>
                                     <h4>Connect Google Analytics</h4>
                                 </div>
