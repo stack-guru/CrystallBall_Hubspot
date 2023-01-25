@@ -321,4 +321,71 @@ class HomeController extends Controller
         $user->save();
         return response()->json(['success' => 'true', 'message' => 'Phone updated successfully'], 200);
     }
+    
+    public function updateEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email|max:255',
+        ]);
+        $user = Auth::user();
+        if ($user->email !== $request->email) {
+            $user->email_verified_at = null;
+        }
+
+        $user->email = $request->email;
+        $user->save();
+        return response()->json(['success' => 'true', 'message' => 'Email updated successfully'], 200);
+    }
+
+    public function updateProfile (Request $request) {
+
+        $this->validate($request, [
+            'profile_image' => 'required',
+        ]);
+
+        $file = $request->file('profile_image');
+        $filename = time().'_'.$file->getClientOriginalName();
+
+        // File extension
+        $extension = $file->getClientOriginalExtension();
+        // File upload location
+        $location = 'profiles';
+        // Upload file
+        $file->move($location,$filename);
+        // File path
+        // $filepath = url('files/'.$filename);
+        // return $filepath;
+
+        $user = Auth::user();
+        $user->profile_image = 'profiles/'.$filename;
+        $user->save();
+        return response()->json(['success' => 'true', 'message' => 'Profile Image updated successfully'], 200);
+        
+      
+
+    }
+
+    public function updateUser (Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'phone' => 'nullable|string',
+            'timezone' => 'required',
+        ]);
+
+        $user = Auth::user();
+        if ($user->email !== $request->email) {
+            $user->email_verified_at = null;
+        }
+        if ($user->phone_number !== $request->phone) {
+            $user->phone_verified_at = null;
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone;
+        $user->timezone = $request->timezone;
+        $user->save();
+        return response()->json(['success' => 'true', 'message' => 'User updated successfully'], 200);
+    }
 }

@@ -31,13 +31,19 @@ export default class ChangePassword extends React.Component {
         }
         this.changeHandler = this.changeHandler.bind(this);
         this.handlePasswordSubmit = this.handlePasswordSubmit.bind(this);
-        this.timezoneChangeHandler = this.timezoneChangeHandler.bind(this);
+        this.updateUserHandler = this.updateUserHandler.bind(this);
         this.setDefaultState = this.setDefaultState.bind(this);
         this.handlePhoneSubmit = this.handlePhoneSubmit.bind(this);
+        this.handleEmailSubmit = this.handleEmailSubmit.bind(this);
+        this.onChangeFile = this.onChangeFile.bind(this);
     }
     componentDidMount() {
-        document.title = 'Change Password'
-        if (this.props.user) this.setState({ timezone: this.props.user.timezone, phone: this.props.user.phone_number });
+        document.title = 'Change Password';
+
+        if (this.props.user) { 
+            const { name, phone, email, timezone, profile_image } = this.props.user
+            this.setState({ name, phone, email, timezone, profile_image });
+        }
 
         var searchParams = new URLSearchParams(window.location.search);
         if (searchParams.has('identification-code') || this.props.user.do_require_password_change == true) {
@@ -117,13 +123,44 @@ export default class ChangePassword extends React.Component {
         return isValid;
     }
 
-    timezoneChangeHandler(e) {
+    onChangeFile (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        const file = e.target.files[0]
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true });
+
+            var form = new FormData();
+            form.append('profile_image', file);
+
+            HttpClient({
+                url: `/ui/settings/change-profile`, baseURL: "/", method: 'post', headers: { 'Content-Type': 'multipart/form-data' },
+                data: form
+            })
+            // HttpClient.put('/settings/change-profile', form)
+            .then(resp => {
+                toast.success("Profile changed successfully.");
+                this.setDefaultState();
+                (this.props.reloadUser)();
+            }, (err) => {
+
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+
+                this.setState({ isBusy: false, errors: err });
+            })
+        }
+    }
+
+    updateUserHandler(e) {
         e.preventDefault();
 
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
-            HttpClient.put('/settings/change-timezone', { 'timezone': this.state.timezone }).then(resp => {
-                toast.success("Timezone changed successfully.");
+
+            const { name, email, phone, timezone } = this.state;
+            HttpClient.put('/settings/update-user', { name, email, phone, timezone }).then(resp => {
+                toast.success("User updated successfully.");
                 this.setDefaultState();
                 (this.props.reloadUser)();
             }, (err) => {
@@ -166,6 +203,24 @@ export default class ChangePassword extends React.Component {
             })
         }
     }
+    
+    handleEmailSubmit(e) {
+        e.preventDefault();
+        if (!this.state.isBusy) {
+            this.setState({ isBusy: true });
+            HttpClient.put('/settings/change-email', { 'email': this.state.email }).then(resp => {
+                toast.success("Email changed successfully.");
+                this.setDefaultState();
+                (this.props.reloadUser)();
+            }, (err) => {
+
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+
+                this.setState({ isBusy: false, errors: err });
+            })
+        }
+    }
 
     render() {
         return (
@@ -191,19 +246,29 @@ export default class ChangePassword extends React.Component {
                     </ul>
                     <div class="themeTabContent tab-content mb-5" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-personalInfo" role="tabpanel" aria-labelledby="pills-personalInfo-tab">
-                            <form className='profileForm personalInfoForm' onSubmit={this.timezoneChangeHandler}>
+                            <form className='profileForm personalInfoForm' onSubmit={this.updateUserHandler}>
                                 <div className="themeNewInputStyle mb-4 pb-2">
+                                    {
+                                    this.state.profile_image ? 
+                                    // <img class='profileImage' src={'/' + this.state.profile_image} />
+                                    <label htmlFor='addPhoto' className='addPhoto' style={{backgroundImage: `url(/${this.state.profile_image})`}}>
+                                        <input type='file' id='addPhoto' style={{display: 'none'}} onChange={this.onChangeFile}/>
+                                    </label>
+
+                                    : 
                                     <label htmlFor='addPhoto' className='addPhoto'>
                                         <i><img src='/icon-photo.svg' /></i>
                                         <span>Add photo</span>
+                                        <input type='file' id='addPhoto' style={{display: 'none'}} onChange={this.onChangeFile}/>
                                     </label>
+                                    }
                                 </div>
                                 <div className="themeNewInputStyle mb-3">
-                                    <Input type='text' className="form-control" name='' placeholder='Adil Aijaz' value='' />
+                                    <Input type='text' className="form-control" name='name' placeholder='adilaijaz' onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} value={this.state.name} />
                                 </div>
                                 <div className="themeNewInputStyle mb-3 position-relative">
-                                    <a className='btn-update' href='#'>Update</a>
-                                    <Input type='email' className="form-control" name='' placeholder='adilaijaz@gmail.com' value='' />
+                                    <a className='btn-update' onClick={this.handleEmailSubmit} href='javascript:void(0);'>Update</a>
+                                    <Input type='email' className="form-control" name='email' placeholder='adilaijaz@gmail.com' onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} value={this.state.email} />
                                 </div>
                                 <div className="themeNewInputStyle position-relative inputWithIcon mb-3">
                                     <i className='fa fa-link'></i>
