@@ -111,6 +111,8 @@ class GoogleAnalyticsAccountController extends Controller
 
     private function saveGoogleAnalyticsUAPropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user)
     {
+        $colors = GoogleAnalyticsProperty::getColors();
+
         $nGAP = GoogleAnalyticsProperty::createOrUpdate([
             'property_id' => $googleAnalyticsProperty['id'],
             'google_analytics_account_id' => @$googleAnalyticsAccount->id,
@@ -135,6 +137,7 @@ class GoogleAnalyticsAccountController extends Controller
             'child_type' => @$googleAnalyticsProperty['childLink']['type'],
             'child_link' => @$googleAnalyticsProperty['childLink']['href'],
             'permissions' => json_encode(@$googleAnalyticsProperty['permissions']),
+            'color_hex_code' => $colors[rand(0, count($colors) - 1)],
         ]);
 
         return $nGAP;
@@ -142,6 +145,8 @@ class GoogleAnalyticsAccountController extends Controller
 
     private function saveGoogleAnalyticsGA4PropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user)
     {
+        $colors = GoogleAnalyticsProperty::getColors();
+
         $nGAP = GoogleAnalyticsProperty::createOrUpdate([
             'property_id' => explode('/', $googleAnalyticsProperty['name'])[1],
             'google_analytics_account_id' => @$googleAnalyticsAccount->id,
@@ -166,6 +171,7 @@ class GoogleAnalyticsAccountController extends Controller
             'child_type' => @$googleAnalyticsProperty['childLink']['type'],
             'child_link' => @$googleAnalyticsProperty['childLink']['href'],
             'permissions' => json_encode(@$googleAnalyticsProperty['permissions']),
+            'color_hex_code' => $colors[rand(0, count($colors) - 1)],
         ]);
 
         return $nGAP;
