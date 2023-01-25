@@ -94,8 +94,8 @@ export default class CreateUser extends Component {
                         <div className="themeNewInputStyle">
                             <select name="user_level" className="form-control" placeholder='User level' onChange={this.changeHandler} value={this.state.user.user_level}>
                                 <option value="admin">Admin</option>
-                                <option value="team">Team Member</option>
-                                <option value="viewer">Viewer</option>
+                                <option value="team">Read & Write</option>
+                                <option value="viewer">Read</option>
                             </select>
                         </div>
 
