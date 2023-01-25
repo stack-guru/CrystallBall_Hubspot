@@ -218,10 +218,10 @@ export default class GoogleAnalyticsPropertySelect extends Component {
 
 
                     <div>
-                        <h4>
+                        {/* <h4>
                             Selected properties: <span>(Click to remove)</span>
-                        </h4>
-                        <div className="d-flex keywordTags">
+                        </h4> */}
+                        <div className="d-flex keywordTags mt-3">
                             {aProperties.map(itm => {
                                 if (itm.value === "") {
                                     return null;

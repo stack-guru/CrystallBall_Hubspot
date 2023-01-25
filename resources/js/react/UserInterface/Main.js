@@ -165,6 +165,7 @@ class Main extends React.Component {
                             </Route>
                             <Route exact path="/data-source" refresh={true}>
                                 <AppsMarket user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} />
+                                {/* <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} /> */}
                             </Route>
                             <Route exact path="/data-source-old" refresh={true}>
                                 <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} />
