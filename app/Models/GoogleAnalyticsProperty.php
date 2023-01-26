@@ -33,6 +33,7 @@ class GoogleAnalyticsProperty extends Model
         'child_link',
         'permissions',
 
+        'color_hex_code'
     ];
 
     public function scopeOfCurrentUser($query)
@@ -60,4 +61,24 @@ class GoogleAnalyticsProperty extends Model
         return $this->belongsTo(GoogleAnalyticsAccount::class);
     }
 
+    public static function getColors()
+    {
+        return [
+            '#D96FFF',
+            '#A00CE6',
+            '#17DE6B',
+            '#00BB4F',
+            '#04D6E3',
+            '#1976FE',
+            '#1324B0',
+
+            '#FFB8BF',
+            '#FE4C3C',
+            '#DE180E',
+            '#FFE082',
+            '#FFC514',
+            '#FF9147',
+            '#FF6600',
+        ];
+    }
 }
