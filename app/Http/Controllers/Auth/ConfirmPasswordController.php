@@ -55,12 +55,14 @@ class ConfirmPasswordController extends Controller
             return redirect($this->redirectPath());
 
         $this->validate($request, [
+            'name'     => ['required', 'string', 'max:255'],
             'password' => ['confirmed', 'required', 'string', 'min:8', new HasSymbol, new HasLettersNumbers]
         ], [
             'password.min' => 'Must be at least 8 characters.',
         ]);
 
         $user->forceFill([
+            'name' => $request->name,
             'password' => Hash::make($request->password)
         ])->save();
 
@@ -129,7 +131,7 @@ class ConfirmPasswordController extends Controller
         $websiteTechLookup -> save();                                       //save tech lookup (must improve later.)
 
         event(new \Illuminate\Auth\Events\Registered($user));
-
+        return ['user' => $user];
         return redirect($this->redirectPath());
     }
 }
