@@ -17,6 +17,7 @@ export default class ChangePassword extends React.Component {
         super(props);
         this.state = {
             passwords: {
+                current_password: '',
                 new_password: '',
                 new_password_confirmation: '',
 
@@ -80,9 +81,21 @@ export default class ChangePassword extends React.Component {
 
             }, (err) => {
 
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
+                let errors = {};
+                const respErrors = (err.response).data.errors;
 
+                if(respErrors.current_password) {
+                    errors["current_password"] = respErrors.current_password[0];
+                }
+                if(respErrors.new_password) {
+                    errors["new_password"] = respErrors.new_password[0];
+                }
+                if(respErrors.new_password_confirmation) {
+                    errors["new_password_confirmation"] = respErrors.new_password_confirmation[0];
+                }
+
+                this.setState({ isBusy: false, validation: errors });
+            }).catch(err => {
                 this.setState({ isBusy: false, errors: err });
             })
         }
@@ -175,6 +188,7 @@ export default class ChangePassword extends React.Component {
     setDefaultState() {
         this.setState({
             passwords: {
+                current_password: '',
                 new_password: '',
                 new_password_confirmation: '',
             },
@@ -295,7 +309,8 @@ export default class ChangePassword extends React.Component {
                                 </div> */}
                                 <h2>Change password</h2>
                                 <div className="themeNewInputStyle mb-3">
-                                    <input type="password" className="form-control" name="currentPassword" value='' placeholder="Current password" id="" />
+                                    <input type="password" className="form-control" name="current_password" value={this.state.passwords.current_password} onChange={this.changeHandler} placeholder="Current password" id="" />
+                                    {this.state.validation.current_password ? <span className="text-danger mt-1">{this.state.validation.current_password}</span> : ''}
                                 </div>
                                 <div className="themeNewInputStyle mb-3">
                                     <input type="password" className="form-control" name="new_password" value={this.state.passwords.new_password} onChange={this.changeHandler} placeholder="New Password" id="" />
