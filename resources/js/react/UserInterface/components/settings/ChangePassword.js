@@ -137,11 +137,10 @@ export default class ChangePassword extends React.Component {
                 url: `/ui/settings/change-profile`, baseURL: "/", method: 'post', headers: { 'Content-Type': 'multipart/form-data' },
                 data: form
             })
-            // HttpClient.put('/settings/change-profile', form)
             .then(resp => {
                 toast.success("Profile changed successfully.");
                 this.setDefaultState();
-                (this.props.reloadUser)();
+                this.setState({profile_image: resp.data.profile_image})
             }, (err) => {
 
                 this.setState({ isBusy: false, errors: (err.response).data });

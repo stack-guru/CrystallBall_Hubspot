@@ -365,7 +365,7 @@ class HomeController extends Controller
         $user = Auth::user();
         $user->profile_image = 'profiles/'.$filename;
         $user->save();
-        return response()->json(['success' => 'true', 'message' => 'Profile Image updated successfully'], 200);
+        return response()->json(['success' => 'true', 'profile_image' => $user->profile_image, 'message' => 'Profile Image updated successfully'], 200);
         
       
 
