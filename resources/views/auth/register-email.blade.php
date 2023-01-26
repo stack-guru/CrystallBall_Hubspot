@@ -10,14 +10,14 @@
                 <form class="form-signin" method="POST" action="{{ route('register') }}">
                 @csrf
                     <h2>Get started for Free</h2>
-                    <div class="themeNewInputStyle mb-3">
+                    {{-- <div class="themeNewInputStyle mb-3">
                         <input type="text" id="inputName" class="form-control @error('name') is-invalid @enderror" placeholder="Full Name" required="" autofocus="" name="name" value="{{ old('name') }}">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-                    </div>
+                    </div> --}}
                     <div class="themeNewInputStyle mb-3">
                         <input type="email" id="inputEmail" class="form-control @error('email') is-invalid @enderror" placeholder="Email address" required="" autofocus="" name="email" value="{{ old('email') }}">
                         @error('email')

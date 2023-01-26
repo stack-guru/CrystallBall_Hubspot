@@ -31,6 +31,15 @@
 
                 @if ($verified)
                     <div class="form-signin">
+                        <h2>Enter Your Name</h2>
+                        <div class="themeNewInputStyle mb-3">
+                            <input type="text" id="inputName" class="form-control @error('name') is-invalid @enderror" placeholder="Full Name" required="" autofocus="" name="name" value="{{ old('name') }}">
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
                         <h2>Set Your Password</h2>
                         <div class="themeNewInputStyle mb-3">
                             <input type="password" id="inputPassword"

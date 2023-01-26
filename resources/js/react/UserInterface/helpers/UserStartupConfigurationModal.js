@@ -87,6 +87,7 @@ export default class UserStartupConfigurationModal extends Component {
         }
     }
     render() {
+        if (!this.props.isOpen) return null;
         const { stepNumber, automations, integrations, views } = this.state;
         const list = [];
         {this.state.user.starter_configuration_checklist.map(checklist =>

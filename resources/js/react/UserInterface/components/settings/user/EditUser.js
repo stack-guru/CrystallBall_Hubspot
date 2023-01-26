@@ -85,10 +85,9 @@ export default class EditUser extends Component {
                     <div className='grid2layout'>
                         <div className="themeNewInputStyle">
                             <select name="user_level" className="form-control" onChange={this.changeHandler} value={this.state.user.user_level}>
-                                <option value="">User level</option>
                                 <option value="admin">Admin</option>
-                                <option value="team">Team Member</option>
-                                <option value="viewer">Viewer</option>
+                                <option value="team">Read & Write</option>
+                                <option value="viewer">Read</option>
                             </select>
                         </div>
                         <div className="themeNewInputStyle">

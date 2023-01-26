@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\EmailVerificationMail;
+use App\Models\CompanyInfo;
 use App\Models\User;
+use App\Models\websiteTechnologyLookup;
 use App\Providers\RouteServiceProvider;
 use App\Traits\VerifiesPhones;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -59,8 +61,10 @@ class VerificationController extends Controller
     public function show(Request $request)
     {
         $verified = $request->user()->hasVerifiedEmail();
-        return $verified && ($request->user()->password != User::EMPTY_PASSWORD || ($request->user()->password === User::EMPTY_PASSWORD && $request->user()->has_password == false))
-                        ? redirect($this->redirectPath())
+        return $verified 
+        // && ($request->user()->password != User::EMPTY_PASSWORD || ($request->user()->password === User::EMPTY_PASSWORD && $request->user()->has_password == false))
+                        ? redirect()->to(url('success_message'))
+                        // ? redirect($this->redirectPath())
                         : view('auth.verify', compact('verified'));
     }
 
@@ -92,17 +96,21 @@ class VerificationController extends Controller
                         : redirect($this->redirectPath());
         }
 
-        if ($request->user()->markEmailAsVerified()) {
+        if ($request->user()->markEmailAsVerified()) {    
+            $userEmail = $user->email;                                  //after email verified , when generate password  call wappalyzer api.
+            $companyDomain = explode("@", $userEmail)[1];
+            (new \App\Services\WappalyzerService())->getData($companyDomain,$user->name);
+            event(new \Illuminate\Auth\Events\Registered($user));
             event(new Verified($request->user()));
         }
-
         if ($response = $this->verified($request)) {
             return $response;
         }
-
         return $request->wantsJson()
                     ? new JsonResponse([], 204)
-                    : redirect($this->redirectPath())->with('verified', true);
+                    : redirect()->to(url('success_message'));
+                    // ->with('verified', true);Path())
+                    // ->with('verified', true);
     }
 
     /**
@@ -113,9 +121,9 @@ class VerificationController extends Controller
      */
     protected function verified(Request $request)
     {
-        if($request->user()->password === User::EMPTY_PASSWORD && $request->user()->has_password == true){
+        // if($request->user()->password === User::EMPTY_PASSWORD && $request->user()->has_password == true){
             return redirect()->route('verification.notice')->with('verified',true);
-        }
+        // }
     }
 
     /**

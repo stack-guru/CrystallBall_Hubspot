@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\CompanyInfo;
-use App\Models\websiteTechnologyLookup;
 use App\Providers\RouteServiceProvider;
 use App\Rules\HasLettersNumbers;
 use App\Rules\HasSymbol;
@@ -64,9 +62,7 @@ class ConfirmPasswordController extends Controller
         $user->forceFill([
             'name' => $request->name,
             'password' => Hash::make($request->password)
-        ])->save();             
-        event(new \Illuminate\Auth\Events\Registered($user));
+        ])->save();
         return ['user' => $user];
-        return redirect($this->redirectPath());
     }
 }

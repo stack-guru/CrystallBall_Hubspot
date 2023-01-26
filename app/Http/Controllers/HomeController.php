@@ -43,14 +43,20 @@ class HomeController extends Controller
                 ->update([
                     'last_login_at' => new \DateTime,
                 ]);
-            $user->show_configuration_message = true;
         }
-        if($user->starterConfigurationChecklist()->count() != $user->userStarterConfigurationChecklist()->count())
+        if($user->password === User::EMPTY_PASSWORD && $user->has_password == true)
         {
-            $user->starter_configuration_checklist = $user->starterConfigurationChecklist();
-            $user->user_starter_configuration_checklist = $user->userStarterConfigurationChecklist();
-            $user->user_starter_configuration_checklist_count = $user->userStarterConfigurationChecklist()->count();   
-            $user->show_configuration_message = true; 
+            $user->show_password_message = true;
+        }else
+        {
+            $user->show_password_message = false;
+            if($user->starterConfigurationChecklist()->count() != $user->userStarterConfigurationChecklist()->count())
+            {
+                $user->starter_configuration_checklist = $user->starterConfigurationChecklist();
+                $user->user_starter_configuration_checklist = $user->userStarterConfigurationChecklist();
+                $user->user_starter_configuration_checklist_count = $user->userStarterConfigurationChecklist()->count();   
+                $user->show_configuration_message = true; 
+            }
         }
         // $user->annotations_count = $user->getTotalAnnotationsCount(true);
         $user->google_analytics_properties_in_use_count = $user->googleAnalyticsPropertiesInUse()->count();

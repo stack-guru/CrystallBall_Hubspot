@@ -31,6 +31,8 @@ Route::get('test_fb', function () {
 | contains the "web" middleware group. Now create something great!
 |
  */
+Route::view('email_error','auth.email_error');
+Route::view('success_message','auth.success');
 
 Route::get('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookGet']);
 Route::post('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookPost']);
@@ -102,7 +104,7 @@ Route::group(['prefix' => 'app-sumo', 'as' => 'app-sumo.', 'middleware' => ['aut
     Route::get('password', [App\Http\Controllers\AppSumo\AuthController::class, 'showPasswordForm'])->name('password.index');
     Route::put('password', [App\Http\Controllers\AppSumo\AuthController::class, 'updatePassword'])->name('password.update');
 });
-
+Route::post('ui/generate-password', [App\Http\Controllers\ConfirmPasswordController::class, 'generatePassword'])->name('generate-password');
 Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], function () {
 
     Route::delete('user', [App\Http\Controllers\HomeController::class, 'deleteAccount'])->withoutMiddleware('only.non.empty.password');
@@ -123,7 +125,6 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
     Route::view('api-key', 'ui/app');
     Route::view('notifications', 'ui/app');
     Route::view('analytics-and-business-intelligence', 'ui/app');
-
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
 

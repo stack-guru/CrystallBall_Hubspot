@@ -33,6 +33,7 @@ import AnalyticsAndBusinessIntelligenceIndex from './components/analyticsAndBusi
 import CreatePaymentDetail from './components/settings/CreatePaymentDetail';
 import StartupChecklist from './helpers/StartupChecklist';
 import UserStartupConfigurationModal from './helpers/UserStartupConfigurationModal';
+import AddNewPasswordModal from './helpers/AddNewPasswordModal';
 import InterfaceTour from './helpers/InterfaceTour';
 import IndexDashboard from './components/dashboard/IndexDashboard';
 import IndexAnalytics from './components/dashboard/analytics/IndexAnalytics';
@@ -55,6 +56,7 @@ class Main extends React.Component {
             user: undefined,
             showStartupConfiguration: false,
             showInterfaceTour: false,
+            showPasswordPopup: false,
             showDataSourceTour: false,
             showPromotionPopup: false,
             showTimerPromotionPopup: false,
@@ -116,9 +118,9 @@ class Main extends React.Component {
             <React.Fragment>
                 <div className="sidebar">
                     {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={this.toggleStartupConfiguration} /> */}
-                    {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} user={this.state.user} /> */}
+                    <AddNewPasswordModal show={this.state.showPasswordPopup} user={this.state.user} />
                     {/* <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} /> */}
-
+                    {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} user={this.state.user} /> */}
                     <Sidebar openAnnotationPopup={(mka) => {this.setState({mKeyAnnotation: mka});}} user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
                 </div>
                 {/* <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" /> */}
@@ -165,6 +167,7 @@ class Main extends React.Component {
                             </Route>
                             <Route exact path="/data-source" refresh={true}>
                                 <AppsMarket user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} />
+                                {/* <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} /> */}
                             </Route>
                             <Route exact path="/data-source-old" refresh={true}>
                                 <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} />
@@ -277,6 +280,7 @@ class Main extends React.Component {
                     user: response.data.user,
                     // These states were in use when user startup configuration wizard was enabled
                     showStartupConfiguration: response.data.user.show_configuration_message,
+                    showPasswordPopup: response.data.user.show_password_message,
                     // showInterfaceTour: keepInterfaceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at == null),
                     // showDataSourceTour: keepDataSourceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at !== null && response.data.user.data_source_tour_showed_at == null),
                     showInterfaceTour: keepInterfaceTour ? true : (response.data.user.last_login_at == null),

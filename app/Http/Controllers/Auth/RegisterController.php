@@ -76,7 +76,7 @@ class RegisterController extends Controller
                 function ($attribute, $value, $fail){                                       
                     $domainPart = explode('@', $value)[1] ?? null;
                     if (!$domainPart) {
-                        return false;
+                        $fail('The ' . $attribute . ' is null.');
                     }
                     if ($domainPart == 'gmail.com'
                         || $domainPart == 'outlook.com'
@@ -137,8 +137,14 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
+        $request->merge([
+            'name' => explode('@', $request->email)[0] ?? null
+        ]);
         $this->validator($request->all())->validate();
-
+        $user = User::where('email','LIKE','%'.explode('@', $request->email)[1].'%')->first();
+        if ($user) {
+            return redirect()->to(url('email_error'));
+        }
         event(new \App\Events\RegisteredNewUser($user = $this->create($request->all())));
 
         $this->guard()->login($user);
