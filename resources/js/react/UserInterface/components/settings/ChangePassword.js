@@ -41,7 +41,7 @@ export default class ChangePassword extends React.Component {
     componentDidMount() {
         document.title = 'Change Password';
 
-        if (this.props.user) { 
+        if (this.props.user) {
             const { name, phone, email, timezone, profile_image } = this.props.user
             this.setState({ name, phone, email, timezone, profile_image });
         }
@@ -216,7 +216,7 @@ export default class ChangePassword extends React.Component {
             })
         }
     }
-    
+
     handleEmailSubmit(e) {
         e.preventDefault();
         if (!this.state.isBusy) {
@@ -262,12 +262,12 @@ export default class ChangePassword extends React.Component {
                             <form className='profileForm personalInfoForm' onSubmit={this.updateUserHandler}>
                                 <div className="themeNewInputStyle mb-4 pb-2">
                                     {
-                                    this.state.profile_image ? 
-                                    <label htmlFor='addPhoto' className='addPhoto' style={{backgroundPosition: 'center', backgroundImage: `url(/${this.state.profile_image})`}}>
+                                    this.state.profile_image ?
+                                    <label htmlFor='addPhoto' className='addPhoto' style={{backgroundPosition: 'center', backgroundSize: 'contain', backgroundImage: `url(/${this.state.profile_image})`}}>
                                         <input type='file' id='addPhoto' style={{display: 'none'}} onChange={this.onChangeFile}/>
                                     </label>
 
-                                    : 
+                                    :
                                     <label htmlFor='addPhoto' className='addPhoto'>
                                         <i><img src='/icon-photo.svg' /></i>
                                         <span>Add photo</span>
