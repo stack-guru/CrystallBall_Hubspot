@@ -70,6 +70,7 @@ class AppsMarket extends React.Component {
             userBitbucketAccountsExists: false,
             userGithubAccountsExists: false,
             dsKey: "",
+            dsKeySkip: "",
         };
         this.userDataSourceAddHandler =
             this.userDataSourceAddHandler.bind(this);
@@ -432,7 +433,7 @@ class AppsMarket extends React.Component {
                                     {
                                         id: "014a",
                                         background: "null",
-                                        commingSoon: true,
+                                        dsKey: "is_ds_shopify_annotation_enabled",
                                         text: "See new product data over GA4 metrics.",
                                         logo: "/shopify-small.svg",
                                     },
@@ -455,7 +456,7 @@ class AppsMarket extends React.Component {
                                     <p className="noteText m-0">{item.text}</p>
                                     <button data-dsKey={item.dsKey} onClick={(ev) => {
                                         ev.stopPropagation();
-                                        if (item.commingSoon) { swal.fire("This feature is coming soon. Stay tuned!", "", "info"); } else { this.setState({dsKey: item.dsKey,});}
+                                        if (item.commingSoon) { swal.fire("This feature is coming soon. Stay tuned!", "", "info"); } else { this.setState({dsKey: item.dsKey, dsKeySkip: item.dsKey });}
                                     }} className="btn btn-sm btn-primary flex-shrink-0">Add</button>
                                 </div>))}
                             </Slider>
@@ -540,6 +541,7 @@ class AppsMarket extends React.Component {
                                 onClick={() => {
                                     this.setState({
                                         dsKey: item.dsKey,
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 className="item"
@@ -708,6 +710,7 @@ class AppsMarket extends React.Component {
                                     } else {
                                         this.setState({
                                             dsKey: item.dsKey,
+                                            dsKeySkip: ""
                                         });
                                     }
                                 }}

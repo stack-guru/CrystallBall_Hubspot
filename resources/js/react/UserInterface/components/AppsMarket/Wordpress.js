@@ -80,7 +80,7 @@ class Wordpress extends React.Component {
     render() {
         return (
             <div className="popupContent modal-wordpressUpdates">
-                { !this.state.isRead && !this.props.userServices['is_ds_wordpress_enabled'] ?
+                { !this.state.isRead && !this.props.userServices['is_ds_wordpress_enabled'] && !(this.props.dsKeySkip === 'is_ds_wordpress_enabled') ?
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Wordpress"}

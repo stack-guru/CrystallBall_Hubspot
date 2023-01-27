@@ -18,7 +18,7 @@ class Shopify extends React.Component {
     render() {
         return (
             <div className="popupContent modal-Shopify">
-                { !this.state.isRead && !this.props.userServices['is_ds_google_alerts_enabled'] ? 
+                { !this.state.isRead && !this.props.userServices['is_ds_shopify_annotation_enabled'] && !(this.props.dsKeySkip === 'is_ds_shopify_annotation_enabled') ?
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Shopify"}
@@ -26,7 +26,7 @@ class Shopify extends React.Component {
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
-                /> : 
+                /> :
                 <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
@@ -38,22 +38,9 @@ class Shopify extends React.Component {
                     closeModal={this.props.closeModal}
 
                     serviceName={"Shopify"}
-                    colorKeyName={"google_alerts"}
-                    dsKeyName={"is_ds_google_alerts_enabled"}
-                    creditString={
-                        this.props.userDataSources.google_alert_keywords
-                            ? `${
-                                  this.props.userDataSources
-                                      .google_alert_keywords.length
-                              } / ${
-                                  this.props.user.price_plan
-                                      .google_alert_keyword_count > 0
-                                      ? this.props.user.price_plan
-                                            .google_alert_keyword_count
-                                      : 0
-                              }`
-                            : null
-                    }
+                    colorKeyName={"shopify"}
+                    dsKeyName={"is_ds_shopify_annotation_enabled"}
+                    creditString={null}
                 />
 
                 <DSShopifySelect
@@ -66,7 +53,7 @@ class Shopify extends React.Component {
                     updateGAPropertyId={this.props.updateGAPropertyId}
                     reloadWebMonitors={this.props.reloadWebMonitors}
                 />
-                </> 
+                </>
                 }
             </div>
         );

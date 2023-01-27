@@ -19,7 +19,7 @@ class Apple extends React.Component {
     render() {
         return (
             <div className='popupContent modal-apple'>
-                { !this.state.isRead && !this.props.userServices['is_ds_apple_podcast_annotation_enabled'] ? 
+                { !this.state.isRead && !this.props.userServices['is_ds_apple_podcast_annotation_enabled'] && !(this.props.dsKeySkip === 'is_ds_apple_podcast_annotation_enabled')?
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Apple Podcast"}
@@ -27,7 +27,7 @@ class Apple extends React.Component {
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
-                /> : 
+                /> :
                 <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
