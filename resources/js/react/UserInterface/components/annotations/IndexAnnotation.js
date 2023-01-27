@@ -489,7 +489,7 @@ class IndexAnnotations extends React.Component {
                                                 if(anno.id) {
                                                     this.handleOneSelection(anno.id)
                                                 } else {
-                                                    toast.error("This annotation can't be selected because it don't have id.");
+                                                    toast.error("This annotation can't be selected.");
                                                 }
                                             }
                                             } data-anno_id={anno.id}>

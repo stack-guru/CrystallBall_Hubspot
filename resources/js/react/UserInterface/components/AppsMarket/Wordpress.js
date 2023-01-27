@@ -3,9 +3,10 @@ import ModalHeader from "./common/ModalHeader";
 import DescrptionModalNormal from "./common/DescriptionModalNormal";
 import HttpClient from '../../utils/HttpClient';
 import { toast } from "react-toastify";
+import IndexAPIKey from "../apiKey/IndexAPIKey";
 
 class Wordpress extends React.Component {
-    
+
     constructor() {
         super();
         this.state = {
@@ -20,11 +21,11 @@ class Wordpress extends React.Component {
         this.copyAccessToken = this.copyAccessToken.bind(this)
         this.handleChange = this.handleChange.bind(this)
     }
-    
+
     changeModal() {
         this.setState({isRead: true})
     }
-    
+
     copyAccessToken() {
         let copyText = document.getElementById("input-access-token");
         copyText.select();
@@ -79,7 +80,7 @@ class Wordpress extends React.Component {
     render() {
         return (
             <div className="popupContent modal-wordpressUpdates">
-                { !this.state.isRead && !this.props.userServices['is_ds_wordpress_enabled'] ?  
+                { !this.state.isRead && !this.props.userServices['is_ds_wordpress_enabled'] ?
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Wordpress"}
@@ -87,7 +88,7 @@ class Wordpress extends React.Component {
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
-                /> : 
+                /> :
                 <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
@@ -108,8 +109,8 @@ class Wordpress extends React.Component {
                         </div>
                         <div className="contentBox d-flex flex-column">
                             <p className="mb-3">2. Create API Key</p>
-
-                            <form className='apiKeyForm d-block' onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
+                            <IndexAPIKey currentPricePlan={this.props.currentPricePlan} formOnly={true} />
+                            {/* <form className='apiKeyForm d-block' onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
                                 <h3>Generate token</h3>
                                 <div className="inputplusbutton d-flex">
                                     <div className="themeNewInputGroup themeNewInputStyle">
@@ -128,7 +129,7 @@ class Wordpress extends React.Component {
                                     <i><img src={'/icon-info.svg'} alt={'icon'} className="svg-inject" /></i>
                                     <span>The token will appear only once. Make sure to copy it before leaving this page</span>
                                 </div>
-                            </form>
+                            </form> */}
 
                             {/* <div className="d-flex mb-3 tokenBox">
                                 <div className="themeNewInputGroup">
