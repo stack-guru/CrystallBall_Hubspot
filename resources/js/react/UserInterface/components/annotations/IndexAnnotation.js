@@ -254,7 +254,7 @@ class IndexAnnotations extends React.Component {
                         this.setState({ annotations: annotations });
                     }
 
-                    this.setState({ isBusy: false });
+                    this.setState({ isBusy: false, selectedRows: [] });
 
                     this.setState({
                         allAnnotationsSelected: false,
@@ -305,14 +305,14 @@ class IndexAnnotations extends React.Component {
                             <div className="addAnnotation">
                                 <span>Add Annotation:</span>
                                 <a data-toggle="tooltip" data-placement="top" title="Manual" href="javascript:void(0);" onClick={() => this.props.openAnnotationPopup('manual')}>
-                                    <img className='inject-me' src='/manual.svg' width='16' height='16' alt='menu icon' />
+                                    <img className='inject-me' src='/manual.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/manual.svg"; }} width='16' height='16' alt='menu icon' />
                                 </a>
                                 <Link data-toggle="tooltip" data-placement="top" title="Apps Market" href="/data-source">
-                                    <img className='inject-me' src='/appMarket.svg' width='16' height='16' alt='menu icon' />
+                                    <img className='inject-me' src='/appMarket.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/appMarket.svg"; }} width='16' height='16' alt='menu icon' />
                                 </Link>
                                 {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (
                                     <a data-toggle="tooltip" data-placement="top" title="CSV Upload" onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">
-                                        <img className='inject-me' src='/csvUploadd.svg' width='16' height='16' alt='menu icon' />
+                                        <img className='inject-me' src='/csvUploadd.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/csvUploadd.svg"; }} width='16' height='16' alt='menu icon' />
                                     </a>)
                                 :
                                     null
@@ -321,25 +321,70 @@ class IndexAnnotations extends React.Component {
                         </div>
 
                         <form className="pageFilters d-flex justify-content-between align-items-center">
-                            <FormGroup className="filter-sort position-relative">
-                                <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
-                                <i className="btn-searchIcon left-0">
-                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666" />
-                                    </svg>
-                                </i>
-                                <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
-                                    <option value="Null">Sort By</option>
-                                    <option value="added">Added</option>
-                                    <option value="date">By Date</option>
-                                    <option value="category">By Category</option>
-                                    <option value="ga-property">By GA Property</option>
-                                </select>
-                            </FormGroup>
-
                             <div className="d-flex">
-                                <button className={`btn-extraSelect position-relative ${this.state.selectedRows.length ? 'active' : ''}`}>
+                                <FormGroup className="filter-sort position-relative mr-3">
+                                    <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
+                                    <i className="btn-searchIcon left-0">
+                                        <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666" />
+                                        </svg>
+                                    </i>
+                                    <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                    <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
+                                        <option value="Null">Sort By</option>
+                                        <option value="added">Added</option>
+                                        <option value="date">By Date</option>
+                                        <option value="category">By Category</option>
+                                        <option value="ga-property">By GA Property</option>
+                                    </select>
+                                </FormGroup>
+                                <FormGroup className="filter-sort position-relative">
+                                {this.state.sortBy == "ga-property" ? (
+                                        <GoogleAnalyticsPropertySelect
+                                            name={"googleAnalyticsProperty"}
+                                            id={"googleAnalyticsProperty"}
+                                            currentPricePlan={this.props.user.price_plan}
+                                            value={
+                                                this.state
+                                                    .googleAnalyticsProperty
+                                            }
+                                            onChangeCallback={(e) => {
+                                                this.sortByProperty(
+                                                    e.target.value
+                                                );
+                                            }}
+                                        />
+                                    ) : null}
+
+                                    {this.state.sortBy == "category" ? (
+                                        <select
+                                            name="category"
+                                            id="category"
+                                            value={this.state.category}
+                                            className="form-control"
+                                            onChange={(e) => {
+                                                this.sortByCategory(
+                                                    e.target.value
+                                                );
+                                            }}
+                                        >
+                                            <option value="select-category">
+                                                Select Category
+                                            </option>
+                                            {categories.map((cats) => (
+                                                <option
+                                                    value={cats.category}
+                                                    key={cats.category}
+                                                >
+                                                    {cats.category}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    ) : null}
+                                </FormGroup>
+                            </div>
+                            <div className="d-flex">
+                                <button type="button" className={`btn-extraSelect position-relative ${this.state.selectedRows.length ? 'active' : ''}`}>
                                     <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M7.19922 3.00098H18.1992M7.19922 9.00098H18.1992" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M1.80078 8.98566L2.65792 9.84281L4.80078 7.69995" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -359,7 +404,7 @@ class IndexAnnotations extends React.Component {
                             <div className="btnBox d-flex">
                                 <p className="mb-0">{`${this.state.selectedRows.length} annotations selected`}</p>
                                 <div className="d-flex">
-                                    <button className="btn-cancel">Cancel selection</button>
+                                    <button onClick={() => this.setState({selectedRows: []})} className="btn-cancel">Cancel selection</button>
                                     <button className="btn-delete d-block align-items-center justify-content-center" onClick={this.handleDeleteSelected}>
                                         <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M2.33398 12C1.96732 12 1.65354 11.8696 1.39265 11.6087C1.13132 11.3473 1.00065 11.0333 1.00065 10.6667V2H0.333984V0.666667H3.66732V0H7.66732V0.666667H11.0007V2H10.334V10.6667C10.334 11.0333 10.2035 11.3473 9.94265 11.6087C9.68132 11.8696 9.36732 12 9.00065 12H2.33398ZM9.00065 2H2.33398V10.6667H9.00065V2ZM3.66732 9.33333H5.00065V3.33333H3.66732V9.33333ZM6.33398 9.33333H7.66732V3.33333H6.33398V9.33333ZM2.33398 2V10.6667V2Z" fill="currentColor"/>
@@ -439,7 +484,15 @@ class IndexAnnotations extends React.Component {
                                     }
 
                                     return (
-                                        <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId} key={anno.category + anno.event_name + anno.description + anno.url + anno.id} onClick={() => this.handleOneSelection(anno.id)} data-anno_id={anno.id}>
+                                        <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId} key={anno.category + anno.event_name + anno.description + anno.url + anno.id} onClick={
+                                            () => {
+                                                if(anno.id) {
+                                                    this.handleOneSelection(anno.id)
+                                                } else {
+                                                    toast.error("This annotation can't be selected because it don't have id.");
+                                                }
+                                            }
+                                            } data-anno_id={anno.id}>
 
                                             <span className="checkedIcon"><img src={`/icon-checked.svg`} /></span>
 
@@ -480,29 +533,30 @@ class IndexAnnotations extends React.Component {
                                                 <ul className="d-flex list-unstyled">
                                                     <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
                                                     <li><time datetime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
-                                                    <li>
+                                                    {/* <li>
                                                     <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
                                                         <i className="mr-2">
                                                         <img src={"/icon-chart.svg"} /></i><span>open chart</span>
                                                         </a>
-                                                    </li>
+                                                    </li> */}
                                                 </ul>
 
                                                 <ul className="d-flex list-unstyled">
-                                                    <li>{anno.id ? (
-                                                        <span className="cursor-pointer" onClick={(e) => {e.stopPropagation(); this.toggleStatus(anno.id)}}>
-                                                            {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
-                                                        </span>
-                                                    ) : null}
-                                                    </li>
-                                                    <li>
-                                                        <span className="cursor-pointer" onClick={(e) => {e.stopPropagation(); this.setState({ editAnnotationId: anno.id })}}>
-                                                            <img src={`icon-edit.svg`} />
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span className="text-danger" onClick={(e) => {e.stopPropagation(); this.deleteAnnotation(anno.id); }}><img src={`icon-trash.svg`} /></span>
-                                                    </li>
+                                                    {anno.id ? <>
+                                                        <li>
+                                                            <span className="cursor-pointer" onClick={(e) => {e.stopPropagation(); this.toggleStatus(anno.id)}}>
+                                                                {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span className="cursor-pointer" onClick={(e) => {e.stopPropagation(); this.setState({ editAnnotationId: anno.id })}}>
+                                                                <img src={`icon-edit.svg`} />
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span className="text-danger" onClick={(e) => {e.stopPropagation(); this.deleteAnnotation(anno.id); }}><img src={`icon-trash.svg`} /></span>
+                                                        </li>
+                                                    </>: null}
                                                 </ul>
                                             </div>
 
