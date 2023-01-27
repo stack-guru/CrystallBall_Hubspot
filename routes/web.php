@@ -276,7 +276,10 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
             Route::post('change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword'])->withoutMiddleware('only.non.empty.password');
             Route::put('change-timezone', [App\Http\Controllers\HomeController::class, 'updateTimezone']);
+            Route::put('update-user', [App\Http\Controllers\HomeController::class, 'updateUser']);
             Route::put('change-phone', [App\Http\Controllers\HomeController::class, 'updatePhone']);
+            Route::put('change-email', [App\Http\Controllers\HomeController::class, 'updateEmail']);
+            Route::post('change-profile', [App\Http\Controllers\HomeController::class, 'updateProfile']);
 
             Route::get('facebook-accounts', [App\Http\Controllers\FacebookAutomationController::class, 'UIindex']);
             Route::delete('facebook-account/{facebook_account}', [App\Http\Controllers\FacebookAutomationController::class, 'destroy']);

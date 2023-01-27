@@ -14,7 +14,9 @@ export default class EditUser extends Component {
             user: {
                 name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: '',
                 google_analytics_account_id: [""], team_name: ""
-            }
+            },
+            showConfirmPassword: false,
+            showPassword: false,
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
@@ -71,11 +73,13 @@ export default class EditUser extends Component {
                         </div>
                     </div>
                     <div className='grid2layout'>
-                        <div className="themeNewInputStyle">
-                            <input placeholder='Password' type="password" className="form-control" value={this.state.user.password} onChange={this.changeHandler} id="password" name="password" />
+                        <div className="themeNewInputStyle position-relative inputWithIcon">
+                            <span className="fa cursor-pointer" onClick={() => this.setState({showPassword: !this.state.showPassword})} >{this.state.showPassword ? <img src={"/icon-eye-close.svg"}/> : <img src={"/icon-eye-open.svg"}/>}</span>
+                            <input placeholder='Password' type={this.state.showPassword ? "text" : "password"} className="form-control" value={this.state.user.password} onChange={this.changeHandler} id="password" name="password" />
                         </div>
-                        <div className="themeNewInputStyle">
-                            <input placeholder='Confirm password' type="password" className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" />
+                        <div className="themeNewInputStyle position-relative inputWithIcon">
+                            <span className="fa cursor-pointer" onClick={() => this.setState({showConfirmPassword: !this.state.showConfirmPassword})} >{this.state.showConfirmPassword ? <img src={"/icon-eye-close.svg"}/> : <img src={"/icon-eye-open.svg"}/>}</span>
+                            <input placeholder='Confirm password' type={this.state.showConfirmPassword ? "text" : "password"} className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" />
                         </div>
                     </div>
                     <div className='grid2layout'>
