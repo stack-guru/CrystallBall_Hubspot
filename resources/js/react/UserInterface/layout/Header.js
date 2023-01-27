@@ -86,6 +86,14 @@ class header extends React.Component {
                         :
                         null
                     }
+                    <div className='pr-2'>
+                        <div className='text-right'>
+                            <span>{this.props.user.phone_number} {this.props.user.name}</span>
+                        </div>
+                        <div className='text-right'>
+                            <span>{this.props.user.email}</span>
+                        </div>
+                    </div>
                     <div className="dropdown user-dropdown">
                         <button type='button' className="dropdown-toggle btn-toggle no-after border-0 bg-transparent bdrs-50p p-0" data-toggle="dropdown">
                             <span className="w-2r bdrs-50p text-center gaa-bg-color m-0" id="acronym-holder" alt="">{this.props.user != undefined ? this.props.user.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}</span>

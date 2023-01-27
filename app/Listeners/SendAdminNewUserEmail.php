@@ -28,9 +28,11 @@ class SendAdminNewUserEmail
      */
     public function handle($event)
     {
-        $admin = Admin::first();
+        $admins = Admin::get();
         try {
-            Mail::to($admin)->send(new AdminNewUserRegisterMail($admin, $event->user));
+            foreach($admins as $admin) {
+                Mail::to($admin)->send(new AdminNewUserRegisterMail($admin, $event->user));
+            }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
