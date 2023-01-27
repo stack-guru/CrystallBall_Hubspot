@@ -93,14 +93,14 @@ class VerificationController extends Controller
         if ($request->user()->hasVerifiedEmail()) {
             return $request->wantsJson()
                         ? new JsonResponse([], 204)
-                        : redirect($this->redirectPath());
+                    : redirect()->to(url('success_message'));
         }
+        $userEmail = $user->email;                   //after email verified , when generate password  call wappalyzer api.
+        $companyDomain = explode("@", $userEmail)[1];
+        (new \App\Services\WappalyzerService())->getData($companyDomain,$user->name);
+        event(new \Illuminate\Auth\Events\Registered($user));
 
         if ($request->user()->markEmailAsVerified()) {    
-            $userEmail = $user->email;                                  //after email verified , when generate password  call wappalyzer api.
-            $companyDomain = explode("@", $userEmail)[1];
-            (new \App\Services\WappalyzerService())->getData($companyDomain,$user->name);
-            event(new \Illuminate\Auth\Events\Registered($user));
             event(new Verified($request->user()));
         }
         if ($response = $this->verified($request)) {
@@ -122,7 +122,7 @@ class VerificationController extends Controller
     protected function verified(Request $request)
     {
         // if($request->user()->password === User::EMPTY_PASSWORD && $request->user()->has_password == true){
-            return redirect()->route('verification.notice')->with('verified',true);
+            return redirect()->to(url('success_message'));
         // }
     }
 
