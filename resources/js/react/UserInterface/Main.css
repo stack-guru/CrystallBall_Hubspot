@@ -3288,18 +3288,6 @@ body {
 }
 .themePlanAlertPopupContent {margin: 0;}
 
-
-
-
-
-
-
-
-
-
-
-
-
 .propertyLabel {
     border: 0;
     color: #333;
@@ -3314,6 +3302,9 @@ body {
     flex-wrap: nowrap;
 }
 
+.themeTextSlider .slick-slide.slick-active.slick-current {
+    z-index: 3;
+}
 
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }
