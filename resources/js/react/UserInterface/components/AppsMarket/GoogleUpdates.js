@@ -19,14 +19,14 @@ class GoogleUpdates extends React.Component {
     render() {
         return (
             <div className='popupContent modal-googleUpdates'>
-                { !this.state.isRead && !this.props.userServices['is_ds_google_algorithm_updates_enabled'] ? 
+                { !this.state.isRead && !this.props.userServices['is_ds_google_algorithm_updates_enabled'] && !(this.props.dsKeySkip === 'is_ds_google_algorithm_updates_enabled') ?
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Google Algorithm Updates"}
                     description={"Most of these Google updates are so slight that they go completely unnoticed. However, on occasion, the search engine rolls out major algorithmic updates that significantly impact the Search Engine Results Pages."}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
-                /> : 
+                /> :
                 <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}

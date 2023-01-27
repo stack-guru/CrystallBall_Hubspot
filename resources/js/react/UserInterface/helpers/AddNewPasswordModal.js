@@ -3,6 +3,7 @@ import HttpClient from '../utils/HttpClient'
 import { toast } from 'react-toastify'
 import ErrorAlert from '../utils/ErrorAlert';
 import { loadStateFromLocalStorage, saveStateToLocalStorage, removeStateFromLocalStorage } from '../helpers/CommonFunctions';
+import ModalHeader from '../components/AppsMarket/common/ModalHeader';
 
 export default class AddNewPasswordModal extends React.Component {
     constructor(props) {
@@ -126,35 +127,38 @@ export default class AddNewPasswordModal extends React.Component {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
         const validation = this.state.validation;
+        
         return (
             <div className="modal fade show" id="addNewPasswordModal" tabIndex="-1" role="dialog" aria-labelledby="adwordsClientCustomerIdSaverModalLabel" style={{ 'display': 'block', 'paddingRight': '12px' }}>
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="addNewPasswordModalLabel">Set your Password</h5>
+                <div className="modal-dialog modal-dialog-centered " role="document">
+                    <div className="modal-content  border-0 shadow " style={{ borderRadius: "5%" }}>
+                        <div className='mt-4 text-center'>
+                            <h3 style={{ color: "#2A74E7", fontWeight: "bolder" }} >Almost there...</h3>
                         </div>
                         <form onSubmit={this.submitHandler} id="add-new-password-form">
                             <ErrorAlert errors={this.state.errors} />
                             <div className="modal-body">
-                                <div className="form-group">
-                                    <label htmlFor="">Enter Your Name</label>
-                                    <input type="text" className="form-control" value={this.state.user.name} onChange={this.changeHandler} id="name" name="name" placeholder='Your name *' />
-                                    {validation.name ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.name}</span> : ''}
+
+                                <div className='my-4 d-flex gap-5 flex-column align-items-center'>
+                                    <div className="form-group" style={{ width: "70%" }}>
+                                        <input type="text" className="form-control" value={this.state.user.name} onChange={this.changeHandler} id="name" name="name" placeholder='Full name' />
+                                        {validation.name ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.name}</span> : ''}
+                                    </div>
+                                    <div className="form-group" style={{ width: "70%" }}>
+                                        <input type="password" className="form-control" value={this.state.user.password} onChange={this.changeHandler} id="password" name="password" placeholder='Set password' />
+                                        {validation.password ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.password}</span> : ''}
+                                    </div>
+                                    <div className="form-group" style={{ width: "70%" }}>
+                                        <input type="password" className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" placeholder='Confirm password' />
+                                        {validation.password_confirmation ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.password_confirmation}</span> : ''}
+                                    </div>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="">Password</label>
-                                    <input type="password" className="form-control" value={this.state.user.password} onChange={this.changeHandler} id="password" name="password" placeholder='Your password *' />
-                                    {validation.password ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.password}</span> : ''}
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="">Password</label>
-                                    <input type="password" className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" placeholder='Confirm password *' />
-                                    {validation.password_confirmation ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.password_confirmation}</span> : ''}
+                                
+
+                                <div className='mt-4 text-center'>
+                                    <button type="submit" className="btn-theme" title="submit">Add</button>
                                 </div>
 
-                            </div>
-                            <div className="modal-footer">
-                                <button type="submit" className="btn-theme" title="submit">Add</button>
                             </div>
                         </form>
                     </div>

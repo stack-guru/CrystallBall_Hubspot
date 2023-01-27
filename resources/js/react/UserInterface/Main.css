@@ -836,8 +836,8 @@ body {
 }
 .header {width: 100%;}
 .is-collapsed .header {width: 100%;}
-.page-container,
-.is-collapsed .page-container { padding-left: 110px;}
+/* .page-container, */
+/* .is-collapsed .page-container { padding-left: 110px;} */
 .header.navbar {
     top: 44px;
     left: 0;
@@ -3489,6 +3489,9 @@ body {
 
 
 
+.themeTextSlider .slick-slide.slick-active.slick-current {
+    z-index: 3;
+}
 
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }

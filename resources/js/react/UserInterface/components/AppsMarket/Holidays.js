@@ -19,7 +19,7 @@ class Holidays extends React.Component {
     render() {
         return (
             <div className='popupContent modal-holidays'>
-                { !this.state.isRead && !this.props.userServices['is_ds_holidays_enabled'] ? 
+                { !this.state.isRead && !this.props.userServices['is_ds_holidays_enabled'] && !(this.props.dsKeySkip === 'is_ds_holidays_enabled') ?
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Holidays"}
@@ -27,7 +27,7 @@ class Holidays extends React.Component {
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
-                /> : 
+                /> :
                 <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}

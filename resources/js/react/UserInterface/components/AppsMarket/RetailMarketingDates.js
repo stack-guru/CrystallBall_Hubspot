@@ -20,7 +20,7 @@ class RetailMarketingDates extends React.Component {
     render() {
         return (
             <div className="popupContent modal-retailMrketingDates">
-                { !this.state.isRead && !this.props.userServices['is_ds_retail_marketing_enabled'] ? 
+                { !this.state.isRead && !this.props.userServices['is_ds_retail_marketing_enabled'] && !(this.props.dsKeySkip === 'is_ds_retail_marketing_enabled') ?
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Retail Marketing Dates"}
@@ -28,7 +28,7 @@ class RetailMarketingDates extends React.Component {
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
-                /> : 
+                /> :
                 <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}

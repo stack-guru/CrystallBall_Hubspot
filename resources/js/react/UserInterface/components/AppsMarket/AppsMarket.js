@@ -70,6 +70,7 @@ class AppsMarket extends React.Component {
             userBitbucketAccountsExists: false,
             userGithubAccountsExists: false,
             dsKey: "",
+            dsKeySkip: "",
         };
         this.userDataSourceAddHandler =
             this.userDataSourceAddHandler.bind(this);
@@ -432,7 +433,7 @@ class AppsMarket extends React.Component {
                                     {
                                         id: "014a",
                                         background: "null",
-                                        commingSoon: true,
+                                        dsKey: "is_ds_shopify_annotation_enabled",
                                         text: "See new product data over GA4 metrics.",
                                         logo: "/shopify-small.svg",
                                     },
@@ -450,11 +451,12 @@ class AppsMarket extends React.Component {
                                         text: "Get upfront reminders and advertise on retail marketing dates.",
                                         logo: "/retails-marketing-dates-small.svg",
                                     },
-                                ].map((item) => (<div className="d-flex align-items-center justify-content-between">
+                                ].map((item, i) => (<div key={i} className="d-flex align-items-center justify-content-between">
                                     <span className="githubIcon flex-shrink-0"><img src={item.logo} alt={item.logo} className="svg-inject" /></span>
                                     <p className="noteText m-0">{item.text}</p>
-                                    <button onClick={() => {
-                                        if (item.commingSoon) { swal.fire("This feature is coming soon. Stay tuned!", "", "info"); } else { this.setState({dsKey: item.dsKey,});}
+                                    <button data-dsKey={item.dsKey} onClick={(ev) => {
+                                        ev.stopPropagation();
+                                        if (item.commingSoon) { swal.fire("This feature is coming soon. Stay tuned!", "", "info"); } else { this.setState({dsKey: item.dsKey, dsKeySkip: item.dsKey });}
                                     }} className="btn btn-sm btn-primary flex-shrink-0">Add</button>
                                 </div>))}
                             </Slider>
@@ -539,6 +541,7 @@ class AppsMarket extends React.Component {
                                 onClick={() => {
                                     this.setState({
                                         dsKey: item.dsKey,
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 className="item"
@@ -707,6 +710,7 @@ class AppsMarket extends React.Component {
                                     } else {
                                         this.setState({
                                             dsKey: item.dsKey,
+                                            dsKeySkip: ""
                                         });
                                     }
                                 }}
@@ -901,6 +905,7 @@ class AppsMarket extends React.Component {
                         toggle={() => {
                             this.setState({
                                 dsKey: "",
+                                dsKeySkip: ""
                             });
                         }}
                     >
@@ -911,6 +916,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -941,6 +947,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -971,6 +978,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1001,6 +1009,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1031,6 +1040,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1060,6 +1070,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1090,6 +1101,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1120,6 +1132,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1150,6 +1163,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1181,6 +1195,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1217,6 +1232,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1249,6 +1265,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1281,6 +1298,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1311,6 +1329,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1341,6 +1360,7 @@ class AppsMarket extends React.Component {
                                 closeModal={() => {
                                     this.setState({
                                         dsKey: "",
+                                        dsKeySkip: ""
                                     });
                                 }}
                                 updateUserAnnotationColors={
@@ -1648,7 +1668,7 @@ class AppsMarket extends React.Component {
                 this.sectionToggler(null);
                 this.updateUserService(e);
             }
-            i
+
             if (
                 e.target.name == "is_ds_shopify_annotation_enabled" &&
                 e.target.checked

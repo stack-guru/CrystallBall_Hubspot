@@ -22,7 +22,7 @@ class RankTracking extends React.Component {
     render() {
         return (
             <div className="popupContent modal-rankTracking">
-                { !this.state.isRead && !this.props.userServices['is_ds_keyword_tracking_enabled'] ? 
+                { !this.state.isRead && !this.props.userServices['is_ds_keyword_tracking_enabled'] && !(this.props.dsKeySkip === 'is_ds_keyword_tracking_enabled') ?
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Rank Tracking"}
@@ -30,7 +30,7 @@ class RankTracking extends React.Component {
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
-                /> : 
+                /> :
                 <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
