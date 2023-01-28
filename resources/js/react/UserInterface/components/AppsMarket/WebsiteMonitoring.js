@@ -19,7 +19,7 @@ class WebsiteMonitoring extends React.Component {
     render() {
         return (
             <div className="popupContent modal-websiteMonitoring">
-                { !this.state.isRead && !this.props.userServices['is_ds_web_monitors_enabled'] ? 
+                { (!this.state.isRead && !this.props.userServices['is_ds_web_monitors_enabled']) && !(this.props.dsKeySkip === 'is_ds_web_monitors_enabled') ?
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Website Monitoring"}
@@ -27,7 +27,7 @@ class WebsiteMonitoring extends React.Component {
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
-                /> : 
+                /> :
                 <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}

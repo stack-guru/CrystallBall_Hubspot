@@ -19,7 +19,7 @@ class WordpressUpdates extends React.Component {
     render() {
         return (
             <div className="popupContent modal-wordpressUpdates">
-                { !this.state.isRead && !this.props.userServices['is_ds_wordpress_updates_enabled'] ? 
+                { !this.state.isRead && !this.props.userServices['is_ds_wordpress_updates_enabled'] && !(this.props.dsKeySkip === 'is_ds_wordpress_updates_enabled') ?
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Wordpress Updates"}
@@ -27,7 +27,7 @@ class WordpressUpdates extends React.Component {
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
-                /> : 
+                /> :
                 <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}

@@ -119,8 +119,11 @@ class Main extends React.Component {
                 <div className="sidebar">
                     {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={this.toggleStartupConfiguration} /> */}
                     <AddNewPasswordModal show={this.state.showPasswordPopup} user={this.state.user} />
+
                     {/* <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} /> */}
-                    {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} user={this.state.user} /> */}
+
+                    <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} user={this.state.user} />
+
                     <Sidebar openAnnotationPopup={(mka) => {this.setState({mKeyAnnotation: mka});}} user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
                 </div>
                 {/* <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" /> */}

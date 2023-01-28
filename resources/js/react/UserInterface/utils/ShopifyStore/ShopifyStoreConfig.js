@@ -14,11 +14,15 @@ import {
     CardTitle,
     CardSubtitle,
     Table,
+    Popover,
+    PopoverBody,
 } from "reactstrap";
+import GoogleAnalyticsPropertySelect from "../GoogleAnalyticsPropertySelect";
 
 const ShopifyStoreConfig = (props) => {
     const [existingShopifyItems, setExistingShopifyItems] = useState([]);
     const [inputVale, setInputVale] = useState("");
+    const [activeDeletePopover, setActiveDeletePopover] = useState("");
 
     const getExistingShopifyStore = async () => {
         HttpClient.get(
@@ -59,7 +63,7 @@ const ShopifyStoreConfig = (props) => {
 
     const addAnnotation = async () => {
         toast.info("Creating Annotations");
-        HttpClient.post("/data-source/shopify_url", {shopifyUrl: inputVale, gaPropertyId: props.gaPropertyId || ""})
+        HttpClient.post("/data-source/shopify_url", { shopifyUrl: inputVale, gaPropertyId: props.gaPropertyId || "" })
             .then(
                 () => {
                     props.sectionToggler();
@@ -74,52 +78,118 @@ const ShopifyStoreConfig = (props) => {
             });
     };
     return (
-        <div className="switch-wrapper">
-            <h4 className="gaa-text-primary">Manage Shopify Store</h4>
-            {existingShopifyItems.length ? (
-                <div>
-                    <div>
-                        {existingShopifyItems.map((itm, index) => (
-                            <div>
-                                <h5
-                                    style={{ display: "inline-block" }}
-                                    key={itm.id != "" ? itm.id : index}
-                                >
-                                    <span className="badge badge-pill badge-primary m-1 h5">
-                                        {itm.url}{" "}
-                                        <i
-                                            className="fa fa-times"
-                                            data-apple-podcast-name={itm.url}
-                                            data--apple-podcast-id={itm.id}
-                                            onClick={() => deletePodcasts(itm)}
-                                        ></i>
-                                    </span>
-                                </h5>
-                            </div>
-                        ))}
+        <div className="apps-bodyContent">
+            <div className="white-box">
+                <h4>Add Shopify Store:</h4>
+                <div className="d-flex align-items-center">
+                    <div className="input-group search-input-box">
+                        <input
+                            type="text"
+                            className="form-control search-input themeNewInput"
+                            placeholder="Enter store url"
+                            value={inputVale}
+                            onChange={(e) =>
+                                setInputVale(e.target.value.toLowerCase())
+                            }
+                            onKeyUp={(e) => {
+                                if (e.keyCode === 13) {
+                                    e.persist();
+                                    addAnnotation(e);
+                                }
+                            }}
+                        />
+                        <div className="input-group-append">
+                            <i className="ti-plus"></i>
+                        </div>
                     </div>
-                </div>
-            ) : null}
-            <div>
-                <div className="input-group search-input-box mb-3">
-                    <input
-                        type="text"
-                        className="form-control search-input"
-                        placeholder="Enter the Shopify URL"
-                        value={inputVale}
-                        onChange={(e) =>
-                            setInputVale(e.target.value.toLowerCase())
-                        }
-                        onKeyUp={(e) => {
-                            if (e.keyCode === 13) {
-                                e.persist();
-                                addAnnotation(e);
+                    <span className="betweentext">for</span>
+                    <GoogleAnalyticsPropertySelect
+                        className="themeNewselect"
+                        name="ga_property_id"
+                        id="ga_property_id"
+                        currentPricePlan={props.user.price_plan}
+                        value={props.ga_property_id}
+                        onChangeCallback={(gAP) => {
+                            if (gAP.target.value == "") {
+                                props.updateGAPropertyId(null);
+                                props.loadUserDataSources(null);
+                                props.reloadWebMonitors(null);
+                            } else {
+                                props.updateGAPropertyId(
+                                    gAP.target.value
+                                );
+                                props.loadUserDataSources(
+                                    gAP.target.value
+                                );
+                                props.reloadWebMonitors(
+                                    gAP.target.value
+                                );
                             }
                         }}
+                        components={{
+                            DropdownIndicator: () => null,
+                            IndicatorSeparator: () => null,
+                        }}
+                        placeholder="Select GA Properties"
+                        isClearable={true}
                     />
-                    <div className="input-group-append">
-                        <i className="ti-plus"></i>
-                    </div>
+                </div>
+            </div>
+            <div className="gray-box">
+                <h4>
+                    Active stores: <span>(Click to remove)</span>
+                </h4>
+                <div className="d-flex keywordTags">
+                    {existingShopifyItems?.map((gAK, index) => {
+                        return (
+                            <>
+                                <button
+                                    onClick={() => {
+                                        setActiveDeletePopover(gAK)
+                                    }}
+                                    id={"gAK-" + gAK.id}
+                                    type="button"
+                                    className="keywordTag"
+                                    key={gAK.id}
+                                    user_data_source_id={gAK.id}
+                                >
+                                    <span
+                                        style={{ background: "#2d9cdb" }}
+                                        className="dot"
+                                    ></span>
+                                    {gAK.url}
+                                </button>
+
+                                <Popover
+                                    placement="top"
+                                    target={"gAK-" + gAK.id}
+                                    isOpen={
+                                        activeDeletePopover?.id ===
+                                        gAK.id
+                                    }
+                                >
+                                    <PopoverBody web_monitor_id={gAK.id}>
+                                        Are you sure you want to remove "
+                                        {gAK.url}"?.
+                                    </PopoverBody>
+                                    <button
+                                        onClick={() => deletePodcasts(activeDeletePopover)}
+                                        key={gAK.id}
+                                        user_data_source_id={gAK.id}
+                                    >
+                                        Yes
+                                    </button>
+                                    <button
+                                        onClick={() =>
+                                            setActiveDeletePopover("")
+                                        }
+                                    >
+                                        No
+                                    </button>
+                                </Popover>
+                            </>
+                        );
+                    })}
                 </div>
             </div>
         </div>

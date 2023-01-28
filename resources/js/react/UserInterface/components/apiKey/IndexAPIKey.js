@@ -135,17 +135,17 @@ class IndexAPIKey extends React.Component {
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
-            <div id="apiKeyPage" className="apiKeyPage pageWrapper">
-                <Container>
-                    <div className="pageHeader apiKeyPageHead d-flex justify-content-between align-items-center">
+            <div id="apiKeyPage" className={`${this.props.formOnly ? "" : "apiKeyPage pageWrapper"}`}>
+                <div className={`${this.props.formOnly ? "" : "container"}`}>
+                    {this.props.formOnly ? null : <div className="pageHeader apiKeyPageHead d-flex justify-content-between align-items-center">
                         <h2 className="pageTitle d-flex">API Keys{/* <UserAnnotationColorPicker name="api" value={this.state.userAnnotationColors.api} updateCallback={this.updateUserAnnotationColors} /> */}</h2>
                         <a className='btn-theme-outline' href="/documentation" target="_blank">
                             <i><img src={'/icon-document.svg'} alt={'icon'} className="svg-inject" /></i>
                             <span>See documentation</span>
                         </a>
-                    </div>
+                    </div>}
 
-                    <form className='apiKeyForm d-block' onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
+                        <form className={`${this.props.formOnly ? 'mb-0': ''}  apiKeyForm d-block`} onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
                         <h3>Generate token</h3>
                         <div className="inputplusbutton d-flex">
                             <div className="themeNewInputGroup themeNewInputStyle">
@@ -166,7 +166,7 @@ class IndexAPIKey extends React.Component {
                         </div>
                     </form>
 
-                    <div className="postKeys">
+                    {this.props.formOnly ? null : <div className="postKeys">
                         <h3>Past keys</h3>
                         <div className="postKeysItems">
                             {this.state.apiKeys.map(apiKey => {
@@ -195,8 +195,8 @@ class IndexAPIKey extends React.Component {
                                 </ul>)
                             })}
                         </div>
-                    </div>
-                </Container>
+                    </div>}
+                </div>
             </div>
         );
     }

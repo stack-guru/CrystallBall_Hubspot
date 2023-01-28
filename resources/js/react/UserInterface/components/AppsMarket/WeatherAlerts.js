@@ -20,7 +20,7 @@ class WeatherAlerts extends React.Component {
     render() {
         return (
             <div className="popupContent modal-weatherAlerts">
-                { !this.state.isRead && !this.props.userServices['is_ds_weather_alerts_enabled'] ? 
+                { !this.state.isRead && !this.props.userServices['is_ds_weather_alerts_enabled'] && !(this.props.dsKeySkip === 'is_ds_weather_alerts_enabled') ?
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Weather Alerts"}
@@ -28,7 +28,7 @@ class WeatherAlerts extends React.Component {
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
-                /> : 
+                /> :
                 <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
