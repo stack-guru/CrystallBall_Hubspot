@@ -3478,20 +3478,106 @@ body {
     display: block;
 }
 .popupBtnBox { padding: 42px 0 0; }
+
 .connectGoogleAnalytics {}
 
-
-
-
-
-
-
-
-
-
-.themeTextSlider .slick-slide.slick-active.slick-current {
-    z-index: 3;
+.connectGAandSearchConsole {}
+.connectGAandSearchConsole p {
+    color: #666;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: left;
+    line-height: 23px;
+    margin: 0 0 20px !important;
 }
+.connectGAandSearchConsole .dataTableAnalyticsAccount > div {
+    color: #333;
+    font-size: 14px;
+    font-weight: 400;
+    overflow: hidden;
+    line-height: 18px;
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+.connectGAandSearchConsole .dataTableAnalyticsAccount > div:last-child {margin: 0;}
+.connectGAandSearchConsole .grid2layout{ padding: 10px 1rem; }
+.analyticTopBar {
+    padding: 10px 16px;
+    background: #f0f6ff;
+    border-radius: 8px 8px 0px 0px;
+}
+.connectRecommendedApp {}
+.connectRecommendedApp .items {
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+}
+.connectRecommendedApp .items item {}
+.inviteCoWorkers {}
+.inviteCoWorkers form legend {
+    color: #666;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23px;
+    margin-bottom: 20px;
+}
+.tags { display: flex; gap: 8px; flex-wrap: wrap; padding-bottom: 24px; }
+.tag {
+    display: flex;
+    color: #333;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: right;
+    padding: 4px 14px;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 100px;
+    background: #f2f2f2;
+}
+.inviteForm {}
+.inviteForm fieldset .themeNewInputStyle .invitationEmail{
+    width: 100%;
+    min-height: 107px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 50px 16px 20px;
+    border: 1px solid #e0e0e0;
+}
+.textPlusIcon {
+    top: 20px;
+    left: 16px;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    color: #096db7;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    position: absolute;
+    align-items: center;
+    justify-content: start;
+}
+.textPlusIcon em {
+    font-style: normal;
+    padding-left: 8px;
+}
+.themeTextSlider .slick-slide.slick-active.slick-current { z-index: 3; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }

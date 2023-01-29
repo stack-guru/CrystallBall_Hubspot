@@ -353,8 +353,64 @@ export default class UserStartupConfigurationModal extends Component {
                                     </svg>
                                 </span>
                             </div>
-                            <div className='connectGoogleAnalytics d-flex justify-content-center align-items-center'>
-                                <a href="#"><img src="/images/connect_with_google.svg" width="400" height="auto" /></a>
+                            <div className='connectGAandSearchConsole d-flex flex-column'>
+                                <p className='m-0'>Please select URLs for each property</p>
+                                <div className='dataTableAnalyticsAccount'>
+                                    <div className='d-flex flex-column'>
+                                        <div className='d-flex justify-content-start analyticTopBar'>
+                                            <div className='d-flex align-items-center pr-3'>
+                                                <span className='pr-2'><img src="/icon-g.svg" /></span>
+                                                <span>Adil Aijaz</span>
+                                            </div>
+                                            <div className='d-flex align-items-center'>
+                                                <span className='pr-2'><img src="/icon-bars.svg" /></span>
+                                                <span>Crystal ball</span>
+                                            </div>
+                                        </div>
+                                        <div className='grid2layout'>
+                                            <div className='w-100 d-flex justify-content-between align-items-center'>
+                                                <span>A single property</span>
+                                                <span><img src="/icon-unlink-red.svg" /></span>
+                                            </div>
+                                            <div className="singleCol text-left d-flex flex-column">
+                                                <div className="themeNewInputStyle position-relative w-100">
+                                                    <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                                    <select name="" value='' className="form-control selected">
+                                                        <option value="Null">Select website</option>
+                                                    </select>
+                                                    <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='d-flex flex-column'>
+                                        <div className='d-flex justify-content-start analyticTopBar'>
+                                            <div className='d-flex align-items-center pr-3'>
+                                                <span className='pr-2'><img src="/icon-g.svg" /></span>
+                                                <span>Adil Aijaz</span>
+                                            </div>
+                                            <div className='d-flex align-items-center'>
+                                                <span className='pr-2'><img src="/icon-bars.svg" /></span>
+                                                <span>Crystal ball</span>
+                                            </div>
+                                        </div>
+                                        <div className='grid2layout'>
+                                            <div className='w-100 d-flex justify-content-between align-items-center'>
+                                                <span>A single property</span>
+                                                <span><img src="/icon-unlink-red.svg" /></span>
+                                            </div>
+                                            <div className="singleCol text-left d-flex flex-column">
+                                                <div className="themeNewInputStyle position-relative w-100">
+                                                    <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                                    <select name="" value='' className="form-control selected">
+                                                        <option value="Null">Select website</option>
+                                                    </select>
+                                                    <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div className='popupBtnBox d-flex justify-content-between align-items-center'>
                                 <Button onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(1) }} className="btn-cancel">Skip this</Button>
@@ -417,8 +473,65 @@ export default class UserStartupConfigurationModal extends Component {
                                     </svg>
                                 </span>
                             </div>
-                            <div className='connectGoogleAnalytics d-flex justify-content-center align-items-center'>
-                                <a href="#"><img src="/images/connect_with_google.svg" width="400" height="auto" /></a>
+                            <div className='connectRecommendedApp d-flex justify-content-center align-items-center'>
+                                <div className="items">
+                                    {[
+                                        {
+                                            id: "02",
+                                            background: "#00749a",
+                                            dsKey: "",
+                                            enabled: true,
+                                            premium: false,
+                                            brandName: "Wordpress",
+                                            brandLogo: "/wordpress.svg",
+                                        },
+                                        {
+                                            id: "03",
+                                            background: "null",
+                                            dsKey: "",
+                                            enabled: false,
+                                            premium: false,
+                                            brandName: "Rank Tracking SERP",
+                                            brandLogo: "/serp.svg",
+                                        },
+                                        {
+                                            id: "10",
+                                            background: "#411442",
+                                            dsKey: "",
+                                            enabled: false,
+                                            premium: false,
+                                            commingSoon: true,
+                                            brandName: "slack",
+                                            brandLogo: "/slack.svg",
+                                        },
+                                        {
+                                            id: "11",
+                                            background: "#F8761F",
+                                            dsKey: "",
+                                            enabled: false,
+                                            premium: false,
+                                            commingSoon: true,
+                                            brandName: "Hubspot",
+                                            brandLogo: "/hubspot.svg",
+                                        },
+                                        {
+                                            id: "07",
+                                            background: "#004F9D",
+                                            dsKey: "",
+                                            enabled: false,
+                                            premium: false,
+                                            commingSoon: true,
+                                            brandName: "Facebook Ads",
+                                            brandLogo: "/facebookAds.svg",
+                                        },
+                                    ].map((item, itemKey) => (
+                                        <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color" : item.background || "#e0e0e0",}}>
+                                            { item.enabled ? (<i className="active fa fa-check-circle"></i>) : null }
+                                            <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width='140' />
+                                            { item.premium ? (<span className="btn-premium"><i className="fa fa-diamond"></i><span>Premium</span></span>) : null }
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                             <div className='popupBtnBox d-flex justify-content-between align-items-center'>
                                 <Button onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(1) }} className="btn-cancel">Skip this</Button>
@@ -481,12 +594,77 @@ export default class UserStartupConfigurationModal extends Component {
                                     </svg>
                                 </span>
                             </div>
-                            <div className='connectGoogleAnalytics d-flex justify-content-center align-items-center'>
-                                <a href="#"><img src="/images/connect_with_google.svg" width="400" height="auto" /></a>
+                            <div className='inviteCoWorkers d-flex justify-content-center align-items-center'>
+                                <form className='inviteForm'>
+                                    <legend>Enter details</legend>
+
+                                    <fieldset className='grid2layout'>
+                                        <div className="themeNewInputStyle">
+                                            <input type='text' className='form-control' placeholder='Full name' value='' id='' name='' />
+                                        </div>
+                                        <div className="themeNewInputStyle">
+                                            <input type='email' className='form-control' placeholder='Email' value='' id='' name='' />
+                                        </div>
+                                        <div className="themeNewInputStyle position-relative inputWithIcon">
+                                            <span className="cursor-pointer fa"><img src={"/icon-eye-close.svg"}/></span>
+                                            <input type='password' className='form-control' placeholder='Password' value='' id='' name='' />
+                                        </div>
+                                        <div className="themeNewInputStyle position-relative inputWithIcon">
+                                            <span className="cursor-pointer fa"><img src={"/icon-eye-open.svg"}/></span>
+                                            <input type='password' className='form-control' placeholder='Confirm password' value='' id='' name='' />
+                                        </div>
+                                        <div className="themeNewInputStyle">
+                                            <select name='user_level' className='form-control' placeholder='User level' onChange='' value=''>
+                                                <option value="admin">Admin</option>
+                                                <option value="team">Read & Write</option>
+                                                <option value="viewer">Read</option>
+                                            </select>
+                                        </div>
+                                        <div className="themeNewInputStyle">
+                                            <input type='text' className='form-control' placeholder='Department' value='' id='' name='' />
+                                        </div>
+                                        <div className="themeNewInputStyle position-relative inputWithIcon">
+                                            <span className="cursor-pointer fa"><img src={"/icon-plus.svg"}/></span>
+                                            <input type='text' className='form-control' placeholder='Google accounts' value='' id='' name='' />
+                                        </div>
+                                        <div className="themeNewInputStyle">
+                                            <select name='user_level' className='form-control' placeholder='Team' onChange='' value=''>
+                                                <option value="admin">Admin</option>
+                                                <option value="team">Read & Write</option>
+                                                <option value="viewer">Read</option>
+                                            </select>
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset className="tags">
+                                        <span className="tag">All accounts</span>
+                                        <span className="tag">Crystal account</span>
+                                    </fieldset>
+
+                                    <fieldset>
+                                        <div className="themeNewInputStyle position-relative inputWithIcon">
+                                            <span className="textPlusIcon cursor-pointer">
+                                                <img src={"/icon-email.svg"}/>
+                                                <em>Invitations sent to</em>
+                                            </span>
+                                            <div className='invitationEmail'>
+                                                <div className="tags">
+                                                    <span className="tag">adilaijazwow@gmail.com</span>
+                                                    <span className="tag">wowmail@yahoo.com</span>
+                                                    <span className="tag">Adnie@hotmail.com</span>
+                                                    <span className="tag">Oswald_Ledner73@gmail.com</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
                             </div>
                             <div className='popupBtnBox d-flex justify-content-between align-items-center'>
                                 <Button onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(1) }} className="btn-cancel">Skip this</Button>
-                                <Button className="btn-theme">Continue</Button>
+                                <div>
+                                    <Button className="btn-theme mr-3">Send another</Button>
+                                    <Button className="btn-theme">Continue</Button>
+                                </div>
                             </div>
                         </ModalBody>
                     </div>
