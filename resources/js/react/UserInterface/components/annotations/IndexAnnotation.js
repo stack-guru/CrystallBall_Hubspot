@@ -40,7 +40,7 @@ class IndexAnnotations extends React.Component {
         this.sortByCategory = this.sortByCategory.bind(this);
 
         this.handleChange = this.handleChange.bind(this);
-        this.checkSearchText = this.checkSearchText.bind(this);
+        // this.checkSearchText = this.checkSearchText.bind(this);
 
         this.handleAllSelection = this.handleAllSelection.bind(this);
         this.handleOneSelection = this.handleOneSelection.bind(this);
@@ -179,6 +179,8 @@ class IndexAnnotations extends React.Component {
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+        this.loadAnnotations(null, e.target.value);
+
     }
 
     handleAllSelection(e) {
@@ -269,28 +271,28 @@ class IndexAnnotations extends React.Component {
             });
     }
 
-    checkSearchText(annotation) {
-        if (this.state.searchText.length) {
-            const searchText = this.state.searchText.toLowerCase();
-            if (
-                (annotation.category &&
-                    annotation.category.toLowerCase().indexOf(searchText) >
-                    -1) ||
-                (annotation.event_name &&
-                    annotation.event_name.toLowerCase().indexOf(searchText) >
-                    -1) ||
-                (annotation.description &&
-                    annotation.description.toLowerCase().indexOf(searchText) >
-                    -1) ||
-                (annotation.show_at &&
-                    annotation.show_at.toLowerCase().indexOf(searchText) > -1)
-            ) {
-                return true;
-            }
-            return false;
-        }
-        return true;
-    }
+    // checkSearchText(annotation) {
+    //     if (this.state.searchText.length) {
+    //         const searchText = this.state.searchText.toLowerCase();
+    //         if (
+    //             (annotation.category &&
+    //                 annotation.category.toLowerCase().indexOf(searchText) >
+    //                 -1) ||
+    //             (annotation.event_name &&
+    //                 annotation.event_name.toLowerCase().indexOf(searchText) >
+    //                 -1) ||
+    //             (annotation.description &&
+    //                 annotation.description.toLowerCase().indexOf(searchText) >
+    //                 -1) ||
+    //             (annotation.show_at &&
+    //                 annotation.show_at.toLowerCase().indexOf(searchText) > -1)
+    //         ) {
+    //             return true;
+    //         }
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
     render() {
         let wasLastAnnotationInFuture = true;
@@ -423,7 +425,7 @@ class IndexAnnotations extends React.Component {
                     ) : (
                         <>
                             {this.state.annotations
-                                .filter(this.checkSearchText)
+                                // .filter(this.checkSearchText)
                                 .map((anno, idx) => {
                                     let borderLeftColor = "rgba(0,0,0,.0625)";
                                     let selectedIcon = anno.category;
@@ -579,9 +581,18 @@ class IndexAnnotations extends React.Component {
 
     sort(e) {
         this.setState({ sortBy: e.target.value });
-        if (e.target.value !== "ga-account") {
+        this.loadAnnotations(e.target.value);
+    }
+
+    loadAnnotations (sortColumn, filterName) {
+
+        const { sortBy, searchText } = this.state;
+        const sort = filterName ? sortBy : sortColumn;
+        const filter = sortColumn ? searchText : filterName;
+
+        if (sortColumn !== "ga-account") {
             this.setState({ isLoading: true });
-            HttpClient.get(`/annotation?sortBy=${e.target.value}`)
+            HttpClient.get(`/annotation?sortBy=${sort}&filterBy=${filter}`)
                 .then(
                     (response) => {
                         this.setState({
