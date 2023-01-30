@@ -71,12 +71,17 @@ class AppsMarket extends React.Component {
             userGithubAccountsExists: false,
             dsKey: "",
             dsKeySkip: "",
+            recommendedApps: [],
+            sortBy: '',
+            filter: ''
         };
         this.userDataSourceAddHandler =
             this.userDataSourceAddHandler.bind(this);
         this.userDataSourceDeleteHandler =
             this.userDataSourceDeleteHandler.bind(this);
         this.serviceStatusHandler = this.serviceStatusHandler.bind(this);
+        this.onChangeSortHandler = this.onChangeSortHandler.bind(this);
+        this.onChangeFilterHandler = this.onChangeFilterHandler.bind(this);
 
         this.loadUserDataSources = this.loadUserDataSources.bind(this);
 
@@ -103,6 +108,7 @@ class AppsMarket extends React.Component {
             this.checkUserBitbucketAccount.bind(this);
         this.checkUserGithubAccount = this.checkUserGithubAccount.bind(this);
         this.updateUserService = this.updateUserService.bind(this);
+        this.getRecommendedApps = this.getRecommendedApps.bind(this);
     }
 
     componentDidMount() {
@@ -116,7 +122,7 @@ class AppsMarket extends React.Component {
         this.checkUserFacebookAccount();
         this.checkUserBitbucketAccount();
         this.checkUserGithubAccount();
-
+        this.getRecommendedApps()
         let alertMessage = new URLSearchParams(window.location.search).get(
             "alertMessage"
         );
@@ -284,6 +290,181 @@ class AppsMarket extends React.Component {
         });
 
         this.sectionToggler("edit_keyword");
+    }
+
+    getRecommendedApps (sortColumn, filterName) {
+
+        const { sortBy, filter } = this.state;
+        sortColumn = filterName ? sortBy : sortColumn;
+        filterName = sortColumn ? filter : filterName;
+
+        let apps = [
+            {
+                id: "01",
+                background: "null",
+                dsKey: "is_ds_google_alerts_enabled",
+                enabled:this.state.userServices.is_ds_google_alerts_enabled,
+                premium: false,
+                brandName: "News Alerts",
+                brandLogo: "/newsAlerts.svg",
+            },
+            {
+                id: "02",
+                background: "#00749a",
+                dsKey: "is_ds_wordpress_enabled",
+                enabled:this.state.userServices.is_ds_wordpress_enabled,
+                premium: false,
+                brandName: "Wordpress",
+                brandLogo: "/wordpress.svg",
+            },
+            {
+                id: "30",
+                background: "null",
+                dsKey: "is_ds_wordpress_updates_enabled",
+                enabled:this.state.userServices.is_ds_wordpress_updates_enabled,
+                premium: false,
+                brandName: "Wordpress System Core Updates",
+                brandLogo: "/wordpressSCU.svg",
+            },
+            {
+                id: "03",
+                background: "null",
+                dsKey: "is_ds_keyword_tracking_enabled",
+                enabled:this.state.userServices.is_ds_keyword_tracking_enabled,
+                premium: false,
+                brandName: "Rank Tracking SERP",
+                brandLogo: "/serp.svg",
+            },
+            {
+                id: "04",
+                background: "null",
+                dsKey: "is_ds_weather_alerts_enabled",
+                enabled:this.state.userServices.is_ds_weather_alerts_enabled,
+                premium: false,
+                brandName: "Weather Alerts",
+                brandLogo: "/weatherAlerts.svg",
+            },
+            {
+                id: "05",
+                background: "null",
+                dsKey: "is_ds_google_algorithm_updates_enabled",
+                enabled:this.state.userServices.is_ds_google_algorithm_updates_enabled,
+                premium: false,
+                brandName: "Google Updates",
+                brandLogo: "/googleUpdates.svg",
+            },
+            {
+                id: "09",
+                background: "#1DA1F2",
+                dsKey: "is_ds_twitter_tracking_enabled",
+                enabled:this.state.userServices.is_ds_twitter_tracking_enabled,
+                premium: false,
+                brandName: "Twitter",
+                brandLogo: "/twitter.svg",
+            },
+            {
+                id: "17",
+                background: "null",
+                dsKey: "is_ds_apple_podcast_annotation_enabled",
+                enabled: this.state.userServices.is_ds_apple_podcast_annotation_enabled,
+                premium: false,
+                brandName: "Apple Podcast",
+                brandLogo: "/applePodcast.svg",
+            },
+
+            {
+                id: "19",
+                background: "#24292F",
+                dsKey: "is_ds_github_tracking_enabled",
+                enabled: this.state.userServices.is_ds_github_tracking_enabled,
+                premium: false,
+                brandName: "GitHub",
+                brandLogo: "/github.svg",
+            },
+            {
+                id: "24",
+                background: "null",
+                dsKey: "is_ds_retail_marketing_enabled",
+                enabled: this.state.userServices.is_ds_retail_marketing_enabled,
+                premium: false,
+                brandName: "Retail Marketing Dates",
+                brandLogo: "/retailMarketingDates.svg",
+            },
+            {
+                id: "25",
+                background: "#253858",
+                dsKey: "is_ds_bitbucket_tracking_enabled",
+                enabled: this.state.userServices.is_ds_bitbucket_tracking_enabled,
+                premium: false,
+                brandName: "Bitbucket",
+                brandLogo: "/bitbucket.svg",
+            },
+            {
+                id: "27",
+                background: "null",
+                dsKey: "is_ds_holidays_enabled",
+                enabled: this.state.userServices.is_ds_holidays_enabled,
+                premium: false,
+                brandName: "Holidays",
+                brandLogo: "/holidays.svg",
+            },
+            {
+                id: "28",
+                background: "null",
+                dsKey: "is_ds_web_monitors_enabled",
+                enabled: this.state.userServices.is_ds_web_monitors_enabled,
+                premium: false,
+                brandName: "Website Monitoring",
+                brandLogo: "/websiteMonitoring.svg",
+            },
+            {
+                id: "20",
+                background: "null",
+                dsKey: "is_ds_shopify_annotation_enabled",
+                enabled:this.state.userServices.is_ds_shopify_annotation_enabled,
+                premium: false,
+                brandName: "Shopify",
+                brandLogo: "/shopify.svg",
+            },
+        ];
+
+        const sort_by = (field, reverse, primer) => {
+
+            const key = primer ?
+                function(x) {
+                return primer(x[field])
+                } :
+                function(x) {
+                return x[field]
+                };
+            
+            reverse = !reverse ? 1 : -1;
+            return function(a, b) {
+                return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+            }
+        }
+
+        let sortedData = apps;
+        if (sortColumn) {
+            const column = sortColumn.split(':')[0]
+            const order = sortColumn.split(':')[1]
+            sortedData = apps.sort(sort_by(column, order !== "asc", (a) => (column === 'brandName' ? a.toUpperCase() : !!a)))
+        }
+
+        if (filterName) {
+            sortedData = sortedData.filter(x => x.brandName.toLowerCase().includes(filterName))
+        }
+
+        this.setState({ recommendedApps: sortedData });
+    }
+
+    onChangeSortHandler (data) {
+        this.setState({ sortBy: data.target.value })
+        this.getRecommendedApps(data.target.value);
+    }
+    onChangeFilterHandler (data) {
+        this.setState({ filter: data.target.value })
+        this.getRecommendedApps(null, data.target.value);
     }
 
     render() {
@@ -474,17 +655,17 @@ class AppsMarket extends React.Component {
                                     </svg>
                                 </i>
                                 <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                <Input type="select" name="select" id="dropdownFilters">
+                                <Input type="select" name="select" id="dropdownFilters" onChange={this.onChangeSortHandler}>
                                     <option>Sort by</option>
-                                    <option>Asending</option>
-                                    <option>Desending</option>
-                                    <option>Name</option>
-                                    <option>Date</option>
+                                    <option value="brandName:asc">By Name: ASC</option>
+                                    <option value="brandName:desc">By Name: DESC</option>
+                                    <option value="enabled:asc">By Connected</option>
+                                    <option value="enabled:desc">By Not Connected</option>
                                 </Input>
                             </FormGroup>
                             <FormGroup className="filter-search position-relative">
                                 <Label className="sr-only" for="search">search</Label>
-                                <Input type="search" name="search" id="search" placeholder="with a placeholder"/>
+                                <Input type="search" name="search" id="search" placeholder="Search App to Connect" onChange={this.onChangeFilterHandler}/>
                                 <button className="btn-searchIcon">
                                     <img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search"/>
                                 </button>
@@ -570,135 +751,7 @@ class AppsMarket extends React.Component {
                         <h3 className="h3-title">Recommended For You</h3>
                     </div>
                     <div className="items mb-5">
-                        {[
-                            {
-                                id: "01",
-                                background: "null",
-                                dsKey: "is_ds_google_alerts_enabled",
-                                enabled:this.state.userServices.is_ds_google_alerts_enabled,
-                                premium: false,
-                                brandName: "News Alerts",
-                                brandLogo: "/newsAlerts.svg",
-                            },
-                            {
-                                id: "02",
-                                background: "#00749a",
-                                dsKey: "is_ds_wordpress_enabled",
-                                enabled:this.state.userServices.is_ds_wordpress_enabled,
-                                premium: false,
-                                brandName: "Wordpress",
-                                brandLogo: "/wordpress.svg",
-                            },
-                            {
-                                id: "30",
-                                background: "null",
-                                dsKey: "is_ds_wordpress_updates_enabled",
-                                enabled:this.state.userServices.is_ds_wordpress_updates_enabled,
-                                premium: false,
-                                brandName: "Wordpress System Core Updates",
-                                brandLogo: "/wordpressSCU.svg",
-                            },
-                            {
-                                id: "03",
-                                background: "null",
-                                dsKey: "is_ds_keyword_tracking_enabled",
-                                enabled:this.state.userServices.is_ds_keyword_tracking_enabled,
-                                premium: false,
-                                brandName: "Rank Tracking SERP",
-                                brandLogo: "/serp.svg",
-                            },
-                            {
-                                id: "04",
-                                background: "null",
-                                dsKey: "is_ds_weather_alerts_enabled",
-                                enabled:this.state.userServices.is_ds_weather_alerts_enabled,
-                                premium: false,
-                                brandName: "Weather Alerts",
-                                brandLogo: "/weatherAlerts.svg",
-                            },
-                            {
-                                id: "05",
-                                background: "null",
-                                dsKey: "is_ds_google_algorithm_updates_enabled",
-                                enabled:this.state.userServices.is_ds_google_algorithm_updates_enabled,
-                                premium: false,
-                                brandName: "Google Updates",
-                                brandLogo: "/googleUpdates.svg",
-                            },
-                            {
-                                id: "09",
-                                background: "#1DA1F2",
-                                dsKey: "is_ds_twitter_tracking_enabled",
-                                enabled:this.state.userServices.is_ds_twitter_tracking_enabled,
-                                premium: false,
-                                brandName: "Twitter",
-                                brandLogo: "/twitter.svg",
-                            },
-                            {
-                                id: "17",
-                                background: "null",
-                                dsKey: "is_ds_apple_podcast_annotation_enabled",
-                                enabled: this.state.userServices.is_ds_apple_podcast_annotation_enabled,
-                                premium: false,
-                                brandName: "Apple Podcast",
-                                brandLogo: "/applePodcast.svg",
-                            },
-
-                            {
-                                id: "19",
-                                background: "#24292F",
-                                dsKey: "is_ds_github_tracking_enabled",
-                                enabled: this.state.userServices.is_ds_github_tracking_enabled,
-                                premium: false,
-                                brandName: "GitHub",
-                                brandLogo: "/github.svg",
-                            },
-                            {
-                                id: "24",
-                                background: "null",
-                                dsKey: "is_ds_retail_marketing_enabled",
-                                enabled: this.state.userServices.is_ds_retail_marketing_enabled,
-                                premium: false,
-                                brandName: "Retail Marketing Dates",
-                                brandLogo: "/retailMarketingDates.svg",
-                            },
-                            {
-                                id: "25",
-                                background: "#253858",
-                                dsKey: "is_ds_bitbucket_tracking_enabled",
-                                enabled: this.state.userServices.is_ds_bitbucket_tracking_enabled,
-                                premium: false,
-                                brandName: "Bitbucket",
-                                brandLogo: "/bitbucket.svg",
-                            },
-                            {
-                                id: "27",
-                                background: "null",
-                                dsKey: "is_ds_holidays_enabled",
-                                enabled: this.state.userServices.is_ds_holidays_enabled,
-                                premium: false,
-                                brandName: "Holidays",
-                                brandLogo: "/holidays.svg",
-                            },
-                            {
-                                id: "28",
-                                background: "null",
-                                dsKey: "is_ds_web_monitors_enabled",
-                                enabled: this.state.userServices.is_ds_web_monitors_enabled,
-                                premium: false,
-                                brandName: "Website Monitoring",
-                                brandLogo: "/websiteMonitoring.svg",
-                            },
-                            {
-                                id: "20",
-                                background: "null",
-                                dsKey: "is_ds_shopify_annotation_enabled",
-                                enabled:this.state.userServices.is_ds_shopify_annotation_enabled,
-                                premium: false,
-                                brandName: "Shopify",
-                                brandLogo: "/shopify.svg",
-                            },
-                        ].map((item, itemKey) => (
+                        {this.state.recommendedApps.map((item, itemKey) => (
                             <div
                                 onClick={() => {
                                     if (item.commingSoon) {
