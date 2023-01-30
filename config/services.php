@@ -134,22 +134,21 @@ return [
         'cid' => env('FIRST_PROMOTER_CID'),
     ],
     'facebook'         => [
-//         client's app
-        'client_id'     => '1944502855758578',
-        'client_secret' => 'edad0b998cc735879f3addeaeb907140',
-        'redirect'      => 'https://lukionline.me/socialite/facebook/redirect',
+        'client_id'     => env('FACEBOOK_CLIENT_ID','1944502855758578'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET','edad0b998cc735879f3addeaeb907140'),
+        'redirect'      => env('FACEBOOK_REDIRECT','https://lukionline.me/socialite/facebook/redirect'),
     ],
 
     'instagram'        => [
-        'client_id'     => '417643546831147',
-        'client_secret' => 'af8387d1bf790e75d484e30e4080b4cb',
-        'redirect'      => 'https://lukionline.me/socialite/instagram/redirect',
+        'client_id'     => env('INSTAGRAM_CLIENT_ID','417643546831147'),
+        'client_secret' => env('INSTAGRAM_CLIENT_SECRET','af8387d1bf790e75d484e30e4080b4cb'),
+        'redirect'      => env('INSTAGRAM_REDIRECT','https://lukionline.me/socialite/instagram/redirect'),
     ],
 
     'instagrambasic'   => [
-        'client_id'     => '5322713981188629',
-        'client_secret' => '9a2fd6d6c7c12a8592a1ae1b68613816',
-        'redirect'      => 'https://lukionline.me/socialite/instagrambasic/redirect',
+        'client_id'     => env('INSTAGRAM_BASIC_CLIENT_ID','5322713981188629'),
+        'client_secret' => env('INSTAGRAM_BASIC_CLIENT_SECRET','9a2fd6d6c7c12a8592a1ae1b68613816'),
+        'redirect'      => env('INSTAGRAM_BASIC_REDIRECT','https://lukionline.me/socialite/instagrambasic/redirect'),
     ],
 
     'twitter'          => [
