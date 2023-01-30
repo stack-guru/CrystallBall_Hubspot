@@ -33,7 +33,9 @@ class GoogleAnalyticsProperty extends Model
         'child_link',
         'permissions',
 
-        'color_hex_code'
+        'color_hex_code',
+
+        'google_search_console_site_id'
     ];
 
     public function scopeOfCurrentUser($query)
@@ -80,5 +82,10 @@ class GoogleAnalyticsProperty extends Model
             '#FF9147',
             '#FF6600',
         ];
+    }
+
+    public function googleSearchConsoleSite()
+    {
+        return $this->belongsTo(GoogleSearchConsoleSite::class);
     }
 }

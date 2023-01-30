@@ -18,7 +18,7 @@ class NewsAlerts extends React.Component {
     render() {
         return (
             <div className="popupContent modal-newsAlerts">
-                { !this.state.isRead && !this.props.userServices['is_ds_google_alerts_enabled'] ? 
+                { !this.state.isRead && !this.props.userServices['is_ds_google_alerts_enabled'] && !(this.props.dsKeySkip === 'is_ds_google_alerts_enabled') ?
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"News Alerts"}
@@ -26,7 +26,7 @@ class NewsAlerts extends React.Component {
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
-                /> : 
+                /> :
                 <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
@@ -66,7 +66,7 @@ class NewsAlerts extends React.Component {
                     updateGAPropertyId={this.props.updateGAPropertyId}
                     reloadWebMonitors={this.props.reloadWebMonitors}
                 />
-                </> 
+                </>
                 }
             </div>
         );

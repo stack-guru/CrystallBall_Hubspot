@@ -41,12 +41,28 @@ class GoogleAnalyticsPropertyController extends Controller
             $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->ofCurrentUser()->get();
         }
         // if user's plan is trial or free new than only return 1 ga account with 1 property
-        
+
         // if (Auth::user()->price_plan_id == PricePlan::TRIAL || Auth::user()->price_plan_id == PricePlan::CODE_FREE_NEW) {
         //     $googleAccounts = $googleAccounts->first();
         // }
 
         return ['google_analytics_properties' => $googleAnalyticsProperties];
+    }
+
+    public function update(Request $request, GoogleAnalyticsProperty $googleAnalyticsProperty)
+    {
+        $this->validate($request, [
+            'google_search_console_site_id' => 'bail|required|numeric|exists:google_search_console_sites,ids'
+        ]);
+
+        if (Auth::id() !== $googleAnalyticsProperty->user_id) {
+            abort(404, 'Unable to find referenced Google Analytics Property.');
+        }
+
+        if ($request->has('google_search_console_site_id')) $googleAnalyticsProperty->google_search_console_site_id = $request->google_search_console_site_id;
+        $googleAnalyticsProperty->save();
+
+        return ['google_analytics_property' => $googleAnalyticsProperty];
     }
 
     public function destroy(GoogleAnalyticsProperty $googleAnalyticsProperty)
