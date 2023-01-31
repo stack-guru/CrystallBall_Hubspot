@@ -261,10 +261,17 @@ class AnnotationController extends Controller
             $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
         }
         // Add limit for annotations if the price plan is limited in annotations count
-        if ($user->pricePlan->annotations_count > 0) {
-            $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
-        }
+        $offset = $request->query('offset');
 
+        $limit = 10;
+        $annotations_count = $user->pricePlan->annotations_count;
+        if($annotations_count > 0 && $annotations_count < $offset + 10) {
+            $limit = $annotations_count - $offset; 
+        }
+        if ($annotations_count && ($offset - $annotations_count > 10 || $limit < 0)) {
+            $limit = 0;
+        }
+        $annotationsQuery .= " LIMIT $limit OFFSET $offset";
         $annotations = DB::select($annotationsQuery);
 
         return ['annotations' => $annotations, 'query' => $annotationsQuery];

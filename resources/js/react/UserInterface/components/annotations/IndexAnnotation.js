@@ -11,6 +11,7 @@ import xor from 'lodash/xor';
 import AppsModal from "../AppsMarket/AppsModal";
 import AnnotationsUpdate from './EditAnnotation';
 import ShowChartAnnotation from './ShowChartAnnotation';
+import throttle from 'lodash/throttle';
 
 class IndexAnnotations extends React.Component {
     constructor() {
@@ -32,6 +33,7 @@ class IndexAnnotations extends React.Component {
             selectedRows: [],
             editAnnotationId: '',
             showChartAnnotationId: '',
+            offset: 0,
         };
         this.deleteAnnotation = this.deleteAnnotation.bind(this);
         this.toggleStatus = this.toggleStatus.bind(this);
@@ -40,7 +42,7 @@ class IndexAnnotations extends React.Component {
         this.sortByCategory = this.sortByCategory.bind(this);
 
         this.handleChange = this.handleChange.bind(this);
-        // this.checkSearchText = this.checkSearchText.bind(this);
+        this.registerScrollEvent = this.registerScrollEvent.bind(this);
 
         this.handleAllSelection = this.handleAllSelection.bind(this);
         this.handleOneSelection = this.handleOneSelection.bind(this);
@@ -57,24 +59,8 @@ class IndexAnnotations extends React.Component {
                     this.setState({
                         userAnnotationColors: resp.data.user_annotation_color,
                     });
-                    HttpClient.get(`/annotation`)
-                        .then(
-                            (response) => {
-                                this.setState({
-                                    annotations: response.data.annotations,
-                                    isLoading: false,
-                                });
-                            },
-                            (err) => {
-                                this.setState({
-                                    errors: err.response.data,
-                                    isLoading: false,
-                                });
-                            }
-                        )
-                        .catch((err) => {
-                            this.setState({ errors: err, isLoading: false });
-                        });
+                    this.registerScrollEvent()
+                    this.loadInitAnnotations()
                     HttpClient.get(`/annotation-categories`)
                         .then(
                             (response) => {
@@ -175,6 +161,27 @@ class IndexAnnotations extends React.Component {
                     this.setState({ isBusy: false, errors: err });
                 });
         }
+    }
+
+    loadInitAnnotations () {
+        HttpClient.get(`/annotation?offset=${this.state.offset}`)
+            .then(
+                (response) => {
+                    this.setState({
+                        annotations: this.state.annotations.concat(response.data.annotations),
+                        isLoading: false,
+                    });
+                },
+                (err) => {
+                    this.setState({
+                        errors: err.response.data,
+                        isLoading: false,
+                    });
+                }
+            )
+            .catch((err) => {
+                this.setState({ errors: err, isLoading: false });
+            });
     }
 
     handleChange(e) {
@@ -584,15 +591,26 @@ class IndexAnnotations extends React.Component {
         this.loadAnnotations(e.target.value);
     }
 
+    registerScrollEvent() {
+        $(window).off('scroll');
+        $(window).on('scroll', function() {
+            if($(window).scrollTop() + $(window).height() === $(document).height() ) {
+                const offset = this.state.offset + 10
+                this.setState({ offset })
+                this.loadInitAnnotations();
+            }
+        }.bind(this));
+    }
+
     loadAnnotations (sortColumn, filterName) {
 
-        const { sortBy, searchText } = this.state;
+        const { sortBy, searchText, offset } = this.state;
         const sort = filterName ? sortBy : sortColumn;
         const filter = sortColumn ? searchText : filterName;
 
         if (sortColumn !== "ga-account") {
             this.setState({ isLoading: true });
-            HttpClient.get(`/annotation?sortBy=${sort}&filterBy=${filter}`)
+            HttpClient.get(`/annotation?sortBy=${sort}&filterBy=${filter}&offset=0`)
                 .then(
                     (response) => {
                         this.setState({
