@@ -30,5 +30,7 @@ class UserAnnotationColor extends Model
         'github_tracking',
         'twitter_tracking',
         'wordpress',
+        'shopify',
+        'apple_podcast',
     ];
 }
