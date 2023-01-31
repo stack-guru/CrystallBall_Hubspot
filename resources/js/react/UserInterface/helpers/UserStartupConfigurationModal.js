@@ -719,7 +719,7 @@ export default class UserStartupConfigurationModal extends Component {
                             <h1>Good work, Adil!</h1>
                             <p>Now you can go to your dashboard and do some productive work. Hooray 🎉</p>
                             <div className='d-flex justify-content-center'>
-                                <Button className='btn-theme' onClick={() => { this.recordStepResponse('START', true); this.incrementStep(1) }}>Go to Dashboard</Button>
+                                <Button className='btn-theme' onClick={() => { this.props.closeModal() }}>Go to Dashboard</Button>
                             </div>
                         </ModalBody>
                     </div>
