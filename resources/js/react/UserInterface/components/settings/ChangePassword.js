@@ -276,11 +276,11 @@ export default class ChangePassword extends React.Component {
                                     }
                                 </div>
                                 <div className="themeNewInputStyle mb-3">
-                                    <Input type='text' className="form-control" name='name' placeholder='adilaijaz' onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} value={this.state.name} />
+                                    <Input type='text' className="form-control" name='name' placeholder='Enter your name' onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} value={this.state.name} />
                                 </div>
                                 <div className="themeNewInputStyle mb-3 position-relative">
                                     <a className='btn-update' onClick={this.handleEmailSubmit} href='javascript:void(0);'>Update</a>
-                                    <Input type='email' className="form-control" name='email' placeholder='adilaijaz@gmail.com' onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} value={this.state.email} />
+                                    <Input type='email' className="form-control" name='email' placeholder='Enter your email address' onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} value={this.state.email} />
                                 </div>
                                 <div className="themeNewInputStyle position-relative inputWithIcon mb-3">
                                     <i className='fa fa-link'></i>
