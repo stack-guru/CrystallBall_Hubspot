@@ -383,10 +383,10 @@ class Sidebar extends React.Component {
                     </ul>
                 </nav>
                 <div className="btn-holder dropdown-holder">
-                    <div class="btn-group dropup">
+                    <div className="btn-group dropup">
                         <button
                             type="button"
-                            class="btn-addAnnotation btn btn-primary d-flex align-items-center justify-content-center dropdown-toggle"
+                            className="btn-addAnnotation btn btn-primary d-flex align-items-center justify-content-center dropdown-toggle"
                             data-toggle="dropdown"
                             aria-expanded="false"
                         >
@@ -398,12 +398,12 @@ class Sidebar extends React.Component {
                             />
                             <span>Add Annotation</span>
                         </button>
-                        <div class="dropdown-menu">
+                        <div className="dropdown-menu">
                             <h4 className="mb-0">Add Annotation</h4>
-                            <div class="dropdown-divider"></div>
+                            <div className="dropdown-divider"></div>
                             <div className="ropdown-links">
                                 <a
-                                    class="dropdown-item"
+                                    className="dropdown-item"
                                     href="javascript:void(0);"
                                     onClick={() => this.props.openAnnotationPopup('manual')}
                                 >
@@ -420,7 +420,7 @@ class Sidebar extends React.Component {
                                     </span>
                                     <span className="pl-2">Manual</span>
                                 </a>
-                                <a class="dropdown-item" href="/data-source">
+                                <a className="dropdown-item" href="/data-source">
                                     <span>
                                         <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
                                             <path
@@ -435,7 +435,7 @@ class Sidebar extends React.Component {
                                 {this.props.user.user_level == "admin" ||
                                     this.props.user.user_level == "team" ? (
                                     <a
-                                        class="dropdown-item"
+                                        className="dropdown-item"
                                         href="javascript:void(0);"
                                         onClick={() => this.props.openAnnotationPopup('upload')}
                                     >

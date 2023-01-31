@@ -102,10 +102,10 @@ export default class UserStartupConfigurationModal extends Component {
                     <>
                         <div className="d-flex">
                             <aside className="popupSidebar p-6">
-                                <div class="progressbar d-flex align-items-center">
+                                <div className="progressbar d-flex align-items-center">
                                     <span className='ml-2'>20%</span>
-                                    <div class="progress flex-grow-1">
-                                        <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div className="progress flex-grow-1">
+                                        <div className="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div className="checklist">
@@ -158,10 +158,10 @@ export default class UserStartupConfigurationModal extends Component {
                 modalBodyFooter = [
                     <div className="d-flex">
                         <aside className="popupSidebar p-6">
-                            <div class="progressbar d-flex align-items-center">
+                            <div className="progressbar d-flex align-items-center">
                                 <span className='ml-2'>20%</span>
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div className="progress flex-grow-1">
+                                    <div className="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div className="checklist">
@@ -240,10 +240,10 @@ export default class UserStartupConfigurationModal extends Component {
                 modalBodyFooter = [
                     <div className="d-flex">
                         <aside className="popupSidebar p-6">
-                            <div class="progressbar d-flex align-items-center">
+                            <div className="progressbar d-flex align-items-center">
                                 <span className='ml-2'>20%</span>
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div className="progress flex-grow-1">
+                                    <div className="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div className="checklist">
@@ -304,10 +304,10 @@ export default class UserStartupConfigurationModal extends Component {
                 modalBodyFooter = [
                     <div className="d-flex">
                         <aside className="popupSidebar p-6">
-                            <div class="progressbar d-flex align-items-center">
+                            <div className="progressbar d-flex align-items-center">
                                 <span className='ml-2'>20%</span>
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div className="progress flex-grow-1">
+                                    <div className="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div className="checklist">
@@ -424,10 +424,10 @@ export default class UserStartupConfigurationModal extends Component {
                 modalBodyFooter = [
                     <div className="d-flex">
                         <aside className="popupSidebar p-6">
-                            <div class="progressbar d-flex align-items-center">
+                            <div className="progressbar d-flex align-items-center">
                                 <span className='ml-2'>20%</span>
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div className="progress flex-grow-1">
+                                    <div className="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div className="checklist">
@@ -545,10 +545,10 @@ export default class UserStartupConfigurationModal extends Component {
                 modalBodyFooter = [
                     <div className="d-flex">
                         <aside className="popupSidebar p-6">
-                            <div class="progressbar d-flex align-items-center">
+                            <div className="progressbar d-flex align-items-center">
                                 <span className='ml-2'>20%</span>
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div className="progress flex-grow-1">
+                                    <div className="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div className="checklist">
@@ -674,10 +674,10 @@ export default class UserStartupConfigurationModal extends Component {
                 modalBodyFooter = [
                     <div className="d-flex">
                         <aside className="popupSidebar p-6">
-                            <div class="progressbar d-flex align-items-center">
+                            <div className="progressbar d-flex align-items-center">
                                 <span className='ml-2'>20%</span>
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div className="progress flex-grow-1">
+                                    <div className="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div className="checklist">

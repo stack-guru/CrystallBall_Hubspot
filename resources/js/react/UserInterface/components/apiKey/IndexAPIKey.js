@@ -173,7 +173,7 @@ class IndexAPIKey extends React.Component {
                                 return (<ul className="postKeyItem" key={apiKey.id}>
                                     <li className='align-align-items-start'>
                                         <h6>{apiKey.name}</h6>
-                                        <div class="dropup">
+                                        <div className="dropup">
                                             <button className="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" ariaHaspopup="true" ariaExpanded="false">
                                                 <i><img src={'/icon-elipsis-v.svg'} alt={'icon'} className="svg-inject" /></i>
                                             </button>
