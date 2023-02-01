@@ -162,8 +162,13 @@ class IndexAnnotations extends React.Component {
         }
     }
 
-    loadInitAnnotations () {
-        HttpClient.get(`/annotation?offset=${this.state.offset}`)
+    loadInitAnnotations (sortColumn = null, filterName = null) {
+
+        const { sortBy, searchText, offset } = this.state;
+        const sort = filterName ? sortBy : sortColumn;
+        const filter = sortColumn ? searchText : filterName;
+
+        HttpClient.get(`/annotation?sortBy=${sort}&filterBy=${filter}&offset=${offset}`)
             .then(
                 (response) => {
                     this.setState({
@@ -581,30 +586,9 @@ class IndexAnnotations extends React.Component {
 
     loadAnnotations (sortColumn, filterName) {
 
-        const { sortBy, searchText, offset } = this.state;
-        const sort = filterName ? sortBy : sortColumn;
-        const filter = sortColumn ? searchText : filterName;
-
         if (sortColumn !== "ga-account") {
             this.setState({ isLoading: true });
-            HttpClient.get(`/annotation?sortBy=${sort}&filterBy=${filter}&offset=0`)
-                .then(
-                    (response) => {
-                        this.setState({
-                            isLoading: false,
-                            annotations: response.data.annotations,
-                        });
-                    },
-                    (err) => {
-                        this.setState({
-                            isLoading: false,
-                            errors: err.response.data,
-                        });
-                    }
-                )
-                .catch((err) => {
-                    this.setState({ isLoading: false, errors: err });
-                });
+            this.loadInitAnnotations(sortColumn, filterName)
         }
     }
     sortByProperty(gaPropertyId) {

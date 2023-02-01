@@ -144,7 +144,7 @@ export default class UserStartupConfigurationModal extends Component {
                         <div className="d-flex">
                             {popupSidebar}
                             <ModalBody className='p-6 contentArea helloContent flex-grow-1'>
-                                <h1>Hello Adil 👋</h1>
+                                <h1>Hello {this.state.user.name} 👋</h1>
                                 <strong>Let's get you started.</strong>
                                 <p>Based on your website, we recommend you some steps to enhance your experience. You can see the checklist on left, and even if you cancel, you can resume the setup whenever you like from the header</p>
                                 <div className='d-flex justify-content-center'>
@@ -241,7 +241,7 @@ export default class UserStartupConfigurationModal extends Component {
                                         <div className='d-flex justify-content-start analyticTopBar'>
                                             <div className='d-flex align-items-center pr-3'>
                                                 <span className='pr-2'><img src="/icon-g.svg" /></span>
-                                                <span>Adil Aijaz</span>
+                                                <span>{this.state.user.name}</span>
                                             </div>
                                             <div className='d-flex align-items-center'>
                                                 <span className='pr-2'><img src="/icon-bars.svg" /></span>
@@ -268,7 +268,7 @@ export default class UserStartupConfigurationModal extends Component {
                                         <div className='d-flex justify-content-start analyticTopBar'>
                                             <div className='d-flex align-items-center pr-3'>
                                                 <span className='pr-2'><img src="/icon-g.svg" /></span>
-                                                <span>Adil Aijaz</span>
+                                                <span>{this.state.user.name}</span>
                                             </div>
                                             <div className='d-flex align-items-center'>
                                                 <span className='pr-2'><img src="/icon-bars.svg" /></span>
@@ -450,7 +450,7 @@ export default class UserStartupConfigurationModal extends Component {
                                             </span>
                                             <div className='invitationEmail'>
                                                 <div className="tags">
-                                                    <span className="tag">adilaijazwow@gmail.com</span>
+                                                    <span className="tag">{this.state.user.email}</span>
                                                     <span className="tag">wowmail@yahoo.com</span>
                                                     <span className="tag">Adnie@hotmail.com</span>
                                                     <span className="tag">Oswald_Ledner73@gmail.com</span>
@@ -477,7 +477,7 @@ export default class UserStartupConfigurationModal extends Component {
                         {popupSidebar}
                         <ModalBody className='p-6 contentArea goodWork flex-grow-1'>
                             <strong><img src="/allDone.svg" width={180} height={180} /></strong>
-                            <h1>Good work, Adil!</h1>
+                            <h1>Good work, {this.state.user.name}!</h1>
                             <p>Now you can go to your dashboard and do some productive work. Hooray 🎉</p>
                             <div className='popupBtnBox d-flex justify-content-center'>
                                 <Button className='btn-theme' onClick={() => { this.props.closeModal() }}>Go to Dashboard</Button>

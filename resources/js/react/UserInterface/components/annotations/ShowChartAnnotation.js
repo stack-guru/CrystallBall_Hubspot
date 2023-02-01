@@ -16,7 +16,7 @@ export default class ShowChartAnnotation extends React.Component {
                     <figure className='theme-insights'><img src='/insights.jpeg' alt='image'/></figure>
                     <div className='flex-grow-1 d-flex flex-column'>
                         <h3>Developed radical application | Website update</h3>
-                        <p className='mb-0'>Text for dummy text New annotation regarding new finals of the event lorem ipsum dummy text here Adil put here new text Text for dummy text New annotation regarding new finals of the event lorem ipsum dummy text here Adil put here new text.</p>
+                        <p className='mb-0'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum nulla consectetur euismod tristique. Curabitur fermentum eros non elit elementum, aliquet vestibulum metus mollis. Proin ac aliquam quam. Quisque vestibulum tincidunt quam sit amet porttitor. Aenean eleifend egestas ante, eget vulputate arcu venenatis sit amet. Aenean sit amet magna dolor. Donec at lacus in erat iaculis lacinia.</p>
                     </div>
                 </div>
                 <div className="apps-bodyContent">
