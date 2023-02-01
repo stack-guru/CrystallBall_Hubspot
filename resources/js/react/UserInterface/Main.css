@@ -148,20 +148,14 @@ setting-menu-item.dropdown {transition: 0.3s ease;}
     transition: 0.4s;
 }
 
-.switch input:checked + .slider {
-    background-color: #4caf50;
-}
+.switch input:checked + .slider { background-color: #4caf50; }
+.switch input:focus + .slider { box-shadow: 0 0 1px #4caf50; }
 
-.switch input:focus + .slider {
-    box-shadow: 0 0 1px #4caf50;
-}
-
-.switch input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
+.apps-modalHead .switch input:checked + .slider { background-color: #0BD25F;}
+.apps-modalHead .switch input:focus + .slider { box-shadow: 0 0 1px #0BD25F;}
+.apps-modalHead .trigger .slider:before { width: 20px; }
+.switch input:checked + .slider:before {transform: translateX(26px);}
+.apps-modalHead .switch input:checked + .slider:before {transform: translateX(23px);}
 /* Rounded sliders */
 .switch .slider.round {
     border-radius: 34px;
@@ -935,7 +929,7 @@ body {
     right: 0;
     border: 0;
     padding: 0;
-    width: 44px;
+    width: 38px;
     height: 44px;
     display: flex;
     line-height: 44px;
@@ -986,7 +980,7 @@ body {
 .sidebar:hover .btn-addAnnotation,
 .is-collapsed .sidebar:hover .btn-addAnnotation span {display: block;}
 .is-collapsed .btn-addAnnotation span { display: none; }
-.appMarket { padding: 50px 0; }
+.appMarket { padding: 50px 0 150px; }
 .pageTitle {
     color: #096db7;
     font-size: 40px;
@@ -995,15 +989,17 @@ body {
     margin-bottom: 50px;
 }
 .pageNote {
+    background: #fff;
+    border-radius: 16px;
+    margin-bottom: 50px;
+    box-shadow: 0px 8px 32px -6px rgba(0, 0, 0, 0.14);
+}
+.noteSlideerContent {
     padding: 60px;
     color: #333;
     font-size: 24px;
     font-weight: 400;
     line-height: 30px;
-    background: #fff;
-    border-radius: 16px;
-    margin-bottom: 50px;
-    box-shadow: 0px 8px 32px -6px rgba(0, 0, 0, 0.14);
 }
 .githubIcon {
     width: 56px;
@@ -1089,7 +1085,7 @@ body {
 .items {
     gap: 24px;
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 /* .items > div { padding: 12px; } */
 .boxWhite {
@@ -1708,7 +1704,8 @@ body {
     border-radius: 12px;
     background: #f7faff;
 }
-.contentBox button {
+.inputplusbutton .btn-theme-success/* ,
+.contentBox button  */{
     border: 0;
     color: #fff;
     font-size: 16px;
@@ -1886,12 +1883,18 @@ body {
     border: 2px solid #1976fe;
 }
 .btn-adduser span{ padding-left: 10px;}
-.dataTableusers .tableHead.singleRow {padding: 0 24px 24px;}
+.dataTableusers .tableHead.singleRow {padding: 0 12px 32px;}
+.dataTableusers .tableHead.singleRow .singleCol {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23px;
+}
 .dataTableusers .tableBody .singleRow {
     border: 0;
-    padding: 24px;
+    padding: 24px 12px;
     border-radius: 8px;
     background: #fff;
+    margin-bottom: 20px;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
 }
 .dataTableusers .tableBody .singleRow .form-control {
@@ -2084,12 +2087,25 @@ body {
     background-color: #fff;
     border: 1px solid #1976fe;
 }
-.apiKeyForm .btn-theme-outline-sm {
+.apiKeyForm .themeNewInputGroup .btn-theme-outline-sm {
     top: 12px;
+    margin: 0;
     z-index: 2;
     right: 12px;
+    display: flex;
+    font-size: 14px;
+    color: #1976fe;
+    font-weight: 600;
+    line-height: 18px;
+    padding: 8px 16px;
     position: absolute;
+    align-items: center;
+    border-radius: 100px;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #1976FE;
 }
+.apiKeyForm .themeNewInputGroup .btn-theme-outline-sm i {padding-right: 6px;}
 .apiKeyForm {margin-bottom: 80px;}
 .postKeys {}
 .postKeys h3{
@@ -2502,7 +2518,10 @@ body {
     height: 100%;
 }
 .notificationPageHead { padding-bottom: 70px; }
-.dataTableNotifiction .tableHead { padding-bottom: 32px; }
+.dataTableNotifiction .tableHead {
+    padding-top: 0;
+    padding-bottom: 32px;
+}
 
 .dataTableNotifiction .tableBody .singleRow .singleCol:first-child,
 .dataTableNotifiction .tableHead div:first-child { flex-grow: 1; }
@@ -3200,7 +3219,7 @@ body {
     height: calc(1.5em + 0.75rem + 8px);
 }
 .filter-sort select.form-control {
-    padding-left: 56px;
+    padding-left: 38px;
     padding-right: 56px;
     -webkit-appearance: none;
 }
@@ -3629,21 +3648,46 @@ body {
 .goodWork h1 { margin: 0 0 24px; }
 .goodWork p { margin: 0; }
 .colorPalette {
+    top: 28px;
+    left: 24px;
     z-index: 2;
     position: absolute;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
-.colorPalette > div:first-child{display: none;}
-.colorPalette > div:first-nth-child(2){
-    top: -8px !important;
-    left: 15px !important;
+.colorPalette .github-picker {
+    border: 0 !important;
+    border-radius: 6px !important;
+    padding: 14px 12px !important;
+    box-shadow: 0px 3px 12px rgb(0 0 0 / 20%) !important;
 }
+.colorPalette .github-picker > div:nth-child(1){display: none;}
+.colorPalette .github-picker > div:nth-child(2){
+    /* top: -8px !important;
+    left: 15px !important; */
+    left: calc(50% - 7px) !important;
+}
+
+
+
+
+
+
 .modal-createAnnotation { padding: 0 10px 10px; }
+.modal-createUser .themeNewInputStyle .css-yk16xz-control,
+.modal-createUser .themeNewInputStyle .css-1pahdxg-control,
+.modal-createUser .themeNewInputStyle .form-control,
 .modal-createAnnotation .themeNewInputStyle .css-yk16xz-control,
 .modal-createAnnotation .themeNewInputStyle .css-1pahdxg-control,
 .modal-createAnnotation .themeNewInputStyle .form-control {
     height: 38px;
 }
+.modal-createUser .themeNewInputStyle .css-g1d714-ValueContainer,
 .modal-createAnnotation .themeNewInputStyle .css-g1d714-ValueContainer{ height: 36px; }
+.modal-createUser .inputWithIcon .fa,
 .modal-createAnnotation .inputWithIcon .fa{
     height: 38px;
     height: 38px;
@@ -3654,10 +3698,17 @@ body {
     line-height: 30px;
 }
 .modal-createAnnotation .apps-modalHead { padding-bottom: 32px; }
-
-
-
-
+.boxWhite.comingSoon { padding: 24px; }
+.boxWhite.comingSoon h4 { margin-bottom: 24px; }
+.items.analyticsAndBITools,
+.recommendedForYou { margin-bottom: 65px; }
+.modal-createUser {padding: 0 10px 10px;}
+.modal-createUser .apps-modalHead {padding-bottom: 2rem;}
+.modal-createUser .apps-modalHead h2 {
+    font-size: 24px;
+    color: #096DB7;
+    line-height: 30px;
+}
 
 
 

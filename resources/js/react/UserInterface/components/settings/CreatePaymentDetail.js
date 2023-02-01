@@ -85,7 +85,8 @@ export default class CreatePaymentDetail extends Component {
                                 {/* <input placeholder="" type="text" value={this.state.paymentDetail.expiry_month} onChange={this.changeHandler} className="form-control" id="expiryMonth" name="expiry_month" /> */}
                                 <input placeholder="Expiry date (mm/yy)" type="text" value={this.state.paymentDetail.expiry_year} onChange={this.changeHandler} className="form-control" id="expiryYear" name="expiry_year" />
                             </div>
-                            <div className="themeNewInputStyle">
+                            <div className="themeNewInputStyle position-relative inputWithIcon">
+                                <i className="fa"><img src="/icon-eye-close.svg"/></i>
                                 <input placeholder="CVV" type="text" value={this.state.paymentDetail.security_code} onChange={this.changeHandler} className="form-control" id="securityCode" name="security_code" />
                             </div>
                         </div>

@@ -283,7 +283,7 @@ export default class ChangePassword extends React.Component {
                                     <Input type='email' className="form-control" name='email' placeholder='Enter your email address' onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} value={this.state.email} />
                                 </div>
                                 <div className="themeNewInputStyle position-relative inputWithIcon mb-3">
-                                    <i className='fa fa-link'></i>
+                                    <i className='fa'><img src='/icon-chain-gray.svg'/></i>
                                     <Input type='url' className="form-control" name='' placeholder='https://awesomecompany.com' value='' />
                                 </div>
                                 <div className="themeNewInputStyle mb-3 position-relative">
@@ -312,7 +312,8 @@ export default class ChangePassword extends React.Component {
                                     <input type="password" className="form-control" name="current_password" value={this.state.passwords.current_password} onChange={this.changeHandler} placeholder="Current password" id="" />
                                     {this.state.validation.current_password ? <span className="text-danger mt-1">{this.state.validation.current_password}</span> : ''}
                                 </div>
-                                <div className="themeNewInputStyle mb-3">
+                                <div className="themeNewInputStyle mb-3 inputWithIcon position-relative">
+                                    <i className='fa'><img src='/icon-eye-close.svg'/></i>
                                     <input type="password" className="form-control" name="new_password" value={this.state.passwords.new_password} onChange={this.changeHandler} placeholder="New Password" id="" />
                                     {this.state.validation.new_password ? <span className="text-danger mt-1">{this.state.validation.new_password}</span> : ''}
                                 </div>
