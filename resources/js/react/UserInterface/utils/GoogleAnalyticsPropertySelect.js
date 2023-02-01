@@ -19,6 +19,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         };
         this.searchGoogleAnalyticsProperties = this.searchGoogleAnalyticsProperties.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
+        this.deleteKeyword = this.deleteKeyword.bind(this);
     }
 
     componentDidMount() {
@@ -43,6 +44,13 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 this.setState({ aProperties: this.props.aProperties });
             }
         }
+    }
+
+    deleteKeyword(e) {
+        console.log(e)
+
+        // In Progress
+        // this.props.onChangeCallback();
     }
 
     searchGoogleAnalyticsProperties(keyword, callback) {
@@ -132,7 +140,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             if (this.props.multiple) {
                 aProperties = sOption.filter(sO => sO.value !== "");
             } else {
-                aProperties = sOption;
+                aProperties = [sOption];
             }
             this.setState({ aProperties: aProperties });
             if (this.props.multiple) (this.props.onChangeCallback)({

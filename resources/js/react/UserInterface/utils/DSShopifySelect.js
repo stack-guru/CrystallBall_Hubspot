@@ -73,21 +73,10 @@ export default class DSShopifySelect extends React.Component {
                             currentPricePlan={this.props.user.price_plan}
                             value={this.props.ga_property_id}
                             onChangeCallback={(gAP) => {
-                                if (gAP.target.value == "") {
-                                    this.props.updateGAPropertyId(null);
-                                    this.props.loadUserDataSources(null);
-                                    this.props.reloadWebMonitors(null);
-                                } else {
-                                    this.props.updateGAPropertyId(
-                                        gAP.target.value
-                                    );
-                                    this.props.loadUserDataSources(
-                                        gAP.target.value
-                                    );
-                                    this.props.reloadWebMonitors(
-                                        gAP.target.value
-                                    );
-                                }
+                                const targetValue = gAP.target.value || null
+                                this.props.updateGAPropertyId(targetValue);
+                                this.props.loadUserDataSources(targetValue);
+                                this.props.reloadWebMonitors(targetValue);
                             }}
                             components={{
                                 DropdownIndicator: () => null,
