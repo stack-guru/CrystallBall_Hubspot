@@ -148,20 +148,14 @@ setting-menu-item.dropdown {transition: 0.3s ease;}
     transition: 0.4s;
 }
 
-.switch input:checked + .slider {
-    background-color: #4caf50;
-}
+.switch input:checked + .slider { background-color: #4caf50; }
+.switch input:focus + .slider { box-shadow: 0 0 1px #4caf50; }
 
-.switch input:focus + .slider {
-    box-shadow: 0 0 1px #4caf50;
-}
-
-.switch input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
+.apps-modalHead .switch input:checked + .slider { background-color: #0BD25F;}
+.apps-modalHead .switch input:focus + .slider { box-shadow: 0 0 1px #0BD25F;}
+.apps-modalHead .trigger .slider:before { width: 20px; }
+.switch input:checked + .slider:before {transform: translateX(26px);}
+.apps-modalHead .switch input:checked + .slider:before {transform: translateX(23px);}
 /* Rounded sliders */
 .switch .slider.round {
     border-radius: 34px;
@@ -995,15 +989,17 @@ body {
     margin-bottom: 50px;
 }
 .pageNote {
+    background: #fff;
+    border-radius: 16px;
+    margin-bottom: 50px;
+    box-shadow: 0px 8px 32px -6px rgba(0, 0, 0, 0.14);
+}
+.noteSlideerContent {
     padding: 60px;
     color: #333;
     font-size: 24px;
     font-weight: 400;
     line-height: 30px;
-    background: #fff;
-    border-radius: 16px;
-    margin-bottom: 50px;
-    box-shadow: 0px 8px 32px -6px rgba(0, 0, 0, 0.14);
 }
 .githubIcon {
     width: 56px;
@@ -3652,14 +3648,34 @@ body {
 .goodWork h1 { margin: 0 0 24px; }
 .goodWork p { margin: 0; }
 .colorPalette {
+    top: 28px;
+    left: 24px;
     z-index: 2;
     position: absolute;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
-.colorPalette > div:first-child{display: none;}
-.colorPalette > div:first-nth-child(2){
-    top: -8px !important;
-    left: 15px !important;
+.colorPalette .github-picker {
+    border: 0 !important;
+    border-radius: 6px !important;
+    padding: 14px 12px !important;
+    box-shadow: 0px 3px 12px rgb(0 0 0 / 20%) !important;
 }
+.colorPalette .github-picker > div:nth-child(1){display: none;}
+.colorPalette .github-picker > div:nth-child(2){
+    /* top: -8px !important;
+    left: 15px !important; */
+    left: calc(50% - 7px) !important;
+}
+
+
+
+
+
+
 .modal-createAnnotation { padding: 0 10px 10px; }
 .modal-createUser .themeNewInputStyle .css-yk16xz-control,
 .modal-createUser .themeNewInputStyle .css-1pahdxg-control,

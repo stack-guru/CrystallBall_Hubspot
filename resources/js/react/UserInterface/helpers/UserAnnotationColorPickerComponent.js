@@ -71,9 +71,9 @@ export default class UserAnnotationColorPicker extends React.Component {
                     this.state.displayColorPicker ? <div className="colorPalette">
                         <div onClick={this.handleClose} />
                         <GithubPicker
-                            width={192}
+                            width={199}
                             color={this.props.value}
-                            colors={['#f98258', '#f7c45e', '#149966', '#be95c4', '#227c9d', '#ea636d', '#685599', '#17c3b2', '#96735c', '#a33d4b',]}
+                            colors={['#D96FFF', '#A00CE6', '#17DE6B', '#00BB4F', '#04D6E3', '#1976FE', '#1324B0', '#FFB8BF', '#FE4C3C', '#DE180E', '#FFE082', '#FFC514', '#FF9147', '#FF6600']}
                             onChangeComplete={this.handleChange}
                         />
                     </div> : null
