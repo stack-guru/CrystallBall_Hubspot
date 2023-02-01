@@ -247,7 +247,7 @@ export default class CreateAnnotation extends React.Component {
 
                         <div className='grid2layout'>
                             <div className="themeNewInputStyle position-relative inputWithIcon">
-                                <i class="fa fa-link"></i>
+                                <i className="icon fa"><img src='/icon-chain-gray.svg'/></i>
                                 <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control" id="url" name="url" placeholder='https://' />
                                 {validation.url ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.url}</span> : ''}
                             </div>

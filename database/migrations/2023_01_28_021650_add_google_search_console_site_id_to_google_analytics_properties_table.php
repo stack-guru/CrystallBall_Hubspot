@@ -15,7 +15,7 @@ class AddGoogleSearchConsoleSiteIdToGoogleAnalyticsPropertiesTable extends Migra
     {
         Schema::table('google_analytics_properties', function (Blueprint $table) {
             $table->bigInteger('google_search_console_site_id')->nullable()->unsigned();
-            $table->foreign('google_search_console_site_id', 'ga_properties_g_search_console_site_id_foreign')->references('id')->on('users');
+            $table->foreign('google_search_console_site_id', 'ga_properties_g_search_console_site_id_foreign')->references('id')->on('google_search_console_sites');
         });
     }
 

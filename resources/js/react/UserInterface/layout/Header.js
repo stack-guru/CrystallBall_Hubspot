@@ -50,7 +50,7 @@ class header extends React.Component {
                         null
                     }
 
-                    {this.props.user.price_plan.code == "free new" ? <p class="trial-countdown">You are on the Fee Plan</p> : null}
+                    {this.props.user.price_plan.code == "free new" ? <p className="trial-countdown">You are on the Fee Plan</p> : null}
 
                     {
                         this.props.user.price_plan.price == 0 ?
@@ -118,7 +118,7 @@ class header extends React.Component {
                                             {this.props.user.google_analytics_properties_in_use_count} / {this.props.user.price_plan.google_analytics_property_count == -1 ? 0 : (this.props.user.price_plan.google_analytics_property_count == 0 ? "∞" : this.props.user.price_plan.google_analytics_property_count)}
                                         </span>
                                     </div>
-                                    {this.props.user.price_plan.code == "free new" ? <p class="trial-countdown mt-4">You are on the Free Plan</p> : null}
+                                    {this.props.user.price_plan.code == "free new" ? <p className="trial-countdown mt-4">You are on the Free Plan</p> : null}
                                     <ProgressBar completed={this.props.user.price_plan.google_analytics_property_count ? (((this.props.user.google_analytics_properties_in_use_count / this.props.user.price_plan.google_analytics_property_count) * 100) || 10) : 10}/>
                                 </li>
                                 <li className='annotation'>

@@ -65,20 +65,20 @@ export default class UserAnnotationColorPicker extends React.Component {
         // });
 
         return (
-            <>
+            <div className="position-relative">
                 <div onClick={this.handleClick} className="user-annotation-color-picker" style={{ backgroundColor: this.props.value }}></div>
                 {
-                    this.state.displayColorPicker ? <div style={{ position: 'absolute', zIndex: '2', }}>
+                    this.state.displayColorPicker ? <div className="colorPalette">
                         <div onClick={this.handleClose} />
                         <GithubPicker
-                            width={137}
+                            width={192}
                             color={this.props.value}
                             colors={['#f98258', '#f7c45e', '#149966', '#be95c4', '#227c9d', '#ea636d', '#685599', '#17c3b2', '#96735c', '#a33d4b',]}
                             onChangeComplete={this.handleChange}
                         />
                     </div> : null
                 }
-            </>
+            </div>
         )
         // return <input className="user-annotation-color-picker" type="color" name={props.name} value={props.value} onInput={(e) => {
         //     HttpClient.post(`/data-source/user-annotation-color`, { [props.name]: e.target.value }).then(resp => {

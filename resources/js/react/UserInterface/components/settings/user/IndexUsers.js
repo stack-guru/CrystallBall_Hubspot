@@ -99,7 +99,7 @@ export default class IndexUsers extends Component {
                                     <>
                                         {this.props.user.price_plan
                                             .user_per_ga_account_count > -1 ? (
-                                            <a onClick={() => this.setState({ addUserPopup: true })} href="javascript:void(0);" class="btn-adduser d-flex align-items-center justify-content-center">
+                                            <a onClick={() => this.setState({ addUserPopup: true })} href="javascript:void(0);" className="btn-adduser d-flex align-items-center justify-content-center">
                                                 <i className="fa fa-plus"></i>
                                                 <span>Add User</span>
                                             </a>
@@ -130,7 +130,7 @@ export default class IndexUsers extends Component {
                                                 });
 
                                             }}
-                                                class="btn-adduser d-flex align-items-center justify-content-center"
+                                                className="btn-adduser d-flex align-items-center justify-content-center"
                                             >
                                                 <i className="fa fa-plus"></i>
                                                 <span>Add User</span>

@@ -524,7 +524,6 @@ export default class GoogleAccountIndex extends React.Component {
     fetchGAAccounts(id) {
         this.setState({ isBusy: true });
         return HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
-            console.log(resp)
             toast.success("Accounts fetched.");
             this.setState({ isBusy: false })
             return this.getGAAccounts() && this.getGAProperties();

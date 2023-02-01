@@ -87,6 +87,47 @@ export default class UserStartupConfigurationModal extends Component {
         }
     }
     render() {
+        const popupSidebar = <aside className="popupSidebar p-6">
+            <div className="progressbar d-flex align-items-center">
+                <span className='ml-2'>20%</span>
+                <div className="progress flex-grow-1">
+                    <div className="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div className="checklist">
+                <strong>Checklist</strong>
+                <ul>
+                    <li>
+                        <span className='status-icon checked'><img src="./icon-checked-green.svg" /></span>
+                        <span className='pl-2'>Invite Co-workers</span>
+                    </li>
+                    <li>
+                        <span className='status-icon current'><img className='loader' src="./icon-current.svg" /></span>
+                        <span className='pl-2'>Install Chrome Extension</span>
+                    </li>
+                    <li>
+                        <span className='status-icon icon-list'></span>
+                        <span className='pl-2'>Connect Apps</span>
+                    </li>
+                    <li>
+                        <span className='status-icon icon-list'></span>
+                        <span className='pl-2'>Another Item</span>
+                    </li>
+                    <li>
+                        <span className='status-icon icon-list'></span>
+                        <span className='pl-2'>Download Blah</span>
+                    </li>
+                </ul>
+            </div>
+            <button className='btn-bookADemo'>
+                <span>Book a Demo</span>
+                <span className='ml-2'>
+                    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.58475 8.28475C8.44126 8.14125 8.37238 7.96786 8.37812 7.76457C8.38434 7.56128 8.45919 7.38789 8.60269 7.24439L10.6296 5.21749H1.6296C1.42631 5.21749 1.25579 5.14861 1.11803 5.01085C0.980749 4.87357 0.912109 4.70329 0.912109 4.5C0.912109 4.29671 0.980749 4.12619 1.11803 3.98843C1.25579 3.85115 1.42631 3.78251 1.6296 3.78251H10.6296L8.58475 1.73767C8.44126 1.59417 8.36951 1.42365 8.36951 1.2261C8.36951 1.02903 8.44126 0.858744 8.58475 0.715246C8.72825 0.571749 8.89878 0.5 9.09632 0.5C9.29339 0.5 9.46368 0.571749 9.60718 0.715246L12.8897 3.99776C12.9614 4.06951 13.0124 4.14723 13.0425 4.23094C13.0722 4.31465 13.087 4.40433 13.087 4.5C13.087 4.59566 13.0722 4.68535 13.0425 4.76906C13.0124 4.85277 12.9614 4.93049 12.8897 5.00224L9.58924 8.30269C9.4577 8.43423 9.29339 8.5 9.09632 8.5C8.89878 8.5 8.72825 8.42825 8.58475 8.28475Z" fill="#096DB7" />
+                    </svg>
+                </span>
+            </button>
+        </aside>
         // if (!this.props.isOpen) return null;
         const { stepNumber, automations, integrations, views } = this.state;
         const list = [];
@@ -101,48 +142,8 @@ export default class UserStartupConfigurationModal extends Component {
                 modalBodyFooter = [
                     <>
                         <div className="d-flex">
-                            <aside className="popupSidebar p-6">
-                                <div class="progressbar d-flex align-items-center">
-                                    <span className='ml-2'>20%</span>
-                                    <div class="progress flex-grow-1">
-                                        <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div className="checklist">
-                                    <strong>Checklist</strong>
-                                    <ul>
-                                        <li>
-                                            <span className='status-icon checked'><img src="./icon-checked-green.svg" /></span>
-                                            <span className='pl-2'>Invite Co-workers</span>
-                                        </li>
-                                        <li>
-                                            <span className='status-icon current'><img src="./icon-current.svg" /></span>
-                                            <span className='pl-2'>Install Chrome Extension</span>
-                                        </li>
-                                        <li>
-                                            <span className='status-icon icon-list'></span>
-                                            <span className='pl-2'>Connect Apps</span>
-                                        </li>
-                                        <li>
-                                            <span className='status-icon icon-list'></span>
-                                            <span className='pl-2'>Another Item</span>
-                                        </li>
-                                        <li>
-                                            <span className='status-icon icon-list'></span>
-                                            <span className='pl-2'>Download Blah</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <button className='btn-bookADemo'>
-                                    <span>Book a Demo</span>
-                                    <span className='ml-2'>
-                                        <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M8.58475 8.28475C8.44126 8.14125 8.37238 7.96786 8.37812 7.76457C8.38434 7.56128 8.45919 7.38789 8.60269 7.24439L10.6296 5.21749H1.6296C1.42631 5.21749 1.25579 5.14861 1.11803 5.01085C0.980749 4.87357 0.912109 4.70329 0.912109 4.5C0.912109 4.29671 0.980749 4.12619 1.11803 3.98843C1.25579 3.85115 1.42631 3.78251 1.6296 3.78251H10.6296L8.58475 1.73767C8.44126 1.59417 8.36951 1.42365 8.36951 1.2261C8.36951 1.02903 8.44126 0.858744 8.58475 0.715246C8.72825 0.571749 8.89878 0.5 9.09632 0.5C9.29339 0.5 9.46368 0.571749 9.60718 0.715246L12.8897 3.99776C12.9614 4.06951 13.0124 4.14723 13.0425 4.23094C13.0722 4.31465 13.087 4.40433 13.087 4.5C13.087 4.59566 13.0722 4.68535 13.0425 4.76906C13.0124 4.85277 12.9614 4.93049 12.8897 5.00224L9.58924 8.30269C9.4577 8.43423 9.29339 8.5 9.09632 8.5C8.89878 8.5 8.72825 8.42825 8.58475 8.28475Z" fill="#096DB7" />
-                                        </svg>
-                                    </span>
-                                </button>
-                            </aside>
-                            <ModalBody className='p-6 contentArea flex-grow-1'>
+                            {popupSidebar}
+                            <ModalBody className='p-6 contentArea helloContent flex-grow-1'>
                                 <h1>Hello {this.state.user.name} 👋</h1>
                                 <strong>Let's get you started.</strong>
                                 <p>Based on your website, we recommend you some steps to enhance your experience. You can see the checklist on left, and even if you cancel, you can resume the setup whenever you like from the header</p>
@@ -157,50 +158,10 @@ export default class UserStartupConfigurationModal extends Component {
             case 1:
                 modalBodyFooter = [
                     <div className="d-flex">
-                        <aside className="popupSidebar p-6">
-                            <div class="progressbar d-flex align-items-center">
-                                <span className='ml-2'>20%</span>
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div className="checklist">
-                                <strong>Checklist</strong>
-                                <ul>
-                                    <li>
-                                        <span className='status-icon checked'><img src="./icon-checked-green.svg" /></span>
-                                        <span className='pl-2'>Invite Co-workers</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon current'><img src="./icon-current.svg" /></span>
-                                        <span className='pl-2'>Install Chrome Extension</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Connect Apps</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Another Item</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Download Blah</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <button className='btn-bookADemo'>
-                                <span>Book a Demo</span>
-                                <span className='ml-2'>
-                                    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8.58475 8.28475C8.44126 8.14125 8.37238 7.96786 8.37812 7.76457C8.38434 7.56128 8.45919 7.38789 8.60269 7.24439L10.6296 5.21749H1.6296C1.42631 5.21749 1.25579 5.14861 1.11803 5.01085C0.980749 4.87357 0.912109 4.70329 0.912109 4.5C0.912109 4.29671 0.980749 4.12619 1.11803 3.98843C1.25579 3.85115 1.42631 3.78251 1.6296 3.78251H10.6296L8.58475 1.73767C8.44126 1.59417 8.36951 1.42365 8.36951 1.2261C8.36951 1.02903 8.44126 0.858744 8.58475 0.715246C8.72825 0.571749 8.89878 0.5 9.09632 0.5C9.29339 0.5 9.46368 0.571749 9.60718 0.715246L12.8897 3.99776C12.9614 4.06951 13.0124 4.14723 13.0425 4.23094C13.0722 4.31465 13.087 4.40433 13.087 4.5C13.087 4.59566 13.0722 4.68535 13.0425 4.76906C13.0124 4.85277 12.9614 4.93049 12.8897 5.00224L9.58924 8.30269C9.4577 8.43423 9.29339 8.5 9.09632 8.5C8.89878 8.5 8.72825 8.42825 8.58475 8.28475Z" fill="#096DB7" />
-                                    </svg>
-                                </span>
-                            </button>
-                        </aside>
-                        <ModalBody className='p-6 contentArea flex-grow-1'>
+                        {popupSidebar}
+                        <ModalBody className='p-6 contentArea installChromeExtension flex-grow-1'>
                             <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
-                                <h1>Install Chrome Extension</h1>
+                                <h2>Install Chrome Extension</h2>
                                 <span className='cursor-pointer'>
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z" fill="#a6a6a6" />
@@ -239,50 +200,10 @@ export default class UserStartupConfigurationModal extends Component {
             case 2:
                 modalBodyFooter = [
                     <div className="d-flex">
-                        <aside className="popupSidebar p-6">
-                            <div class="progressbar d-flex align-items-center">
-                                <span className='ml-2'>20%</span>
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div className="checklist">
-                                <strong>Checklist</strong>
-                                <ul>
-                                    <li>
-                                        <span className='status-icon checked'><img src="./icon-checked-green.svg" /></span>
-                                        <span className='pl-2'>Invite Co-workers</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon current'><img src="./icon-current.svg" /></span>
-                                        <span className='pl-2'>Install Chrome Extension</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Connect Apps</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Another Item</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Download Blah</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <button className='btn-bookADemo'>
-                                <span>Book a Demo</span>
-                                <span className='ml-2'>
-                                    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8.58475 8.28475C8.44126 8.14125 8.37238 7.96786 8.37812 7.76457C8.38434 7.56128 8.45919 7.38789 8.60269 7.24439L10.6296 5.21749H1.6296C1.42631 5.21749 1.25579 5.14861 1.11803 5.01085C0.980749 4.87357 0.912109 4.70329 0.912109 4.5C0.912109 4.29671 0.980749 4.12619 1.11803 3.98843C1.25579 3.85115 1.42631 3.78251 1.6296 3.78251H10.6296L8.58475 1.73767C8.44126 1.59417 8.36951 1.42365 8.36951 1.2261C8.36951 1.02903 8.44126 0.858744 8.58475 0.715246C8.72825 0.571749 8.89878 0.5 9.09632 0.5C9.29339 0.5 9.46368 0.571749 9.60718 0.715246L12.8897 3.99776C12.9614 4.06951 13.0124 4.14723 13.0425 4.23094C13.0722 4.31465 13.087 4.40433 13.087 4.5C13.087 4.59566 13.0722 4.68535 13.0425 4.76906C13.0124 4.85277 12.9614 4.93049 12.8897 5.00224L9.58924 8.30269C9.4577 8.43423 9.29339 8.5 9.09632 8.5C8.89878 8.5 8.72825 8.42825 8.58475 8.28475Z" fill="#096DB7" />
-                                    </svg>
-                                </span>
-                            </button>
-                        </aside>
-                        <ModalBody className='p-6 contentArea flex-grow-1'>
+                        {popupSidebar}
+                        <ModalBody className='p-6 contentArea googleAnalytics flex-grow-1'>
                             <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
-                                <h1>Connect Google Analytics</h1>
+                                <h2>Connect Google Analytics</h2>
                                 <span className='cursor-pointer'>
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z" fill="#a6a6a6" />
@@ -290,7 +211,7 @@ export default class UserStartupConfigurationModal extends Component {
                                 </span>
                             </div>
                             <div className='connectGoogleAnalytics d-flex justify-content-center align-items-center'>
-                                <a href="#"><img src="/images/connect_with_google.svg" width="400" height="auto" /></a>
+                                <a href="#"><img src="/images/connect_with_google.svg" /></a>
                             </div>
                             <div className='popupBtnBox d-flex justify-content-between align-items-center'>
                                 <Button onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(1) }} className="btn-cancel">Skip this</Button>
@@ -303,50 +224,10 @@ export default class UserStartupConfigurationModal extends Component {
             case 3:
                 modalBodyFooter = [
                     <div className="d-flex">
-                        <aside className="popupSidebar p-6">
-                            <div class="progressbar d-flex align-items-center">
-                                <span className='ml-2'>20%</span>
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div className="checklist">
-                                <strong>Checklist</strong>
-                                <ul>
-                                    <li>
-                                        <span className='status-icon checked'><img src="./icon-checked-green.svg" /></span>
-                                        <span className='pl-2'>Invite Co-workers</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon current'><img src="./icon-current.svg" /></span>
-                                        <span className='pl-2'>Install Chrome Extension</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Connect Apps</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Another Item</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Download Blah</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <button className='btn-bookADemo'>
-                                <span>Book a Demo</span>
-                                <span className='ml-2'>
-                                    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8.58475 8.28475C8.44126 8.14125 8.37238 7.96786 8.37812 7.76457C8.38434 7.56128 8.45919 7.38789 8.60269 7.24439L10.6296 5.21749H1.6296C1.42631 5.21749 1.25579 5.14861 1.11803 5.01085C0.980749 4.87357 0.912109 4.70329 0.912109 4.5C0.912109 4.29671 0.980749 4.12619 1.11803 3.98843C1.25579 3.85115 1.42631 3.78251 1.6296 3.78251H10.6296L8.58475 1.73767C8.44126 1.59417 8.36951 1.42365 8.36951 1.2261C8.36951 1.02903 8.44126 0.858744 8.58475 0.715246C8.72825 0.571749 8.89878 0.5 9.09632 0.5C9.29339 0.5 9.46368 0.571749 9.60718 0.715246L12.8897 3.99776C12.9614 4.06951 13.0124 4.14723 13.0425 4.23094C13.0722 4.31465 13.087 4.40433 13.087 4.5C13.087 4.59566 13.0722 4.68535 13.0425 4.76906C13.0124 4.85277 12.9614 4.93049 12.8897 5.00224L9.58924 8.30269C9.4577 8.43423 9.29339 8.5 9.09632 8.5C8.89878 8.5 8.72825 8.42825 8.58475 8.28475Z" fill="#096DB7" />
-                                    </svg>
-                                </span>
-                            </button>
-                        </aside>
-                        <ModalBody className='p-6 contentArea flex-grow-1'>
+                        {popupSidebar}
+                        <ModalBody className='p-6 contentArea GAandSearchConsole flex-grow-1'>
                             <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
-                                <h1>Connect GA & Search Console</h1>
+                                <h2>Connect GA & Search Console</h2>
                                 <span className='cursor-pointer'>
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z" fill="#a6a6a6" />
@@ -423,50 +304,10 @@ export default class UserStartupConfigurationModal extends Component {
             case 4:
                 modalBodyFooter = [
                     <div className="d-flex">
-                        <aside className="popupSidebar p-6">
-                            <div class="progressbar d-flex align-items-center">
-                                <span className='ml-2'>20%</span>
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div className="checklist">
-                                <strong>Checklist</strong>
-                                <ul>
-                                    <li>
-                                        <span className='status-icon checked'><img src="./icon-checked-green.svg" /></span>
-                                        <span className='pl-2'>Invite Co-workers</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon current'><img src="./icon-current.svg" /></span>
-                                        <span className='pl-2'>Install Chrome Extension</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Connect Apps</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Another Item</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Download Blah</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <button className='btn-bookADemo'>
-                                <span>Book a Demo</span>
-                                <span className='ml-2'>
-                                    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8.58475 8.28475C8.44126 8.14125 8.37238 7.96786 8.37812 7.76457C8.38434 7.56128 8.45919 7.38789 8.60269 7.24439L10.6296 5.21749H1.6296C1.42631 5.21749 1.25579 5.14861 1.11803 5.01085C0.980749 4.87357 0.912109 4.70329 0.912109 4.5C0.912109 4.29671 0.980749 4.12619 1.11803 3.98843C1.25579 3.85115 1.42631 3.78251 1.6296 3.78251H10.6296L8.58475 1.73767C8.44126 1.59417 8.36951 1.42365 8.36951 1.2261C8.36951 1.02903 8.44126 0.858744 8.58475 0.715246C8.72825 0.571749 8.89878 0.5 9.09632 0.5C9.29339 0.5 9.46368 0.571749 9.60718 0.715246L12.8897 3.99776C12.9614 4.06951 13.0124 4.14723 13.0425 4.23094C13.0722 4.31465 13.087 4.40433 13.087 4.5C13.087 4.59566 13.0722 4.68535 13.0425 4.76906C13.0124 4.85277 12.9614 4.93049 12.8897 5.00224L9.58924 8.30269C9.4577 8.43423 9.29339 8.5 9.09632 8.5C8.89878 8.5 8.72825 8.42825 8.58475 8.28475Z" fill="#096DB7" />
-                                    </svg>
-                                </span>
-                            </button>
-                        </aside>
-                        <ModalBody className='p-6 contentArea flex-grow-1'>
+                        {popupSidebar}
+                        <ModalBody className='p-6 contentArea recommendedApp flex-grow-1'>
                             <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
-                                <h1>Connect Recommended Apps</h1>
+                                <h2>Connect Recommended Apps</h2>
                                 <span className='cursor-pointer'>
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z" fill="#a6a6a6" />
@@ -544,50 +385,10 @@ export default class UserStartupConfigurationModal extends Component {
             case 5:
                 modalBodyFooter = [
                     <div className="d-flex">
-                        <aside className="popupSidebar p-6">
-                            <div class="progressbar d-flex align-items-center">
-                                <span className='ml-2'>20%</span>
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div className="checklist">
-                                <strong>Checklist</strong>
-                                <ul>
-                                    <li>
-                                        <span className='status-icon checked'><img src="./icon-checked-green.svg" /></span>
-                                        <span className='pl-2'>Invite Co-workers</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon current'><img src="./icon-current.svg" /></span>
-                                        <span className='pl-2'>Install Chrome Extension</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Connect Apps</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Another Item</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Download Blah</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <button className='btn-bookADemo'>
-                                <span>Book a Demo</span>
-                                <span className='ml-2'>
-                                    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8.58475 8.28475C8.44126 8.14125 8.37238 7.96786 8.37812 7.76457C8.38434 7.56128 8.45919 7.38789 8.60269 7.24439L10.6296 5.21749H1.6296C1.42631 5.21749 1.25579 5.14861 1.11803 5.01085C0.980749 4.87357 0.912109 4.70329 0.912109 4.5C0.912109 4.29671 0.980749 4.12619 1.11803 3.98843C1.25579 3.85115 1.42631 3.78251 1.6296 3.78251H10.6296L8.58475 1.73767C8.44126 1.59417 8.36951 1.42365 8.36951 1.2261C8.36951 1.02903 8.44126 0.858744 8.58475 0.715246C8.72825 0.571749 8.89878 0.5 9.09632 0.5C9.29339 0.5 9.46368 0.571749 9.60718 0.715246L12.8897 3.99776C12.9614 4.06951 13.0124 4.14723 13.0425 4.23094C13.0722 4.31465 13.087 4.40433 13.087 4.5C13.087 4.59566 13.0722 4.68535 13.0425 4.76906C13.0124 4.85277 12.9614 4.93049 12.8897 5.00224L9.58924 8.30269C9.4577 8.43423 9.29339 8.5 9.09632 8.5C8.89878 8.5 8.72825 8.42825 8.58475 8.28475Z" fill="#096DB7" />
-                                    </svg>
-                                </span>
-                            </button>
-                        </aside>
-                        <ModalBody className='p-6 contentArea flex-grow-1'>
+                        {popupSidebar}
+                        <ModalBody className='p-6 contentArea coWorkers flex-grow-1'>
                             <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
-                                <h1>Invite Co-workers</h1>
+                                <h2>Invite Co-workers</h2>
                                 <span className='cursor-pointer'>
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z" fill="#a6a6a6" />
@@ -610,7 +411,7 @@ export default class UserStartupConfigurationModal extends Component {
                                             <input type='password' className='form-control' placeholder='Password' value='' id='' name='' />
                                         </div>
                                         <div className="themeNewInputStyle position-relative inputWithIcon">
-                                            <span className="cursor-pointer fa"><img src={"/icon-eye-open.svg"}/></span>
+                                            <span className="cursor-pointer fa"><img src={"/icon-eye-blue.svg"}/></span>
                                             <input type='password' className='form-control' placeholder='Confirm password' value='' id='' name='' />
                                         </div>
                                         <div className="themeNewInputStyle">
@@ -673,52 +474,12 @@ export default class UserStartupConfigurationModal extends Component {
             case 6:
                 modalBodyFooter = [
                     <div className="d-flex">
-                        <aside className="popupSidebar p-6">
-                            <div class="progressbar d-flex align-items-center">
-                                <span className='ml-2'>20%</span>
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div className="checklist">
-                                <strong>Checklist</strong>
-                                <ul>
-                                    <li>
-                                        <span className='status-icon checked'><img src="./icon-checked-green.svg" /></span>
-                                        <span className='pl-2'>Invite Co-workers</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon current'><img src="./icon-current.svg" /></span>
-                                        <span className='pl-2'>Install Chrome Extension</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Connect Apps</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Another Item</span>
-                                    </li>
-                                    <li>
-                                        <span className='status-icon icon-list'></span>
-                                        <span className='pl-2'>Download Blah</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <button className='btn-bookADemo'>
-                                <span>Book a Demo</span>
-                                <span className='ml-2'>
-                                    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8.58475 8.28475C8.44126 8.14125 8.37238 7.96786 8.37812 7.76457C8.38434 7.56128 8.45919 7.38789 8.60269 7.24439L10.6296 5.21749H1.6296C1.42631 5.21749 1.25579 5.14861 1.11803 5.01085C0.980749 4.87357 0.912109 4.70329 0.912109 4.5C0.912109 4.29671 0.980749 4.12619 1.11803 3.98843C1.25579 3.85115 1.42631 3.78251 1.6296 3.78251H10.6296L8.58475 1.73767C8.44126 1.59417 8.36951 1.42365 8.36951 1.2261C8.36951 1.02903 8.44126 0.858744 8.58475 0.715246C8.72825 0.571749 8.89878 0.5 9.09632 0.5C9.29339 0.5 9.46368 0.571749 9.60718 0.715246L12.8897 3.99776C12.9614 4.06951 13.0124 4.14723 13.0425 4.23094C13.0722 4.31465 13.087 4.40433 13.087 4.5C13.087 4.59566 13.0722 4.68535 13.0425 4.76906C13.0124 4.85277 12.9614 4.93049 12.8897 5.00224L9.58924 8.30269C9.4577 8.43423 9.29339 8.5 9.09632 8.5C8.89878 8.5 8.72825 8.42825 8.58475 8.28475Z" fill="#096DB7" />
-                                    </svg>
-                                </span>
-                            </button>
-                        </aside>
-                        <ModalBody className='p-6 contentArea flex-grow-1'>
-                            <strong><img src="/allDone.svg" /></strong>
+                        {popupSidebar}
+                        <ModalBody className='p-6 contentArea goodWork flex-grow-1'>
+                            <strong><img src="/allDone.svg" width={180} height={180} /></strong>
                             <h1>Good work, {this.state.user.name}!</h1>
                             <p>Now you can go to your dashboard and do some productive work. Hooray 🎉</p>
-                            <div className='d-flex justify-content-center'>
+                            <div className='popupBtnBox d-flex justify-content-center'>
                                 <Button className='btn-theme' onClick={() => { this.props.closeModal() }}>Go to Dashboard</Button>
                             </div>
                         </ModalBody>

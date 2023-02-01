@@ -218,7 +218,7 @@ export default class EditAnnotation extends React.Component {
 
                         <div className='grid2layout'>
                             <div className="themeNewInputStyle position-relative inputWithIcon">
-                                <i class="fa fa-link"></i>
+                                <i className="fa fa-link"></i>
                                 <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control gray_clr" id="url" name="url" placeholder='https://example.com' />
                                 {validation.url ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.url}</span> : null}
                             </div>

@@ -75,7 +75,6 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     }
 
     onChangeHandler(sOption) {
-        console.log(sOption);
 
         if (sOption == null) {
             this.setState({ aProperties: [{ value: "", label: "All Properties" }] });
@@ -161,7 +160,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             <>
                 <div>
                     <div className="themeNewInputStyle position-relative inputWithIcon">
-                        <i class="fa fa-plus"></i>
+                        {/* <i className="icon fa"><img src='/icon-plus.svg'/></i> */}
                         <Select
                             onFocus={this.props.onFocus}
                             loadOptions={this.searchGoogleAnalyticsProperties}

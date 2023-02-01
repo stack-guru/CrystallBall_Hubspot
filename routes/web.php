@@ -31,8 +31,8 @@ Route::get('test_fb', function () {
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::view('email_error','auth.email_error');
-Route::view('success_message','auth.success');
+Route::view('email_error', 'auth.email_error');
+Route::view('success_message', 'auth.success');
 
 Route::get('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookGet']);
 Route::post('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookPost']);
@@ -251,12 +251,11 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
             // github repositories
             Route::get('get-github-repositories', [GithubAutomationController::class, 'getRepositories']);
-            Route::post('apple_podcast_url', [App\Http\Controllers\ApplePodcastMonitorController::class,'applePodcastUrl']);
+            Route::post('apple_podcast_url', [App\Http\Controllers\ApplePodcastMonitorController::class, 'applePodcastUrl']);
 
-            Route::post('shopify_url', [App\Http\Controllers\ShopifyMonitorController::class,'shopifyUrl']);
+            Route::post('shopify_url', [App\Http\Controllers\ShopifyMonitorController::class, 'shopifyUrl']);
             Route::resource('shopify-monitor', App\Http\Controllers\ShopifyMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('apple-podcast-monitor', App\Http\Controllers\ApplePodcastMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
-
         });
 
         Route::group(['prefix' => 'settings'], function () {
@@ -287,7 +286,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::resource('google-analytics-account', App\Http\Controllers\GoogleAnalyticsAccountController::class)->only(['index', 'destroy']);
             Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);
 
-            Route::resource('google-analytics-property', GoogleAnalyticsPropertyController::class)->only(['index', 'destroy']);
+            Route::resource('google-analytics-property', GoogleAnalyticsPropertyController::class)->only(['index', 'update', 'destroy']);
 
             Route::resource('google-search-console-site', App\Http\Controllers\GoogleSearchConsoleSiteController::class)->only(['index', 'destroy']);
             Route::post('google-search-console-site/google-account/{google_account}', [App\Http\Controllers\GoogleSearchConsoleSiteController::class, 'fetch']);
@@ -300,7 +299,6 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
         Route::post('extend-trial', [App\Http\Controllers\PricePlanController::class, 'extendTrial']);
-
     });
 
     Route::get('/beaming/auth', function () {

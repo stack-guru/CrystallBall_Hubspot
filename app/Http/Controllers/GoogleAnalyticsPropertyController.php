@@ -52,7 +52,7 @@ class GoogleAnalyticsPropertyController extends Controller
     public function update(Request $request, GoogleAnalyticsProperty $googleAnalyticsProperty)
     {
         $this->validate($request, [
-            'google_search_console_site_id' => 'bail|required|numeric|exists:google_search_console_sites,ids'
+            'google_search_console_site_id' => 'bail|required|numeric|exists:google_search_console_sites,id'
         ]);
 
         if (Auth::id() !== $googleAnalyticsProperty->user_id) {
@@ -62,6 +62,7 @@ class GoogleAnalyticsPropertyController extends Controller
         if ($request->has('google_search_console_site_id')) $googleAnalyticsProperty->google_search_console_site_id = $request->google_search_console_site_id;
         $googleAnalyticsProperty->save();
 
+        $googleAnalyticsProperty->load('googleAccount');
         return ['google_analytics_property' => $googleAnalyticsProperty];
     }
 

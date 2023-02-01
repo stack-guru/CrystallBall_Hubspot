@@ -243,22 +243,22 @@ export default class ChangePassword extends React.Component {
                         <h2 className="pageTitle mb-0">Profile</h2>
                     </div>
 
-                    <ul class="themeTabNav nav nav-pills" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="pills-personalInfo-tab" data-toggle="pill" href="#pills-personalInfo" role="tab" aria-controls="pills-personalInfo" aria-selected="true">Personal Info</a>
+                    <ul className="themeTabNav nav nav-pills" id="pills-tab" role="tablist">
+                        <li className="nav-item">
+                            <a className="nav-link active" id="pills-personalInfo-tab" data-toggle="pill" href="#pills-personalInfo" role="tab" aria-controls="pills-personalInfo" aria-selected="true">Personal Info</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-security-tab" data-toggle="pill" href="#pills-security" role="tab" aria-controls="pills-security" aria-selected="false">Security</a>
+                        <li className="nav-item">
+                            <a className="nav-link" id="pills-security-tab" data-toggle="pill" href="#pills-security" role="tab" aria-controls="pills-security" aria-selected="false">Security</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-subscription-tab" data-toggle="pill" href="#pills-subscription" role="tab" aria-controls="pills-subscription" aria-selected="false">Subscription</a>
+                        <li className="nav-item">
+                            <a className="nav-link" id="pills-subscription-tab" data-toggle="pill" href="#pills-subscription" role="tab" aria-controls="pills-subscription" aria-selected="false">Subscription</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-payments-tab" data-toggle="pill" href="#pills-payments" role="tab" aria-controls="pills-payments" aria-selected="false">Payments</a>
+                        <li className="nav-item">
+                            <a className="nav-link" id="pills-payments-tab" data-toggle="pill" href="#pills-payments" role="tab" aria-controls="pills-payments" aria-selected="false">Payments</a>
                         </li>
                     </ul>
-                    <div class="themeTabContent tab-content mb-5" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-personalInfo" role="tabpanel" aria-labelledby="pills-personalInfo-tab">
+                    <div className="themeTabContent tab-content mb-5" id="pills-tabContent">
+                        <div className="tab-pane fade show active" id="pills-personalInfo" role="tabpanel" aria-labelledby="pills-personalInfo-tab">
                             <form className='profileForm personalInfoForm' onSubmit={this.updateUserHandler}>
                                 <div className="themeNewInputStyle mb-4 pb-2">
                                     {
@@ -296,7 +296,7 @@ export default class ChangePassword extends React.Component {
                                 <Button className='btn-theme'>Update</Button>
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="pills-security" role="tabpanel" aria-labelledby="pills-security-tab">
+                        <div className="tab-pane fade" id="pills-security" role="tabpanel" aria-labelledby="pills-security-tab">
                             <form className='profileForm securityForm' onSubmit={this.handlePasswordSubmit}>
                                 {/* <div className="themeNewInputStyle mb-3 d-flex justify-content-between align-items-center">
                                     <p className='mb-0'>Enable 2-Factor Verification:</p>
@@ -323,7 +323,7 @@ export default class ChangePassword extends React.Component {
                                 <Button className='btn-theme'>Update</Button>
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="pills-subscription" role="tabpanel" aria-labelledby="pills-subscription-tab">
+                        <div className="tab-pane fade" id="pills-subscription" role="tabpanel" aria-labelledby="pills-subscription-tab">
                             <div className='gridBox'>
                                 <div className="column">
                                     <h2>Current subscription</h2>
@@ -383,7 +383,7 @@ export default class ChangePassword extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="pills-payments" role="tabpanel" aria-labelledby="pills-payments-tab">
+                        <div className="tab-pane fade" id="pills-payments" role="tabpanel" aria-labelledby="pills-payments-tab">
                             <div className="pageHeader paymentHistoryPageHead d-flex justify-content-between">
                                 <h2 className="pageTitle mb-0">Payments</h2>
                                 {this.state.pricePlanSubscriptions.length ? <a onClick={() => this.setState({ showPaymentPopup: true })} href="javascript:void(0);" className='btn-theme-outline bg-white'>
