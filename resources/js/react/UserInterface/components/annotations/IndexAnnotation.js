@@ -427,6 +427,7 @@ class IndexAnnotations extends React.Component {
                                 .map((anno, idx) => {
                                     let borderLeftColor = "rgba(0,0,0,.0625)";
                                     let selectedIcon = anno.category;
+                                    anno.description = `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis accusantium reprehenderit perferendis, ipsum natus, molestiae voluptatum beatae ut harum dolores reiciendis fuga hic! Consectetur repellendus ullam ab magni obcaecati dolorem!`
 
                                     switch (anno.category) {
                                         case "Google Updates":
@@ -502,9 +503,9 @@ class IndexAnnotations extends React.Component {
                                                 <p className="titleCategory d-flex align-items-center">
                                                     <span>{anno.event_name}</span>
                                                     <a href="">{anno.category}</a>
-                                                    <i className="fa fa-link"></i>
+                                                    <i className="icon"><img src={'/icon-chain.svg'} /></i>
                                                 </p>
-                                                <p className="annotationDesc mb-0 d-flex ">
+                                                <p className="annotationDesc mb-0 d-flex-inline">
                                                     {anno.description &&
                                                         !anno.show_complete_desc ? anno.description.substring(0, 150) : ""}
                                                     {anno.description &&
@@ -522,7 +523,7 @@ class IndexAnnotations extends React.Component {
                                                     )}
 
                                                     {anno.url && anno.url != "https://" && anno.url != "null" ? (
-                                                        <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a>
+                                                        <a href={anno.url} target="_blank" className="ml-1"><i className="icon"><img src={'/icon-chain.svg'} /></i></a>
                                                     ) : (
                                                         ""
                                                     )}
