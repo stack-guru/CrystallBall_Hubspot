@@ -122,7 +122,7 @@ class Main extends React.Component {
 
                     {/* <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} /> */}
 
-                    <UserStartupConfigurationModal closeModal={() => this.setState({showStartupConfiguration: false})} isOpen={this.state.showStartupConfiguration} user={this.state.user} />
+                    {/* <UserStartupConfigurationModal closeModal={() => this.setState({showStartupConfiguration: false})} isOpen={this.state.showStartupConfiguration} user={this.state.user} /> */}
 
                     <Sidebar openAnnotationPopup={(mka) => {this.setState({mKeyAnnotation: mka});}} user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
                 </div>
