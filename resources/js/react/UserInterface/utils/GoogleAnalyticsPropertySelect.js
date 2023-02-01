@@ -48,9 +48,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
 
     deleteKeyword(e) {
         console.log(e)
-
-        // In Progress
-        // this.props.onChangeCallback();
+        this.onChangeHandler(null);
     }
 
     searchGoogleAnalyticsProperties(keyword, callback) {
