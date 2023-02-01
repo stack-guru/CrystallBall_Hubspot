@@ -307,6 +307,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "News Alerts",
                 brandLogo: "/newsAlerts.svg",
+                width: 136,
+                height: 26,
             },
             {
                 id: "02",
@@ -316,6 +318,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "Wordpress",
                 brandLogo: "/wordpress.svg",
+                width: 146,
+                height: 42,
             },
             {
                 id: "30",
@@ -325,6 +329,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "Wordpress System Core Updates",
                 brandLogo: "/wordpressSCU.svg",
+                width: 148,
+                height: 40,
             },
             {
                 id: "03",
@@ -334,6 +340,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "Rank Tracking SERP",
                 brandLogo: "/serp.svg",
+                width: 160,
+                height: 56,
             },
             {
                 id: "04",
@@ -343,6 +351,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "Weather Alerts",
                 brandLogo: "/weatherAlerts.svg",
+                width: 160,
+                height: 56,
             },
             {
                 id: "05",
@@ -352,6 +362,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "Google Updates",
                 brandLogo: "/googleUpdates.svg",
+                width: 156,
+                height: 26,
             },
             {
                 id: "09",
@@ -361,6 +373,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "Twitter",
                 brandLogo: "/twitter.svg",
+                width: 100,
+                height: 26,
             },
             {
                 id: "17",
@@ -370,6 +384,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "Apple Podcast",
                 brandLogo: "/applePodcast.svg",
+                width: 114,
+                height: 30,
             },
 
             {
@@ -380,6 +396,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "GitHub",
                 brandLogo: "/github.svg",
+                width: 116,
+                height: 34,
             },
             {
                 id: "24",
@@ -389,6 +407,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "Retail Marketing Dates",
                 brandLogo: "/retailMarketingDates.svg",
+                width: 218,
+                height: 26,
             },
             {
                 id: "25",
@@ -398,6 +418,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "Bitbucket",
                 brandLogo: "/bitbucket.svg",
+                width: 142,
+                height: 40,
             },
             {
                 id: "27",
@@ -407,6 +429,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "Holidays",
                 brandLogo: "/holidays.svg",
+                width: 106,
+                height: 26,
             },
             {
                 id: "28",
@@ -416,6 +440,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "Website Monitoring",
                 brandLogo: "/websiteMonitoring.svg",
+                width: 194,
+                height: 26,
             },
             {
                 id: "20",
@@ -425,6 +451,8 @@ class AppsMarket extends React.Component {
                 premium: false,
                 brandName: "Shopify",
                 brandLogo: "/shopify.svg",
+                width: 114,
+                height: 32,
             },
         ];
 
@@ -665,7 +693,7 @@ class AppsMarket extends React.Component {
                             </FormGroup>
                             <FormGroup className="filter-search position-relative">
                                 <Label className="sr-only" for="search">search</Label>
-                                <Input type="search" name="search" id="search" placeholder="Search App to Connect" onChange={this.onChangeFilterHandler}/>
+                                <Input type="text" name="search" id="search" placeholder="Search App to Connect" onChange={this.onChangeFilterHandler}/>
                                 <button className="btn-searchIcon">
                                     <img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search"/>
                                 </button>
@@ -675,7 +703,7 @@ class AppsMarket extends React.Component {
                         <h3 className="h3-title">Display on Analytics and BI Tools</h3>
                     </div>
 
-                    <div className="items mb-5">
+                    <div className="items analyticsAndBITools">
                         {[
                             {
                                 id: "06",
@@ -685,7 +713,9 @@ class AppsMarket extends React.Component {
                                 premium: false,
                                 brandName: "Google Analytics",
                                 brandLogo: "/googleAnalytics.svg",
-                                url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en'
+                                url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en',
+                                width: 178,
+                                height: 28,
                             },
                             {
                                 id: "12",
@@ -695,7 +725,9 @@ class AppsMarket extends React.Component {
                                 premium: false,
                                 brandName: "Data Studio",
                                 brandLogo: "/dataStudio.svg",
-                                url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en'
+                                url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en',
+                                width: 142,
+                                height: 32,
                             },
                             {
                                 id: "06",
@@ -705,7 +737,9 @@ class AppsMarket extends React.Component {
                                 premium: false,
                                 brandName: "Google Ads",
                                 brandLogo: "/googleAds.svg",
-                                url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en'
+                                url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en',
+                                width: 108,
+                                height: 40,
                             },
                             {
                                 id: "12",
@@ -715,7 +749,9 @@ class AppsMarket extends React.Component {
                                 premium: false,
                                 brandName: "Zapier",
                                 brandLogo: "/zapier.svg",
-                                url: '/integrations'
+                                url: '/integrations',
+                                width: 88,
+                                height: 40,
                             }
                         ].map((item, itemKey) => (
                             <a target={'_blank'} href={item.url}
@@ -736,7 +772,7 @@ class AppsMarket extends React.Component {
                                 {item.enabled ? (
                                     <i className="active fa fa-check-circle"></i>
                                 ) : null}
-                                <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width='140' />
+                                <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width} height={item.height} />
                                 {item.premium ? (
                                     <span className="btn-premium">
                                         <i className="fa fa-diamond"></i>
@@ -750,7 +786,7 @@ class AppsMarket extends React.Component {
                     <div className="pageHeader">
                         <h3 className="h3-title">Recommended For You</h3>
                     </div>
-                    <div className="items mb-5">
+                    <div className="items recommendedForYou">
                         {this.state.recommendedApps.map((item, itemKey) => (
                             <div
                                 onClick={() => {
@@ -778,7 +814,7 @@ class AppsMarket extends React.Component {
                                 {item.enabled ? (
                                     <i className="active fa fa-check-circle"></i>
                                 ) : null}
-                                <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width='140' />
+                                <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width} height={item.height} />
                                 {item.premium ? (
                                     <span className="btn-premium">
                                         <i className="fa fa-diamond"></i>
@@ -789,7 +825,7 @@ class AppsMarket extends React.Component {
                         ))}
                     </div>
 
-                    <div className="boxWhite">
+                    <div className="boxWhite comingSoon">
                         <h4>Coming Soon</h4>
                         <div className="items">
                             {[
@@ -801,6 +837,8 @@ class AppsMarket extends React.Component {
                                     premium: false,
                                     brandName: "twilio",
                                     brandLogo: "/twilio.svg",
+                                    width: 108,
+                                    height: 32,
                                 },
                                 {
                                     id: "07",
@@ -811,6 +849,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "Facebook Ads",
                                     brandLogo: "/facebookAds.svg",
+                                    width: 140,
+                                    height: 19,
                                 },
                                 {
                                     id: "08",
@@ -821,6 +861,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "Instagram",
                                     brandLogo: "/instagram.svg",
+                                    width: 142,
+                                    height: 32,
                                 },
                                 {
                                     id: "29",
@@ -831,6 +873,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "TikTok",
                                     brandLogo: "/tiktok.svg",
+                                    width: 110,
+                                    height: 32,
                                 },
                                 {
                                     id: "26",
@@ -841,6 +885,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "Google Tag Manager",
                                     brandLogo: "/googleTagManager.svg",
+                                    width: 110,
+                                    height: 64,
                                 },
                                 {
                                     id: "23",
@@ -851,6 +897,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "YouTube",
                                     brandLogo: "/youtube.svg",
+                                    width: 120,
+                                    height: 28,
                                 },
                                 {
                                     id: "22",
@@ -861,6 +909,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "ZOHO",
                                     brandLogo: "/zoho.svg",
+                                    width: 100,
+                                    height: 36,
                                 },
                                 {
                                     id: "21",
@@ -871,6 +921,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "WIX.com",
                                     brandLogo: "/wixCom.svg",
+                                    width: 116,
+                                    height: 28,
                                 },
                                 {
                                     id: "10",
@@ -881,6 +933,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "slack",
                                     brandLogo: "/slack.svg",
+                                    width: 112,
+                                    height: 28,
                                 },
                                 {
                                     id: "11",
@@ -891,6 +945,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "Hubspot",
                                     brandLogo: "/hubspot.svg",
+                                    width: 104,
+                                    height: 30,
                                 },
                                 {
                                     id: "13",
@@ -901,6 +957,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "Linkedin",
                                     brandLogo: "/linkedin.svg",
+                                    width: 116,
+                                    height: 28,
                                 },
                                 {
                                     id: "14",
@@ -911,6 +969,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "Zendesk",
                                     brandLogo: "/zendesk.svg",
+                                    width: 126,
+                                    height: 24,
                                 },
                                 {
                                     id: "15",
@@ -921,6 +981,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "Salesforce",
                                     brandLogo: "/salesforce.svg",
+                                    width: 124,
+                                    height: 28,
                                 },
                                 {
                                     id: "16",
@@ -931,6 +993,8 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "Sportfy Podcast",
                                     brandLogo: "/sportfyPodcast.svg",
+                                    width: 116,
+                                    height: 32,
                                 },
                                 {
                                     id: "18",
@@ -941,11 +1005,13 @@ class AppsMarket extends React.Component {
                                     commingSoon: true,
                                     brandName: "amazoon Podcast",
                                     brandLogo: "/amazonPodcast.svg",
+                                    width: 114,
+                                    height: 30,
                                 },
                             ].map((item, itemKey) => (
                                 <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color" : item.background || "#e0e0e0",}}>
                                     { item.enabled ? (<i className="active fa fa-check-circle"></i>) : null }
-                                    <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width='140' />
+                                    <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width} height={item.height} />
                                     { item.premium ? (<span className="btn-premium"><i className="fa fa-diamond"></i><span>Premium</span></span>) : null }
                                 </div>
                             ))}
