@@ -1,4 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
+p {
+    color: #666;
+    font-family: 'Source Sans Pro', Helvetica Neue, Arial, sans-serif;
+}
+.loader {
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 .main-content {
     padding-left: 0% !important;
     padding-right: 0% !important;
@@ -1004,10 +1015,15 @@ body {
     justify-content: center;
     border: 1px solid #bdbdbd;
 }
-.pageNote p { padding: 0 1rem; }
+.pageNote p {
+    padding: 0 1rem;
+    line-height: 30px;
+}
 .pageNote .btn {
-    width: 67px;
-    height: 36px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    width: fit-content;
     padding: 8px 20px;
     border-radius: 36px;
     background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%);
@@ -1339,7 +1355,7 @@ body {
 }
 .btn-theme {
     border: 0;
-    height: 40px;
+    /* height: 40px; */
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
@@ -1776,15 +1792,23 @@ body {
 .annotionRow .description .titleCategory span,
 .annotionRow .description .titleCategory a{
     color: #096db7;
-    font-weight: 600;
+    color: #096db7;
+    font-weight: 600
 }
-.annotionRow .description .titleCategory .fa { margin-left: 10px; font-size: 14px; color: #1976fe; }
+.annotionRow .description .titleCategory .icon {margin-left: 10px;}
 .annotionRow .description .titleCategory span{
     margin-right: 10px;
     padding-right: 10px;
     border-right: 1px solid #096db7;
 }
-.annotionRow .description p.annotationDesc {line-height: 20px;}
+.annotionRow .description p.annotationDesc {
+    color: #333;
+    line-height: 20px;
+}
+.annotionRow .description p.annotationDesc  a{
+    cursor: pointer;
+    color: #1976fe;
+}
 .annotionRow .description p span{ color: #1976fe; }
 .annotionRow ul{
     color: #666;
@@ -2143,8 +2167,8 @@ body {
     border-radius: 8px;
 }
 .btn-cancel {
-    width: 94px;
-    height: 40px;
+    /* width: 94px; */
+    /* height: 40px; */
     color: #666;
     font-size: 16px;
     font-weight: 600;
@@ -2358,8 +2382,13 @@ body {
 .modal-createAnnotation,
 .modal-createUser,
 .modal-csvUpload { margin: 0; }
-.modal-csvUpload { padding: 8px 10px 18px; }
-.modal-csvUpload .apps-modalHead h2 {color: #096db7;}
+.modal-csvUpload { padding: 0 10px 10px; }
+.modal-csvUpload .apps-modalHead {padding: 0 0 32px;}
+.modal-csvUpload .apps-modalHead h2 {
+    font-size: 24px;
+    color: #096db7;
+    line-height: 30px;
+}
 .form-csvUpload {}
 .csvFileUpload > label {
     width: 100%;
@@ -3300,18 +3329,20 @@ body {
     background: transparent;
     justify-content: center;
 }
-.accountSetUpPopup {max-width: 1000px;}
+.accountSetUpPopup {max-width: 910px;}
 .accountSetUpPopup .modal-content {
     border: 0;
     border-radius: 0;
     background-color: transparent;
 }
+.accountSetUpPopup .modal-content > div { align-items: flex-start; }
 .contentArea {
-    padding: 54px 42px;
     background: #fff;
     border-radius: 16px;
+    padding: 32px 42px 42px; 
     box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.22);
 }
+.helloContent { padding: 54px 42px; }
 .contentArea h1 {
     font-size: 32px;
     margin: 0 0 2rem;
@@ -3340,10 +3371,11 @@ body {
 }
 .contentArea .btn-cancel,
 .contentArea .btn-theme {
-    height: 48px;
-    min-width: 120px;
+    /* height: 48px;
+    min-width: 120px; */
     padding: 12px 28px;
     border-radius: 100px;
+    width: fit-content;
 }
 .contentArea .btn-cancel:focus,
 .contentArea .btn-cancel:hover {
@@ -3356,6 +3388,7 @@ body {
 }
 .popupSidebar {
     width: 274px;
+    height: 400px;
     display: flex;
     flex-shrink: 0;
     background: #fff;
@@ -3440,6 +3473,14 @@ body {
 }
 .titleAndCloseButton { padding: 0 0 42px; }
 .titleAndCloseButton h1 { margin: 0; }
+.titleAndCloseButton h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #096db7;
+    font-weight: 600;
+    line-height: 30px;
+}
+/* .installChromeExtension { padding: 32px 42px 42px; } */
 .chromeExtensionContent {
     color: #333;
     font-size: 14px;
@@ -3478,9 +3519,9 @@ body {
     display: block;
 }
 .popupBtnBox { padding: 42px 0 0; }
-
-.connectGoogleAnalytics {}
-
+/* .googleAnalytics { padding: 32px 42px 42px; } */
+.connectGoogleAnalytics { padding: 24px 0; }
+/* .GAandSearchConsole { padding: 32px 42px 42px; } */
 .connectGAandSearchConsole {}
 .connectGAandSearchConsole p {
     color: #666;
@@ -3502,18 +3543,23 @@ body {
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
 }
 .connectGAandSearchConsole .dataTableAnalyticsAccount > div:last-child {margin: 0;}
-.connectGAandSearchConsole .grid2layout{ padding: 10px 1rem; }
+.connectGAandSearchConsole .grid2layout{
+    padding: 10px 1rem;
+    grid-template-columns: 1fr 1fr;
+}
 .analyticTopBar {
     padding: 10px 16px;
     background: #f0f6ff;
     border-radius: 8px 8px 0px 0px;
 }
-.connectRecommendedApp {}
+/* .recommendedApp { padding: 32px 42px 42px; } */
+.connectRecommendedApp { padding: 0 44px 0 0; }
 .connectRecommendedApp .items {
+    gap: 1rem;
     width: 100%;
     grid-template-columns: 1fr 1fr;
 }
-.connectRecommendedApp .items item {}
+.connectRecommendedApp .items .item { height: 90px; }
 .inviteCoWorkers {}
 .inviteCoWorkers form legend {
     color: #666;
@@ -3536,7 +3582,17 @@ body {
     border-radius: 100px;
     background: #f2f2f2;
 }
+.coWorkers {}
 .inviteForm {}
+.inviteForm .grid2layout{
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+}
+.inviteForm fieldset .themeNewInputStyle.inputWithIcon .fa {
+    width: 38px;
+    height: 38px;
+}
+.inviteForm fieldset .themeNewInputStyle .form-control { height: 38px; }
 .inviteForm fieldset .themeNewInputStyle .invitationEmail{
     width: 100%;
     min-height: 107px;
@@ -3564,13 +3620,40 @@ body {
     padding-left: 8px;
 }
 .themeTextSlider .slick-slide.slick-active.slick-current { z-index: 3; }
-
-
-
-
-
-
-
+.goodWork { padding: 42px; }
+.goodWork strong { margin: 0 0 42px; }
+.goodWork strong img{
+    display: block;
+    margin: 0 auto;
+}
+.goodWork h1 { margin: 0 0 24px; }
+.goodWork p { margin: 0; }
+.colorPalette {
+    z-index: 2;
+    position: absolute;
+}
+.colorPalette > div:first-child{display: none;}
+.colorPalette > div:first-nth-child(2){
+    top: -8px !important;
+    left: 15px !important;
+}
+.modal-createAnnotation { padding: 0 10px 10px; }
+.modal-createAnnotation .themeNewInputStyle .css-yk16xz-control,
+.modal-createAnnotation .themeNewInputStyle .css-1pahdxg-control,
+.modal-createAnnotation .themeNewInputStyle .form-control {
+    height: 38px;
+}
+.modal-createAnnotation .themeNewInputStyle .css-g1d714-ValueContainer{ height: 36px; }
+.modal-createAnnotation .inputWithIcon .fa{
+    height: 38px;
+    height: 38px;
+}
+.modal-createAnnotation .apps-modalHead h2 {
+    color: #096db7;
+    font-size: 24px;
+    line-height: 30px;
+}
+.modal-createAnnotation .apps-modalHead { padding-bottom: 32px; }
 
 
 

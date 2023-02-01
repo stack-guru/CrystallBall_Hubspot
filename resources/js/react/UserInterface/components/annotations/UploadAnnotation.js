@@ -42,21 +42,23 @@ export default class UploadAnnotation extends React.Component {
                     }else{
                         if(response.data.user_total_annotations >= this.state.user.price_plan.annotations_count){
                         // if(true){
-                            let url = document.location.origin + '/images/annotation_limit_reached.jpg';
+                            let url = document.location.origin + '/images/annotation_limit_reached.png';
                             swal.fire({
                                 html: "<img src='"+url+"' style='width:100%;'>",
-                                width: 700,
-                                customClass: {
-                                    popup: 'custom_bg pb-5',
-                                    htmlContainer: 'm-0',
-                                },
+                                width: 1000,
+                                showCancelButton: true,
                                 showCloseButton: false,
-                                // title: "You have reached your plan limits!",
-                                // text: "Upgrade your plan to add more annotations.",
-                                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                confirmButtonText: "<a href='#' class='text-white'>Upgrade Now</a>",
+                                customClass: {
+                                    popup: "themePlanAlertPopup",
+                                    htmlContainer: "themePlanAlertPopupContent",
+                                    closeButton: 'btn-closeplanAlertPopup',
+                                },
+                                cancelButtonClass: "btn-bookADemo",
+                                cancelButtonText: "Book a Demo",
+                                confirmButtonClass: "btn-subscribeNow",
+                                confirmButtonText: "Subscribe now",
                             }).then(function(){
-                                window.location.href = '/settings/price-plans';
+                                if (value.isConfirmed) window.location.href = '/settings/price-plans'
                             });
                         }
                     }
@@ -163,19 +165,24 @@ export default class UploadAnnotation extends React.Component {
                                     multiple
                                     onFocus={(e) => {
                                         if (this.props.currentPricePlan.ga_account_count == 1 || this.props.currentPricePlan.google_analytics_property_count == -1) {
-                                            const accountNotLinkedHtml = '' + '<div class="">' + '<img src="/images/property-upgrade-modal.jpg" class="img-fluid">' + '</div>'
+                                            const accountNotLinkedHtml = '' + '<div class="">' + '<img src="/images/property-upgrade-modal.png" class="img-fluid">' + '</div>'
                                             swal.fire({
                                                 html: accountNotLinkedHtml,
-                                                width: 700,
+                                                width: 1000,
+                                                showCancelButton: true,
+                                                showCloseButton: false,
                                                 customClass: {
-                                                    popup: 'custom_bg pb-5',
-                                                    htmlContainer: 'm-0',
+                                                    popup: "themePlanAlertPopup",
+                                                    htmlContainer: "themePlanAlertPopupContent",
+                                                    closeButton: 'btn-closeplanAlertPopup',
                                                 },
-                                                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                                confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+                                                cancelButtonClass: "btn-bookADemo",
+                                                cancelButtonText: "Book a Demo",
+                                                confirmButtonClass: "btn-subscribeNow",
+                                                confirmButtonText: "Subscribe now",
 
                                             }).then(value => {
-                                                if (value.isConfirmed) { this.setState({ redirectTo: "/settings/price-plans" });}
+                                                if (value.isConfirmed) window.location.href = '/settings/price-plans'
                                             });
                                         }
                                     }}

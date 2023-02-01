@@ -50,7 +50,7 @@ class header extends React.Component {
                         null
                     }
 
-                    {this.props.user.price_plan.code == "free new" ? <p class="trial-countdown">You are on the Fee Plan</p> : null}
+                    {this.props.user.price_plan.code == "free new" ? <p className="trial-countdown">You are on the Fee Plan</p> : null}
 
                     {
                         this.props.user.price_plan.price == 0 ?
@@ -96,7 +96,13 @@ class header extends React.Component {
                     </div>
                     <div className="dropdown user-dropdown">
                         <button type='button' className="dropdown-toggle btn-toggle no-after border-0 bg-transparent bdrs-50p p-0" data-toggle="dropdown">
+                        {
+                        this.props.user.profile_image ?
+                            <div className='addPhoto' id='acronym-holder' style={{backgroundPosition: 'center', backgroundSize: 'contain', backgroundImage: `url(/${this.props.user.profile_image})`}}>
+                            </div>
+                            :
                             <span className="w-2r bdrs-50p text-center gaa-bg-color m-0" id="acronym-holder" alt="">{this.props.user != undefined ? this.props.user.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}</span>
+                        }
                         </button>
                         <div className="dropdown-menu">
                             <div className="dropdownHead">
@@ -112,7 +118,7 @@ class header extends React.Component {
                                             {this.props.user.google_analytics_properties_in_use_count} / {this.props.user.price_plan.google_analytics_property_count == -1 ? 0 : (this.props.user.price_plan.google_analytics_property_count == 0 ? "∞" : this.props.user.price_plan.google_analytics_property_count)}
                                         </span>
                                     </div>
-                                    {this.props.user.price_plan.code == "free new" ? <p class="trial-countdown mt-4">You are on the Free Plan</p> : null}
+                                    {this.props.user.price_plan.code == "free new" ? <p className="trial-countdown mt-4">You are on the Free Plan</p> : null}
                                     <ProgressBar completed={this.props.user.price_plan.google_analytics_property_count ? (((this.props.user.google_analytics_properties_in_use_count / this.props.user.price_plan.google_analytics_property_count) * 100) || 10) : 10}/>
                                 </li>
                                 <li className='annotation'>

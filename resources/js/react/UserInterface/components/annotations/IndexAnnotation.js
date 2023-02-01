@@ -32,6 +32,7 @@ class IndexAnnotations extends React.Component {
             selectedRows: [],
             editAnnotationId: '',
             showChartAnnotationId: '',
+            offset: 0,
         };
         this.deleteAnnotation = this.deleteAnnotation.bind(this);
         this.toggleStatus = this.toggleStatus.bind(this);
@@ -40,7 +41,7 @@ class IndexAnnotations extends React.Component {
         this.sortByCategory = this.sortByCategory.bind(this);
 
         this.handleChange = this.handleChange.bind(this);
-        this.checkSearchText = this.checkSearchText.bind(this);
+        this.registerScrollEvent = this.registerScrollEvent.bind(this);
 
         this.handleAllSelection = this.handleAllSelection.bind(this);
         this.handleOneSelection = this.handleOneSelection.bind(this);
@@ -57,24 +58,8 @@ class IndexAnnotations extends React.Component {
                     this.setState({
                         userAnnotationColors: resp.data.user_annotation_color,
                     });
-                    HttpClient.get(`/annotation`)
-                        .then(
-                            (response) => {
-                                this.setState({
-                                    annotations: response.data.annotations,
-                                    isLoading: false,
-                                });
-                            },
-                            (err) => {
-                                this.setState({
-                                    errors: err.response.data,
-                                    isLoading: false,
-                                });
-                            }
-                        )
-                        .catch((err) => {
-                            this.setState({ errors: err, isLoading: false });
-                        });
+                    this.registerScrollEvent()
+                    this.loadInitAnnotations()
                     HttpClient.get(`/annotation-categories`)
                         .then(
                             (response) => {
@@ -177,8 +162,36 @@ class IndexAnnotations extends React.Component {
         }
     }
 
+    loadInitAnnotations (sortColumn = null, filterName = null) {
+
+        const { sortBy, searchText, offset } = this.state;
+        const sort = filterName ? sortBy : sortColumn;
+        const filter = sortColumn ? searchText : filterName;
+
+        HttpClient.get(`/annotation?sortBy=${sort}&filterBy=${filter}&offset=${offset}`)
+            .then(
+                (response) => {
+                    this.setState({
+                        annotations: this.state.annotations.concat(response.data.annotations),
+                        isLoading: false,
+                    });
+                },
+                (err) => {
+                    this.setState({
+                        errors: err.response.data,
+                        isLoading: false,
+                    });
+                }
+            )
+            .catch((err) => {
+                this.setState({ errors: err, isLoading: false });
+            });
+    }
+
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+        this.loadAnnotations(null, e.target.value);
+
     }
 
     handleAllSelection(e) {
@@ -267,29 +280,6 @@ class IndexAnnotations extends React.Component {
             .catch((err) => {
                 this.setState({ isBusy: false, errors: err });
             });
-    }
-
-    checkSearchText(annotation) {
-        if (this.state.searchText.length) {
-            const searchText = this.state.searchText.toLowerCase();
-            if (
-                (annotation.category &&
-                    annotation.category.toLowerCase().indexOf(searchText) >
-                    -1) ||
-                (annotation.event_name &&
-                    annotation.event_name.toLowerCase().indexOf(searchText) >
-                    -1) ||
-                (annotation.description &&
-                    annotation.description.toLowerCase().indexOf(searchText) >
-                    -1) ||
-                (annotation.show_at &&
-                    annotation.show_at.toLowerCase().indexOf(searchText) > -1)
-            ) {
-                return true;
-            }
-            return false;
-        }
-        return true;
     }
 
     render() {
@@ -423,10 +413,11 @@ class IndexAnnotations extends React.Component {
                     ) : (
                         <>
                             {this.state.annotations
-                                .filter(this.checkSearchText)
+                                // .filter(this.checkSearchText)
                                 .map((anno, idx) => {
                                     let borderLeftColor = "rgba(0,0,0,.0625)";
                                     let selectedIcon = anno.category;
+                                    anno.description = `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis accusantium reprehenderit perferendis, ipsum natus, molestiae voluptatum beatae ut harum dolores reiciendis fuga hic! Consectetur repellendus ullam ab magni obcaecati dolorem!`
 
                                     switch (anno.category) {
                                         case "Google Updates":
@@ -502,9 +493,9 @@ class IndexAnnotations extends React.Component {
                                                 <p className="titleCategory d-flex align-items-center">
                                                     <span>{anno.event_name}</span>
                                                     <a href="">{anno.category}</a>
-                                                    <i className="fa fa-link"></i>
+                                                    <i className="icon"><img src={'/icon-chain.svg'} /></i>
                                                 </p>
-                                                <p className="annotationDesc mb-0 d-flex ">
+                                                <p className="annotationDesc mb-0 d-flex-inline">
                                                     {anno.description &&
                                                         !anno.show_complete_desc ? anno.description.substring(0, 150) : ""}
                                                     {anno.description &&
@@ -522,7 +513,7 @@ class IndexAnnotations extends React.Component {
                                                     )}
 
                                                     {anno.url && anno.url != "https://" && anno.url != "null" ? (
-                                                        <a href={anno.url} target="_blank" className="ml-1"><i className="fa fa-link"></i></a>
+                                                        <a href={anno.url} target="_blank" className="ml-1"><i className="icon"><img src={'/icon-chain.svg'} /></i></a>
                                                     ) : (
                                                         ""
                                                     )}
@@ -579,26 +570,25 @@ class IndexAnnotations extends React.Component {
 
     sort(e) {
         this.setState({ sortBy: e.target.value });
-        if (e.target.value !== "ga-account") {
+        this.loadAnnotations(e.target.value);
+    }
+
+    registerScrollEvent() {
+        $(window).off('scroll');
+        $(window).on('scroll', function() {
+            if($(window).scrollTop() + $(window).height() === $(document).height() ) {
+                const offset = this.state.offset + 10
+                this.setState({ offset })
+                this.loadInitAnnotations();
+            }
+        }.bind(this));
+    }
+
+    loadAnnotations (sortColumn, filterName) {
+
+        if (sortColumn !== "ga-account") {
             this.setState({ isLoading: true });
-            HttpClient.get(`/annotation?sortBy=${e.target.value}`)
-                .then(
-                    (response) => {
-                        this.setState({
-                            isLoading: false,
-                            annotations: response.data.annotations,
-                        });
-                    },
-                    (err) => {
-                        this.setState({
-                            isLoading: false,
-                            errors: err.response.data,
-                        });
-                    }
-                )
-                .catch((err) => {
-                    this.setState({ isLoading: false, errors: err });
-                });
+            this.loadInitAnnotations(sortColumn, filterName)
         }
     }
     sortByProperty(gaPropertyId) {

@@ -75,7 +75,6 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     }
 
     onChangeHandler(sOption) {
-        console.log(sOption);
 
         if (sOption == null) {
             this.setState({ aProperties: [{ value: "", label: "All Properties" }] });
@@ -105,23 +104,28 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             ) {
                 const accountNotLinkedHtml = '' +
                     '<div class="">' +
-                    '<img src="/images/property-upgrade-modal.jpg" class="img-fluid">' +
+                    '<img src="/images/property-upgrade-modal.png" class="img-fluid">' +
                     '</div>'
                 /*
                 * Show new google analytics account popup
                 * */
                 swal.fire({
                     html: accountNotLinkedHtml,
-                    width: 700,
+                    width: 1000,
+                    showCancelButton: true,
+                    showCloseButton: true,
                     customClass: {
-                        popup: 'custom_bg pb-5',
-                        htmlContainer: 'm-0',
+                        popup: "themePlanAlertPopup",
+                        htmlContainer: "themePlanAlertPopupContent",
+                        closeButton: 'btn-closeplanAlertPopup',
                     },
-                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                    confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+                    cancelButtonClass: "btn-bookADemo",
+                    cancelButtonText: "Book a Demo",
+                    confirmButtonClass: "btn-subscribeNow",
+                    confirmButtonText: "Subscribe now",
 
                 }).then(value => {
-                    this.setState({ redirectTo: "/settings/price-plans" });
+                    if (value.isConfirmed) window.location.href = '/settings/price-plans'
                 });
             }
             let aProperties = null;
@@ -156,7 +160,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             <>
                 <div>
                     <div className="themeNewInputStyle position-relative inputWithIcon">
-                        <i class="fa fa-plus"></i>
+                        {/* <i className="icon fa"><img src='/icon-plus.svg'/></i> */}
                         <Select
                             onFocus={this.props.onFocus}
                             loadOptions={this.searchGoogleAnalyticsProperties}

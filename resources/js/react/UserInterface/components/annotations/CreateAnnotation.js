@@ -52,21 +52,23 @@ export default class CreateAnnotation extends React.Component {
                                 // unlimited
                             } else {
                                 if (response.data.user_total_annotations >= this.state.user.price_plan.annotations_count) {
-                                    let url = document.location.origin + '/images/annotation_limit_reached.jpg';
+                                    let url = document.location.origin + '/images/annotation_limit_reached.png';
                                     swal.fire({
                                         html: "<img src='" + url + "' style='width:100%;'>",
-                                        width: 700,
+                                        width: 1000,
+                                        showCancelButton: true,
+                                        showCloseButton: true,
                                         customClass: {
-                                            popup: 'custom_bg pb-5',
-                                            htmlContainer: 'm-0',
+                                            popup: "themePlanAlertPopup",
+                                            htmlContainer: "themePlanAlertPopupContent",
+                                            closeButton: 'btn-closeplanAlertPopup',
                                         },
-                                        showCloseButton: false,
-                                        // title: "You have reached your plan limits!",
-                                        // text: "Upgrade your plan to add more annotations.",
-                                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                        confirmButtonText: "<a href='#' class='text-white'>Upgrade Now</a>",
+                                        cancelButtonClass: "btn-bookADemo",
+                                        cancelButtonText: "Book a Demo",
+                                        confirmButtonClass: "btn-subscribeNow",
+                                        confirmButtonText: "Subscribe now",
                                     }).then(function () {
-                                        window.location.href = '/settings/price-plans';
+                                        if (value.isConfirmed) window.location.href = '/settings/price-plans'
                                     });
                                 }
                             }
@@ -245,7 +247,7 @@ export default class CreateAnnotation extends React.Component {
 
                         <div className='grid2layout'>
                             <div className="themeNewInputStyle position-relative inputWithIcon">
-                                <i class="fa fa-link"></i>
+                                <i className="icon fa"><img src='/icon-chain-gray.svg'/></i>
                                 <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control" id="url" name="url" placeholder='https://' />
                                 {validation.url ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.url}</span> : ''}
                             </div>

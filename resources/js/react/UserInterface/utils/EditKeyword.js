@@ -106,7 +106,6 @@ export default class EditKeyword extends React.Component {
             ranking_places: this.state.ranking_places,
             is_url_competitors: this.state.is_url_competitors,
         };
-        console.log(params);
         HttpClient.post("/data-source/update-keyword-tracking-keyword", params)
             .then(
                 (resp) => {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify'
 import { DateRangePicker } from 'react-date-range';
 
 import HttpClient from '../../utils/HttpClient';
@@ -62,6 +63,7 @@ export default class IndexDashboard extends Component {
             searchApearancesStatistics: [],
             searchConsoleAnnotations: [],
             google_search_console_site_id: '*',
+            googleSearchConsoleSites: [],
             // Analytics
             usersDaysStatistics: [],
             mediaStatistics: [],
@@ -112,7 +114,7 @@ export default class IndexDashboard extends Component {
         const allDates = [...new Set(Object.keys(searchConsoleData).concat(Object.keys(analyticsData)))];
 
         return <React.Fragment>
-             <div id="analaticsAccountPage" className="analaticsAccountPage pageWrapper">
+            <div id="analaticsAccountPage" className="analaticsAccountPage pageWrapper">
                 <Container>
                     <div className="pageHeader analaticsAccountPageHead">
                         <h2 className="pageTitle">Analytics Accounts</h2>
@@ -167,8 +169,11 @@ export default class IndexDashboard extends Component {
                                         <div className="singleCol text-left d-flex flex-column">
                                             <div className="themeNewInputStyle position-relative w-100">
                                                 <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                                <select name="" value='' className="form-control selected">
-                                                    <option value="Null">Select website</option>
+                                                <select name="" value={gAP.google_search_console_site_id} className="form-control selected" onChange={(event) => this.handleGAPUpdate(gAP, { google_search_console_site_id: event.target.value })}>
+                                                    <option>Select website</option>
+                                                    {
+                                                        this.state.googleSearchConsoleSites.map(gSCS => <option value={gSCS.id} key={gSCS.id}>{gSCS.site_url} from {gSCS.google_account.name}</option>)
+                                                    }
                                                 </select>
                                                 <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
                                             </div>
@@ -543,7 +548,6 @@ export default class IndexDashboard extends Component {
     fetchGAAccounts(id) {
         this.setState({ isBusy: true });
         return HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
-            console.log(resp)
             toast.success("Accounts fetched.");
             this.setState({ isBusy: false })
             return this.getGAAccounts() && this.getGAProperties();
@@ -608,6 +612,22 @@ export default class IndexDashboard extends Component {
         }).catch(err => {
             this.setState({ isBusy: false, errors: err });
             return false;
+        });
+    }
+
+    handleGAPUpdate(gAP, data) {
+        this.setState({ isBusy: true });
+        HttpClient.put(`/settings/google-analytics-property/${gAP.id}`, data).then(resp => {
+            const updatedGAP = resp.data.google_analytics_property;
+            toast.success("Google Analytics Property updated.");
+            this.setState({
+                isBusy: false,
+                googleAnalyticsProperties: this.state.googleAnalyticsProperties.map(g => g.id == updatedGAP.id ? updatedGAP : g)
+            });
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
         });
     }
 }

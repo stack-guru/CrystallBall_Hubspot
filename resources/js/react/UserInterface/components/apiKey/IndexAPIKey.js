@@ -72,21 +72,26 @@ class IndexAPIKey extends React.Component {
         } else {
             const accountNotLinkedHtml = '' +
                 '<div class="">' +
-                '<img src="/images/api-upgrade-modal.jpg" class="img-fluid">' +
+                '<img src="/images/api-upgrade-modal.png" class="img-fluid">' +
                 '</div>'
 
             swal.fire({
                 html: accountNotLinkedHtml,
-                width: 700,
+                width: 1000,
+                showCancelButton: true,
+                showCloseButton: true,
                 customClass: {
-                    popup: 'bg-light-red pb-5',
-                    htmlContainer: 'm-0',
+                    popup: "themePlanAlertPopup",
+                    htmlContainer: "themePlanAlertPopupContent",
+                    closeButton: 'btn-closeplanAlertPopup',
                 },
-                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+                cancelButtonClass: "btn-bookADemo",
+                cancelButtonText: "Book a Demo",
+                confirmButtonClass: "btn-subscribeNow",
+                confirmButtonText: "Subscribe now",
 
             }).then(value => {
-                this.setState({ redirectTo: "/settings/price-plans" });
+                if (value.isConfirmed) window.location.href = '/settings/price-plans'
             });
         }
     }
@@ -173,7 +178,7 @@ class IndexAPIKey extends React.Component {
                                 return (<ul className="postKeyItem" key={apiKey.id}>
                                     <li className='align-align-items-start'>
                                         <h6>{apiKey.name}</h6>
-                                        <div class="dropup">
+                                        <div className="dropup">
                                             <button className="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" ariaHaspopup="true" ariaExpanded="false">
                                                 <i><img src={'/icon-elipsis-v.svg'} alt={'icon'} className="svg-inject" /></i>
                                             </button>

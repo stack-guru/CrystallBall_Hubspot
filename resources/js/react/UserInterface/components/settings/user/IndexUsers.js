@@ -99,7 +99,7 @@ export default class IndexUsers extends Component {
                                     <>
                                         {this.props.user.price_plan
                                             .user_per_ga_account_count > -1 ? (
-                                            <a onClick={() => this.setState({ addUserPopup: true })} href="javascript:void(0);" class="btn-adduser d-flex align-items-center justify-content-center">
+                                            <a onClick={() => this.setState({ addUserPopup: true })} href="javascript:void(0);" className="btn-adduser d-flex align-items-center justify-content-center">
                                                 <i className="fa fa-plus"></i>
                                                 <span>Add User</span>
                                             </a>
@@ -108,29 +108,29 @@ export default class IndexUsers extends Component {
                                                 const accountNotLinkedHtml =
                                                     "" +
                                                     '<div class="">' +
-                                                    '<img src="/images/banners/user_limit_banner.jpg" class="img-fluid">' +
+                                                    '<img src="/images/banners/user_limit_banner.png" class="img-fluid">' +
                                                     "</div>";
 
                                                 swal.fire({
                                                     html: accountNotLinkedHtml,
-                                                    width: 700,
+                                                    width: 1000,
+                                                    showCancelButton: true,
+                                                    showCloseButton: true,
                                                     customClass: {
-                                                        popup: "bg-light-red pb-5",
-                                                        htmlContainer:
-                                                            "m-0",
+                                                        popup: "themePlanAlertPopup",
+                                                        htmlContainer: "themePlanAlertPopupContent",
+                                                        closeButton: 'btn-closeplanAlertPopup',
                                                     },
-                                                    confirmButtonClass:
-                                                        "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                                    confirmButtonText:
-                                                        "Upgrade Now" +
-                                                        "<i class='ml-2 fa fa-caret-right'> </i>",
+                                                    cancelButtonClass: "btn-bookADemo",
+                                                    cancelButtonText: "Book a Demo",
+                                                    confirmButtonClass: "btn-subscribeNow",
+                                                    confirmButtonText: "Subscribe now",
                                                 }).then((value) => {
-                                                    window.location.href =
-                                                        "/settings/price-plans";
+                                                    if (value.isConfirmed) window.location.href = '/settings/price-plans'
                                                 });
 
                                             }}
-                                                class="btn-adduser d-flex align-items-center justify-content-center"
+                                                className="btn-adduser d-flex align-items-center justify-content-center"
                                             >
                                                 <i className="fa fa-plus"></i>
                                                 <span>Add User</span>

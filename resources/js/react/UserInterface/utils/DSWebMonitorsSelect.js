@@ -159,10 +159,6 @@ export default class DSWebMonitorsSelect extends React.Component {
     }
 
     render() {
-        console.log(
-            `WebsiteMonitoring :: render :: this.props.user`,
-            this.props.user
-        );
 
         return (
             <div className="apps-bodyContent switch-wrapper">

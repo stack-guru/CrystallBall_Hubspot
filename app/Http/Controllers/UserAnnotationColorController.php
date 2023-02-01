@@ -54,6 +54,8 @@ class UserAnnotationColorController extends Controller
             $userAnnotationColor->bitbucket_tracking = '#227c9d';
             $userAnnotationColor->github_tracking = '#227c9d';
             $userAnnotationColor->wordpress = '#227c9d';
+            $userAnnotationColor->shopify = '#227c9d';
+            $userAnnotationColor->apple_podcast = '#227c9d';
 
             $userAnnotationColor->save();
         }
