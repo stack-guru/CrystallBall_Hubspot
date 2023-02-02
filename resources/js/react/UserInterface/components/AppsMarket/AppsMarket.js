@@ -292,16 +292,11 @@ class AppsMarket extends React.Component {
         this.sectionToggler("edit_keyword");
     }
 
-    getRecommendedApps (sortColumn, filterName) {
-
-        const { sortBy, filter } = this.state;
-        sortColumn = filterName ? sortBy : sortColumn;
-        filterName = sortColumn ? filter : filterName;
-
-        let apps = [
+    getRecommendedAppsData () {
+        return [
             {
                 id: "01",
-                background: "null",
+                background: null,
                 dsKey: "is_ds_google_alerts_enabled",
                 enabled:this.state.userServices.is_ds_google_alerts_enabled,
                 premium: false,
@@ -323,7 +318,7 @@ class AppsMarket extends React.Component {
             },
             {
                 id: "30",
-                background: "null",
+                background: null,
                 dsKey: "is_ds_wordpress_updates_enabled",
                 enabled:this.state.userServices.is_ds_wordpress_updates_enabled,
                 premium: false,
@@ -334,7 +329,7 @@ class AppsMarket extends React.Component {
             },
             {
                 id: "03",
-                background: "null",
+                background: null,
                 dsKey: "is_ds_keyword_tracking_enabled",
                 enabled:this.state.userServices.is_ds_keyword_tracking_enabled,
                 premium: false,
@@ -345,7 +340,7 @@ class AppsMarket extends React.Component {
             },
             {
                 id: "04",
-                background: "null",
+                background: null,
                 dsKey: "is_ds_weather_alerts_enabled",
                 enabled:this.state.userServices.is_ds_weather_alerts_enabled,
                 premium: false,
@@ -356,7 +351,7 @@ class AppsMarket extends React.Component {
             },
             {
                 id: "05",
-                background: "null",
+                background: null,
                 dsKey: "is_ds_google_algorithm_updates_enabled",
                 enabled:this.state.userServices.is_ds_google_algorithm_updates_enabled,
                 premium: false,
@@ -378,7 +373,7 @@ class AppsMarket extends React.Component {
             },
             {
                 id: "17",
-                background: "null",
+                background: null,
                 dsKey: "is_ds_apple_podcast_annotation_enabled",
                 enabled: this.state.userServices.is_ds_apple_podcast_annotation_enabled,
                 premium: false,
@@ -387,7 +382,7 @@ class AppsMarket extends React.Component {
                 width: 114,
                 height: 30,
             },
-
+    
             {
                 id: "19",
                 background: "#24292F",
@@ -401,7 +396,7 @@ class AppsMarket extends React.Component {
             },
             {
                 id: "24",
-                background: "null",
+                background: null,
                 dsKey: "is_ds_retail_marketing_enabled",
                 enabled: this.state.userServices.is_ds_retail_marketing_enabled,
                 premium: false,
@@ -423,7 +418,7 @@ class AppsMarket extends React.Component {
             },
             {
                 id: "27",
-                background: "null",
+                background: null,
                 dsKey: "is_ds_holidays_enabled",
                 enabled: this.state.userServices.is_ds_holidays_enabled,
                 premium: false,
@@ -434,7 +429,7 @@ class AppsMarket extends React.Component {
             },
             {
                 id: "28",
-                background: "null",
+                background: null,
                 dsKey: "is_ds_web_monitors_enabled",
                 enabled: this.state.userServices.is_ds_web_monitors_enabled,
                 premium: false,
@@ -445,7 +440,7 @@ class AppsMarket extends React.Component {
             },
             {
                 id: "20",
-                background: "null",
+                background: null,
                 dsKey: "is_ds_shopify_annotation_enabled",
                 enabled:this.state.userServices.is_ds_shopify_annotation_enabled,
                 premium: false,
@@ -455,6 +450,9 @@ class AppsMarket extends React.Component {
                 height: 32,
             },
         ];
+    }
+
+    getRecommendedApps (sortColumn) {
 
         const sort_by = (field, reverse, primer) => {
 
@@ -472,15 +470,11 @@ class AppsMarket extends React.Component {
             }
         }
 
-        let sortedData = apps;
+        let sortedData = this.getRecommendedAppsData();
         if (sortColumn) {
             const column = sortColumn.split(':')[0]
             const order = sortColumn.split(':')[1]
-            sortedData = apps.sort(sort_by(column, order !== "asc", (a) => (column === 'brandName' ? a.toUpperCase() : !!a)))
-        }
-
-        if (filterName) {
-            sortedData = sortedData.filter(x => x.brandName.toLowerCase().includes(filterName))
+            sortedData = this.state.recommendedApps.sort(sort_by(column, order !== "asc", (a) => (column === 'brandName' ? a.toUpperCase() : !!a)))
         }
 
         this.setState({ recommendedApps: sortedData });
@@ -492,7 +486,10 @@ class AppsMarket extends React.Component {
     }
     onChangeFilterHandler (data) {
         this.setState({ filter: data.target.value })
-        this.getRecommendedApps(null, data.target.value);
+
+        let sortedData = this.getRecommendedAppsData();
+        sortedData = sortedData.filter(x => x.brandName.toLowerCase().includes(data.target.value.toLowerCase()))
+        this.setState({ recommendedApps: sortedData });
     }
 
     render() {
