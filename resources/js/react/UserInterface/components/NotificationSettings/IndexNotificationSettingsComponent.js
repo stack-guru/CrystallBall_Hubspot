@@ -150,7 +150,7 @@ export default class IndexNotificationSettings extends Component {
                             <div className="tableBody">
                                 {this.state.notification_settings.map(notificationSetting => {
                                     return (
-                                        <div key={notificationSetting.id} className="singleRow justify-content-between align-items-stretch">
+                                        <div key={notificationSetting.id} className={`singleRow justify-content-between align-items-stretch ${!notificationSetting.is_enabled ? 'disabled-notification': ''}`}>
                                             <div className="singleCol text-left d-flex align-items-center justify-content-start">
                                                 <label className="themeSwitch">
                                                     <input type="checkbox"
