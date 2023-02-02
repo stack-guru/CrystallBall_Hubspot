@@ -80,7 +80,6 @@ export default class DSWebMonitorsSelect extends React.Component {
                     ga_property_id: this.props.ga_property_id,
                 },
             });
-            this.reloadWebMonitors();
         }
     }
 
@@ -201,24 +200,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                                     }
                                     value={this.props.ga_property_id}
                                     onChangeCallback={(gAP) => {
-                                        if (gAP.target.value == "") {
-                                            this.props.updateGAPropertyId(null);
-                                            this.props.loadUserDataSources(
-                                                null
-                                            );
-                                            this.props.reloadWebMonitors(null);
-                                        } else {
-                                            debugger;
-                                            this.props.updateGAPropertyId(
-                                                gAP.target.value
-                                            );
-                                            this.props.loadUserDataSources(
-                                                gAP.target.value
-                                            );
-                                            this.props.reloadWebMonitors(
-                                                gAP.target.value
-                                            );
-                                        }
+                                        this.props.updateGAPropertyId(gAP.target.value || null);
                                     }}
                                     components={{
                                         DropdownIndicator: () => null,
@@ -226,6 +208,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                                     }}
                                     placeholder="Select GA Properties"
                                     isClearable={true}
+                                    onDeleteCallback={this.props.onUncheckCallback}
                                 />
                             </div>
                             <div className="mt-4">
