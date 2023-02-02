@@ -417,7 +417,7 @@ class IndexAnnotations extends React.Component {
                                 .map((anno, idx) => {
                                     let borderLeftColor = "rgba(0,0,0,.0625)";
                                     let selectedIcon = anno.category;
-                                    anno.description = `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis accusantium reprehenderit perferendis, ipsum natus, molestiae voluptatum beatae ut harum dolores reiciendis fuga hic! Consectetur repellendus ullam ab magni obcaecati dolorem!`
+                                    anno.description = anno.description || anno.event_name
 
                                     switch (anno.category) {
                                         case "Google Updates":
