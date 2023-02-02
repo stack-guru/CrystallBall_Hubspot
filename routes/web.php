@@ -138,7 +138,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
         Route::resource('facebook-accounts', App\Http\Controllers\FacebookAutomationController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
 
-        Route::view('change-password', 'ui/app')->name('settings.change-password.index');
+        Route::view('profile', 'ui/app')->name('settings.profile.index');
         Route::view('payment-detail/create', 'ui/app');
         Route::view('price-plans', 'ui/app')->name('settings.price-plans');
         Route::view('custom-price-plan/{code}', 'ui/app')->name('settings.custom-price-plan');
@@ -268,7 +268,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
             Route::post('payment-detail', [App\Http\Controllers\PaymentDetailController::class, 'store']);
 
-            Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
+            Route::get('accounts', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
 
             Route::get('google-ads-account-ids', [App\Http\Controllers\GoogleAdsAccountController::class, 'uiIndex']);
             Route::put('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'update']);

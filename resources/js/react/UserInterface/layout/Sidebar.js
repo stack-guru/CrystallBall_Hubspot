@@ -352,7 +352,7 @@ class Sidebar extends React.Component {
                                         </React.Fragment>
                                     ) : null}
                                     <li className="nav-item dropdown">
-                                        <Link to="/settings/change-password">
+                                        <Link to="/settings/profile">
                                             My Account
                                         </Link>
                                     </li>

@@ -11,7 +11,7 @@ import moment from 'moment';
 import AppsModal from '../AppsMarket/AppsModal';
 import CreatePaymentDetail from './CreatePaymentDetail';
 
-export default class ChangePassword extends React.Component {
+export default class Profile extends React.Component {
 
     constructor(props) {
         super(props);
@@ -39,7 +39,7 @@ export default class ChangePassword extends React.Component {
         this.onChangeFile = this.onChangeFile.bind(this);
     }
     componentDidMount() {
-        document.title = 'Change Password';
+        document.title = 'Profile';
 
         if (this.props.user) {
             const { name, phone, email, timezone, profile_image } = this.props.user
