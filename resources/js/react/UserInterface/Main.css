@@ -2730,6 +2730,10 @@ body {
     color: #096db7;
     background-color: #f0f6ff;
 }
+.themeTabNav li a.nav-link:hover {
+    color: #096db7;
+    background-color: #f0f6ff;
+}
 .themeTabContent {
     padding: 42px;
     background: #fff;

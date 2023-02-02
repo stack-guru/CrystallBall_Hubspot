@@ -297,9 +297,9 @@ class IndexAnnotations extends React.Component {
                                 <a data-toggle="tooltip" data-placement="top" title="Manual" href="javascript:void(0);" onClick={() => this.props.openAnnotationPopup('manual')}>
                                     <img className='inject-me' src='/manual.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/manual.svg"; }} width='16' height='16' alt='menu icon' />
                                 </a>
-                                <Link data-toggle="tooltip" data-placement="top" title="Apps Market" href="/data-source">
+                                <a data-toggle="tooltip" data-placement="top" title="Apps Market" to="/data-source" href="/data-source">
                                     <img className='inject-me' src='/appMarket.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/appMarket.svg"; }} width='16' height='16' alt='menu icon' />
-                                </Link>
+                                </a>
                                 {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (
                                     <a data-toggle="tooltip" data-placement="top" title="CSV Upload" onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">
                                         <img className='inject-me' src='/csvUploadd.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/csvUploadd.svg"; }} width='16' height='16' alt='menu icon' />
