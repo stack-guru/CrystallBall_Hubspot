@@ -143,7 +143,7 @@ export default class ChangePhoneModal extends Component {
                     </div>
                 </form>
 
-                {this.props.phoneNumber ? <div className={`alert alert-info border-0 justify-content-between`}>
+                {(this.props.phoneNumber && !this.props.phone_verified_at) ? <div className={`alert alert-info border-0 justify-content-between`}>
                     <div>
                         <i><img src={'/icon-info.svg'} alt={'icon'} className="svg-inject" /></i>
                         <span>{this.state?.errors?.message || "Verification code is sent to the given number"}</span>
@@ -151,7 +151,7 @@ export default class ChangePhoneModal extends Component {
                     <button className='btn-resend' onClick={this.resendVerificationCode}>Resend</button>
                 </div> : null}
 
-                {this.props.phoneNumber ? <>
+                {(this.props.phoneNumber && !this.props.phone_verified_at) ? <>
                     {this.state.isBusy ?
                         <div className="fa-3x"><i className="fa fa-spinner fa-pulse"></i></div>
                         :
