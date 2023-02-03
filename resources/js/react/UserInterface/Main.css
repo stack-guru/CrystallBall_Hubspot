@@ -3598,7 +3598,12 @@ body {
     line-height: 23px;
     margin-bottom: 20px;
 }
-.tags { display: flex; gap: 8px; flex-wrap: wrap; padding-bottom: 24px; }
+.tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-bottom: 24px;
+}
 .tag {
     display: flex;
     color: #333;
