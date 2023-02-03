@@ -858,7 +858,7 @@ body {
 .sidebar-menu > li > a {padding: 8px 15px;}
 .sidebar-link > span:first-child {
     width: 79px;
-    display: block;
+    flex-shrink: 0;
     text-align: center;
 }
 .sidebar-menu > li > a {
@@ -2519,8 +2519,14 @@ body {
 }
 .notificationPageHead { padding-bottom: 70px; }
 .dataTableNotifiction .tableHead {
-    padding-top: 0;
-    padding-bottom: 32px;
+    top: 120px;
+    z-index: 10;
+    position: sticky;
+    padding-top: 22px;
+    margin-bottom: 10px;
+    border-radius: 16px;
+    padding-bottom: 22px;
+    background-color: #fff;
 }
 
 .dataTableNotifiction .tableBody .singleRow .singleCol:first-child,
@@ -2996,7 +3002,7 @@ body {
     max-width: 342px;
     position: relative;
 }
-.themeNewInputStyle.changePhoneNumber {}
+.themeNewInputStyle.changePhoneNumber {margin-bottom: 42px;}
 .themeNewInputStyle.changePhoneNumber .form-control { height: 44px !important; }
 .phoneNumberBox .btn-change {
     top: 1px;
@@ -3709,13 +3715,34 @@ body {
     color: #096DB7;
     line-height: 30px;
 }
+.nodata {
+    display: flex;
+    color: #666;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: center;
+    padding: 32px 24px;
+    border-radius: 24px;
+    background: #fcfcfc;
+    flex-direction: column;
+}
+.nodata p { margin-bottom: 0; }
+.nodata p a {color: #1976fe; }
+.addPhoneNumber {padding: 22px 10px;}
+.md.csvupload {
+    margin: 50px auto;
+    max-height: calc(100% - 100px);
+}
+.md.csvupload .modal-content{max-height: calc(100vh - 100px);}
+
 
 
 
 
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }
-    .is-collapsed .sidebar .sidebar-inner .sidebar-menu>li>a .title {display: none;}
+    .is-collapsed .sidebar .sidebar-inner .sidebar-menu>li>a .title {visibility: hidden;}
 }
 @media screen and (min-width: 1440px) {
     .is-collapsed .sidebar { width: 110px; }

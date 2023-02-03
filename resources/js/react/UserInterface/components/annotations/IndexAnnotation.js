@@ -556,7 +556,12 @@ class IndexAnnotations extends React.Component {
                                         </div>
                                     );
 
-                                })}{" "}
+                                })}{
+                                    <div className="nodata">
+                                        <p>No annotations added yet.</p>
+                                        <p className="mb-0">Suggestions: <a href=''>Add manual annotation</a> or <a href=''>Upload CSV</a></p>
+                                    </div>
+                                }
                         </>
                     )}
                 </Container>

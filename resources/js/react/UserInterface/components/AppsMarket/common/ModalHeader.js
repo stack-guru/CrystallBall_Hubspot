@@ -35,7 +35,19 @@ class ModalHeader extends React.Component {
                             </span>
                         ) : null}
                     </div>
-                    {this.props.closeModal ? <span onClick={this.props.closeModal} className="btn-close"><img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" /></span>:  null}
+                    {this.props.downloadButton ?
+                        <div className="d-flex align-items-center">
+                            <button className="btn-cancel mr-5">
+                                <i className="mr-2"><img src="/icon-download.svg"/></i>
+                                <span>Download Sample</span>
+                            </button>
+                            {this.props.closeModal ? <span onClick={this.props.closeModal} className="btn-close"><img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" /></span> : null}
+                        </div>
+                    :
+                        <>
+                            {this.props.closeModal ? <span onClick={this.props.closeModal} className="btn-close"><img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" /></span> : null}
+                        </>
+                    }
                 </div>
                 {this.props.description ? <p className="mb-0 pt-3">{this.props.description}</p> : null}
             </div>
