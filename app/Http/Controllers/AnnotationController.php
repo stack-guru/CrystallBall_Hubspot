@@ -237,14 +237,22 @@ class AnnotationController extends Controller
         // LEFT JOINs to load all property details which are loaded from above statement
         $annotationsQuery .= " LEFT JOIN google_analytics_properties ON annotation_ga_properties.google_analytics_property_id = google_analytics_properties.id";
 
+        // All where clauses should reside here
+        $whereClauses = [];
         // Apply category filter if it is added in GET request query parameter
         if ($request->query('category') && $request->query('category') !== '') {
-            $annotationsQuery .= " WHERE category = '" . $request->query('category') . "'";
+            $whereClauses[] = "category = '" . $request->query('category') . "'";
         }
         // Apply google analytics property filter if the value for filter is provided
         if ($request->query('annotation_ga_property_id') && $request->query('annotation_ga_property_id') !== '*') {
-            $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $request->query('annotation_ga_property_id') . ") ";
+            $whereClauses[] = "(annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $request->query('annotation_ga_property_id') . ") ";
         }
+        // Apply search functionality if search keyword is given
+        if ($request->has('search') && $request->query('search') !== '') {
+            $search = $request->query('search');
+            $whereClauses[] = "(`TempTable`.`category` LIKE '%$search%' OR `TempTable`.`event_name` LIKE '%$search%' OR `TempTable`.`description` LIKE '%$search%')";
+        }
+        if (count($whereClauses)) $annotationsQuery .= " WHERE " . implode(' AND ', $whereClauses);
 
         // Apply sort of provided column if it is added in GET request query parameter
         if ($request->query('sortBy') == "added") {
@@ -261,12 +269,12 @@ class AnnotationController extends Controller
             $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
         }
         // Add limit for annotations if the price plan is limited in annotations count
-        $offset = $request->query('offset');
+        $offset = $request->has('offset') ? $request->query('offset') : 0;
 
         $limit = 10;
         $annotations_count = $user->pricePlan->annotations_count;
-        if($annotations_count > 0 && $annotations_count < $offset + 10) {
-            $limit = $annotations_count - $offset; 
+        if ($annotations_count > 0 && $annotations_count < $offset + 10) {
+            $limit = $annotations_count - $offset;
         }
         if ($annotations_count && ($offset - $annotations_count > 10 || $limit < 0)) {
             $limit = 0;

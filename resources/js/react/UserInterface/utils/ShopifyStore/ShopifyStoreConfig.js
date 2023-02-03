@@ -57,9 +57,9 @@ const ShopifyStoreConfig = (props) => {
             });
     };
 
-    useEffect(() => {
-        getExistingShopifyStore();
-    }, [props.gaPropertyId]);
+    // useEffect(() => {
+    //     getExistingShopifyStore();
+    // }, [props.gaPropertyId]);
 
     const addAnnotation = async () => {
         toast.info("Creating Annotations");
@@ -110,21 +110,7 @@ const ShopifyStoreConfig = (props) => {
                         currentPricePlan={props.user.price_plan}
                         value={props.ga_property_id}
                         onChangeCallback={(gAP) => {
-                            if (gAP.target.value == "") {
-                                props.updateGAPropertyId(null);
-                                props.loadUserDataSources(null);
-                                props.reloadWebMonitors(null);
-                            } else {
-                                props.updateGAPropertyId(
-                                    gAP.target.value
-                                );
-                                props.loadUserDataSources(
-                                    gAP.target.value
-                                );
-                                props.reloadWebMonitors(
-                                    gAP.target.value
-                                );
-                            }
+                            props.updateGAPropertyId(gAP?.target?.value || null);
                         }}
                         components={{
                             DropdownIndicator: () => null,

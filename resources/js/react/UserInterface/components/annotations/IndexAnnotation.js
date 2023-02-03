@@ -168,7 +168,7 @@ class IndexAnnotations extends React.Component {
         const sort = filterName ? sortBy : sortColumn;
         const filter = sortColumn ? searchText : filterName;
 
-        HttpClient.get(`/annotation?sortBy=${sort}&filterBy=${filter}&offset=${offset}`)
+        HttpClient.get(`/annotation?sortBy=${sort}&search=${filter}&offset=${offset}`)
             .then(
                 (response) => {
                     this.setState({
