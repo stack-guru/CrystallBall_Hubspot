@@ -556,11 +556,13 @@ class IndexAnnotations extends React.Component {
                                         </div>
                                     );
 
-                                })}{
+                                })}
+
+                                { !this.state.isLoading && !this.state.annotations.length ?
                                     <div className="nodata">
                                         <p>No annotations added yet.</p>
                                         <p className="mb-0">Suggestions: <a href=''>Add manual annotation</a> or <a href=''>Upload CSV</a></p>
-                                    </div>
+                                    </div> : null
                                 }
                         </>
                     )}
