@@ -82,7 +82,7 @@ class GoogleAccountController extends Controller
 
         $this->addGoogleAccount($user, $googleAccount, Auth::user());
 
-        return redirect()->route('google-account.index', ['google_account_id' => $googleAccount->id, 'do-refresh' => true]);
+        return redirect()->route('accounts', ['google_account_id' => $googleAccount->id, 'do-refresh' => true]);
     }
 
     public function update(GoogleAccountRequest $request, GoogleAccount $googleAccount)

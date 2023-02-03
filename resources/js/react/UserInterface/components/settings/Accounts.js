@@ -2,16 +2,16 @@ import React from 'react';
 import { toast } from 'react-toastify'
 import { Redirect } from "react-router-dom";
 
-import HttpClient from '../../../utils/HttpClient';
-import ErrorAlert from '../../../utils/ErrorAlert'
+import HttpClient from '../../utils/HttpClient';
+import ErrorAlert from '../../utils/ErrorAlert'
 // import AdwordsClientCustomerIdSaverModal from '../../../helpers/AdwordsClientCustomerIdSaverModalComponent';
-import VideoModalBox from '../../../utils/VideoModalBox';
-import GooglePermissionPopup from '../../../utils/GooglePermissionPopup';
+import VideoModalBox from '../../utils/VideoModalBox';
+import GooglePermissionPopup from '../../utils/GooglePermissionPopup';
 import { Container, FormGroup, Label, Input } from 'reactstrap';
 import { Link } from "react-router-dom";
 
 
-export default class GoogleAccountIndex extends React.Component {
+export default class Accounts extends React.Component {
 
     constructor(props) {
         super(props);
@@ -44,7 +44,7 @@ export default class GoogleAccountIndex extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Google Accounts';
+        document.title = 'Accounts';
 
         let autoRedirectDelay = 3000;
         let searchParams = new URLSearchParams(document.location.search);
@@ -53,12 +53,12 @@ export default class GoogleAccountIndex extends React.Component {
                 autoRedirectDelay = 10000;
                 this.fetchGSCSites(searchParams.get('google_account_id'))
                 this.fetchGAAccounts(searchParams.get('google_account_id'))
-                history.pushState({}, null, "/settings/google-account");
+                history.pushState({}, null, "/settings/accounts");
             }
         }
 
         const redirectTo = localStorage.getItem('frontend_redirect_to');
-        if (redirectTo && redirectTo !== "/settings/google-account") {
+        if (redirectTo && redirectTo !== "/settings/accounts") {
             localStorage.removeItem('frontend_redirect_to');
             toast.info("Redirecting you in 10 seconds, please wait.", {
                 autoClose: autoRedirectDelay
