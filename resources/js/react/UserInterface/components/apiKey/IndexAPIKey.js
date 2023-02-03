@@ -27,7 +27,9 @@ class IndexAPIKey extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'API Keys';
+        if(!this.props.formOnly) {
+            document.title = 'API Keys';
+        }
 
         this.setState({ isBusy: true });
         HttpClient({ url: `/oauth/personal-access-tokens`, baseURL: "/" })
@@ -150,8 +152,8 @@ class IndexAPIKey extends React.Component {
                         </a>
                     </div>}
 
-                        <form className={`${this.props.formOnly ? 'mb-0': ''}  apiKeyForm d-block`} onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
-                        <h3>Generate token</h3>
+                        <form className={`${this.props.formOnly ? 'mb-0 p-0 shadow-none w-100': ''}  apiKeyForm d-block`} onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
+                        {!this.props.formOnly ? <h3>Generate token</h3>: ''}
                         <div className="inputplusbutton d-flex">
                             <div className="themeNewInputGroup themeNewInputStyle">
                                 <input placeholder='Token name' type="text" className="form-control" name="token_name" onChange={this.handleChange} value={this.state.token_name} />

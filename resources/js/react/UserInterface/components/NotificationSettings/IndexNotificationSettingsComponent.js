@@ -150,7 +150,7 @@ export default class IndexNotificationSettings extends Component {
                             <div className="tableBody">
                                 {this.state.notification_settings.map(notificationSetting => {
                                     return (
-                                        <div key={notificationSetting.id} className="singleRow justify-content-between align-items-stretch">
+                                        <div key={notificationSetting.id} className={`singleRow justify-content-between align-items-stretch ${!notificationSetting.is_enabled ? 'disabled-notification': ''}`}>
                                             <div className="singleCol text-left d-flex align-items-center justify-content-start">
                                                 <label className="themeSwitch">
                                                     <input type="checkbox"
@@ -198,7 +198,7 @@ export default class IndexNotificationSettings extends Component {
                             </div>
                         </div>
                     </div>
-                    <ChangePhoneModal phoneNumber={this.props.user.phone_number} reloadUser={this.props.reloadUser} show={this.state.showChangePhoneModal} toggleCallback={() => { this.setState({ showChangePhoneModal: false, showPhoneVerificationModal: false }); this.props.reloadUser(); }} />
+                    <ChangePhoneModal phone_verified_at={this.props.user.phone_verified_at} phoneNumber={this.props.user.phone_number} reloadUser={this.props.reloadUser} show={this.state.showChangePhoneModal} toggleCallback={() => { this.setState({ showChangePhoneModal: false, showPhoneVerificationModal: false }); this.props.reloadUser(); }} />
                 </Container>
             </div>
         );

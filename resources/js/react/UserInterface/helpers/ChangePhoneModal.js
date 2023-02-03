@@ -58,6 +58,7 @@ export default class ChangePhoneModal extends Component {
                 HttpClient({ method: 'POST', url: '/phone/resend', baseURL: "/", data: { phone: `+${statePhone}` } })
                     .then(response => {
                         this.setState({ isBusy: false });
+                        this.props.reloadUser();
                     }, (err) => {
                         this.setState({ errors: (err.response).data, isBusy: false });
                     }).catch(err => {
@@ -108,7 +109,7 @@ export default class ChangePhoneModal extends Component {
     handleVerifyPhoneSubmit(e) {
         e.preventDefault();
         var verificationCode = "";
-        e.target.childNodes.forEach(function (i) { if (i.tagName == "INPUT" && i.type == "text") { verificationCode = verificationCode.concat(i.value); } });
+        e.target.querySelectorAll('input').forEach(function (i) { if (i.tagName == "INPUT" && i.type == "text") { verificationCode = verificationCode.concat(i.value); } });
 
         this.setState({ isBusy: true });
         HttpClient({ method: 'POST', url: '/phone/verify', baseURL: "/", data: { verification_code: verificationCode } })
