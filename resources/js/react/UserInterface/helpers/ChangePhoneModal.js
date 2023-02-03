@@ -133,7 +133,7 @@ export default class ChangePhoneModal extends Component {
                     <form onSubmit={this.handlePhoneSubmit} className='changePhoneForm' id='changePhoneForm'>
                         <h2 className='text-center'>Add phone number</h2>
                         <div className='phoneNumberBox'>
-                            <PhoneInput className='themeNewInputStyle changePhoneNumber' country={'us'} value={this.state.phone} onChange={phone => this.setState({ phone })} inputProps={{name: 'phone', required: true, autoFocus: true}}/>
+                            <PhoneInput className='themeNewInputStyle changePhoneNumber' country={'us'} value={this.state.phone} onChange={phone => this.setState({ phone })} inputProps={{ name: 'phone', required: true, autoFocus: true }} />
                             <div className='d-flex justify-content-center p-0'>
                                 {this.props.phoneNumber ? <button className="btn-change" type="submit">Change</button> : <>
                                     <button onClick={this.props.toggleCallback} className="btn-cancel mr-3" type="button">Cancel</button>
@@ -143,35 +143,37 @@ export default class ChangePhoneModal extends Component {
                         </div>
                     </form>
 
-                    {this.props.phoneNumber ? <div className='alert alert-info border-0 justify-content-between'>
+                    {(this.props.phoneNumber && !this.props.phone_verified_at) ? <div className='alert alert-info border-0 justify-content-between'>
                         <div>
                             <i><img src={'/icon-info.svg'} alt={'icon'} className="svg-inject" /></i>
-                            <span>Verification code is sent to the given number</span>
+                            <span>{this.state?.errors?.message || "Verification code is sent to the given number"}</span>
                         </div>
                         <button className='btn-resend' onClick={this.resendVerificationCode}>Resend</button>
                     </div> : null}
 
-                    {this.state.isBusy ?
-                        <div className="fa-3x"><i className="fa fa-spinner fa-pulse"></i></div>
-                        :
-                        <form onSubmit={this.handleVerifyPhoneSubmit} id="form" onKeyUp={this.moveNext} className='phoneSubmitForm'>
-                            <p>Please enter 6-digit code sent to your number</p>
-                            <div className='codeinputs'>
-                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                <span className='px-1 d-flex align-items-center'>-</span>
-                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                            </div>
+                    {(this.props.phoneNumber && !this.props.phone_verified_at) ? <>
+                        {this.state.isBusy ?
+                            <div className="fa-3x"><i className="fa fa-spinner fa-pulse"></i></div>
+                            :
+                            <form onSubmit={this.handleVerifyPhoneSubmit} id="form" onKeyUp={this.moveNext} className='phoneSubmitForm'>
+                                <p>Please enter 6-digit code sent to your number</p>
+                                <div className='codeinputs'>
+                                    <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                    <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                    <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                    <span className='px-1 d-flex align-items-center'>-</span>
+                                    <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                    <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                    <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                </div>
 
-                            <div className='d-flex justify-content-center pb-0'>
-                                <button onClick={this.props.toggleCallback} className="btn-cancel" type="button">Cancel</button>
-                                <button className="btn-theme ml-3" type="submit">Verify</button>
-                            </div>
-                        </form>
-                    }
+                                <div className='d-flex justify-content-center pb-0'>
+                                    <button onClick={this.props.toggleCallback} className="btn-cancel" type="button">Cancel</button>
+                                    <button className="btn-theme ml-3" type="submit">Verify</button>
+                                </div>
+                            </form>
+                        }
+                    </> : null}
                 </div>
             </AppsModal>
         )
