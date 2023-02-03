@@ -133,7 +133,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
         Route::view('support', 'ui/app');
         Route::view('/devices', 'ui/app');
 
-        Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
+        Route::get('accounts', [App\Http\Controllers\GoogleAccountController::class, 'index']);
+        Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['create', 'store', 'update', 'destroy']);
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store'])->name('settings.google-account.redirect.store');
 
         Route::resource('facebook-accounts', App\Http\Controllers\FacebookAutomationController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
@@ -268,7 +269,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
             Route::post('payment-detail', [App\Http\Controllers\PaymentDetailController::class, 'store']);
 
-            Route::get('accounts', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
+            Route::get('google-account', [App\Http\Controllers\GoogleAccountController::class, 'uiIndex']);
 
             Route::get('google-ads-account-ids', [App\Http\Controllers\GoogleAdsAccountController::class, 'uiIndex']);
             Route::put('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'update']);

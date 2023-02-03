@@ -16,7 +16,7 @@ import IndexPricingPlans from './components/settings/pricingPlans/IndexPricingPl
 import Settings from './components/settings/IndexSettings';
 import Profile from './components/settings/Profile';
 import PaymentHistory from './components/settings/pricingPlans/PaymentHistory';
-import GoogleAccountIndex from './components/settings/googleAccount/GoogleAccountIndex';
+import Accounts from './components/settings/Accounts';
 import FacebookAccounts from './components/settings/facebookaccounts/FacebookAccountsIndex';
 import UserDevices from './components/settings/devices/UserDevicesIndex';
 import DataSourceIndex from "./components/DataSource/DataSourceIndex";
@@ -205,8 +205,8 @@ class Main extends React.Component {
                             <Route exact path="/settings/payment-detail/create" refresh={true}>
                                 <CreatePaymentDetail user={this.state.user} />
                             </Route>
-                            <Route exact path="/settings/google-account" refresh={true}>
-                                <GoogleAccountIndex user={this.state.user} reloadUser={this.loadUser} />
+                            <Route exact path="/settings/accounts" refresh={true}>
+                                <Accounts user={this.state.user} reloadUser={this.loadUser} />
                             </Route>
                             <Route exact path="/settings/facebook-accounts" refresh={true}>
                                 <FacebookAccounts user={this.state.user} reloadUser={this.loadUser} />
