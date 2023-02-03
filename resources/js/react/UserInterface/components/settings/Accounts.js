@@ -23,6 +23,7 @@ export default class Accounts extends React.Component {
             googleSearchConsoleSites: [],
             redirectTo: null,
             isPermissionPopupOpened: false,
+            user: props.user
         }
 
         this.handleDelete = this.handleDelete.bind(this);
@@ -40,6 +41,7 @@ export default class Accounts extends React.Component {
         this.fetchGSCSites = this.fetchGSCSites.bind(this);
         this.getGSCSites = this.getGSCSites.bind(this);
         this.handleGSCSDelete = this.handleGSCSDelete.bind(this);
+        this.updateUserService = this.updateUserService.bind(this);
 
     }
 
@@ -80,7 +82,7 @@ export default class Accounts extends React.Component {
         this.getGAProperties();
         this.getGSCSites();
 
-        if (this.props.user.google_accounts_tour_showed_at == null && this.props.user.last_login_at !== null) {
+        if (this.state.user.google_accounts_tour_showed_at == null && this.state.user.last_login_at !== null) {
             setTimeout(function () { document.getElementById("properties-video-modal-button").click(); }, 3000)
             HttpClient.put(`/data-source/mark-google-accounts-tour`, { google_accounts_tour_showed_at: true })
                 .then(response => {
@@ -92,6 +94,22 @@ export default class Accounts extends React.Component {
 
     }
 
+    updateUserService(value) {
+        HttpClient.post("/userService", {
+            [value]: 0,
+        }).then((resp) => {
+                toast.info("Service deactivated successfully.");
+                this.setState({user: resp.data.user_services})
+            },
+            (err) => {
+                this.setState({ isBusy: false, errors: err.response.data });
+            }
+        )
+        .catch((err) => {
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
@@ -100,118 +118,85 @@ export default class Accounts extends React.Component {
                 <Container>
                     <div className="pageHeader googleAccountPageHead">
                         <h2 className="pageTitle">Accounts</h2>
-                        <div className="alert alert-danger border-0">
+                        {/* <div className="alert alert-danger border-0">
                             <i><img src={'/icon-info-red.svg'} alt={'icon'} className="svg-inject" /></i>
                             <span>One of your Google accounts doesn’t  have required permissions given. Please remove and reconnect the account.</span>
-                        </div>
+                        </div> */}
                     </div>
                     <section className='accountsHolder'>
                         <h3>Google accounts</h3>
                         <div className="accounts googleAccounts">
-                            <div className='account'>
-                                <figure><img src='/userDP.jpeg' alt='user image' /></figure>
-                                <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
-                                    <span>adilaijaz@gmail.com</span>
-                                </div>
-                                <div className='btns'>
-                                    <button className='btn-change'>Change</button>
-                                    <button className='btn-disconnect'>Disconnect</button>
-                                </div>
-                            </div>
-                            <div className='account reconnect'>
-                                <figure><img src='/userDP.jpeg' alt='user image' /></figure>
-                                <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz <i className='fa fa-exclamation-circle' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></h4>
-                                    <span>adilaijaz@gmail.com</span>
-                                </div>
-                                <div className='btns'>
-                                    <button className='btn-change'>Change</button>
-                                    <button className='btn-disconnect'>Disconnect</button>
-                                </div>
-                            </div>
-                            <div className='account'>
-                                <figure><img src='/userDP.jpeg' alt='user image' /></figure>
-                                <div className='nameAndEmail'>
-                                    <h4>Adil Aijaz</h4>
-                                    <span>adilaijaz@gmail.com</span>
-                                </div>
-                                <div className='btns'>
-                                    <button className='btn-change'>Change</button>
-                                    <button className='btn-disconnect'>Disconnect</button>
-                                </div>
-                            </div>
+                        {
+                            this.state.googleAccounts.map(googleAccount => {
+                                // className: reconnect
+                                return <div className='account'> 
+                                            <figure><img src={googleAccount.avatar} alt='user image' /></figure>
+                                            <div className='nameAndEmail'>
+                                                <h4>{googleAccount.name}</h4>
+                                                <span>{googleAccount.email}</span>
+                                            </div>
+                                            <div className='btns'>
+                                                <button className='btn-change'>Change</button>
+                                                <button className='btn-disconnect' 
+                                                onClick={() => this.handleDelete(googleAccount.id)} 
+                                                >Disconnect</button>
+                                            </div>
+                                        </div>
+                            })
+                        }
                         </div>
                     </section>
                     <section className='accountsHolder'>
                         <h3>Social accounts</h3>
                         <div className="accounts socialAccounts">
-                            <div className='account'>
-                                <figure><img className='socialImage' src='/facebook-small.svg' alt='user image' /></figure>
-                                <div className='nameAndEmail'>
-                                    <h4>Facebook</h4>
-                                    <span>adilaijaz@gmail.com</span>
+                            {
+                                this.state.user.is_ds_twitter_tracking_enabled ? 
+                                <div className='account'>
+                                    <figure><img className='socialImage' src='/twitter-small.svg' alt='user image' /></figure>
+                                    <div className='nameAndEmail'>
+                                        <h4>Twitter</h4>
+                                        <span>{this.state.user.email}</span>
+                                    </div>
+                                    <div className='btns'>
+                                        <button className='btn-change'>Change</button>
+                                        <button className='btn-disconnect' 
+                                        onClick={() => this.updateUserService('is_ds_twitter_tracking_enabled')}
+                                        >Disconnect</button>
+                                    </div>
                                 </div>
-                                <div className='btns'>
-                                    <button className='btn-change'>Change</button>
-                                    <button className='btn-disconnect'>Disconnect</button>
+                            : ''}
+                            {
+                                this.state.user.is_ds_bitbucket_tracking_enabled ? 
+                                <div className='account'>
+                                    <figure><img className='socialImage' src='/bitbucket-small.svg' alt='user image' /></figure>
+                                    <div className='nameAndEmail'>
+                                        <h4>Bitbucket</h4>
+                                        <span>{this.state.user.email}</span>
+                                    </div>
+                                    <div className='btns'>
+                                        <button className='btn-change'>Change</button>
+                                        <button className='btn-disconnect' 
+                                        onClick={() => this.updateUserService('is_ds_bitbucket_tracking_enabled')}
+                                        >Disconnect</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='account'>
-                                <figure><img className='socialImage' src='/twitter-small.svg' alt='user image' /></figure>
-                                <div className='nameAndEmail'>
-                                    <h4>Twitter</h4>
-                                    <span>adilaijaz@gmail.com</span>
+                            : ''}
+                            {
+                                this.state.user.is_ds_github_tracking_enabled ? 
+                                <div className='account'>
+                                    <figure><img className='socialImage' src='/images/icons/github.png' alt='user image' /></figure>
+                                    <div className='nameAndEmail'>
+                                        <h4>Github</h4>
+                                        <span>{this.state.user.email}</span>
+                                    </div>
+                                    <div className='btns'>
+                                        <button className='btn-change'>Change</button>
+                                        <button className='btn-disconnect' 
+                                        onClick={() => this.updateUserService('is_ds_github_tracking_enabled')}
+                                        >Disconnect</button>
+                                    </div>
                                 </div>
-                                <div className='btns'>
-                                    <button className='btn-change'>Change</button>
-                                    <button className='btn-disconnect'>Disconnect</button>
-                                </div>
-                            </div>
-                            <div className='account'>
-                                <figure><img className='socialImage' src='/images/icons/adwords.png' alt='user image' /></figure>
-                                <div className='nameAndEmail'>
-                                    <h4>Google Analytics</h4>
-                                    <span>adilaijaz@gmail.com</span>
-                                </div>
-                                <div className='btns'>
-                                    <button className='btn-change'>Change</button>
-                                    <button className='btn-disconnect'>Disconnect</button>
-                                </div>
-                            </div>
-                            <div className='account'>
-                                <figure><img className='socialImage' src='/instagram-small.svg' alt='user image' /></figure>
-                                <div className='nameAndEmail'>
-                                    <h4>Instagram</h4>
-                                    <span>adilaijaz@gmail.com</span>
-                                </div>
-                                <div className='btns'>
-                                    <button className='btn-change'>Change</button>
-                                    <button className='btn-disconnect'>Disconnect</button>
-                                </div>
-                            </div>
-                            <div className='account'>
-                                <figure><img className='socialImage' src='/images/icons/adwords.png' alt='user image' /></figure>
-                                <div className='nameAndEmail'>
-                                    <h4>Google</h4>
-                                    <span>adilaijaz@gmail.com</span>
-                                </div>
-                                <div className='btns'>
-                                    <button className='btn-change'>Change</button>
-                                    <button className='btn-disconnect'>Disconnect</button>
-                                </div>
-                            </div>
-                            <div className='account'>
-                                <figure><img className='socialImage' src='/facebook-small.svg' alt='user image' /></figure>
-                                <div className='nameAndEmail'>
-                                    <h4>Facebook</h4>
-                                    <span>adilaijaz@gmail.com</span>
-                                </div>
-                                <div className='btns'>
-                                    <button className='btn-change'>Change</button>
-                                    <button className='btn-disconnect'>Disconnect</button>
-                                </div>
-                            </div>
+                            : ''}
                         </div>
                     </section>
                     <section className='accountsHolder'>
@@ -330,7 +315,7 @@ export default class Accounts extends React.Component {
             {/*    show={this.state.showACCISModal}*/}
             {/*    dismissCallback={this.closeACCISModal}*/}
             {/*/>*/}
-            <div className="container p-5">
+            {/* <div className="container p-5">
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
                         <h2 className="heading-section gaa-title">Connect Multiple GA Accounts/Properties</h2>
@@ -431,7 +416,7 @@ export default class Accounts extends React.Component {
                         </div>
                     </div>
                 </div>
-                {/* <div className="row ml-0 mr-0 mt-5">
+                <div className="row ml-0 mr-0 mt-5">
                     <div className="col-12">
                         <div className="table-responsive">
                             <table className="table table-hover gaa-hover table-bordered">
@@ -461,7 +446,7 @@ export default class Accounts extends React.Component {
                             </table>
                         </div>
                     </div>
-                </div> */}
+                </div>
                 <div className="row ml-0 mr-0 mt-5">
                     <div className="col-12">
                         <div className="table-responsive">
@@ -488,9 +473,9 @@ export default class Accounts extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
-            {this.state.isPermissionPopupOpened ? <GooglePermissionPopup /> : ''}
+            {/* {this.state.isPermissionPopupOpened ? <GooglePermissionPopup /> : ''} */}
         </>);
     }
 
@@ -581,7 +566,7 @@ export default class Accounts extends React.Component {
 
     restrictionHandler(e) {
         e.preventDefault();
-        if (this.props.user.price_plan.ga_account_count > this.state.googleAccounts.length || this.props.user.price_plan.ga_account_count == 0) {
+        if (this.state.user.price_plan.ga_account_count > this.state.googleAccounts.length || this.state.user.price_plan.ga_account_count == 0) {
             this.setState({ isPermissionPopupOpened: true });
         } else {
             swal.fire("Upgrade to Pro Plan!", "Google account feature is not available in this plan.", "warning").then(value => {
