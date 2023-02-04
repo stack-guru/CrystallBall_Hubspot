@@ -391,9 +391,9 @@ class IndexAnnotations extends React.Component {
                             <div className="d-flex">
                                 <button type="button" className={`btn-extraSelect position-relative ${this.state.selectedRows.length ? 'active' : ''}`}>
                                     <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M7.19922 3.00098H18.1992M7.19922 9.00098H18.1992" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M1.80078 8.98566L2.65792 9.84281L4.80078 7.69995" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M3.19922 3.011L3.20922 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M7.19922 3.00098H18.1992M7.19922 9.00098H18.1992" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M1.80078 8.98566L2.65792 9.84281L4.80078 7.69995" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M3.19922 3.011L3.20922 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                     <span>Select</span>
                                 </button>
@@ -492,15 +492,17 @@ class IndexAnnotations extends React.Component {
                                     }
 
                                     return (
-                                        <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId} key={anno.category + anno.event_name + anno.description + anno.url + anno.id} onClick={
-                                            () => {
-                                                if (anno.id) {
-                                                    this.handleOneSelection(anno.id)
-                                                } else {
-                                                    toast.error("This annotation can't be selected.");
+                                        <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId}
+                                            key={idx + anno.toString()}
+                                            onClick={
+                                                () => {
+                                                    if (anno.id) {
+                                                        this.handleOneSelection(anno.id)
+                                                    } else {
+                                                        toast.error("This annotation can't be selected.");
+                                                    }
                                                 }
-                                            }
-                                        } data-anno_id={anno.id}>
+                                            } data-anno_id={anno.id}>
 
                                             <span className="checkedIcon"><img src={`/icon-checked.svg`} /></span>
 
@@ -540,7 +542,7 @@ class IndexAnnotations extends React.Component {
                                             <div className="flex-grow-1 d-flex justify-content-between align-items-center">
                                                 <ul className="d-flex list-unstyled">
                                                     <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
-                                                    <li><time datetime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
+                                                    <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
                                                     {/* <li>
                                                     <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
                                                         <i className="mr-2">
@@ -573,19 +575,19 @@ class IndexAnnotations extends React.Component {
 
                                 })}
 
-                                { !this.state.isLoading && !this.state.annotations.length ?
-                                    <div className="nodata">
-                                        <p>No annotations added yet.</p>
-                                        <p className="mb-0">Suggestions: <a href=''>Add manual annotation</a> or <a href=''>Upload CSV</a></p>
-                                    </div> : null
-                                }
+                            {!this.state.isLoading && !this.state.annotations.length ?
+                                <div className="nodata">
+                                    <p>No annotations added yet.</p>
+                                    <p className="mb-0">Suggestions: <a href=''>Add manual annotation</a> or <a href=''>Upload CSV</a></p>
+                                </div> : null
+                            }
                         </>
                     )}
                 </Container>
-                <AppsModal isOpen={this.state.editAnnotationId} popupSize={'md'} toggle={() => { this.setState({ editAnnotationId: '' }); }}>
+                <AppsModal isOpen={!!this.state.editAnnotationId} popupSize={'md'} toggle={() => { this.setState({ editAnnotationId: '' }); }}>
                     <AnnotationsUpdate togglePopup={() => this.setState({ editAnnotationId: '' })} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
                 </AppsModal>
-                <AppsModal isOpen={this.state.showChartAnnotationId} popupSize={'null'} toggle={() => { this.setState({ showChartAnnotationId: '' }); }}>
+                <AppsModal isOpen={!!this.state.showChartAnnotationId} popupSize={'null'} toggle={() => { this.setState({ showChartAnnotationId: '' }); }}>
                     <ShowChartAnnotation togglePopup={() => this.setState({ showChartAnnotationId: '' })} showChartAnnotationId={this.state.showChartAnnotationId} currentPricePlan={this.props.user.price_plan} />
                 </AppsModal>
             </div>
@@ -605,7 +607,6 @@ class IndexAnnotations extends React.Component {
         // $(window).off('scroll');
         $(window).on('scroll', () => {
             if (parseFloat($(window).scrollTop() + $(window).height()).toFixed(0) == $(document).height()) {
-                console.info('Scroll reached end');
                 this.setState({ pageNumber: this.state.pageNumber + 1 }, this.loadInitAnnotations)
             }
         });
