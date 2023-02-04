@@ -312,9 +312,9 @@ class IndexAnnotations extends React.Component {
                                 <a data-toggle="tooltip" data-placement="top" title="Manual" href="javascript:void(0);" onClick={() => this.props.openAnnotationPopup('manual')}>
                                     <img className='inject-me' src='/manual.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/manual.svg"; }} width='16' height='16' alt='menu icon' />
                                 </a>
-                                <Link data-toggle="tooltip" data-placement="top" title="Apps Market" href="/data-source">
+                                <a data-toggle="tooltip" data-placement="top" title="Apps Market" to="/data-source" href="/data-source">
                                     <img className='inject-me' src='/appMarket.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/appMarket.svg"; }} width='16' height='16' alt='menu icon' />
-                                </Link>
+                                </a>
                                 {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (
                                     <a data-toggle="tooltip" data-placement="top" title="CSV Upload" onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">
                                         <img className='inject-me' src='/csvUploadd.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/csvUploadd.svg"; }} width='16' height='16' alt='menu icon' />
@@ -432,7 +432,7 @@ class IndexAnnotations extends React.Component {
                                 .map((anno, idx) => {
                                     let borderLeftColor = "rgba(0,0,0,.0625)";
                                     let selectedIcon = anno.category;
-                                    anno.description = `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis accusantium reprehenderit perferendis, ipsum natus, molestiae voluptatum beatae ut harum dolores reiciendis fuga hic! Consectetur repellendus ullam ab magni obcaecati dolorem!`
+                                    anno.description = anno.description || anno.event_name
 
                                     switch (anno.category) {
                                         case "Google Updates":
@@ -453,18 +453,20 @@ class IndexAnnotations extends React.Component {
                                         case "News Alert":
                                             borderLeftColor = this.state.userAnnotationColors.google_alerts;
                                             break;
+                                        default:
+                                            borderLeftColor = '#1976fe';
                                     }
-                                    switch (anno.added_by) {
-                                        case "manual":
-                                            borderLeftColor = "#002e60";
-                                            break;
-                                        case "csv-upload":
-                                            borderLeftColor = this.state.userAnnotationColors.csv;
-                                            break;
-                                        case "api":
-                                            borderLeftColor = this.state.userAnnotationColors.api;
-                                            break;
-                                    }
+                                    // switch (anno.added_by) {
+                                    //     case "manual":
+                                    //         borderLeftColor = "#002e60";
+                                    //         break;
+                                    //     case "csv-upload":
+                                    //         borderLeftColor = this.state.userAnnotationColors.csv;
+                                    //         break;
+                                    //     case "api":
+                                    //         borderLeftColor = this.state.userAnnotationColors.api;
+                                    //         break;
+                                    // }
                                     if (anno.category.indexOf("Holiday") !== -1)
                                         borderLeftColor = this.state.userAnnotationColors.holidays;
 
@@ -569,7 +571,14 @@ class IndexAnnotations extends React.Component {
                                         </div>
                                     );
 
-                                })}{" "}
+                                })}
+
+                                { !this.state.isLoading && !this.state.annotations.length ?
+                                    <div className="nodata">
+                                        <p>No annotations added yet.</p>
+                                        <p className="mb-0">Suggestions: <a href=''>Add manual annotation</a> or <a href=''>Upload CSV</a></p>
+                                    </div> : null
+                                }
                         </>
                     )}
                 </Container>

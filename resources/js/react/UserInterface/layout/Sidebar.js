@@ -265,7 +265,7 @@ class Sidebar extends React.Component {
 
                         <li className="nav-item gaa-menu-item">
                             {/* <Link to="/analytics-and-business-intelligence"> */}
-                            <Link to="/settings/google-account">
+                            <Link to="/settings/accounts">
                                 <span className="sidebar-link d-flex align-items-center justify-content-start">
                                     <span><svg width={26} height={26} viewBox="0 0 26 26" fill="none">
                                         <path
@@ -352,7 +352,7 @@ class Sidebar extends React.Component {
                                         </React.Fragment>
                                     ) : null}
                                     <li className="nav-item dropdown">
-                                        <Link to="/settings/change-password">
+                                        <Link to="/settings/profile">
                                             My Account
                                         </Link>
                                     </li>

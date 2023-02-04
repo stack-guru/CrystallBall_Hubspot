@@ -106,7 +106,7 @@ export default class PhoneVerificationModal extends Component {
                     </form>
                 }
                 <div>
-                    <p>Didn't receive the code? <Link to="/settings/change-password">Change Phone</Link></p>
+                    <p>Didn't receive the code? <Link to="/settings/profile">Change Phone</Link></p>
                     {/* <p> <a href="#">Send again</a></p> */}
                 </div>
 
