@@ -225,6 +225,15 @@ class AnnotationController extends Controller
     {
         $this->authorize('viewAny', Annotation::class);
 
+        $this->validate($request, [
+            'annotation_ga_property_id' => 'nullable|string',
+            'category' => 'nullable|string',
+            'search' => 'nullable|string',
+            'sort_by' => 'nullable|string|in:added,date,category,added-by,ga-property',
+            'page_size' => 'nullable|numeric|min:1|max:100',
+            'page_number' => 'nullable|numeric|min:1',
+        ]);
+
         $user = Auth::user();
         $userIdsArray = $user->getAllGroupUserIdsArray();
 
@@ -255,28 +264,29 @@ class AnnotationController extends Controller
         if (count($whereClauses)) $annotationsQuery .= " WHERE " . implode(' AND ', $whereClauses);
 
         // Apply sort of provided column if it is added in GET request query parameter
-        if ($request->query('sortBy') == "added") {
+        if ($request->query('sort_by') == "added") {
             $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
-        } elseif ($request->query('sortBy') == "date") {
+        } elseif ($request->query('sort_by') == "date") {
             $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
         } elseif ($request->query('google_account_id')) {
             $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
-        } elseif ($request->query('sortBy') == "category") {
+        } elseif ($request->query('sort_by') == "category") {
             $annotationsQuery .= " ORDER BY TempTable.category ASC";
-        } elseif ($request->query('sortBy') == "added-by") {
+        } elseif ($request->query('sort_by') == "added-by") {
             $annotationsQuery .= " ORDER BY TempTable.added_by ASC";
         } else {
             $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
         }
-        // Add limit for annotations if the price plan is limited in annotations count
-        $offset = $request->has('offset') ? $request->query('offset') : 0;
 
-        $limit = 10;
+        $limit = $request->has('page_size') ? $request->query('page_size') : 10;
+        $offset = $request->has('page_number') ? $limit * ($request->query('page_number') - 1) : 1;
+
+        // Add limit for annotations if the price plan is limited in annotations count
         $annotations_count = $user->pricePlan->annotations_count;
-        if ($annotations_count > 0 && $annotations_count < $offset + 10) {
+        if ($annotations_count > 0 && $annotations_count < $offset + $limit) {
             $limit = $annotations_count - $offset;
         }
-        if ($annotations_count && ($offset - $annotations_count > 10 || $limit < 0)) {
+        if ($annotations_count && ($offset - $annotations_count > $limit || $limit < 0)) {
             $limit = 0;
         }
         $annotationsQuery .= " LIMIT $limit OFFSET $offset";
