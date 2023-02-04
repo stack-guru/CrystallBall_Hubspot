@@ -133,10 +133,11 @@ export default class UploadAnnotation extends React.Component {
                     userServices={this.state}
                     serviceStatusHandler={this.updateUserAnnotationColors}
                     closeModal={() => this.props.togglePopup('')}
-                    serviceName={'Upload annotations using CSV'}
+                    serviceName={'Upload CSV'}
                     colorKeyName={"csv"}
                     dsKeyName={null}
                     creditString={null}
+                    downloadButton={true}
                 />
 
                 <div className='apps-bodyContent'>

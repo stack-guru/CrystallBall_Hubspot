@@ -133,12 +133,13 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
         Route::view('support', 'ui/app');
         Route::view('/devices', 'ui/app');
 
-        Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
+        Route::get('accounts', [App\Http\Controllers\GoogleAccountController::class, 'index']);
+        Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['create', 'store', 'update', 'destroy']);
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store'])->name('settings.google-account.redirect.store');
 
         Route::resource('facebook-accounts', App\Http\Controllers\FacebookAutomationController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
 
-        Route::view('change-password', 'ui/app')->name('settings.change-password.index');
+        Route::view('profile', 'ui/app')->name('settings.profile.index');
         Route::view('payment-detail/create', 'ui/app');
         Route::view('price-plans', 'ui/app')->name('settings.price-plans');
         Route::view('custom-price-plan/{code}', 'ui/app')->name('settings.custom-price-plan');

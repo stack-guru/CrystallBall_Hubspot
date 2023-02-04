@@ -86,7 +86,7 @@ class header extends React.Component {
                         :
                         null
                     }
-                    <div className='pr-2'>
+                    <div className='note-trial pr-2'>
                         <div className='text-right'>
                             <span>{this.props.user.phone_number} {this.props.user.name}</span>
                         </div>

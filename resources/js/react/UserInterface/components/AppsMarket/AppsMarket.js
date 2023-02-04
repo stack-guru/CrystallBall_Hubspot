@@ -382,7 +382,7 @@ class AppsMarket extends React.Component {
                 width: 114,
                 height: 30,
             },
-    
+
             {
                 id: "19",
                 background: "#24292F",
@@ -463,7 +463,7 @@ class AppsMarket extends React.Component {
                 function(x) {
                 return x[field]
                 };
-            
+
             reverse = !reverse ? 1 : -1;
             return function(a, b) {
                 return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
@@ -721,7 +721,7 @@ class AppsMarket extends React.Component {
                                 premium: false,
                                 brandName: "Data Studio",
                                 brandLogo: "/dataStudio.svg",
-                                url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en',
+                                url: 'https://lookerstudio.google.com/data?search=gaannotations',
                                 width: 142,
                                 height: 32,
                             },
@@ -748,9 +748,10 @@ class AppsMarket extends React.Component {
                                 url: '/integrations',
                                 width: 88,
                                 height: 40,
+                                openInSameTab: true
                             }
                         ].map((item, itemKey) => (
-                            <a target={'_blank'} href={item.url}
+                            <a target={`${!item.openInSameTab ? '_blank': ''}`} href={item.url}
                                 onClick={() => {
                                     this.setState({
                                         dsKey: item.dsKey,

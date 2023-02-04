@@ -14,9 +14,9 @@ import IndexAnnotations from './components/annotations/IndexAnnotation';
 import AnnotationsUpload from './components/annotations/UploadAnnotation';
 import IndexPricingPlans from './components/settings/pricingPlans/IndexPricingPlans';
 import Settings from './components/settings/IndexSettings';
-import ChangePassword from './components/settings/ChangePassword';
+import Profile from './components/settings/Profile';
 import PaymentHistory from './components/settings/pricingPlans/PaymentHistory';
-import GoogleAccountIndex from './components/settings/googleAccount/GoogleAccountIndex';
+import Accounts from './components/settings/Accounts';
 import FacebookAccounts from './components/settings/facebookaccounts/FacebookAccountsIndex';
 import UserDevices from './components/settings/devices/UserDevicesIndex';
 import DataSourceIndex from "./components/DataSource/DataSourceIndex";
@@ -190,8 +190,8 @@ class Main extends React.Component {
                             <Route exact path="/settings" refresh={true}>
                                 <Settings user={this.state.user} />
                             </Route>
-                            <Route exact path="/settings/change-password" refresh={true}>
-                                <ChangePassword user={this.state.user} reloadUser={this.loadUser} />
+                            <Route exact path="/settings/profile" refresh={true}>
+                                <Profile user={this.state.user} reloadUser={this.loadUser} />
                             </Route>
                             <Route exact path="/settings/price-plans" refresh={true}>
                                 <IndexPricingPlans user={this.state.user} />
@@ -205,8 +205,8 @@ class Main extends React.Component {
                             <Route exact path="/settings/payment-detail/create" refresh={true}>
                                 <CreatePaymentDetail user={this.state.user} />
                             </Route>
-                            <Route exact path="/settings/google-account" refresh={true}>
-                                <GoogleAccountIndex user={this.state.user} reloadUser={this.loadUser} />
+                            <Route exact path="/settings/accounts" refresh={true}>
+                                <Accounts user={this.state.user} reloadUser={this.loadUser} />
                             </Route>
                             <Route exact path="/settings/facebook-accounts" refresh={true}>
                                 <FacebookAccounts user={this.state.user} reloadUser={this.loadUser} />
@@ -240,7 +240,7 @@ class Main extends React.Component {
                     </AppsModal>
                 :
                 this.state.mKeyAnnotation === 'upload' ?
-                <AppsModal popupSize={'md'} isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka='') => {this.setState({mKeyAnnotation: mka,});}}>
+                <AppsModal popupSize={'md csvupload'} isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka='') => {this.setState({mKeyAnnotation: mka,});}}>
                     <AnnotationsUpload togglePopup={(mka) => {this.setState({mKeyAnnotation: mka,});}} currentPricePlan={this.state.user.price_plan} />
                 </AppsModal>
                 :

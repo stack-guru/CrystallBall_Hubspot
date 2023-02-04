@@ -140,7 +140,7 @@ export default class IndexUsers extends Component {
                                 ) : null}
                             </div>
 
-                            <form className="pageFilters d-flex justify-content-end align-items-center">
+                            {this.state.users.length ? <form className="pageFilters d-flex justify-content-end align-items-center">
                                 {/* <FormGroup className="filter-sort position-relative form-group">
                                     <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
                                     <i className="btn-searchIcon left-0">
@@ -164,11 +164,11 @@ export default class IndexUsers extends Component {
                                     <Input name="searchText" value={this.state.searchText} placeholder="Search..." onChange={this.handleChange} />
                                     <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search" /></button>
                                 </FormGroup>
-                            </form>
+                            </form> : null}
                         </div>
 
                         <div className="dataTable dataTableusers d-flex flex-column">
-                            <div className="dataTableHolder">
+                            {this.state.users.length  ? <div className="dataTableHolder">
                                 <div className="tableHead singleRow justify-content-between align-items-center">
                                     <div className="singleCol text-left">Email</div>
                                     <div className="singleCol text-left">Name</div>
@@ -211,7 +211,61 @@ export default class IndexUsers extends Component {
                                         );
                                     })}
                                 </div>
-                            </div>
+                            </div>:null}
+
+                            {!this.state.users.length ?
+                                    <div className="nodata">
+                                        <p>No user added yet.</p>
+
+
+                                        {this.props.user.user_level == "admin" ? (
+                                    <>
+                                        {this.props.user.price_plan
+                                            .user_per_ga_account_count > -1 ? (
+                                            <a onClick={() => this.setState({ addUserPopup: true })} href="javascript:void(0);" className="btn-adduser d-flex align-items-center justify-content-center">
+                                                <i className="fa fa-plus"></i>
+                                                <span>Add User</span>
+                                            </a>
+                                        ) : (
+                                            <p className="mb-0" onClick={(ev) => {
+                                                ev.stopPropagation();
+                                                const accountNotLinkedHtml =
+                                                    "" +
+                                                    '<div class="">' +
+                                                    '<img src="/images/banners/user_limit_banner.png" class="img-fluid">' +
+                                                    "</div>";
+
+                                                swal.fire({
+                                                    html: accountNotLinkedHtml,
+                                                    width: 1000,
+                                                    showCancelButton: true,
+                                                    showCloseButton: true,
+                                                    customClass: {
+                                                        popup: "themePlanAlertPopup",
+                                                        htmlContainer: "themePlanAlertPopupContent",
+                                                        closeButton: 'btn-closeplanAlertPopup',
+                                                    },
+                                                    cancelButtonClass: "btn-bookADemo",
+                                                    cancelButtonText: "Book a Demo",
+                                                    confirmButtonClass: "btn-subscribeNow",
+                                                    confirmButtonText: "Subscribe now",
+                                                }).then((value) => {
+                                                    if (value.isConfirmed) window.location.href = '/settings/price-plans'
+                                                });
+
+                                            }}
+                                            >
+                                                Suggestions: <a href="javascript:void(0);">Add user</a>
+                                            </p>
+                                        )}
+                                    </>
+                                ) : null}
+
+
+
+
+                                    </div> : null
+                                }
                         </div>
                     </Container>
 

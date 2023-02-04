@@ -58,6 +58,7 @@ export default class ChangePhoneModal extends Component {
                 HttpClient({ method: 'POST', url: '/phone/resend', baseURL: "/", data: { phone: `+${statePhone}` } })
                     .then(response => {
                         this.setState({ isBusy: false });
+                        this.props.reloadUser();
                     }, (err) => {
                         this.setState({ errors: (err.response).data, isBusy: false });
                     }).catch(err => {
@@ -108,7 +109,7 @@ export default class ChangePhoneModal extends Component {
     handleVerifyPhoneSubmit(e) {
         e.preventDefault();
         var verificationCode = "";
-        e.target.childNodes.forEach(function (i) { if (i.tagName == "INPUT" && i.type == "text") { verificationCode = verificationCode.concat(i.value); } });
+        e.target.querySelectorAll('input').forEach(function (i) { if (i.tagName == "INPUT" && i.type == "text") { verificationCode = verificationCode.concat(i.value); } });
 
         this.setState({ isBusy: true });
         HttpClient({ method: 'POST', url: '/phone/verify', baseURL: "/", data: { verification_code: verificationCode } })
@@ -128,49 +129,52 @@ export default class ChangePhoneModal extends Component {
         if (!this.props.show) return null;
         return (
             <AppsModal isOpen={this.props.show} popupSize={'md'} toggle={this.props.toggleCallback}>
-
-                <form onSubmit={this.handlePhoneSubmit} className='changePhoneForm' id='changePhoneForm'>
-                    <h2 className='text-center'>Add phone number</h2>
-                    <div className='phoneNumberBox'>
-                        <PhoneInput className='themeNewInputStyle changePhoneNumber mb-4' country={'us'} value={this.state.phone} onChange={phone => this.setState({ phone })} inputProps={{name: 'phone', required: true, autoFocus: true}}/>
-                        <div className='d-flex justify-content-center pt-3'>
-                            {this.props.phoneNumber ? <button className="btn-change" type="submit">Change</button> : <>
-                                <button onClick={this.props.toggleCallback} className="btn-cancel mr-3" type="button">Cancel</button>
-                                <button className="btn-theme" type="submit">Send Code</button>
-                            </>}
-                        </div>
-                    </div>
-                </form>
-
-                {this.props.phoneNumber ? <div className='alert alert-info border-0 justify-content-between'>
-                    <div>
-                        <i><img src={'/icon-info.svg'} alt={'icon'} className="svg-inject" /></i>
-                        <span>Verification code is sent to the given number</span>
-                    </div>
-                    <button className='btn-resend' onClick={this.resendVerificationCode}>Resend</button>
-                </div> : null}
-
-                {this.state.isBusy ?
-                    <div className="fa-3x"><i className="fa fa-spinner fa-pulse"></i></div>
-                    :
-                    <form onSubmit={this.handleVerifyPhoneSubmit} id="form" onKeyUp={this.moveNext} className='phoneSubmitForm'>
-                        <p>Please enter 6-digit code sent to your number</p>
-                        <div className='codeinputs'>
-                            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                            <span className='px-1 d-flex align-items-center'>-</span>
-                            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                        </div>
-
-                        <div className='d-flex justify-content-center pb-4'>
-                            <button onClick={this.props.toggleCallback} className="btn-cancel" type="button">Cancel</button>
-                            <button className="btn-theme ml-3" type="submit">Verify</button>
+                <div className='addPhoneNumber'>
+                    <form onSubmit={this.handlePhoneSubmit} className='changePhoneForm' id='changePhoneForm'>
+                        <h2 className='text-center'>Add phone number</h2>
+                        <div className='phoneNumberBox'>
+                            <PhoneInput className='themeNewInputStyle changePhoneNumber' country={'us'} value={this.state.phone} onChange={phone => this.setState({ phone })} inputProps={{ name: 'phone', required: true, autoFocus: true }} />
+                            <div className='d-flex justify-content-center p-0'>
+                                {this.props.phoneNumber ? <button className="btn-change" type="submit">Change</button> : <>
+                                    <button onClick={this.props.toggleCallback} className="btn-cancel mr-3" type="button">Cancel</button>
+                                    <button className="btn-theme" type="submit">Send Code</button>
+                                </>}
+                            </div>
                         </div>
                     </form>
-                }
+
+                    {(this.props.phoneNumber && !this.props.phone_verified_at) ? <div className='alert alert-info border-0 justify-content-between'>
+                        <div>
+                            <i><img src={'/icon-info.svg'} alt={'icon'} className="svg-inject" /></i>
+                            <span>{this.state?.errors?.message || "Verification code is sent to the given number"}</span>
+                        </div>
+                        <button className='btn-resend' onClick={this.resendVerificationCode}>Resend</button>
+                    </div> : null}
+
+                    {(this.props.phoneNumber && !this.props.phone_verified_at) ? <>
+                        {this.state.isBusy ?
+                            <div className="fa-3x"><i className="fa fa-spinner fa-pulse"></i></div>
+                            :
+                            <form onSubmit={this.handleVerifyPhoneSubmit} id="form" onKeyUp={this.moveNext} className='phoneSubmitForm'>
+                                <p>Please enter 6-digit code sent to your number</p>
+                                <div className='codeinputs'>
+                                    <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                    <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                    <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                    <span className='px-1 d-flex align-items-center'>-</span>
+                                    <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                    <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                    <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                </div>
+
+                                <div className='d-flex justify-content-center pb-0'>
+                                    <button onClick={this.props.toggleCallback} className="btn-cancel" type="button">Cancel</button>
+                                    <button className="btn-theme ml-3" type="submit">Verify</button>
+                                </div>
+                            </form>
+                        }
+                    </> : null}
+                </div>
             </AppsModal>
         )
     }
