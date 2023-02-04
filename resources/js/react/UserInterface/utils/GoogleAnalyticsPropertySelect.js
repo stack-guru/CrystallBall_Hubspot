@@ -47,7 +47,6 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     }
 
     deleteKeyword(e) {
-        console.log(e)
         this.onChangeHandler(null);
     }
 
