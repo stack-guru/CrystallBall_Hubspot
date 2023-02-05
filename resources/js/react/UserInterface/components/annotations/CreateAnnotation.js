@@ -31,12 +31,15 @@ export default class CreateAnnotation extends React.Component {
             isDirty: false,
             redirectTo: null,
             user: null,
+            userAnnotationColors: {},
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
         this.setDefaultState = this.setDefaultState.bind(this)
         this.loadCategoriesList = this.loadCategoriesList.bind(this)
+        this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
         this.checkIfCanCreateAnnotation = this.checkIfCanCreateAnnotation.bind(this)
+        this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
     }
 
     checkIfCanCreateAnnotation() {
@@ -80,14 +83,25 @@ export default class CreateAnnotation extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Create Annotation'
         setTimeout(() => {
             this.setState(loadStateFromLocalStorage("CreateAnnotation"));
         }, 1000);
 
 
         this.loadCategoriesList();
+        this.loadUserAnnotationColors();
         this.checkIfCanCreateAnnotation();
+    }
+
+    loadUserAnnotationColors() {
+        HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
+            this.setState({ isLoading: false, userAnnotationColors: resp.data.user_annotation_color });
+        }, (err) => {
+            this.setState({ isLoading: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isLoading: false, errors: err });
+        })
+
     }
 
     loadCategoriesList() {
@@ -209,6 +223,10 @@ export default class CreateAnnotation extends React.Component {
         return isValid;
     }
 
+    updateUserAnnotationColors(userAnnotationColors) {
+        this.setState({ userAnnotationColors: userAnnotationColors });
+    }
+
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
@@ -216,14 +234,14 @@ export default class CreateAnnotation extends React.Component {
         return (
             <div className="popupContent modal-createAnnotation">
                 <ModalHeader
-                    userAnnotationColors={this.state}
-                    updateUserAnnotationColors={() => { }}
+                    userAnnotationColors={this.state.userAnnotationColors}
+                    updateUserAnnotationColors={this.updateUserAnnotationColors}
                     userServices={() => { }}
                     serviceStatusHandler={() => { }}
                     closeModal={() => this.props.togglePopup('')}
                     serviceName={'Add annotation manually'}
-                    colorKeyName={"manual_annotation"}
-                    dsKeyName={null}
+                    colorKeyName={"manual"}
+                    dsKeyName={''}
                     creditString={null}
                 />
                 <div className="apps-bodyContent">
@@ -247,7 +265,7 @@ export default class CreateAnnotation extends React.Component {
 
                         <div className='grid2layout'>
                             <div className="themeNewInputStyle position-relative inputWithIcon">
-                                <i className="icon fa"><img src='/icon-chain-gray.svg'/></i>
+                                <i className="icon fa"><img src='/icon-chain-gray.svg' /></i>
                                 <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control" id="url" name="url" placeholder='https://' />
                                 {validation.url ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.url}</span> : ''}
                             </div>
