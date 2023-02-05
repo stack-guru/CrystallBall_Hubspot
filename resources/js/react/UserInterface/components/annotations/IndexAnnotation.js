@@ -424,7 +424,7 @@ class IndexAnnotations extends React.Component {
                     </div>
 
                     {this.state.isLoading ? (
-                        <></>
+                        <>Loading...</>
                     ) : (
                         <>
                             {this.state.annotations
@@ -499,7 +499,7 @@ class IndexAnnotations extends React.Component {
                                                     if (anno.id) {
                                                         this.handleOneSelection(anno.id)
                                                     } else {
-                                                        toast.error("This annotation can't be selected.");
+                                                        // toast.error("This annotation can't be selected.");
                                                     }
                                                 }
                                             } data-anno_id={anno.id}>
