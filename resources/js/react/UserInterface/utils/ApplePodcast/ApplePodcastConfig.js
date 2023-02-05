@@ -14,6 +14,8 @@ import {
     CardTitle,
     CardSubtitle,
     Table,
+    Popover,
+    PopoverBody,
 } from "reactstrap";
 import Slider from "react-slick";
 
@@ -22,6 +24,7 @@ const ApplePodcastConfig = (props) => {
     const [searchResult, setSearchResult] = useState([]);
     const [noResult, setNoResult] = useState("");
     const [inputVale, setInputVale] = useState("");
+    const [activeDeletePopover, setActiveDeletePopover] = useState("");
 
     const getExistingPodcasts = async () => {
         HttpClient.get(
@@ -141,18 +144,7 @@ const ApplePodcastConfig = (props) => {
             <div className="white-box">
                 <h4 className='textblue'>Add new podcast</h4>
 
-                {existingPodcast.length ? (
-                    <div>
-                        {existingPodcast.map((itm, index) => (
-                                <h5 style={{ display: "inline-block" }} key={itm.id != "" ? itm.id : index}>
-                                    <span className="badge badge-pill badge-primary m-1 h5">
-                                        {itm.name}{" "}
-                                        <i className="fa fa-times" data-apple-podcast-name={itm.name} data--apple-podcast-id={itm.id} onClick={() => deletePodcasts(itm)}></i>
-                                    </span>
-                                </h5>
-                        ))}
-                    </div>
-                ) : null}
+
                 <div className="input-group mb-3">
                     <input type="text" className="form-control search-input" placeholder="Search or Enter the Podcast URL" value={inputVale} id="applePodcastURL" name="applePodcastURL" onChange={(e) => setInputVale(e.target.value.toLowerCase())} onKeyUp={(e) => {if (e.keyCode === 13) { e.persist(); getMetaData(e);}}}/>
                     <div className="input-group-append">
@@ -174,7 +166,80 @@ const ApplePodcastConfig = (props) => {
                         ))}
                     </Slider>
                 </div>
+
+                {/* {existingPodcast.length ? (
+                    <div>
+                        {existingPodcast.map((itm, index) => (
+                                <h5 style={{ display: "inline-block" }} key={itm.id != "" ? itm.id : index}>
+                                    <span className="badge badge-pill badge-primary m-1 h5">
+                                        {itm.name}{" "}
+                                        <i className="fa fa-times" data-apple-podcast-name={itm.name} data--apple-podcast-id={itm.id} onClick={() => deletePodcasts(itm)}></i>
+                                    </span>
+                                </h5>
+                        ))}
+                    </div>
+                ) : null} */}
             </div>
+
+            {existingPodcast.length ? <div className="white-box">
+                <h4 className='textblue'>Manage podcasts</h4>
+                <div className="gray-box">
+                    <h4>
+                    Active podcasts: <span>(Click to remove)</span>
+                    </h4>
+                    <div className="d-flex keywordTags">
+                        {existingPodcast?.map((gAK) => {
+                            return (
+                                <>
+                                    <button
+                                        onClick={() =>
+                                            setActiveDeletePopover(gAK.id)
+                                        }
+                                        id={"gAK-" + gAK.id}
+                                        type="button"
+                                        className="keywordTag"
+                                        key={gAK.id}
+                                        user_data_source_id={gAK.id}
+                                    >
+                                        <span
+                                            style={{ background: "#2d9cdb" }}
+                                            className="dot"
+                                        ></span>
+                                        {gAK.name}
+                                    </button>
+
+                                    <Popover
+                                        placement="top"
+                                        target={"gAK-" + gAK.id}
+                                        isOpen={
+                                            activeDeletePopover ===
+                                            gAK.id
+                                        }
+                                    >
+                                        <PopoverBody web_monitor_id={gAK.id}>
+                                            Are you sure you want to remove "{gAK.name}"?.
+                                        </PopoverBody>
+                                        <button
+                                            onClick={() => deletePodcasts(gAK)}
+                                            key={gAK.id}
+                                            user_data_source_id={gAK.id}
+                                        >
+                                            Yes
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                setActiveDeletePopover('')
+                                            }
+                                        >
+                                            No
+                                        </button>
+                                    </Popover>
+                                </>
+                            );
+                        })}
+                    </div>
+                </div>
+            </div> : null}
         </div>
     );
 };
