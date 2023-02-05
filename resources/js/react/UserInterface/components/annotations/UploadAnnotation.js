@@ -96,8 +96,6 @@ export default class UploadAnnotation extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Upload CSV';
-
         this.loadUserAnnotationColors();
         this.checkIfCanCreateAnnotation();
     }
