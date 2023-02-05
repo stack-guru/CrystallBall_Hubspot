@@ -76,7 +76,7 @@ const ApplePodcastConfig = (props) => {
             let sr = [];
             for (const item of result.data?.results) {
                 sr.push({
-                    previewImage: item.artworkUrl100,
+                    previewImage: item.artworkUrl600 || item.artworkUrl100,
                     collectionName: item.collectionName,
                     collectionId: item.collectionId,
                     feedUrl: item.feedUrl,
