@@ -249,6 +249,7 @@ class AnnotationController extends Controller
         $whereClauses = [];
         // Apply category filter if it is added in GET request query parameter
         if ($request->query('cateogry') && $request->query('cateogry') !== '') {
+            
             $whereClauses[] = "category = '" . $request->query('cateogry') . "'";
         }
         // Apply google analytics property filter if the value for filter is provided
