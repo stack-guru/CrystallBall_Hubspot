@@ -94,7 +94,7 @@ export default class IndexDashboard extends Component {
     }
 
     componentDidMount() {
-        document.title = 'Analytics';
+        document.title = 'Ga Accounts';
         this.getGoogleAccounts();
         this.getGAAccounts();
         this.getGAProperties();
