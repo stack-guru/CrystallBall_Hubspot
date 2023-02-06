@@ -120,10 +120,10 @@ class AppsMarket extends React.Component {
         }
 
         const redirectedRepo = localStorage.getItem("repo");
-        if( !!redirectedRepo ) {
+        if (!!redirectedRepo) {
             Toast.fire({
                 icon: 'success',
-                title: `${ redirectedRepo } Account is connected. You can enable the automation now.`
+                title: `${redirectedRepo} Account is connected. You can enable the automation now.`
             });
             // this.setState({ dsKey: `is_ds_${ redirectedRepo.toLowerCase() }_tracking_enabled` });
             localStorage.removeItem("repo");
@@ -272,13 +272,13 @@ class AppsMarket extends React.Component {
         this.sectionToggler("edit_keyword");
     }
 
-    getRecommendedAppsData () {
+    getRecommendedAppsData() {
         return [
             {
                 id: "01",
                 background: null,
                 dsKey: "is_ds_google_alerts_enabled",
-                enabled:this.state.userServices.is_ds_google_alerts_enabled,
+                enabled: this.state.userServices.is_ds_google_alerts_enabled,
                 premium: false,
                 brandName: "News Alerts",
                 brandLogo: "/newsAlerts.svg",
@@ -289,7 +289,7 @@ class AppsMarket extends React.Component {
                 id: "02",
                 background: "#00749a",
                 dsKey: "is_ds_wordpress_enabled",
-                enabled:this.state.userServices.is_ds_wordpress_enabled,
+                enabled: this.state.userServices.is_ds_wordpress_enabled,
                 premium: false,
                 brandName: "Wordpress",
                 brandLogo: "/wordpress.svg",
@@ -300,7 +300,7 @@ class AppsMarket extends React.Component {
                 id: "30",
                 background: null,
                 dsKey: "is_ds_wordpress_updates_enabled",
-                enabled:this.state.userServices.is_ds_wordpress_updates_enabled,
+                enabled: this.state.userServices.is_ds_wordpress_updates_enabled,
                 premium: false,
                 brandName: "Wordpress System Core Updates",
                 brandLogo: "/wordpressSCU.svg",
@@ -311,7 +311,7 @@ class AppsMarket extends React.Component {
                 id: "03",
                 background: null,
                 dsKey: "is_ds_keyword_tracking_enabled",
-                enabled:this.state.userServices.is_ds_keyword_tracking_enabled,
+                enabled: this.state.userServices.is_ds_keyword_tracking_enabled,
                 premium: false,
                 brandName: "Rank Tracking SERP",
                 brandLogo: "/serp.svg",
@@ -322,7 +322,7 @@ class AppsMarket extends React.Component {
                 id: "04",
                 background: null,
                 dsKey: "is_ds_weather_alerts_enabled",
-                enabled:this.state.userServices.is_ds_weather_alerts_enabled,
+                enabled: this.state.userServices.is_ds_weather_alerts_enabled,
                 premium: false,
                 brandName: "Weather Alerts",
                 brandLogo: "/weatherAlerts.svg",
@@ -333,7 +333,7 @@ class AppsMarket extends React.Component {
                 id: "05",
                 background: null,
                 dsKey: "is_ds_google_algorithm_updates_enabled",
-                enabled:this.state.userServices.is_ds_google_algorithm_updates_enabled,
+                enabled: this.state.userServices.is_ds_google_algorithm_updates_enabled,
                 premium: false,
                 brandName: "Google Updates",
                 brandLogo: "/googleUpdates.svg",
@@ -344,7 +344,7 @@ class AppsMarket extends React.Component {
                 id: "09",
                 background: "#1DA1F2",
                 dsKey: "is_ds_twitter_tracking_enabled",
-                enabled:this.state.userServices.is_ds_twitter_tracking_enabled,
+                enabled: this.state.userServices.is_ds_twitter_tracking_enabled,
                 premium: false,
                 brandName: "Twitter",
                 brandLogo: "/twitter.svg",
@@ -422,7 +422,7 @@ class AppsMarket extends React.Component {
                 id: "20",
                 background: null,
                 dsKey: "is_ds_shopify_annotation_enabled",
-                enabled:this.state.userServices.is_ds_shopify_annotation_enabled,
+                enabled: this.state.userServices.is_ds_shopify_annotation_enabled,
                 premium: false,
                 brandName: "Shopify",
                 brandLogo: "/shopify.svg",
@@ -432,20 +432,20 @@ class AppsMarket extends React.Component {
         ];
     }
 
-    getRecommendedApps (sortColumn) {
+    getRecommendedApps(sortColumn) {
 
         const sort_by = (field, reverse, primer) => {
 
             const key = primer ?
-                function(x) {
-                return primer(x[field])
+                function (x) {
+                    return primer(x[field])
                 } :
-                function(x) {
-                return x[field]
+                function (x) {
+                    return x[field]
                 };
 
             reverse = !reverse ? 1 : -1;
-            return function(a, b) {
+            return function (a, b) {
                 return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
             }
         }
@@ -460,11 +460,11 @@ class AppsMarket extends React.Component {
         this.setState({ recommendedApps: sortedData });
     }
 
-    onChangeSortHandler (data) {
+    onChangeSortHandler(data) {
         this.setState({ sortBy: data.target.value })
         this.getRecommendedApps(data.target.value);
     }
-    onChangeFilterHandler (data) {
+    onChangeFilterHandler(data) {
         this.setState({ filter: data.target.value })
 
         let sortedData = this.getRecommendedAppsData();
@@ -520,9 +520,9 @@ class AppsMarket extends React.Component {
                                     {
                                         id: "01a",
                                         background: "null",
-                                        commingSoon: true,
                                         text: "Create annotations directly from Slack or Asana",
                                         logo: "/zapier-small.svg",
+                                        url: '/integrations',
                                     },
 
                                     {
@@ -642,7 +642,13 @@ class AppsMarket extends React.Component {
                                     <p className="noteText mb-0">{item.text}</p>
                                     <button data-dsKey={item.dsKey} onClick={(ev) => {
                                         ev.stopPropagation();
-                                        if (item.commingSoon) { swal.fire("This feature is coming soon. Stay tuned!", "", "info"); } else { this.setState({dsKey: item.dsKey, dsKeySkip: item.dsKey });}
+                                        if (item.url) {
+                                            window.location.href = item.url;
+                                        } else if (item.commingSoon) {
+                                            swal.fire("This feature is coming soon. Stay tuned!", "", "info");
+                                        } else {
+                                            this.setState({ dsKey: item.dsKey, dsKeySkip: item.dsKey });
+                                        }
                                     }} className="btn btn-sm btn-primary flex-shrink-0">Add</button>
                                     <a href="/" className="btn-learnmore">Learn more</a>
                                 </div>))}
@@ -655,7 +661,7 @@ class AppsMarket extends React.Component {
                                 <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
                                 <i className="btn-searchIcon left-0">
                                     <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666"/>
+                                        <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666" />
                                     </svg>
                                 </i>
                                 <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
@@ -669,9 +675,9 @@ class AppsMarket extends React.Component {
                             </FormGroup>
                             <FormGroup className="filter-search position-relative">
                                 <Label className="sr-only" for="search">search</Label>
-                                <Input type="text" name="search" id="search" placeholder="Search App to Connect" onChange={this.onChangeFilterHandler}/>
+                                <Input type="text" name="search" id="search" placeholder="Search App to Connect" onChange={this.onChangeFilterHandler} />
                                 <button className="btn-searchIcon">
-                                    <img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search"/>
+                                    <img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search" />
                                 </button>
                             </FormGroup>
                         </form>
@@ -731,7 +737,7 @@ class AppsMarket extends React.Component {
                                 openInSameTab: true
                             }
                         ].map((item, itemKey) => (
-                            <a target={`${!item.openInSameTab ? '_blank': ''}`} href={item.url}
+                            <a target={`${!item.openInSameTab ? '_blank' : ''}`} href={item.url}
                                 onClick={() => {
                                     this.setState({
                                         dsKey: item.dsKey,
@@ -986,10 +992,10 @@ class AppsMarket extends React.Component {
                                     height: 30,
                                 },
                             ].map((item, itemKey) => (
-                                <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color" : item.background || "#e0e0e0",}}>
-                                    { item.enabled ? (<i className="active fa fa-check-circle"></i>) : null }
+                                <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color": item.background || "#e0e0e0", }}>
+                                    {item.enabled ? (<i className="active fa fa-check-circle"></i>) : null}
                                     <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width} height={item.height} />
-                                    { item.premium ? (<span className="btn-premium"><i className="fa fa-diamond"></i><span>Premium</span></span>) : null }
+                                    {item.premium ? (<span className="btn-premium"><i className="fa fa-diamond"></i><span>Premium</span></span>) : null}
                                 </div>
                             ))}
                         </div>
@@ -1036,7 +1042,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                          "is_ds_google_alerts_enabled" ? (
+                            "is_ds_google_alerts_enabled" ? (
                             <NewsAlerts
                                 {...this.state}
                                 {...this.props}
@@ -1066,8 +1072,8 @@ class AppsMarket extends React.Component {
                                     });
                                 }}
                             />
-                        )  : this.state.dsKey ===
-                          "is_ds_shopify_annotation_enabled" ? (
+                        ) : this.state.dsKey ===
+                            "is_ds_shopify_annotation_enabled" ? (
                             <Shopify
                                 {...this.state}
                                 {...this.props}
@@ -1098,7 +1104,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                          "is_ds_google_algorithm_updates_enabled" ? (
+                            "is_ds_google_algorithm_updates_enabled" ? (
                             <GoogleUpdates
                                 {...this.state}
                                 {...this.props}
@@ -1129,7 +1135,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                          "is_ds_retail_marketing_enabled" ? (
+                            "is_ds_retail_marketing_enabled" ? (
                             <RetailMarketingDates
                                 {...this.state}
                                 {...this.props}
@@ -1190,7 +1196,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                          "is_ds_weather_alerts_enabled" ? (
+                            "is_ds_weather_alerts_enabled" ? (
                             <WeatherAlerts
                                 {...this.state}
                                 {...this.props}
@@ -1221,7 +1227,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                          "is_ds_wordpress_updates_enabled" ? (
+                            "is_ds_wordpress_updates_enabled" ? (
                             <WordpressUpdates
                                 {...this.state}
                                 {...this.props}
@@ -1252,7 +1258,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                          "is_ds_wordpress_enabled" ? (
+                            "is_ds_wordpress_enabled" ? (
                             <Wordpress
                                 {...this.state}
                                 {...this.props}
@@ -1284,7 +1290,7 @@ class AppsMarket extends React.Component {
                                 currentPricePlan={this.props.user.price_plan}
                             />
                         ) : this.state.dsKey ===
-                          "is_ds_keyword_tracking_enabled" ? (
+                            "is_ds_keyword_tracking_enabled" ? (
                             <RankTracking
                                 {...this.state}
                                 {...this.props}
@@ -1321,7 +1327,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                          "is_ds_bitbucket_tracking_enabled" ? (
+                            "is_ds_bitbucket_tracking_enabled" ? (
                             <Bitbucket
                                 {...this.state}
                                 {...this.props}
@@ -1354,7 +1360,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                          "is_ds_github_tracking_enabled" ? (
+                            "is_ds_github_tracking_enabled" ? (
                             <Github
                                 {...this.state}
                                 {...this.props}
@@ -1387,7 +1393,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                          "is_ds_apple_podcast_annotation_enabled" ? (
+                            "is_ds_apple_podcast_annotation_enabled" ? (
                             <Apple
                                 {...this.state}
                                 {...this.props}
@@ -1418,7 +1424,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                          "is_ds_twitter_tracking_enabled" ? (
+                            "is_ds_twitter_tracking_enabled" ? (
                             <Twitter
                                 {...this.state}
                                 {...this.props}
@@ -1449,7 +1455,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                          "is_ds_create_annotation_enabled" ? (
+                            "is_ds_create_annotation_enabled" ? (
                             <Twitter
                                 {...this.state}
                                 {...this.props}
