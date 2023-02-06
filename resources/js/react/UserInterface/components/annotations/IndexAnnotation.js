@@ -16,23 +16,29 @@ class IndexAnnotations extends React.Component {
     constructor() {
         super();
         this.state = {
+            error: "",
+            isBusy: false,
+            isLoading: false,
+
             annotations: [],
             accounts: [],
             annotationCategories: [],
             userAnnotationColors: {},
-            sortBy: "",
-            googleAccount: "",
-            googleAnalyticsProperty: "",
-            category: "",
-            searchText: "",
-            error: "",
-            isBusy: false,
-            isLoading: false,
             allAnnotationsSelected: false,
             selectedRows: [],
             editAnnotationId: '',
             showChartAnnotationId: '',
-            offset: 0,
+
+            // Table Actions
+            sortBy: "",
+            searchText: "",
+            googleAccount: "",
+            category: "",
+            googleAnalyticsProperty: "",
+
+            // Table Infinite Scroll
+            pageSize: 20,
+            pageNumber: 1
         };
         this.deleteAnnotation = this.deleteAnnotation.bind(this);
         this.toggleStatus = this.toggleStatus.bind(this);
@@ -162,13 +168,18 @@ class IndexAnnotations extends React.Component {
         }
     }
 
-    loadInitAnnotations (sortColumn = null, filterName = null) {
+    loadInitAnnotations() {
+        const { sortBy, searchText, category, googleAnalyticsProperty, pageSize, pageNumber } = this.state;
+        let link = '/annotation?';
 
-        const { sortBy, searchText, offset } = this.state;
-        const sort = filterName ? sortBy : sortColumn;
-        const filter = sortColumn ? searchText : filterName;
+        if (sortBy) link += `&sort_by=${sortBy}`;
+        if (searchText) link += `&search=${searchText}`;
+        if (category) link += `&cateogry=${category}`;
+        if (googleAnalyticsProperty) link += `&annotation_ga_property_id=${googleAnalyticsProperty}`;
+        if (pageSize) link += `&page_size=${pageSize}`;
+        if (pageNumber) link += `&page_number=${pageNumber}`;
 
-        HttpClient.get(`/annotation?sortBy=${sort}&search=${filter}&offset=${offset}`)
+        HttpClient.get(link)
             .then(
                 (response) => {
                     this.setState({
@@ -186,12 +197,16 @@ class IndexAnnotations extends React.Component {
             .catch((err) => {
                 this.setState({ errors: err, isLoading: false });
             });
+
     }
 
     handleChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-        this.loadAnnotations(null, e.target.value);
-
+        this.setState({
+            [e.target.name]: e.target.value,
+            annotations: [],
+            pageNumber: 1,
+            isLoading: true
+        }, this.loadInitAnnotations);
     }
 
     handleAllSelection(e) {
@@ -304,7 +319,7 @@ class IndexAnnotations extends React.Component {
                                     <a data-toggle="tooltip" data-placement="top" title="CSV Upload" onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">
                                         <img className='inject-me' src='/csvUploadd.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/csvUploadd.svg"; }} width='16' height='16' alt='menu icon' />
                                     </a>)
-                                :
+                                    :
                                     null
                                 }
                             </div>
@@ -321,7 +336,7 @@ class IndexAnnotations extends React.Component {
                                     </i>
                                     <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
                                     <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
-                                        <option value="Null">Sort By</option>
+                                        <option value="">Sort By</option>
                                         <option value="added">Added</option>
                                         <option value="date">By Date</option>
                                         <option value="category">By Category</option>
@@ -329,7 +344,7 @@ class IndexAnnotations extends React.Component {
                                     </select>
                                 </FormGroup>
                                 <FormGroup className="filter-sort position-relative">
-                                {this.state.sortBy == "ga-property" ? (
+                                    {this.state.sortBy == "ga-property" ? (
                                         <GoogleAnalyticsPropertySelect
                                             name={"googleAnalyticsProperty"}
                                             id={"googleAnalyticsProperty"}
@@ -376,9 +391,9 @@ class IndexAnnotations extends React.Component {
                             <div className="d-flex">
                                 <button type="button" className={`btn-extraSelect position-relative ${this.state.selectedRows.length ? 'active' : ''}`}>
                                     <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M7.19922 3.00098H18.1992M7.19922 9.00098H18.1992" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M1.80078 8.98566L2.65792 9.84281L4.80078 7.69995" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M3.19922 3.011L3.20922 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M7.19922 3.00098H18.1992M7.19922 9.00098H18.1992" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M1.80078 8.98566L2.65792 9.84281L4.80078 7.69995" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M3.19922 3.011L3.20922 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                     <span>Select</span>
                                 </button>
@@ -394,22 +409,22 @@ class IndexAnnotations extends React.Component {
                             <div className="btnBox d-flex">
                                 <p className="mb-0">{`${this.state.selectedRows.length} annotations selected`}</p>
                                 <div className="d-flex">
-                                    <button onClick={() => this.setState({selectedRows: []})} className="btn-cancel">Cancel selection</button>
+                                    <button onClick={() => this.setState({ selectedRows: [] })} className="btn-cancel">Cancel selection</button>
                                     <button className="btn-delete d-block align-items-center justify-content-center" onClick={this.handleDeleteSelected}>
                                         <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M2.33398 12C1.96732 12 1.65354 11.8696 1.39265 11.6087C1.13132 11.3473 1.00065 11.0333 1.00065 10.6667V2H0.333984V0.666667H3.66732V0H7.66732V0.666667H11.0007V2H10.334V10.6667C10.334 11.0333 10.2035 11.3473 9.94265 11.6087C9.68132 11.8696 9.36732 12 9.00065 12H2.33398ZM9.00065 2H2.33398V10.6667H9.00065V2ZM3.66732 9.33333H5.00065V3.33333H3.66732V9.33333ZM6.33398 9.33333H7.66732V3.33333H6.33398V9.33333ZM2.33398 2V10.6667V2Z" fill="currentColor"/>
+                                            <path d="M2.33398 12C1.96732 12 1.65354 11.8696 1.39265 11.6087C1.13132 11.3473 1.00065 11.0333 1.00065 10.6667V2H0.333984V0.666667H3.66732V0H7.66732V0.666667H11.0007V2H10.334V10.6667C10.334 11.0333 10.2035 11.3473 9.94265 11.6087C9.68132 11.8696 9.36732 12 9.00065 12H2.33398ZM9.00065 2H2.33398V10.6667H9.00065V2ZM3.66732 9.33333H5.00065V3.33333H3.66732V9.33333ZM6.33398 9.33333H7.66732V3.33333H6.33398V9.33333ZM2.33398 2V10.6667V2Z" fill="currentColor" />
                                         </svg>
                                         <span>Delete selected</span>
                                     </button>
                                 </div>
                             </div>)
-                        :
+                            :
                             null
                         }
                     </div>
 
                     {this.state.isLoading ? (
-                        <></>
+                        <>Loading...</>
                     ) : (
                         <>
                             {this.state.annotations
@@ -477,14 +492,16 @@ class IndexAnnotations extends React.Component {
                                     }
 
                                     return (
-                                        <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId} key={anno.category + anno.event_name + anno.description + anno.url + anno.id} onClick={
-                                            () => {
-                                                if(anno.id) {
-                                                    this.handleOneSelection(anno.id)
-                                                } else {
-                                                    toast.error("This annotation can't be selected.");
+                                        <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId}
+                                            key={idx + anno.toString()}
+                                            onClick={
+                                                () => {
+                                                    if (anno.id) {
+                                                        this.handleOneSelection(anno.id)
+                                                    } else {
+                                                        // toast.error("This annotation can't be selected.");
+                                                    }
                                                 }
-                                            }
                                             } data-anno_id={anno.id}>
 
                                             <span className="checkedIcon"><img src={`/icon-checked.svg`} /></span>
@@ -525,7 +542,7 @@ class IndexAnnotations extends React.Component {
                                             <div className="flex-grow-1 d-flex justify-content-between align-items-center">
                                                 <ul className="d-flex list-unstyled">
                                                     <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
-                                                    <li><time datetime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
+                                                    <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
                                                     {/* <li>
                                                     <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
                                                         <i className="mr-2">
@@ -537,19 +554,19 @@ class IndexAnnotations extends React.Component {
                                                 <ul className="d-flex list-unstyled">
                                                     {anno.id ? <>
                                                         <li>
-                                                            <span className="cursor-pointer" onClick={(e) => {e.stopPropagation(); this.toggleStatus(anno.id)}}>
+                                                            <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.toggleStatus(anno.id) }}>
                                                                 {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
                                                             </span>
                                                         </li>
                                                         <li>
-                                                            <span className="cursor-pointer" onClick={(e) => {e.stopPropagation(); this.setState({ editAnnotationId: anno.id })}}>
+                                                            <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.setState({ editAnnotationId: anno.id }) }}>
                                                                 <img src={`icon-edit.svg`} />
                                                             </span>
                                                         </li>
                                                         <li>
-                                                            <span className="text-danger" onClick={(e) => {e.stopPropagation(); this.deleteAnnotation(anno.id); }}><img src={`icon-trash.svg`} /></span>
+                                                            <span className="text-danger" onClick={(e) => { e.stopPropagation(); this.deleteAnnotation(anno.id); }}><img src={`icon-trash.svg`} /></span>
                                                         </li>
-                                                    </>: null}
+                                                    </> : null}
                                                 </ul>
                                             </div>
 
@@ -558,48 +575,43 @@ class IndexAnnotations extends React.Component {
 
                                 })}
 
-                                { !this.state.isLoading && !this.state.annotations.length ?
-                                    <div className="nodata">
-                                        <p>No annotations added yet.</p>
-                                        <p className="mb-0">Suggestions: <a href=''>Add manual annotation</a> or <a href=''>Upload CSV</a></p>
-                                    </div> : null
-                                }
+                            {!this.state.isLoading && !this.state.annotations.length ?
+                                <div className="nodata">
+                                    <p>No annotations added yet.</p>
+                                    <p className="mb-0">Suggestions: <a href=''>Add manual annotation</a> or <a href=''>Upload CSV</a></p>
+                                </div> : null
+                            }
                         </>
                     )}
                 </Container>
-                <AppsModal isOpen={this.state.editAnnotationId} popupSize={'md'} toggle={() => { this.setState({ editAnnotationId: '' }); }}>
-                    <AnnotationsUpdate togglePopup={() => this.setState({editAnnotationId: ''})} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
+                <AppsModal isOpen={!!this.state.editAnnotationId} popupSize={'md'} toggle={() => { this.setState({ editAnnotationId: '' }); }}>
+                    <AnnotationsUpdate togglePopup={() => this.setState({ editAnnotationId: '' })} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
                 </AppsModal>
-                <AppsModal isOpen={this.state.showChartAnnotationId} popupSize={'null'} toggle={() => { this.setState({ showChartAnnotationId: '' }); }}>
-                    <ShowChartAnnotation togglePopup={() => this.setState({showChartAnnotationId: ''})} showChartAnnotationId={this.state.showChartAnnotationId} currentPricePlan={this.props.user.price_plan} />
+                <AppsModal isOpen={!!this.state.showChartAnnotationId} popupSize={'null'} toggle={() => { this.setState({ showChartAnnotationId: '' }); }}>
+                    <ShowChartAnnotation togglePopup={() => this.setState({ showChartAnnotationId: '' })} showChartAnnotationId={this.state.showChartAnnotationId} currentPricePlan={this.props.user.price_plan} />
                 </AppsModal>
             </div>
         );
     }
 
     sort(e) {
-        this.setState({ sortBy: e.target.value });
-        this.loadAnnotations(e.target.value);
+        this.setState({
+            sortBy: e.target.value,
+            annotations: [],
+            pageNumber: 1,
+            isLoading: true,
+        }, this.loadInitAnnotations);
     }
 
     registerScrollEvent() {
-        $(window).off('scroll');
-        $(window).on('scroll', function() {
-            if($(window).scrollTop() + $(window).height() === $(document).height() ) {
-                const offset = this.state.offset + 10
-                this.setState({ offset })
-                this.loadInitAnnotations();
+        // $(window).off('scroll');
+        $(window).on('scroll', () => {
+            if (parseFloat($(window).scrollTop() + $(window).height()).toFixed(0) == $(document).height()) {
+                this.setState({ pageNumber: this.state.pageNumber + 1 }, this.loadInitAnnotations)
             }
-        }.bind(this));
+        });
     }
 
-    loadAnnotations (sortColumn, filterName) {
-
-        if (sortColumn !== "ga-account") {
-            this.setState({ isLoading: true });
-            this.loadInitAnnotations(sortColumn, filterName)
-        }
-    }
     sortByProperty(gaPropertyId) {
         this.setState({ googleAnalyticsProperty: gaPropertyId });
         if (gaPropertyId !== "select-ga-property") {
@@ -627,33 +639,15 @@ class IndexAnnotations extends React.Component {
         }
     }
     sortByCategory(catName) {
-        this.setState({ category: catName });
-        let url = "";
-        if (catName !== "select-category") {
-            url = `/annotation?category=${catName}`;
-        } else {
-            url = `/annotation?sortBy=category`;
-        }
-        this.setState({ isLoading: true });
-        HttpClient.get(url)
-            .then(
-                (response) => {
-                    this.setState({
-                        isLoading: false,
-                        annotations: response.data.annotations,
-                    });
-                },
-                (err) => {
-                    this.setState({
-                        isLoading: false,
-                        errors: err.response.data,
-                    });
-                }
-            )
-            .catch((err) => {
-                this.setState({ isLoading: false, errors: err });
-            });
+        this.setState({
+            isLoading: true,
+            category: catName,
+            annotations: [],
+            pageNumber: 1,
+            pageSize: 20
+        }, this.loadInitAnnotations);
     }
+
     seeCompleteDescription(anno, idx) {
         anno.show_complete_desc = true;
         let annotations_new = this.state.annotations;

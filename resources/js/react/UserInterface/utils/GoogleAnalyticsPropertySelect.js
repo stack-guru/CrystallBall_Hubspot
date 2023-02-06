@@ -12,10 +12,10 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            aProperties: [{ value: "", label: "All Properties" }],
             allProperties: [],
             isAccountLinked: true,
             isPermissionPopupOpened: false,
+            selectedProperties: []
         };
         this.searchGoogleAnalyticsProperties = this.searchGoogleAnalyticsProperties.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -26,7 +26,6 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         this.searchGoogleAnalyticsProperties(' ', (options) => {
             if (options.length) {
                 if (this.props.autoSelectFirst) {
-                    this.setState({ aProperties: [{ value: "", label: "Loading..." }] });
                     setTimeout(() => {
                         this.onChangeHandler(options[0]);
                     }, 5000);
@@ -41,14 +40,41 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     componentDidUpdate(prevProps) {
         if (this.props != prevProps) {
             if (this.props.aProperties) {
-                this.setState({ aProperties: this.props.aProperties });
+                this.setState({ selectedProperties: this.props.aProperties });
             }
         }
     }
 
-    deleteKeyword(e) {
-        console.log(e)
-        this.onChangeHandler(null);
+    deleteKeyword(propertyId) {
+        // this.onChangeHandler(null);
+        const filteredProperty = this.state.selectedProperties.filter(itm => itm.value != propertyId);
+        this.setState({ selectedProperties: filteredProperty });
+
+        if (filteredProperty.length === 0) {
+            if (this.props.multiple) {
+                this.props.onChangeCallback({
+                    target: {
+                        name: this.props.name,
+                        value: [""],
+                        wasLastDataFetchingSuccessful: true
+                    }
+                });
+            }
+
+            if (this.props.multiple) {
+                this.props.onChangeCallback({
+                    target: {
+                        name: this.props.name,
+                        value: [""],
+                        wasLastDataFetchingSuccessful: true
+                    }
+                });
+            }
+
+            if (this.props.onChangeCallback2) {
+                this.props.onChangeCallback2([{ value: "", label: "All Properties" }]);
+            }
+        }
     }
 
     searchGoogleAnalyticsProperties(keyword, callback) {
@@ -64,7 +90,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                         label: (
                             <div className="d-flex propertyLabel">
                                 <span style={{ background: "#2d9cdb" }} className="dot"></span>
-                                <span className="text-truncate" style={{maxWidth: 150}}>{gap.name + ' ' + gap.google_analytics_account.name}</span>
+                                <span className="text-truncate" style={{ maxWidth: 150 }}>{gap.name + ' ' + gap.google_analytics_account.name}</span>
                             </div>
                         )
                     };
@@ -81,92 +107,86 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     }
 
     onChangeHandler(sOption) {
+        if(sOption.value === '') {
+            return ''
+        }
 
-        if (sOption == null) {
-            this.setState({ aProperties: [{ value: "", label: "All Properties" }] });
-            if (this.props.multiple) this.props.onChangeCallback({
-                target: {
-                    name: this.props.name,
-                    value: [""],
-                    wasLastDataFetchingSuccessful: true
-                }
-            });
-            if (!this.props.multiple) this.props.onChangeCallback({
-                target: { name: this.props.name, value: "" },
-                wasLastDataFetchingSuccessful: true
-            });
-            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Properties" }]);
+        if (this.props.multiple) {
+            const selectedVal = sOption;
+            this.setState({ selectedProperties: [...this.state.selectedProperties, ...selectedVal.map(itm => ({ ...itm, value: itm.value, label: itm.labelText }))] })
         } else {
-            let tempProperties = sOption;
-            if (!this.props.multiple) {
-                tempProperties = [sOption];
-            }
-            if (
-                (this.props.currentPricePlan.google_analytics_property_count < (
-                    this.state.allProperties.filter(sO => sO.isInUse).length
-                    + tempProperties.filter(sO => sO.value !== "").filter(sO => !sO.isInUse).length)
-                )
-                && (this.props.currentPricePlan.google_analytics_property_count !== 0)
-            ) {
-                const accountNotLinkedHtml = '' +
-                    '<div class="">' +
-                    '<img src="/images/property-upgrade-modal.png" class="img-fluid">' +
-                    '</div>'
-                /*
-                * Show new google analytics account popup
-                * */
-                swal.fire({
-                    html: accountNotLinkedHtml,
-                    width: 1000,
-                    showCancelButton: true,
-                    showCloseButton: true,
-                    customClass: {
-                        popup: "themePlanAlertPopup",
-                        htmlContainer: "themePlanAlertPopupContent",
-                        closeButton: 'btn-closeplanAlertPopup',
-                    },
-                    cancelButtonClass: "btn-bookADemo",
-                    cancelButtonText: "Book a Demo",
-                    confirmButtonClass: "btn-subscribeNow",
-                    confirmButtonText: "Subscribe now",
+            const selectedVal = sOption[0];
+            this.setState({ selectedProperties: [{ ...selectedVal, value: selectedVal.value, label: selectedVal.labelText, wasLastDataFetchingSuccessful: true }] })
+        }
 
-                }).then(value => {
-                    if (value.isConfirmed) window.location.href = '/settings/price-plans'
+        if (
+            (this.props.currentPricePlan.google_analytics_property_count < (
+                this.state.allProperties.filter(sO => sO.isInUse).length
+                + this.state.selectedProperties.filter(sO => !sO.isInUse).length)
+            )
+            && (this.props.currentPricePlan.google_analytics_property_count !== 0)
+        ) {
+            const accountNotLinkedHtml = '' +
+                '<div class="">' +
+                '<img src="/images/property-upgrade-modal.png" class="img-fluid">' +
+                '</div>'
+            /*
+            * Show new google analytics account popup
+            * */
+            swal.fire({
+                html: accountNotLinkedHtml,
+                width: 1000,
+                showCancelButton: true,
+                showCloseButton: true,
+                customClass: {
+                    popup: "themePlanAlertPopup",
+                    htmlContainer: "themePlanAlertPopupContent",
+                    closeButton: 'btn-closeplanAlertPopup',
+                },
+                cancelButtonClass: "btn-bookADemo",
+                cancelButtonText: "Book a Demo",
+                confirmButtonClass: "btn-subscribeNow",
+                confirmButtonText: "Subscribe now",
+
+            }).then(value => {
+                if (value.isConfirmed) window.location.href = '/settings/price-plans'
+            });
+
+        } else {
+            if (this.props.multiple) {
+                this.props.onChangeCallback({
+                    target: {
+                        name: this.props.name,
+                        value: this.state.selectedProperties.map(sO => sO.value),
+                        wasLastDataFetchingSuccessful: true
+                    }
                 });
             }
-            let aProperties = null;
-            if (this.props.multiple) {
-                aProperties = sOption.filter(sO => sO.value !== "");
-            } else {
-                aProperties = [sOption];
+
+            if (!this.props.multiple) {
+                this.props.onChangeCallback({
+                    target: {
+                        name: this.props.name,
+                        value: this.state.selectedProperties[0].value,
+                        wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful
+                    }
+                });
             }
-            this.setState({ aProperties: aProperties });
-            if (this.props.multiple) (this.props.onChangeCallback)({
-                target: {
-                    name: this.props.name,
-                    value: sOption.filter(sO => sO.value !== "").map(sO => sO.value),
-                    wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful
-                }
-            });
-            if (!this.props.multiple) (this.props.onChangeCallback)({
-                target: {
-                    name: this.props.name,
-                    value: sOption.value,
-                    wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful
-                }
-            });
-            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)(aProperties);
+
+            if (this.props.onChangeCallback2) {
+                this.props.onChangeCallback2(this.state.selectedProperties);
+            }
         }
     }
 
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
-        let aProperties = this.state.aProperties;
+
         return (
             <>
                 <div>
                     <div className="themeNewInputStyle position-relative inputWithIcon">
-                        {/* <i className="icon fa"><img src='/icon-plus.svg'/></i> */}
+                        <i className="icon fa"><img src='/icon-plus.svg'/></i>
                         <Select
                             onFocus={this.props.onFocus}
                             loadOptions={this.searchGoogleAnalyticsProperties}
@@ -176,7 +196,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                             className={this.props.className}
                             name={this.props.name}
                             disabled={this.props.disabled}
-                            value={this.state.aProperties}
+                            // value={this.state.aProperties}
+                            value={[]}
                             id={this.props.id}
                             isMulti={this.props.multiple}
                             isClearable={this.props.isClearable}
@@ -232,10 +253,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                             Selected properties: <span>(Click to remove)</span>
                         </h4> */}
                         <div className="d-flex keywordTags mt-3">
-                            {aProperties.map(itm => {
-                                if (itm.value === "") {
-                                    return null;
-                                }
+                            {this.state.selectedProperties.map(itm => {
                                 return (<>
                                     <button
                                         onClick={() =>
@@ -265,11 +283,10 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                                         }
                                     >
                                         <PopoverBody web_monitor_id={itm.value}>
-                                            Are you sure you want to remove "
-                                            {itm.label}"?.
+                                            Are you sure you want to remove "{itm.labelText || itm.label}"?.
                                         </PopoverBody>
                                         <button
-                                            onClick={this.deleteKeyword}
+                                            onClick={() => this.deleteKeyword(itm.value)}
                                             key={itm.value}
                                             user_data_source_id={itm.value}
                                         >
