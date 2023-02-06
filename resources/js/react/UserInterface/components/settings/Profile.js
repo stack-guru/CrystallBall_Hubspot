@@ -278,7 +278,7 @@ export default class Profile extends React.Component {
                                 <div className="themeNewInputStyle mb-4 pb-2">
                                     {
                                     this.state.profile_image ?
-                                    <label htmlFor='addPhoto' className='addPhoto' style={{backgroundPosition: 'center', backgroundSize: 'contain', backgroundImage: `url(/${this.state.profile_image})`}}>
+                                    <label title='Click to upload Profile Image' htmlFor='addPhoto' className='addPhoto' style={{backgroundPosition: 'center', backgroundSize: 'contain', backgroundImage: `url(/${this.state.profile_image})`}}>
                                         <input type='file' id='addPhoto' style={{display: 'none'}} onChange={this.onChangeFile}/>
                                     </label>
 
