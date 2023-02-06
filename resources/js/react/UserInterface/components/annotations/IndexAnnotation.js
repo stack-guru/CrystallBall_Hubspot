@@ -11,8 +11,13 @@ import AppsModal from "../AppsMarket/AppsModal";
 import AnnotationsUpdate from './EditAnnotation';
 import ShowChartAnnotation from './ShowChartAnnotation';
 import Toast from "../../utils/Toast";
+import axios from 'axios';
 
 class IndexAnnotations extends React.Component {
+
+    axiosCancelToken = null;
+    loadAnnotationsCancelToken = null;
+
     constructor() {
         super();
         this.state = {
@@ -56,6 +61,7 @@ class IndexAnnotations extends React.Component {
         this.seeCompleteDescription = this.seeCompleteDescription.bind(this);
     }
     componentDidMount() {
+        this.axiosCancelToken = axios.CancelToken;
         document.title = "Annotation";
 
         this.setState({ isBusy: true, isLoading: true });
@@ -186,15 +192,24 @@ class IndexAnnotations extends React.Component {
         if (pageSize) link += `&page_size=${pageSize}`;
         if (pageNumber) link += `&page_number=${pageNumber}`;
 
-        HttpClient.get(link)
+        if (this.loadAnnotationsCancelToken) {
+            this.loadAnnotationsCancelToken.cancel('Request overridden.');
+        }
+        this.loadAnnotationsCancelToken = this.axiosCancelToken.source();
+        HttpClient.get(
+            link,
+            { cancelToken: this.loadAnnotationsCancelToken.token }
+        )
             .then(
                 (response) => {
+                    this.loadAnnotationsCancelToken = null;
                     this.setState({
                         annotations: this.state.annotations.concat(response.data.annotations),
                         isLoading: false,
                     });
                 },
                 (err) => {
+                    this.loadAnnotationsCancelToken = null;
                     this.setState({
                         errors: err.response.data,
                         isLoading: false,
@@ -202,6 +217,7 @@ class IndexAnnotations extends React.Component {
                 }
             )
             .catch((err) => {
+                this.loadAnnotationsCancelToken = null;
                 this.setState({ errors: err, isLoading: false });
             });
 
@@ -398,7 +414,7 @@ class IndexAnnotations extends React.Component {
                                 </FormGroup>
                             </div>
                             <div className="d-flex">
-                                <button 
+                                <button
                                     onClick={() => {
                                         this.setState({ enableSelect: !this.state.enableSelect })
                                         if (this.state.enableSelect) {
