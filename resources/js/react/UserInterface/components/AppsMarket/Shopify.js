@@ -41,7 +41,20 @@ class Shopify extends React.Component {
                             serviceName={"Shopify"}
                             colorKeyName={"shopify"}
                             dsKeyName={"is_ds_shopify_annotation_enabled"}
-                            creditString={null}
+                            creditString={
+                                this.props.userDataSources.shopify_annotation
+                                    ? `${
+                                          this.props.userDataSources
+                                              .shopify_annotation.length
+                                      } / ${
+                                          this.props.user.price_plan
+                                              .shopify_monitor_count > 0
+                                              ? this.props.user.price_plan
+                                                    .shopify_monitor_count
+                                              : 0
+                                      }`
+                                    : null
+                            }
                         />
 
                         {/* <DSShopifySelect

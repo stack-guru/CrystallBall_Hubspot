@@ -110,7 +110,6 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
     Route::delete('user', [App\Http\Controllers\HomeController::class, 'deleteAccount'])->withoutMiddleware('only.non.empty.password');
 
     Route::view('dashboard', 'ui/app'); // obsolete
-    Route::view('analytics', 'ui/app');
     Route::view('dashboard/analytics', 'ui/app');
     Route::view('dashboard/search-console', 'ui/app');
 
@@ -132,6 +131,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
         Route::view('/', 'ui/app');
         Route::view('support', 'ui/app');
         Route::view('/devices', 'ui/app');
+        Route::view('analytics-accounts', 'ui/app');
 
         Route::get('accounts', [App\Http\Controllers\GoogleAccountController::class, 'index']);
         Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['create', 'store', 'update', 'destroy']);

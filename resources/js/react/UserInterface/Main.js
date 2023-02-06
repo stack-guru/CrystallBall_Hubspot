@@ -138,7 +138,7 @@ class Main extends React.Component {
                     </div>
                     <main className="main-content bgc-grey-100">
                         <Switch>
-                            <Route exact path="/analytics" refresh={true}>
+                            <Route exact path="/settings/analytics-accounts" refresh={true}>
                                 <IndexDashboard user={this.state.user} />
                             </Route>
                             <Route exact path="/dashboard/analytics" refresh={true}>
