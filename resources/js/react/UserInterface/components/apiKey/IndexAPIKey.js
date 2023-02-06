@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import HttpClient from '../../utils/HttpClient';
-import { toast } from "react-toastify";
-import ErrorAlert from '../../utils/ErrorAlert';
 import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
+import Toast from "../../utils/Toast";
 
 class IndexAPIKey extends React.Component {
 
@@ -59,7 +57,10 @@ class IndexAPIKey extends React.Component {
                 this.setState({ isBusy: true });
                 HttpClient({ url: `/oauth/personal-access-tokens`, baseURL: "/", method: 'post', data: { name: this.state.token_name, scopes: [] } })
                     .then(response => {
-                        toast.success("Token generated.");
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Token generated."
+                        });
                         let tokens = this.state.apiKeys;
                         tokens.push(response.data.token);
                         this.setState({ isBusy: false, apiKeys: tokens, accessToken: response.data.accessToken })
@@ -108,7 +109,10 @@ class IndexAPIKey extends React.Component {
             this.setState({ isBusy: true });
             HttpClient({ url: `/oauth/personal-access-tokens/${tokenId}`, baseURL: "/", method: 'delete' })
                 .then(response => {
-                    toast.error("Token removed.");
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Token removed."
+                    });
                     let tokens = this.state.apiKeys;
                     tokens = tokens.filter(t => t.id !== tokenId);
                     this.setState({ isBusy: false, apiKeys: tokens })

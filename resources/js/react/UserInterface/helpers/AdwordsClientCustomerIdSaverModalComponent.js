@@ -1,6 +1,6 @@
 import React from 'react'
 import HttpClient from '../utils/HttpClient'
-import { toast } from 'react-toastify'
+import Toast from "../utils/Toast";
 
 
 export default class AdwordsClientCustomerIdSaverModal extends React.Component {
@@ -64,7 +64,10 @@ export default class AdwordsClientCustomerIdSaverModal extends React.Component {
                                 'adwords_client_customer_id': document.getElementById("adwordsClientCustomerId").value
                             })
                                 .then(response => {
-                                    toast.success("Google Account ID saved.");
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: "Google Account ID saved.",
+                                    });
                                     (this.props.dismissCallback)()
                                 }, (err) => {
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { toast } from 'react-toastify'
+import Toast from "../../../utils/Toast";
 import { Redirect } from 'react-router-dom'
 
 import ErrorAlert from '../../../utils/ErrorAlert'
@@ -53,7 +53,10 @@ export default class CreateUser extends Component {
         this.setState({ loading: true });
         HttpClient.post(`/settings/user`, this.state.user)
             .then(response => {
-                toast.success("New user added.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "New user added.",
+                });
                 this.setState({ loading: false });
                 this.setState({ redirectTo: "/settings/user" })
             }, (err) => {

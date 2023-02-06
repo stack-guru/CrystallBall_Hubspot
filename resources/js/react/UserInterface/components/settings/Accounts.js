@@ -1,5 +1,5 @@
 import React from 'react';
-import { toast } from 'react-toastify'
+import Toast from "../../utils/Toast";
 import { Redirect } from "react-router-dom";
 
 import HttpClient from '../../utils/HttpClient';
@@ -62,7 +62,9 @@ export default class Accounts extends React.Component {
         const redirectTo = localStorage.getItem('frontend_redirect_to');
         if (redirectTo && redirectTo !== "/settings/accounts") {
             localStorage.removeItem('frontend_redirect_to');
-            toast.info("Redirecting you in 10 seconds, please wait.", {
+            Toast.fire({
+                icon: 'info',
+                title: "Redirecting you in 10 seconds, please wait.",
                 autoClose: autoRedirectDelay
             });
             setTimeout(() => {
@@ -98,7 +100,10 @@ export default class Accounts extends React.Component {
         HttpClient.post("/userService", {
             [value]: 0,
         }).then((resp) => {
-                toast.info("Service deactivated successfully.");
+                Toast.fire({
+                    icon: 'info',
+                    title: "Service deactivated successfully.",
+                });
                 this.setState({user: resp.data.user_services})
             },
             (err) => {
@@ -536,7 +541,10 @@ export default class Accounts extends React.Component {
     handleDelete(id) {
         this.setState({ isBusy: true });
         HttpClient.delete(`/settings/google-account/${id}`).then(resp => {
-            toast.success("Account removed.");
+            Toast.fire({
+                icon: 'success',
+                title: "Account removed.",
+            });
             let googleAccounts = this.state.googleAccounts;
             googleAccounts = googleAccounts.filter(ga => ga.id != id);
             this.setState({ isBusy: false, googleAccounts: googleAccounts })
@@ -550,7 +558,10 @@ export default class Accounts extends React.Component {
     fetchGAAccounts(id) {
         this.setState({ isBusy: true });
         return HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
-            toast.success("Accounts fetched.");
+            Toast.fire({
+                icon: 'success',
+                title: "Accounts fetched.",
+            });
             this.setState({ isBusy: false })
             return this.getGAAccounts() && this.getGAProperties();
         }, (err) => {
@@ -565,7 +576,10 @@ export default class Accounts extends React.Component {
     fetchGSCSites(id) {
         this.setState({ isBusy: true });
         return HttpClient.post(`/settings/google-search-console-site/google-account/${id}`).then(resp => {
-            toast.success("Sites fetched.");
+            Toast.fire({
+                icon: 'success',
+                title: "Sites fetched.",
+            });
             this.setState({ isBusy: false })
             return this.getGSCSites();
         }, (err) => {
@@ -621,7 +635,10 @@ export default class Accounts extends React.Component {
             this.setState({ isBusy: true })
             HttpClient.delete(`/settings/google-analytics-account/${gAAId}`).then(response => {
                 this.setState({ isBusy: false, googleAnalyticsAccounts: this.state.googleAnalyticsAccounts.filter(g => g.id !== gAAId) })
-                toast.success("Account removed.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "Account removed.",
+                });
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
@@ -635,7 +652,10 @@ export default class Accounts extends React.Component {
             this.setState({ isBusy: true })
             HttpClient.delete(`/settings/google-analytics-property/${gAPId}`).then(response => {
                 this.setState({ isBusy: false, googleAnalyticsProperties: this.state.googleAnalyticsProperties.filter(g => g.id !== gAPId) })
-                toast.success("Property removed.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "Property removed.",
+                });
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
@@ -649,7 +669,10 @@ export default class Accounts extends React.Component {
             this.setState({ isBusy: true })
             HttpClient.delete(`/settings/google-search-console-site/${gSCS}`).then(response => {
                 this.setState({ isBusy: false, googleSearchConsoleSites: this.state.googleSearchConsoleSites.filter(g => g.id !== gSCS) })
-                toast.success("Site removed.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "Site removed.",
+                });
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {

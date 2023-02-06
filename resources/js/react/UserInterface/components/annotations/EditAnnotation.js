@@ -1,5 +1,5 @@
 import React from 'react';
-import { toast } from "react-toastify";
+import Toast from "../../utils/Toast";
 import { Redirect } from "react-router-dom";
 
 import ErrorAlert from "../../utils/ErrorAlert";
@@ -127,7 +127,10 @@ export default class EditAnnotation extends React.Component {
             fd.append('_method', 'PUT');
             HttpClient.post(`/annotation/${this.state.annotation.id}`, fd)
                 .then(response => {
-                    toast.success("Annotation updated.");
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Annotation updated."
+                    });
                     this.setState({ redirectTo: "/annotation" });
                 }, (err) => {
 

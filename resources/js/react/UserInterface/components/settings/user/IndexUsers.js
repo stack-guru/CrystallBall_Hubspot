@@ -6,7 +6,7 @@ import HttpClient from "../../../utils/HttpClient";
 import AppsModal from "../../AppsMarket/AppsModal";
 import CreateUser from "./CreateUser";
 import EditUser from "./EditUser";
-import { toast } from 'react-toastify'
+import Toast from "../../../utils/Toast";
 
 export default class IndexUsers extends Component {
     constructor(props) {
@@ -61,7 +61,10 @@ export default class IndexUsers extends Component {
         user.user_level = user_level
         HttpClient.put(`/settings/user/${user.id}`, user)
             .then(response => {
-                toast.success("User updated.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "User updated.",
+                });
             }, (err) => {
                 this.setState({ errors: (err.response).data });
             }).catch(err => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { toast } from "react-toastify";
+import Toast from "../../utils/Toast";
 import { Redirect } from 'react-router';
 
 import HttpClient from '../../utils/HttpClient';
@@ -166,7 +166,10 @@ export default class CreateAnnotation extends React.Component {
             HttpClient.post('/annotation', fd)
                 .then(response => {
                     removeStateFromLocalStorage("CreateAnnotation");
-                    toast.success("Annotation added.");
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Annotation added."
+                    });
                     this.setState({ redirectTo: "/annotation" });
                     this.props.togglePopup('');
                     // this.setDefaultState();
