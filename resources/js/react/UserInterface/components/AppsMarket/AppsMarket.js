@@ -809,8 +809,8 @@ class AppsMarket extends React.Component {
                                 {
                                     id: "01",
                                     background: "#f12e45",
-                                    dsKey: "is_ds_wordpress_updates_enabled",
-                                    enabled:this.state.userServices.is_ds_wordpress_updates_enabled,
+                                    dsKey: "",
+                                    enabled: false,
                                     premium: false,
                                     brandName: "twilio",
                                     brandLogo: "/twilio.svg",
