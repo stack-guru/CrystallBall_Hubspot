@@ -36,7 +36,7 @@ export default class AnnotationCategorySelect extends React.Component {
                 onChange={this.onChangeHandler}
                 className="gray_clr"
                 options={this.props.categories}
-                placeholder={this.props.placeholder}
+                placeholder={this.props.placeholder || 'Category *'}
             >
             </CreatableSelect>
         )

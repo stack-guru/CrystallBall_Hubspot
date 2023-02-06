@@ -259,7 +259,7 @@ class AnnotationController extends Controller
         // Apply search functionality if search keyword is given
         if ($request->has('search') && $request->query('search') !== '') {
             $search = $request->query('search');
-            $whereClauses[] = "(`TempTable`.`category` LIKE '%$search%' OR `TempTable`.`event_name` LIKE '%$search%' OR `TempTable`.`description` LIKE '%$search%')";
+            $whereClauses[] = "(`category` LIKE '%$search%' OR `event_name` LIKE '%$search%' OR `description` LIKE '%$search%')";
         }
         if (count($whereClauses)) $annotationsQuery .= " WHERE " . implode(' AND ', $whereClauses);
 

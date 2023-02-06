@@ -178,6 +178,14 @@ export default class IndexPricingPlans extends React.Component {
                                                 <li>Google Updates: <span>∞</span></li>
                                                 <li>WordPress Updates: <span>∞</span></li>
                                                 <li>Holidays: <span>∞</span></li>
+                                                <li>Apple Poadcast: <span>{pricePlan.apple_podcast_monitor_count == 0 ? 'Unlimited' : (pricePlan.apple_podcast_monitor_count > 0 ? pricePlan.apple_podcast_monitor_count : 0)}</span></li>
+                                                <li>Bitbucket: <span>{pricePlan.bitbucket_credits_count == 0 ? 'Unlimited' : (pricePlan.bitbucket_credits_count > 0 ? pricePlan.bitbucket_credits_count : 0)}</span></li>
+                                                <li>Aws: <span>{pricePlan.aws_credits_count == 0 ? 'Unlimited' : (pricePlan.aws_credits_count > 0 ? pricePlan.aws_credits_count : 0)}</span></li>
+                                                <li>Github: <span>{pricePlan.github_credits_count == 0 ? 'Unlimited' : (pricePlan.github_credits_count > 0 ? pricePlan.github_credits_count : 0)}</span></li>
+                                                <li>Linkedin: <span>{pricePlan.linkedin_credits_count == 0 ? 'Unlimited' : (pricePlan.linkedin_credits_count > 0 ? pricePlan.linkedin_credits_count : 0)}</span></li>
+                                                <li>Shopify: <span>{pricePlan.shopify_monitor_count == 0 ? 'Unlimited' : (pricePlan.shopify_monitor_count > 0 ? pricePlan.shopify_monitor_count : 0)}</span></li>
+                                                <li>Twitter: <span>{pricePlan.twitter_credits_count == 0 ? 'Unlimited' : (pricePlan.twitter_credits_count > 0 ? pricePlan.twitter_credits_count : 0)}</span></li>
+
 
                                                 {/* {pricePlan.has_data_sources ? <li>
                                                     <span className="fa-li"><i className="fa fa-check-circle-o"></i></span>

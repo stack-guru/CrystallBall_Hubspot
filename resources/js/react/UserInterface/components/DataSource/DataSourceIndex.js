@@ -1,5 +1,5 @@
 import React from 'react';
-import { toast } from "react-toastify";
+import Toast from "../../utils/Toast";
 import { Redirect } from "react-router-dom";
 import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 import LoaderAnimation from "../../utils/LoaderAnimation";
@@ -3072,7 +3072,10 @@ export default class DataSourceIndex extends React.Component {
                     userBitbucketAccountsExists: true
                 })
             } else if (resp.data.error) {
-                toast.error("BitBucket Error: " + resp.data.error);
+                Toast.fire({
+                    icon: 'error',
+                    title: "BitBucket Error: " + resp.data.error
+                });
                 this.sectionToggler(null)
                 this.updateUserService(
                     {
@@ -3103,7 +3106,10 @@ export default class DataSourceIndex extends React.Component {
                     userGithubAccountsExists: true
                 })
             } else if (resp.data.error) {
-                toast.error("Github Error: " + resp.data.error);
+                Toast.fire({
+                    icon: 'error',
+                    title: "Github Error: " + resp.data.error
+                });
                 this.sectionToggler(null)
                 this.updateUserService(
                     {
@@ -3132,10 +3138,16 @@ export default class DataSourceIndex extends React.Component {
                     if (resp.data.twitter_accounts > 0) {
                         this.setState({ userServices: resp.data.user_services })
                         if (resp.data.user_services[e.target.name] == 1) {
-                            toast.success("Service activated successfully.");
+                            Toast.fire({
+                                icon: 'success',
+                                title: "Service activated successfully."
+                            });
                         }
                         if (resp.data.user_services[e.target.name] == 0) {
-                            toast.info("Service deactivated successfully.");
+                            Toast.fire({
+                                icon: 'info',
+                                title: "Service deactivated successfully."
+                            });
                         }
                     } else {
                         swal.fire({
@@ -3152,10 +3164,16 @@ export default class DataSourceIndex extends React.Component {
                 default:
 
                     if (resp.data.user_services[e.target.name] == 1) {
-                        toast.success("Service activated successfully.");
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Service activated successfully."
+                        });
                     }
                     if (resp.data.user_services[e.target.name] == 0) {
-                        toast.info("Service deactivated successfully.");
+                        Toast.fire({
+                            icon: 'info',
+                            title: "Service deactivated successfully."
+                        });
                     }
                     this.setState({ userServices: resp.data.user_services })
                     break;
@@ -3393,7 +3411,10 @@ export default class DataSourceIndex extends React.Component {
             }
 
             if (dataSource.code == 'bitbucket_tracking' || dataSource.code == 'github_tracking')
-                toast.success("Repository Connected.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "Repository Connected."
+                });
             this.setState({
                 userDataSources: { ...this.state.userDataSources, [uds.ds_code]: ar },
                 isBusy: false,
@@ -3472,7 +3493,10 @@ export default class DataSourceIndex extends React.Component {
             let ar = this.state.userDataSources[dsCode];
             let newAr = ar.filter(a => a.id != userDataSourceId)
             if (dsCode == 'bitbucket_tracking' || dsCode == 'github_tracking')
-                toast.info("Repository Disconnected.");
+                Toast.fire({
+                    icon: 'info',
+                    title: "Repository Disconnected."
+                });
             this.setState({
                 userDataSources: { ...this.state.userDataSources, [dsCode]: newAr },
                 isBusy: false,

@@ -1,12 +1,11 @@
 import React from 'react';
-import { toast } from "react-toastify";
+import Toast from "../../utils/Toast";
 import { Redirect } from "react-router-dom";
 
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 
-import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
 import ModalHeader from '../AppsMarket/common/ModalHeader';
 import { Button } from 'reactstrap';
 
@@ -83,7 +82,10 @@ export default class UploadAnnotation extends React.Component {
                 url: `/annotation/upload`, baseURL: "/", method: 'post', headers: { 'Content-Type': 'multipart/form-data' },
                 data: formData
             }).then(response => {
-                toast.success("CSV file uploaded.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "CSV file uploaded."
+                });
                 this.setState({ isBusy: false, errors: response.data.message });
             }, (err) => {
 
@@ -96,8 +98,6 @@ export default class UploadAnnotation extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Upload CSV';
-
         this.loadUserAnnotationColors();
         this.checkIfCanCreateAnnotation();
     }

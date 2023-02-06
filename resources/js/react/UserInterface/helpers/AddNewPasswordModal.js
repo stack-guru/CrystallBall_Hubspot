@@ -1,6 +1,6 @@
 import React from 'react'
 import HttpClient from '../utils/HttpClient'
-import { toast } from 'react-toastify'
+import Toast from "../utils/Toast";
 import ErrorAlert from '../utils/ErrorAlert';
 import { loadStateFromLocalStorage, saveStateToLocalStorage, removeStateFromLocalStorage } from '../helpers/CommonFunctions';
 import ModalHeader from '../components/AppsMarket/common/ModalHeader';
@@ -62,7 +62,10 @@ export default class AddNewPasswordModal extends React.Component {
             HttpClient.post('/generate-password', fd)
                 .then(response => {
                     removeStateFromLocalStorage("AddNewPasswordModal");
-                    toast.success("Password added.");
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Password added.",
+                    });
                     this.setState({ redirectTo: "/annotation" });
                     this.props.togglePopup('');
                 }, (err) => {

@@ -14,7 +14,8 @@ export default class SupportIndex extends Component {
                 successMessage: false
             },
             isBusy: false,
-            errors: undefined
+            errors: undefined,
+            fileSelected: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -80,8 +81,14 @@ export default class SupportIndex extends Component {
                         <div className="themeNewInputGroup inputFie mb-4">
                             <span className='d-block'>Attach files (optional)</span>
                             <label>
-                                <span><i><img src={'/icon-paperclip.svg'} alt={'Paper Clip icon'} className="svg-inject" /></i><span>No file chosen...</span></span>
-                                <label htmlFor="attachment" className="form-control-placeholder">Upload<input type="file" id="attachment" name="attachment" /></label>
+                                <span><i><img src={'/icon-paperclip.svg'} alt={'Paper Clip icon'} className="svg-inject" /></i>
+                                { this.state.fileSelected ? 
+                                    <span>Chosen</span>
+                                : 
+                                    <span>No file chosen...</span>
+                                }
+                                </span>
+                                <label htmlFor="attachment" className="form-control-placeholder">Upload<input type="file" id="attachment" onChange={() => {this.setState({fileSelected: true})}} name="attachment" /></label>
                             </label>
                         </div>
                         <button type="submit" className="btn-theme">Send</button>

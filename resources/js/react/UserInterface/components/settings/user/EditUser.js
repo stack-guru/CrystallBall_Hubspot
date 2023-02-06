@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { toast } from 'react-toastify'
+import Toast from "../../../utils/Toast";
 
 import HttpClient from '../../../utils/HttpClient'
 import ErrorAlert from '../../../utils/ErrorAlert'
@@ -51,7 +51,10 @@ export default class EditUser extends Component {
 
         HttpClient.put(`/settings/user/${this.state.user.id}`, this.state.user)
             .then(response => {
-                toast.success("User updated.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "User updated.",
+                });
             }, (err) => {
                 this.setState({ errors: (err.response).data });
             }).catch(err => {

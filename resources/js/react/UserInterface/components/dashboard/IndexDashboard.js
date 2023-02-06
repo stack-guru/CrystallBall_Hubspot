@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { toast } from 'react-toastify'
+import Toast from "../../utils/Toast";
 import { DateRangePicker } from 'react-date-range';
 
 import HttpClient from '../../utils/HttpClient';
@@ -94,7 +94,7 @@ export default class IndexDashboard extends Component {
     }
 
     componentDidMount() {
-        document.title = 'Analytics';
+        document.title = 'Ga Accounts';
         this.getGoogleAccounts();
         this.getGAAccounts();
         this.getGAProperties();
@@ -548,7 +548,10 @@ export default class IndexDashboard extends Component {
     fetchGAAccounts(id) {
         this.setState({ isBusy: true });
         return HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
-            toast.success("Accounts fetched.");
+            Toast.fire({
+                icon: 'success',
+                title: "Accounts fetched."
+            });
             this.setState({ isBusy: false })
             return this.getGAAccounts() && this.getGAProperties();
         }, (err) => {
@@ -619,7 +622,10 @@ export default class IndexDashboard extends Component {
         this.setState({ isBusy: true });
         HttpClient.put(`/settings/google-analytics-property/${gAP.id}`, data).then(resp => {
             const updatedGAP = resp.data.google_analytics_property;
-            toast.success("Google Analytics Property updated.");
+            Toast.fire({
+                icon: 'success',
+                title: "Google Analytics Property updated."
+            });
             this.setState({
                 isBusy: false,
                 googleAnalyticsProperties: this.state.googleAnalyticsProperties.map(g => g.id == updatedGAP.id ? updatedGAP : g)

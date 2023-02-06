@@ -2762,6 +2762,7 @@ body {
     background: #f7f7f7;
     flex-direction: column;
     justify-content: center;
+    cursor: pointer;
 }
 .addPhoto i { padding: 0 0 6px; }
 .btn-update {
