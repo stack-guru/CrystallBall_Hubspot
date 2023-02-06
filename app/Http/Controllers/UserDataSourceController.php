@@ -36,6 +36,7 @@ class UserDataSourceController extends Controller
                     'keyword_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'keyword_tracking')->get(),
                     'bitbucket_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'bitbucket_tracking')->get(),
                     'github_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'github_tracking')->get(),
+                    'shopify_annotation' => UserDataSource::select('id', 'ds_code', 'ds_name', 'shopify_annotation_id')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'shopify_annotation')->get(),
                 ],
             ];
         }
@@ -51,6 +52,7 @@ class UserDataSourceController extends Controller
                 'keyword_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'keyword_tracking')->get(),
                 'bitbucket_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'bitbucket_tracking')->get(),
                 'github_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'github_tracking')->get(),
+                'shopify_annotation' => UserDataSource::select('id', 'ds_code', 'ds_name', 'shopify_annotation_id')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'shopify_annotation')->get(),
             ],
         ];
     }

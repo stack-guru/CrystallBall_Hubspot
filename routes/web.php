@@ -132,6 +132,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
         Route::view('/', 'ui/app');
         Route::view('support', 'ui/app');
         Route::view('/devices', 'ui/app');
+        Route::view('analytics-accounts', 'ui/app');
 
         Route::get('accounts', [App\Http\Controllers\GoogleAccountController::class, 'index']);
         Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['create', 'store', 'update', 'destroy']);
