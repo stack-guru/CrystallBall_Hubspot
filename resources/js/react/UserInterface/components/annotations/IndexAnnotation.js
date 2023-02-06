@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Container, FormGroup, Input, Label } from "reactstrap";
 import { Link } from "react-router-dom";
 import HttpClient from "../../utils/HttpClient";
-import { toast } from "react-toastify";
 import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
 import { timezoneToDateFormat } from "../../utils/TimezoneTodateFormat";
 import { getCompanyName } from "../../helpers/CommonFunctions";
@@ -11,6 +10,7 @@ import xor from 'lodash/xor';
 import AppsModal from "../AppsMarket/AppsModal";
 import AnnotationsUpdate from './EditAnnotation';
 import ShowChartAnnotation from './ShowChartAnnotation';
+import Toast from "../../utils/Toast";
 
 class IndexAnnotations extends React.Component {
     constructor() {
@@ -112,7 +112,10 @@ class IndexAnnotations extends React.Component {
         HttpClient.delete(`/annotation/${id}`)
             .then(
                 (resp) => {
-                    toast.success("Annotation deleted.");
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Annotation deleted."
+                    });
                     let annotations = this.state.annotations;
                     annotations = annotations.filter((a) => a.id != id);
                     this.setState({ isBusy: false, annotations: annotations });
@@ -141,7 +144,10 @@ class IndexAnnotations extends React.Component {
             HttpClient.put(`/annotation/${id}`, { is_enabled: newStatus })
                 .then(
                     (response) => {
-                        toast.success("Annotation status changed.");
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Annotation status changed."
+                        });
                         let newAnnotation = response.data.annotation;
                         let annotations = this.state.annotations.map((an) => {
                             if (an.id == id) {
@@ -270,8 +276,10 @@ class IndexAnnotations extends React.Component {
         })
             .then(
                 (resp) => {
-                    toast.success("Annotation(s) deleted.");
-
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Annotation(s) deleted."
+                    });
                     let selected_annotations = this.state.selectedRows;
                     let annotations = this.state.annotations;
 

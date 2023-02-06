@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import Toast from "../../utils/Toast";
 import HttpClient from "../HttpClient";
 import "./ApplePodcastConfig.css";
 
@@ -35,11 +35,17 @@ const ApplePodcastConfig = (props) => {
                     setExisting(result.data.apple_podcast_monitors);
                 },
                 (err) => {
-                    toast.error("Error while getting exists Apple Podcast.");
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Error while getting exists Apple Podcast.",
+                    });
                 }
             )
             .catch((err) => {
-                toast.error("Error while getting exists Apple Podcast.");
+                Toast.fire({
+                    icon: 'error',
+                    title: "Error while getting exists Apple Podcast.",
+                });
             });
     };
 
@@ -48,14 +54,23 @@ const ApplePodcastConfig = (props) => {
             .then(
                 () => {
                     getExistingPodcasts();
-                    toast.success("Apple Podcast deleted successfully.");
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Apple Podcast deleted successfully.",
+                    });
                 },
                 (err) => {
-                    toast.error("Error while delete exists Apple Podcast.");
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Error while delete exists Apple Podcast.",
+                    });
                 }
             )
             .catch((err) => {
-                toast.error("Error while delete exists Apple Podcast.");
+                Toast.fire({
+                    icon: 'error',
+                    title: "Error while delete exists Apple Podcast.",
+                });
             });
     };
 
@@ -97,18 +112,30 @@ const ApplePodcastConfig = (props) => {
     };
 
     const addAnnotation = async (formData) => {
-        toast.info("Creating Annotations");
+        Toast.fire({
+            icon: 'info',
+            title: "Creating Annotations",
+        });
         HttpClient.post("/data-source/apple_podcast_url", formData)
             .then(
                 () => {
-                    toast.success("Apple Podcast added successfully.");
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Apple Podcast added successfully.",
+                    });
                 },
                 (err) => {
-                    toast.error("Error while adding Apple Podcast.");
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Error while adding Apple Podcast.",
+                    });
                 }
             )
             .catch((err) => {
-                toast.error("Error while adding Apple Podcast.");
+                Toast.fire({
+                    icon: 'error',
+                    title: "Error while adding Apple Podcast.",
+                });
             });
     };
 

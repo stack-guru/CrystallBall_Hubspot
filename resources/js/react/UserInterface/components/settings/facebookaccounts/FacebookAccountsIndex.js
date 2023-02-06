@@ -1,5 +1,5 @@
 import React from 'react';
-import { toast } from 'react-toastify'
+import Toast from "../../../utils/Toast";
 import { Redirect } from "react-router-dom";
 
 import HttpClient from '../../../utils/HttpClient';
@@ -126,7 +126,10 @@ export default class FacebookAccountsIndex extends React.Component {
     handleDelete(id) {
         this.setState({ isBusy: true });
         HttpClient.delete(`/settings/facebook-account/${id}`).then(resp => {
-            toast.success("Account removed.");
+            Toast.fire({
+                icon: 'success',
+                title: "Account removed.",
+            });
             let facebookAccounts = this.state.facebookAccounts;
             facebookAccounts = facebookAccounts.filter(ga => ga.id != id);
             this.setState({ isBusy: false, facebookAccounts: facebookAccounts })

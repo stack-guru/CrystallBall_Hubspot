@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import CountryCodeSelect from '../../utils/CountryCodeSelect';
 import ErrorAlert from "../../utils/ErrorAlert";
 import HttpClient from "../../utils/HttpClient"
-import { toast } from "react-toastify";
+import Toast from "../../utils/Toast";
 import ModalHeader from "../AppsMarket/common/ModalHeader";
 
 export default class CreatePaymentDetail extends Component {
@@ -51,7 +51,10 @@ export default class CreatePaymentDetail extends Component {
 
             HttpClient.post('/settings/payment-detail', this.state.paymentDetail)
                 .then(response => {
-                    toast.success("Card Added");
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Card Added",
+                    });
                     this.setDefaultState();
                 }, (err) => {
                     this.setState({ isBusy: false, errors: (err.response).data });

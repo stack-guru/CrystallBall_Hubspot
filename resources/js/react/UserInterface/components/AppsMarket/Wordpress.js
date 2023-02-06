@@ -2,7 +2,7 @@ import React from "react";
 import ModalHeader from "./common/ModalHeader";
 import DescrptionModalNormal from "./common/DescriptionModalNormal";
 import HttpClient from '../../utils/HttpClient';
-import { toast } from "react-toastify";
+import Toast from "../../utils/Toast";
 import IndexAPIKey from "../apiKey/IndexAPIKey";
 
 class Wordpress extends React.Component {
@@ -43,7 +43,10 @@ class Wordpress extends React.Component {
                 this.setState({ isBusy: true });
                 HttpClient({ url: `/oauth/personal-access-tokens`, baseURL: "/", method: 'post', data: { name: this.state.token_name, scopes: [] } })
                     .then(response => {
-                        toast.success("Token generated.");
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Token generated."
+                        });
                         let tokens = this.state.apiKeys;
                         tokens.push(response.data.token);
                         this.setState({ isBusy: false, apiKeys: tokens, accessToken: response.data.accessToken })

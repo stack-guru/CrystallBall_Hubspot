@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { toast } from "react-toastify";
+import Toast from "../../utils/Toast";
 import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 import HttpClient from "../../utils/HttpClient";
@@ -75,7 +75,10 @@ export default class Profile extends React.Component {
         if (this.validate() && !this.state.isBusy) {
             this.setState({ isBusy: true });
             HttpClient.post('/settings/change-password', this.state.passwords).then(resp => {
-                toast.success("Update successfully.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "Update successfully.",
+                });
                 this.setDefaultState();
                 this.setState({ isBusy: false });
 
@@ -151,7 +154,10 @@ export default class Profile extends React.Component {
                 data: form
             })
             .then(resp => {
-                toast.success("Profile changed successfully.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "Profile changed successfully.",
+                });
                 this.setDefaultState();
                 this.setState({profile_image: resp.data.profile_image})
             }, (err) => {
@@ -172,7 +178,10 @@ export default class Profile extends React.Component {
 
             const { name, email, phone, timezone } = this.state;
             HttpClient.put('/settings/update-user', { name, email, phone, timezone }).then(resp => {
-                toast.success("User updated successfully.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "User updated successfully.",
+                });
                 this.setDefaultState();
                 (this.props.reloadUser)();
             }, (err) => {
@@ -204,7 +213,10 @@ export default class Profile extends React.Component {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
             HttpClient.put('/settings/change-phone', { 'phone': this.state.phone }).then(resp => {
-                toast.success("Phone changed successfully.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "Phone changed successfully.",
+                });
                 this.setDefaultState();
                 (this.props.reloadUser)();
             }, (err) => {
@@ -222,7 +234,10 @@ export default class Profile extends React.Component {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
             HttpClient.put('/settings/change-email', { 'email': this.state.email }).then(resp => {
-                toast.success("Email changed successfully.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "Email changed successfully.",
+                });
                 this.setDefaultState();
                 (this.props.reloadUser)();
             }, (err) => {
