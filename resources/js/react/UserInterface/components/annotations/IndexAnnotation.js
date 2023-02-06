@@ -38,7 +38,8 @@ class IndexAnnotations extends React.Component {
 
             // Table Infinite Scroll
             pageSize: 20,
-            pageNumber: 1
+            pageNumber: 1,
+            enableSelect: false
         };
         this.deleteAnnotation = this.deleteAnnotation.bind(this);
         this.toggleStatus = this.toggleStatus.bind(this);
@@ -397,7 +398,14 @@ class IndexAnnotations extends React.Component {
                                 </FormGroup>
                             </div>
                             <div className="d-flex">
-                                <button type="button" className={`btn-extraSelect position-relative ${this.state.selectedRows.length ? 'active' : ''}`}>
+                                <button 
+                                    onClick={() => {
+                                        this.setState({ enableSelect: !this.state.enableSelect })
+                                        if (this.state.enableSelect) {
+                                            this.setState({ selectedRows: [] })
+                                        }
+                                    }}
+                                    type="button" className={`btn-extraSelect position-relative ${this.state.enableSelect ? 'active' : ''}`}>
                                     <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M7.19922 3.00098H18.1992M7.19922 9.00098H18.1992" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                         <path d="M1.80078 8.98566L2.65792 9.84281L4.80078 7.69995" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -413,7 +421,7 @@ class IndexAnnotations extends React.Component {
                                 </FormGroup>
                             </div>
                         </form>
-                        {this.state.selectedRows.length ? (
+                        {this.state.enableSelect ? (
                             <div className="btnBox d-flex">
                                 <p className="mb-0">{`${this.state.selectedRows.length} annotations selected`}</p>
                                 <div className="d-flex">
@@ -504,7 +512,7 @@ class IndexAnnotations extends React.Component {
                                             key={idx + anno.toString()}
                                             onClick={
                                                 () => {
-                                                    if (anno.id) {
+                                                    if (anno.id && this.state.enableSelect) {
                                                         this.handleOneSelection(anno.id)
                                                     } else {
                                                         // toast.error("This annotation can't be selected.");
