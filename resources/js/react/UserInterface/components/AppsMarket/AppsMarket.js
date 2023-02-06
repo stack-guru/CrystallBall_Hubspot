@@ -661,10 +661,10 @@ class AppsMarket extends React.Component {
                                 <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
                                 <Input type="select" name="select" id="dropdownFilters" onChange={this.onChangeSortHandler}>
                                     <option>Sort by</option>
-                                    <option value="brandName:asc">By Name: ASC</option>
-                                    <option value="brandName:desc">By Name: DESC</option>
+                                    <option value="brandName:asc">By Name</option>
+                                    {/* <option value="brandName:desc">By Name: DESC</option> */}
                                     <option value="enabled:asc">By Connected</option>
-                                    <option value="enabled:desc">By Not Connected</option>
+                                    {/* <option value="enabled:desc">By Not Connected</option> */}
                                 </Input>
                             </FormGroup>
                             <FormGroup className="filter-search position-relative">
