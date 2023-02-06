@@ -1,30 +1,6 @@
 import React from "react";
-import { toast } from "react-toastify";
 import { Redirect } from "react-router-dom";
-import { UncontrolledPopover, PopoverHeader, PopoverBody } from "reactstrap";
-import LoaderAnimation from "../../utils/LoaderAnimation";
-import Countries from "../../utils/Countries";
 import HttpClient from "../../utils/HttpClient";
-import DSRMDatesSelect from "../../utils/DSRMDatesSelect";
-import DSOWMCitiesSelect from "../../utils/DSOWMCitiesSelect";
-import DSOWMEventsSelect from "../../utils/DSOWMEventsSelect";
-import DSGAUDatesSelect from "../../utils/DSGAUDatesSelect";
-import DSGoogleAlertsSelect from "../../utils/DSGoogleAlertsSelect";
-import DSWebMonitorsSelect from "../../utils/DSWebMonitorsSelect";
-import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
-import AddKeyword from "../../utils/AddKeyword";
-import ManageKeywords from "../../utils/ManageKeywords";
-import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
-import ErrorAlert from "../../utils/ErrorAlert";
-import DataSourceInterfaceTour from "../../helpers/DataSourceInterfaceTour";
-import { getCompanyName } from "../../helpers/CommonFunctions";
-import EditKeyword from "../../utils/EditKeyword";
-import GoogleAdChanges from "../../utils/GoogleAdChanges";
-import FacebookTracking from "../../utils/FacebookTracking";
-import TwitterTracking from "../../utils/TwitterTracking";
-import InstagramTracking from "../../utils/InstagramTracking";
-import GithubTracking from "../../utils/GithubTracking";
-import ApplePodcast, { ApplePodcastConfig } from "../../utils/ApplePodcast";
 
 import { Container, Row, Col, FormGroup, Input, Label } from "reactstrap";
 import AppsModal from "./AppsModal";
@@ -43,6 +19,7 @@ import Github from "./Github";
 import Apple from "./Apple";
 import Twitter from "./Twitter";
 import Slider from "react-slick";
+import Toast from "../../utils/Toast";
 
 class AppsMarket extends React.Component {
     constructor(props) {
@@ -144,7 +121,10 @@ class AppsMarket extends React.Component {
 
         const redirectedRepo = localStorage.getItem("repo");
         if( !!redirectedRepo ) {
-            toast.success(`${ redirectedRepo } Account is connected. You can enable the automation now.`);
+            Toast.fire({
+                icon: 'success',
+                title: `${ redirectedRepo } Account is connected. You can enable the automation now.`
+            });
             // this.setState({ dsKey: `is_ds_${ redirectedRepo.toLowerCase() }_tracking_enabled` });
             localStorage.removeItem("repo");
         }
@@ -681,10 +661,10 @@ class AppsMarket extends React.Component {
                                 <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
                                 <Input type="select" name="select" id="dropdownFilters" onChange={this.onChangeSortHandler}>
                                     <option>Sort by</option>
-                                    <option value="brandName:asc">By Name: ASC</option>
-                                    <option value="brandName:desc">By Name: DESC</option>
+                                    <option value="brandName:asc">By Name</option>
+                                    {/* <option value="brandName:desc">By Name: DESC</option> */}
                                     <option value="enabled:asc">By Connected</option>
-                                    <option value="enabled:desc">By Not Connected</option>
+                                    {/* <option value="enabled:desc">By Not Connected</option> */}
                                 </Input>
                             </FormGroup>
                             <FormGroup className="filter-search position-relative">
@@ -1569,7 +1549,10 @@ class AppsMarket extends React.Component {
                             userBitbucketAccountsExists: true,
                         });
                     } else if (resp.data.error) {
-                        toast.error("BitBucket Error: " + resp.data.error);
+                        Toast.fire({
+                            icon: 'error',
+                            title: "BitBucket Error: " + resp.data.error
+                        });
                         this.sectionToggler(null);
                         this.updateUserService({
                             target: {
@@ -1604,7 +1587,10 @@ class AppsMarket extends React.Component {
                             userGithubAccountsExists: true,
                         });
                     } else if (resp.data.error) {
-                        toast.error("Github Error: " + resp.data.error);
+                        Toast.fire({
+                            icon: 'error',
+                            title: "Github Error: " + resp.data.error
+                        });
                         this.sectionToggler(null);
                         this.updateUserService({
                             target: {
@@ -1641,16 +1627,18 @@ class AppsMarket extends React.Component {
                                 if (
                                     resp.data.user_services[e.target.name] == 1
                                 ) {
-                                    toast.success(
-                                        "Service activated successfully."
-                                    );
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: "Service activated successfully."
+                                    });
                                 }
                                 if (
                                     resp.data.user_services[e.target.name] == 0
                                 ) {
-                                    toast.info(
-                                        "Service deactivated successfully."
-                                    );
+                                    Toast.fire({
+                                        icon: 'info',
+                                        title: "Service deactivated successfully."
+                                    });
                                 }
                             } else {
                                 swal.fire({
@@ -1671,12 +1659,16 @@ class AppsMarket extends React.Component {
 
                         default:
                             if (resp.data.user_services[e.target.name] == 1) {
-                                toast.success(
-                                    "Service activated successfully."
-                                );
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: "Service activated successfully."
+                                });
                             }
                             if (resp.data.user_services[e.target.name] == 0) {
-                                toast.info("Service deactivated successfully.");
+                                Toast.fire({
+                                    icon: 'info',
+                                    title: "Service deactivated successfully."
+                                });
                             }
                             this.setState({
                                 userServices: resp.data.user_services,
@@ -2039,7 +2031,10 @@ class AppsMarket extends React.Component {
                         dataSource.code == "bitbucket_tracking" ||
                         dataSource.code == "github_tracking"
                     )
-                        toast.success("Repository Connected.");
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Repository Connected."
+                        });
                     this.setState({
                         userDataSources: {
                             ...this.state.userDataSources,
@@ -2108,7 +2103,10 @@ class AppsMarket extends React.Component {
                         dsCode == "bitbucket_tracking" ||
                         dsCode == "github_tracking"
                     )
-                        toast.info("Repository Disconnected.");
+                        Toast.fire({
+                            icon: 'info',
+                            title: "Repository Disconnected."
+                        });
                     this.setState({
                         userDataSources: {
                             ...this.state.userDataSources,

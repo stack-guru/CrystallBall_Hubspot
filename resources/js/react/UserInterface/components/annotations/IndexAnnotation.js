@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Container, FormGroup, Input, Label } from "reactstrap";
 import { Link } from "react-router-dom";
 import HttpClient from "../../utils/HttpClient";
-import { toast } from "react-toastify";
 import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
 import { timezoneToDateFormat } from "../../utils/TimezoneTodateFormat";
 import { getCompanyName } from "../../helpers/CommonFunctions";
@@ -11,6 +10,7 @@ import xor from 'lodash/xor';
 import AppsModal from "../AppsMarket/AppsModal";
 import AnnotationsUpdate from './EditAnnotation';
 import ShowChartAnnotation from './ShowChartAnnotation';
+import Toast from "../../utils/Toast";
 
 class IndexAnnotations extends React.Component {
     constructor() {
@@ -38,7 +38,8 @@ class IndexAnnotations extends React.Component {
 
             // Table Infinite Scroll
             pageSize: 20,
-            pageNumber: 1
+            pageNumber: 1,
+            enableSelect: false
         };
         this.deleteAnnotation = this.deleteAnnotation.bind(this);
         this.toggleStatus = this.toggleStatus.bind(this);
@@ -112,7 +113,10 @@ class IndexAnnotations extends React.Component {
         HttpClient.delete(`/annotation/${id}`)
             .then(
                 (resp) => {
-                    toast.success("Annotation deleted.");
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Annotation deleted."
+                    });
                     let annotations = this.state.annotations;
                     annotations = annotations.filter((a) => a.id != id);
                     this.setState({ isBusy: false, annotations: annotations });
@@ -141,7 +145,10 @@ class IndexAnnotations extends React.Component {
             HttpClient.put(`/annotation/${id}`, { is_enabled: newStatus })
                 .then(
                     (response) => {
-                        toast.success("Annotation status changed.");
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Annotation status changed."
+                        });
                         let newAnnotation = response.data.annotation;
                         let annotations = this.state.annotations.map((an) => {
                             if (an.id == id) {
@@ -270,8 +277,10 @@ class IndexAnnotations extends React.Component {
         })
             .then(
                 (resp) => {
-                    toast.success("Annotation(s) deleted.");
-
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Annotation(s) deleted."
+                    });
                     let selected_annotations = this.state.selectedRows;
                     let annotations = this.state.annotations;
 
@@ -389,7 +398,14 @@ class IndexAnnotations extends React.Component {
                                 </FormGroup>
                             </div>
                             <div className="d-flex">
-                                <button type="button" className={`btn-extraSelect position-relative ${this.state.selectedRows.length ? 'active' : ''}`}>
+                                <button 
+                                    onClick={() => {
+                                        this.setState({ enableSelect: !this.state.enableSelect })
+                                        if (this.state.enableSelect) {
+                                            this.setState({ selectedRows: [] })
+                                        }
+                                    }}
+                                    type="button" className={`btn-extraSelect position-relative ${this.state.enableSelect ? 'active' : ''}`}>
                                     <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M7.19922 3.00098H18.1992M7.19922 9.00098H18.1992" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                         <path d="M1.80078 8.98566L2.65792 9.84281L4.80078 7.69995" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -405,7 +421,7 @@ class IndexAnnotations extends React.Component {
                                 </FormGroup>
                             </div>
                         </form>
-                        {this.state.selectedRows.length ? (
+                        {this.state.enableSelect ? (
                             <div className="btnBox d-flex">
                                 <p className="mb-0">{`${this.state.selectedRows.length} annotations selected`}</p>
                                 <div className="d-flex">
@@ -496,7 +512,7 @@ class IndexAnnotations extends React.Component {
                                             key={idx + anno.toString()}
                                             onClick={
                                                 () => {
-                                                    if (anno.id) {
+                                                    if (anno.id && this.state.enableSelect) {
                                                         this.handleOneSelection(anno.id)
                                                     } else {
                                                         // toast.error("This annotation can't be selected.");

@@ -50,7 +50,6 @@ export default class IntegrationsIndex extends React.Component {
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
                         <h2 className="heading-section gaa-title">
-                            Integrations
                             <Link to="/my-integrations" className="btn gaa-btn-primary float-right">My Integrations</Link>
                         </h2>
                     </div>

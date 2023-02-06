@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import Toast from "../../utils/Toast";
 import HttpClient from "../HttpClient";
 import "./ShopifyStoreConfig.css";
 
@@ -33,11 +33,17 @@ const ShopifyStoreConfig = (props) => {
                     setExistingShopifyItems(result.data.shopify_monitors);
                 },
                 (err) => {
-                    toast.error("Error while getting exists shopify urls.");
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Error while getting exists shopify urls.",
+                    });
                 }
             )
             .catch((err) => {
-                toast.error("Error while getting exists shopify urls.");
+                Toast.fire({
+                    icon: 'error',
+                    title: "Error while getting exists shopify urls.",
+                });
             });
     };
 
@@ -46,14 +52,23 @@ const ShopifyStoreConfig = (props) => {
             .then(
                 () => {
                     getExistingShopifyStore();
-                    toast.success("Shopify url deleted successfully.");
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Shopify url deleted successfully.",
+                    });
                 },
                 (err) => {
-                    toast.error("Error while delete exists shopify url.");
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Error while delete exists shopify url.",
+                    });
                 }
             )
             .catch((err) => {
-                toast.error("Error while delete exists shopify url.");
+                Toast.fire({
+                    icon: 'error',
+                    title: "Error while delete exists shopify url.",
+                });
             });
     };
 
@@ -62,19 +77,31 @@ const ShopifyStoreConfig = (props) => {
     // }, [props.gaPropertyId]);
 
     const addAnnotation = async () => {
-        toast.info("Creating Annotations");
+        Toast.fire({
+            icon: 'info',
+            title: "Creating Annotations",
+        });
         HttpClient.post("/data-source/shopify_url", { shopifyUrl: inputVale, gaPropertyId: props.gaPropertyId || "" })
             .then(
                 () => {
                     props.sectionToggler();
-                    toast.success("Shopify Store added successfully.");
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Shopify Store added successfully.",
+                    });
                 },
                 (err) => {
-                    toast.error("Error while adding Shopify Store.");
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Error while adding Shopify Store.",
+                    });
                 }
             )
             .catch((err) => {
-                toast.error("Error while adding Shopify Store.");
+                Toast.fire({
+                    icon: 'error',
+                    title: "Error while adding Shopify Store.",
+                });
             });
     };
     return (
