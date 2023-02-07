@@ -44,7 +44,7 @@ class header extends React.Component {
                         this.props.user.price_plan.name == "Trial" ?
                             <span class='note-trial d-flex align-items-center justify-content-center'>
                                 <i className='ti-time mr-1'></i>
-                                <span>Trial ending {moment(this.props.user.price_plan_expiry_date).fromNow()}</span>
+                                <span>Trial ending {moment(this.props.user.price_plan_expiry_date).format('ll')}</span>
                             </span>
                             :
                             null
