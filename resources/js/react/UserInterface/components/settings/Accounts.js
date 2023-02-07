@@ -127,7 +127,7 @@ export default class Accounts extends React.Component {
                     <a href="javascript:void(0);"
                         onClick={this.restrictionHandler}
                         className="btn-adduser d-flex align-items-center justify-content-center">
-                        <i className="fa fa-plus"></i>
+                        <i><img style={{width: 16, height: 16}} src={'/google-small.svg'} alt={'icon'} className="svg-inject socialImage" /></i>
                         <span>Connect New Account</span>
                     </a>
                     </div>
