@@ -50,7 +50,7 @@
             </div>
         @endif
         <div class="mb-3">
-            <button class="btn-theme" type="submit">Login</button>
+            <button class="btn-theme" type="submit">Log in</button>
         </div>
         <div class="or text-center mb-3">
             <span>or</span>

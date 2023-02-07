@@ -36,7 +36,7 @@
         <strong><a class="d-block" href="/"><img src="/logo-new.svg" width="150" height="44" alt="Crystal Ball"></a></strong>
         <ul class='auth-nav'>
           <li><a href='https://www.gaannotations.com/pricing' target="_blank">Pricing</a></li>
-          <li><a href='/login'>Login</a></li>
+          <li><a href='/login'>Log in</a></li>
           <li><a class='btn-theme' href='/register?email=1'>Sign up</a></li>
         </ul>
       </div>
