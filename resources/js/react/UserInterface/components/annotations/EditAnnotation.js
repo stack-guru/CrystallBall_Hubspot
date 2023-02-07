@@ -27,13 +27,15 @@ export default class EditAnnotation extends React.Component {
             error: '',
             isBusy: false,
             isDirty: false,
+            userAnnotationColors: {},
             redirectTo: null,
         }
         this.changeHandler = this.changeHandler.bind(this);
         this.gAPropertyChangeHandler = this.gAPropertyChangeHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
         this.setDefaultState = this.setDefaultState.bind(this);
-
+        this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
+        this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
     }
 
     componentDidMount() {
@@ -62,6 +64,7 @@ export default class EditAnnotation extends React.Component {
                     this.setState({ isBusy: false, errors: err });
                 });
         }
+        this.loadUserAnnotationColors();
     }
 
     setDefaultState() {
@@ -132,6 +135,8 @@ export default class EditAnnotation extends React.Component {
                         title: "Annotation updated."
                     });
                     this.setState({ redirectTo: "/annotation" });
+                    this.props.togglePopup('');
+                    window.location.reload(false);
                 }, (err) => {
 
                     this.setState({ isBusy: false, errors: (err.response).data });
@@ -180,6 +185,19 @@ export default class EditAnnotation extends React.Component {
         return isValid;
     }
 
+    loadUserAnnotationColors() {
+        HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
+            this.setState({ isLoading: false, userAnnotationColors: resp.data.user_annotation_color });
+        }, (err) => {
+            this.setState({ isLoading: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isLoading: false, errors: err });
+        })
+
+    }
+    updateUserAnnotationColors(userAnnotationColors) {
+        this.setState({ userAnnotationColors: userAnnotationColors });
+    }
 
 
     render() {
@@ -190,13 +208,13 @@ export default class EditAnnotation extends React.Component {
         return (
             <div className="popupContent modal-editAnnotation">
                 <ModalHeader
-                    userAnnotationColors={null}
-                    updateUserAnnotationColors={null}
+                    userAnnotationColors={this.state.userAnnotationColors}
+                    updateUserAnnotationColors={this.updateUserAnnotationColors}
                     userServices={null}
                     serviceStatusHandler={null}
                     closeModal={() => this.props.togglePopup('')}
                     serviceName={'Edit Annotation'}
-                    colorKeyName={null}
+                    colorKeyName={this.state.annotation.added_by}
                     dsKeyName={null}
                     creditString={null}
                 />

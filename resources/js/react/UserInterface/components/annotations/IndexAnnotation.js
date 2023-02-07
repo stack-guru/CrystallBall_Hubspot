@@ -318,7 +318,9 @@ class IndexAnnotations extends React.Component {
                             <h2 className="pageTitle m-0">Annotations</h2>
                             <div className="addAnnotation">
                                 <span>Add Annotation:</span>
-                                <a data-toggle="tooltip" data-placement="top" title="Manual" href="javascript:void(0);" onClick={() => this.props.openAnnotationPopup('manual')}>
+                                <a data-toggle="tooltip" data-placement="top" title="Manual" 
+                                href="javascript:void(0);" 
+                                onClick={() => this.props.openAnnotationPopup('manual')} >
                                     <img className='inject-me' src='/manual.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/manual.svg"; }} width='16' height='16' alt='menu icon' />
                                 </a>
                                 <a data-toggle="tooltip" data-placement="top" title="Apps Market" to="/data-source" href="/data-source">
@@ -472,17 +474,17 @@ class IndexAnnotations extends React.Component {
                                         default:
                                             borderLeftColor = '#1976fe';
                                     }
-                                    // switch (anno.added_by) {
-                                    //     case "manual":
-                                    //         borderLeftColor = "#002e60";
-                                    //         break;
-                                    //     case "csv-upload":
-                                    //         borderLeftColor = this.state.userAnnotationColors.csv;
-                                    //         break;
-                                    //     case "api":
-                                    //         borderLeftColor = this.state.userAnnotationColors.api;
-                                    //         break;
-                                    // }
+                                    switch (anno.added_by) {
+                                        case "manual":
+                                            borderLeftColor = this.state.userAnnotationColors.manual;
+                                            break;
+                                        case "csv-upload":
+                                            borderLeftColor = this.state.userAnnotationColors.csv;
+                                            break;
+                                        case "api":
+                                            borderLeftColor = this.state.userAnnotationColors.api;
+                                            break;
+                                    }
                                     if (anno.category.indexOf("Holiday") !== -1)
                                         borderLeftColor = this.state.userAnnotationColors.holidays;
 
@@ -568,7 +570,7 @@ class IndexAnnotations extends React.Component {
                                                 </ul>
 
                                                 <ul className="d-flex list-unstyled">
-                                                    {anno.id ? <>
+                                                    {anno.added_by == "manual" ? <>
                                                         <li>
                                                             <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.toggleStatus(anno.id) }}>
                                                                 {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
