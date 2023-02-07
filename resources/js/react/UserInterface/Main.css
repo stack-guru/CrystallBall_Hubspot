@@ -33,7 +33,7 @@ p {
 /*#456287*/
 .text-yellow {color: yellow !important;}
 .gaa-blue-gradient {background: linear-gradient(to bottom, #0a2950, #456287);}
-.gaa-bg-color {background-color: #456287;}
+.gaa-bg-color {background-color: #456287 !important;}
 .gaa-bg-primary {background: #456287;}
 .gaa-text-primary {color: #456287;}
 .gaa-text-color {color: #456287;}
@@ -2778,6 +2778,10 @@ body {
     justify-content: center;
     cursor: pointer;
 }
+.addPhoto.profile {
+    font-size: 40px;
+    color: #fff;
+}
 .addPhoto i { padding: 0 0 6px; }
 .btn-update {
     top: 0;
@@ -3339,6 +3343,19 @@ body {
     padding: 10px 24px;
     border-radius: 100px;
     width: calc(50% - 20px);
+}
+.themePlanAlertPopup .swal2-actions .btn-close:hover,
+.themePlanAlertPopup .swal2-actions .btn-close:focus,
+.themePlanAlertPopup .swal2-actions .btn-close{
+    color: #666;
+    background: #fff;
+    border: 2px solid #a6a6a6;
+    display: block;
+    position: absolute;
+    bottom: -55px;
+    left: -20px;
+    width: 110px;
+    height: 55px;
 }
 .themePlanAlertPopup .swal2-actions .btn-bookADemo:hover,
 .themePlanAlertPopup .swal2-actions .btn-bookADemo:focus,
