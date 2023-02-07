@@ -138,7 +138,7 @@ export default class IndexPricingPlans extends React.Component {
                                                                 <Button className='btn-plan' onClick={() => { this.changePricePlan(pricePlan); }}>Subscribe</Button>}
                                             </>}
                                         </div>
-                                        <div className='planbody flex-grow-1'>
+                                        <div className='planbody'>
                                             <ul>
                                                 <li className='d-flex align-items-center'>
                                                     <i><img src={'/tick-green.svg'} /></i>
