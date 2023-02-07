@@ -283,9 +283,9 @@ export default class Profile extends React.Component {
                                     </label>
 
                                     :
-                                    <label htmlFor='addPhoto' className='addPhoto'>
-                                        <i><img src='/icon-photo.svg' /></i>
-                                        <span>Add photo</span>
+                                    <label htmlFor='addPhoto' className='addPhoto gaa-bg-color profile'>
+                                        {/* <i><img src='/icon-photo.svg' /></i> */}
+                                        <span>{this.props.user.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase()}</span>
                                         <input type='file' id='addPhoto' style={{display: 'none'}} onChange={this.onChangeFile}/>
                                     </label>
                                     }

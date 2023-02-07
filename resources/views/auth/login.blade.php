@@ -13,7 +13,7 @@
             <h1 class="h3 mb-3 font-weight-normal">{{ config('app.name') }}</h1>
             {{-- <p>Google Analytics Annotations Amplified</p> --}}
         </div> -->
-        <h2>Log in</h2>
+        <h2>Login</h2>
 
         <div class="themeNewInputStyle mb-3">
             <input type="email" id="inputEmail" class="form-control @error('email') is-invalid @enderror" placeholder="Email address" required="" autofocus="" name="email" value="{{ old('email') }}">

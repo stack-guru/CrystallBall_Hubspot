@@ -97,8 +97,8 @@ export default class IndexPricingPlans extends React.Component {
                     <Container>
                         <div className="pageHeader planPageHead">
                             <h2 className="pageTitle">Manage plan</h2>
-                            {this.props.user.price_plan.name != "Free" && this.props.user.is_billing_enabled == 0 ?
-                                <p className='mb-0'>Your account will be automatically downgraded to the Free plan at {(new Date(this.props.user.price_plan_expiry_date)).getDay() + '-' + (new Date(this.props.user.price_plan_expiry_date)).getMonth() + '-' + (new Date(this.props.user.price_plan_expiry_date)).getFullYear()}. Upgrade your account to keep enjoying all the features.</p>
+                            {this.props.user.price_plan.name != "Free" && this.props.user.price_plan_expiry_date ?
+                                <p className='mb-0'>Your account will be automatically downgraded to the Free plan at {moment(this.props.user.price_plan_expiry_date || new Date()).format('ll')}. Upgrade your account to keep enjoying all the features.</p>
                                 : null}
                         </div>
 
@@ -138,7 +138,7 @@ export default class IndexPricingPlans extends React.Component {
                                                                 <Button className='btn-plan' onClick={() => { this.changePricePlan(pricePlan); }}>Subscribe</Button>}
                                             </>}
                                         </div>
-                                        <div className='planbody flex-grow-1'>
+                                        <div className='planbody'>
                                             <ul>
                                                 <li className='d-flex align-items-center'>
                                                     <i><img src={'/tick-green.svg'} /></i>

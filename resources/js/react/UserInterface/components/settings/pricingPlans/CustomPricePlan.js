@@ -23,7 +23,7 @@ export default class CustomPricePlan extends React.Component {
 
     componentDidMount() {
         document.title = 'Price Plan';
-        
+
         this.setState({ isBusy: true });
         HttpClient.get('/settings/price-plan-detail?code='+this.props.routeParams.match.params.code)
             .then(response => {
@@ -33,7 +33,7 @@ export default class CustomPricePlan extends React.Component {
             }).catch(err => {
                 this.setState({ isBusy: false, errors: err });
         });
-        
+
         // HttpClient.get('/price-plan')
         //     .then(response => {
         //         this.setState({ pricePlans: response.data.price_plans });
@@ -316,7 +316,7 @@ export default class CustomPricePlan extends React.Component {
                         </div>
 
                         {
-                            this.props.user.price_plan.name != "Free" && this.props.user.is_billing_enabled == 0 ?
+                            this.props.user.price_plan.name != "Free" && this.props.user.price_plan_expiry_date ?
                                 <div className="p-5 mt-4 text-center">
                                     <p>Your account will be automatically downgraded to the Free plan at {this.props.user.price_plan_expiry_date}.<br />
                                         Upgrade your account to keep enjoying all the features.</p>

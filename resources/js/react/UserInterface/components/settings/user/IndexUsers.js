@@ -171,7 +171,7 @@ export default class IndexUsers extends Component {
                         </div>
 
                         <div className="dataTable dataTableusers d-flex flex-column">
-                            {this.state.users.length  ? <div className="dataTableHolder">
+                            {this.state.users.length ? <div className="dataTableHolder">
                                 <div className="tableHead singleRow justify-content-between align-items-center">
                                     <div className="singleCol text-left">Email</div>
                                     <div className="singleCol text-left">Name</div>
@@ -214,61 +214,60 @@ export default class IndexUsers extends Component {
                                         );
                                     })}
                                 </div>
-                            </div>:null}
+                            </div> : null}
 
                             {!this.state.users.length ?
-                                    <div className="nodata">
-                                        <p>No user added yet.</p>
+                                <div className="nodata">
+                                    <p>No user added yet.</p>
 
 
-                                        {this.props.user.user_level == "admin" ? (
-                                    <>
-                                        {this.props.user.price_plan
-                                            .user_per_ga_account_count > -1 ? (
-                                            <a onClick={() => this.setState({ addUserPopup: true })} href="javascript:void(0);" className="btn-adduser d-flex align-items-center justify-content-center">
-                                                <i className="fa fa-plus"></i>
-                                                <span>Add User</span>
-                                            </a>
-                                        ) : (
-                                            <p className="mb-0" onClick={(ev) => {
-                                                ev.stopPropagation();
-                                                const accountNotLinkedHtml =
-                                                    "" +
-                                                    '<div class="">' +
-                                                    '<img src="/images/banners/user_limit_banner.png" class="img-fluid">' +
-                                                    "</div>";
+                                    {this.props.user.user_level == "admin" ? (
+                                        <>
+                                            {this.props.user.price_plan
+                                                .user_per_ga_account_count > -1 ? (
+                                                <p onClick={() => this.setState({ addUserPopup: true })} href="javascript:void(0);" className="mb-0">
+                                                    Suggestions: <a href="javascript:void(0);"> Add user</a>
+                                                </p>
+                                            ) : (
+                                                <p className="mb-0" onClick={(ev) => {
+                                                    ev.stopPropagation();
+                                                    const accountNotLinkedHtml =
+                                                        "" +
+                                                        '<div class="">' +
+                                                        '<img src="/images/banners/user_limit_banner.png" class="img-fluid">' +
+                                                        "</div>";
 
-                                                swal.fire({
-                                                    html: accountNotLinkedHtml,
-                                                    width: 1000,
-                                                    showCancelButton: true,
-                                                    showCloseButton: true,
-                                                    customClass: {
-                                                        popup: "themePlanAlertPopup",
-                                                        htmlContainer: "themePlanAlertPopupContent",
-                                                        closeButton: 'btn-closeplanAlertPopup',
-                                                    },
-                                                    cancelButtonClass: "btn-bookADemo",
-                                                    cancelButtonText: "Book a Demo",
-                                                    confirmButtonClass: "btn-subscribeNow",
-                                                    confirmButtonText: "Subscribe now",
-                                                }).then((value) => {
-                                                    if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                                                });
+                                                    swal.fire({
+                                                        html: accountNotLinkedHtml,
+                                                        width: 1000,
+                                                        showCancelButton: true,
+                                                        showCloseButton: true,
+                                                        customClass: {
+                                                            popup: "themePlanAlertPopup",
+                                                            htmlContainer: "themePlanAlertPopupContent",
+                                                            closeButton: 'btn-closeplanAlertPopup',
+                                                        },
+                                                        cancelButtonClass: "btn-bookADemo",
+                                                        cancelButtonText: "Book a Demo",
+                                                        confirmButtonClass: "btn-subscribeNow",
+                                                        confirmButtonText: "Subscribe now",
+                                                    }).then((value) => {
+                                                        if (value.isConfirmed) window.location.href = '/settings/price-plans'
+                                                    });
 
-                                            }}
-                                            >
-                                                Suggestions: <a href="javascript:void(0);">Add user</a>
-                                            </p>
-                                        )}
-                                    </>
-                                ) : null}
-
+                                                }}
+                                                >
+                                                    Suggestions: <a href="javascript:void(0);">Add user</a>
+                                                </p>
+                                            )}
+                                        </>
+                                    ) : null}
 
 
 
-                                    </div> : null
-                                }
+
+                                </div> : null
+                            }
                         </div>
                     </Container>
 
