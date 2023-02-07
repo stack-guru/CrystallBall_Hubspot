@@ -39,7 +39,25 @@ axiosInst.interceptors.response.use(function (response) {
 
     if (error.response.status === 404) {
         console.log(error);
-        swal.fire("Error!", "Not found.", "error");
+
+        const imageHtml = '' +
+                    '<div class="">' +
+                    '<img src="/images/error.png" class="img-fluid">' +
+                    '</div>'
+
+        swal.fire({
+            html: imageHtml,
+            width: 600,
+            showCancelButton: true,
+            showCloseButton: false,
+            showConfirmButton: false,
+            customClass: {
+                popup: "themePlanAlertPopup",
+            },
+            cancelButtonClass: "btn-close",
+            cancelButtonText: "Close",
+        });
+
     }
 
     if (error.response.status === 405) {

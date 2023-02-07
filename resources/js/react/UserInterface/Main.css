@@ -3340,6 +3340,19 @@ body {
     border-radius: 100px;
     width: calc(50% - 20px);
 }
+.themePlanAlertPopup .swal2-actions .btn-close:hover,
+.themePlanAlertPopup .swal2-actions .btn-close:focus,
+.themePlanAlertPopup .swal2-actions .btn-close{
+    color: #666;
+    background: #fff;
+    border: 2px solid #a6a6a6;
+    display: block;
+    position: absolute;
+    bottom: -55px;
+    left: -20px;
+    width: 110px;
+    height: 55px;
+}
 .themePlanAlertPopup .swal2-actions .btn-bookADemo:hover,
 .themePlanAlertPopup .swal2-actions .btn-bookADemo:focus,
 .themePlanAlertPopup .swal2-actions .btn-bookADemo{
