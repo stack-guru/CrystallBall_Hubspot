@@ -400,7 +400,7 @@ class IndexAnnotations extends React.Component {
                                 </FormGroup>
                             </div>
                             <div className="d-flex">
-                                <button 
+                                <button
                                     onClick={() => {
                                         this.setState({ enableSelect: !this.state.enableSelect })
                                         if (this.state.enableSelect) {
@@ -451,6 +451,18 @@ class IndexAnnotations extends React.Component {
                                     let borderLeftColor = "rgba(0,0,0,.0625)";
                                     let selectedIcon = anno.category;
                                     anno.description = anno.description || anno.event_name
+
+                                    switch (anno.added_by) {
+                                        case "manual":
+                                            borderLeftColor = this.state.userAnnotationColors.manual;
+                                            break;
+                                        case "csv-upload":
+                                            borderLeftColor = this.state.userAnnotationColors.csv;
+                                            break;
+                                        case "api":
+                                            borderLeftColor = this.state.userAnnotationColors.api;
+                                            break;
+                                    }
 
                                     switch (anno.category) {
                                         case "Google Updates":
@@ -560,6 +572,7 @@ class IndexAnnotations extends React.Component {
                                             <div className="flex-grow-1 d-flex justify-content-between align-items-center">
                                                 <ul className="d-flex list-unstyled">
                                                     <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
+                                                    {anno.added_by ? <li><span>{anno.added_by}</span></li> : null}
                                                     <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
                                                     {/* <li>
                                                     <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
