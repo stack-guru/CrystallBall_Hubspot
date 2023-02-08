@@ -3788,7 +3788,20 @@ body {
 .themeNewInputStyle ul li{margin: 0; padding: 0;} */
 
 
+.ga-analytics-property-selected h4 {
+    font-size: 14px;
+    margin-top: 16px;
+    font-family: 'Source Sans Pro', Helvetica Neue, Arial, sans-serif;
+    font-weight: 600;
+}
 
+.ga-analytics-property-selected h4 > span {
+    font-weight: 400;
+}
+.ga-analytics-property-selected .ga-selected-label {
+    font-size: 14px;
+    line-height: 18px;
+}
 
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }

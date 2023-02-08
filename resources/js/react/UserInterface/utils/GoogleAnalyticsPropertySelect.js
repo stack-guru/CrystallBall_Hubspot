@@ -248,10 +248,10 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                     </div>
 
 
-                    <div>
-                        {/* <h4>
+                    <div className='ga-analytics-property-selected'>
+                        {this.state.selectedProperties.length ? <h4>
                             Selected properties: <span>(Click to remove)</span>
-                        </h4> */}
+                        </h4>: null}
                         <div className="d-flex keywordTags mt-3">
                             {this.state.selectedProperties.map(itm => {
                                 return (<>
@@ -271,7 +271,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                                             style={{ background: "#2d9cdb" }}
                                             className="dot"
                                         ></span>
-                                        <span className="text-truncate" style={{ maxWidth: 150 }}>{itm.labelText}</span>
+                                        <span className="text-truncate ga-selected-label" style={{ maxWidth: 150 }}>{itm.labelText}</span>
                                     </button>
 
                                     <Popover
