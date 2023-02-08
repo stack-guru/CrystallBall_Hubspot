@@ -85,16 +85,16 @@ class Main extends React.Component {
     togglePromotionPopup() { this.setState({ showPromotionPopup: !this.state.showPromotionPopup }); }
     toggleTimerPromotionPopup() { this.setState({ showTimerPromotionPopup: !this.state.showTimerPromotionPopup }); }
 
-    extendTrial(){
+    extendTrial() {
         HttpClient.post('extend-trial')
-        .then(response => {
-            swal.fire(
-                "Extended",
-                response.data.message,
-                "success"
-            );
-            this.loadUser();
-        });
+            .then(response => {
+                swal.fire(
+                    "Extended",
+                    response.data.message,
+                    "success"
+                );
+                this.loadUser();
+            });
     }
 
     render() {
@@ -124,7 +124,7 @@ class Main extends React.Component {
 
                     {/*<UserStartupConfigurationModal closeModal={() => this.setState({showStartupConfiguration: false})} isOpen={this.state.showStartupConfiguration} user={this.state.user} />*/}
 
-                    <Sidebar openAnnotationPopup={(mka) => {this.setState({mKeyAnnotation: mka});}} user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
+                    <Sidebar openAnnotationPopup={(mka) => { this.setState({ mKeyAnnotation: mka }); }} user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
                 </div>
                 {/* <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" /> */}
                 <div className="page-container">
@@ -153,11 +153,15 @@ class Main extends React.Component {
                             </Route>
 
                             <Route exact path="/annotation" refresh={true}>
-                                <IndexAnnotations openAnnotationPopup={(mka) => {
-                                    this.setState({
-                                        mKeyAnnotation: mka
-                                    });
-                                }}  user={this.state.user} />
+                                <IndexAnnotations
+                                    openAnnotationPopup={(mka) => {
+                                        this.setState({
+                                            mKeyAnnotation: mka
+                                        });
+                                    }}
+                                    user={this.state.user}
+                                    mKeyAnnotation={this.state.mKeyAnnotation}
+                                />
                             </Route>
                             <Route exact path="/annotation/create" refresh={true}>
                                 <AnnotationsCreate currentPricePlan={this.state.user.price_plan} />
@@ -239,16 +243,16 @@ class Main extends React.Component {
                 </div>
 
                 {this.state.mKeyAnnotation === 'manual' ?
-                    <AppsModal isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} popupSize={'md'} toggle={(mka='') => {this.setState({mKeyAnnotation: mka,});}}>
-                        <AnnotationsCreate togglePopup={(mka) => {this.setState({mKeyAnnotation: mka,});}} currentPricePlan={this.state.user.price_plan}/>
+                    <AppsModal isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} popupSize={'md'} toggle={(mka = '') => { this.setState({ mKeyAnnotation: mka, }); }}>
+                        <AnnotationsCreate togglePopup={(mka) => { this.setState({ mKeyAnnotation: mka, }); }} currentPricePlan={this.state.user.price_plan} />
                     </AppsModal>
-                :
-                this.state.mKeyAnnotation === 'upload' ?
-                <AppsModal popupSize={'md csvupload'} isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka='') => {this.setState({mKeyAnnotation: mka,});}}>
-                    <AnnotationsUpload togglePopup={(mka) => {this.setState({mKeyAnnotation: mka,});}} currentPricePlan={this.state.user.price_plan} />
-                </AppsModal>
-                :
-                null}
+                    :
+                    this.state.mKeyAnnotation === 'upload' ?
+                        <AppsModal popupSize={'md csvupload'} isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka = '') => { this.setState({ mKeyAnnotation: mka, }); }}>
+                            <AnnotationsUpload togglePopup={(mka) => { this.setState({ mKeyAnnotation: mka, }); }} currentPricePlan={this.state.user.price_plan} />
+                        </AppsModal>
+                        :
+                        null}
             </React.Fragment>
         )
     }

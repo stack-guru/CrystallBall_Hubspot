@@ -114,6 +114,14 @@ class IndexAnnotations extends React.Component {
         }, 5000);
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.mKeyAnnotation !== this.props.mKeyAnnotation) {
+            if (!this.props.mKeyAnnotation.length) {
+                this.setState({ isLoading: true, annotations: [] }, this.loadInitAnnotations);
+            }
+        }
+    }
+
     deleteAnnotation(id) {
         this.setState({ isBusy: true });
         HttpClient.delete(`/annotation/${id}`)
@@ -334,9 +342,9 @@ class IndexAnnotations extends React.Component {
                             <h2 className="pageTitle m-0">Annotations</h2>
                             <div className="addAnnotation">
                                 <span>Add Annotation:</span>
-                                <a data-toggle="tooltip" data-placement="top" title="Manual" 
-                                href="javascript:void(0);" 
-                                onClick={() => this.props.openAnnotationPopup('manual')} >
+                                <a data-toggle="tooltip" data-placement="top" title="Manual"
+                                    href="javascript:void(0);"
+                                    onClick={() => this.props.openAnnotationPopup('manual')} >
                                     <img className='inject-me' src='/manual.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/manual.svg"; }} width='16' height='16' alt='menu icon' />
                                 </a>
                                 <a data-toggle="tooltip" data-placement="top" title="Apps Market" to="/data-source" href="/data-source">
