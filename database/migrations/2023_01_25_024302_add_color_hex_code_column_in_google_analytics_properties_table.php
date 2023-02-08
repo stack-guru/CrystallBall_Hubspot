@@ -14,7 +14,7 @@ class AddColorHexCodeColumnInGoogleAnalyticsPropertiesTable extends Migration
     public function up()
     {
         Schema::table('google_analytics_properties', function (Blueprint $table) {
-            $table->string('color_hex_code', 20)->nullable()->default('null');
+            $table->string('color_hex_code', 20)->nullable()->default(null);
         });
     }
 
