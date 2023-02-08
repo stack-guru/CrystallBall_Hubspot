@@ -172,7 +172,6 @@ export default class CreateAnnotation extends React.Component {
                     });
                     this.setState({ redirectTo: "/annotation" });
                     this.props.togglePopup('');
-                    window.location.reload(false);
                     // this.setDefaultState();
                     // this.loadCategoriesList();
                 }, (err) => {

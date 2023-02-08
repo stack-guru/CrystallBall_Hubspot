@@ -136,7 +136,6 @@ export default class EditAnnotation extends React.Component {
                     });
                     this.setState({ redirectTo: "/annotation" });
                     this.props.togglePopup('');
-                    window.location.reload(false);
                 }, (err) => {
 
                     this.setState({ isBusy: false, errors: (err.response).data });
@@ -225,7 +224,7 @@ export default class EditAnnotation extends React.Component {
                         <div className='grid2layout'>
                             <div className="themeNewInputStyle">
                                 <input type="text" className="form-control gray_clr" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" placeholder='Name the Annotation' />
-                                { validation.event_name ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : null }
+                                {validation.event_name ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : null}
                             </div>
                             <div className="themeNewInputStyle">
                                 <AnnotationCategorySelect className="gray_clr" name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
@@ -233,7 +232,7 @@ export default class EditAnnotation extends React.Component {
                         </div>
 
                         <div className="themeNewInputStyle has-danger mb-3">
-                            <input type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control gray_clr" id="description" name="description" placeholder='Add descriptive info'/>
+                            <input type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control gray_clr" id="description" name="description" placeholder='Add descriptive info' />
                             {validation.description ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : null}
                         </div>
 
