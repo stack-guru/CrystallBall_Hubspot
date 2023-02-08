@@ -122,7 +122,7 @@ export default class CreateUser extends Component {
 
                     <div className='d-flex pt-3'>
                         {/* <button type="submit" className="btn-cancel mr-3" title="submit">Cancel</button> */}
-                        <button type="submit" className="btn-theme mr-3" title="submit">Add</button>
+                        {/* <button type="submit" className="btn-theme mr-3" title="submit">Add</button> */}
                         <button type="submit" disabled={this.state.loading} className="btn-theme" title="submit">{ this.state.loading ? <SpinningLoader/> : "Save & Send Invitation"}</button>
                     </div>
                 </form>
