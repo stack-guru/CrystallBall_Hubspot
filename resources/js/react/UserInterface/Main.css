@@ -33,7 +33,7 @@ p {
 /*#456287*/
 .text-yellow {color: yellow !important;}
 .gaa-blue-gradient {background: linear-gradient(to bottom, #0a2950, #456287);}
-.gaa-bg-color {background-color: #456287;}
+.gaa-bg-color {background-color: #456287 !important;}
 .gaa-bg-primary {background: #456287;}
 .gaa-text-primary {color: #456287;}
 .gaa-text-color {color: #456287;}
@@ -842,7 +842,7 @@ body {
 .header {width: 100%;}
 .is-collapsed .header {width: 100%;}
 /* .page-container, */
-/* .is-collapsed .page-container { padding-left: 110px;} */
+.is-collapsed .page-container { padding-left: 110px;}
 .header.navbar {
     top: 44px;
     left: 0;
@@ -1059,8 +1059,12 @@ body {
     z-index: 1;
 }
 .btn-searchIcon.right-0 {
-    right: 0;
+    top: 1px;
+    right: 1px;
     z-index: 1;
+    height: 42px;
+    background: #fff;
+    border-radius: 0 7px 7px 0;
 }
 .usersPage select.form-control,
 .annotationPage select.form-control,
@@ -1150,7 +1154,7 @@ body {
 .apps-modal .modal-content {
     border: 0;
     width: 100%;
-    overflow-y: auto;
+    overflow: hidden;
     border-radius: 1rem;
     max-height: calc(100vh - 180px);
 }
@@ -1519,7 +1523,12 @@ body {
     background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%);
 }
 .modal-newsAlerts {}
-.modal-wordpressUpdates {}
+.modal-wordpressUpdates {
+    margin: 0;
+    display: flex;
+    padding: 0 10px;
+    flex-direction: column;
+}
 .modal-rankTracking {}
 .modal-weatherAlerts {}
 .modal-googleUpdates {}
@@ -1652,7 +1661,7 @@ body {
 .inputWithIcon .form-control {
     z-index: 1;
     position: relative;
-    padding-right: 55px;
+    padding-right: 44px !important;
 }
 .inputWithIcon .fa{
     top: 0;
@@ -2195,16 +2204,14 @@ body {
     border: 1px solid #a6a6a6;
 }
 .btn-cancel:focus,
-.btn-cancel:hover {
-    color: #666;
-    border-color: #a6a6a6;
-}
+.btn-cancel:hover {border-color: #a6a6a6;}
 .themeNewInputStyle select.form-control{
-    appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     background-size: 1.25em;
+    appearance: none;
+    -webkit-appearance: none;
 }
 .btn-extraSelect{
     width: 100%;
@@ -2275,9 +2282,10 @@ body {
     color: #333;
     font-size: 16px;
     font-weight: 400;
+    min-height: 46px;
     line-height: 23px;
     text-align: center;
-    margin: 1rem 0 32px;
+    margin: 1rem 0 10px;
 }
 .planhead span {
     color: #666;
@@ -2310,7 +2318,9 @@ body {
     box-shadow: 0px 4px 12px rgba(40, 126, 252, 0.16);
     background: linear-gradient(90deg, #3d8bfd 39.06%, #1273ff 100%);
 }
-.planbody {padding: 24px 0;}
+.planbody {
+    min-height: 240px;
+    padding: 24px 0;}
 .plan ul {
     margin: 0;
     padding: 0;
@@ -2408,7 +2418,7 @@ body {
 .form-csvUpload {}
 .csvFileUpload > label {
     width: 100%;
-    height: 276px;
+    /* height: 276px; */
     display: flex;
     cursor: pointer;
     overflow: hidden;
@@ -2422,6 +2432,11 @@ body {
     justify-content: center;
 }
 .csvFileUpload > label i { margin-bottom: 2rem; }
+.csvFileUpload > label i img {
+    display: block;
+    width: 100px;
+    height: auto;
+}
 .csvFileUpload > label strong {
     color: #666;
     font-size: 18px;
@@ -2764,6 +2779,10 @@ body {
     justify-content: center;
     cursor: pointer;
 }
+.addPhoto.profile {
+    font-size: 40px;
+    color: #fff;
+}
 .addPhoto i { padding: 0 0 6px; }
 .btn-update {
     top: 0;
@@ -2905,7 +2924,10 @@ body {
     border-radius: 0px 0px 16px 16px;
     box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.22);
 }
-.apps-modalFoot { padding-top: 32px; }
+.apps-modalFoot {
+    padding-top: 32px;
+    margin: 0 -42px -32px;
+}
 .apps-modalFoot > span {
     height: 65px;
     display: flex;
@@ -2917,7 +2939,7 @@ body {
     text-align: center;
     padding: 20px 2rem;
     align-items: center;
-    margin: 0 -32px -56px;
+    /* margin: 0 -32px -56px; */
     justify-content: center;
     border-radius: 0px 0px 16px 16px;
     background: rgba(11, 210, 95, 0.05);
@@ -3322,6 +3344,19 @@ body {
     padding: 10px 24px;
     border-radius: 100px;
     width: calc(50% - 20px);
+}
+.themePlanAlertPopup .swal2-actions .btn-close:hover,
+.themePlanAlertPopup .swal2-actions .btn-close:focus,
+.themePlanAlertPopup .swal2-actions .btn-close{
+    color: #666;
+    background: #fff;
+    border: 2px solid #a6a6a6;
+    display: block;
+    position: absolute;
+    bottom: -55px;
+    left: -20px;
+    width: 110px;
+    height: 55px;
 }
 .themePlanAlertPopup .swal2-actions .btn-bookADemo:hover,
 .themePlanAlertPopup .swal2-actions .btn-bookADemo:focus,
@@ -3746,7 +3781,11 @@ body {
     max-height: calc(100% - 100px);
 }
 .md.csvupload .modal-content{max-height: calc(100vh - 100px);}
-
+/* .themeNewInputStyle .css-2613qy-menu ul,
+.themeNewInputStyle .css-2613qy-menu ul li,
+.themeNewInputStyle .css-2613qy-menu span,
+.themeNewInputStyle ul,
+.themeNewInputStyle ul li{margin: 0; padding: 0;} */
 
 
 
