@@ -1,44 +1,55 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
-import { capitalizeFirstLetter } from '../../../helpers/CommonFunctions';
-import HttpClient from '../../../utils/HttpClient'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { Container, FormGroup, Input, Label } from "reactstrap";
+import { capitalizeFirstLetter } from "../../../helpers/CommonFunctions";
+import HttpClient from "../../../utils/HttpClient";
+import AppsModal from "../../AppsMarket/AppsModal";
+import CreateUser from "./CreateUser";
+import EditUser from "./EditUser";
+import Toast from "../../../utils/Toast";
 
 export default class IndexUsers extends Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             users: [],
-            searchText: ''
-        }
+            searchText: "",
+            addUserPopup: false,
+            editUserId: '',
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.checkSearchText = this.checkSearchText.bind(this);
+        this.saveRole = this.saveRole.bind(this);
     }
 
     componentDidMount() {
-        document.title = 'Users';
+        document.title = "Users";
         HttpClient.get(`/settings/user`)
-            .then(response => {
-                this.setState({ users: response.data.users });
-            }, (err) => {
-
-                this.setState({ errors: (err.response).data });
-            }).catch(err => {
-
+            .then(
+                (response) => {
+                    this.setState({ users: response.data.users });
+                },
+                (err) => {
+                    this.setState({ errors: err.response.data });
+                }
+            )
+            .catch((err) => {
                 this.setState({ errors: err });
             });
     }
 
-
     handleChange(e) {
-        this.setState({ [e.target.name]: e.target.value })
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     checkSearchText(user) {
         if (this.state.searchText.length) {
-            if (user.email.toLowerCase().indexOf(this.state.searchText) > -1
-                || user.name.toLowerCase().indexOf(this.state.searchText) > -1) {
+            if (
+                user.email.toLowerCase().indexOf(this.state.searchText) > -1 ||
+                user.name.toLowerCase().indexOf(this.state.searchText) > -1
+            ) {
                 return true;
             }
             return false;
@@ -46,184 +57,250 @@ export default class IndexUsers extends Component {
         return true;
     }
 
-    handleDelete(id) {
-        HttpClient.delete(`/settings/user/${id}`)
+    saveRole(user_level, user) {
+        user.user_level = user_level
+        HttpClient.put(`/settings/user/${user.id}`, user)
             .then(response => {
-                this.setState({ users: this.state.users.filter(u => u.id !== id) });
+                Toast.fire({
+                    icon: 'success',
+                    title: "User updated.",
+                });
             }, (err) => {
-
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
+                this.setState({ errors: err });
+            });
+    }
 
+    handleDelete(id) {
+        HttpClient.delete(`/settings/user/${id}`)
+            .then(
+                (response) => {
+                    this.setState({
+                        users: this.state.users.filter((u) => u.id !== id),
+                    });
+                },
+                (err) => {
+                    this.setState({ errors: err.response.data });
+                }
+            )
+            .catch((err) => {
                 this.setState({ errors: err });
             });
     }
 
     render() {
         return (
-            <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper">
-                <section className="ftco-section" id="inputs">
-                    <div className="container-xl p-0">
-                        <div className="row ml-0 mr-0 mb-5">
-                            <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">
-                                    Users
-                                </h2>
-                            </div>
-                        </div>
-                        <div id="annotation-index-container">
-                            {/* <div className="row mb-4 ml-3 mr-3">
-                                <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
-                                    <Link to="/settings/devices" className="text-primary mr-2">Manage Device</Link>
-                                </div>
-                            </div> */}
+            <>
+                <div className="usersPage">
+                    <Container>
+                        <div className="pageHead">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <h2 className="pageTitle m-0">Users</h2>
 
-                            {this.props.user.user_level == "admin" ? (
-                                <div className="row mb-4 ml-3 mr-3">
-                                    <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4 pt-sm-0 p-md-0 pt-lg-0 text-center text-sm-center text-md-right text-lg-right">
+                                {this.props.user.user_level == "admin" ? (
+                                    <>
                                         {this.props.user.price_plan
                                             .user_per_ga_account_count > -1 ? (
-                                            <Link
-                                                to="/settings/user/create"
-                                                className="btn btn-sm gaa-btn-primary text-white mr-2"
-                                            >
-                                                <i className=" mr-2 fa fa-plus"></i>
-                                                Add User
-                                            </Link>
+                                            <a onClick={() => this.setState({ addUserPopup: true })} href="javascript:void(0);" className="btn-adduser d-flex align-items-center justify-content-center">
+                                                <i className="fa fa-plus"></i>
+                                                <span>Add User</span>
+                                            </a>
                                         ) : (
-                                            <button
-                                                onClick={() => {
-                                                    const accountNotLinkedHtml = '' +
+                                            <button onClick={() => {
+                                                const accountNotLinkedHtml =
+                                                    "" +
+                                                    '<div class="">' +
+                                                    '<img src="/images/banners/user_limit_banner.png" class="img-fluid">' +
+                                                    "</div>";
+
+                                                swal.fire({
+                                                    html: accountNotLinkedHtml,
+                                                    width: 1000,
+                                                    showCancelButton: true,
+                                                    showCloseButton: true,
+                                                    customClass: {
+                                                        popup: "themePlanAlertPopup",
+                                                        htmlContainer: "themePlanAlertPopupContent",
+                                                        closeButton: 'btn-closeplanAlertPopup',
+                                                    },
+                                                    cancelButtonClass: "btn-bookADemo",
+                                                    cancelButtonText: "Book a Demo",
+                                                    confirmButtonClass: "btn-subscribeNow",
+                                                    confirmButtonText: "Subscribe now",
+                                                }).then((value) => {
+                                                    if (value.isConfirmed) window.location.href = '/settings/price-plans'
+                                                });
+
+                                            }}
+                                                className="btn-adduser d-flex align-items-center justify-content-center"
+                                            >
+                                                <i className="fa fa-plus"></i>
+                                                <span>Add User</span>
+                                            </button>
+                                        )}
+                                    </>
+                                ) : null}
+                            </div>
+
+                            {this.state.users.length ? <form className="pageFilters d-flex justify-content-end align-items-center">
+                                {/* <FormGroup className="filter-sort position-relative form-group">
+                                    <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
+                                    <i className="btn-searchIcon left-0">
+                                        <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666" />
+                                        </svg>
+                                    </i>
+                                    <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                    <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
+                                        <option value="Null">Sort By</option>
+                                        <option value="added">Added</option>
+                                        <option value="date">By Date</option>
+                                        <option value="category">By Category</option>
+                                        <option value="ga-property">By GA Property</option>
+                                    </select>
+                                </FormGroup> */}
+
+
+                                <FormGroup className="filter-search position-relative">
+                                    <Label className="sr-only" for="search">search</Label>
+                                    <Input name="searchText" value={this.state.searchText} placeholder="Search..." onChange={this.handleChange} />
+                                    <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search" /></button>
+                                </FormGroup>
+                            </form> : null}
+                        </div>
+
+                        <div className="dataTable dataTableusers d-flex flex-column">
+                            {this.state.users.length ? <div className="dataTableHolder">
+                                <div className="tableHead singleRow justify-content-between align-items-center">
+                                    <div className="singleCol text-left">Email</div>
+                                    <div className="singleCol text-left">Name</div>
+                                    <div className="singleCol text-left">User Level</div>
+                                    <div className="singleCol text-left">Department</div>
+                                    <div className="singleCol text-left">Team</div>
+                                    <div className="singleCol text-right">Actions</div>
+                                </div>
+                                <div className="tableBody">
+                                    {this.state.users.filter(this.checkSearchText).map((user) => {
+                                        return (
+                                            <div key={user.id} className="singleRow justify-content-between align-items-center">
+                                                <div className="singleCol text-left"><span>{user.email}</span></div>
+                                                <div className="singleCol text-left"><span>{user.name}</span></div>
+                                                <div className="singleCol text-left">
+                                                    <span>
+                                                        <div className="themeNewInputStyle">
+                                                            <select name="user_level" className="form-control" onChange={(ev) => this.saveRole(ev.target.value, user)} value={user.user_level}>
+                                                                <option value="">User level</option>
+                                                                <option value="admin">Admin</option>
+                                                                <option value="team">Team Member</option>
+                                                                <option value="viewer">Viewer</option>
+                                                            </select>
+                                                        </div>
+                                                        {/* {capitalizeFirstLetter(user.user_level)} */}
+                                                    </span>
+                                                </div>
+                                                <div className="singleCol text-left"><span>{user.department}</span></div>
+                                                <div className="singleCol text-left"><span>{user.team_name}</span></div>
+                                                <div className="singleCol text-right">
+                                                    <span>{this.props.user.user_level == "admin" ? (
+                                                        <>
+                                                            <Link onClick={() => this.setState({ editUserId: user.id })}><img src={`/icon-edit.svg`} /></Link>
+                                                            <Link onClick={() => this.handleDelete(user.id)}><img src={`/icon-trash.svg`} /></Link>
+                                                        </>
+                                                    ) : null}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div> : null}
+
+                            {!this.state.users.length ?
+                                <div className="nodata">
+                                    <p>No user added yet.</p>
+
+
+                                    {this.props.user.user_level == "admin" ? (
+                                        <>
+                                            {this.props.user.price_plan
+                                                .user_per_ga_account_count > -1 ? (
+                                                <p onClick={() => this.setState({ addUserPopup: true })} href="javascript:void(0);" className="mb-0">
+                                                    Suggestions: <a href="javascript:void(0);"> Add user</a>
+                                                </p>
+                                            ) : (
+                                                <p className="mb-0" onClick={(ev) => {
+                                                    ev.stopPropagation();
+                                                    const accountNotLinkedHtml =
+                                                        "" +
                                                         '<div class="">' +
-                                                        '<img src="/images/banners/user_limit_banner.jpg" class="img-fluid">' +
-                                                        '</div>'
+                                                        '<img src="/images/banners/user_limit_banner.png" class="img-fluid">' +
+                                                        "</div>";
 
                                                     swal.fire({
                                                         html: accountNotLinkedHtml,
-                                                        width: 700,
+                                                        width: 1000,
+                                                        showCancelButton: true,
+                                                        showCloseButton: true,
                                                         customClass: {
-                                                            popup: 'bg-light-red pb-5',
-                                                            htmlContainer: 'm-0',
+                                                            popup: "themePlanAlertPopup",
+                                                            htmlContainer: "themePlanAlertPopupContent",
+                                                            closeButton: 'btn-closeplanAlertPopup',
                                                         },
-                                                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                                        confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
-
-                                                    }).then(value => {
-                                                        window.location.href = "/settings/price-plans";
-                                                        // <Redirect to="/settings/price-plans"/>
-                                                        // this.setState({redirectTo: "/settings/price-plans"});
+                                                        cancelButtonClass: "btn-bookADemo",
+                                                        cancelButtonText: "Book a Demo",
+                                                        confirmButtonClass: "btn-subscribeNow",
+                                                        confirmButtonText: "Subscribe now",
+                                                    }).then((value) => {
+                                                        if (value.isConfirmed) window.location.href = '/settings/price-plans'
                                                     });
-                                                        
-                                                    // swal.fire(
-                                                    //     {
-                                                    //         icon: 'warning',
-                                                    //         title: 'To add more users, please upgrade your account',
-                                                    //         confirmButtonText: "<a href='/settings/price-plans' style='color:white;'> Upgrade </a>"
-                                                    //     }
-                                                    // );
-                                                }}
-                                                className="btn btn-sm gaa-btn-primary text-white mr-2"
-                                            >
-                                                <i className=" mr-2 fa fa-plus"></i>
-                                                Add User
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-                            ) : null}
 
-                            <div className="row mb-4 ml-0 mr-0">
-                                <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right">
-                                    <input
-                                        name="searchText"
-                                        value={this.state.searchText}
-                                        className="form-control"
-                                        placeholder="Search..."
-                                        onChange={this.handleChange}
-                                    />
-                                </div>
-                            </div>
-                            <div className="row ml-0 mr-0">
-                                <div className="col-12">
-                                    <div className="table-responsive">
-                                        <table className="table table-hover gaa-hover table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Email</th>
-                                                    <th>Name</th>
-                                                    <th>User Level</th>
-                                                    <th>Department</th>
-                                                    <th>Team</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {this.state.users
-                                                    .filter(
-                                                        this.checkSearchText
-                                                    )
-                                                    .map((user) => {
-                                                        return (
-                                                            <tr key={user.id}>
-                                                                <td>
-                                                                    {user.email}
-                                                                </td>
-                                                                <td>
-                                                                    {user.name}
-                                                                </td>
-                                                                <td>
-                                                                    {capitalizeFirstLetter(
-                                                                        user.user_level
-                                                                    )}
-                                                                </td>
-                                                                <td>
-                                                                    {
-                                                                        user.department
-                                                                    }
-                                                                </td>
-                                                                <td>
-                                                                    {
-                                                                        user.team_name
-                                                                    }
-                                                                </td>
-                                                                <td>
-                                                                    {this.props
-                                                                        .user
-                                                                        .user_level ==
-                                                                    "admin" ? (
-                                                                        <React.Fragment>
-                                                                            <Link
-                                                                                className="btn gaa-btn-primary btn-sm"
-                                                                                to={`/settings/user/${user.id}/edit`}
-                                                                            >
-                                                                                <i className="fa fa-edit"></i>
-                                                                            </Link>
-                                                                            <button
-                                                                                className="btn gaa-btn-danger btn-sm ml-2"
-                                                                                onClick={() =>
-                                                                                    this.handleDelete(
-                                                                                        user.id
-                                                                                    )
-                                                                                }
-                                                                            >
-                                                                                <i className="fa fa-trash"></i>
-                                                                            </button>
-                                                                        </React.Fragment>
-                                                                    ) : null}
-                                                                </td>
-                                                            </tr>
-                                                        );
-                                                    })}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                                                }}
+                                                >
+                                                    Suggestions: <a href="javascript:void(0);">Add user</a>
+                                                </p>
+                                            )}
+                                        </>
+                                    ) : null}
+
+
+
+
+                                </div> : null
+                            }
                         </div>
-                    </div>
-                </section>
-            </div>
+                    </Container>
+
+                    <AppsModal isOpen={this.state.addUserPopup} popupSize={'md'} toggle={() => { this.setState({ addUserPopup: false, }); }}>
+                        <div className="popupContent modal-createUser">
+                            <div className="apps-modalHead">
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <div className="d-flex justify-content-start align-items-center"><h2>Add User</h2></div>
+                                    <span onClick={() => this.setState({ addUserPopup: false, })} className="btn-close">
+                                        <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" />
+                                    </span>
+                                </div>
+                            </div>
+
+                            <CreateUser user={this.props.user} />
+                        </div>
+                    </AppsModal>
+                    <AppsModal isOpen={this.state.editUserId} popupSize={'md'} toggle={() => { this.setState({ editUserId: '', }); }}>
+                        <div className="popupContent modal-createUser">
+                            <div className="apps-modalHead">
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <div className="d-flex justify-content-start align-items-center"><h2>Edit User</h2></div>
+                                    <span onClick={() => this.setState({ editUserId: '', })} className="btn-close">
+                                        <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" />
+                                    </span>
+                                </div>
+                            </div>
+
+                            <EditUser editUserId={this.state.editUserId} />
+                        </div>
+                    </AppsModal>
+                </div>
+            </>
         );
     }
-
 }

@@ -14,9 +14,9 @@ import IndexAnnotations from './components/annotations/IndexAnnotation';
 import AnnotationsUpload from './components/annotations/UploadAnnotation';
 import IndexPricingPlans from './components/settings/pricingPlans/IndexPricingPlans';
 import Settings from './components/settings/IndexSettings';
-import ChangePassword from './components/settings/ChangePassword';
+import Profile from './components/settings/Profile';
 import PaymentHistory from './components/settings/pricingPlans/PaymentHistory';
-import GoogleAccountIndex from './components/settings/googleAccount/GoogleAccountIndex';
+import Accounts from './components/settings/Accounts';
 import FacebookAccounts from './components/settings/facebookaccounts/FacebookAccountsIndex';
 import UserDevices from './components/settings/devices/UserDevicesIndex';
 import DataSourceIndex from "./components/DataSource/DataSourceIndex";
@@ -33,6 +33,7 @@ import AnalyticsAndBusinessIntelligenceIndex from './components/analyticsAndBusi
 import CreatePaymentDetail from './components/settings/CreatePaymentDetail';
 import StartupChecklist from './helpers/StartupChecklist';
 import UserStartupConfigurationModal from './helpers/UserStartupConfigurationModal';
+import AddNewPasswordModal from './helpers/AddNewPasswordModal';
 import InterfaceTour from './helpers/InterfaceTour';
 import IndexDashboard from './components/dashboard/IndexDashboard';
 import IndexAnalytics from './components/dashboard/analytics/IndexAnalytics';
@@ -42,6 +43,9 @@ import PromotionPopup from './utils/PromotionPopup';
 import UserRegistrationOffer from './utils/UserRegistrationOffer';
 import TimerPromotionPopup from './utils/TimerPromotionPopup';
 import CustomPricePlan from './components/settings/pricingPlans/CustomPricePlan'
+import AppsMarket from './components/AppsMarket/AppsMarket'
+import AppsModal from './components/AppsMarket/AppsModal';
+import ModalHeader from './components/AppsMarket/common/ModalHeader';
 
 class Main extends React.Component {
 
@@ -52,9 +56,11 @@ class Main extends React.Component {
             user: undefined,
             showStartupConfiguration: false,
             showInterfaceTour: false,
+            showPasswordPopup: false,
             showDataSourceTour: false,
             showPromotionPopup: false,
-            showTimerPromotionPopup: false
+            showTimerPromotionPopup: false,
+            mKeyAnnotation: '',
         }
         this.loadUser = this.loadUser.bind(this)
 
@@ -66,7 +72,7 @@ class Main extends React.Component {
         this.extendTrial = this.extendTrial.bind(this);
     }
 
-    // toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
+    toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
     toggleInterfaceTour(keepInterfaceTour = false) {
         // If the user has alive registration offers and interface tour is showing
         if (this.state.user.user_registration_offers.length && this.state.showInterfaceTour) {
@@ -79,16 +85,16 @@ class Main extends React.Component {
     togglePromotionPopup() { this.setState({ showPromotionPopup: !this.state.showPromotionPopup }); }
     toggleTimerPromotionPopup() { this.setState({ showTimerPromotionPopup: !this.state.showTimerPromotionPopup }); }
 
-    extendTrial(){
+    extendTrial() {
         HttpClient.post('extend-trial')
-        .then(response => {
-            swal.fire(
-                "Extended",
-                response.data.message,
-                "success"
-            );
-            this.loadUser();
-        });
+            .then(response => {
+                swal.fire(
+                    "Extended",
+                    response.data.message,
+                    "success"
+                );
+                this.loadUser();
+            });
     }
 
     render() {
@@ -107,15 +113,18 @@ class Main extends React.Component {
         if (["/settings/change-password"].indexOf(this.props.location.pathname) == -1 && this.state.user.do_require_password_change == true) {
             return <Redirect to={"/settings/change-password"} />
         }
-
         return (
 
             <React.Fragment>
                 <div className="sidebar">
                     {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={this.toggleStartupConfiguration} /> */}
-                    <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} />
+                    <AddNewPasswordModal show={this.state.showPasswordPopup} user={this.state.user} />
 
-                    <Sidebar user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
+                    {/* <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} /> */}
+
+                    {/*<UserStartupConfigurationModal closeModal={() => this.setState({showStartupConfiguration: false})} isOpen={this.state.showStartupConfiguration} user={this.state.user} />*/}
+
+                    <Sidebar openAnnotationPopup={(mka) => { this.setState({ mKeyAnnotation: mka }); }} user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
                 </div>
                 {/* <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" /> */}
                 <div className="page-container">
@@ -129,7 +138,11 @@ class Main extends React.Component {
                     </div>
                     <main className="main-content bgc-grey-100">
                         <Switch>
-                            <Route exact path="/analytics" refresh={true}>
+
+                            <Route exact path="/ga-accounts" refresh={true}>
+                                <IndexDashboard user={this.state.user} />
+                            </Route>
+                            <Route exact path="/settings/analytics-accounts" refresh={true}>
                                 <IndexDashboard user={this.state.user} />
                             </Route>
                             <Route exact path="/dashboard/analytics" refresh={true}>
@@ -140,7 +153,15 @@ class Main extends React.Component {
                             </Route>
 
                             <Route exact path="/annotation" refresh={true}>
-                                <IndexAnnotations user={this.state.user} />
+                                <IndexAnnotations
+                                    openAnnotationPopup={(mka) => {
+                                        this.setState({
+                                            mKeyAnnotation: mka
+                                        });
+                                    }}
+                                    user={this.state.user}
+                                    mKeyAnnotation={this.state.mKeyAnnotation}
+                                />
                             </Route>
                             <Route exact path="/annotation/create" refresh={true}>
                                 <AnnotationsCreate currentPricePlan={this.state.user.price_plan} />
@@ -156,6 +177,10 @@ class Main extends React.Component {
                                 <AnnotationsUpload currentPricePlan={this.state.user.price_plan} />
                             </Route>
                             <Route exact path="/data-source" refresh={true}>
+                                <AppsMarket user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} />
+                                {/* <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} /> */}
+                            </Route>
+                            <Route exact path="/data-source-old" refresh={true}>
                                 <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} />
                             </Route>
                             <Route exact path="/integrations" refresh={true}>
@@ -173,8 +198,8 @@ class Main extends React.Component {
                             <Route exact path="/settings" refresh={true}>
                                 <Settings user={this.state.user} />
                             </Route>
-                            <Route exact path="/settings/change-password" refresh={true}>
-                                <ChangePassword user={this.state.user} reloadUser={this.loadUser} />
+                            <Route exact path="/settings/profile" refresh={true}>
+                                <Profile user={this.state.user} reloadUser={this.loadUser} />
                             </Route>
                             <Route exact path="/settings/price-plans" refresh={true}>
                                 <IndexPricingPlans user={this.state.user} />
@@ -188,8 +213,8 @@ class Main extends React.Component {
                             <Route exact path="/settings/payment-detail/create" refresh={true}>
                                 <CreatePaymentDetail user={this.state.user} />
                             </Route>
-                            <Route exact path="/settings/google-account" refresh={true}>
-                                <GoogleAccountIndex user={this.state.user} reloadUser={this.loadUser} />
+                            <Route exact path="/settings/accounts" refresh={true}>
+                                <Accounts user={this.state.user} reloadUser={this.loadUser} />
                             </Route>
                             <Route exact path="/settings/facebook-accounts" refresh={true}>
                                 <FacebookAccounts user={this.state.user} reloadUser={this.loadUser} />
@@ -216,13 +241,30 @@ class Main extends React.Component {
                     </main>
                     <Footer />
                 </div>
-                {/* <StartupChecklist lastStartupConfigurationShowedAt={this.state.user.startup_configuration_showed_at} /> */}
-            </React.Fragment>
 
+                {this.state.mKeyAnnotation === 'manual' ?
+                    <AppsModal isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} popupSize={'md'} toggle={(mka = '') => { this.setState({ mKeyAnnotation: mka, }); }}>
+                        <AnnotationsCreate togglePopup={(mka) => { this.setState({ mKeyAnnotation: mka, }); }} currentPricePlan={this.state.user.price_plan} />
+                    </AppsModal>
+                    :
+                    this.state.mKeyAnnotation === 'upload' ?
+                        <AppsModal popupSize={'md csvupload'} isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka = '') => { this.setState({ mKeyAnnotation: mka, }); }}>
+                            <AnnotationsUpload togglePopup={(mka) => { this.setState({ mKeyAnnotation: mka, }); }} currentPricePlan={this.state.user.price_plan} />
+                        </AppsModal>
+                        :
+                        null}
+            </React.Fragment>
         )
     }
 
     componentDidMount() {
+        const { SVGInjector } = window.SVGInjector
+        SVGInjector(document.getElementsByClassName('inject-me'), {
+            cacheRequests: false,
+            evalScripts: 'once',
+            httpRequestWithCredentials: false,
+            renumerateIRIElements: false
+        })
 
         let loader = document.getElementById("loader");
         loader.classList.remove("fadeOut")
@@ -248,7 +290,8 @@ class Main extends React.Component {
                 this.setState({
                     user: response.data.user,
                     // These states were in use when user startup configuration wizard was enabled
-                    // showStartupConfiguration: keepStartupConfiguration ? true : (response.data.user.startup_configuration_showed_at == null),
+                    showStartupConfiguration: response.data.user.show_configuration_message,
+                    showPasswordPopup: response.data.user.show_password_message,
                     // showInterfaceTour: keepInterfaceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at == null),
                     // showDataSourceTour: keepDataSourceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at !== null && response.data.user.data_source_tour_showed_at == null),
                     showInterfaceTour: keepInterfaceTour ? true : (response.data.user.last_login_at == null),

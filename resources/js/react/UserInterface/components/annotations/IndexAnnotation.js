@@ -1,30 +1,50 @@
 import React, { useEffect } from "react";
+import { Container, FormGroup, Input, Label } from "reactstrap";
 import { Link } from "react-router-dom";
 import HttpClient from "../../utils/HttpClient";
-import { toast } from "react-toastify";
 import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
 import { timezoneToDateFormat } from "../../utils/TimezoneTodateFormat";
 import { getCompanyName } from "../../helpers/CommonFunctions";
 import ErrorAlert from "../../utils/ErrorAlert";
+import xor from 'lodash/xor';
+import AppsModal from "../AppsMarket/AppsModal";
+import AnnotationsUpdate from './EditAnnotation';
+import ShowChartAnnotation from './ShowChartAnnotation';
+import Toast from "../../utils/Toast";
+import axios from 'axios';
 
 class IndexAnnotations extends React.Component {
+
+    axiosCancelToken = null;
+    loadAnnotationsCancelToken = null;
+
     constructor() {
         super();
         this.state = {
+            error: "",
+            isBusy: false,
+            isLoading: false,
+
             annotations: [],
             accounts: [],
             annotationCategories: [],
             userAnnotationColors: {},
-            sortBy: "",
-            googleAccount: "",
-            googleAnalyticsProperty: "",
-            category: "",
-            searchText: "",
-            error: "",
-            isBusy: false,
-            isLoading: false,
             allAnnotationsSelected: false,
             selectedRows: [],
+            editAnnotationId: '',
+            showChartAnnotationId: '',
+
+            // Table Actions
+            sortBy: "",
+            searchText: "",
+            googleAccount: "",
+            category: "",
+            googleAnalyticsProperty: "",
+
+            // Table Infinite Scroll
+            pageSize: 20,
+            pageNumber: 1,
+            enableSelect: false
         };
         this.deleteAnnotation = this.deleteAnnotation.bind(this);
         this.toggleStatus = this.toggleStatus.bind(this);
@@ -33,15 +53,15 @@ class IndexAnnotations extends React.Component {
         this.sortByCategory = this.sortByCategory.bind(this);
 
         this.handleChange = this.handleChange.bind(this);
-        this.checkSearchText = this.checkSearchText.bind(this);
+        this.registerScrollEvent = this.registerScrollEvent.bind(this);
 
         this.handleAllSelection = this.handleAllSelection.bind(this);
         this.handleOneSelection = this.handleOneSelection.bind(this);
         this.handleDeleteSelected = this.handleDeleteSelected.bind(this);
         this.seeCompleteDescription = this.seeCompleteDescription.bind(this);
-        
     }
     componentDidMount() {
+        this.axiosCancelToken = axios.CancelToken;
         document.title = "Annotation";
 
         this.setState({ isBusy: true, isLoading: true });
@@ -51,24 +71,8 @@ class IndexAnnotations extends React.Component {
                     this.setState({
                         userAnnotationColors: resp.data.user_annotation_color,
                     });
-                    HttpClient.get(`/annotation`)
-                        .then(
-                            (response) => {
-                                this.setState({
-                                    annotations: response.data.annotations,
-                                    isLoading: false,
-                                });
-                            },
-                            (err) => {
-                                this.setState({
-                                    errors: err.response.data,
-                                    isLoading: false,
-                                });
-                            }
-                        )
-                        .catch((err) => {
-                            this.setState({ errors: err, isLoading: false });
-                        });
+                    this.registerScrollEvent()
+                    this.loadInitAnnotations()
                     HttpClient.get(`/annotation-categories`)
                         .then(
                             (response) => {
@@ -110,12 +114,23 @@ class IndexAnnotations extends React.Component {
         }, 5000);
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.mKeyAnnotation !== this.props.mKeyAnnotation) {
+            if (!this.props.mKeyAnnotation.length) {
+                this.setState({ isLoading: true, annotations: [] }, this.loadInitAnnotations);
+            }
+        }
+    }
+
     deleteAnnotation(id) {
         this.setState({ isBusy: true });
         HttpClient.delete(`/annotation/${id}`)
             .then(
                 (resp) => {
-                    toast.success("Annotation deleted.");
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Annotation deleted."
+                    });
                     let annotations = this.state.annotations;
                     annotations = annotations.filter((a) => a.id != id);
                     this.setState({ isBusy: false, annotations: annotations });
@@ -144,7 +159,10 @@ class IndexAnnotations extends React.Component {
             HttpClient.put(`/annotation/${id}`, { is_enabled: newStatus })
                 .then(
                     (response) => {
-                        toast.success("Annotation status changed.");
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Annotation status changed."
+                        });
                         let newAnnotation = response.data.annotation;
                         let annotations = this.state.annotations.map((an) => {
                             if (an.id == id) {
@@ -171,8 +189,55 @@ class IndexAnnotations extends React.Component {
         }
     }
 
+    loadInitAnnotations() {
+        const { sortBy, searchText, category, googleAnalyticsProperty, pageSize, pageNumber } = this.state;
+        let link = '/annotation?';
+
+        if (sortBy) link += `&sort_by=${sortBy}`;
+        if (searchText) link += `&search=${searchText}`;
+        if (category) link += `&cateogry=${category}`;
+        if (googleAnalyticsProperty) link += `&annotation_ga_property_id=${googleAnalyticsProperty}`;
+        if (pageSize) link += `&page_size=${pageSize}`;
+        if (pageNumber) link += `&page_number=${pageNumber}`;
+
+        if (this.loadAnnotationsCancelToken) {
+            this.loadAnnotationsCancelToken.cancel('Request overridden.');
+        }
+        this.loadAnnotationsCancelToken = this.axiosCancelToken.source();
+        HttpClient.get(
+            link,
+            { cancelToken: this.loadAnnotationsCancelToken.token }
+        )
+            .then(
+                (response) => {
+                    this.loadAnnotationsCancelToken = null;
+                    this.setState({
+                        annotations: this.state.annotations.concat(response.data.annotations),
+                        isLoading: false,
+                    });
+                },
+                (err) => {
+                    this.loadAnnotationsCancelToken = null;
+                    this.setState({
+                        errors: err.response.data,
+                        isLoading: false,
+                    });
+                }
+            )
+            .catch((err) => {
+                this.loadAnnotationsCancelToken = null;
+                this.setState({ errors: err, isLoading: false });
+            });
+
+    }
+
     handleChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({
+            [e.target.name]: e.target.value,
+            annotations: [],
+            pageNumber: 1,
+            isLoading: true
+        }, this.loadInitAnnotations);
     }
 
     handleAllSelection(e) {
@@ -195,36 +260,38 @@ class IndexAnnotations extends React.Component {
         }
     }
 
-    handleOneSelection(e) {
-        let anno_id = e.target.dataset.anno_id;
+    handleOneSelection(anno_id) {
+        // let anno_id = e.target.dataset.anno_id;
+
+        this.setState({ selectedRows: xor(this.state.selectedRows, [anno_id]) });
 
         // if input is checked
-        if (e.target.checked) {
-            // if annotation id is not in the array
-            if (!this.state.selectedRows.includes(anno_id)) {
-                this.state.selectedRows.push(anno_id);
-            }
-        }
+        // if (e.target.checked) {
+        // if annotation id is not in the array
+        // if (!this.state.selectedRows.includes(anno_id)) {
+        // this.state.selectedRows.push(anno_id);
+        // }
+        // }
         // if input is not checked, remove the id from array if it exists
-        else {
-            if (this.state.selectedRows.includes(anno_id)) {
-                let rows = this.state.selectedRows;
-                let new_rows = rows.filter((item) => item !== anno_id);
-                this.setState({
-                    selectedRows: new_rows,
-                });
-            }
-        }
+        // else {
+        // if (this.state.selectedRows.includes(anno_id)) {
+        //     let rows = this.state.selectedRows;
+        //     let new_rows = rows.filter((item) => item !== anno_id);
+        //     this.setState({
+        //         selectedRows: new_rows,
+        //     });
+        // }
+        // }
 
-        if (this.state.selectedRows.length > 0) {
-            this.setState({
-                allAnnotationsSelected: true,
-            });
-        } else {
-            this.setState({
-                allAnnotationsSelected: false,
-            });
-        }
+        // if (this.state.selectedRows.length > 0) {
+        //     this.setState({
+        //         allAnnotationsSelected: true,
+        //     });
+        // } else {
+        //     this.setState({
+        //         allAnnotationsSelected: false,
+        //     });
+        // }
     }
 
     handleDeleteSelected() {
@@ -234,8 +301,10 @@ class IndexAnnotations extends React.Component {
         })
             .then(
                 (resp) => {
-                    toast.success("Annotation(s) deleted.");
-
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Annotation(s) deleted."
+                    });
                     let selected_annotations = this.state.selectedRows;
                     let annotations = this.state.annotations;
 
@@ -246,7 +315,7 @@ class IndexAnnotations extends React.Component {
                         this.setState({ annotations: annotations });
                     }
 
-                    this.setState({ isBusy: false });
+                    this.setState({ isBusy: false, selectedRows: [] });
 
                     this.setState({
                         allAnnotationsSelected: false,
@@ -261,97 +330,60 @@ class IndexAnnotations extends React.Component {
             });
     }
 
-    checkSearchText(annotation) {
-        if (this.state.searchText.length) {
-            const searchText = this.state.searchText.toLowerCase();
-            if (
-                (annotation.category &&
-                    annotation.category.toLowerCase().indexOf(searchText) >
-                        -1) ||
-                (annotation.event_name &&
-                    annotation.event_name.toLowerCase().indexOf(searchText) >
-                        -1) ||
-                (annotation.description &&
-                    annotation.description.toLowerCase().indexOf(searchText) >
-                        -1) ||
-                (annotation.show_at &&
-                    annotation.show_at.toLowerCase().indexOf(searchText) > -1)
-            ) {
-                return true;
-            }
-            return false;
-        }
-        return true;
-    }
-
     render() {
         let wasLastAnnotationInFuture = true;
         const categories = this.state.annotationCategories;
 
         return (
-            <div className="container-xl bg-white anno-container d-flex flex-column justify-content-center component-wrapper">
-                <section className="ftco-section" id="inputs">
-                    <div className="container-xl p-0">
-                        <div className="row ml-0 mr-0 mb-1">
-                            <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">
-                                    Annotations
-                                </h2>
+            <div id="annotationPage" className="annotationPage">
+                <Container>
+                    <div className="pageHead">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h2 className="pageTitle m-0">Annotations</h2>
+                            <div className="addAnnotation">
+                                <span>Add Annotation:</span>
+                                <a data-toggle="tooltip" data-placement="top" title="Manual"
+                                    href="javascript:void(0);"
+                                    onClick={() => this.props.openAnnotationPopup('manual')} >
+                                    <img className='inject-me' src='/manual.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/manual.svg"; }} width='16' height='16' alt='menu icon' />
+                                </a>
+                                <a data-toggle="tooltip" data-placement="top" title="Apps Market" to="/data-source" href="/data-source">
+                                    <img className='inject-me' src='/appMarket.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/appMarket.svg"; }} width='16' height='16' alt='menu icon' />
+                                </a>
+                                {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (
+                                    <a data-toggle="tooltip" data-placement="top" title="CSV Upload" onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">
+                                        <img className='inject-me' src='/csvUploadd.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/csvUploadd.svg"; }} width='16' height='16' alt='menu icon' />
+                                    </a>)
+                                    :
+                                    null
+                                }
                             </div>
                         </div>
-                        <div id="annotation-index-container">
-                            <div className="row mb-3 ml-0 mr-0">
-                                <div className="col-sm-12 col-md-9 col-lg-9 text-center text-sm-center text-md-left text-lg-left mb-3"></div>
-                                <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-right text-lg-right">
-                                    <Link
-                                        to="/annotation/create"
-                                        className="btn btn-sm gaa-btn-primary text-white float-left w-100 mb-2"
-                                    >
-                                        <i className=" mr-2 fa fa-plus"></i>Add
-                                        Manual
-                                    </Link>
-                                    <Link
-                                        to="/data-source"
-                                        className="btn btn-sm gaa-btn-primary text-white float-left w-100"
-                                    >
-                                        Add Automated Annotations
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className="row mb-1 ml-0 mr-0">
-                                <div className="col-sm-12 col-md-2 col-lg-2 text-center text-sm-center text-md-left text-lg-left mb-3">
-                                    <select
-                                        name="sortBy"
-                                        id="sort-by"
-                                        value={this.state.sortBy}
-                                        className="form-control"
-                                        onChange={this.sort}
-                                    >
-                                        <option value="Null">Sort By</option>
+
+                        <form className="pageFilters d-flex justify-content-between align-items-center">
+                            <div className="d-flex">
+                                <FormGroup className="filter-sort position-relative mr-3">
+                                    <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
+                                    <i className="btn-searchIcon left-0">
+                                        <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666" />
+                                        </svg>
+                                    </i>
+                                    <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                    <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
+                                        <option value="">Sort By</option>
                                         <option value="added">Added</option>
                                         <option value="date">By Date</option>
-                                        <option value="category">
-                                            By Category
-                                        </option>
-                                        <option value="ga-property">
-                                            By GA Property
-                                        </option>
-                                        {/* <option value="added-by">By Colour</option> */}
+                                        <option value="category">By Category</option>
+                                        <option value="ga-property">By GA Property</option>
                                     </select>
-                                    {this.state.selectedRows.length ? (
-                                        <button
-                                            className="btn btn-danger btn-sm mt-2"
-                                            onClick={this.handleDeleteSelected}
-                                        >
-                                            Delete
-                                        </button>
-                                    ) : null}
-                                </div>
-                                <div className="col-sm-12 col-md-3 col-lg-3 text-center text-sm-center text-md-left text-lg-left">
+                                </FormGroup>
+                                <FormGroup className="filter-sort position-relative">
                                     {this.state.sortBy == "ga-property" ? (
                                         <GoogleAnalyticsPropertySelect
                                             name={"googleAnalyticsProperty"}
                                             id={"googleAnalyticsProperty"}
+                                            currentPricePlan={this.props.user.price_plan}
                                             value={
                                                 this.state
                                                     .googleAnalyticsProperty
@@ -363,6 +395,7 @@ class IndexAnnotations extends React.Component {
                                             }}
                                         />
                                     ) : null}
+
                                     {this.state.sortBy == "category" ? (
                                         <select
                                             name="category"
@@ -388,399 +421,252 @@ class IndexAnnotations extends React.Component {
                                             ))}
                                         </select>
                                     ) : null}
-                                </div>
-                                <div className="col-sm-12 col-md-4 col-lg-4  text-center text-sm-center text-md-right text-lg-right"></div>
-                                <div className="col-sm-12 col-md-3 col-lg-3  text-center text-sm-center text-md-right text-lg-right">
-                                    <input
-                                        name="searchText"
-                                        value={this.state.searchText}
-                                        className="form-control float-right m-w-255px"
-                                        placeholder="Search..."
-                                        onChange={this.handleChange}
-                                    />
-                                </div>
+                                </FormGroup>
                             </div>
-                            <div className="row ml-0 mr-0">
-                                <div className="col-12">
-                                    <ErrorAlert errors={this.state.errors} />
-                                    <div
-                                        id="annotation-table-container"
-                                        className="table-responsive sticky-header"
-                                    >
-                                        <table className="table table-hover gaa-hover table-bordered">
-                                            <thead id="annotation-table-head">
-                                                <tr>
-                                                    <th>
-                                                        <input
-                                                            type="checkbox"
-                                                            onClick={
-                                                                this
-                                                                    .handleAllSelection
-                                                            }
-                                                        />
-                                                    </th>
-                                                    <th>Category</th>
-                                                    <th
-                                                        style={{
-                                                            width: "25% !important",
-                                                            wordWrap:
-                                                                "break-word",
-                                                            wordBreak:
-                                                                "break-all",
-                                                        }}
-                                                    >
-                                                        Event Name
-                                                    </th>
-                                                    <th>Description</th>
-                                                    <th>Properties</th>
-                                                    <th>Status</th>
-                                                    <th
-                                                        style={{
-                                                            minWidth: "100px",
-                                                        }}
-                                                    >
-                                                        Show At
-                                                    </th>
-                                                    <th
-                                                        style={{
-                                                            minWidth: "100px",
-                                                        }}
-                                                    >
-                                                        Added By
-                                                    </th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="annotation-table-body">
-                                                {this.state.isLoading ? (
-                                                    <tr key={"blank-row"}>
-                                                        <td
-                                                            colSpan="8"
-                                                            className="text-center"
-                                                        >
-                                                            <i className="fa fa-spinner fa-spin fa-pulse fa-3x"></i>
-                                                        </td>
-                                                    </tr>
-                                                ) : (
-                                                    this.state.annotations
-                                                        .filter(
-                                                            this.checkSearchText
-                                                        )
-                                                        .map((anno, idx) => {
-                                                            let borderLeftColor =
-                                                                "rgba(0,0,0,.0625)";
-                                                            switch (
-                                                                anno.category
-                                                            ) {
-                                                                case "Google Updates":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .google_algorithm_updates;
-                                                                    break;
-                                                                case "Retail Marketing Dates":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .retail_marketings;
-                                                                    break;
-                                                                case "Weather Alert":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .weather_alerts;
-                                                                    break;
-                                                                case "Website Monitoring":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .web_monitors;
-                                                                    break;
-                                                                case "WordPress Updates":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .wordpress_updates;
-                                                                    break;
-                                                                case "News Alert":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .google_alerts;
-                                                                    break;
-                                                            }
-                                                            switch (
-                                                                anno.added_by
-                                                            ) {
-                                                                case "manual":
-                                                                    borderLeftColor =
-                                                                        "#002e60";
-                                                                    break;
-                                                                case "csv-upload":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .csv;
-                                                                    break;
-                                                                case "api":
-                                                                    borderLeftColor =
-                                                                        this
-                                                                            .state
-                                                                            .userAnnotationColors
-                                                                            .api;
-                                                                    break;
-                                                            }
-                                                            if (
-                                                                anno.category.indexOf(
-                                                                    "Holiday"
-                                                                ) !== -1
-                                                            )
-                                                                borderLeftColor =
-                                                                    this.state
-                                                                        .userAnnotationColors
-                                                                        .holidays;
+                            <div className="d-flex">
+                                <button
+                                    onClick={() => {
+                                        this.setState({ enableSelect: !this.state.enableSelect })
+                                        if (this.state.enableSelect) {
+                                            this.setState({ selectedRows: [] })
+                                        }
+                                    }}
+                                    type="button" className={`btn-extraSelect position-relative ${this.state.enableSelect ? 'active' : ''}`}>
+                                    <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M7.19922 3.00098H18.1992M7.19922 9.00098H18.1992" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M1.80078 8.98566L2.65792 9.84281L4.80078 7.69995" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M3.19922 3.011L3.20922 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                    <span>Select</span>
+                                </button>
 
-                                                            const currentDateTime =
-                                                                new Date();
-                                                            const annotationDateTime =
-                                                                new Date(
-                                                                    anno.show_at
-                                                                );
-                                                            const diffTime =
-                                                                annotationDateTime -
-                                                                currentDateTime;
-                                                            let rowId = null;
-                                                            if (
-                                                                diffTime < 0 &&
-                                                                wasLastAnnotationInFuture ==
-                                                                    true
-                                                            )
-                                                                rowId =
-                                                                    "scrollable-annotation";
-                                                            if (diffTime > 0) {
-                                                                wasLastAnnotationInFuture = true;
-                                                            } else {
-                                                                wasLastAnnotationInFuture = false;
-                                                            }
-
-                                                            return (
-                                                                <tr
-                                                                    data-diff-in-milliseconds={
-                                                                        diffTime
-                                                                    }
-                                                                    id={rowId}
-                                                                    key={
-                                                                        anno.category +
-                                                                        anno.event_name +
-                                                                        anno.description +
-                                                                        anno.url +
-                                                                        anno.id
-                                                                    }
-                                                                >
-                                                                    {/* style={{ borderLeft: `${borderLeftColor} solid 20px` }} */}
-                                                                    <td>
-                                                                        <input
-                                                                            type="checkbox"
-                                                                            className="row_checkbox"
-                                                                            data-anno_id={
-                                                                                anno.id
-                                                                            }
-                                                                            onChange={
-                                                                                this
-                                                                                    .handleOneSelection
-                                                                            }
-                                                                        />
-                                                                    </td>
-                                                                    <td>
-                                                                        {
-                                                                            anno.category
-                                                                        }
-                                                                    </td>
-                                                                    <td>
-                                                                        {
-                                                                            anno.event_name
-                                                                        }
-                                                                    </td>
-                                                                    <td
-                                                                        style={{
-                                                                            overflowWrap:
-                                                                                "anywhere",
-                                                                        }}
-                                                                    >
-                                                                        {anno.description  && !anno.show_complete_desc
-                                                                            ? anno.description.substring(
-                                                                                  0,
-                                                                                  50
-                                                                              )
-                                                                            : ''}
-                                                                        
-                                                                        {anno.description &&
-                                                                        anno
-                                                                            .description
-                                                                            .length >
-                                                                            50 && !anno.show_complete_desc ? (
-                                                                                <div>
-                                                                                    ...
-                                                                                    <a
-                                                                                        style={{ cursor: "pointer" }}
-                                                                                        onClick={()=>{this.seeCompleteDescription(anno, idx)}}
-                                                                                        target="_blank"
-                                                                                        className="ml-1"
-                                                                                    >
-                                                                                        See
-                                                                                        more
-                                                                                    </a>
-                                                                                </div>
-                                                                        ) : ''}
-
-                                                                        {anno.description &&
-                                                                        anno
-                                                                            .description
-                                                                            .length >
-                                                                            50 && anno.show_complete_desc ? (
-                                                                                <div id="">
-                                                                                    {anno.description}
-                                                                                </div>
-                                                                        ) : ''}
-
-                                                                        {anno.url &&
-                                                                        anno.url !=
-                                                                            "https://" &&
-                                                                        anno.url !=
-                                                                            "null" ? (
-                                                                            <a
-                                                                                href={
-                                                                                    anno.url
-                                                                                }
-                                                                                target="_blank"
-                                                                                className="ml-1"
-                                                                            >
-                                                                                <i className="fa fa-link"></i>
-                                                                            </a>
-                                                                        ) : ''}
-                                                                    </td>
-                                                                    <td>
-                                                                        {anno.google_analytics_property_name
-                                                                            ? anno.google_analytics_property_name
-                                                                            : "All Properties"}
-                                                                    </td>
-                                                                    <td className="text-center">
-                                                                        {anno.id ? (
-                                                                            <button
-                                                                                className={
-                                                                                    "btn btn-sm" +
-                                                                                    (anno.is_enabled
-                                                                                        ? " btn-success"
-                                                                                        : " btn-danger") +
-                                                                                    (this
-                                                                                        .state
-                                                                                        .isBusy
-                                                                                        ? " disabled"
-                                                                                        : "")
-                                                                                }
-                                                                                onClick={() =>
-                                                                                    this.toggleStatus(
-                                                                                        anno.id
-                                                                                    )
-                                                                                }
-                                                                            >
-                                                                                {anno.is_enabled
-                                                                                    ? "On"
-                                                                                    : "Off"}
-                                                                            </button>
-                                                                        ) : null}
-                                                                    </td>
-                                                                    <td>
-                                                                        {moment(
-                                                                            anno.show_at
-                                                                        ).format(
-                                                                            timezoneToDateFormat(
-                                                                                this
-                                                                                    .props
-                                                                                    .user
-                                                                                    .timezone
-                                                                            )
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {anno.event_name ==
-                                                                        "Sample Annotation"
-                                                                            ? getCompanyName()
-                                                                            : anno.user_name}
-                                                                    </td>
-                                                                    <td className="text-center">
-                                                                        {anno.id ? (
-                                                                            <React.Fragment>
-                                                                                <button
-                                                                                    type="button"
-                                                                                    onClick={() => {
-                                                                                        this.deleteAnnotation(
-                                                                                            anno.id
-                                                                                        );
-                                                                                    }}
-                                                                                    className="btn btn-sm gaa-btn-danger anno-action-btn text-white m-1"
-                                                                                >
-                                                                                    <i className="fa fa-trash"></i>
-                                                                                </button>
-                                                                                <Link
-                                                                                    to={`/annotation/${anno.id}/edit`}
-                                                                                    className="btn anno-action-btn btn-sm gaa-btn-primary text-white m-1"
-                                                                                    style={{
-                                                                                        width: "28.3667px",
-                                                                                    }}
-                                                                                >
-                                                                                    <i className="fa fa-edit"></i>
-                                                                                </Link>
-                                                                            </React.Fragment>
-                                                                        ) : null}
-                                                                    </td>
-                                                                </tr>
-                                                            );
-                                                        })
-                                                )}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                <FormGroup className="filter-search position-relative">
+                                    <Label className="sr-only" for="search">search</Label>
+                                    <Input name="searchText" value={this.state.searchText} placeholder="Search..." onChange={this.handleChange} />
+                                    <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search" /></button>
+                                </FormGroup>
                             </div>
-                        </div>
+                        </form>
+                        {this.state.enableSelect ? (
+                            <div className="btnBox d-flex">
+                                <p className="mb-0">{`${this.state.selectedRows.length} annotations selected`}</p>
+                                <div className="d-flex">
+                                    <button onClick={() => this.setState({ selectedRows: [] })} className="btn-cancel">Cancel selection</button>
+                                    <button className="btn-delete d-block align-items-center justify-content-center" onClick={this.handleDeleteSelected}>
+                                        <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.33398 12C1.96732 12 1.65354 11.8696 1.39265 11.6087C1.13132 11.3473 1.00065 11.0333 1.00065 10.6667V2H0.333984V0.666667H3.66732V0H7.66732V0.666667H11.0007V2H10.334V10.6667C10.334 11.0333 10.2035 11.3473 9.94265 11.6087C9.68132 11.8696 9.36732 12 9.00065 12H2.33398ZM9.00065 2H2.33398V10.6667H9.00065V2ZM3.66732 9.33333H5.00065V3.33333H3.66732V9.33333ZM6.33398 9.33333H7.66732V3.33333H6.33398V9.33333ZM2.33398 2V10.6667V2Z" fill="currentColor" />
+                                        </svg>
+                                        <span>Delete selected</span>
+                                    </button>
+                                </div>
+                            </div>)
+                            :
+                            null
+                        }
                     </div>
-                </section>
+
+                    {this.state.isLoading ? (
+                        <>Loading...</>
+                    ) : (
+                        <>
+                            {this.state.annotations
+                                // .filter(this.checkSearchText)
+                                .map((anno, idx) => {
+                                    let borderLeftColor = "rgba(0,0,0,.0625)";
+                                    let selectedIcon = anno.category;
+                                    anno.description = anno.description || anno.event_name
+
+                                    switch (anno.added_by) {
+                                        case "manual":
+                                            borderLeftColor = this.state.userAnnotationColors.manual;
+                                            break;
+                                        case "csv-upload":
+                                            borderLeftColor = this.state.userAnnotationColors.csv;
+                                            break;
+                                        case "api":
+                                            borderLeftColor = this.state.userAnnotationColors.api;
+                                            break;
+                                    }
+
+                                    switch (anno.category) {
+                                        case "Google Updates":
+                                            borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates;
+                                            break;
+                                        case "Retail Marketing Dates":
+                                            borderLeftColor = this.state.userAnnotationColors.retail_marketings;
+                                            break;
+                                        case "Weather Alert":
+                                            borderLeftColor = this.state.userAnnotationColors.weather_alerts;
+                                            break;
+                                        case "Website Monitoring":
+                                            borderLeftColor = this.state.userAnnotationColors.web_monitors;
+                                            break;
+                                        case "WordPress Updates":
+                                            borderLeftColor = this.state.userAnnotationColors.wordpress_updates;
+                                            break;
+                                        case "News Alert":
+                                            borderLeftColor = this.state.userAnnotationColors.google_alerts;
+                                            break;
+                                        default:
+                                            borderLeftColor = '#1976fe';
+                                    }
+                                    switch (anno.added_by) {
+                                        case "manual":
+                                            borderLeftColor = this.state.userAnnotationColors.manual;
+                                            break;
+                                        case "csv-upload":
+                                            borderLeftColor = this.state.userAnnotationColors.csv;
+                                            break;
+                                        case "api":
+                                            borderLeftColor = this.state.userAnnotationColors.api;
+                                            break;
+                                    }
+                                    if (anno.category.indexOf("Holiday") !== -1)
+                                        borderLeftColor = this.state.userAnnotationColors.holidays;
+
+                                    const currentDateTime =
+                                        new Date();
+                                    const annotationDateTime =
+                                        new Date(anno.show_at);
+                                    const diffTime =
+                                        annotationDateTime -
+                                        currentDateTime;
+                                    let rowId = null;
+                                    if (
+                                        diffTime < 0 &&
+                                        wasLastAnnotationInFuture ==
+                                        true
+                                    )
+                                        rowId =
+                                            "scrollable-annotation";
+                                    if (diffTime > 0) {
+                                        wasLastAnnotationInFuture = true;
+                                    } else {
+                                        wasLastAnnotationInFuture = false;
+                                    }
+
+                                    return (
+                                        <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId}
+                                            key={idx + anno.toString()}
+                                            onClick={
+                                                () => {
+                                                    if (anno.id && this.state.enableSelect) {
+                                                        this.handleOneSelection(anno.id)
+                                                    } else {
+                                                        // toast.error("This annotation can't be selected.");
+                                                    }
+                                                }
+                                            } data-anno_id={anno.id}>
+
+                                            <span className="checkedIcon"><img src={`/icon-checked.svg`} /></span>
+
+                                            <span className="annotionRowIcon"><img src={`/${selectedIcon}.svg`} onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/annotation-default.svg"; }} /></span>
+
+                                            <div className="description d-flex flex-column flex-shrink-1">
+                                                <p className="titleCategory d-flex align-items-center">
+                                                    <span>{anno.event_name}</span>
+                                                    <a href="">{anno.category}</a>
+                                                    <i className="icon"><img src={'/icon-chain.svg'} /></i>
+                                                </p>
+                                                <p className="annotationDesc mb-0 d-flex-inline">
+                                                    {anno.description &&
+                                                        !anno.show_complete_desc ? anno.description.substring(0, 150) : ""}
+                                                    {anno.description &&
+                                                        anno.description.length > 150 &&
+                                                        !anno.show_complete_desc ? (
+                                                        <span>...<a onClick={() => { this.seeCompleteDescription(anno, idx); }} target="_blank" className="ml-1">Read more</a></span>
+                                                    ) : (
+                                                        ""
+                                                    )}
+
+                                                    {anno.description && anno.description.length > 150 && anno.show_complete_desc ? (
+                                                        <div id="">{anno.description}</div>
+                                                    ) : (
+                                                        ""
+                                                    )}
+
+                                                    {anno.url && anno.url != "https://" && anno.url != "null" ? (
+                                                        <a href={anno.url} target="_blank" className="ml-1"><i className="icon"><img src={'/icon-chain.svg'} /></i></a>
+                                                    ) : (
+                                                        ""
+                                                    )}
+                                                </p>
+                                            </div>
+
+                                            <div className="flex-grow-1 d-flex justify-content-between align-items-center">
+                                                <ul className="d-flex list-unstyled">
+                                                    <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
+                                                    {anno.added_by ? <li><span>{anno.added_by}</span></li> : null}
+                                                    <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
+                                                    {/* <li>
+                                                    <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
+                                                        <i className="mr-2">
+                                                        <img src={"/icon-chart.svg"} /></i><span>open chart</span>
+                                                        </a>
+                                                    </li> */}
+                                                </ul>
+
+                                                <ul className="d-flex list-unstyled">
+                                                    {anno.added_by == "manual" ? <>
+                                                        <li>
+                                                            <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.toggleStatus(anno.id) }}>
+                                                                {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.setState({ editAnnotationId: anno.id }) }}>
+                                                                <img src={`icon-edit.svg`} />
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span className="text-danger" onClick={(e) => { e.stopPropagation(); this.deleteAnnotation(anno.id); }}><img src={`icon-trash.svg`} /></span>
+                                                        </li>
+                                                    </> : null}
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    );
+
+                                })}
+
+                            {!this.state.isLoading && !this.state.annotations.length ?
+                                <div className="nodata">
+                                    <p>No annotations added yet.</p>
+                                    <p className="mb-0">Suggestions: <a href=''>Add manual annotation</a> or <a href=''>Upload CSV</a></p>
+                                </div> : null
+                            }
+                        </>
+                    )}
+                </Container>
+                <AppsModal isOpen={!!this.state.editAnnotationId} popupSize={'md'} toggle={() => { this.setState({ editAnnotationId: '' }); }}>
+                    <AnnotationsUpdate togglePopup={() => this.setState({ editAnnotationId: '' })} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
+                </AppsModal>
+                <AppsModal isOpen={!!this.state.showChartAnnotationId} popupSize={'null'} toggle={() => { this.setState({ showChartAnnotationId: '' }); }}>
+                    <ShowChartAnnotation togglePopup={() => this.setState({ showChartAnnotationId: '' })} showChartAnnotationId={this.state.showChartAnnotationId} currentPricePlan={this.props.user.price_plan} />
+                </AppsModal>
             </div>
         );
     }
 
     sort(e) {
-        this.setState({ sortBy: e.target.value });
-        if (e.target.value !== "ga-account") {
-            this.setState({ isLoading: true });
-            HttpClient.get(`/annotation?sortBy=${e.target.value}`)
-                .then(
-                    (response) => {
-                        this.setState({
-                            isLoading: false,
-                            annotations: response.data.annotations,
-                        });
-                    },
-                    (err) => {
-                        this.setState({
-                            isLoading: false,
-                            errors: err.response.data,
-                        });
-                    }
-                )
-                .catch((err) => {
-                    this.setState({ isLoading: false, errors: err });
-                });
-        }
+        this.setState({
+            sortBy: e.target.value,
+            annotations: [],
+            pageNumber: 1,
+            isLoading: true,
+        }, this.loadInitAnnotations);
     }
+
+    registerScrollEvent() {
+        // $(window).off('scroll');
+        $(window).on('scroll', () => {
+            if (parseFloat($(window).scrollTop() + $(window).height()).toFixed(0) == $(document).height()) {
+                this.setState({ pageNumber: this.state.pageNumber + 1 }, this.loadInitAnnotations)
+            }
+        });
+    }
+
     sortByProperty(gaPropertyId) {
         this.setState({ googleAnalyticsProperty: gaPropertyId });
         if (gaPropertyId !== "select-ga-property") {
@@ -808,40 +694,22 @@ class IndexAnnotations extends React.Component {
         }
     }
     sortByCategory(catName) {
-        this.setState({ category: catName });
-        let url = "";
-        if (catName !== "select-category") {
-            url = `/annotation?category=${catName}`;
-        } else {
-            url = `/annotation?sortBy=category`;
-        }
-        this.setState({ isLoading: true });
-        HttpClient.get(url)
-            .then(
-                (response) => {
-                    this.setState({
-                        isLoading: false,
-                        annotations: response.data.annotations,
-                    });
-                },
-                (err) => {
-                    this.setState({
-                        isLoading: false,
-                        errors: err.response.data,
-                    });
-                }
-            )
-            .catch((err) => {
-                this.setState({ isLoading: false, errors: err });
-            });
-    }
-    seeCompleteDescription(anno, idx) {
-        anno.show_complete_desc = true
-        let annotations_new = this.state.annotations
-        annotations_new[idx] = anno
         this.setState({
-            annotations: annotations_new
-        })
+            isLoading: true,
+            category: catName,
+            annotations: [],
+            pageNumber: 1,
+            pageSize: 20
+        }, this.loadInitAnnotations);
+    }
+
+    seeCompleteDescription(anno, idx) {
+        anno.show_complete_desc = true;
+        let annotations_new = this.state.annotations;
+        annotations_new[idx] = anno;
+        this.setState({
+            annotations: annotations_new,
+        });
     }
 }
 

@@ -31,6 +31,8 @@ Route::get('test_fb', function () {
 | contains the "web" middleware group. Now create something great!
 |
  */
+Route::view('email_error', 'auth.email_error');
+Route::view('success_message', 'auth.success');
 
 Route::get('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookGet']);
 Route::post('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookPost']);
@@ -102,13 +104,13 @@ Route::group(['prefix' => 'app-sumo', 'as' => 'app-sumo.', 'middleware' => ['aut
     Route::get('password', [App\Http\Controllers\AppSumo\AuthController::class, 'showPasswordForm'])->name('password.index');
     Route::put('password', [App\Http\Controllers\AppSumo\AuthController::class, 'updatePassword'])->name('password.update');
 });
-
+Route::post('ui/generate-password', [App\Http\Controllers\ConfirmPasswordController::class, 'generatePassword'])->name('generate-password');
 Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], function () {
 
     Route::delete('user', [App\Http\Controllers\HomeController::class, 'deleteAccount'])->withoutMiddleware('only.non.empty.password');
 
     Route::view('dashboard', 'ui/app'); // obsolete
-    Route::view('analytics', 'ui/app');
+    Route::view('ga-accounts', 'ui/app');
     Route::view('dashboard/analytics', 'ui/app');
     Route::view('dashboard/search-console', 'ui/app');
 
@@ -123,7 +125,6 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
     Route::view('api-key', 'ui/app');
     Route::view('notifications', 'ui/app');
     Route::view('analytics-and-business-intelligence', 'ui/app');
-
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
 
@@ -131,13 +132,15 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
         Route::view('/', 'ui/app');
         Route::view('support', 'ui/app');
         Route::view('/devices', 'ui/app');
+        Route::view('analytics-accounts', 'ui/app');
 
-        Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
+        Route::get('accounts', [App\Http\Controllers\GoogleAccountController::class, 'index']);
+        Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['create', 'store', 'update', 'destroy']);
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store'])->name('settings.google-account.redirect.store');
 
         Route::resource('facebook-accounts', App\Http\Controllers\FacebookAutomationController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
 
-        Route::view('change-password', 'ui/app')->name('settings.change-password.index');
+        Route::view('profile', 'ui/app')->name('settings.profile.index');
         Route::view('payment-detail/create', 'ui/app');
         Route::view('price-plans', 'ui/app')->name('settings.price-plans');
         Route::view('custom-price-plan/{code}', 'ui/app')->name('settings.custom-price-plan');
@@ -205,7 +208,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::put('mark-data-source-tour', [App\Http\Controllers\HomeController::class, 'markDataSourceTourDone']);
             Route::put('mark-google-accounts-tour', [App\Http\Controllers\HomeController::class, 'markGoogleAccountsTourDone']);
 
-            Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'destroy']);
+            Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'update', 'destroy']);
 
             Route::get('user-facebook-accounts-exists', [FacebookAutomationController::class, 'userFacebookAccountsExists']);
             Route::get('user-instagram-accounts-exists', [InstagramAutomationController::class, 'userInstagramAccountsExists']);
@@ -250,9 +253,11 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
             // github repositories
             Route::get('get-github-repositories', [GithubAutomationController::class, 'getRepositories']);
-            Route::post('apple_podcast_url', [App\Http\Controllers\ApplePodcastMonitorController::class,'applePodcastUrl']);
-            Route::resource('apple-podcast-monitor', App\Http\Controllers\ApplePodcastMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
+            Route::post('apple_podcast_url', [App\Http\Controllers\ApplePodcastMonitorController::class, 'applePodcastUrl']);
 
+            Route::post('shopify_url', [App\Http\Controllers\ShopifyMonitorController::class, 'shopifyUrl']);
+            Route::resource('shopify-monitor', App\Http\Controllers\ShopifyMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
+            Route::resource('apple-podcast-monitor', App\Http\Controllers\ApplePodcastMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
         });
 
         Route::group(['prefix' => 'settings'], function () {
@@ -272,7 +277,10 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::delete('google-account/{google_account}', [App\Http\Controllers\GoogleAccountController::class, 'destroy']);
             Route::post('change-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword'])->withoutMiddleware('only.non.empty.password');
             Route::put('change-timezone', [App\Http\Controllers\HomeController::class, 'updateTimezone']);
+            Route::put('update-user', [App\Http\Controllers\HomeController::class, 'updateUser']);
             Route::put('change-phone', [App\Http\Controllers\HomeController::class, 'updatePhone']);
+            Route::put('change-email', [App\Http\Controllers\HomeController::class, 'updateEmail']);
+            Route::post('change-profile', [App\Http\Controllers\HomeController::class, 'updateProfile']);
 
             Route::get('facebook-accounts', [App\Http\Controllers\FacebookAutomationController::class, 'UIindex']);
             Route::delete('facebook-account/{facebook_account}', [App\Http\Controllers\FacebookAutomationController::class, 'destroy']);
@@ -280,7 +288,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::resource('google-analytics-account', App\Http\Controllers\GoogleAnalyticsAccountController::class)->only(['index', 'destroy']);
             Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);
 
-            Route::resource('google-analytics-property', GoogleAnalyticsPropertyController::class)->only(['index', 'destroy']);
+            Route::resource('google-analytics-property', GoogleAnalyticsPropertyController::class)->only(['index', 'update', 'destroy']);
 
             Route::resource('google-search-console-site', App\Http\Controllers\GoogleSearchConsoleSiteController::class)->only(['index', 'destroy']);
             Route::post('google-search-console-site/google-account/{google_account}', [App\Http\Controllers\GoogleSearchConsoleSiteController::class, 'fetch']);
@@ -293,7 +301,6 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
         Route::get('price-plan', [App\Http\Controllers\PricePlanController::class, 'uiIndex']);
         Route::get('price-plan/{price_plan}', [App\Http\Controllers\PricePlanController::class, 'show']);
         Route::post('extend-trial', [App\Http\Controllers\PricePlanController::class, 'extendTrial']);
-
     });
 
     Route::get('/beaming/auth', function () {

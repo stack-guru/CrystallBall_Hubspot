@@ -3,39 +3,24 @@
 namespace App\Services;
 
 use DOMDocument;
+use Illuminate\Support\Facades\Http;
 use Exception;
+use Symfony\Component\HttpFoundation\Response;
 
 class GoogleAlertService
 {
     public function getAllFeeds($keyword)
     {
-        $curl = curl_init();
 
         $params = urlencode('[null,[null,null,null,[null,"' . $keyword . '","com",[null,"en","US"],null,null,null,0,1],null,3,[[null,1,"user@example.com",[null,null,11],2,"en-US",null,null,null,null,null,"0",null,null,"AB2Xq4hcilCERh73EFWJVHXx-io2lhh1EhC8UD8"]]],0]');
-
-        curl_setopt_array($curl, [
-            CURLOPT_URL => "https://www.google.com/alerts/preview?params=" . $params,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_POSTFIELDS => "",
-        ]);
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
+        $baseUrl    = "https://www.google.com/alerts/preview?params=" . $params;
+        $response = Http::get($baseUrl);
+        if ($response->status() != Response::HTTP_OK) {
             return false;
         }
-
         try {
             $doc = new DOMDocument;
-            $doc->loadHTML($response);
+            $doc->loadHTML($response->body());
             $doc->normalize();
             $lis = $doc->getElementsByTagName('li');
         } catch (Exception $exception) {

@@ -58,7 +58,7 @@ class OWMPushNotificationController extends Controller
 
         //     //$oWMPushNotification->open_weather_map_city_id = $alert['a'];
         //     $oWMPushNotification->save();
-        }
+        // }
     }
 
 }

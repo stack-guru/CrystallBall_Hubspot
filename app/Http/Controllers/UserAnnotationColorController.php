@@ -39,20 +39,24 @@ class UserAnnotationColorController extends Controller
             $userAnnotationColor = new UserAnnotationColor;
             $userAnnotationColor->user_id = $userId;
 
-            $userAnnotationColor->manual = '#227c9d';
-            $userAnnotationColor->csv = '#227c9d';
-            $userAnnotationColor->api = '#227c9d';
-            $userAnnotationColor->holidays = '#227c9d';
-            $userAnnotationColor->google_algorithm_updates = '#227c9d';
-            $userAnnotationColor->retail_marketings = '#227c9d';
-            $userAnnotationColor->weather_alerts = '#227c9d';
-            $userAnnotationColor->web_monitors = '#227c9d';
-            $userAnnotationColor->wordpress_updates = '#227c9d';
-            $userAnnotationColor->google_alerts = '#227c9d';
-            $userAnnotationColor->keyword_tracking = '#227c9d';
-            $userAnnotationColor->facebook_tracking = '#227c9d';
-            $userAnnotationColor->bitbucket_tracking = '#227c9d';
-            $userAnnotationColor->github_tracking = '#227c9d';
+            $defaultColor = '#1976fe';
+            $userAnnotationColor->manual = $defaultColor;
+            $userAnnotationColor->csv = $defaultColor;
+            $userAnnotationColor->api = $defaultColor;
+            $userAnnotationColor->holidays = $defaultColor;
+            $userAnnotationColor->google_algorithm_updates = $defaultColor;
+            $userAnnotationColor->retail_marketings = $defaultColor;
+            $userAnnotationColor->weather_alerts = $defaultColor;
+            $userAnnotationColor->web_monitors = $defaultColor;
+            $userAnnotationColor->wordpress_updates = $defaultColor;
+            $userAnnotationColor->google_alerts = $defaultColor;
+            $userAnnotationColor->keyword_tracking = $defaultColor;
+            $userAnnotationColor->facebook_tracking = $defaultColor;
+            $userAnnotationColor->bitbucket_tracking = $defaultColor;
+            $userAnnotationColor->github_tracking = $defaultColor;
+            $userAnnotationColor->wordpress = $defaultColor;
+            $userAnnotationColor->shopify = $defaultColor;
+            $userAnnotationColor->apple_podcast = $defaultColor;
 
             $userAnnotationColor->save();
         }

@@ -72,6 +72,42 @@ class RegisterController extends Controller
                 'string',
                 'email',
                 'max:255',
+                // email validation(only business email available.)
+                function ($attribute, $value, $fail){                                       
+                    $domainPart = explode('@', $value)[1] ?? null;
+                    if (!$domainPart) {
+                        $fail('The ' . $attribute . ' is null.');
+                    }
+                    if ($domainPart == 'gmail.com'
+                        || $domainPart == 'outlook.com'
+                        || $domainPart == 'yahoo.com'
+                        || $domainPart == '10minutemail.com'
+                        || $domainPart == 'mailnator.com'
+                        || $domainPart == 'temp-mail.org'
+                        || $domainPart == 'e4ward.com'
+                        || $domainPart == 'guerrillamail.com'
+                        || $domainPart == 'mohmal.com'
+                        || $domainPart == 'throwawaymail.com'
+                        || $domainPart == 'getnada.com'
+                        || $domainPart == 'yopmail.com'
+                        || $domainPart == 'spambox.xyz'
+                        || $domainPart == 'trashmail.top'
+                        || $domainPart == 'tempmail.win'
+                        || $domainPart == 'postbox.cyou'
+                        || $domainPart == 'msn.com'
+                        || $domainPart == 'tutanota.com'
+                        || $domainPart == 'posteo.com'
+                        || $domainPart == 'startmail.com'
+                        || $domainPart == 'runbox.com'
+                        || $domainPart == 'countermail.com'
+                        || $domainPart == 'protonmail.com'
+                        || $domainPart == 'mailbox.org'
+                        || $domainPart == 'mailfence.com') {
+                        $fail('The ' . $attribute . ' must be a business email address!');
+                    }
+                    return true;
+                },
+                // 
                 function ($attribute, $value, $fail) {
 
                     $user = User::where('email', $value)->first();
@@ -101,8 +137,14 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
+        $request->merge([
+            'name' => explode('@', $request->email)[0] ?? null
+        ]);
         $this->validator($request->all())->validate();
-
+        $user = User::where('email','LIKE','%'.explode('@', $request->email)[1].'%')->first();
+        if ($user) {
+            return redirect()->to(url('email_error'));
+        }
         event(new \App\Events\RegisteredNewUser($user = $this->create($request->all())));
 
         $this->guard()->login($user);

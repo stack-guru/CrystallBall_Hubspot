@@ -14,7 +14,8 @@ export default class UserStartupConfigurationModal extends Component {
             automations: [],
             integrations: [],
             views: [],
-            feedback: ''
+            feedback: '',
+            user: props.user
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.incrementStep = this.incrementStep.bind(this);
@@ -22,15 +23,12 @@ export default class UserStartupConfigurationModal extends Component {
         this.toggleAutomation = this.toggleAutomation.bind(this);
         this.toggleIntegration = this.toggleIntegration.bind(this);
         this.toggleView = this.toggleView.bind(this);
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
-
     handleSubmit() {
         let formData = new FormData;
         Object.keys(this.state.stepResponses).forEach(k => {
@@ -39,7 +37,6 @@ export default class UserStartupConfigurationModal extends Component {
             formData.append('data_label[]', stepResponse.data_label);
             formData.append('data_value[]', stepResponse.data_value);
         });
-
         HttpClient.post('/user-startup-configuration', formData).then(resp => {
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
@@ -47,15 +44,12 @@ export default class UserStartupConfigurationModal extends Component {
             this.setState({ isBusy: false, errors: err });
         });
     }
-
     toggleModal() {
         this.setState({ isOpen: !this.state.isOpen });
     }
-
     incrementStep(increment = 1) {
         this.setState({ stepNumber: this.state.stepNumber + increment })
     }
-
     recordStepResponse(name, value, stateCallback = () => { }) {
         this.setState({
             stepResponses: {
@@ -68,176 +62,433 @@ export default class UserStartupConfigurationModal extends Component {
             }
         }, stateCallback);
     }
-
     toggleAutomation(automationName) {
         const { automations } = this.state;
-
         if (automations.indexOf(automationName) > -1) {
             this.setState({ automations: automations.filter(a => a !== automationName) });
         } else {
             this.setState({ automations: [...automations, automationName] });
         }
     }
-
     toggleIntegration(integrationName) {
         const { integrations } = this.state;
-
         if (integrations.indexOf(integrationName) > -1) {
             this.setState({ integrations: integrations.filter(a => a !== integrationName) });
         } else {
             this.setState({ integrations: [...integrations, integrationName] });
         }
     }
-
     toggleView(viewName) {
         const { views } = this.state;
-
         if (views.indexOf(viewName) > -1) {
             this.setState({ views: views.filter(a => a !== viewName) });
         } else {
             this.setState({ views: [...views, viewName] });
         }
     }
-
     render() {
-
+        const popupSidebar = <aside className="popupSidebar p-6">
+            <div className="progressbar d-flex align-items-center">
+                <span className='ml-2'>20%</span>
+                <div className="progress flex-grow-1">
+                    <div className="progress-bar" role="progressbar" style={{ "width": "20%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div className="checklist">
+                <strong>Checklist</strong>
+                <ul>
+                    <li>
+                        <span className='status-icon checked'><img src="./icon-checked-green.svg" /></span>
+                        <span className='pl-2'>Invite Co-workers</span>
+                    </li>
+                    <li>
+                        <span className='status-icon current'><img className='loader' src="./icon-current.svg" /></span>
+                        <span className='pl-2'>Install Chrome Extension</span>
+                    </li>
+                    <li>
+                        <span className='status-icon icon-list'></span>
+                        <span className='pl-2'>Connect Apps</span>
+                    </li>
+                    <li>
+                        <span className='status-icon icon-list'></span>
+                        <span className='pl-2'>Another Item</span>
+                    </li>
+                    <li>
+                        <span className='status-icon icon-list'></span>
+                        <span className='pl-2'>Download Blah</span>
+                    </li>
+                </ul>
+            </div>
+            <button className='btn-bookADemo'>
+                <span>Book a Demo</span>
+                <span className='ml-2'>
+                    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.58475 8.28475C8.44126 8.14125 8.37238 7.96786 8.37812 7.76457C8.38434 7.56128 8.45919 7.38789 8.60269 7.24439L10.6296 5.21749H1.6296C1.42631 5.21749 1.25579 5.14861 1.11803 5.01085C0.980749 4.87357 0.912109 4.70329 0.912109 4.5C0.912109 4.29671 0.980749 4.12619 1.11803 3.98843C1.25579 3.85115 1.42631 3.78251 1.6296 3.78251H10.6296L8.58475 1.73767C8.44126 1.59417 8.36951 1.42365 8.36951 1.2261C8.36951 1.02903 8.44126 0.858744 8.58475 0.715246C8.72825 0.571749 8.89878 0.5 9.09632 0.5C9.29339 0.5 9.46368 0.571749 9.60718 0.715246L12.8897 3.99776C12.9614 4.06951 13.0124 4.14723 13.0425 4.23094C13.0722 4.31465 13.087 4.40433 13.087 4.5C13.087 4.59566 13.0722 4.68535 13.0425 4.76906C13.0124 4.85277 12.9614 4.93049 12.8897 5.00224L9.58924 8.30269C9.4577 8.43423 9.29339 8.5 9.09632 8.5C8.89878 8.5 8.72825 8.42825 8.58475 8.28475Z" fill="#096DB7" />
+                    </svg>
+                </span>
+            </button>
+        </aside>
+        // if (!this.props.isOpen) return null;
         const { stepNumber, automations, integrations, views } = this.state;
-
+        const list = [];
+        {
+            this.state.user.starter_configuration_checklist?.map(checklist =>
+                list.push(<li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>{checklist.label}</li>)
+            )
+        }
         let modalBodyFooter = undefined;
         switch (stepNumber) {
             case 0:
                 modalBodyFooter = [
-                    <ModalBody id="scw-modal-body" className="with-background">
-                        <center>
-                            <h1>Let's build the best experience for you</h1>
-                            <Button style={{ left: '45%' }} className="mt-8 to-below" color="primary" onClick={() => { this.recordStepResponse('START', true); this.incrementStep(1) }} >Let's Start</Button>
-                        </center>
-                    </ModalBody>
+                    <>
+                        <div className="d-flex">
+                            {popupSidebar}
+                            <ModalBody className='p-6 contentArea helloContent flex-grow-1'>
+                                <h1>Hello {this.state.user.name} 👋</h1>
+                                <strong>Let's get you started.</strong>
+                                <p>Based on your website, we recommend you some steps to enhance your experience. You can see the checklist on left, and even if you cancel, you can resume the setup whenever you like from the header</p>
+                                <div className='d-flex justify-content-center'>
+                                    <Button className='btn-theme' onClick={() => { this.recordStepResponse('START', true); this.incrementStep(1) }}>Let's Go</Button>
+                                </div>
+                            </ModalBody>
+                        </div>
+                    </>
                 ];
                 break;
             case 1:
                 modalBodyFooter = [
-                    <ModalBody id="scw-modal-body">
-                        <center>
-                            <h1>Do you want to import old annotations from Universal Analytics?</h1>
-                            <Button style={{ left: '40%' }} color="primary" onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', true); this.incrementStep(1) }} className="to-below">Yes</Button>
-                            <Button style={{ right: '40%' }} color="secondary" onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(2) }} className="ml-4 to-below">No</Button>
-                        </center>
-                    </ModalBody>
-                    ,
-                    <ModalFooter className="border-top-0"></ModalFooter>
+                    <div className="d-flex">
+                        {popupSidebar}
+                        <ModalBody className='p-6 contentArea installChromeExtension flex-grow-1'>
+                            <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
+                                <h2>Install Chrome Extension</h2>
+                                <span className='cursor-pointer'>
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z" fill="#a6a6a6" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <div className='chromeExtensionContent d-flex flex-row-reverse align-items-center'>
+                                <div className='pl-4 flex-shrink-0'><img src="./chrome-01.svg" /></div>
+                                <div className='flex-grow-1 d-flex flex-column'>
+                                    <strong><img src="./chromeExtension.svg" /></strong>
+                                    <p>Install our extension, It's like a sticky note on your data charts.</p>
+                                    <ul>
+                                        <li>
+                                            <span><img src="./icon-listTick.svg" /></span>
+                                            <span>GA4 & Universal Analytics</span>
+                                        </li>
+                                        <li>
+                                            <span><img src="./icon-listTick.svg" /></span>
+                                            <span>Google Ads</span>
+                                        </li>
+                                        <li>
+                                            <span><img src="./icon-listTick.svg" /></span>
+                                            <span>Add annotations directly from your browser</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className='popupBtnBox d-flex justify-content-between align-items-center'>
+                                <Button onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(1) }} className="btn-cancel">Skip this</Button>
+                                <Button className="btn-theme">Continue</Button>
+                            </div>
+                        </ModalBody>
+                    </div>
                 ];
                 break;
             case 2:
                 modalBodyFooter = [
-                    <ModalBody id="scw-modal-body">
-                        <center>
-                            <h1>What Automation would you like to add?</h1>
-                            <Button color="light" onClick={() => { this.toggleAutomation('WEB_MONITORING'); }} className={"mt-3" + (automations.indexOf('WEB_MONITORING') > -1 ? " active" : "")}>Web Monitoring</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('GOOGLE_ALERT'); }} className={"mt-3 ml-3" + (automations.indexOf('GOOGLE_ALERT') > -1 ? " active" : "")}>News Alert</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('GOOGLE_UPDATES'); }} className={"mt-3 ml-3" + (automations.indexOf('GOOGLE_UPDATES') > -1 ? " active" : "")}>Google Updates</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('RETAIL_MARKETING_DATES'); }} className={"mt-3 ml-3" + (automations.indexOf('RETAIL_MARKETING_DATES') > -1 ? " active" : "")}>Retail Marketing Dates</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('HOLIDAYS'); }} className={"mt-3 ml-3" + (automations.indexOf('HOLIDAYS') > -1 ? " active" : "")}>Holidays</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('WEATHER_ALERTS'); }} className={"mt-3 ml-3" + (automations.indexOf('WEATHER_ALERTS') > -1 ? " active" : "")}>Weather Alerts</Button>
-                            <Button color="light" onClick={() => { this.toggleAutomation('WORDPRESS_UPDATES'); }} className={"mt-3 ml-3" + (automations.indexOf('WORDPRESS_UPDATES') > -1 ? " active" : "")}>WordPress Updates</Button>
-                        </center>
-                    </ModalBody>
-                    ,
-                    <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => { this.recordStepResponse('automations', JSON.stringify(this.state.automations)); this.incrementStep(1) }} >Next</Button>
-                    </ModalFooter>
+                    <div className="d-flex">
+                        {popupSidebar}
+                        <ModalBody className='p-6 contentArea googleAnalytics flex-grow-1'>
+                            <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
+                                <h2>Connect Google Analytics</h2>
+                                <span className='cursor-pointer'>
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z" fill="#a6a6a6" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <div className='connectGoogleAnalytics d-flex justify-content-center align-items-center'>
+                                <a href="#"><img src="/images/connect_with_google.svg" /></a>
+                            </div>
+                            <div className='popupBtnBox d-flex justify-content-between align-items-center'>
+                                <Button onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(1) }} className="btn-cancel">Skip this</Button>
+                                <Button className="btn-theme">Continue</Button>
+                            </div>
+                        </ModalBody>
+                    </div>
                 ];
                 break;
             case 3:
                 modalBodyFooter = [
-                    <ModalBody id="scw-modal-body">
-                        <center>
-                            <h1>What tools would you like to connect?</h1>
-                            <Button color="light" onClick={() => { this.toggleIntegration('ADWORDS'); }} className={"mt-3" + (integrations.indexOf('ADWORDS') > -1 ? " active" : "")}><img src="/images/icons/adwords.png" width="20px" height="auto" className="mr-2" /> Google AdWords</Button>
-                            <Button color="light" onClick={() => { this.toggleIntegration('MAILCHIMP'); }} className={"mt-3 ml-3" + (integrations.indexOf('MAILCHIMP') > -1 ? " active" : "")}><img src="/images/icons/mailchimp.png" width="20px" height="auto" className="mr-2" /> MailChimp</Button>
-                            <Button color="light" onClick={() => { this.toggleIntegration('SHOPIFY'); }} className={"mt-3 ml-3" + (integrations.indexOf('SHOPIFY') > -1 ? " active" : "")}><img src="/images/icons/shopify.png" width="20px" height="auto" className="mr-2" /> Shopify</Button>
-                            <Button color="light" onClick={() => { this.toggleIntegration('SLACK'); }} className={"mt-3 ml-3" + (integrations.indexOf('SLACK') > -1 ? " active" : "")}><img src="/images/icons/slack.png" width="20px" height="auto" className="mr-2" /> Slack</Button>
-                            <Button color="light" onClick={() => { this.toggleIntegration('ASANA'); }} className={"mt-3 ml-3" + (integrations.indexOf('ASANA') > -1 ? " active" : "")}><img src="/images/icons/asana.png" width="20px" height="auto" className="mr-2" /> Asana</Button>
-                            <Button color="light" onClick={() => { this.toggleIntegration('JIRA'); }} className={"mt-3 ml-3" + (integrations.indexOf('JIRA') > -1 ? " active" : "")}><img src="/images/icons/jira.png" width="20px" height="auto" className="mr-2" /> Jira</Button>
-                            <Button color="light" onClick={() => { this.toggleIntegration('TRELLO'); }} className={"mt-3 ml-3" + (integrations.indexOf('TRELLO') > -1 ? " active" : "")}><img src="/images/icons/trello.png" width="20px" height="auto" className="mr-2" /> Trello</Button>
-                            <Button color="light" onClick={() => { this.toggleIntegration('GITHUB'); }} className={"mt-3 ml-3" + (integrations.indexOf('GITHUB') > -1 ? " active" : "")}><img src="/images/icons/github.png" width="20px" height="auto" className="mr-2" /> GitHub</Button>
-                            <Button color="light" onClick={() => { this.toggleIntegration('BITBUCKET'); }} className={"mt-3 ml-3" + (integrations.indexOf('BITBUCKET') > -1 ? " active" : "")}><img src="/images/icons/bitbucket.png" width="20px" height="auto" className="mr-2" /> Bitbucket</Button>
-                            <Button color="light" onClick={() => { this.toggleIntegration('GOOGLE_SHEETS'); }} className={"mt-3 ml-3" + (integrations.indexOf('GOOGLE_SHEETS') > -1 ? " active" : "")}><img src="/images/icons/google-sheets.png" width="20px" height="auto" className="mr-2" /> Google Spreadsheet</Button>
-                            <Button color="light" onClick={() => { this.toggleIntegration('OTHER'); }} className={"mt-3 ml-3" + (integrations.indexOf('OTHER') > -1 ? " active" : "")}>Other</Button>
-                        </center>
-                    </ModalBody>
-                    ,
-                    <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => { this.recordStepResponse('integrations', JSON.stringify(this.state.integrations)); this.incrementStep(1) }} >Next</Button>
-                    </ModalFooter>
+                    <div className="d-flex">
+                        {popupSidebar}
+                        <ModalBody className='p-6 contentArea GAandSearchConsole flex-grow-1'>
+                            <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
+                                <h2>Connect GA & Search Console</h2>
+                                <span className='cursor-pointer'>
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z" fill="#a6a6a6" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <div className='connectGAandSearchConsole d-flex flex-column'>
+                                <p className='m-0'>Please select URLs for each property</p>
+                                <div className='dataTableAnalyticsAccount'>
+                                    <div className='d-flex flex-column'>
+                                        <div className='d-flex justify-content-start analyticTopBar'>
+                                            <div className='d-flex align-items-center pr-3'>
+                                                <span className='pr-2'><img src="/icon-g.svg" /></span>
+                                                <span>{this.state.user.name}</span>
+                                            </div>
+                                            <div className='d-flex align-items-center'>
+                                                <span className='pr-2'><img src="/icon-bars.svg" /></span>
+                                                <span>Crystal ball</span>
+                                            </div>
+                                        </div>
+                                        <div className='grid2layout'>
+                                            <div className='w-100 d-flex justify-content-between align-items-center'>
+                                                <span>A single property</span>
+                                                <span><img src="/icon-unlink-red.svg" /></span>
+                                            </div>
+                                            <div className="singleCol text-left d-flex flex-column">
+                                                <div className="themeNewInputStyle position-relative w-100">
+                                                    <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                                    <select name="" value='' className="form-control selected">
+                                                        <option value="Null">Select website</option>
+                                                    </select>
+                                                    <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='d-flex flex-column'>
+                                        <div className='d-flex justify-content-start analyticTopBar'>
+                                            <div className='d-flex align-items-center pr-3'>
+                                                <span className='pr-2'><img src="/icon-g.svg" /></span>
+                                                <span>{this.state.user.name}</span>
+                                            </div>
+                                            <div className='d-flex align-items-center'>
+                                                <span className='pr-2'><img src="/icon-bars.svg" /></span>
+                                                <span>Crystal ball</span>
+                                            </div>
+                                        </div>
+                                        <div className='grid2layout'>
+                                            <div className='w-100 d-flex justify-content-between align-items-center'>
+                                                <span>A single property</span>
+                                                <span><img src="/icon-unlink-red.svg" /></span>
+                                            </div>
+                                            <div className="singleCol text-left d-flex flex-column">
+                                                <div className="themeNewInputStyle position-relative w-100">
+                                                    <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                                    <select name="" value='' className="form-control selected">
+                                                        <option value="Null">Select website</option>
+                                                    </select>
+                                                    <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='popupBtnBox d-flex justify-content-between align-items-center'>
+                                <Button onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(1) }} className="btn-cancel">Skip this</Button>
+                                <Button className="btn-theme">Continue</Button>
+                            </div>
+                        </ModalBody>
+                    </div>
                 ];
                 break;
             case 4:
                 modalBodyFooter = [
-                    <ModalBody id="scw-modal-body">
-                        <center>
-                            <h1>Where would you like to view your annotations?</h1>
-                        </center>
-                        <div className="row">
-                            <div className="col-lg-3 col-sm-4">
-                                <a onClick={() => { this.toggleView('GOOGLE_ANALYTICS'); }} className={"image-button mt-3" + (views.indexOf('GOOGLE_ANALYTICS') > -1 ? " active" : "")}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-analytics.png" />
-                                </a>
+                    <div className="d-flex">
+                        {popupSidebar}
+                        <ModalBody className='p-6 contentArea recommendedApp flex-grow-1'>
+                            <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
+                                <h2>Connect Recommended Apps</h2>
+                                <span className='cursor-pointer'>
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z" fill="#a6a6a6" />
+                                    </svg>
+                                </span>
                             </div>
-                            <div className="col-lg-3 col-sm-4">
-                                <a onClick={() => { this.toggleView('GOOGLE_DATA_STUDIO'); }} className={"image-button mt-3" + (views.indexOf('GOOGLE_DATA_STUDIO') > -1 ? " active" : "")}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-data-studio.png" />
-                                </a>
+                            <div className='connectRecommendedApp d-flex justify-content-center align-items-center'>
+                                <div className="items">
+                                    {[
+                                        {
+                                            id: "02",
+                                            background: "#00749a",
+                                            dsKey: "",
+                                            enabled: true,
+                                            premium: false,
+                                            brandName: "Wordpress",
+                                            brandLogo: "/wordpress.svg",
+                                        },
+                                        {
+                                            id: "03",
+                                            background: "null",
+                                            dsKey: "",
+                                            enabled: false,
+                                            premium: false,
+                                            brandName: "Rank Tracking SERP",
+                                            brandLogo: "/serp.svg",
+                                        },
+                                        {
+                                            id: "10",
+                                            background: "#411442",
+                                            dsKey: "",
+                                            enabled: false,
+                                            premium: false,
+                                            commingSoon: true,
+                                            brandName: "slack",
+                                            brandLogo: "/slack.svg",
+                                        },
+                                        {
+                                            id: "11",
+                                            background: "#F8761F",
+                                            dsKey: "",
+                                            enabled: false,
+                                            premium: false,
+                                            commingSoon: true,
+                                            brandName: "Hubspot",
+                                            brandLogo: "/hubspot.svg",
+                                        },
+                                        {
+                                            id: "07",
+                                            background: "#004F9D",
+                                            dsKey: "",
+                                            enabled: false,
+                                            premium: false,
+                                            commingSoon: true,
+                                            brandName: "Facebook Ads",
+                                            brandLogo: "/facebookAds.svg",
+                                        },
+                                    ].map((item, itemKey) => (
+                                        <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color" : item.background || "#e0e0e0",}}>
+                                            { item.enabled ? (<i className="active fa fa-check-circle"></i>) : null }
+                                            <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width='140' />
+                                            { item.premium ? (<span className="btn-premium"><i className="fa fa-diamond"></i><span>Premium</span></span>) : null }
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                            <div className="col-lg-3 col-sm-4">
-                                <a onClick={() => { this.toggleView('MICROSOFT_POWER_BI'); }} className={"image-button mt-3" + (views.indexOf('MICROSOFT_POWER_BI') > -1 ? " active" : "")}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/microsoft-power-business-intelligence-cs.png" />
-                                </a>
+                            <div className='popupBtnBox d-flex justify-content-between align-items-center'>
+                                <Button onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(1) }} className="btn-cancel">Skip this</Button>
+                                <Button className="btn-theme">Continue</Button>
                             </div>
-                            {/* <div className="col-lg-3 col-sm-4">
-                                <a onClick={() => { this.toggleView('CHROME_EXTENSION'); }} className={"image-button mt-3" + (views.indexOf('CHROME_EXTENSION') > -1 ? " active" : "")}>
-                                    <img style={{ width: '90%', height: 'auto' }} src="/images/buttons/google-analytics.png" />
-                                </a>
-                            </div> */}
-                        </div>
-                    </ModalBody>
-                    ,
-                    <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => { this.recordStepResponse('views', JSON.stringify(this.state.views)); this.incrementStep(1) }} >Next</Button>
-                    </ModalFooter>
+                        </ModalBody>
+                    </div>
                 ];
                 break;
             case 5:
                 modalBodyFooter = [
-                    <ModalBody id="scw-modal-body" className="">
-                        <center>
-                            <h1>Invite your team</h1>
-                            <Button style={{ left: '40%' }} color="primary" onClick={() => { this.recordStepResponse('INVITE_YOUR_TEAM', true); this.incrementStep(1) }} className="to-below">Yes</Button>
-                            <Button style={{ right: '40%' }} color="secondary" onClick={() => { this.recordStepResponse('INVITE_YOUR_TEAM', false); this.incrementStep(1) }} className="ml-4 to-below">No</Button>
-                        </center>
-                    </ModalBody>
-                    ,
-                    <ModalFooter className="border-top-0">
-                    </ModalFooter>
+                    <div className="d-flex">
+                        {popupSidebar}
+                        <ModalBody className='p-6 contentArea coWorkers flex-grow-1'>
+                            <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
+                                <h2>Invite Co-workers</h2>
+                                <span className='cursor-pointer'>
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z" fill="#a6a6a6" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <div className='inviteCoWorkers d-flex justify-content-center align-items-center'>
+                                <form className='inviteForm'>
+                                    <legend>Enter details</legend>
+
+                                    <fieldset className='grid2layout'>
+                                        <div className="themeNewInputStyle">
+                                            <input type='text' className='form-control' placeholder='Full name' value='' id='' name='' />
+                                        </div>
+                                        <div className="themeNewInputStyle">
+                                            <input type='email' className='form-control' placeholder='Email' value='' id='' name='' />
+                                        </div>
+                                        <div className="themeNewInputStyle position-relative inputWithIcon">
+                                            <span className="cursor-pointer fa"><img src={"/icon-eye-close.svg"}/></span>
+                                            <input type='password' className='form-control' placeholder='Password' value='' id='' name='' />
+                                        </div>
+                                        <div className="themeNewInputStyle position-relative inputWithIcon">
+                                            <span className="cursor-pointer fa"><img src={"/icon-eye-blue.svg"}/></span>
+                                            <input type='password' className='form-control' placeholder='Confirm password' value='' id='' name='' />
+                                        </div>
+                                        <div className="themeNewInputStyle">
+                                            <select name='user_level' className='form-control' placeholder='User level' onChange='' value=''>
+                                                <option value="admin">Admin</option>
+                                                <option value="team">Read & Write</option>
+                                                <option value="viewer">Read</option>
+                                            </select>
+                                        </div>
+                                        <div className="themeNewInputStyle">
+                                            <input type='text' className='form-control' placeholder='Department' value='' id='' name='' />
+                                        </div>
+                                        <div className="themeNewInputStyle position-relative inputWithIcon">
+                                            <span className="cursor-pointer fa"><img src={"/icon-plus.svg"}/></span>
+                                            <input type='text' className='form-control' placeholder='Google accounts' value='' id='' name='' />
+                                        </div>
+                                        <div className="themeNewInputStyle">
+                                            <select name='user_level' className='form-control' placeholder='Team' onChange='' value=''>
+                                                <option value="admin">Admin</option>
+                                                <option value="team">Read & Write</option>
+                                                <option value="viewer">Read</option>
+                                            </select>
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset className="tags">
+                                        <span className="tag">All accounts</span>
+                                        <span className="tag">Crystal account</span>
+                                    </fieldset>
+
+                                    <fieldset>
+                                        <div className="themeNewInputStyle position-relative inputWithIcon">
+                                            <span className="textPlusIcon cursor-pointer">
+                                                <img src={"/icon-email.svg"}/>
+                                                <em>Invitations sent to</em>
+                                            </span>
+                                            <div className='invitationEmail'>
+                                                <div className="tags">
+                                                    <span className="tag">{this.state.user.email}</span>
+                                                    <span className="tag">wowmail@yahoo.com</span>
+                                                    <span className="tag">Adnie@hotmail.com</span>
+                                                    <span className="tag">Oswald_Ledner73@gmail.com</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div className='popupBtnBox d-flex justify-content-between align-items-center'>
+                                <Button onClick={() => { this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false); this.incrementStep(1) }} className="btn-cancel">Skip this</Button>
+                                <div>
+                                    <Button className="btn-theme mr-3">Send another</Button>
+                                    <Button className="btn-theme">Continue</Button>
+                                </div>
+                            </div>
+                        </ModalBody>
+                    </div>
                 ];
                 break;
             case 6:
                 modalBodyFooter = [
-                    <ModalBody id="scw-modal-body">
-                        <center>
-                            <h1>Is it something else do you need?</h1>
-                            <textarea name="feedback" value={this.state.feedback} onChange={this.handleChange} className="form-control"></textarea>
-                        </center>
-                    </ModalBody>
-                    ,
-                    <ModalFooter className="border-top-0">
-                        <Button color="primary" onClick={() => { this.recordStepResponse('feedback', this.state.feedback, this.handleSubmit); this.props.toggleShowTour(); }}  >Finish</Button>
-                    </ModalFooter>
+                    <div className="d-flex">
+                        {popupSidebar}
+                        <ModalBody className='p-6 contentArea goodWork flex-grow-1'>
+                            <strong><img src="/allDone.svg" width={180} height={180} /></strong>
+                            <h1>Good work, {this.state.user.name}!</h1>
+                            <p>Now you can go to your dashboard and do some productive work. Hooray 🎉</p>
+                            <div className='popupBtnBox d-flex justify-content-center'>
+                                <Button className='btn-theme' onClick={() => { this.props.closeModal() }}>Go to Dashboard</Button>
+                            </div>
+                        </ModalBody>
+                    </div>
                 ];
                 break;
         }
         return (
-            <Modal isOpen={this.props.isOpen} toggle={this.props.toggleShowTour} size="lg" centered={true} id="scw-modal" backdrop="static">
+            <Modal isOpen={this.props.isOpen} className='accountSetUpPopup' toggle={this.props.toggleShowTour} size="lg" centered={true} id="scw-modal" backdrop="static">
                 {modalBodyFooter}
             </Modal>
         )
