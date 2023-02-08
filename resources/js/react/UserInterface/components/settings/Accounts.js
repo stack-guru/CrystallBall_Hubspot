@@ -122,13 +122,24 @@ export default class Accounts extends React.Component {
             <div id="googleAccountPage" className="googleAccountPage pageWrapper">
                 <Container>
                     <div className="pageHeader googleAccountPageHead">
-                        <h2 className="pageTitle">Accounts</h2>
-                        {/* <div className="alert alert-danger border-0">
+                    <div className="d-flex justify-content-between align-items-center">
+                    <h2 className="pageTitle">Accounts</h2>
+                    <a href="javascript:void(0);"
+                        onClick={this.restrictionHandler}
+                        className="btn-adduser d-flex align-items-center justify-content-center">
+                        <i><img style={{width: 16, height: 16}} src={'/google-small.svg'} alt={'icon'} className="svg-inject socialImage" /></i>
+                        <span>Connect New Account</span>
+                    </a>
+                    </div>
+
+
+                    </div>
+
+                    {/* <div className="alert alert-danger border-0">
                             <i><img src={'/icon-info-red.svg'} alt={'icon'} className="svg-inject" /></i>
                             <span>One of your Google accounts doesn’t  have required permissions given. Please remove and reconnect the account.</span>
                         </div> */}
-                    </div>
-                    <div className="row ml-0 mr-0 my-5">
+                    {/* <div className="row ml-0 mr-0 my-5">
                         <div className="col-12 text-center text-md-right text-lg-right">
                             <a href="#"
                                 onClick={this.restrictionHandler}
@@ -136,23 +147,23 @@ export default class Accounts extends React.Component {
                                 Connect New Account
                             </a>
                         </div>
-                    </div>
+                    </div> */}
                     <section className='accountsHolder'>
                         <h3>Google accounts</h3>
                         <div className="accounts googleAccounts">
                         {
                             this.state.googleAccounts.map(googleAccount => {
                                 // className: reconnect
-                                return <div className='account'> 
-                                            <figure><img src={googleAccount.avatar} alt='user image' /></figure>
+                                return <div className='account'>
+                                            <figure><img className='w-100' src={googleAccount.avatar} alt='user image' /></figure>
                                             <div className='nameAndEmail'>
                                                 <h4>{googleAccount.name}</h4>
                                                 <span>{googleAccount.email}</span>
                                             </div>
                                             <div className='btns'>
                                                 <button className='btn-change'>Change</button>
-                                                <button className='btn-disconnect' 
-                                                onClick={() => this.handleDelete(googleAccount.id)} 
+                                                <button className='btn-disconnect'
+                                                onClick={() => this.handleDelete(googleAccount.id)}
                                                 >Disconnect</button>
                                             </div>
                                         </div>
@@ -164,7 +175,7 @@ export default class Accounts extends React.Component {
                         <h3>Social accounts</h3>
                         <div className="accounts socialAccounts">
                             {
-                                this.state.user.is_ds_twitter_tracking_enabled ? 
+                                this.state.user.is_ds_twitter_tracking_enabled ?
                                 <div className='account'>
                                     <figure><img className='socialImage' src='/twitter-small.svg' alt='user image' /></figure>
                                     <div className='nameAndEmail'>
@@ -173,14 +184,14 @@ export default class Accounts extends React.Component {
                                     </div>
                                     <div className='btns'>
                                         <button className='btn-change'>Change</button>
-                                        <button className='btn-disconnect' 
+                                        <button className='btn-disconnect'
                                         onClick={() => this.updateUserService('is_ds_twitter_tracking_enabled')}
                                         >Disconnect</button>
                                     </div>
                                 </div>
                             : ''}
                             {
-                                this.state.user.is_ds_bitbucket_tracking_enabled ? 
+                                this.state.user.is_ds_bitbucket_tracking_enabled ?
                                 <div className='account'>
                                     <figure><img className='socialImage' src='/bitbucket-small.svg' alt='user image' /></figure>
                                     <div className='nameAndEmail'>
@@ -189,14 +200,14 @@ export default class Accounts extends React.Component {
                                     </div>
                                     <div className='btns'>
                                         <button className='btn-change'>Change</button>
-                                        <button className='btn-disconnect' 
+                                        <button className='btn-disconnect'
                                         onClick={() => this.updateUserService('is_ds_bitbucket_tracking_enabled')}
                                         >Disconnect</button>
                                     </div>
                                 </div>
                             : ''}
                             {
-                                this.state.user.is_ds_github_tracking_enabled ? 
+                                this.state.user.is_ds_github_tracking_enabled ?
                                 <div className='account'>
                                     <figure><img className='socialImage' src='/images/icons/github.png' alt='user image' /></figure>
                                     <div className='nameAndEmail'>
@@ -205,14 +216,14 @@ export default class Accounts extends React.Component {
                                     </div>
                                     <div className='btns'>
                                         <button className='btn-change'>Change</button>
-                                        <button className='btn-disconnect' 
+                                        <button className='btn-disconnect'
                                         onClick={() => this.updateUserService('is_ds_github_tracking_enabled')}
                                         >Disconnect</button>
                                     </div>
                                 </div>
                             : ''}
                             {
-                                this.state.user.is_ds_instagram_tracking_enabled ? 
+                                this.state.user.is_ds_instagram_tracking_enabled ?
                                 <div className='account'>
                                     <figure><img className='socialImage' src='/images/icons/instagram.png' alt='user image' /></figure>
                                     <div className='nameAndEmail'>
@@ -221,14 +232,14 @@ export default class Accounts extends React.Component {
                                     </div>
                                     <div className='btns'>
                                         <button className='btn-change'>Change</button>
-                                        <button className='btn-disconnect' 
+                                        <button className='btn-disconnect'
                                         onClick={() => this.updateUserService('is_ds_instagram_tracking_enabled')}
                                         >Disconnect</button>
                                     </div>
                                 </div>
                             : ''}
                             {
-                                this.state.user.is_ds_facebook_tracking_enabled ? 
+                                this.state.user.is_ds_facebook_tracking_enabled ?
                                 <div className='account'>
                                     <figure><img className='socialImage' src='/images/icons/facebook.png' alt='user image' /></figure>
                                     <div className='nameAndEmail'>
@@ -237,7 +248,7 @@ export default class Accounts extends React.Component {
                                     </div>
                                     <div className='btns'>
                                         <button className='btn-change'>Change</button>
-                                        <button className='btn-disconnect' 
+                                        <button className='btn-disconnect'
                                         onClick={() => this.updateUserService('is_ds_facebook_tracking_enabled')}
                                         >Disconnect</button>
                                     </div>

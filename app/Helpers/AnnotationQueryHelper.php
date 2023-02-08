@@ -127,7 +127,7 @@ class AnnotationQueryHelper
     public static function userAnnotationsQuery(User $user, array $userIdsArray, $showDisabled = false, string $googleAnalyticsPropertyId = null, string $userId = '*', string $showWebMonitoring = 'false', string $showManualAnnotations = 'false', string  $showCSVAnnotations = 'false', string $showAPIAnnotations = 'false')
     {
         $annotationsQuery = "";
-        $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `description`, `annotations`.`created_at`, `annotations`.`added_by` FROM `annotations`";
+        $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `added_by`, `description`, `annotations`.`created_at` FROM `annotations`";
         if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
             $annotationsQuery .= " LEFT JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
         }
@@ -184,7 +184,7 @@ class AnnotationQueryHelper
     public static function googleAlgorithmQuery(User $user)
     {
         $annotationsQuery = "";
-        $annotationsQuery .= "select 1, 2, update_date AS show_at, google_algorithm_updates.id, category, event_name, NULL as url, description, update_date, added_by from `google_algorithm_updates`";
+        $annotationsQuery .= "select 1, update_date AS show_at, google_algorithm_updates.id, category, event_name, NULL as url, NULL as added_by, description, update_date from `google_algorithm_updates`";
         $gAUConf = UserDataSource::where('user_id', $user->id)->where('ds_code', 'google_algorithm_update_dates')->first();
         if ($gAUConf) {
             if ($gAUConf->status != '' && $gAUConf->status != null) {
@@ -197,37 +197,37 @@ class AnnotationQueryHelper
 
     public static function webMonitorQuery(array $userIdsArray)
     {
-        return "select 1, 2, show_at, id, category, event_name, url, description, show_at from `web_monitor_annotations` WHERE `web_monitor_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, show_at, id, category, event_name, url, NULL as added_by, description, show_at from `web_monitor_annotations` WHERE `web_monitor_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function holidaysQuery(User $user, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
-        return "select 1, 2, holiday_date AS show_at, holidays.id, category, event_name, NULL as url, description, holiday_date from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays')";
+        return "select 1, holiday_date AS show_at, holidays.id, category, event_name, NULL as url, NULL as added_by, description, holiday_date from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'holidays')";
     }
 
     public static function retailMarketingQuery(User $user, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
-        return "select 1, 2, show_at, retail_marketings.id, category, event_name, NULL as url, description, show_at from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings')";
+        return "select 1, show_at, retail_marketings.id, category, event_name, NULL as url, NULL as added_by, description, show_at from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'retail_marketings')";
     }
 
     public static function openWeatherMapQuery(User $user, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
-        return "select 1, 2, alert_date, open_weather_map_alerts.id, open_weather_map_cities.name, description, null, description, alert_date from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` inner join `open_weather_map_cities` on `open_weather_map_cities`.id = `open_weather_map_alerts`.`open_weather_map_city_id` where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities')";
+        return "select 1, alert_date, open_weather_map_alerts.id, open_weather_map_cities.name, description, null,NULL as added_by, description, alert_date from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` inner join `open_weather_map_cities` on `open_weather_map_cities`.id = `open_weather_map_alerts`.`open_weather_map_city_id` where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities')";
     }
 
     public static function googleAlertsQuery(User $user, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
-        return "select 1, 2, alert_date, google_alerts.id, 'News Alert', title, google_alerts.url, description, alert_date from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords' AND DATE(google_alerts.created_at) > DATE(DATE_ADD(uds.created_at, INTERVAL 1 DAY)) )";
+        return "select 1, alert_date, google_alerts.id, 'News Alert', title, google_alerts.url, NULL as added_by, description, alert_date from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'google_alert_keywords' AND DATE(google_alerts.created_at) > DATE(DATE_ADD(uds.created_at, INTERVAL 1 DAY)) )";
     }
 
     public static function wordPressQuery()
     {
         $annotationsQuery = "";
-        $annotationsQuery .= "select 1, 2, update_date, wordpress_updates.id, category, event_name, url, description, update_date from `wordpress_updates`";
+        $annotationsQuery .= "select 1, update_date, wordpress_updates.id, category, event_name, url, NULL as added_by, description, update_date from `wordpress_updates`";
         if (UserDataSource::ofCurrentUser()->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count()) {
             $annotationsQuery .= " where (update_date BETWEEN " . Carbon::now()->subYear()->format('Y-m-d') . " AND " . Carbon::now()->format('Y-m-d') . " )";
         }
@@ -237,41 +237,41 @@ class AnnotationQueryHelper
 
     public static function keywordTrackingQuery(array $userIdsArray)
     {
-        return "select 1, 2, created_at, null, category, event_name, url, description, created_at from `keyword_tracking_annotations` WHERE `keyword_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, created_at, null, category, event_name, url, NULL as added_by, description, created_at from `keyword_tracking_annotations` WHERE `keyword_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function facebookTrackingQuery(array $userIdsArray)
     {
-        return "select 1, 2, created_at, null, category, event_name, url, description, created_at from `facebook_tracking_annotations` WHERE `facebook_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, created_at, null, category, event_name, url, NULL as added_by, description, created_at from `facebook_tracking_annotations` WHERE `facebook_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function instagramTrackingQuery(array $userIdsArray)
     {
-        return "select 1, 2, created_at, null, category, event_name, url, description, created_at from `instagram_tracking_annotations` WHERE `instagram_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, created_at, null, category, event_name, url, NULL as added_by, description, created_at from `instagram_tracking_annotations` WHERE `instagram_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function twitterTrackingQuery(array $userIdsArray)
     {
-        return "select 1, 2, created_at, null, category, event_name, url, description, created_at from `twitter_tracking_annotations` WHERE `twitter_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, created_at, null, category, event_name, url, NULL as added_by, description, created_at from `twitter_tracking_annotations` WHERE `twitter_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function bitbucketCommitQuery(array $userIdsArray)
     {
-        return "select 1, 2, created_at, null, category, event_name, url, description, created_at from `bitbucket_commit_annotations` WHERE `bitbucket_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, created_at, null, category, event_name, url, NULL as added_by, description, created_at from `bitbucket_commit_annotations` WHERE `bitbucket_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function gitHubCommitQuery(array $userIdsArray)
     {
-        return "select 1, 2, created_at, null, category, event_name, url, description, created_at from `github_commit_annotations` WHERE `github_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, created_at, null, category, event_name, url, NULL as added_by, description, created_at from `github_commit_annotations` WHERE `github_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function googleAdsQuery(array $userIdsArray)
     {
-        return "select 1, 2, created_at, null, category, event_name, url, description, created_at from `google_ads_annotations` WHERE `google_ads_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, created_at, null, category, event_name, url, NULL as added_by, description, created_at from `google_ads_annotations` WHERE `google_ads_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function applePodcastQuery(array $userIdsArray)
     {
-        return "select 1, 2, podcast_date, null, category, event, url, description, podcast_date from `apple_podcast_annotations` WHERE `apple_podcast_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, podcast_date, null, category, event, url, NULL as added_by, description, podcast_date from `apple_podcast_annotations` WHERE `apple_podcast_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 }

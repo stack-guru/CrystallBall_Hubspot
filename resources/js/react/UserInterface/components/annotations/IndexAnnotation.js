@@ -11,8 +11,13 @@ import AppsModal from "../AppsMarket/AppsModal";
 import AnnotationsUpdate from './EditAnnotation';
 import ShowChartAnnotation from './ShowChartAnnotation';
 import Toast from "../../utils/Toast";
+import axios from 'axios';
 
 class IndexAnnotations extends React.Component {
+
+    axiosCancelToken = null;
+    loadAnnotationsCancelToken = null;
+
     constructor() {
         super();
         this.state = {
@@ -56,6 +61,7 @@ class IndexAnnotations extends React.Component {
         this.seeCompleteDescription = this.seeCompleteDescription.bind(this);
     }
     componentDidMount() {
+        this.axiosCancelToken = axios.CancelToken;
         document.title = "Annotation";
 
         this.setState({ isBusy: true, isLoading: true });
@@ -186,15 +192,24 @@ class IndexAnnotations extends React.Component {
         if (pageSize) link += `&page_size=${pageSize}`;
         if (pageNumber) link += `&page_number=${pageNumber}`;
 
-        HttpClient.get(link)
+        if (this.loadAnnotationsCancelToken) {
+            this.loadAnnotationsCancelToken.cancel('Request overridden.');
+        }
+        this.loadAnnotationsCancelToken = this.axiosCancelToken.source();
+        HttpClient.get(
+            link,
+            { cancelToken: this.loadAnnotationsCancelToken.token }
+        )
             .then(
                 (response) => {
+                    this.loadAnnotationsCancelToken = null;
                     this.setState({
                         annotations: this.state.annotations.concat(response.data.annotations),
                         isLoading: false,
                     });
                 },
                 (err) => {
+                    this.loadAnnotationsCancelToken = null;
                     this.setState({
                         errors: err.response.data,
                         isLoading: false,
@@ -202,6 +217,7 @@ class IndexAnnotations extends React.Component {
                 }
             )
             .catch((err) => {
+                this.loadAnnotationsCancelToken = null;
                 this.setState({ errors: err, isLoading: false });
             });
 
@@ -318,7 +334,9 @@ class IndexAnnotations extends React.Component {
                             <h2 className="pageTitle m-0">Annotations</h2>
                             <div className="addAnnotation">
                                 <span>Add Annotation:</span>
-                                <a data-toggle="tooltip" data-placement="top" title="Manual" href="javascript:void(0);" onClick={() => this.props.openAnnotationPopup('manual')}>
+                                <a data-toggle="tooltip" data-placement="top" title="Manual" 
+                                href="javascript:void(0);" 
+                                onClick={() => this.props.openAnnotationPopup('manual')} >
                                     <img className='inject-me' src='/manual.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/manual.svg"; }} width='16' height='16' alt='menu icon' />
                                 </a>
                                 <a data-toggle="tooltip" data-placement="top" title="Apps Market" to="/data-source" href="/data-source">
@@ -398,7 +416,7 @@ class IndexAnnotations extends React.Component {
                                 </FormGroup>
                             </div>
                             <div className="d-flex">
-                                <button 
+                                <button
                                     onClick={() => {
                                         this.setState({ enableSelect: !this.state.enableSelect })
                                         if (this.state.enableSelect) {
@@ -449,6 +467,18 @@ class IndexAnnotations extends React.Component {
                                     let borderLeftColor = "rgba(0,0,0,.0625)";
                                     let selectedIcon = anno.category;
                                     anno.description = anno.description || anno.event_name
+
+                                    switch (anno.added_by) {
+                                        case "manual":
+                                            borderLeftColor = this.state.userAnnotationColors.manual;
+                                            break;
+                                        case "csv-upload":
+                                            borderLeftColor = this.state.userAnnotationColors.csv;
+                                            break;
+                                        case "api":
+                                            borderLeftColor = this.state.userAnnotationColors.api;
+                                            break;
+                                    }
 
                                     switch (anno.category) {
                                         case "Google Updates":
@@ -558,6 +588,7 @@ class IndexAnnotations extends React.Component {
                                             <div className="flex-grow-1 d-flex justify-content-between align-items-center">
                                                 <ul className="d-flex list-unstyled">
                                                     <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
+                                                    {anno.added_by ? <li><span>{anno.added_by}</span></li> : null}
                                                     <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
                                                     {/* <li>
                                                     <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
@@ -568,7 +599,7 @@ class IndexAnnotations extends React.Component {
                                                 </ul>
 
                                                 <ul className="d-flex list-unstyled">
-                                                    {anno.id ? <>
+                                                    {anno.added_by == "manual" ? <>
                                                         <li>
                                                             <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.toggleStatus(anno.id) }}>
                                                                 {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
