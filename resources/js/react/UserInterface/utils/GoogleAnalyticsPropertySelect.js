@@ -191,7 +191,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                             onFocus={this.props.onFocus}
                             loadOptions={this.searchGoogleAnalyticsProperties}
                             noOptionsMessage={() => {
-                                return "Enter chars to search"
+                                return "No Property"
                             }}
                             className={this.props.className}
                             name={this.props.name}
