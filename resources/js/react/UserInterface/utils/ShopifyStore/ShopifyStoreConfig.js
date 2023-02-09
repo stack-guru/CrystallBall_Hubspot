@@ -147,6 +147,9 @@ const ShopifyStoreConfig = (props) => {
                         isClearable={true}
                     />
                 </div>
+                <div className='d-flex justify-content-end pt-3'>
+                    <button className="btn-theme">Add</button>
+                </div>
             </div>
             <div className="gray-box">
                 <h4>
