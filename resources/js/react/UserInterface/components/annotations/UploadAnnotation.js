@@ -162,7 +162,7 @@ export default class UploadAnnotation extends React.Component {
                                     value={this.state.google_analytics_property_id}
                                     onChangeCallback={this.changeHandler}
                                     components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
-                                    placeholder="Select GA Propertys"
+                                    placeholder="Select GA property"
                                     multiple
                                     onFocus={(e) => {
                                         if (this.props.currentPricePlan.ga_account_count == 1 || this.props.currentPricePlan.google_analytics_property_count == -1) {
