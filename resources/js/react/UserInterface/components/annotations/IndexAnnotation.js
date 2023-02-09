@@ -207,6 +207,12 @@ class IndexAnnotations extends React.Component {
                         annotations: this.state.annotations.concat(response.data.annotations),
                         isLoading: false,
                     });
+
+                    setTimeout(() => {
+                        $(function () {
+                            $('.miniPreview').miniPreview({ prefetch: 'pageload' });
+                        })
+                    }, 2000);
                 },
                 (err) => {
                     this.loadAnnotationsCancelToken = null;
@@ -557,8 +563,12 @@ class IndexAnnotations extends React.Component {
                                             <div className="description d-flex flex-column flex-shrink-1">
                                                 <p className="titleCategory d-flex align-items-center">
                                                     <span>{anno.event_name}</span>
-                                                    <a href="">{anno.category}</a>
-                                                    <i className="icon"><img src={'/icon-chain.svg'} /></i>
+                                                    <a href="javascript:void(0)">{anno.category}</a>
+                                                    {anno.url && anno.url != "https://" && anno.url != "null" ? (
+                                                        <a href={anno.url} target="_blank" className="ml-1 miniPreview"><i className="icon"><img src={'/icon-chain.svg'} /></i></a>
+                                                    ) : (
+                                                        ""
+                                                    )}
                                                 </p>
                                                 <p className="annotationDesc mb-0 d-flex-inline">
                                                     {anno.description &&
@@ -577,11 +587,6 @@ class IndexAnnotations extends React.Component {
                                                         ""
                                                     )}
 
-                                                    {anno.url && anno.url != "https://" && anno.url != "null" ? (
-                                                        <a href={anno.url} target="_blank" className="ml-1"><i className="icon"><img src={'/icon-chain.svg'} /></i></a>
-                                                    ) : (
-                                                        ""
-                                                    )}
                                                 </p>
                                             </div>
 
