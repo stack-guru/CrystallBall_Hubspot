@@ -70,7 +70,7 @@ export default class CreateAnnotation extends React.Component {
                                         cancelButtonText: "Book a Demo",
                                         confirmButtonClass: "btn-subscribeNow",
                                         confirmButtonText: "Subscribe now",
-                                    }).then(function () {
+                                    }).then(function (value) {
                                         if (value.isConfirmed) window.location.href = '/settings/price-plans'
                                     });
                                 }
