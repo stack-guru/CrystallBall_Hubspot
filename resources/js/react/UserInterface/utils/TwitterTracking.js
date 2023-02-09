@@ -98,13 +98,13 @@ export default class FacebookTracking extends React.Component {
                     <div className="checkBoxList d-flex flex-column">
                         <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor="is_tweets_likes_tracking_on_checkbox">
                             <input type="checkbox" checked={ this.state.is_tweets_likes_tracking_on } id="is_tweets_likes_tracking_on_checkbox" onChange={(e) => {this.setState({is_tweets_likes_tracking_on: e.target.checked,});}}/>
-                            <span>A Post that raised</span>
+                            <span>A Post received</span>
                             <input id="when_tweet_reach_likes" onKeyUp={(e) => {this.setState({ when_tweet_reach_likes: e.target.value, });}} className="themenewCountInput" />
                             <span>Likes</span>
                         </label>
                         <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor="is_tweets_retweets_tracking_on_checkbox">
                             <input type="checkbox" checked={this.state.is_tweets_retweets_tracking_on} id="is_tweets_retweets_tracking_on_checkbox" onChange={(e) => {this.setState({is_tweets_retweets_tracking_on: e.target.checked,});}}/>
-                            <span>A Post that raised</span>
+                            <span>A Post received</span>
                             <input id="when_tweet_reach_retweets" onKeyUp={(e) => { this.setState({ when_tweet_reach_retweets: e.target.value,});}} className="themenewCountInput"/>
                             <span>Retweets</span>
                         </label>
