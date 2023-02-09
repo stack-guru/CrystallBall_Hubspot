@@ -122,7 +122,7 @@ export default class IndexPricingPlans extends React.Component {
                                         <div className='planhead d-flex flex-column text-center'>
                                             <h3>{pricePlan.name}</h3>
                                             <p>{pricePlan.short_description.length > 35 ? <>{pricePlan.short_description}</> : pricePlan.short_description.length == 0 ? <></> : <>{pricePlan.short_description}</>}</p>
-                                            <h3>{userRegistrationOffer ? <><sup>$</sup>{pricePlan.price}</> : null} <sup>$</sup>{calculatePricePlanPrice(pricePlan.price, this.state.planDuration, pricePlan.yearly_discount_percent, userRegistrationOffer)} /m</h3>
+                                            <h3>{userRegistrationOffer ? <><sup>$</sup>{pricePlan.price}</> : <><sup>$</sup>{calculatePricePlanPrice(pricePlan.price, this.state.planDuration, pricePlan.yearly_discount_percent, userRegistrationOffer)} /m</>}</h3>
                                             {this.state.planDuration == 12 ? <span>Billed Annually</span> : <span>Billed Monthly</span>}
 
                                             {<>

@@ -3814,6 +3814,15 @@ body {
     line-height: 18px;
 }
 
+.keywordTags .mini-preview-anchor .mini-preview-wrapper {
+    left: -20px !important;
+}
+
+.mini-preview-anchor .mini-preview-wrapper {
+    bottom: 20px !important;
+    top: auto !important;
+}
+
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }
     .is-collapsed .sidebar .sidebar-inner .sidebar-menu>li>a .title {visibility: hidden;}

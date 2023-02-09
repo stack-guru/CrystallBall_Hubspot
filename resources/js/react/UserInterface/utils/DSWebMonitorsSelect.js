@@ -62,6 +62,12 @@ export default class DSWebMonitorsSelect extends React.Component {
                         webMonitors: resp.data.web_monitors,
                         isBusy: false,
                     });
+
+                    setTimeout(() => {
+                        $(function () {
+                            $('.miniPreview').miniPreview({ prefetch: 'pageload' });
+                        })
+                    }, 2000);
                 },
                 (err) => {
                     this.setState({ isBusy: false });
@@ -307,8 +313,12 @@ export default class DSWebMonitorsSelect extends React.Component {
                                                 }}
                                                 className="dot"
                                             ></span>
+                                            <a href={wM.url} target="_blank" className="ml-1 miniPreview">
+                                                <i className="icon"><img src={'/icon-chain.svg'} /></i>
+                                            </a>
+                                            &nbsp;
                                             {wM.name}
-                                            {/* <span className="badge badge-light" user_data_source_id={wM.id}>&times;</span> */}
+                                            
                                         </button>
 
                                         <Popover

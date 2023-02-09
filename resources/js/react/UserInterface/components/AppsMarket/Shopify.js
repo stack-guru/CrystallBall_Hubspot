@@ -23,7 +23,7 @@ class Shopify extends React.Component {
                     <DescrptionModalNormal
                         changeModal={this.changeModal.bind(this)}
                         serviceName={"Shopify"}
-                        description={"Shopify Is a content change detection on the web. Crystal Ball add annotations that match the user's search terms, such as web pages, newspaper articles, blogs, or scientific research. Add keywords like https://www.your-domain.com/, Company Name. The system will search for news once a day at midnight. Annotations for News Alerts will start showing after 48 hours the automation is activated."}
+                        description={"Automated annotations will track updates to product pricing, descriptions, providing insights into the impact of these changes on sales and revenue. No manual work required, just an effortless way to understand your store's activity and improve your business."}
                         userServices={this.props.userServices}
                         closeModal={this.props.closeModal}
 
