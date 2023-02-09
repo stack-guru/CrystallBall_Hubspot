@@ -3184,9 +3184,27 @@ export default class DataSourceIndex extends React.Component {
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
             if ((err.response).status == 402) {
-                swal.fire("Upgrade to Pro Plan!", "You have reached your Free 100 credits.", "warning").then(value => {
-                    this.setState({ redirectTo: '/settings/price-plans' });
-                })
+                const accountNotLinkedHtml = '' +
+                        '<div class="">' +
+                        '<img src="/images/increase-plan-limit.png" class="img-fluid">' +
+                        '</div>';
+                swal.fire({
+                    html: accountNotLinkedHtml,
+                    width: 1000,
+                    showCancelButton: true,
+                    showCloseButton: true,
+                    customClass: {
+                        popup: "themePlanAlertPopup",
+                        htmlContainer: "themePlanAlertPopupContent",
+                        closeButton: 'btn-closeplanAlertPopup',
+                    },
+                    cancelButtonClass: "btn-bookADemo",
+                    cancelButtonText: "Book a Demo",
+                    confirmButtonClass: "btn-subscribeNow",
+                    confirmButtonText: "Subscribe now",
+                }).then(function (value) {
+                    if (value.isConfirmed) window.location.href = '/settings/price-plans'
+                });
             }
         }).catch(err => {
             this.setState({ isBusy: false, errors: err });
