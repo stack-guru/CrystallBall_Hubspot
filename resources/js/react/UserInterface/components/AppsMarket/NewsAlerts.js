@@ -22,7 +22,7 @@ class NewsAlerts extends React.Component {
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"News Alerts"}
-                    description={"News Alerts Is a content change detection on the web. Crystal Ball add annotations that match the user's search terms, such as web pages, newspaper articles, blogs, or scientific research. Add keywords like https://www.your-domain.com/, Company Name. The system will search for news once a day at midnight. Annotations for News Alerts will start showing after 48 hours the automation is activated."}
+                    description={"News Alerts Is a content change detection on the web. Crystal Ball add annotations that match the user's search terms, such as web pages, newspaper articles, blogs, or scientific research. Add keywords like https://www.your-domain.com/, Company Name. The system will search for news once a day at midnight."}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
