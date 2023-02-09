@@ -151,9 +151,13 @@ class IndexAnnotations extends React.Component {
             HttpClient.put(`/annotation/${id}`, { is_enabled: newStatus })
                 .then(
                     (response) => {
+                        let title = "Annotation is hidden in GA charts";
+                        if (newStatus === 1) {
+                            title = "Annotation is visible in GA charts";
+                        }
                         Toast.fire({
                             icon: 'success',
-                            title: "Annotation status changed."
+                            title
                         });
                         let newAnnotation = response.data.annotation;
                         let annotations = this.state.annotations.map((an) => {
