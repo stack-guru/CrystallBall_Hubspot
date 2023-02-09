@@ -72,9 +72,9 @@ const ShopifyStoreConfig = (props) => {
             });
     };
 
-    // useEffect(() => {
-    //     getExistingShopifyStore();
-    // }, [props.gaPropertyId]);
+    useEffect(() => {
+        getExistingShopifyStore();
+    }, []);
 
     const addAnnotation = async () => {
         Toast.fire({
