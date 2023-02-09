@@ -189,8 +189,10 @@ const ApplePodcastConfig = (props) => {
                         {searchResult.map((t0a) => (
                             <Card className="cb-ap-search-card apple-card mb-0" body>
                                 <CardImg top width="100%" src={t0a.previewImage} alt={t0a.collectionName} />
-                                <CardTitle tag="h5">{t0a.collectionName}</CardTitle>
-                                <CardSubtitle tag="h6" className="mb-0 text-muted">{t0a.trackCount} episodes</CardSubtitle>
+                                <div className="">
+                                    <CardTitle className="text-truncate w-100" tag="h5">{t0a.collectionName}</CardTitle>
+                                    <CardSubtitle tag="h6" className="mb-0 text-muted">{t0a.trackCount} episodes</CardSubtitle>
+                                </div>
                                 <Button onClick={() => addAnnotation(t0a)}>Create Annotations</Button>
                             </Card>
                         ))}
