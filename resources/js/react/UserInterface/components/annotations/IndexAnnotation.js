@@ -633,7 +633,7 @@ class IndexAnnotations extends React.Component {
                             {!this.state.isLoading && !this.state.annotations.length ?
                                 <div className="nodata">
                                     <p>No annotations added yet.</p>
-                                    <p className="mb-0">Suggestions: <a href=''>Add manual annotation</a> or <a href=''>Upload CSV</a></p>
+                                    <p className="mb-0">Suggestions: <a onClick={() => this.props.openAnnotationPopup('manual')} href="javascript:void(0);">Add manual annotation</a> {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (<>or <a onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">Upload CSV</a></>): null}</p>
                                 </div> : null
                             }
                         </>
