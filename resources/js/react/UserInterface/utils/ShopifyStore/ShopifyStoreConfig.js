@@ -148,7 +148,7 @@ const ShopifyStoreConfig = (props) => {
                     />
                 </div>
                 <div className='d-flex justify-content-end pt-3'>
-                    <button className="btn-theme">Add</button>
+                    <button onClick={(e) => addAnnotation(e)} className="btn-theme">Add</button>
                 </div>
             </div>
             <div className="gray-box">
