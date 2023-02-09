@@ -53,7 +53,8 @@ class Apple extends React.Component {
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Apple Podcast"}
-                    description={""}
+                    description={`Staying on top of the latest content and tracking changes to Apple podcasts can be a challenge\n
+                    Simply search for a channel or add a URL, and we'll automatically create annotations in your GA4 environment every time there is a new episode. This means you'll have a clear picture of what's new and how it's impacting your audience, all in one place.`}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 

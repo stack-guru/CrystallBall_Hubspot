@@ -37,7 +37,7 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="form-label-group" style="padding-left: 12%;">
+                    <div class="py-2 mb-3 d-flex justify-content-center">
                         @error('g-recaptcha-response')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
