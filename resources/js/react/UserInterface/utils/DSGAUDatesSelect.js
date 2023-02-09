@@ -44,40 +44,25 @@ export default class DSGAUDatesSelect extends React.Component {
     render() {
 
         return (
-            <div className="switch-wrapper">
-                <div className="weather_alert_cities-form">
-                    <h4 className="gaa-text-primary">
-                        Algorithm Updates
-                </h4>
-                    <div className="input-group mb-3">
-                        <select
-                            className="form-control"
-                            placeholder="Search"
-                            value={this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""}
-                            name="searchStatus"
-                            onChange={this.selectedStatusChanged}
-                        >
-                            <option value="">Both</option>
-                            <option value="unconfirmed">Unconfirmed</option>
-                            <option value="confirmed">Confirmed</option>
-                        </select>
-                    </div>
-                    <div className="checkbox-box mt-3">
-                        {
-                            this.state.google_algorithm_updates.map(gAU => {
-                                return <div className="form-check wac" key={gAU.id}>
-                                    <label
-                                        className="form-check-label"
-                                        htmlFor="defaultCheck1"
-                                    >
-                                        {moment(gAU.update_date).format('YYYY-MM-DD')} - {gAU.event_name}
-                                        {/* {gAU.update_date} - {gAU.event_name} */}
-                                    </label>
-                                    <hr />
-                                </div>
-                            })
-                        }
-                    </div>
+            <div className="apps-bodyContent">
+                <h4 className='themeNewTitle'>Select mode:</h4>
+                <div className="status input-group mb-3 themeNewInputGroup">
+                    <select className="form-control" placeholder="Search" value={this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""} name="searchStatus" onChange={this.selectedStatusChanged}>
+                        <option value="">Both</option>
+                        <option value="unconfirmed">Unconfirmed</option>
+                        <option value="confirmed">Confirmed</option>
+                    </select>
+                </div>
+                <div className="checkBoxList d-flex flex-column">
+                    {
+                        this.state.google_algorithm_updates.map(gAU => {
+                            return (
+                                <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="defaultCheck1" key={gAU.id}>
+                                    <span>{moment(gAU.update_date).format('YYYY-MM-DD')} - {gAU.event_name}</span>
+                                </label>
+                            )
+                        })
+                    }
                 </div>
             </div>
         );

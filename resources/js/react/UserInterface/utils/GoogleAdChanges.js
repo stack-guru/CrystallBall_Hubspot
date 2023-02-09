@@ -17,7 +17,7 @@ export default class GoogleAdChanges extends React.Component {
 
     render() {
         return (
-            <div className="switch-wrapper">
+            <div className="apps-bodyContent switch-wrapper">
                 <div className="">
                     <h4 className="gaa-text-primary">Google Ad Change Configurations</h4>
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Toast from "../../utils/Toast";
 import { DateRangePicker } from 'react-date-range';
 
 import HttpClient from '../../utils/HttpClient';
@@ -24,6 +25,7 @@ import MediaGraph from './analytics/graphs/mediaGraph';
 import DeviceUsersGraph from './analytics/graphs/deviceUsersGraph';
 import UsersDaysWithAnnotationsGraph from './analytics/graphs/usersDaysWithAnnotationsGraph';
 import AnnotationsTable from './annotationsTable';
+import { Container, FormGroup, Input, Label } from 'reactstrap';
 
 const SimpleMasonry = (props) => {
     return <div className={"simple-masonary " + (props.className ?? "")}>
@@ -37,6 +39,7 @@ export default class IndexDashboard extends Component {
 
         this.state = {
             isBusy: false,
+            googleAnalyticsProperties: [],
             showDateRangeSelect: false,
             googleAccount: undefined,
             analyticsTopStatistics: {
@@ -60,6 +63,7 @@ export default class IndexDashboard extends Component {
             searchApearancesStatistics: [],
             searchConsoleAnnotations: [],
             google_search_console_site_id: '*',
+            googleSearchConsoleSites: [],
             // Analytics
             usersDaysStatistics: [],
             mediaStatistics: [],
@@ -72,7 +76,8 @@ export default class IndexDashboard extends Component {
             endDate: moment().subtract(2, 'days').format('YYYY-MM-DD'),
 
             statisticsPaddingDays: 3,
-            errors: undefined
+            errors: undefined,
+            sortBy: "",
         };
 
         this.searchConsoleFetchStatistics = this.searchConsoleFetchStatistics.bind(this);
@@ -81,10 +86,21 @@ export default class IndexDashboard extends Component {
         this.analyticsFetchStatistics = this.analyticsFetchStatistics.bind(this);
         this.analyticsFetchUsersDaysAnnotations = this.analyticsFetchUsersDaysAnnotations.bind(this);
         this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
+
+
+        this.getGoogleAccounts = this.getGoogleAccounts.bind(this);
+        this.getGAAccounts = this.getGAAccounts.bind(this);
+        this.getGAProperties = this.getGAProperties.bind(this);
+        this.getGSCSites = this.getGSCSites.bind(this);
+        this.sort = this.sort.bind(this);
     }
 
     componentDidMount() {
-        document.title = 'Analytics';
+        document.title = 'Ga Accounts';
+        this.getGoogleAccounts();
+        this.getGAAccounts();
+        this.getGAProperties();
+        this.getGSCSites();
     }
 
     render() {
@@ -100,7 +116,91 @@ export default class IndexDashboard extends Component {
         const allDates = [...new Set(Object.keys(searchConsoleData).concat(Object.keys(analyticsData)))];
 
         return <React.Fragment>
-            <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
+            <div id="analaticsAccountPage" className="analaticsAccountPage pageWrapper">
+                <Container>
+                    <div className="pageHeader analaticsAccountPageHead">
+                        <h2 className="pageTitle">Analytics Accounts</h2>
+                        <form className="pageFilters d-flex justify-content-between align-items-center">
+                            <FormGroup className="filter-sort position-relative">
+                                <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
+                                <i className="btn-searchIcon left-0">
+                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666" />
+                                    </svg>
+                                </i>
+                                <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
+                                    <option value="">Sort By</option>
+                                    <option value="google_search_console_site_id">Connected</option>
+                                    <option value="is_in_use">In Use</option>
+                                </select>
+                            </FormGroup>
+
+                            <FormGroup className="filter-search position-relative">
+                                <Label className="sr-only" for="search">search</Label>
+                                <Input name="searchText" value='' placeholder="Search..." />
+                                <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search" /></button>
+                            </FormGroup>
+                        </form>
+                    </div>
+
+                    <div className="dataTable dataTableAnalyticsAccount d-flex flex-column">
+                        <div className="dataTableHolder">
+                            <div className="tableHead singleRow justify-content-between align-items-center">
+                                <div className="singleCol text-left">ID for API</div>
+                                <div className="singleCol text-left">Analytics Accounts</div>
+                                <div className="singleCol text-left">Properties &amp; Apps</div>
+                                <div className="singleCol text-left">Search Console <i className='fa fa-exclamation-circle ml-2' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></div>
+                                <div className="singleCol text-left">Google Account</div>
+                                <div className="singleCol text-right">&nbsp;</div>
+                            </div>
+                            <div className="tableBody">
+
+                                {this.state.googleAnalyticsProperties.map(gAP => {
+                                    return <div className="singleRow justify-content-between align-items-center" key={gAP.id}>
+                                        <div className="singleCol text-left"><span>{gAP.id}</span></div>
+                                        <div className="singleCol text-left">
+                                            <span className='w-100 d-flex justify-content-start'>
+                                                {
+                                                    (gAP.google_analytics_account) ? 
+                                                    gAP.google_analytics_account.name :
+                                                     ''
+                                                }
+                                                {
+                                                    gAP.is_in_use ?
+                                                    <em className='tag-inuse'><i className='fa fa-check'></i><i>In use</i></em> :
+                                                    null
+                                                }
+                                            </span>
+                                        </div>
+                                        <div className="singleCol text-left">
+                                            <span className='d-flex justify-content-between w-100'>
+                                                <span>{gAP.name}</span>
+                                                {gAP.is_in_use ? <i><img src={'/icon-link-green.svg'} /></i> : <i><img src={'/icon-unlink-red.svg'} /></i>}
+                                            </span>
+                                        </div>
+                                        <div className="singleCol text-left d-flex flex-column">
+                                            <div className="themeNewInputStyle position-relative w-100">
+                                                <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                                <select name="" value={gAP.google_search_console_site_id} className="form-control selected" onChange={(event) => this.handleGAPUpdate(gAP, { google_search_console_site_id: event.target.value })}>
+                                                    <option>Select website</option>
+                                                    {
+                                                        this.state.googleSearchConsoleSites.map(gSCS => <option value={gSCS.id} key={gSCS.id}>{gSCS.site_url} from {gSCS.google_account.name}</option>)
+                                                    }
+                                                </select>
+                                                <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
+                                            </div>
+                                        </div>
+                                        <div className="singleCol text-left"><span>{gAP.google_account.name}</span></div>
+                                        <div className="singleCol text-right"><span><img src={`/icon-trash.svg`} onClick={() => this.handleGAPDelete(gAP.id)} /></span></div>
+                                    </div>
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </Container>
+            </div>
+            {/* <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
                     <div className="container-xl p-0">
                         <div className="row ml-0 mr-0 mb-1">
@@ -236,8 +336,6 @@ export default class IndexDashboard extends Component {
                     </div>
                 </div>
                 <section className="ftco-section" id="inputs">
-                    {/* <SearchConsoleTopStatistics topStatistics={this.state.searchConsoleTopStatistics} />
-                    <AnalyticsTopStatistics topStatistics={this.state.analyticsTopStatistics} /> */}
                     <div className="container-xl p-0">
                         <div id="dashboard-index-container">
                             <div className="row ml-0 mr-0">
@@ -313,8 +411,14 @@ export default class IndexDashboard extends Component {
                         </div>
                     </div>
                 </section>
-            </div >
-        </React.Fragment >;
+            </div > */}
+        </React.Fragment>;
+    }
+
+    sort (e) {
+        this.setState({
+            sortBy: e.target.value,
+        }, this.getGAProperties);
     }
 
     searchConsoleFetchStatistics(gSCSiteId) {
@@ -460,4 +564,95 @@ export default class IndexDashboard extends Component {
             });
     }
 
+    fetchGAAccounts(id) {
+        this.setState({ isBusy: true });
+        return HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
+            Toast.fire({
+                icon: 'success',
+                title: "Accounts fetched."
+            });
+            this.setState({ isBusy: false })
+            return this.getGAAccounts() && this.getGAProperties();
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+            return false;
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+            return false;
+        });
+    }
+
+    getGAProperties() {
+        this.setState({ isBusy: true });
+        return HttpClient.get(`/settings/google-analytics-property?sortBy=${this.state.sortBy}`).then(response => {
+            this.setState({ isBusy: false, googleAnalyticsProperties: response.data.google_analytics_properties })
+            return true;
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+            return false;
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+            return false;
+        });
+    }
+
+    getGoogleAccounts() {
+        this.setState({ isBusy: true })
+        HttpClient.get('/settings/google-account').then(resp => {
+            this.setState({ googleAccounts: resp.data.google_accounts, isBusy: false });
+        }, (err) => {
+
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+
+    getGAAccounts() {
+        this.setState({ isBusy: true });
+        return HttpClient.get(`/settings/google-analytics-account`).then(response => {
+            this.setState({ isBusy: false, googleAnalyticsAccounts: response.data.google_analytics_accounts })
+            return true;
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+            return false;
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+            return false;
+        });
+    }
+
+    getGSCSites() {
+        this.setState({ isBusy: true });
+        return HttpClient.get(`/settings/google-search-console-site`).then(response => {
+            this.setState({ isBusy: false, googleSearchConsoleSites: response.data.google_search_console_sites })
+            return true;
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+            return false;
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+            return false;
+        });
+    }
+
+    handleGAPUpdate(gAP, data) {
+        this.setState({ isBusy: true });
+        HttpClient.put(`/settings/google-analytics-property/${gAP.id}`, data).then(resp => {
+            const updatedGAP = resp.data.google_analytics_property;
+            Toast.fire({
+                icon: 'success',
+                title: "Google Analytics Property updated."
+            });
+            this.setState({
+                isBusy: false,
+                googleAnalyticsProperties: this.state.googleAnalyticsProperties.map(g => g.id == updatedGAP.id ? updatedGAP : g)
+            });
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
 }

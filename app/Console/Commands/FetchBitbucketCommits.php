@@ -70,7 +70,7 @@ class FetchBitbucketCommits extends Command
                     }
                     $message = $commit['message'];
                     $link = $commit['links']['html']['href'];
-                    $category = "Bitbucket";
+                    $category = $data_source->ds_name;
                     $date = $commit['date'];
 
                     $this->precessResult($user_id, $message, $category, $hash, $author, $date, $link);

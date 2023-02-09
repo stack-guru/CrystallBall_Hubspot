@@ -146,7 +146,7 @@ class AnnotationController extends Controller
         }
 
         $showDate = Carbon::parse($annotations[count($annotations) - 1]->show_at);
-        // If annotations are not ending on the request end date then add blank records for 
+        // If annotations are not ending on the request end date then add blank records for
         // each date till end date
         if ($showDate !== $endDate) {
             $nextShowDate = $endDate;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import HttpClient from "../../../utils/HttpClient";
-import { toast } from "react-toastify";
+import Toast from "../../../utils/Toast";
 import { Redirect } from 'react-router';
 import ErrorAlert from '../../../utils/ErrorAlert';
 import CCDetector from '../../../utils/CreditCardDetector';
@@ -231,7 +231,10 @@ export default class CreatePayment extends Component {
         HttpClient.get('/coupon?coupon_code=' + this.state.couponCode)
             .then(response => {
                 this.setState({ coupon: response.data.coupon, paymentDetails: { ...this.state.paymentDetails, coupon_id: response.data.coupon.id }, isBusy: false });
-                toast.success("Coupon applied.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "Coupon applied.",
+                });
             }, (err) => {
 
                 this.setState({ isBusy: false, errors: (err.response).data });

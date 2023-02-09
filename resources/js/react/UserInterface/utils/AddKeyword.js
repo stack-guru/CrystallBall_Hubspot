@@ -237,186 +237,72 @@ export default class AddKeyword extends React.Component {
 
     render() {
         return (
-            <div className="switch-wrapper">
-                <div className="weather_alert_cities-form">
-                    <h4 className="gaa-text-primary">Manage keywords</h4>
-                    <div className="my-1">
-                        <strong>
-                            Available Credits: {this.state.available_credits}
-                        </strong>
-                    </div>
-                    <label>Tracking</label>
-                    <div className="input-group mb-3">
-                        <select
-                            className="form-control"
-                            id="tracking_of"
-                            onChange={(e) => {
-                                this.setState({
-                                    is_url_competitors:
-                                        e.target.options[e.target.selectedIndex]
-                                            .value,
-                                });
-                            }}
-                        >
-                            <option selected disabled>
-                                --Select--
-                            </option>
+            <>
+                <h4>Add tracker</h4>
+                <div className="grid2layout">
+                    {/* <div className="my-1"><strong>Available Credits: {this.state.available_credits}</strong></div> */}
+                    <div className="themeNewInputGroup themeNewselect flex-column">
+                        <select className="form-control" id="tracking_of" onChange={(e) => {this.setState({is_url_competitors:e.target.options[e.target.selectedIndex].value,});}}>
+                            <option selected disabled>--Select--</option>
                             <option value="false">My website</option>
                             <option value="true">Competitor's website</option>
                         </select>
                     </div>
-                    <label>Website URL</label>
-                    <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="your-company-domain.com"
-                            name="url"
-                            id="url"
-                            onChange={(e) => {
-                                this.setState({ url: e.target.value });
-                            }}
-                        />
+
+                    <div className="themeNewInputGroup inputWithIcon position-relative">
+                        <input type="text" className="form-control" placeholder="your-company-domain.com" name="url" id="url" onChange={(e) => {this.setState({ url: e.target.value });}}/>
+                        <i className="fa fa-link"></i>
                     </div>
-                    <label>Keywords</label>
-                    <div className="input-group mb-1">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Add keywords"
-                            name="keywords"
-                            id="tracking_keywords"
-                            onKeyUp={(e) => {
-                                this.addKeyword(e);
-                            }}
-                        />
-                        <div className="input-group-append">
-                            <i className="ti-plus"></i>
-                        </div>
+
+                    <div className="themeNewInputGroup">
+                        <input type="text" className="form-control" placeholder="Add keywords" name="keywords" id="tracking_keywords" onKeyUp={(e) => {this.addKeyword(e);}}/>
+                        <div className="input-group-append"><i className="ti-plus"></i></div>
+
+                        {this.state.keywords.length > 0 ?
+                            <div className="keywordTags pt-3">
+                                {this.state.keywords.length > 0 ? this.state.keywords.map((keyword, index) => {
+                                    return (
+                                            <button type="button" className="keywordTag" key={keyword.id != "" ? keyword.id : index} data-keyword={keyword.keyword} data-keyword_id={keyword.id} onClick={(e) => {this.deleteKeyword(e);}}>{keyword.keyword}</button>
+                                    );})
+                                    : ""
+                                }
+                            </div>
+                        : null}
                     </div>
-                    <div className="mb-3">
-                        {this.state.keywords.length > 0
-                            ? this.state.keywords.map((keyword, index) => {
-                                  return (
-                                      <h5
-                                          style={{ display: "inline-block" }}
-                                          key={
-                                              keyword.id != ""
-                                                  ? keyword.id
-                                                  : index
-                                          }
-                                      >
-                                          <span className="badge badge-pill badge-primary m-1 h5">
-                                              {keyword.keyword}{" "}
-                                              <i
-                                                  className="fa fa-times"
-                                                  data-keyword={keyword.keyword}
-                                                  data-keyword_id={keyword.id}
-                                                  onClick={(e) => {
-                                                      this.deleteKeyword(e);
-                                                  }}
-                                              ></i>
-                                          </span>
-                                      </h5>
-                                  );
-                              })
-                            : ""}
+
+                    <div className="themeNewInputGroup themeNewselect">
+                        <SearchEngineSelect className="gray_clr" name="search_engine" id="search_engine" selected={{label: '', value: ''}} onChangeCallback={this.changeSearchEngineHandler} placeholder="Select Search Engine" multiple="true"/>
                     </div>
-                    <label>Search Engine</label>
-                    <div className="input-group mb-3">
-                        <SearchEngineSelect
-                            className="gray_clr"
-                            name="search_engine"
-                            id="search_engine"
-                            selected={{
-                                label: '',
-                                value: ''
-                            }}
-                            onChangeCallback={this.changeSearchEngineHandler}
-                            placeholder="Select Search Engine"
-                            multiple="true"
-                        />
-                    </div>
-                    <label>Location</label>
-                    <div className="input-group mb-3">
-                        <LocationSelect
-                            className="gray_clr"
-                            name="country"
-                            id="country"
-                            selected={{
-                                label: '',
-                                value: ''
-                            }}
-                            onChangeCallback={this.changeLocationHandler}
-                            placeholder="Select Location"
-                            multiple="true"
-                        />
+
+                    <div className="themeNewInputGroup">
+                        <LocationSelect className="gray_clr" name="country" id="country" selected={{label: '', value: ''}} onChangeCallback={this.changeLocationHandler} placeholder="Select Location" multiple="true"/>
 
                         {/* <select className='form-control' id="country" onChange={(e) => { this.setState({ country: e.target.options[e.target.selectedIndex].value }) }}>
                             <option selected disabled>Select Country</option>
                             <option value='2840'>USA</option>
                         </select> */}
                     </div>
-                    <div className="mt-3">
-                        <label className="font-weight-bold">
-                            Threashold to create annotation:
-                        </label>
-                        <br />
-                        If ranking change
-                        <select
-                            className="form-control my-2"
-                            id="ranking_direction"
-                            onChange={(e) => {
-                                this.setState({
-                                    ranking_direction:
-                                        e.target.options[e.target.selectedIndex]
-                                            .value,
-                                });
-                            }}
-                        >
-                            <option value="" selected disabled>--Select--</option>
-                            <option value="up">Up</option>
-                            <option value="down">Down</option>
-                        </select>
-                        Places
-                        <input
-                            className="form-control"
-                            id="ranking_places"
-                            placeholder="Places"
-                            type="number"
-                            min="0"
-                            onChange={(e) => {
-                                this.setState({
-                                    ranking_places: e.target.value,
-                                });
-                            }}
-                        />
-                        in search result, create annotation
-                    </div>
-                    <div className="mt-4">
-                        <button
-                            className="btn btn-success"
-                            onClick={this.saveKeywords}
-                        >
-                            Save
-                        </button>
-                    </div>
-                    <div className="checkbox-box mt-3">
-                        {/* {
-                            this.props.ds_data.map(gAK => {
-                                return (
-                                    <button type="button" className="btn gaa-btn-primary m-2" key={gAK.id}
-                                        user_data_source_id={gAK.id}
-                                        onClick={this.deleteKeyword}
-                                    >
-                                        {gAK.value} <span className="badge badge-light" user_data_source_id={gAK.id}>&times;</span>
-                                    </button>
-                                )
-                            })
-                        } */}
+                </div>
+                <div className="d-flex flex-column">
+                    <h4>Threashold to create annotation:</h4>
+                    <div className="grid2layout">
+                        <div className="themeNewInputGroup themeNewselect flex-column">
+                            <select className="form-control" id="ranking_direction" onChange={(e) => {this.setState({ranking_direction:e.target.options[e.target.selectedIndex].value,});}}>
+                                <option value="" selected disabled>--Select--</option>
+                                <option value="up">Up</option>
+                                <option value="down">Down</option>
+                            </select>
+                        </div>
+
+                        <div className="themeNewInputGroup">
+                            <input className="form-control" id="ranking_places" placeholder="Places" type="number" min="0" onChange={(e) => {this.setState({ranking_places: e.target.value,});}}/>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div className="mt-4">
+                    <button className="btn-theme" onClick={this.saveKeywords}>Save</button>
+                </div>
+            </>
         );
     }
 }

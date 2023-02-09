@@ -132,7 +132,7 @@ export default class FacebookTracking extends React.Component {
 
     render() {
         return (
-            <div className="switch-wrapper">
+            <div className="apps-bodyContent switch-wrapper">
                 <div className="weather_alert_cities-form">
                     <h4 className="gaa-text-primary">Configure Facebook</h4>
                     <label>Select Facebook Pages</label>

@@ -23,7 +23,7 @@ export default class indexSettings extends React.Component {
     toggleSuspendAccountModal(event) {
         if (this.props.user.user) {
             swal.fire("Unauthorized", "Only the admin can delete the account.", "error");
-        }
+        } 
         else{
             this.setState({ showSuspendAccountModal: !this.state.showSuspendAccountModal });
         }
@@ -74,7 +74,7 @@ export default class indexSettings extends React.Component {
                                  </Link>
                                 </li>*/}
                                 <li className='nav-item border-bottom'>
-                                    <Link to="/settings/change-password">
+                                    <Link to="/settings/profile">
                                         <span className="nav-link">Change password</span>
                                     </Link>
                                 </li >
@@ -90,7 +90,7 @@ export default class indexSettings extends React.Component {
                             <h4 className="border-bottom gaa-text-primary"><b>Connected Accounts</b></h4>
                             <ul className='list-unstyled list-group mt-2 ml-4'>
                                 <li className='nav-item border-bottom'>
-                                    <Link to="/settings/google-account">
+                                    <Link to="/settings/accounts">
                                         <span className="nav-link">Add google account</span>
                                     </Link>
                                 </li>

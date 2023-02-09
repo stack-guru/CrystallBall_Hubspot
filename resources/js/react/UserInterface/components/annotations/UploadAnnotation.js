@@ -1,12 +1,13 @@
 import React from 'react';
-import { toast } from "react-toastify";
+import Toast from "../../utils/Toast";
 import { Redirect } from "react-router-dom";
 
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 
-import UserAnnotationColorPicker from '../../helpers/UserAnnotationColorPickerComponent';
+import ModalHeader from '../AppsMarket/common/ModalHeader';
+import { Button } from 'reactstrap';
 
 export default class UploadAnnotation extends React.Component {
 
@@ -24,8 +25,8 @@ export default class UploadAnnotation extends React.Component {
         this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
         this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
         this.checkIfCanCreateAnnotation = this.checkIfCanCreateAnnotation.bind(this)
-
     }
+
     checkIfCanCreateAnnotation(){
         HttpClient.get('user')
         .then(user_response => {
@@ -40,27 +41,29 @@ export default class UploadAnnotation extends React.Component {
                     }else{
                         if(response.data.user_total_annotations >= this.state.user.price_plan.annotations_count){
                         // if(true){
-                            let url = document.location.origin + '/images/annotation_limit_reached.jpg';
+                            let url = document.location.origin + '/images/annotation_limit_reached.png';
                             swal.fire({
                                 html: "<img src='"+url+"' style='width:100%;'>",
-                                width: 700,
-                                customClass: {
-                                    popup: 'custom_bg pb-5',
-                                    htmlContainer: 'm-0',
-                                },
+                                width: 1000,
+                                showCancelButton: true,
                                 showCloseButton: false,
-                                // title: "You have reached your plan limits!",
-                                // text: "Upgrade your plan to add more annotations.",
-                                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                confirmButtonText: "<a href='#' class='text-white'>Upgrade Now</a>",
+                                customClass: {
+                                    popup: "themePlanAlertPopup",
+                                    htmlContainer: "themePlanAlertPopupContent",
+                                    closeButton: 'btn-closeplanAlertPopup',
+                                },
+                                cancelButtonClass: "btn-bookADemo",
+                                cancelButtonText: "Book a Demo",
+                                confirmButtonClass: "btn-subscribeNow",
+                                confirmButtonText: "Subscribe now",
                             }).then(function(){
-                                window.location.href = '/settings/price-plans';
+                                if (value.isConfirmed) window.location.href = '/settings/price-plans'
                             });
                         }
                     }
-                    
+
                 }
-                
+
             });
         });
     }
@@ -79,7 +82,10 @@ export default class UploadAnnotation extends React.Component {
                 url: `/annotation/upload`, baseURL: "/", method: 'post', headers: { 'Content-Type': 'multipart/form-data' },
                 data: formData
             }).then(response => {
-                toast.success("CSV file uploaded.");
+                Toast.fire({
+                    icon: 'success',
+                    title: "CSV file uploaded."
+                });
                 this.setState({ isBusy: false, errors: response.data.message });
             }, (err) => {
 
@@ -92,8 +98,6 @@ export default class UploadAnnotation extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Upload CSV';
-
         this.loadUserAnnotationColors();
         this.checkIfCanCreateAnnotation();
     }
@@ -122,116 +126,99 @@ export default class UploadAnnotation extends React.Component {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
         return (
-            <div className="container-xl bg-white component-wrapper" >
-                <section className="ftco-section" id="buttons">
-                    <div className="container p-5">
-                        <div className="mb-5">
-                            <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">Upload Annotations <UserAnnotationColorPicker name="csv" value={this.state.userAnnotationColors.csv} updateCallback={this.updateUserAnnotationColors} /><br />
-                                    <small>Upload all your annotations using CSV</small>
-                                </h2>
+            <div className="popupContent modal-csvUpload">
+                <ModalHeader
+                    userAnnotationColors={this.state.userAnnotationColors}
+                    updateUserAnnotationColors={this.updateUserAnnotationColors}
+                    userServices={this.state}
+                    serviceStatusHandler={this.updateUserAnnotationColors}
+                    closeModal={() => this.props.togglePopup('')}
+                    serviceName={'Upload CSV'}
+                    colorKeyName={"csv"}
+                    dsKeyName={null}
+                    creditString={null}
+                    downloadButton={true}
+                />
+
+                <div className='apps-bodyContent'>
+                    <ErrorAlert errors={this.state.errors}/>
+
+                    <form className='form-csvUpload' onSubmit={this.handleSubmit} encType="multipart/form-data" id="csv-upload-form-container">
+                        <div className="themeNewInputGroup csvFileUpload mb-4">
+                            <label htmlFor="csv">
+                                <i><img src={'/icon-csvUpload.svg'} alt={'CSV Upload Icon'} className="svg-inject" /></i>
+                                <strong>Drag and drop or click here</strong>
+                                <span>.csv files only — 5mb max</span>
+                                <input type="file" className="form-control upload-csv-input" id="csv" name="csv" />
+                            </label>
+                        </div>
+
+                        <div className='grid2layout mb-3'>
+                            <div className="themeNewInputStyle">
+                                <GoogleAnalyticsPropertySelect
+                                    currentPricePlan={this.props.currentPricePlan}
+                                    name="google_analytics_property_id"
+                                    id="google_analytics_property_id"
+                                    value={this.state.google_analytics_property_id}
+                                    onChangeCallback={this.changeHandler}
+                                    components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
+                                    placeholder="Select GA property"
+                                    multiple
+                                    onFocus={(e) => {
+                                        if (this.props.currentPricePlan.ga_account_count == 1 || this.props.currentPricePlan.google_analytics_property_count == -1) {
+                                            const accountNotLinkedHtml = '' + '<div class="">' + '<img src="/images/property-upgrade-modal.png" class="img-fluid">' + '</div>'
+                                            swal.fire({
+                                                html: accountNotLinkedHtml,
+                                                width: 1000,
+                                                showCancelButton: true,
+                                                showCloseButton: false,
+                                                customClass: {
+                                                    popup: "themePlanAlertPopup",
+                                                    htmlContainer: "themePlanAlertPopupContent",
+                                                    closeButton: 'btn-closeplanAlertPopup',
+                                                },
+                                                cancelButtonClass: "btn-bookADemo",
+                                                cancelButtonText: "Book a Demo",
+                                                confirmButtonClass: "btn-subscribeNow",
+                                                confirmButtonText: "Subscribe now",
+
+                                            }).then(value => {
+                                                if (value.isConfirmed) window.location.href = '/settings/price-plans'
+                                            });
+                                        }
+                                    }}
+                                ></GoogleAnalyticsPropertySelect>
+                            </div>
+                            <div className="themeNewInputStyle">
+                                <select name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
+                                    <option value="">Select your date format</option>
+                                    <option value="j/n/Y">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
+                                    <option value="n-j-Y">{moment("2021-01-15").format('M-D-YYYY')}</option>
+                                    <option value="n-j-y">{moment("2021-01-15").format('M-D-YY')}</option>
+                                    <option value="m-d-y">{moment("2021-01-15").format('MM-DD-YY')}</option>
+                                    <option value="m-d-Y">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
+                                    <option value="y-m-d">{moment("2021-01-15").format('YY-MM-DD')}</option>
+                                    <option value="Y-m-d">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
+                                    <option value="d-M-y">{moment("2021-01-15").format('DD-MMM-YY')}</option>
+                                    <option value="n/j/Y">{moment("2021-01-15").format('M/D/YYYY')}</option>
+                                    <option value="n/j/y">{moment("2021-01-15").format('M/D/YY')}</option>
+                                    <option value="m/d/y">{moment("2021-01-15").format('MM/DD/YY')}</option>
+                                    <option value="m/d/Y">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
+                                    <option value="y/m/d">{moment("2021-01-15").format('YY/MM/DD')}</option>
+                                    <option value="Y/m/d">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
+                                    <option value="d/M/y">{moment("2021-01-15").format('DD/MMM/YY')}</option>
+                                </select>
                             </div>
                         </div>
-                        <div className="row ml-0 mr-0">
-                            <div className="col-md-12">
-                                <ErrorAlert errors={this.state.errors} />
-                            </div>
+
+                        <div className="btns-csvUpload d-flex justify-content-center">
+                            <Button className='btn-cancel'>Cancel</Button>
+                            <Button className='btn-theme'>Save</Button>
+                            {/* <a href="/csv/upload_sample.csv" target="_blank" download>Download sample CSV file</a>
+                            <button type="submit" className="btn gaa-btn-primary btn-fab btn-round"><i className="fa fa-upload mr-3"></i>Upload</button> */}
                         </div>
-
-                        {/* <div className="text-primary mb-3 mt-3 ml-3 "><b>Notice: </b>Please upload CSV with date formatted as "yyyy-mm-dd"</div> */}
-
-                        <form onSubmit={this.handleSubmit} encType="multipart/form-data" id="csv-upload-form-container">
-
-                            <div className="row mr-0 ml-0">
-                                <div className="col-lg-12 col-sm-12">
-                                    <div className="form-group">
-                                        <label htmlFor="csv" className="form-control-placeholder">CSV</label>
-                                        <input type="file" className="form-control upload-csv-input" id="csv" name="csv" />
-                                    </div>
-                                    <div className="row ml-0 mr-0 mt-2">
-                                        <div className="form-group  col-12 col-sm-12 col-md-5 col-lg-5 p-0 ua-r-pr ">
-                                            <label htmlFor="property" className="form-control-placeholder">Google Properties</label>
-                                            <GoogleAnalyticsPropertySelect
-                                                currentPricePlan={this.props.currentPricePlan}
-                                                name="google_analytics_property_id"
-                                                id="google_analytics_property_id"
-                                                value={this.state.google_analytics_property_id}
-                                                onChangeCallback={this.changeHandler}
-                                                components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
-                                                placeholder="Select GA Propertys"
-                                                multiple
-                                                onFocus={(e) => {
-                                                    if (this.props.currentPricePlan.ga_account_count == 1 || this.props.currentPricePlan.google_analytics_property_count == -1) {
-                                                        const accountNotLinkedHtml = '' +
-                                                            '<div class="">' +
-                                                            '<img src="/images/property-upgrade-modal.jpg" class="img-fluid">' +
-                                                            '</div>'
-                                                        /*
-                                                        * Show new google analytics account popup
-                                                        * */
-                                                        swal.fire({
-                                                            html: accountNotLinkedHtml,
-                                                            width: 700,
-                                                            customClass: {
-                                                                popup: 'custom_bg pb-5',
-                                                                htmlContainer: 'm-0',
-                                                            },
-                                                            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                                            confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
-
-                                                        }).then(value => {
-                                                            if (value.isConfirmed) {
-                                                                this.setState({ redirectTo: "/settings/price-plans" });
-                                                            }
-                                                        });
-                                                    }
-                                                }}
-                                            ></GoogleAnalyticsPropertySelect>
-                                        </div>
-                                        <div className="col-md-2 col-lg-2"></div>
-                                        <div className="form-group col-12 col-sm-12 col-md-5 col-lg-5 p-0 ua-r-pl ">
-                                            <label htmlFor="date-format" className="form-control-placeholder" >Select Date format</label>
-                                            <select name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
-                                                <option value="">select your date format</option>
-                                                <option value="j/n/Y">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
-
-                                                <option value="n-j-Y">{moment("2021-01-15").format('M-D-YYYY')}</option>
-                                                <option value="n-j-y">{moment("2021-01-15").format('M-D-YY')}</option>
-                                                <option value="m-d-y">{moment("2021-01-15").format('MM-DD-YY')}</option>
-                                                <option value="m-d-Y">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
-                                                <option value="y-m-d">{moment("2021-01-15").format('YY-MM-DD')}</option>
-                                                <option value="Y-m-d">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
-                                                <option value="d-M-y">{moment("2021-01-15").format('DD-MMM-YY')}</option>
-
-                                                <option value="n/j/Y">{moment("2021-01-15").format('M/D/YYYY')}</option>
-                                                <option value="n/j/y">{moment("2021-01-15").format('M/D/YY')}</option>
-                                                <option value="m/d/y">{moment("2021-01-15").format('MM/DD/YY')}</option>
-                                                <option value="m/d/Y">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
-                                                <option value="y/m/d">{moment("2021-01-15").format('YY/MM/DD')}</option>
-                                                <option value="Y/m/d">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
-                                                <option value="d/M/y">{moment("2021-01-15").format('DD/MMM/YY')}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div className="row ml-0 mr-0  mt-3">
-                                <div className="col-12 col-sm-12 col-md-4 col-lg-4 d-flex flex-column justify-content-center">
-                                    <a href="/csv/upload_sample.csv" target="_blank" download>Download sample CSV file</a>
-                                </div>
-                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 text-right">
-                                    <button type="submit" className="btn gaa-btn-primary btn-fab btn-round">
-                                        <i className="fa fa-upload mr-3"></i>
-                                        Upload
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </section>
-
+                    </form>
+                </div>
             </div>
         );
     }

@@ -57,6 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_ds_facebook_tracking_enabled',
         'is_ds_instagram_tracking_enabled',
         'is_ds_bitbucket_tracking_enabled',
+        'is_ds_shopify_annotation_enabled',
         'is_ds_github_tracking_enabled',
         'is_ds_apple_podcast_annotation_enabled',
         'is_ds_g_ads_history_change_enabled',
@@ -74,6 +75,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'startup_configuration_showed_at',
 
         'last_screenshot_of_report_at',
+        'is_ds_wordpress_enabled',
         // app_sumo_uuid
     ];
 
@@ -280,6 +282,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function userChecklistItems()
     {
         return $this->hasMany(UserChecklistItem::class);
+    }
+
+    public function userStarterConfigurationChecklist()
+    {
+        return  $this->userChecklistItems->whereIn('checklist_item_id',['25','21','23']);
+    }
+
+    public function starterConfigurationChecklist()
+    {
+        return  ChecklistItem::whereIn('id',['25','21','23'])->get();
     }
 
     public function notificationSettings()

@@ -106,7 +106,6 @@ export default class EditKeyword extends React.Component {
             ranking_places: this.state.ranking_places,
             is_url_competitors: this.state.is_url_competitors,
         };
-        console.log(params);
         HttpClient.post("/data-source/update-keyword-tracking-keyword", params)
             .then(
                 (resp) => {
@@ -163,7 +162,7 @@ export default class EditKeyword extends React.Component {
 
     render() {
         return (
-            <div className="switch-wrapper">
+            <div className="apps-bodyContent switch-wrapper">
                 <div className="weather_alert_cities-form">
                     <h4 className="gaa-text-primary">Manage keywords</h4>
                     <label>Tracking</label>
@@ -183,7 +182,7 @@ export default class EditKeyword extends React.Component {
                         </select>
                     </div>
                     <label>Website URL</label>
-                    <div className="input-group mb-3">
+                    <div className="input-group inputWithIcon mb-3 position-relative">
                         <input
                             type="text"
                             className="form-control"
@@ -201,6 +200,7 @@ export default class EditKeyword extends React.Component {
                                 this.setState({ url: val });
                             }}
                         />
+                        <i className="fa fa-link"></i>
                     </div>
                     <label>Keyword</label>
                     <div className="input-group mb-3">

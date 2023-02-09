@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Rules\MatchOldPassword;
 
 class ResetPasswordController extends Controller
 {
@@ -36,7 +37,9 @@ class ResetPasswordController extends Controller
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
+            'current_password' => ['required', new MatchOldPassword],
             'new_password' => ['confirmed', 'required', 'string', 'min:8', new HasSymbol, new HasLettersNumbers],
+            'new_password_confirmation' => ['same:new_password'],
         ]);
 
         $user = Auth::user();

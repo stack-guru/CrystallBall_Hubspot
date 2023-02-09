@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\CompanyInfo;
+use App\Models\websiteTechnologyLookup;
 use App\Providers\RouteServiceProvider;
 use App\Rules\HasLettersNumbers;
 use App\Rules\HasSymbol;
@@ -11,6 +13,7 @@ use Illuminate\Foundation\Auth\ConfirmsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Sentry\Util\JSON;
 
 class ConfirmPasswordController extends Controller
 {
@@ -52,17 +55,18 @@ class ConfirmPasswordController extends Controller
             return redirect($this->redirectPath());
 
         $this->validate($request, [
+            'name'     => ['required', 'string', 'max:255'],
             'password' => ['confirmed', 'required', 'string', 'min:8', new HasSymbol, new HasLettersNumbers]
         ], [
             'password.min' => 'Must be at least 8 characters.',
         ]);
 
         $user->forceFill([
+            'name' => $request->name,
             'password' => Hash::make($request->password)
-        ])->save();
-
+        ])->save();             
         event(new \Illuminate\Auth\Events\Registered($user));
-
+        return ['user' => $user];
         return redirect($this->redirectPath());
     }
 }

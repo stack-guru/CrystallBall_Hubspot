@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './PhoneVerificationModal.css';
 import HttpClient from "../utils/HttpClient";
 import { Link } from 'react-router-dom';
+import AppsModal from '../components/AppsMarket/AppsModal';
 
 export default class PhoneVerificationModal extends Component {
 
@@ -86,40 +87,30 @@ export default class PhoneVerificationModal extends Component {
     render() {
         if (!this.props.show) return null;
         return (
-            <div className="modal fade show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
-                <div className="modal-dialog" role="document" style={{ marginTop: '10%' }}>
-                    <div className="modal-content" style={{ width: 'max-content' }}>
-                        <div className="modal-body" style={{ padding: '0px' }}>
-                            <div id="wrapper">
-                                <div id="dialog">
+            <AppsModal isOpen={this.props.show} popupSize={'md'} toggle={this.props.toggleCallback}>
 
-                                    <h5>Please enter the 6-digit verification code we sent via SMS:</h5>
-                                    <span>The code sent to {this.props.phoneNumber} is valid for 5 minutes only.</span><br />
-                                    <span className="text-danger">{this.state.errors.message}</span>
-                                    {this.state.isBusy ?
-                                        <div className="fa-3x"><i className="fa fa-spinner fa-pulse"></i></div>
-                                        :
-                                        <form onSubmit={this.handleSubmit} id="form" onKeyUp={this.moveNext}>
-                                            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                            <button className="btn gaa-btn-primary btn-embossed" type="submit">Verify</button>
-                                        </form>
-                                    }
-                                    <div>
-                                        <p>Didn't receive the code? <Link to="/settings/change-password">Change Phone</Link></p>
-                                        {/* <p> <a href="#">Send again</a></p> */}
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <h5>Please enter the 6-digit verification code we sent via SMS:</h5>
+                <span>The code sent to {this.props.phoneNumber} is valid for 5 minutes only.</span><br />
+                <span className="text-danger">{this.state.errors.message}</span>
+                {this.state.isBusy ?
+                    <div className="fa-3x"><i className="fa fa-spinner fa-pulse"></i></div>
+                    :
+                    <form onSubmit={this.handleSubmit} id="form" onKeyUp={this.moveNext}>
+                        <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                        <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                        <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                        <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                        <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                        <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                        <button className="btn gaa-btn-primary btn-embossed" type="submit">Verify</button>
+                    </form>
+                }
+                <div>
+                    <p>Didn't receive the code? <Link to="/settings/profile">Change Phone</Link></p>
+                    {/* <p> <a href="#">Send again</a></p> */}
                 </div>
-            </div>
+
+            </AppsModal>
         )
     }
 }

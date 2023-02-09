@@ -34,28 +34,31 @@ class UserAnnotationColorController extends Controller
     {
 
         $userAnnotationColor = UserAnnotationColor::where('user_id', $userId)->first();
-        if (!$userAnnotationColor) {
 
+        if (!$userAnnotationColor) {
             $userAnnotationColor = new UserAnnotationColor;
             $userAnnotationColor->user_id = $userId;
-
-            $userAnnotationColor->manual = '#227c9d';
-            $userAnnotationColor->csv = '#227c9d';
-            $userAnnotationColor->api = '#227c9d';
-            $userAnnotationColor->holidays = '#227c9d';
-            $userAnnotationColor->google_algorithm_updates = '#227c9d';
-            $userAnnotationColor->retail_marketings = '#227c9d';
-            $userAnnotationColor->weather_alerts = '#227c9d';
-            $userAnnotationColor->web_monitors = '#227c9d';
-            $userAnnotationColor->wordpress_updates = '#227c9d';
-            $userAnnotationColor->google_alerts = '#227c9d';
-            $userAnnotationColor->keyword_tracking = '#227c9d';
-            $userAnnotationColor->facebook_tracking = '#227c9d';
-            $userAnnotationColor->bitbucket_tracking = '#227c9d';
-            $userAnnotationColor->github_tracking = '#227c9d';
-
-            $userAnnotationColor->save();
         }
+
+        $defaultColor = '#1976fe';
+        !str_contains($userAnnotationColor->manual, '#') ? $userAnnotationColor->manual = "#FE4C3C" : '';
+        !str_contains($userAnnotationColor->csv, '#') ? $userAnnotationColor->csv = $defaultColor : '';
+        !str_contains($userAnnotationColor->api, '#') ? $userAnnotationColor->api = $defaultColor : '';
+        !str_contains($userAnnotationColor->holidays, '#') ? $userAnnotationColor->holidays = $defaultColor : '';
+        !str_contains($userAnnotationColor->google_algorithm_updates, '#') ? $userAnnotationColor->google_algorithm_updates = $defaultColor : '';
+        !str_contains($userAnnotationColor->retail_marketings, '#') ? $userAnnotationColor->retail_marketings = $defaultColor : '';
+        !str_contains($userAnnotationColor->weather_alerts, '#') ? $userAnnotationColor->weather_alerts = $defaultColor : '';
+        !str_contains($userAnnotationColor->web_monitors, '#') ? $userAnnotationColor->web_monitors = $defaultColor : '';
+        !str_contains($userAnnotationColor->wordpress_updates, '#') ? $userAnnotationColor->wordpress_updates = $defaultColor : '';
+        !str_contains($userAnnotationColor->google_alerts, '#') ? $userAnnotationColor->google_alerts = $defaultColor : '';
+        !str_contains($userAnnotationColor->keyword_tracking, '#') ? $userAnnotationColor->keyword_tracking = $defaultColor : '';
+        !str_contains($userAnnotationColor->facebook_tracking, '#') ? $userAnnotationColor->facebook_tracking = $defaultColor : '';
+        !str_contains($userAnnotationColor->bitbucket_tracking, '#') ? $userAnnotationColor->bitbucket_tracking = $defaultColor : '';
+        !str_contains($userAnnotationColor->github_tracking, '#') ? $userAnnotationColor->github_tracking = $defaultColor : '';
+        !str_contains($userAnnotationColor->wordpress, '#') ? $userAnnotationColor->wordpress = $defaultColor : '';
+        !str_contains($userAnnotationColor->shopify, '#') ? $userAnnotationColor->shopify = $defaultColor : '';
+        !str_contains($userAnnotationColor->apple_podcast, '#') ? $userAnnotationColor->apple_podcast = $defaultColor : '';
+        $userAnnotationColor->save();
 
         return $userAnnotationColor;
     }

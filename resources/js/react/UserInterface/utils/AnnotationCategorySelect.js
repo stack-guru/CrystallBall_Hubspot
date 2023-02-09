@@ -30,13 +30,13 @@ export default class AnnotationCategorySelect extends React.Component {
             <CreatableSelect
                 name={this.props.name}
                 disabled={this.props.disabled}
-                value={{ label: this.props.value, value: this.props.value }}
+                value={this.props.value ? { label: this.props.value, value: this.props.value }: []}
                 id={this.props.id}
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}
                 className="gray_clr"
                 options={this.props.categories}
-                placeholder={this.props.placeholder}
+                placeholder={this.props.placeholder || 'Category *'}
             >
             </CreatableSelect>
         )

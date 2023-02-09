@@ -174,7 +174,7 @@ export default class DSKeywordTracking extends React.Component {
     render() {
 
         return (
-            <div className="switch-wrapper">
+            <div className="apps-bodyContent switch-wrapper">
 
                 <div className="weather_alert_cities-form">
                     <h4 className="gaa-text-primary">
@@ -189,7 +189,7 @@ export default class DSKeywordTracking extends React.Component {
                         </select>
                     </div>
                     <label>Website URL</label>
-                    <div className="input-group mb-3">
+                    <div className="input-group inputWithIcon mb-3 position-relative">
                         <input
                             type="text"
                             className="form-control"
@@ -207,6 +207,7 @@ export default class DSKeywordTracking extends React.Component {
                                 this.setState({ url: val });
                             }}
                         />
+                        <i className="fa fa-link"></i>
                     </div>
                     <label>Keywords</label>
                     <div className="input-group mb-1">
