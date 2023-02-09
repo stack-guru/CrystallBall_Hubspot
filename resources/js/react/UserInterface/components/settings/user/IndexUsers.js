@@ -22,26 +22,31 @@ export default class IndexUsers extends Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.checkSearchText = this.checkSearchText.bind(this);
         this.saveRole = this.saveRole.bind(this);
+        this.getUsers = this.getUsers.bind(this);
     }
 
     componentDidMount() {
         document.title = "Users";
-        HttpClient.get(`/settings/user`)
-            .then(
-                (response) => {
-                    this.setState({ users: response.data.users });
-                },
-                (err) => {
-                    this.setState({ errors: err.response.data });
-                }
-            )
-            .catch((err) => {
-                this.setState({ errors: err });
-            });
+       this.getUsers();
     }
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    getUsers() {
+        HttpClient.get(`/settings/user`)
+        .then(
+            (response) => {
+                this.setState({ users: response.data.users });
+            },
+            (err) => {
+                this.setState({ errors: err.response.data });
+            }
+        )
+        .catch((err) => {
+            this.setState({ errors: err });
+        });
     }
 
     checkSearchText(user) {
@@ -65,6 +70,7 @@ export default class IndexUsers extends Component {
                     icon: 'success',
                     title: "User updated.",
                 });
+                this.getUsers();
             }, (err) => {
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
@@ -79,6 +85,8 @@ export default class IndexUsers extends Component {
                     this.setState({
                         users: this.state.users.filter((u) => u.id !== id),
                     });
+
+                    this.getUsers();
                 },
                 (err) => {
                     this.setState({ errors: err.response.data });
@@ -282,7 +290,7 @@ export default class IndexUsers extends Component {
                                 </div>
                             </div>
 
-                            <CreateUser user={this.props.user} />
+                            <CreateUser toggle={() => { this.setState({ addUserPopup: false, }); }} getUsers={this.getUsers}  user={this.props.user} />
                         </div>
                     </AppsModal>
                     <AppsModal isOpen={this.state.editUserId} popupSize={'md'} toggle={() => { this.setState({ editUserId: '', }); }}>
@@ -296,7 +304,7 @@ export default class IndexUsers extends Component {
                                 </div>
                             </div>
 
-                            <EditUser editUserId={this.state.editUserId} />
+                            <EditUser toggle={() => { this.setState({ editUserId: '', }); }} getUsers={this.getUsers} editUserId={this.state.editUserId} />
                         </div>
                     </AppsModal>
                 </div>

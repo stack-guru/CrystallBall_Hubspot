@@ -59,6 +59,8 @@ export default class CreateUser extends Component {
                 });
                 this.setState({ loading: false });
                 this.setState({ redirectTo: "/settings/user" })
+                this.props.getUsers();
+                this.props.toggle();
             }, (err) => {
                 this.setState({ loading: false });
                 this.setState({ errors: (err.response).data });
