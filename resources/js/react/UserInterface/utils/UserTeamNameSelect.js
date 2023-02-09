@@ -24,10 +24,10 @@ export default class UserTeamNameSelect extends React.Component {
             .then(response => {
                 this.setState({ isBusy: false, teamNames: response.data.team_names.map(tN => { return { label: tN.team_name, value: tN.team_name } }) });
             }, (err) => {
-                
+
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-                
+
                 this.setState({ isBusy: false, errors: err });
             });
     }
@@ -41,7 +41,7 @@ export default class UserTeamNameSelect extends React.Component {
             <CreatableSelect
                 name={this.props.name}
                 disabled={this.props.disabled}
-                value={{ label: this.props.value, value: this.props.value }}
+                value={this.props.value ? { label: this.props.value, value: this.props.value }: []}
                 id={this.props.id}
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}

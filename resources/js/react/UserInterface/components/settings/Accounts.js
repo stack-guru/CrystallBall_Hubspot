@@ -635,9 +635,29 @@ export default class Accounts extends React.Component {
         if (this.state.user.price_plan.ga_account_count > this.state.googleAccounts.length || this.state.user.price_plan.ga_account_count == 0) {
             this.setState({ isPermissionPopupOpened: true });
         } else {
-            swal.fire("Upgrade to Pro Plan!", "Google account feature is not available in this plan.", "warning").then(value => {
-                this.setState({ redirectTo: '/settings/price-plans' });
-            })
+
+            const accountNotLinkedHtml = '' +
+                        '<div class="">' +
+                        '<img src="/images/increase-plan-limit.png" class="img-fluid">' +
+                        '</div>';
+
+            swal.fire({
+                html: accountNotLinkedHtml,
+                width: 1000,
+                showCancelButton: true,
+                showCloseButton: true,
+                customClass: {
+                    popup: "themePlanAlertPopup",
+                    htmlContainer: "themePlanAlertPopupContent",
+                    closeButton: 'btn-closeplanAlertPopup',
+                },
+                cancelButtonClass: "btn-bookADemo",
+                cancelButtonText: "Book a Demo",
+                confirmButtonClass: "btn-subscribeNow",
+                confirmButtonText: "Subscribe now",
+            }).then(function (value) {
+                if (value.isConfirmed) window.location.href = '/settings/price-plans'
+            });
         }
     }
 

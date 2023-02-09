@@ -76,7 +76,8 @@ export default class IndexDashboard extends Component {
             endDate: moment().subtract(2, 'days').format('YYYY-MM-DD'),
 
             statisticsPaddingDays: 3,
-            errors: undefined
+            errors: undefined,
+            sortBy: "",
         };
 
         this.searchConsoleFetchStatistics = this.searchConsoleFetchStatistics.bind(this);
@@ -91,6 +92,7 @@ export default class IndexDashboard extends Component {
         this.getGAAccounts = this.getGAAccounts.bind(this);
         this.getGAProperties = this.getGAProperties.bind(this);
         this.getGSCSites = this.getGSCSites.bind(this);
+        this.sort = this.sort.bind(this);
     }
 
     componentDidMount() {
@@ -127,12 +129,10 @@ export default class IndexDashboard extends Component {
                                     </svg>
                                 </i>
                                 <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                <select name="sortBy" id="sort-by" value='' className="form-control">
-                                    <option value="Null">Sort By</option>
-                                    <option value="added">Added</option>
-                                    <option value="date">By Date</option>
-                                    <option value="category">By Category</option>
-                                    <option value="ga-property">By GA Property</option>
+                                <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
+                                    <option value="">Sort By</option>
+                                    <option value="google_search_console_site_id">Connected</option>
+                                    <option value="is_in_use">In Use</option>
                                 </select>
                             </FormGroup>
 
@@ -159,7 +159,20 @@ export default class IndexDashboard extends Component {
                                 {this.state.googleAnalyticsProperties.map(gAP => {
                                     return <div className="singleRow justify-content-between align-items-center" key={gAP.id}>
                                         <div className="singleCol text-left"><span>{gAP.id}</span></div>
-                                        <div className="singleCol text-left"><span className='w-100 d-flex justify-content-start'>{(gAP.google_analytics_account) ? gAP.google_analytics_account.name : ''}{gAP.is_in_use ? <em className='tag-inuse'><i className='fa fa-check'></i><i>In use</i></em> : null}</span></div>
+                                        <div className="singleCol text-left">
+                                            <span className='w-100 d-flex justify-content-start'>
+                                                {
+                                                    (gAP.google_analytics_account) ? 
+                                                    gAP.google_analytics_account.name :
+                                                     ''
+                                                }
+                                                {
+                                                    gAP.is_in_use ?
+                                                    <em className='tag-inuse'><i className='fa fa-check'></i><i>In use</i></em> :
+                                                    null
+                                                }
+                                            </span>
+                                        </div>
                                         <div className="singleCol text-left">
                                             <span className='d-flex justify-content-between w-100'>
                                                 <span>{gAP.name}</span>
@@ -402,6 +415,12 @@ export default class IndexDashboard extends Component {
         </React.Fragment>;
     }
 
+    sort (e) {
+        this.setState({
+            sortBy: e.target.value,
+        }, this.getGAProperties);
+    }
+
     searchConsoleFetchStatistics(gSCSiteId) {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
@@ -565,7 +584,7 @@ export default class IndexDashboard extends Component {
 
     getGAProperties() {
         this.setState({ isBusy: true });
-        return HttpClient.get(`/settings/google-analytics-property`).then(response => {
+        return HttpClient.get(`/settings/google-analytics-property?sortBy=${this.state.sortBy}`).then(response => {
             this.setState({ isBusy: false, googleAnalyticsProperties: response.data.google_analytics_properties })
             return true;
         }, (err) => {
