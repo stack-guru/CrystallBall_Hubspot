@@ -65,12 +65,14 @@ class WappalyzerService
         $techArray = @$data[0]['technologies'];
         $websiteTechLookup -> site_url = @$data[0]['url'];
         $websiteTechLookup -> save();
-        foreach($techArray as $technology)
-        {
-            WebsiteTechnologyName::create([
-                'name' => $technology['name'],
-                'website_technology_lookup_id' => $websiteTechLookup->id
-            ]);
+        if(!empty($techArray)){
+            foreach($techArray as $technology)
+            {
+                WebsiteTechnologyName::create([
+                    'name' => $technology['name'],
+                    'website_technology_lookup_id' => $websiteTechLookup->id
+                ]);
+            }
         }
         //save tech lookup (must improve later.)
     }
