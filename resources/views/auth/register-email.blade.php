@@ -64,15 +64,15 @@
                     <div class="signup-slider">
                         <div class='slide'>
                             <h4>Create annotations for essential workspaces</h4>
-                            <img src="/images/signup-slider-01.png" />
+                            <img src="/images/signup-slider-01.svg" />
                         </div>
                         <div class='slide'>
                             <h4>Insights - predictions</h4>
-                            <img src="/images/signup-slider-02.png" />
+                            <img src="/images/signup-slider-02.svg" />
                         </div>
                         <div class='slide'>
                             <h4>Use AI and Google Analytics annotations to make more accurate predictions about your website's future performance</h4>
-                            <img src="/images/signup-slider-03.png" />
+                            <img src="/images/signup-slider-03.svg" />
                         </div>
                     </div>
                 </div>

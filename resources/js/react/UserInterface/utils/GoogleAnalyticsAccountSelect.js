@@ -107,24 +107,21 @@ export default class GoogleAnalyticsAccountSelect extends React.Component {
         }
         return (
             <>
-
-                <div className="themeNewInputStyle">
-                    <div className="themeNewInputStyle position-relative inputWithIcon">
-                        <i className="icon fa"><img src='/icon-plus.svg' /></i>
-                        <Select
-                            name={this.props.name}
-                            disabled={this.props.disabled}
-                            // value={selectedOptions}
-                            value={[]}
-                            id={this.props.id}
-                            className="gray_clr"
-                            isMulti={this.props.multiple}
-                            onChange={this.onChangeHandler}
-                            options={this.state.aAccounts}
-                            isSearchable={this.state.aAccounts.length > 3}
-                            placeholder={this.props.placeholder}>
-                        </Select>
-                    </div>
+                <div className="selectGoogleAccount themeNewInputStyle position-relative inputWithIcon">
+                    <i className="icon fa"><img src='/icon-plus.svg' /></i>
+                    <Select
+                        name={this.props.name}
+                        disabled={this.props.disabled}
+                        // value={selectedOptions}
+                        value={[]}
+                        id={this.props.id}
+                        className="gray_clr"
+                        isMulti={this.props.multiple}
+                        onChange={this.onChangeHandler}
+                        options={this.state.aAccounts}
+                        isSearchable={this.state.aAccounts.length > 3}
+                        placeholder={this.props.placeholder}>
+                    </Select>
                 </div>
 
 

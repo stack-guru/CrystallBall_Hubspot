@@ -63,7 +63,7 @@ class VerificationController extends Controller
         $verified = $request->user()->hasVerifiedEmail();
         return $verified 
         // && ($request->user()->password != User::EMPTY_PASSWORD || ($request->user()->password === User::EMPTY_PASSWORD && $request->user()->has_password == false))
-                        ? redirect()->to(url('success_message'))
+                        ? redirect()->to(url('success-message'))
                         // ? redirect($this->redirectPath())
                         : view('auth.verify', compact('verified'));
     }
@@ -93,7 +93,7 @@ class VerificationController extends Controller
         if ($request->user()->hasVerifiedEmail()) {
             return $request->wantsJson()
                         ? new JsonResponse([], 204)
-                    : redirect()->to(url('success_message'));
+                    : redirect()->to(url('success-message'));
         }
         $userEmail = $user->email;                   //after email verified , when generate password  call wappalyzer api.
         $companyDomain = explode("@", $userEmail)[1];
@@ -108,7 +108,7 @@ class VerificationController extends Controller
         }
         return $request->wantsJson()
                     ? new JsonResponse([], 204)
-                    : redirect()->to(url('success_message'));
+                    : redirect()->to(url('success-message'));
                     // ->with('verified', true);Path())
                     // ->with('verified', true);
     }
@@ -122,7 +122,7 @@ class VerificationController extends Controller
     protected function verified(Request $request)
     {
         // if($request->user()->password === User::EMPTY_PASSWORD && $request->user()->has_password == true){
-            return redirect()->to(url('success_message'));
+            return redirect()->to(url('success-message'));
         // }
     }
 

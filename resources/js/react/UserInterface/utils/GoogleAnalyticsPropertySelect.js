@@ -252,59 +252,59 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                         {this.state.selectedProperties.length ? <h4>
                             Selected properties: <span>(Click to remove)</span>
                         </h4>: null}
-                        <div className="d-flex keywordTags mt-3">
-                            {this.state.selectedProperties.map(itm => {
-                                return (<>
-                                    <button
-                                        onClick={() =>
-                                            this.setState({
-                                                activeDeletePopover: itm.value,
-                                            })
-                                        }
-                                        id={"gAK-" + itm.value}
-                                        type="button"
-                                        className="keywordTag"
-                                        key={itm.value}
-                                        user_data_source_id={itm.value}
-                                    >
-                                        <span
-                                            style={{ background: "#2d9cdb" }}
-                                            className="dot"
-                                        ></span>
-                                        <span className="text-truncate ga-selected-label" style={{ maxWidth: 150 }}>{itm.labelText}</span>
-                                    </button>
-
-                                    <Popover
-                                        placement="top"
-                                        target={"gAK-" + itm.value}
-                                        isOpen={
-                                            this.state.activeDeletePopover ===
-                                            itm.value
-                                        }
-                                    >
-                                        <PopoverBody web_monitor_id={itm.value}>
-                                            Are you sure you want to remove "{itm.labelText || itm.label}"?.
-                                        </PopoverBody>
-                                        <button
-                                            onClick={() => this.deleteKeyword(itm.value)}
-                                            key={itm.value}
-                                            user_data_source_id={itm.value}
-                                        >
-                                            Yes
-                                        </button>
+                        {this.state.selectedProperties.length ? <div className="d-flex keywordTags mt-3">
+                                {this.state.selectedProperties.map(itm => {
+                                    return (<>
                                         <button
                                             onClick={() =>
                                                 this.setState({
-                                                    activeDeletePopover: null,
+                                                    activeDeletePopover: itm.value,
                                                 })
                                             }
+                                            id={"gAK-" + itm.value}
+                                            type="button"
+                                            className="keywordTag"
+                                            key={itm.value}
+                                            user_data_source_id={itm.value}
                                         >
-                                            No
+                                            <span
+                                                style={{ background: "#2d9cdb" }}
+                                                className="dot"
+                                            ></span>
+                                            <span className="text-truncate ga-selected-label" style={{ maxWidth: 150 }}>{itm.labelText}</span>
                                         </button>
-                                    </Popover>
-                                </>)
-                            })}
-                        </div>
+
+                                        <Popover
+                                            placement="top"
+                                            target={"gAK-" + itm.value}
+                                            isOpen={
+                                                this.state.activeDeletePopover ===
+                                                itm.value
+                                            }
+                                        >
+                                            <PopoverBody web_monitor_id={itm.value}>
+                                                Are you sure you want to remove "{itm.labelText || itm.label}"?.
+                                            </PopoverBody>
+                                            <button
+                                                onClick={() => this.deleteKeyword(itm.value)}
+                                                key={itm.value}
+                                                user_data_source_id={itm.value}
+                                            >
+                                                Yes
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    this.setState({
+                                                        activeDeletePopover: null,
+                                                    })
+                                                }
+                                            >
+                                                No
+                                            </button>
+                                        </Popover>
+                                    </>)
+                                })}
+                            </div> : null}
                     </div>
                 </div>
             </>

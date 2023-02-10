@@ -69,6 +69,7 @@ class Shopify extends React.Component {
                 /> */}
 
                         <ShopifyStoreConfig
+                            sectionToggler={this.props.closeModal}
                             onCheckCallback={this.props.userDataSourceAddHandler}
                             onUncheckCallback={this.props.userDataSourceDeleteHandler}
                             user={this.props.user}

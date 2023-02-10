@@ -6,31 +6,30 @@ export default function ErrorAlert(props) {
         if (errors !== undefined) {
             if (props.errors.message !== undefined) {
                 return (
-                    <div className="alert alert-danger border-0">
-                        <i><img src={'/icon-info-red.svg'} alt={'icon'} className="svg-inject" /></i>
-                        <span>
-                            {props.errors.message}
-                        </span>
-
-                        <ul>
+                    <>
+                        <div className="alert alert-danger border-0 mt-0 mb-3">
+                            <i><img src={'/icon-info-red.svg'} alt={'icon'} className="svg-inject" /></i>
+                            <span>
+                                {props.errors.message}
+                            </span>
+                        </div>
+                        <ul className='errorList m-0 pl-4 pb-3 text-danger'>
                             {Object.keys(errors).map((field, fi) => {
                                 return (
                                     <li key={fi}>
                                         {field}
-                                        <ul>
-                                            {errors[field].map((rule, ri) => {
-                                                return (
-                                                    <li key={fi + ri}>
-                                                        {rule}
-                                                    </li>
-                                                );
-                                            })}
-                                        </ul>
+                                        {errors[field].map((rule, ri) => {
+                                            return (
+                                                <span className='pl-2' key={fi + ri}>
+                                                    {rule}
+                                                </span>
+                                            );
+                                        })}
                                     </li>
                                 );
                             })}
                         </ul>
-                    </div>
+                    </>
                 );
             } else {
                 return (
@@ -44,7 +43,7 @@ export default function ErrorAlert(props) {
             }
         } else {
             return (
-                <div className="alert alert-danger border-0">
+                <div className="alert alert-danger border-0 mt-0">
                     <i><img src={'/icon-info-red.svg'} alt={'icon'} className="svg-inject" /></i>
                     <span
                         dangerouslySetInnerHTML={{

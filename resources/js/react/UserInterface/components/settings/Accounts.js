@@ -150,12 +150,13 @@ export default class Accounts extends React.Component {
                     </div> */}
                     <section className='accountsHolder'>
                         <h3>Google accounts</h3>
-                        <div className="accounts googleAccounts">
+                        <div className="accounts socialAccounts">
                         {
                             this.state.googleAccounts.map(googleAccount => {
                                 // className: reconnect
                                 return <div className='account'>
-                                            <figure><img className='w-100' src={googleAccount.avatar} alt='user image' /></figure>
+                                            {/* <figure><img className='w-100' src={googleAccount.avatar} alt='user image' /></figure> */}
+                                            <figure><img className='socialImage' src='/google-small.svg' alt='user image' /></figure>
                                             <div className='nameAndEmail'>
                                                 <h4>{googleAccount.name}</h4>
                                                 <span>{googleAccount.email}</span>
