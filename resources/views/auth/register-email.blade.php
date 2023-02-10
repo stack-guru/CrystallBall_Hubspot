@@ -37,7 +37,7 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="form-label-group" style="padding-left: 12%;">
+                    <div class="py-2 mb-3 d-flex justify-content-center">
                         @error('g-recaptcha-response')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -64,15 +64,15 @@
                     <div class="signup-slider">
                         <div class='slide'>
                             <h4>Create annotations for essential workspaces</h4>
-                            <img src="/images/signup-slider-01.png" />
+                            <img src="/images/signup-slider-01.svg" />
                         </div>
                         <div class='slide'>
                             <h4>Insights - predictions</h4>
-                            <img src="/images/signup-slider-02.png" />
+                            <img src="/images/signup-slider-02.svg" />
                         </div>
                         <div class='slide'>
                             <h4>Use AI and Google Analytics annotations to make more accurate predictions about your website's future performance</h4>
-                            <img src="/images/signup-slider-03.png" />
+                            <img src="/images/signup-slider-03.svg" />
                         </div>
                     </div>
                 </div>

@@ -540,7 +540,9 @@ setting-menu-item.dropdown {transition: 0.3s ease;}
 }
 
 .trial-countdown {
+    font-size: 15px;
     color: #2196f3;
+    font-weight: 600;
 }
 .hint-button {
     height: 15px;
@@ -1158,8 +1160,14 @@ body {
     border-radius: 1rem;
     max-height: calc(100vh - 180px);
 }
-.apps-modal .modal-body { padding: 32px 32px; }
-.popupContent { margin: 0 0 24px; }
+.apps-modal .modal-body {
+    padding: 32px 32px;
+    height: 100%;
+    overflow: auto;
+}
+.popupContent {
+    padding: 0 10px;
+}
 .apps-modalHead {
     display: flex;
     padding: 0 0 42px;
@@ -1522,7 +1530,12 @@ body {
     box-shadow: 0px 4px 12px rgba(40, 126, 252, 0.16);
     background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%);
 }
-.modal-newsAlerts {}
+/* .modal-newsAlerts,
+.modal-rankTracking,
+.modal-weatherAlerts {
+    margin: 0;
+    padding: 0 10px;
+} */
 .modal-wordpressUpdates {
     margin: 0;
     display: flex;
@@ -2205,6 +2218,8 @@ body {
 }
 .btn-cancel:focus,
 .btn-cancel:hover {border-color: #a6a6a6;}
+.css-tlfecz-indicatorContainer { width: 38px; }
+.css-tlfecz-indicatorContainer,
 .themeNewInputStyle select.form-control{
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
@@ -2408,6 +2423,10 @@ body {
 .modal-createAnnotation,
 .modal-createUser,
 .modal-csvUpload { margin: 0; }
+.selectGoogleAccount .css-1hb7zxy-IndicatorsContainer { display: none; }
+.css-tlfecz-indicatorContainer {color: #333;}
+.css-1okebmr-indicatorSeparator,
+.css-tlfecz-indicatorContainer svg { display: none !important; }
 .modal-csvUpload { padding: 0 10px 10px; }
 .modal-csvUpload .apps-modalHead {padding: 0 0 32px;}
 .modal-csvUpload .apps-modalHead h2 {
@@ -3803,6 +3822,23 @@ body {
     line-height: 18px;
 }
 
+.keywordTags .mini-preview-anchor .mini-preview-wrapper {
+    left: -20px !important;
+}
+
+.mini-preview-anchor .mini-preview-wrapper {
+    bottom: 20px !important;
+    top: auto !important;
+}
+.btn-trial {
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+.errorList {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.25;
+}
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }
     .is-collapsed .sidebar .sidebar-inner .sidebar-menu>li>a .title {visibility: hidden;}

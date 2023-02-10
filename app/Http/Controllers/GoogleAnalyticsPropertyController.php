@@ -18,7 +18,7 @@ class GoogleAnalyticsPropertyController extends Controller
             abort(400, "Please connect Google Analytics account before you use Google Analytics Properties.");
         }
 
-        $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::with(['googleAccount', 'googleAnalyticsAccount'])->orderBy('name');
+        $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::with(['googleAccount', 'googleAnalyticsAccount']);
         if ($request->has('keyword')) {
             $googleAnalyticsPropertiesQuery->select('id', 'name', 'google_account_id', 'google_analytics_account_id', 'was_last_data_fetching_successful', 'is_in_use')
                 ->with(['googleAccount:id,name', 'googleAnalyticsAccount:id,name'])
@@ -38,7 +38,14 @@ class GoogleAnalyticsPropertyController extends Controller
 
             $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get();
         } else {
-            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->ofCurrentUser()->get();
+            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->ofCurrentUser();
+
+            if ($request->has('sortBy') && $request->sortBy) {
+                $googleAnalyticsProperties = $googleAnalyticsProperties->orderByRaw("$request->sortBy * 1 desc");
+            }
+            // return $googleAnalyticsProperties->toSql();
+            $googleAnalyticsProperties = $googleAnalyticsProperties->get();
+
         }
         // if user's plan is trial or free new than only return 1 ga account with 1 property
 
