@@ -90,7 +90,7 @@ export default class indexSettings extends React.Component {
                             <h4 className="border-bottom gaa-text-primary"><b>Connected Accounts</b></h4>
                             <ul className='list-unstyled list-group mt-2 ml-4'>
                                 <li className='nav-item border-bottom'>
-                                    <Link to="/settings/accounts">
+                                    <Link to="/accounts">
                                         <span className="nav-link">Add google account</span>
                                     </Link>
                                 </li>
