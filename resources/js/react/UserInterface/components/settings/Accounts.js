@@ -55,12 +55,12 @@ export default class Accounts extends React.Component {
                 autoRedirectDelay = 10000;
                 this.fetchGSCSites(searchParams.get('google_account_id'))
                 this.fetchGAAccounts(searchParams.get('google_account_id'))
-                history.pushState({}, null, "/settings/accounts");
+                history.pushState({}, null, "/accounts");
             }
         }
 
         const redirectTo = localStorage.getItem('frontend_redirect_to');
-        if (redirectTo && redirectTo !== "/settings/accounts") {
+        if (redirectTo && redirectTo !== "/accounts") {
             localStorage.removeItem('frontend_redirect_to');
             Toast.fire({
                 icon: 'info',
