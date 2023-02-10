@@ -150,12 +150,13 @@ export default class Accounts extends React.Component {
                     </div> */}
                     <section className='accountsHolder'>
                         <h3>Google accounts</h3>
-                        <div className="accounts googleAccounts">
+                        <div className="accounts socialAccounts">
                         {
                             this.state.googleAccounts.map(googleAccount => {
                                 // className: reconnect
                                 return <div className='account'>
-                                            <figure><img className='w-100' src={googleAccount.avatar} alt='user image' /></figure>
+                                            {/* <figure><img className='w-100' src={googleAccount.avatar} alt='user image' /></figure> */}
+                                            <figure><img className='socialImage' src='/google-small.svg' alt='user image' /></figure>
                                             <div className='nameAndEmail'>
                                                 <h4>{googleAccount.name}</h4>
                                                 <span>{googleAccount.email}</span>
@@ -635,9 +636,29 @@ export default class Accounts extends React.Component {
         if (this.state.user.price_plan.ga_account_count > this.state.googleAccounts.length || this.state.user.price_plan.ga_account_count == 0) {
             this.setState({ isPermissionPopupOpened: true });
         } else {
-            swal.fire("Upgrade to Pro Plan!", "Google account feature is not available in this plan.", "warning").then(value => {
-                this.setState({ redirectTo: '/settings/price-plans' });
-            })
+
+            const accountNotLinkedHtml = '' +
+                        '<div class="">' +
+                        '<img src="/images/increase-plan-limit.png" class="img-fluid">' +
+                        '</div>';
+
+            swal.fire({
+                html: accountNotLinkedHtml,
+                width: 1000,
+                showCancelButton: true,
+                showCloseButton: true,
+                customClass: {
+                    popup: "themePlanAlertPopup",
+                    htmlContainer: "themePlanAlertPopupContent",
+                    closeButton: 'btn-closeplanAlertPopup',
+                },
+                cancelButtonClass: "btn-bookADemo",
+                cancelButtonText: "Book a Demo",
+                confirmButtonClass: "btn-subscribeNow",
+                confirmButtonText: "Subscribe now",
+            }).then(function (value) {
+                if (value.isConfirmed) window.location.href = '/settings/price-plans'
+            });
         }
     }
 

@@ -181,7 +181,9 @@
 }
 .signup-slider .slide img {
   display: block;
+  max-width: 100%;
   margin: 0 auto;
+  height: auto;
 }
 .signup-slider .slick-dots {
   left: 0;
@@ -268,4 +270,12 @@
   width: 100%;
   margin: 54px 0 32px;
   border-top: 1px solid #e0e0e0;
+}
+@media screen and (max-height: 830px) {
+  .signup-slider .slide {height: 370px;}
+  .signup-slider .slide  img{
+    height: 74%;
+    width: auto;
+    margin: 0 auto;
+  }
 }
