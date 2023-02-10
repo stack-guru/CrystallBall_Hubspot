@@ -25,6 +25,25 @@ export default class UploadAnnotation extends React.Component {
         this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
         this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
         this.checkIfCanCreateAnnotation = this.checkIfCanCreateAnnotation.bind(this)
+        this.onDragEnter = this.onDragEnter.bind(this)
+        this.onDragOver = this.onDragOver.bind(this)
+        this.onFileDrop = this.onFileDrop.bind(this)
+    }
+
+    onDragEnter (e) {
+        e.preventDefault();
+        $("#csv-caption").text("Drag and drop or click here")
+    }
+
+    onDragOver (e) {
+        e.preventDefault();
+        $("#csv-caption").text("Drop here")
+    }
+
+    onFileDrop (e) {
+        e.preventDefault();
+        $("#csv-caption").text("Dropped")
+        $("#csv")[0].files = e.dataTransfer.files;
     }
 
     checkIfCanCreateAnnotation(){
@@ -144,10 +163,10 @@ export default class UploadAnnotation extends React.Component {
                     <ErrorAlert errors={this.state.errors}/>
 
                     <form className='form-csvUpload' onSubmit={this.handleSubmit} encType="multipart/form-data" id="csv-upload-form-container">
-                        <div className="themeNewInputGroup csvFileUpload mb-4">
+                        <div className="themeNewInputGroup csvFileUpload mb-4" onDragEnter={this.onDragEnter} onDragOver={this.onDragOver} onDrop={this.onFileDrop}>
                             <label htmlFor="csv">
                                 <i><img src={'/icon-csvUpload.svg'} alt={'CSV Upload Icon'} className="svg-inject" /></i>
-                                <strong>Drag and drop or click here</strong>
+                                <strong id='csv-caption'>Drag and drop or click here</strong>
                                 <span>.csv files only — 5mb max</span>
                                 <input type="file" className="form-control upload-csv-input" id="csv" name="csv" />
                             </label>
