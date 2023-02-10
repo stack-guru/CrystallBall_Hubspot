@@ -9,12 +9,16 @@ class RetailMarketingDates extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isRead: false
+            isRead: false,
+            isActiveTracking: false
         }
     }
 
     changeModal() {
         this.setState({isRead: true})
+    }
+    updateTrackingStatus = status => {
+        this.setState({ isActiveTracking: status })
     }
 
     render() {
@@ -31,6 +35,7 @@ class RetailMarketingDates extends React.Component {
                 /> :
                 <>
                 <ModalHeader
+                    isActiveTracking={this.state.isActiveTracking}
                     userAnnotationColors={this.props.userAnnotationColors}
                     updateUserAnnotationColors={this.props.updateUserAnnotationColors}
                     userServices={this.props.userServices}
@@ -43,6 +48,8 @@ class RetailMarketingDates extends React.Component {
                 />
 
                 <DSRMDatesSelect
+                    updateTrackingStatus={this.updateTrackingStatus.bind(this)}
+                    updateUserService={this.props.updateUserService}
                     onCheckCallback={this.props.userDataSourceAddHandler}
                     onUncheckCallback={this.props.userDataSourceDeleteHandler}
                     ds_data={this.props.userDataSources.retail_marketings}
