@@ -143,7 +143,7 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
         $user = User::where('email','LIKE','%'.explode('@', $request->email)[1].'%')->first();
         if ($user) {
-            return redirect()->to(url('email_error'));
+            return redirect()->to(url('email-error'));
         }
         event(new \App\Events\RegisteredNewUser($user = $this->create($request->all())));
 

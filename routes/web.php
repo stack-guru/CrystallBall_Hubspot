@@ -31,8 +31,8 @@ Route::get('test_fb', function () {
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::view('email_error', 'auth.email_error');
-Route::view('success_message', 'auth.success');
+Route::view('email-error', 'auth.email-error');
+Route::view('success-message', 'auth.success');
 
 Route::get('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookGet']);
 Route::post('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookPost']);
