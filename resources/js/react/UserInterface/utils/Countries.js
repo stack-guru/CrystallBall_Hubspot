@@ -53,6 +53,12 @@ export default class countries extends React.Component {
                 country_name: e.target.name,
                 retail_marketing_id: null,
             });
+            this.props.updateTrackingStatus(true)
+            this.props.updateUserService({ target: {
+                    name: "is_ds_holidays_enabled",
+                    checked: true,
+                }, 
+            });
         } else {
             this.props.onUncheckCallback(e.target.id, "holidays");
         }
@@ -80,6 +86,12 @@ export default class countries extends React.Component {
                     );
                 }
             }
+        });
+        this.props.updateTrackingStatus(false)
+        this.props.updateUserService({ target: {
+                name: "is_ds_holidays_enabled",
+                checked: false,
+            }, 
         });
     }
 
