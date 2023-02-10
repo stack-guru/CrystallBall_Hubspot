@@ -104,6 +104,10 @@ class RegisterController extends Controller
                         || $domainPart == 'mailbox.org'
                         || $domainPart == 'mailfence.com') {
                         $fail('The ' . $attribute . ' must be a business email address!');
+                    }          
+                    $userExist = User::where('email','LIKE','%'.$domainPart)->first();
+                    if ($userExist) {
+                        $fail('The user already exist with this company email.');
                     }
                     return true;
                 },
@@ -118,8 +122,7 @@ class RegisterController extends Controller
                         } else {
                             $fail('The ' . $attribute . ' has already been taken.');
                         }
-                    }
-
+                    }    
                 },
             ],
             'read_confirmation'    => ['required'],
@@ -141,10 +144,6 @@ class RegisterController extends Controller
             'name' => explode('@', $request->email)[0] ?? null
         ]);
         $this->validator($request->all())->validate();
-        $user = User::where('email','LIKE','%'.explode('@', $request->email)[1].'%')->first();
-        if ($user) {
-            return redirect()->to(url('email-error'));
-        }
         event(new \App\Events\RegisteredNewUser($user = $this->create($request->all())));
 
         $this->guard()->login($user);

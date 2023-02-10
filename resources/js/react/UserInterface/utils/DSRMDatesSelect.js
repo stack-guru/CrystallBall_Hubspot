@@ -78,6 +78,12 @@ export default class DSRMDatesSelect extends React.Component {
                 }
             }
         });
+        this.props.updateTrackingStatus(true)
+        this.props.updateUserService({ target: {
+                name: "is_ds_retail_marketing_enabled",
+                checked: true,
+            }, 
+        });
     }
 
     clearAll(e) {
