@@ -83,7 +83,7 @@ export default class GoogleAnalyticsAccountSelect extends React.Component {
         }
 
         if (!this.props.multiple && sOption.value == 'new-google-account') {
-            this.setState({ redirectTo: '/settings/accounts' });
+            this.setState({ redirectTo: '/accounts' });
         } else {
             this.props.onChangeCallback({ target: { name: this.props.name, value: this.props.multiple ? finalValues?.map(sO => sO.id) : sOption?.[0]?.id } });
         }
