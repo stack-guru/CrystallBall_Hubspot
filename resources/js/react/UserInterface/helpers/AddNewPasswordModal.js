@@ -4,6 +4,7 @@ import Toast from "../utils/Toast";
 import ErrorAlert from '../utils/ErrorAlert';
 import { loadStateFromLocalStorage, saveStateToLocalStorage, removeStateFromLocalStorage } from '../helpers/CommonFunctions';
 import ModalHeader from '../components/AppsMarket/common/ModalHeader';
+import { Redirect } from 'react-router';
 
 export default class AddNewPasswordModal extends React.Component {
     constructor(props) {
@@ -56,7 +57,7 @@ export default class AddNewPasswordModal extends React.Component {
             this.setState({ isBusy: true, errors: '' });
             let fd = new FormData;
             for (var key in this.state.user) {
-                    fd.append(key, this.state.user[key])
+                fd.append(key, this.state.user[key])
             }
 
             HttpClient.post('/generate-password', fd)
@@ -130,7 +131,7 @@ export default class AddNewPasswordModal extends React.Component {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
 
         const validation = this.state.validation;
-        
+
         return (
             <div className="modal fade show" id="addNewPasswordModal" tabIndex="-1" role="dialog" aria-labelledby="adwordsClientCustomerIdSaverModalLabel" style={{ 'display': 'block', 'paddingRight': '12px' }}>
                 <div className="modal-dialog modal-dialog-centered " role="document">
@@ -156,7 +157,7 @@ export default class AddNewPasswordModal extends React.Component {
                                         {validation.password_confirmation ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.password_confirmation}</span> : ''}
                                     </div>
                                 </div>
-                                
+
 
                                 <div className='mt-4 text-center'>
                                     <button type="submit" className="btn-theme" title="submit">Add</button>
