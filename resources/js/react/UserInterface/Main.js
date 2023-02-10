@@ -213,7 +213,7 @@ class Main extends React.Component {
                             <Route exact path="/settings/payment-detail/create" refresh={true}>
                                 <CreatePaymentDetail user={this.state.user} />
                             </Route>
-                            <Route exact path="/settings/accounts" refresh={true}>
+                            <Route exact path="/accounts" refresh={true}>
                                 <Accounts user={this.state.user} reloadUser={this.loadUser} />
                             </Route>
                             <Route exact path="/settings/facebook-accounts" refresh={true}>
