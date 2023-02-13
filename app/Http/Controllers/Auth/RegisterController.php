@@ -105,9 +105,10 @@ class RegisterController extends Controller
                         || $domainPart == 'mailfence.com') {
                         $fail('The ' . $attribute . ' must be a business email address!');
                     }          
-                    $userExist = User::where('email','LIKE','%'.$domainPart)->first();
+                    $userExist = User::where('email',$value)->first();
+                    // $userExist = User::where('email','LIKE','%'.$domainPart)->first();
                     if ($userExist) {
-                        $fail('The user already exist with this company email.');
+                        $fail('This user already exist with same company email.');
                     }
                     return true;
                 },
