@@ -137,9 +137,8 @@ class Main extends React.Component {
                         <Header user={this.state.user} extendTrial={this.extendTrial} />
                     </div>
                     <main className="main-content bgc-grey-100">
-                    <ga-upgrade-popup></ga-upgrade-popup>
+                        <ga-upgrade-popup></ga-upgrade-popup>
                         <Switch>
-
                             <Route exact path="/ga-accounts" refresh={true}>
                                 <IndexDashboard user={this.state.user} />
                             </Route>
@@ -154,15 +153,7 @@ class Main extends React.Component {
                             </Route>
 
                             <Route exact path="/annotation" refresh={true}>
-                                <IndexAnnotations
-                                    openAnnotationPopup={(mka) => {
-                                        this.setState({
-                                            mKeyAnnotation: mka
-                                        });
-                                    }}
-                                    user={this.state.user}
-                                    mKeyAnnotation={this.state.mKeyAnnotation}
-                                />
+                                <IndexAnnotations openAnnotationPopup={(mka) => {this.setState({mKeyAnnotation: mka});}} user={this.state.user} mKeyAnnotation={this.state.mKeyAnnotation} />
                             </Route>
                             <Route exact path="/annotation/create" refresh={true}>
                                 <AnnotationsCreate currentPricePlan={this.state.user.price_plan} />

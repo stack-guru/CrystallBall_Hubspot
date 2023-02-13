@@ -3886,6 +3886,101 @@ body {
     background-color: #fff !important;
     border: 2px solid #1976fe !important;
 }
+.gaUpgradePopup {
+    display: flex;
+    margin: 0 auto;
+    overflow: hidden;
+    max-width: 1000px;
+    padding: 60px 42px;
+    align-items: center;
+    border-radius: 2rem;
+    box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.22);
+    background: url('/images/bg-upgradePopup2x.jpeg') no-repeat center center;
+}
+.gaUpgradePopupContent {
+    flex-grow: 1;
+    padding-left: 1.5rem;
+}
+.gaUpgradePopupContent h1 {
+    color: #333;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 35px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.gaUpgradePopupContent h1 span {
+    font-weight: 600;
+    background: linear-gradient(90deg, #F7751E 39.06%, #F2480C 100%);
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.gaUpgradePopupContent p {
+    color: #666;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0 0 42px;
+    line-height: 23px;
+    text-align: center;
+}
+.keyPoints ul {
+    margin: 0;
+    color: #333;
+    font-size: 16px;
+    padding: 0 30px;
+    font-weight: 400;
+    list-style: none;
+    line-height: 20px;
+}
+.keyPoints ul li {
+    display: flex;
+    align-items: center;
+    padding-bottom: 1rem;
+    list-style-type: none;
+    justify-content: start;
+}
+.keyPoints ul li:last-child { padding-bottom: 0; }
+.keyPoints ul li span:first-child {margin: 0 10px 0 0;}
+.btns-upgradePopup {
+    display: flex;
+    padding-top: 42px;
+    justify-content: space-between;
+}
+.btn-bookAdemo {
+    color: #666;
+    width: 100%;
+    height: 43px;
+    font-size: 18px;
+    max-width: 220px;
+    font-weight: 600;
+    line-height: 18px;
+    text-align: center;
+    padding: 10px 24px;
+    background: #FFFFFF;
+    border-radius: 100px;
+    border: 2px solid #a6a6a6;
+}
+.btn-subscribeNow {
+    gap: 8px;
+    border: 0;
+    color: #fff;
+    width: 100%;
+    height: 43px;
+    font-size: 18px;
+    max-width: 220px;
+    font-weight: 600;
+    line-height: 23px;
+    padding: 10px 24px;
+    text-align: center;
+    border-radius: 100px;
+    box-shadow: 0px 4px 12px rgba(255, 120, 36, 0.2);
+    background: linear-gradient(90deg, #FF8534 33.33%, #FF630C 100%);
+}
+
+
+
 
 
 
