@@ -1685,9 +1685,7 @@ class AppsMarket extends React.Component {
                     this.setState({ isBusy: false, errors: err.response.data });
                     if (err.response.status == 402) {
                         const accountNotLinkedHtml = '' +
-                            '<div class="">' +
-                            '<img src="/images/increase-plan-limit.png" class="img-fluid">' +
-                            '</div>';
+                            '<div class=""><img src="/images/increase-plan-limit.png" class="img-fluid"></div>';
                         swal.fire({
                             html: accountNotLinkedHtml,
                             width: 1000,

@@ -46,6 +46,7 @@ import CustomPricePlan from './components/settings/pricingPlans/CustomPricePlan'
 import AppsMarket from './components/AppsMarket/AppsMarket'
 import AppsModal from './components/AppsMarket/AppsModal';
 import ModalHeader from './components/AppsMarket/common/ModalHeader';
+import { Modal, ModalBody } from 'reactstrap';
 
 class Main extends React.Component {
 
@@ -253,6 +254,12 @@ class Main extends React.Component {
                         </AppsModal>
                         :
                         null}
+
+                <Modal isOpen={false} centered>
+                    <ModalBody>
+                        <ga-upgrade-popup></ga-upgrade-popup>
+                    </ModalBody>
+                </Modal>
             </React.Fragment>
         )
     }
