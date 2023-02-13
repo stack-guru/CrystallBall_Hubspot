@@ -255,7 +255,7 @@ class Main extends React.Component {
                         :
                         null}
 
-                <Modal isOpen={true} centered>
+                <Modal isOpen={false} centered>
                     <ModalBody>
                         <ga-upgrade-popup></ga-upgrade-popup>
                     </ModalBody>
