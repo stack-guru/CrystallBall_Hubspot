@@ -62,6 +62,8 @@ class Main extends React.Component {
             showPromotionPopup: false,
             showTimerPromotionPopup: false,
             mKeyAnnotation: '',
+            showUpgradePopup: false,
+            upgradePopupType: '',
         }
         this.loadUser = this.loadUser.bind(this)
 
@@ -246,9 +248,14 @@ class Main extends React.Component {
                         :
                         null}
 
-                <Modal isOpen={false} centered className="gaUpgradePopup">
-                    <button class="btn-closeUpgradePopup"><img src="images/close.svg" alt="close icon" /></button>
-                    <ga-upgrade-popup></ga-upgrade-popup>
+                <Modal isOpen={this.state.showUpgradePopup} centered className="gaUpgradePopup" toggle={() => this.setState({showUpgradePopup: false})}>
+                    <button onClick={() => this.setState({showUpgradePopup: false})} class="btn-closeUpgradePopup"><img src="images/close.svg" alt="close icon" /></button>
+                    <ga-upgrade-popup
+                        heading={`<h1>Upgrade to access <span>API Functionality</span></h1>`}
+                        subHeading={`<p>and get access to all amazing features</p>`}
+                        bannerImg="/images/apiFunctionality.svg"
+                    >
+                    </ga-upgrade-popup>
                 </Modal>
             </React.Fragment>
         )
