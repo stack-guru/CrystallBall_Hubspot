@@ -22,6 +22,7 @@ export default class EditAnnotation extends React.Component {
                 show_at: '',
                 google_analytics_property_id: [""]
             },
+            categories: [],
             validation: {},
             resp: '',
             error: '',
@@ -34,12 +35,12 @@ export default class EditAnnotation extends React.Component {
         this.gAPropertyChangeHandler = this.gAPropertyChangeHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
         this.setDefaultState = this.setDefaultState.bind(this);
+        this.loadCategoriesList = this.loadCategoriesList.bind(this)
         this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
         this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
     }
 
     componentDidMount() {
-        document.title = 'Edit Annotation'
         if (this.props.editAnnotationId) {
             this.setState({ isBusy: true });
             HttpClient.get(`/annotation/${this.props.editAnnotationId}`)
@@ -65,6 +66,20 @@ export default class EditAnnotation extends React.Component {
                 });
         }
         this.loadUserAnnotationColors();
+        this.loadCategoriesList();
+    }
+
+    loadCategoriesList() {
+        HttpClient.get(`/annotation-categories`)
+            .then(response => {
+                this.setState({ isBusy: false, categories: response.data.categories.map(c => { return { label: c.category, value: c.category } }) });
+            }, (err) => {
+
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+
+                this.setState({ isBusy: false, errors: err });
+            });
     }
 
     setDefaultState() {
@@ -227,7 +242,7 @@ export default class EditAnnotation extends React.Component {
                                 {validation.event_name ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : null}
                             </div>
                             <div className="themeNewInputStyle">
-                                <AnnotationCategorySelect className="gray_clr" name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
+                                <AnnotationCategorySelect categories={this.state.categories} className="gray_clr" name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
                             </div>
                         </div>
 
