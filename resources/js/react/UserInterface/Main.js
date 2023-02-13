@@ -46,6 +46,7 @@ import CustomPricePlan from './components/settings/pricingPlans/CustomPricePlan'
 import AppsMarket from './components/AppsMarket/AppsMarket'
 import AppsModal from './components/AppsMarket/AppsModal';
 import ModalHeader from './components/AppsMarket/common/ModalHeader';
+import { Modal, ModalBody } from 'reactstrap';
 
 class Main extends React.Component {
 
@@ -137,7 +138,6 @@ class Main extends React.Component {
                         <Header user={this.state.user} extendTrial={this.extendTrial} />
                     </div>
                     <main className="main-content bgc-grey-100">
-                    <ga-upgrade-popup></ga-upgrade-popup>
                         <Switch>
 
                             <Route exact path="/ga-accounts" refresh={true}>
@@ -254,6 +254,12 @@ class Main extends React.Component {
                         </AppsModal>
                         :
                         null}
+
+                <Modal isOpen={true} centered>
+                    <ModalBody>
+                        <ga-upgrade-popup></ga-upgrade-popup>
+                    </ModalBody>
+                </Modal>
             </React.Fragment>
         )
     }
