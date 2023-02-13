@@ -246,7 +246,7 @@ class Main extends React.Component {
                         :
                         null}
 
-                <Modal isOpen={true} centered className="gaUpgradePopup">
+                <Modal isOpen={false} centered className="gaUpgradePopup">
                     <button class="btn-closeUpgradePopup"><img src="images/close.svg" alt="close icon" /></button>
                     <ga-upgrade-popup></ga-upgrade-popup>
                 </Modal>
