@@ -25,8 +25,8 @@ export default class GooglePermissionPopup extends Component {
         googlePermissionsHtml += '<div style="font-size: 14px !important; margin-left: 20px; margin-bottom:15px;">Allows you to assign annotations to specific properties.</div>';
 
         googlePermissionsHtml += "<div class='form-check form-check-inline'>";
-        googlePermissionsHtml += '<input class="form-check-input" type="checkbox" checked id="google_search_console_perm">';
-        googlePermissionsHtml += '<label class="form-check-label" for="google_search_console_perm">Google Search Console </label>';
+        googlePermissionsHtml += '<input class="form-check-input" type="checkbox" disabled id="google_search_console_perm">';
+        googlePermissionsHtml += '<label class="form-check-label" for="google_search_console_perm">Google Search Console </label><label class="badge badge-warning badge-sm ml-2 mb-0">Coming Soon</label>';
         googlePermissionsHtml += '</div>';
         googlePermissionsHtml += '<div style="font-size: 14px !important;margin-left: 20px;margin-bottom:15px;">Provides insights on how the people found your site and converted.</div>';
 
