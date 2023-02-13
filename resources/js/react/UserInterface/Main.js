@@ -250,119 +250,119 @@ class Main extends React.Component {
 
                 <Modal isOpen={this.state.showUpgradePopup} centered className="gaUpgradePopup" toggle={() => this.setState({showUpgradePopup: false, upgradePopupType: ''})}>
                     <button onClick={() => this.setState({showUpgradePopup: false, upgradePopupType: ''})} class="btn-closeUpgradePopup"><img src="images/close.svg" alt="close icon" /></button>
-                    {this.props.upgradePopupType === 'api-upgrade' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'api-upgrade' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade to access <span>API Functionality</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/apiFunctionality.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'news-alert' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'news-alert' ? <ga-upgrade-popup
                         heading={`<h1>Increase your credits limits to add more <span>News Alerts</span></h1>`}
                         subHeading={`<p>Upgrade to get access to all amazing features</p>`}
                         bannerImg="/images/news-upgrade.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'rank-tracking-access' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'rank-tracking-access' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade to access <span>Rank Tracking (SERP)</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/rank-tracking-upgrade.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'rank-tracking' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'rank-tracking' ? <ga-upgrade-popup
                         heading={`<h1>Increase your credits limits to add more <span>Rank Trackers</span></h1>`}
                         subHeading={`<p>Upgrade to get access to all amazing features</p>`}
                         bannerImg="/images/rank-tracking-upgrade.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'website-monitoring-upgrade' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'website-monitoring-upgrade' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to add <span>Website Monitors</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/web-monitor-upgrade.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'website-monitoring-limit' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'website-monitoring-limit' ? <ga-upgrade-popup
                         heading={`<h1>Increase your credits limits to add more <span>Website Monitors</span></h1>`}
                         subHeading={`<p>Upgrade to get access to all amazing features</p>`}
                         bannerImg="/images/web-monitor-limit-increase.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'add-more-than-one-property' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'add-more-than-one-property' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade to add <span>more than one</span> property</h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/more-property-upgrade.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'add-more-property' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'add-more-property' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to add <span>more properties</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/more-property-upgrade.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'more-users' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'more-users' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today and add <span>more users</span> to your company account</h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/more-users.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'more-annotations' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'more-annotations' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to add <span>more annotations</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/more-annotations.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'integrations' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'integrations' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to access <span>integrations</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/more-integrations.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'get-notifications' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'get-notifications' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to <span>get notifications</span> via Email, SMS, and Push</h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/get-notifications.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'podcast-trackers' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'podcast-trackers' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade to add more <span>Podcast Trackers</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/podcast-trackers.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'increase-limits' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'increase-limits' ? <ga-upgrade-popup
                         heading={`<h1>You’ve reached your plan limits! Upgrade to  <span>increase limits</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/increase-limits.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'more-repositories' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'more-repositories' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to track  <span>more repositories</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/more-repositories.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'social-media' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'social-media' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to access  <span>social media</span> tracking and insights</h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/social-media.svg"
                     >
                     </ga-upgrade-popup> : null}
 
-                    {this.props.upgradePopupType === 'ads-trackers' ? <ga-upgrade-popup
+                    {this.state.upgradePopupType === 'ads-trackers' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to add more  <span>Ads Trackers</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/trackers-ads.svg"
