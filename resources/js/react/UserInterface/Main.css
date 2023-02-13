@@ -3741,12 +3741,6 @@ body {
     left: 15px !important; */
     left: calc(50% - 7px) !important;
 }
-
-
-
-
-
-
 .modal-createAnnotation { padding: 0 10px 10px; }
 .modal-createUser .themeNewInputStyle .css-yk16xz-control,
 .modal-createUser .themeNewInputStyle .css-1pahdxg-control,
@@ -3805,27 +3799,18 @@ body {
 .themeNewInputStyle .css-2613qy-menu span,
 .themeNewInputStyle ul,
 .themeNewInputStyle ul li{margin: 0; padding: 0;} */
-
-
 .ga-analytics-property-selected h4 {
     font-size: 14px;
     margin-top: 16px;
     font-family: 'Source Sans Pro', Helvetica Neue, Arial, sans-serif;
     font-weight: 600;
 }
-
-.ga-analytics-property-selected h4 > span {
-    font-weight: 400;
-}
+.ga-analytics-property-selected h4 > span { font-weight: 400; }
 .ga-analytics-property-selected .ga-selected-label {
     font-size: 14px;
     line-height: 18px;
 }
-
-.keywordTags .mini-preview-anchor .mini-preview-wrapper {
-    left: -20px !important;
-}
-
+.keywordTags .mini-preview-anchor .mini-preview-wrapper { left: -20px !important; }
 .mini-preview-anchor .mini-preview-wrapper {
     bottom: 20px !important;
     top: auto !important;
@@ -3839,6 +3824,72 @@ body {
     font-weight: 600;
     line-height: 1.25;
 }
+.confirmConnectionTo {
+    padding: 32px 42px;
+    border-radius: 1rem;
+    flex-direction: column;
+    display: flex !important;
+}
+.confirmConnectionToContent {
+    margin: 0;
+    text-align: left;
+}
+.confirmConnectionToContent h2{
+    color: #096db7;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 30px;
+    margin: 0 0 1.5rem;
+    text-align: center;
+}
+.confirmConnectionTo .swal2-actions{ margin: 1.5rem 0 0; }
+.contentHolder .form-check-label{
+    color: #666;
+    display: flex;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 23px;
+    align-items: center;
+}
+.confirmConnectionTo .swal2-icon {
+    border: 0;
+    width: 46px;
+    height: 46px;
+    padding: 0.75rem;
+    margin: -67px auto 0;
+    background-color: #fff;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+.confirmConnectionTo .swal2-actions .swal2-confirm {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1976fe;
+    line-height: 20px;
+    text-align: right;
+    flex-direction: row;
+    align-items: center;
+    display: flex !important;
+    padding: 10px 24px !important;
+    border-radius: 100px !important;
+    background-image: none !important;
+    background-color: #fff !important;
+    border: 2px solid #1976fe !important;
+}
+.confirmConnectionTo .swal2-actions:not(.swal2-loading) .swal2-styled:hover,
+.confirmConnectionTo .swal2-actions .swal2-confirm:confirm,
+.confirmConnectionTo .swal2-actions .swal2-confirm:focus,
+.confirmConnectionTo .swal2-actions .swal2-confirm:hover {
+    color: #1976fe;
+    background-image: none !important;
+    background-color: #fff !important;
+    border: 2px solid #1976fe !important;
+}
+
+
+
+
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }
     .is-collapsed .sidebar .sidebar-inner .sidebar-menu>li>a .title {visibility: hidden;}
