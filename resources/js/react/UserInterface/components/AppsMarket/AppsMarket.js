@@ -99,7 +99,18 @@ class AppsMarket extends React.Component {
         this.checkUserFacebookAccount();
         this.checkUserBitbucketAccount();
         this.checkUserGithubAccount();
-        this.getRecommendedApps()
+        this.getRecommendedApps();
+        var urlSearchParams = new URLSearchParams(window.location.search);
+        if (urlSearchParams.has('show_bit_bucket_popup')) {             
+            this.setState({
+                dsKey : "is_ds_bitbucket_tracking_enabled",
+            });
+        }
+        if (urlSearchParams.has('show_github_popup')) {             
+            this.setState({
+                dsKey : "is_ds_github_tracking_enabled",
+            });
+        }
         let alertMessage = new URLSearchParams(window.location.search).get(
             "alertMessage"
         );
@@ -1313,7 +1324,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_bitbucket_tracking_enabled" ? (
+                            "is_ds_bitbucket_tracking_enabled"? (
                             <Bitbucket
                                 {...this.state}
                                 {...this.props}
