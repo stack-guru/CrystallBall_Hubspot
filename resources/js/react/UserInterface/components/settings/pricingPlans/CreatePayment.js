@@ -6,6 +6,7 @@ import ErrorAlert from '../../../utils/ErrorAlert';
 import CCDetector from '../../../utils/CreditCardDetector';
 import CountryCodeSelect from "../../../utils/CountryCodeSelect";
 import { Link } from 'react-router-dom';
+import { Col, Container, Row } from 'reactstrap';
 
 export default class CreatePayment extends Component {
 
@@ -313,41 +314,199 @@ export default class CreatePayment extends Component {
 
         window.pricePlanTotalPurchasePrice = totalPrice;
         return (
-            <div className="container-xl bg-white component-wrapper" >
-                <ErrorAlert errors={this.state.errors} />
-                <div className="masonry-item">
-                    <div className="bgc-white bd">
-                        <div className="mT-30">
-                            <form onSubmit={this.preSubmitBlueSnap} id="paymentDetailsForm">
+            <>
+                <div id="checkoutPage" className="checkoutPage pageWrapper">
+                    <Container>
+                        <div className="pageHeader checkoutPageHead">
+                            <h2 className="pageTitle">Checkout</h2>
+                        </div>
+                        <form className='paymentDetailsForm' onSubmit={this.preSubmitBlueSnap} id="paymentDetailsForm">
+                            <ErrorAlert errors={this.state.errors} />
+                            <Row>
+                                <Col md={6} className='pr-4'>
+                                    <div className='cardBox cardInfo'>
+                                        <h3>Billing information</h3>
+                                        <div className='grid2layout'>
+                                            <div className='themeNewInputStyle'>
+                                            <input type="text" className="form-control" placeholder="Company Name" name="company_name" id="company_name" onChange={this.changeHandler} value={this.state.paymentDetails.company_name} />
+                                            </div>
+                                            <div className='themeNewInputStyle'>
+                                                <input type="text" className="form-control" placeholder="Company Number" name="company_registration_number" id="company_registration_number" onChange={this.changeHandler} value={this.state.paymentDetails.company_registration_number} />
+                                            </div>
+                                        </div>
+                                        <div className='themeNewInputStyle pb-3'>
+                                            <input type="text" className="form-control " placeholder="Billing address" name="billing_address" id="billingAddress" onChange={this.changeHandler} value={this.state.paymentDetails.billing_address} />
+                                        </div>
+                                        <div className='grid3layout'>
+                                            <div className='themeNewInputStyle'>
+                                                <CountryCodeSelect className="form-control" name="country" onChange={this.changeHandler} value={this.state.paymentDetails.country} showBlankOption ></CountryCodeSelect>
+                                            </div>
+                                            <div className='themeNewInputStyle'>
+                                                <input type="text" className="form-control" placeholder="City" name="city" id="city" onChange={this.changeHandler} value={this.state.paymentDetails.city} />
+                                            </div>
+                                            <div className='themeNewInputStyle'>
+                                                <input type="text" className="form-control" placeholder="Zip code" name="zip_code" id="zipCard" onChange={this.changeHandler} value={this.state.paymentDetails.zip_code} />
+                                            </div>
+                                        </div>
+                                        <div className='grid2layout'>
+                                            <div className='themeNewInputStyle'>
+                                                <input type="text" className="form-control" placeholder="Phone Number" name="phone_number" id="phone_number" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='cardBox addedcardlist'>
+                                        <h3>Card details</h3>
+                                        <ul className=''>
+                                            <li className='active'>
+                                                <span>
+                                                    <img src='/images/icon-card.svg' alt='card' />
+                                                    <strong>Card ending with 4129</strong>
+                                                </span>
+                                                <i><img src='/images/icon-selected.svg' alt='selected icon' /></i>
+                                            </li>
+                                            <li>
+                                                <span>
+                                                    <img src='/images/icon-card.svg' alt='card' />
+                                                    <strong>Card ending with 4129</strong>
+                                                </span>
+                                                <i><img src='/images/icon-selected.svg' alt='selected icon' /></i>
+                                            </li>
+                                            <li>
+                                                <span>
+                                                    <img src='/images/icon-card.svg' alt='card' />
+                                                    <strong>Card ending with 4129</strong>
+                                                </span>
+                                                <i><img src='/images/icon-selected.svg' alt='selected icon' /></i>
+                                            </li>
+                                            <li>
+                                                <span>
+                                                    <img src='/images/icon-card.svg' alt='card' />
+                                                    <strong>Card ending with 4129</strong>
+                                                </span>
+                                                <i><img src='/images/icon-selected.svg' alt='selected icon' /></i>
+                                            </li>
+                                        </ul>
+                                        <div className=''>
+                                            <a className='btn-addAnother' href='#'>
+                                                <i><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.14286 12V6.85714H0V5.14286H5.14286V0H6.85714V5.14286H12V6.85714H6.85714V12H5.14286Z" fill="#1976FE"/></svg></i>
+                                                Add another
+                                            </a>
+                                        </div>
+                                        <div className='grid2layout'>
+                                            <div className='themeNewInputStyle'>
+                                                <input type="text" className="form-control" placeolder="First Name" name="first_name" id="first_name" onChange={this.changeHandler} value={this.state.paymentDetails.first_name} />
+                                            </div>
+                                            <div className='themeNewInputStyle'>
+                                                <input type="text" className="form-control" placeholder="Last Name" name="last_name" id="last_name" onChange={this.changeHandler} value={this.state.paymentDetails.last_name} />
+                                            </div>
+                                        </div>
+                                        <div className='themeNewInputStyle pb-3'>
+                                            <div data-bluesnap="ccn" className="pb-c-inputs form-control"></div>
+                                        </div>
+                                        <div className='grid2layout'>
+                                            <div className='themeNewInputStyle'>
+                                                <div data-bluesnap="exp" className="pb-c-inputs form-control"></div>
+                                            </div>
+                                            <div className='themeNewInputStyle'>
+                                                <div data-bluesnap="cvv" className="pb-c-inputs form-control"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Col>
+                                <Col md={6} className='pl-4'>
+                                    <div className='paymenDetailBox'>
+                                        <h3>Details</h3>
+                                        <ul className='listOne'>
+                                            <li>
+                                                <span>Plan</span>
+                                                <strong className='planName'>{this.state.pricePlan.name}</strong>
+                                            </li>
+                                            <li>
+                                                <span>Price</span>
+                                                <span>${actualPrice}</span>
+                                            </li>
+                                            {annualDiscountAmount && annualDiscountAmount != "0.00" ?
+                                                <li>
+                                                    <span>Annual Discount ({this.state.pricePlan.yearly_discount_percent}%)</span>
+                                                    <span>${annualDiscountAmount}</span>
+                                                </li>
+                                            :
+                                                null
+                                            }
+                                        </ul>
+                                        <ul className='listTwo'>
+                                            {this.state.coupon ?
+                                                <li>
+                                                    <span>Discount Price</span>
+                                                    <span>${discountPrice}</span>
+                                                </li>
+                                            :
+                                                null
+                                            }
+                                            {userRegistrationOfferDiscountAmount && userRegistrationOfferDiscountAmount != "0.00" ?
+                                                <li>
+                                                    <span>Limited Time Offer</span>
+                                                    <span>${userRegistrationOfferDiscountAmount}</span>
+                                                </li>
+                                            :
+                                                null
+                                            }
+                                            <li>
+                                                <span>Tax ({this.state.taxPercent}%)</span>
+                                                <span>${taxAmount}</span>
+                                            </li>
+                                            <li>
+                                                <strong>Total</strong>
+                                                <strong>${totalPrice}</strong>
+                                            </li>
+                                            <li>
+                                                <span>Subscription starts at</span>
+                                                <span>{moment().format("YYYY-MM-DD")}</span>
+                                            </li>
+                                            <li>
+                                                <span>Next billing date</span>
+                                                <span>{moment().add(this.state.planDuration, 'M').format("YYYY-MM-DD")}</span>
+                                            </li>
+                                        </ul>
+                                        <button type="submit" data-bluesnap="submitButton" className={"btn-payNow" + (this.state.isBusy ? "disabled" : '')}>Pay now</button>
+                                        <div className='d-flex justify-content-center'>
+                                            <img className='d-block' src='/images/blueSnap.svg'/>
+                                        </div>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </form>
+                    </Container>
+                </div>
+
+                <div className="container-xl bg-white component-wrapper" >
+                    <div className="masonry-item">
+                        <div className="bgc-white bd">
+                            <div className="mT-30">
                                 <div className="row ml-0 mr-0 seperator">
 
                                     {/*firs  column start*/}
 
                                     <div className="col-12 col-sm-12 col-md-6 col-lg-6">
                                         <h4 className="gaa-text-primary">Billing Information</h4>
-
                                         <div className="row ml-0 mr-0">
                                             <div className="col-6  pl-0">
                                                 <div className="form-group floating-labels">
-                                                    <input type="text" className="form-control" placeholder="Company Name" name="company_name"
-                                                        id="company_name" onChange={this.changeHandler} value={this.state.paymentDetails.company_name} />
+                                                    
                                                     <label htmlFor="">Company Name</label>
                                                 </div>
                                             </div>
                                             <div className="col-6">
                                                 <div className="form-group floating-labels">
-                                                    <input type="text" className="form-control" placeholder="Company Number" name="company_registration_number"
-                                                        id="company_registration_number" onChange={this.changeHandler} value={this.state.paymentDetails.company_registration_number} />
+                                                    
                                                     <label htmlFor="">Company Number</label>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div className="row ml-0 mr-0">
                                             <div className="col-12  pl-0">
                                                 <div className="form-group floating-labels">
-                                                    <input type="text" className="form-control " placeholder="Billing address" name="billing_address"
-                                                        id="billingAddress" onChange={this.changeHandler} value={this.state.paymentDetails.billing_address} />
+                                                    
                                                     <label htmlFor="">Address</label>
                                                 </div>
                                             </div>
@@ -356,25 +515,22 @@ export default class CreatePayment extends Component {
                                             <div className="col-4  pl-0">
                                                 <div className="form-group ">
                                                     <label htmlFor="">Country</label>
-                                                    <CountryCodeSelect className="form-control" name="country" onChange={this.changeHandler} value={this.state.paymentDetails.country} showBlankOption ></CountryCodeSelect>
+                                                    
                                                 </div>
                                             </div>
                                             <div className="col-4">
                                                 <div className="form-group floating-labels">
-                                                    <input type="text" className="form-control" placeholder="City" name="city"
-                                                        id="city" onChange={this.changeHandler} value={this.state.paymentDetails.city} />
+                                                    
                                                     <label htmlFor="">City</label>
                                                 </div>
                                             </div>
                                             <div className="col-4 pr-0">
                                                 <div className="form-group floating-labels">
-                                                    <input type="text" className="form-control" placeholder="Zip" name="zip_code"
-                                                        id="zipCard" onChange={this.changeHandler} value={this.state.paymentDetails.zip_code} />
+                                                    
                                                     <label htmlFor="">Zip Code</label>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div className="row ml-0 mr-0">
                                             <div className="col-2 pl-0 pr-0">
                                                 <div className="form-group floating-labels">
@@ -385,13 +541,11 @@ export default class CreatePayment extends Component {
                                             </div>
                                             <div className="col-5 pl-0">
                                                 <div className="form-group floating-labels ml-2">
-                                                    <input type="text" className="form-control" placeholder="Phone Number" name="phone_number"
-                                                        id="phone_number" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number} />
+                                                    
                                                     <label htmlFor="">Phone Number</label>
                                                 </div>
                                             </div>
                                         </div>
-
                                         {/* second column start*/}
                                         <div className="mt-2">
                                             <h4 className="gaa-text-primary">Credit Card</h4>
@@ -399,13 +553,13 @@ export default class CreatePayment extends Component {
                                             <div className="row ml-0 mr-0">
                                                 <div className="col-6 p-3 pp-cc-pl-r">
                                                     <div className="form-group floating-labels">
-                                                        <input type="text" className="form-control" placeholder="First Name" name="first_name" id="first_name" onChange={this.changeHandler} value={this.state.paymentDetails.first_name} />
+                                                        
                                                         <label htmlFor="first_name">First Name</label>
                                                     </div>
                                                 </div>
                                                 <div className="col-6 p-3 pp-cc-pr-r">
                                                     <div className="form-group floating-labels">
-                                                        <input type="text" className="form-control" placeholder="Last Name" name="last_name" id="last_name" onChange={this.changeHandler} value={this.state.paymentDetails.last_name} />
+                                                        
                                                         <label htmlFor="last_name">Last Name</label>
                                                     </div>
                                                 </div>
@@ -416,20 +570,19 @@ export default class CreatePayment extends Component {
                                             <div className="row h-30px" >
                                                 <div className="col-6">
                                                     <label>Credit Card Number</label>
-                                                    <div data-bluesnap="ccn" className="pb-c-inputs form-control"></div>
+                                                    
                                                 </div>
                                                 <div className="col-3">
                                                     <label>Expiry</label>
-                                                    <div data-bluesnap="exp" className="pb-c-inputs form-control"></div>
+                                                    
                                                 </div>
                                                 <div className="col-3">
                                                     <label>CVV</label>
-                                                    <div data-bluesnap="cvv" className="pb-c-inputs form-control"></div>
+                                                    
                                                 </div>
 
                                             </div>
                                         </div>
-
                                         <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-4 pl-0">
                                             </div>
@@ -445,64 +598,61 @@ export default class CreatePayment extends Component {
                                                 <div className="mT-30">
                                                     <div className="row">
                                                         <div className="col-6"><b>Plan</b></div>
-                                                        <div className="col-6 text-right"><b>{this.state.pricePlan.name}</b></div>
+                                                        <div className="col-6 text-right"><b></b></div>
                                                     </div>
 
                                                     <br />
                                                     <div className="row">
                                                         <div className="col-6">Price</div>
-                                                        <div className="col-6 text-right">${actualPrice}</div>
+                                                        <div className="col-6 text-right"></div>
                                                     </div>
 
-                                                    {annualDiscountAmount && annualDiscountAmount != "0.00" ?
+                                                    
                                                         <React.Fragment>
                                                             <div className="row">
-                                                                <div className="col-6">Annual Discount ({this.state.pricePlan.yearly_discount_percent}%)</div>
-                                                                <div className="col-6 text-right">${annualDiscountAmount}</div>
+                                                                <div className="col-6">Annual Discount </div>
+                                                                <div className="col-6 text-right"></div>
                                                             </div>
                                                             <hr />
                                                         </React.Fragment>
-                                                        : null}
-                                                    {
-                                                        this.state.coupon ?
+                                                        
+                                                    
                                                             <React.Fragment>
                                                                 <div className="row">
                                                                     <div className="col-6">Discount Price</div>
-                                                                    <div className="col-6 text-right">${discountPrice}</div>
+                                                                    <div className="col-6 text-right"></div>
                                                                 </div>
                                                                 <hr />
                                                             </React.Fragment>
-                                                            : null
-                                                    }
-                                                    {
-                                                        userRegistrationOfferDiscountAmount && userRegistrationOfferDiscountAmount != "0.00" ?
+                                                    
+                                                    {userRegistrationOfferDiscountAmount && userRegistrationOfferDiscountAmount != "0.00" ?
                                                             <React.Fragment>
                                                                 <div className="row">
                                                                     <div className="col-6">Limited Time Offer</div>
-                                                                    <div className="col-6 text-right">${userRegistrationOfferDiscountAmount}</div>
+                                                                    <div className="col-6 text-right"></div>
                                                                 </div>
                                                                 <hr />
                                                             </React.Fragment>
                                                             : null
                                                     }
                                                     <div className="row">
-                                                        <div className="col-6">Tax ({this.state.taxPercent}%)</div>
-                                                        <div className="col-6 text-right">${taxAmount}</div>
+                                                        <div className="col-6">Tax</div>
+                                                        <div className="col-6 text-right"></div>
                                                     </div>
 
                                                     <hr />
                                                     <div className="row">
                                                         <div className="col-6"> <b>Total</b></div>
-                                                        <div className="col-6 text-right"><b>${totalPrice}</b></div>
+                                                        <div className="col-6 text-right"><b></b></div>
                                                     </div>
                                                     <br />
                                                     <div className="row">
                                                         <div className="col-6">Subscription start at</div>
-                                                        <div className="col-6 text-right">{moment().format("YYYY-MM-DD")}</div>
+                                                        <div className="col-6 text-right"></div>
                                                     </div>
                                                     <div className="row">
                                                         <div className="col-6">Next billing at</div>
-                                                        <div className="col-6 text-right">{moment().add(this.state.planDuration, 'M').format("YYYY-MM-DD")}</div>
+                                                        <div className="col-6 text-right"></div>
                                                     </div>
                                                     {/* <div className="form-check mt-3">
                                                         <input type="checkbox" className="form-check-input" name="remember_card"
@@ -525,43 +675,37 @@ export default class CreatePayment extends Component {
                                         <div className="row ml-0 mr-0 mt-1">
                                             <div className="col-12 text-right p-5">
 
-                                                <button type="submit" data-bluesnap="submitButton" className={"btn gaa-btn-primary btn-md payBtn  " + (this.state.isBusy ? "disabled" : '')}>
-                                                    {
-                                                        this.state.isBusy ?
-                                                            <i className="fa fa-spinner fa-pulse"></i> :
-                                                            "PAY NOW"
-                                                    }
-
-                                                </button>
+                                                
                                                 {/* <button type="button" className={"btn btn-default btn-md "} onClick={this.cancelSubscription}>Cancel</button> */}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                            <div className="row mt-5 ml-0 mr-0 d-flex flex-row justify-content-center align-items-center bg-white">
-                                <div className="img-col-wrap">
-                                    <div className="col-12 text-right  secure-img">
-                                        <img src="/images/masterCard.jpg" className="img-fluid " alt="mastercard image" />
-                                        <img src="/images/Visa.png" className="img-fluid " alt="visa card image" />
-                                        <img src="/images/safeKey.png" className="img-fluid " alt="safekey image" />
-                                        <img src="/images/PSD2.png" className="img-fluid " alt="psd2 image" />
-                                        <img src="/images/PS.png" className="img-fluid " alt="ps image" />
-                                        <img src="/images/pciDss.png" className="img-fluid " alt="pciDss image" />
+
+                                <div className="row mt-5 ml-0 mr-0 d-flex flex-row justify-content-center align-items-center bg-white">
+                                    <div className="img-col-wrap">
+                                        <div className="col-12 text-right  secure-img">
+                                            <img src="/images/masterCard.jpg" className="img-fluid " alt="mastercard image" />
+                                            <img src="/images/Visa.png" className="img-fluid " alt="visa card image" />
+                                            <img src="/images/safeKey.png" className="img-fluid " alt="safekey image" />
+                                            <img src="/images/PSD2.png" className="img-fluid " alt="psd2 image" />
+                                            <img src="/images/PS.png" className="img-fluid " alt="ps image" />
+                                            <img src="/images/pciDss.png" className="img-fluid " alt="pciDss image" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row mt-1 ml-0 mr-0 d-flex flex-row justify-content-center align-items-center bg-white">
-                                <div className="img-col-wrap">
-                                    <div className="col-12 text-right  secure-img">
-                                        <Link className="gaa-text-primary" to="/settings/support">Are you having problems with the payment? Want to pay with <strong className="text-primary">PayPal</strong>? <strong className="text-primary">Contact us</strong>, and we will send you a link</Link>
+                                <div className="row mt-1 ml-0 mr-0 d-flex flex-row justify-content-center align-items-center bg-white">
+                                    <div className="img-col-wrap">
+                                        <div className="col-12 text-right  secure-img">
+                                            <Link className="gaa-text-primary" to="/settings/support">Are you having problems with the payment? Want to pay with <strong className="text-primary">PayPal</strong>? <strong className="text-primary">Contact us</strong>, and we will send you a link</Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
 
