@@ -101,12 +101,12 @@ class AppsMarket extends React.Component {
         this.checkUserGithubAccount();
         this.getRecommendedApps();
         var urlSearchParams = new URLSearchParams(window.location.search);
-        if (urlSearchParams.has('show_bit_bucket_popup')) {             
+        if (urlSearchParams.has('show_bit_bucket_popup')) {
             this.setState({
                 dsKey : "is_ds_bitbucket_tracking_enabled",
             });
         }
-        if (urlSearchParams.has('show_github_popup')) {             
+        if (urlSearchParams.has('show_github_popup')) {
             this.setState({
                 dsKey : "is_ds_github_tracking_enabled",
             });
@@ -1684,25 +1684,41 @@ class AppsMarket extends React.Component {
                 (err) => {
                     this.setState({ isBusy: false, errors: err.response.data });
                     if (err.response.status == 402) {
-                        const accountNotLinkedHtml = '' +
-                            '<div class=""><img src="/images/increase-plan-limit.png" class="img-fluid"></div>';
-                        swal.fire({
-                            html: accountNotLinkedHtml,
-                            width: 1000,
-                            showCancelButton: true,
-                            showCloseButton: true,
-                            customClass: {
-                                popup: "themePlanAlertPopup",
-                                htmlContainer: "themePlanAlertPopupContent",
-                                closeButton: 'btn-closeplanAlertPopup',
-                            },
-                            cancelButtonClass: "btn-bookADemo",
-                            cancelButtonText: "Book a Demo",
-                            confirmButtonClass: "btn-subscribeNow",
-                            confirmButtonText: "Subscribe now",
-                        }).then(function (value) {
-                            if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                        });
+                        if(e.target.name === 'is_ds_google_alerts_enabled') {
+                            this.props.upgradePopup('news-alert')
+                        }
+
+                        if(e.target.name === 'is_ds_keyword_tracking_enabled') {
+                            this.props.upgradePopup('rank-tracking')
+                        }
+
+                        if(e.target.name === 'is_ds_weather_alerts_enabled' || e.target.name === 'is_ds_google_algorithm_updates_enabled') {
+                            this.props.upgradePopup('increase-limits')
+                        }
+
+                        if(e.target.name === 'is_ds_twitter_tracking_enabled') {
+                            this.props.upgradePopup('social-media')
+                        }
+
+                        if(e.target.name === 'is_ds_apple_podcast_annotation_enabled') {
+                            this.props.upgradePopup('podcast-trackers')
+                        }
+
+                        if(e.target.name === 'is_ds_github_tracking_enabled'  || e.target.name === 'is_ds_bitbucket_tracking_enabled') {
+                            this.props.upgradePopup('more-repositories')
+                        }
+
+                        if(e.target.name === 'is_ds_retail_marketing_enabled' || e.target.name === 'is_ds_holidays_enabled') {
+                            this.props.upgradePopup('more-annotations')
+                        }
+
+                        if(e.target.name === 'is_ds_web_monitors_enabled') {
+                            this.props.upgradePopup('website-monitoring-limit')
+                        }
+
+                        if(e.target.name === 'is_ds_shopify_annotation_enabled') {
+                            this.props.upgradePopup('more-annotations')
+                        }
                     }
                 }
             )
@@ -1973,29 +1989,44 @@ class AppsMarket extends React.Component {
                 );
             }
         } else {
-            const accountNotLinkedHtml =
-                "" +
-                '<div class="">' +
-                '<img src="/images/automation-upgrade-modal.png" class="img-fluid">' +
-                "</div>";
+            if(e.target.name === 'is_ds_keyword_tracking_enabled') {
+                this.props.upgradePopup('rank-tracking-access')
+            }
+            if(e.target.name === 'is_ds_google_alerts_enabled') {
+                this.props.upgradePopup('news-alert')
+            }
 
-            swal.fire({
-                html: accountNotLinkedHtml,
-                width: 1000,
-                showCancelButton: true,
-                showCloseButton: true,
-                customClass: {
-                    popup: "themePlanAlertPopup",
-                    htmlContainer: "themePlanAlertPopupContent",
-                    closeButton: 'btn-closeplanAlertPopup',
-                },
-                cancelButtonClass: "btn-bookADemo",
-                cancelButtonText: "Book a Demo",
-                confirmButtonClass: "btn-subscribeNow",
-                confirmButtonText: "Subscribe now",
-            }).then((value) => {
-                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-            });
+            if(e.target.name === 'is_ds_keyword_tracking_enabled') {
+                this.props.upgradePopup('rank-tracking-access')
+            }
+
+            if(e.target.name === 'is_ds_weather_alerts_enabled' || e.target.name === 'is_ds_google_algorithm_updates_enabled') {
+                this.props.upgradePopup('integrations')
+            }
+
+            if(e.target.name === 'is_ds_twitter_tracking_enabled') {
+                this.props.upgradePopup('social-media')
+            }
+
+            if(e.target.name === 'is_ds_apple_podcast_annotation_enabled') {
+                this.props.upgradePopup('integrations')
+            }
+
+            if(e.target.name === 'is_ds_github_tracking_enabled'  || e.target.name === 'is_ds_bitbucket_tracking_enabled') {
+                this.props.upgradePopup('integrations')
+            }
+
+            if(e.target.name === 'is_ds_retail_marketing_enabled' || e.target.name === 'is_ds_holidays_enabled') {
+                this.props.upgradePopup('integrations')
+            }
+
+            if(e.target.name === 'is_ds_web_monitors_enabled') {
+                this.props.upgradePopup('website-monitoring-upgrade')
+            }
+
+            if(e.target.name === 'is_ds_shopify_annotation_enabled') {
+                this.props.upgradePopup('integrations')
+            }
         }
 
         if (
@@ -2061,42 +2092,41 @@ class AppsMarket extends React.Component {
                     this.setState({ isBusy: false, errors: err.response.data });
 
                     if (err.response.status === 422) {
-                        let imgSrc = "/images/new-api-modal.jpeg";
-                        switch (dataSource.code) {
-                            case "bitbucket_tracking":
-                            case "github_tracking":
-                                imgSrc = "/images/property-upgrade-modal.png";
-                                break;
-
-                            default:
-                                imgSrc = "/images/new-api-modal.jpeg";
-                                break;
+                        if(uds.ds_code === 'is_ds_google_alerts_enabled') {
+                            this.props.upgradePopup('news-alert')
                         }
-                        const accountNotLinkedHtml =
-                            "" +
-                            '<div class="">' +
-                            '<img src="' +
-                            imgSrc +
-                            '" class="img-fluid">' +
-                            "</div>";
 
-                        swal.fire({
-                            html: accountNotLinkedHtml,
-                            width: 1000,
-                            showCancelButton: true,
-                            showCloseButton: true,
-                            customClass: {
-                                popup: "themePlanAlertPopup",
-                                htmlContainer: "themePlanAlertPopupContent",
-                                closeButton: 'btn-closeplanAlertPopup',
-                            },
-                            cancelButtonClass: "btn-bookADemo",
-                            cancelButtonText: "Book a Demo",
-                            confirmButtonClass: "btn-subscribeNow",
-                            confirmButtonText: "Subscribe now",
-                        }).then((value) => {
-                            if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                        });
+                        if(uds.ds_code === 'is_ds_keyword_tracking_enabled') {
+                            this.props.upgradePopup('rank-tracking')
+                        }
+
+                        if(uds.ds_code === 'is_ds_weather_alerts_enabled' || uds.ds_code === 'is_ds_google_algorithm_updates_enabled') {
+                            this.props.upgradePopup('increase-limits')
+                        }
+
+                        if(uds.ds_code === 'is_ds_twitter_tracking_enabled') {
+                            this.props.upgradePopup('social-media')
+                        }
+
+                        if(uds.ds_code === 'is_ds_apple_podcast_annotation_enabled') {
+                            this.props.upgradePopup('podcast-trackers')
+                        }
+
+                        if(uds.ds_code === 'is_ds_github_tracking_enabled'  || uds.ds_code === 'is_ds_bitbucket_tracking_enabled') {
+                            this.props.upgradePopup('more-repositories')
+                        }
+
+                        if(uds.ds_code === 'is_ds_retail_marketing_enabled' || uds.ds_code === 'is_ds_holidays_enabled') {
+                            this.props.upgradePopup('more-annotations')
+                        }
+
+                        if(uds.ds_code === 'is_ds_web_monitors_enabled') {
+                            this.props.upgradePopup('website-monitoring-limit')
+                        }
+
+                        if(uds.ds_code === 'is_ds_shopify_annotation_enabled') {
+                            this.props.upgradePopup('more-annotations')
+                        }
                     }
                 }
             )

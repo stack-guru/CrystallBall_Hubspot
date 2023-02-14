@@ -40,25 +40,7 @@ export default class UploadAnnotation extends React.Component {
                         // unlimited
                     }else{
                         if(response.data.user_total_annotations >= this.state.user.price_plan.annotations_count){
-                        // if(true){
-                            let url = document.location.origin + '/images/annotation_limit_reached.png';
-                            swal.fire({
-                                html: "<img src='"+url+"' style='width:100%;'>",
-                                width: 1000,
-                                showCancelButton: true,
-                                showCloseButton: false,
-                                customClass: {
-                                    popup: "themePlanAlertPopup",
-                                    htmlContainer: "themePlanAlertPopupContent",
-                                    closeButton: 'btn-closeplanAlertPopup',
-                                },
-                                cancelButtonClass: "btn-bookADemo",
-                                cancelButtonText: "Book a Demo",
-                                confirmButtonClass: "btn-subscribeNow",
-                                confirmButtonText: "Subscribe now",
-                            }).then(function(){
-                                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                            });
+                            this.props.upgradePopup('more-annotations')
                         }
                     }
 
@@ -166,25 +148,7 @@ export default class UploadAnnotation extends React.Component {
                                     multiple
                                     onFocus={(e) => {
                                         if (this.props.currentPricePlan.ga_account_count == 1 || this.props.currentPricePlan.google_analytics_property_count == -1) {
-                                            const accountNotLinkedHtml = '' + '<div class="">' + '<img src="/images/property-upgrade-modal.png" class="img-fluid">' + '</div>'
-                                            swal.fire({
-                                                html: accountNotLinkedHtml,
-                                                width: 1000,
-                                                showCancelButton: true,
-                                                showCloseButton: false,
-                                                customClass: {
-                                                    popup: "themePlanAlertPopup",
-                                                    htmlContainer: "themePlanAlertPopupContent",
-                                                    closeButton: 'btn-closeplanAlertPopup',
-                                                },
-                                                cancelButtonClass: "btn-bookADemo",
-                                                cancelButtonText: "Book a Demo",
-                                                confirmButtonClass: "btn-subscribeNow",
-                                                confirmButtonText: "Subscribe now",
-
-                                            }).then(value => {
-                                                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                                            });
+                                            this.props.upgradePopup('add-more-property')
                                         }
                                     }}
                                 ></GoogleAnalyticsPropertySelect>

@@ -44,10 +44,8 @@ class FetchGAMetricsAndDimensionsJob implements ShouldQueue, ShouldBeUnique
     {
         $gAS = new GoogleAnalyticsService;
 
-        print ("Fetching metrics and dimensions for " . $this->googleAnalyticsProperty->internal_property_id . " property of kind " . $this->googleAnalyticsProperty->kind . " under account " . $this->googleAnalyticsProperty->googleAccount->account_id) . "\n";
         $dataRows = $gAS->getMetricsAndDimensions($this->googleAnalyticsProperty->googleAccount, $this->googleAnalyticsProperty, $this->startDate, $this->endDate);
         if ($dataRows !== false) {
-            print (count($dataRows) . " rows fetched.") . "\n";
 
             // As we are dealing with table with +10000000 records, we need to delete data in chunks on 5000
             do {
