@@ -55,29 +55,29 @@ export default class CreateAnnotation extends React.Component {
                                 // unlimited
                             } else {
                                 if (response.data.user_total_annotations >= this.state.user.price_plan.annotations_count) {
-                                    let url = document.location.origin + '/images/annotation_limit_reached.png';
-                                    swal.fire({
-                                        html: "<img src='" + url + "' style='width:100%;'>",
-                                        width: 1000,
-                                        showCancelButton: true,
-                                        showCloseButton: true,
-                                        customClass: {
-                                            popup: "themePlanAlertPopup",
-                                            htmlContainer: "themePlanAlertPopupContent",
-                                            closeButton: 'btn-closeplanAlertPopup',
-                                        },
-                                        cancelButtonClass: "btn-bookADemo",
-                                        cancelButtonText: "Book a Demo",
-                                        confirmButtonClass: "btn-subscribeNow",
-                                        confirmButtonText: "Subscribe now",
-                                    }).then(function (value) {
-                                        if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                                    });
+                                this.props.upgradePopup('more-annotations')
+                                    // let url = document.location.origin + '/images/annotation_limit_reached.png';
+                                    // swal.fire({
+                                    //     html: "<img src='" + url + "' style='width:100%;'>",
+                                    //     width: 1000,
+                                    //     showCancelButton: true,
+                                    //     showCloseButton: true,
+                                    //     customClass: {
+                                    //         popup: "themePlanAlertPopup",
+                                    //         htmlContainer: "themePlanAlertPopupContent",
+                                    //         closeButton: 'btn-closeplanAlertPopup',
+                                    //     },
+                                    //     cancelButtonClass: "btn-bookADemo",
+                                    //     cancelButtonText: "Book a Demo",
+                                    //     confirmButtonClass: "btn-subscribeNow",
+                                    //     confirmButtonText: "Subscribe now",
+                                    // }).then(function (value) {
+                                    //     if (value.isConfirmed) window.location.href = '/settings/price-plans'
+                                    // });
                                 }
                             }
 
                         }
-
                     });
             });
     }
@@ -176,11 +176,13 @@ export default class CreateAnnotation extends React.Component {
                     // this.loadCategoriesList();
                 }, (err) => {
                     if (err.response.status == 402) {
-                        swal.fire({
-                            icon: "warning",
-                            title: "Limit Reached",
-                            html: err.response.data.message,
-                        });
+                        this.props.upgradePopup('increase-limits')
+                        // swal.fire({
+                        //     icon: "warning",
+                        //     title: "Limit Reached",
+                        //     html: err.response.data.message,
+                        // });
+
                     }
                     this.loadCategoriesList();
                     this.setState({ isBusy: false, errors: (err.response).data });
