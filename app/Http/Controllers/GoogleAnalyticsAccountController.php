@@ -9,6 +9,7 @@ use App\Services\GoogleAnalyticsService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Jobs\FetchGAMetricsAndDimensionsJob;
+use Illuminate\Support\Facades\Log;
 
 class GoogleAnalyticsAccountController extends Controller
 {
@@ -58,7 +59,6 @@ class GoogleAnalyticsAccountController extends Controller
             if (!empty($googleAnalyticsAccouts)) {
                 foreach ($googleAnalyticsAccouts as $googleAnalyticsAccount) {
                     $googleAnalyticsProperties = $gAS->getAccountUAProperties($googleAccount, $googleAnalyticsAccount);
-                    $savedGoogleAnalyticPropertyIds = GoogleAnalyticsProperty::select('property_id')->ofCurrentUser()->orderBy('property_id')->get()->pluck('property_id')->toArray();
                     if ($googleAnalyticsProperties != false) {
                         foreach ($googleAnalyticsProperties as $index => $googleAnalyticsProperty) {
                             /**
@@ -74,7 +74,6 @@ class GoogleAnalyticsAccountController extends Controller
                     }
 
                     $googleAnalyticsProperties = $gAS->getAccountGA4Properties($googleAccount, $googleAnalyticsAccount);
-                    $savedGoogleAnalyticPropertyIds = GoogleAnalyticsProperty::select('property_id')->ofCurrentUser()->orderBy('property_id')->get()->pluck('property_id')->toArray();
                     if ($googleAnalyticsProperties != false) {
                         foreach ($googleAnalyticsProperties as $index => $googleAnalyticsProperty) {
                             /**
@@ -91,7 +90,11 @@ class GoogleAnalyticsAccountController extends Controller
                 }
             }
         } catch (\Exception $exception) {
-
+            Log::error($exception->getMessage(), [
+                $exception->getCode(),
+                $exception->getLine(),
+                $exception->getFile(),
+            ]);
             return ['success' => false];
         }
 
@@ -113,7 +116,7 @@ class GoogleAnalyticsAccountController extends Controller
     {
         $colors = GoogleAnalyticsProperty::getColors();
 
-        $nGAP = GoogleAnalyticsProperty::createOrUpdate([
+        $nGAP = GoogleAnalyticsProperty::updateOrCreate([
             'property_id' => $googleAnalyticsProperty['id'],
             'google_analytics_account_id' => @$googleAnalyticsAccount->id,
             'google_account_id' => $googleAccount->id,
@@ -147,7 +150,7 @@ class GoogleAnalyticsAccountController extends Controller
     {
         $colors = GoogleAnalyticsProperty::getColors();
 
-        $nGAP = GoogleAnalyticsProperty::createOrUpdate([
+        $nGAP = GoogleAnalyticsProperty::updateOrCreate([
             'property_id' => explode('/', $googleAnalyticsProperty['name'])[1],
             'google_analytics_account_id' => @$googleAnalyticsAccount->id,
             'google_account_id' => $googleAccount->id,
