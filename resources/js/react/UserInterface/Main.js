@@ -243,7 +243,7 @@ class Main extends React.Component {
                     :
                     this.state.mKeyAnnotation === 'upload' ?
                         <AppsModal popupSize={'md csvupload'} isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka = '') => { this.setState({ mKeyAnnotation: mka, }); }}>
-                            <AnnotationsUpload togglePopup={(mka) => { this.setState({ mKeyAnnotation: mka, }); }} currentPricePlan={this.state.user.price_plan} />
+                            <AnnotationsUpload upgradePopup={(popupType) => this.setState({showUpgradePopup: true, upgradePopupType: popupType})} togglePopup={(mka) => { this.setState({ mKeyAnnotation: mka, }); }} currentPricePlan={this.state.user.price_plan} />
                         </AppsModal>
                         :
                         null}
