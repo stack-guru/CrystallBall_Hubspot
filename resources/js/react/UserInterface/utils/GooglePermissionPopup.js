@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
 export default class GooglePermissionPopup extends Component {
 
@@ -39,9 +39,9 @@ export default class GooglePermissionPopup extends Component {
         }).then(value => {
             if (value.isConfirmed) {
                 let query_string_obj = {
-                    'google_analytics_perm': document.getElementById('google_analytics_perm').checked,
-                    'google_search_console_perm': document.getElementById('google_search_console_perm').checked,
-                    'google_ads_perm': document.getElementById('google_ads_perm').checked,
+                    'google_analytics_perm': document.getElementById('google_analytics_perm') ? document.getElementById('google_analytics_perm').checked : true,
+                    'google_search_console_perm': document.getElementById('google_search_console_perm') ? document.getElementById('google_search_console_perm').checked : true,
+                    'google_ads_perm': document.getElementById('google_ads_perm') ? document.getElementById('google_ads_perm').checked : true,
                 }
                 let query_string = new URLSearchParams(query_string_obj).toString();
                 // Save pathname in this storage without domain name
@@ -54,7 +54,7 @@ export default class GooglePermissionPopup extends Component {
     render() {
         return (
             <div>
-                { this.handleLoad() }
+                {this.handleLoad()}
             </div>
         )
     }
