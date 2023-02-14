@@ -40,25 +40,7 @@ export default class UploadAnnotation extends React.Component {
                         // unlimited
                     }else{
                         if(response.data.user_total_annotations >= this.state.user.price_plan.annotations_count){
-                        // if(true){
-                            let url = document.location.origin + '/images/annotation_limit_reached.png';
-                            swal.fire({
-                                html: "<img src='"+url+"' style='width:100%;'>",
-                                width: 1000,
-                                showCancelButton: true,
-                                showCloseButton: false,
-                                customClass: {
-                                    popup: "themePlanAlertPopup",
-                                    htmlContainer: "themePlanAlertPopupContent",
-                                    closeButton: 'btn-closeplanAlertPopup',
-                                },
-                                cancelButtonClass: "btn-bookADemo",
-                                cancelButtonText: "Book a Demo",
-                                confirmButtonClass: "btn-subscribeNow",
-                                confirmButtonText: "Subscribe now",
-                            }).then(function(){
-                                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                            });
+                            this.props.upgradePopup('more-annotations')
                         }
                     }
 
