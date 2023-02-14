@@ -228,7 +228,7 @@
                     <tr>
                         <td>google_analytics_property_id[]</td>
                         <td>int</td>
-                        <td>[optional] Annotation's google analytics property id with which it will be attached. You can get <strong> IDs for API </strong> of your google analytics properties from <a href="{{ route('google-account.index') }}" target="_blank">here</a>. You can add multiple fields of this name in your request for multiple properties of same annotation.</td>
+                        <td>[optional] Annotation's google analytics property id with which it will be attached. You can get <strong> IDs for API </strong> of your google analytics properties from <a href="settings/accounts" target="_blank">here</a>. You can add multiple fields of this name in your request for multiple properties of same annotation.</td>
                     </tr>
 
                     </tbody>
@@ -339,7 +339,7 @@
                     <tr>
                         <td>google_analytics_property_id[]</td>
                         <td>int</td>
-                        <td>[optional] Annotation's google analytics property id with which it will be attached. You can get Ids of your google analytics properties from <a href="{{ route('google-account.index') }}" target="_blank">here</a>. You can add multiple fields of this name in your request for multiple properties of same annotation.</td>
+                        <td>[optional] Annotation's google analytics property id with which it will be attached. You can get Ids of your google analytics properties from <a href="settings/accounts" target="_blank">here</a>. You can add multiple fields of this name in your request for multiple properties of same annotation.</td>
                     </tr>
                     </tbody>
                 </table>
