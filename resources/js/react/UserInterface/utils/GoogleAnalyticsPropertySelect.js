@@ -127,7 +127,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             )
             && (this.props.currentPricePlan.google_analytics_property_count !== 0)
         ) {
-            this.setState({showUpgradePopup: true})
+            this.setState({ showUpgradePopup: true })
 
         } else {
             if (this.props.multiple) {
@@ -239,7 +239,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                                         iconHtml: '<figure class="m-0"><img src="/images/google-account.svg"></figure>',
                                         html: googlePermissionsHtml,
                                         width: 500,
-                                        confirmButtonClass: "m-0 p-0 border-0 rounded-0 bg-white",
+                                        // confirmButtonClass: "m-0 p-0 border-0 rounded-0 bg-white",
                                         confirmButtonText: `Connect Google Account`,
                                         focusConfirm: false,
                                         // cancelButtonClass: "btn btn-secondary ml-5",
@@ -247,6 +247,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                                         // showCancelButton: false,
                                         // cancelButtonText: 'Cancel',
                                         allowOutsideClick: true,
+                                        backdrop: true,
                                         customClass: {
                                             popup: "confirmConnectionTo",
                                             htmlContainer: "confirmConnectionToContent",
@@ -254,7 +255,9 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                                         },
                                     }).then(value => {
                                         if (value.isConfirmed) {
-                                            this.setState({ isPermissionPopupOpened: true });
+                                            // this.setState({ isPermissionPopupOpened: true });
+                                            localStorage.setItem("frontend_redirect_to", window.location.pathname);
+                                            window.location = "/settings/google-account/create?google_analytics_perm=true";
                                         }
                                     });
 

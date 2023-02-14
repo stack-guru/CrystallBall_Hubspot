@@ -23,7 +23,7 @@ export default class GooglePermissionPopup extends Component {
             iconHtml: '<figure class="m-0"><img src="/images/google-account.svg"></figure>',
             html: googlePermissionsHtml,
             width: 500,
-            confirmButtonClass: "m-0 p-0 border-0 rounded-0 bg-white",
+            // confirmButtonClass: "m-0 p-0 border-0 rounded-0 bg-white",
             confirmButtonText: `Connect Google Account`,
             focusConfirm: false,
             // cancelButtonClass: "btn btn-secondary ml-5",
@@ -31,6 +31,7 @@ export default class GooglePermissionPopup extends Component {
             // showCancelButton: false,
             // cancelButtonText: 'Cancel',
             allowOutsideClick: true,
+            backdrop: true,
             customClass: {
                 popup: "confirmConnectionTo",
                 htmlContainer: "confirmConnectionToContent",

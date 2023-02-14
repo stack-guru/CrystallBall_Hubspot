@@ -560,7 +560,7 @@ class IndexAnnotations extends React.Component {
                                             key={idx + anno.toString()}
                                             onClick={
                                                 () => {
-                                                    if (anno.id && this.state.enableSelect) {
+                                                    if (anno.id && this.state.enableSelect && anno.added_by == 'manual') {
                                                         this.handleOneSelection(anno.id)
                                                     } else {
                                                         // toast.error("This annotation can't be selected.");
