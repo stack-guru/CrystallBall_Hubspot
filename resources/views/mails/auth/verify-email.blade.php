@@ -15,9 +15,9 @@ Verify Email Address
 
 Thank you,<br />
 {{ config('app.name') }}<br />
-{{-- <hr />
+<hr />
 <p>
     If you're having trouble clicking the "Verify Email Address" button, copy and paste the URL below into your web browser:
     <a href="{{ $verificationLink }}">{{ $verificationLink }}</a>
-</p> --}}
+</p>
 @endcomponent

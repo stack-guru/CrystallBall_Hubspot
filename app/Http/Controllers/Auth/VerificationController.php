@@ -95,9 +95,9 @@ class VerificationController extends Controller
                         ? new JsonResponse([], 204)
                     : redirect()->to(url('success-message'));
         }
-        $userEmail = $user->email;                   //after email verified , when generate password  call wappalyzer api.
-        $companyDomain = explode("@", $userEmail)[1];
-        (new \App\Services\WappalyzerService())->getData($companyDomain,$user->name);
+        // $userEmail = $user->email;                   //after email verified , when generate password  call wappalyzer api.
+        // $companyDomain = explode("@", $userEmail)[1];
+        // (new \App\Services\WappalyzerService())->getData($companyDomain,$user->name);
         event(new \Illuminate\Auth\Events\Registered($user));
 
         if ($request->user()->markEmailAsVerified()) {    

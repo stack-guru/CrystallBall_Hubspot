@@ -20,7 +20,7 @@ class DescrptionModal extends React.Component {
             title: `Connect with ${ this.props.serviceName }`,
             text: `Connect your ${ this.props.serviceName } account to create automatic annotations for commits`,
             confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-            confirmButtonText: `<span class='text-white'><i class='mr-2 fa fa-${ this.props.serviceName.toLowerCase() }'> </i>Connect Github Account</span>`,
+            confirmButtonText: `<span class='text-white'><i class='mr-2 fa fa-${ this.props.serviceName.toLowerCase() }'> </i>${ this.props.serviceName }</span>`,
             customClass: {
                 htmlContainer: "py-3",
             },
