@@ -289,6 +289,7 @@ class AppsMarket extends React.Component {
                 id: "01",
                 background: null,
                 dsKey: "is_ds_google_alerts_enabled",
+                connected: this.state.userServices["is_ds_google_alerts_enabled"],
                 premium: false,
                 brandName: "News Alerts",
                 brandLogo: "/newsAlerts.svg",
@@ -299,6 +300,7 @@ class AppsMarket extends React.Component {
                 id: "02",
                 background: "#00749a",
                 dsKey: "is_ds_wordpress_enabled",
+                connected: this.state.userServices["is_ds_wordpress_enabled"],
                 premium: false,
                 brandName: "Wordpress",
                 brandLogo: "/wordpress.svg",
@@ -309,6 +311,7 @@ class AppsMarket extends React.Component {
                 id: "30",
                 background: null,
                 dsKey: "is_ds_wordpress_updates_enabled",
+                connected: this.state.userServices["is_ds_wordpress_updates_enabled"],
                 premium: false,
                 brandName: "Wordpress System Core Updates",
                 brandLogo: "/wordpressSCU.svg",
@@ -319,6 +322,7 @@ class AppsMarket extends React.Component {
                 id: "03",
                 background: null,
                 dsKey: "is_ds_keyword_tracking_enabled",
+                connected: this.state.userServices["is_ds_keyword_tracking_enabled"],
                 premium: false,
                 brandName: "Rank Tracking SERP",
                 brandLogo: "/serp.svg",
@@ -329,6 +333,7 @@ class AppsMarket extends React.Component {
                 id: "04",
                 background: null,
                 dsKey: "is_ds_weather_alerts_enabled",
+                connected: this.state.userServices["is_ds_weather_alerts_enabled"],
                 premium: false,
                 brandName: "Weather Alerts",
                 brandLogo: "/weatherAlerts.svg",
@@ -339,6 +344,7 @@ class AppsMarket extends React.Component {
                 id: "05",
                 background: null,
                 dsKey: "is_ds_google_algorithm_updates_enabled",
+                connected: this.state.userServices["is_ds_google_algorithm_updates_enabled"],
                 premium: false,
                 brandName: "Google Updates",
                 brandLogo: "/googleUpdates.svg",
@@ -349,6 +355,7 @@ class AppsMarket extends React.Component {
                 id: "09",
                 background: "#1DA1F2",
                 dsKey: "is_ds_twitter_tracking_enabled",
+                connected: this.state.userServices["is_ds_twitter_tracking_enabled"],
                 premium: false,
                 brandName: "Twitter",
                 brandLogo: "/twitter.svg",
@@ -359,6 +366,7 @@ class AppsMarket extends React.Component {
                 id: "17",
                 background: null,
                 dsKey: "is_ds_apple_podcast_annotation_enabled",
+                connected: this.state.userServices["is_ds_apple_podcast_annotation_enabled"],
                 premium: false,
                 brandName: "Apple Podcast",
                 brandLogo: "/applePodcast.svg",
@@ -370,6 +378,7 @@ class AppsMarket extends React.Component {
                 id: "19",
                 background: "#24292F",
                 dsKey: "is_ds_github_tracking_enabled",
+                connected: this.state.userServices["is_ds_github_tracking_enabled"],
                 premium: false,
                 brandName: "GitHub",
                 brandLogo: "/github.svg",
@@ -380,6 +389,7 @@ class AppsMarket extends React.Component {
                 id: "24",
                 background: null,
                 dsKey: "is_ds_retail_marketing_enabled",
+                connected: this.state.userServices["is_ds_retail_marketing_enabled"],
                 premium: false,
                 brandName: "Retail Marketing Dates",
                 brandLogo: "/retailMarketingDates.svg",
@@ -390,6 +400,7 @@ class AppsMarket extends React.Component {
                 id: "25",
                 background: "#253858",
                 dsKey: "is_ds_bitbucket_tracking_enabled",
+                connected: this.state.userServices["is_ds_bitbucket_tracking_enabled"],
                 premium: false,
                 brandName: "Bitbucket",
                 brandLogo: "/bitbucket.svg",
@@ -400,6 +411,7 @@ class AppsMarket extends React.Component {
                 id: "27",
                 background: null,
                 dsKey: "is_ds_holidays_enabled",
+                connected: this.state.userServices["is_ds_holidays_enabled"],
                 premium: false,
                 brandName: "Holidays",
                 brandLogo: "/holidays.svg",
@@ -410,6 +422,7 @@ class AppsMarket extends React.Component {
                 id: "28",
                 background: null,
                 dsKey: "is_ds_web_monitors_enabled",
+                connected: this.state.userServices["is_ds_web_monitors_enabled"],
                 premium: false,
                 brandName: "Website Monitoring",
                 brandLogo: "/websiteMonitoring.svg",
@@ -420,6 +433,7 @@ class AppsMarket extends React.Component {
                 id: "20",
                 background: null,
                 dsKey: "is_ds_shopify_annotation_enabled",
+                connected: this.state.userServices["is_ds_shopify_annotation_enabled"],
                 premium: false,
                 brandName: "Shopify",
                 brandLogo: "/shopify.svg",
@@ -666,7 +680,7 @@ class AppsMarket extends React.Component {
                                     <option>Sort by</option>
                                     <option value="brandName:asc">By Name</option>
                                     {/* <option value="brandName:desc">By Name: DESC</option> */}
-                                    <option value="enabled:asc">By Connected</option>
+                                    <option value="connected:desc">By Connected</option>
                                     {/* <option value="enabled:desc">By Not Connected</option> */}
                                 </Input>
                             </FormGroup>
@@ -791,7 +805,7 @@ class AppsMarket extends React.Component {
                                         item.background || "#e0e0e0",
                                 }}
                             >
-                                {this.state.userServices[item.dsKey] ? (
+                                {item.connected ? (
                                     <i className="active fa fa-check-circle"></i>
                                 ) : null}
                                 <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width} height={item.height} />
