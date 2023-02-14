@@ -45,29 +45,6 @@ export default class IndexNotificationSettings extends Component {
     }
 
     showPricePlanModal() {
-        // const accountNotLinkedHtml = '' +
-        //     '<div class="">' +
-        //     '<img src="/images/notification-upgrade-modal.png" class="img-fluid">' +
-        //     '</div>'
-
-        // swal.fire({
-        //     html: accountNotLinkedHtml,
-        //     width: 1000,
-        //     showCancelButton: true,
-        //     showCloseButton: true,
-        //     customClass: {
-        //         popup: "themePlanAlertPopup",
-        //         htmlContainer: "themePlanAlertPopupContent",
-        //         closeButton: 'btn-closeplanAlertPopup',
-        //     },
-        //     cancelButtonClass: "btn-bookADemo",
-        //     cancelButtonText: "Book a Demo",
-        //     confirmButtonClass: "btn-subscribeNow",
-        //     confirmButtonText: "Subscribe now",
-
-        // }).then(value => {
-        //     if (value.isConfirmed) window.location.href = '/settings/price-plans'
-        // });
         this.props.upgradePopup('get-notifications');
     }
 
