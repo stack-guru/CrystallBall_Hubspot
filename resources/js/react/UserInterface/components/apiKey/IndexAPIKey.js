@@ -74,29 +74,6 @@ class IndexAPIKey extends React.Component {
             }
         } else {
             this.props.upgradePopup('api-upgrade')
-            // const accountNotLinkedHtml = '' +
-            //     '<div class="">' +
-            //     '<img src="/images/api-upgrade-modal.png" class="img-fluid">' +
-            //     '</div>'
-
-            // swal.fire({
-            //     html: accountNotLinkedHtml,
-            //     width: 1000,
-            //     showCancelButton: true,
-            //     showCloseButton: true,
-            //     customClass: {
-            //         popup: "themePlanAlertPopup",
-            //         htmlContainer: "themePlanAlertPopupContent",
-            //         closeButton: 'btn-closeplanAlertPopup',
-            //     },
-            //     cancelButtonClass: "btn-bookADemo",
-            //     cancelButtonText: "Book a Demo",
-            //     confirmButtonClass: "btn-subscribeNow",
-            //     confirmButtonText: "Subscribe now",
-
-            // }).then(value => {
-            //     if (value.isConfirmed) window.location.href = '/settings/price-plans'
-            // });
         }
     }
 

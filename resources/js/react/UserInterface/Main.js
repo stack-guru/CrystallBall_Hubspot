@@ -249,7 +249,7 @@ class Main extends React.Component {
                         null}
 
                 <Modal isOpen={this.state.showUpgradePopup} centered className="gaUpgradePopup" toggle={() => this.setState({showUpgradePopup: false, upgradePopupType: ''})}>
-                    <button onClick={() => this.setState({showUpgradePopup: false, upgradePopupType: ''})} class="btn-closeUpgradePopup"><img src="images/close.svg" alt="close icon" /></button>
+                    <button onClick={() => this.setState({showUpgradePopup: false, upgradePopupType: ''})} class="btn-closeUpgradePopup"><img src="/images/close.svg" alt="close icon" /></button>
                     {this.state.upgradePopupType === 'api-upgrade' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade to access <span>API Functionality</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
