@@ -5,7 +5,7 @@ import HttpClient from './HttpClient'
 
 import Select from 'react-select';
 import GooglePermissionPopup from './GooglePermissionPopup';
-import { Popover, PopoverBody } from 'reactstrap';
+import { Modal, Popover, PopoverBody } from 'reactstrap';
 
 export default class GoogleAnalyticsPropertySelect extends Component {
 
@@ -15,7 +15,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             allProperties: [],
             isAccountLinked: true,
             isPermissionPopupOpened: false,
-            selectedProperties: []
+            selectedProperties: [],
+            showUpgradePopup: false
         };
         this.searchGoogleAnalyticsProperties = this.searchGoogleAnalyticsProperties.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -126,31 +127,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             )
             && (this.props.currentPricePlan.google_analytics_property_count !== 0)
         ) {
-            const accountNotLinkedHtml = '' +
-                '<div class="">' +
-                '<img src="/images/property-upgrade-modal.png" class="img-fluid">' +
-                '</div>'
-            /*
-            * Show new google analytics account popup
-            * */
-            swal.fire({
-                html: accountNotLinkedHtml,
-                width: 1000,
-                showCancelButton: true,
-                showCloseButton: true,
-                customClass: {
-                    popup: "themePlanAlertPopup",
-                    htmlContainer: "themePlanAlertPopupContent",
-                    closeButton: 'btn-closeplanAlertPopup',
-                },
-                cancelButtonClass: "btn-bookADemo",
-                cancelButtonText: "Book a Demo",
-                confirmButtonClass: "btn-subscribeNow",
-                confirmButtonText: "Subscribe now",
-
-            }).then(value => {
-                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-            });
+            this.setState({showUpgradePopup: true})
 
         } else {
             if (this.props.multiple) {
@@ -185,6 +162,17 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         return (
             <>
                 <div>
+                    <Modal isOpen={this.state.showUpgradePopup} centered className="gaUpgradePopup" toggle={() => this.setState({ showUpgradePopup: false, upgradePopupType: '' })}>
+                        <button onClick={() => this.setState({ showUpgradePopup: false, upgradePopupType: '' })} class="btn-closeUpgradePopup"><img src="/images/close.svg" alt="close icon" /></button>
+                        <ga-upgrade-popup
+                            heading={`<h1>Upgrade today to add <span>more properties</span></h1>`}
+                            subHeading={`<p>and get access to all amazing features</p>`}
+                            bannerImg="/images/more-property-upgrade.svg"
+                        >
+                        </ga-upgrade-popup>
+
+                    </Modal>
+
                     <div className="themeNewInputStyle position-relative inputWithIcon">
                         <i className="icon fa"><img src='/icon-plus.svg' /></i>
                         <Select
