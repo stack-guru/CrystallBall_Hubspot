@@ -73,7 +73,7 @@ class Apple extends React.Component {
                     creditString={`${ this.state.applePodcast?.length } / ${ (this.props.user.price_plan.apple_podcast_monitor_count * 1) == -1 ? 0 : this.props.user.price_plan.apple_podcast_monitor_count}`}
                 />
 
-                <ApplePodcastConfig limitReached={this.state.applePodcast?.length >= (this.props.user.price_plan.apple_podcast_monitor_count * 1)} existingPodcast={this.state.applePodcast} getExistingPodcasts={this.getExistingPodcasts} gaPropertyId={this.props.ga_property_id}/>
+                <ApplePodcastConfig upgradePopup={this.props.upgradePopup} limitReached={this.state.applePodcast?.length >= (this.props.user.price_plan.apple_podcast_monitor_count * 1)} existingPodcast={this.state.applePodcast} getExistingPodcasts={this.getExistingPodcasts} gaPropertyId={this.props.ga_property_id}/>
                 </>
                 }
             </div>

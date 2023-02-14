@@ -89,29 +89,30 @@ const ApplePodcastConfig = (props) => {
 
     const addAnnotation = async (formData) => {
         if (props.limitReached) {
-            const accountNotLinkedHtml =
-                "" +
-                '<div class="">' +
-                '<img src="/images/annotation_limit_reached.png" class="img-fluid">' +
-                "</div>";
+            this.props.upgradePopup('podcast-trackers')
+            // const accountNotLinkedHtml =
+            //     "" +
+            //     '<div class="">' +
+            //     '<img src="/images/annotation_limit_reached.png" class="img-fluid">' +
+            //     "</div>";
 
-            swal.fire({
-                html: accountNotLinkedHtml,
-                width: 1000,
-                showCancelButton: true,
-                showCloseButton: true,
-                customClass: {
-                    popup: "themePlanAlertPopup",
-                    htmlContainer: "themePlanAlertPopupContent",
-                    closeButton: 'btn-closeplanAlertPopup',
-                },
-                cancelButtonClass: "btn-bookADemo",
-                cancelButtonText: "Book a Demo",
-                confirmButtonClass: "btn-subscribeNow",
-                confirmButtonText: "Subscribe now",
-            }).then((value) => {
-                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-            });
+            // swal.fire({
+            //     html: accountNotLinkedHtml,
+            //     width: 1000,
+            //     showCancelButton: true,
+            //     showCloseButton: true,
+            //     customClass: {
+            //         popup: "themePlanAlertPopup",
+            //         htmlContainer: "themePlanAlertPopupContent",
+            //         closeButton: 'btn-closeplanAlertPopup',
+            //     },
+            //     cancelButtonClass: "btn-bookADemo",
+            //     cancelButtonText: "Book a Demo",
+            //     confirmButtonClass: "btn-subscribeNow",
+            //     confirmButtonText: "Subscribe now",
+            // }).then((value) => {
+            //     if (value.isConfirmed) window.location.href = '/settings/price-plans'
+            // });
         } else {
             Toast.fire({
                 icon: 'info',
