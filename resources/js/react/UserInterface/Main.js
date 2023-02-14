@@ -62,6 +62,8 @@ class Main extends React.Component {
             showPromotionPopup: false,
             showTimerPromotionPopup: false,
             mKeyAnnotation: '',
+            showUpgradePopup: false,
+            upgradePopupType: '',
         }
         this.loadUser = this.loadUser.bind(this)
 
@@ -139,7 +141,6 @@ class Main extends React.Component {
                     </div>
                     <main className="main-content bgc-grey-100">
                         <Switch>
-
                             <Route exact path="/ga-accounts" refresh={true}>
                                 <IndexDashboard user={this.state.user} />
                             </Route>
@@ -154,15 +155,7 @@ class Main extends React.Component {
                             </Route>
 
                             <Route exact path="/annotation" refresh={true}>
-                                <IndexAnnotations
-                                    openAnnotationPopup={(mka) => {
-                                        this.setState({
-                                            mKeyAnnotation: mka
-                                        });
-                                    }}
-                                    user={this.state.user}
-                                    mKeyAnnotation={this.state.mKeyAnnotation}
-                                />
+                                <IndexAnnotations openAnnotationPopup={(mka) => {this.setState({mKeyAnnotation: mka});}} user={this.state.user} mKeyAnnotation={this.state.mKeyAnnotation} />
                             </Route>
                             <Route exact path="/annotation/create" refresh={true}>
                                 <AnnotationsCreate currentPricePlan={this.state.user.price_plan} />
@@ -255,10 +248,14 @@ class Main extends React.Component {
                         :
                         null}
 
-                <Modal isOpen={false} centered>
-                    <ModalBody>
-                        <ga-upgrade-popup></ga-upgrade-popup>
-                    </ModalBody>
+                <Modal isOpen={this.state.showUpgradePopup} centered className="gaUpgradePopup" toggle={() => this.setState({showUpgradePopup: false})}>
+                    <button onClick={() => this.setState({showUpgradePopup: false})} class="btn-closeUpgradePopup"><img src="images/close.svg" alt="close icon" /></button>
+                    <ga-upgrade-popup
+                        heading={`<h1>Upgrade to access <span>API Functionality</span></h1>`}
+                        subHeading={`<p>and get access to all amazing features</p>`}
+                        bannerImg="/images/apiFunctionality.svg"
+                    >
+                    </ga-upgrade-popup>
                 </Modal>
             </React.Fragment>
         )
