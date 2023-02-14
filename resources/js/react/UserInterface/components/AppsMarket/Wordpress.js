@@ -59,29 +59,7 @@ class Wordpress extends React.Component {
                     });
             }
         } else {
-            const accountNotLinkedHtml = '' +
-                '<div class="">' +
-                '<img src="/images/api-upgrade-modal.png" class="img-fluid">' +
-                '</div>'
-
-            swal.fire({
-                html: accountNotLinkedHtml,
-                width: 1000,
-                showCancelButton: true,
-                showCloseButton: true,
-                customClass: {
-                    popup: "themePlanAlertPopup",
-                    htmlContainer: "themePlanAlertPopupContent",
-                    closeButton: 'btn-closeplanAlertPopup',
-                },
-                cancelButtonClass: "btn-bookADemo",
-                cancelButtonText: "Book a Demo",
-                confirmButtonClass: "btn-subscribeNow",
-                confirmButtonText: "Subscribe now",
-
-            }).then(value => {
-                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-            });
+            this.props.upgradePopup('api-upgrade')
         }
     }
 
@@ -117,7 +95,7 @@ class Wordpress extends React.Component {
                         </div>
                         <div className="contentBox d-flex flex-column">
                             <p className="mb-3">2. Create API Key</p>
-                            <IndexAPIKey currentPricePlan={this.props.currentPricePlan} formOnly={true} />
+                            <IndexAPIKey upgradePopup={this.props.upgradePopup} currentPricePlan={this.props.currentPricePlan} formOnly={true} />
                             {/* <form className='apiKeyForm d-block' onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
                                 <h3>Generate token</h3>
                                 <div className="inputplusbutton d-flex">

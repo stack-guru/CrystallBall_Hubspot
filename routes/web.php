@@ -31,8 +31,8 @@ Route::get('test_fb', function () {
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::view('email_error', 'auth.email_error');
-Route::view('success_message', 'auth.success');
+Route::view('join_company', 'auth.join_company');
+Route::view('success-message', 'auth.success');
 
 Route::get('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookGet']);
 Route::post('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookPost']);
@@ -128,13 +128,13 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
     // GET /oauth/personal-access-tokens to get tokens
     // POST /oauth/personal-access-tokens
 
+    Route::get('accounts', [App\Http\Controllers\GoogleAccountController::class, 'index'])->name('accounts');
     Route::group(['prefix' => 'settings'], function () {
         Route::view('/', 'ui/app');
         Route::view('support', 'ui/app');
         Route::view('/devices', 'ui/app');
         Route::view('analytics-accounts', 'ui/app');
 
-        Route::get('accounts', [App\Http\Controllers\GoogleAccountController::class, 'index']);
         Route::resource('google-account', App\Http\Controllers\GoogleAccountController::class)->only(['create', 'store', 'update', 'destroy']);
         Route::get('google-account/redirect', [App\Http\Controllers\GoogleAccountController::class, 'store'])->name('settings.google-account.redirect.store');
 

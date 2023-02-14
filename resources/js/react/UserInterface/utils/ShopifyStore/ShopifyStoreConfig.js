@@ -72,9 +72,9 @@ const ShopifyStoreConfig = (props) => {
             });
     };
 
-    // useEffect(() => {
-    //     getExistingShopifyStore();
-    // }, [props.gaPropertyId]);
+    useEffect(() => {
+        getExistingShopifyStore();
+    }, []);
 
     const addAnnotation = async () => {
         Toast.fire({
@@ -146,6 +146,9 @@ const ShopifyStoreConfig = (props) => {
                         placeholder="Select GA Properties"
                         isClearable={true}
                     />
+                </div>
+                <div className='d-flex justify-content-end pt-3'>
+                    <button onClick={(e) => addAnnotation(e)} className="btn-theme">Add</button>
                 </div>
             </div>
             <div className="gray-box">

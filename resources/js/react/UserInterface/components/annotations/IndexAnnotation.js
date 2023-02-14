@@ -114,6 +114,14 @@ class IndexAnnotations extends React.Component {
         }, 5000);
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.mKeyAnnotation !== this.props.mKeyAnnotation) {
+            if (!this.props.mKeyAnnotation.length) {
+                this.setState({ isLoading: true, annotations: [] }, this.loadInitAnnotations);
+            }
+        }
+    }
+
     deleteAnnotation(id) {
         this.setState({ isBusy: true });
         HttpClient.delete(`/annotation/${id}`)
@@ -344,9 +352,9 @@ class IndexAnnotations extends React.Component {
                             <h2 className="pageTitle m-0">Annotations</h2>
                             <div className="addAnnotation">
                                 <span>Add Annotation:</span>
-                                <a data-toggle="tooltip" data-placement="top" title="Manual" 
-                                href="javascript:void(0);" 
-                                onClick={() => this.props.openAnnotationPopup('manual')} >
+                                <a data-toggle="tooltip" data-placement="top" title="Manual"
+                                    href="javascript:void(0);"
+                                    onClick={() => this.props.openAnnotationPopup('manual')} >
                                     <img className='inject-me' src='/manual.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/manual.svg"; }} width='16' height='16' alt='menu icon' />
                                 </a>
                                 <a data-toggle="tooltip" data-placement="top" title="Apps Market" to="/data-source" href="/data-source">
@@ -634,14 +642,14 @@ class IndexAnnotations extends React.Component {
                             {!this.state.isLoading && !this.state.annotations.length ?
                                 <div className="nodata">
                                     <p>No annotations added yet.</p>
-                                    <p className="mb-0">Suggestions: <a href=''>Add manual annotation</a> or <a href=''>Upload CSV</a></p>
+                                    <p className="mb-0">Suggestions: <a onClick={() => this.props.openAnnotationPopup('manual')} href="javascript:void(0);">Add manual annotation</a> {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (<>or <a onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">Upload CSV</a></>): null}</p>
                                 </div> : null
                             }
                         </>
                     )}
                 </Container>
                 <AppsModal isOpen={!!this.state.editAnnotationId} popupSize={'md'} toggle={() => { this.setState({ editAnnotationId: '' }); }}>
-                    <AnnotationsUpdate togglePopup={() => this.setState({ editAnnotationId: '' })} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
+                    <AnnotationsUpdate upgradePopup={this.props.upgradePopup} togglePopup={() => this.setState({ editAnnotationId: '' })} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
                 </AppsModal>
                 <AppsModal isOpen={!!this.state.showChartAnnotationId} popupSize={'null'} toggle={() => { this.setState({ showChartAnnotationId: '' }); }}>
                     <ShowChartAnnotation togglePopup={() => this.setState({ showChartAnnotationId: '' })} showChartAnnotationId={this.state.showChartAnnotationId} currentPricePlan={this.props.user.price_plan} />

@@ -22,6 +22,7 @@ export default class EditAnnotation extends React.Component {
                 show_at: '',
                 google_analytics_property_id: [""]
             },
+            categories: [],
             validation: {},
             resp: '',
             error: '',
@@ -34,21 +35,21 @@ export default class EditAnnotation extends React.Component {
         this.gAPropertyChangeHandler = this.gAPropertyChangeHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
         this.setDefaultState = this.setDefaultState.bind(this);
+        this.loadCategoriesList = this.loadCategoriesList.bind(this)
         this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
         this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
     }
 
     componentDidMount() {
-        document.title = 'Edit Annotation'
         if (this.props.editAnnotationId) {
             this.setState({ isBusy: true });
             HttpClient.get(`/annotation/${this.props.editAnnotationId}`)
                 .then(response => {
                     let gAPs = [];
                     if (!response.data.annotation.annotation_ga_properties.length) {
-                        gAPs = [{ value: "", label: "All Properties" }];
+                        gAPs = [];
                     } else if (response.data.annotation.annotation_ga_properties[0].google_analytics_property_id == null) {
-                        gAPs = [{ value: "", label: "All properties" }];
+                        gAPs = [];
                     } else {
                         gAPs = response.data.annotation.annotation_ga_properties.map(aGAP => { return { value: aGAP.google_analytics_property_id, label: aGAP.google_analytics_property.name }; });
                     }
@@ -65,6 +66,20 @@ export default class EditAnnotation extends React.Component {
                 });
         }
         this.loadUserAnnotationColors();
+        this.loadCategoriesList();
+    }
+
+    loadCategoriesList() {
+        HttpClient.get(`/annotation-categories`)
+            .then(response => {
+                this.setState({ isBusy: false, categories: response.data.categories.map(c => { return { label: c.category, value: c.category } }) });
+            }, (err) => {
+
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+
+                this.setState({ isBusy: false, errors: err });
+            });
     }
 
     setDefaultState() {
@@ -75,30 +90,7 @@ export default class EditAnnotation extends React.Component {
         switch (e.target.name) {
             case "google_analytics_property_id":
                 if ((this.props.currentPricePlan.google_analytics_property_count < e.target.value.length) && (this.props.currentPricePlan.google_analytics_property_count !== 0)) {
-                    const accountNotLinkedHtml = '' +
-                        '<div class="">' +
-                        '<img src="/images/property-upgrade-modal.png" class="img-fluid">' +
-                        '</div>'
-                    /*
-                    * Show new google analytics account popup
-                    * */
-                    swal.fire({
-                        html: accountNotLinkedHtml,
-                        width: 1000,
-                        showCancelButton: true,
-                        showCloseButton: true,
-                        customClass: {
-                            popup: "themePlanAlertPopup",
-                            htmlContainer: "themePlanAlertPopupContent",
-                            closeButton: 'btn-closeplanAlertPopup',
-                        },
-                        cancelButtonClass: "btn-bookADemo",
-                        cancelButtonText: "Book a Demo",
-                        confirmButtonClass: "btn-subscribeNow",
-                        confirmButtonText: "Subscribe now",
-                    }).then(value => {
-                        if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                    });
+                    this.props.upgradePopup('add-more-property')
                 } else {
                     this.setState({ isDirty: true, annotation: { ...this.state.annotation, [e.target.name]: e.target.value } });
                 }
@@ -136,7 +128,6 @@ export default class EditAnnotation extends React.Component {
                     });
                     this.setState({ redirectTo: "/annotation" });
                     this.props.togglePopup('');
-                    window.location.reload(false);
                 }, (err) => {
 
                     this.setState({ isBusy: false, errors: (err.response).data });
@@ -225,15 +216,15 @@ export default class EditAnnotation extends React.Component {
                         <div className='grid2layout'>
                             <div className="themeNewInputStyle">
                                 <input type="text" className="form-control gray_clr" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" placeholder='Name the Annotation' />
-                                { validation.event_name ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : null }
+                                {validation.event_name ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : null}
                             </div>
                             <div className="themeNewInputStyle">
-                                <AnnotationCategorySelect className="gray_clr" name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
+                                <AnnotationCategorySelect categories={this.state.categories} className="gray_clr" name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
                             </div>
                         </div>
 
                         <div className="themeNewInputStyle has-danger mb-3">
-                            <input type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control gray_clr" id="description" name="description" placeholder='Add descriptive info'/>
+                            <input type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control gray_clr" id="description" name="description" placeholder='Add descriptive info' />
                             {validation.description ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : null}
                         </div>
 

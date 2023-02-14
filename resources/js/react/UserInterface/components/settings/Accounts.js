@@ -55,12 +55,12 @@ export default class Accounts extends React.Component {
                 autoRedirectDelay = 10000;
                 this.fetchGSCSites(searchParams.get('google_account_id'))
                 this.fetchGAAccounts(searchParams.get('google_account_id'))
-                history.pushState({}, null, "/settings/accounts");
+                history.pushState({}, null, "/accounts");
             }
         }
 
         const redirectTo = localStorage.getItem('frontend_redirect_to');
-        if (redirectTo && redirectTo !== "/settings/accounts") {
+        if (redirectTo && redirectTo !== "/accounts") {
             localStorage.removeItem('frontend_redirect_to');
             Toast.fire({
                 icon: 'info',
@@ -150,12 +150,13 @@ export default class Accounts extends React.Component {
                     </div> */}
                     <section className='accountsHolder'>
                         <h3>Google accounts</h3>
-                        <div className="accounts googleAccounts">
+                        <div className="accounts socialAccounts">
                         {
                             this.state.googleAccounts.map(googleAccount => {
                                 // className: reconnect
                                 return <div className='account'>
-                                            <figure><img className='w-100' src={googleAccount.avatar} alt='user image' /></figure>
+                                            {/* <figure><img className='w-100' src={googleAccount.avatar} alt='user image' /></figure> */}
+                                            <figure><img className='socialImage' src='/google-small.svg' alt='user image' /></figure>
                                             <div className='nameAndEmail'>
                                                 <h4>{googleAccount.name}</h4>
                                                 <span>{googleAccount.email}</span>
@@ -284,7 +285,7 @@ export default class Accounts extends React.Component {
 
                         <div className='btn-goToAnalyticsAccount'>
                             <span className='mb-3'>
-                                <a href='/settings/analytics-accounts'>
+                                <a href='/ga-accounts'>
                                 Go to Analytics accounts
                                 <i className='ml-2'><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.3 17.275C13.1 17.075 13.004 16.8333 13.012 16.55C13.0207 16.2667 13.125 16.025 13.325 15.825L16.15 13H5C4.71667 13 4.479 12.904 4.287 12.712C4.09567 12.5207 4 12.2833 4 12C4 11.7167 4.09567 11.479 4.287 11.287C4.479 11.0957 4.71667 11 5 11H16.15L13.3 8.14999C13.1 7.94999 13 7.71232 13 7.43699C13 7.16232 13.1 6.92499 13.3 6.72499C13.5 6.52499 13.7377 6.42499 14.013 6.42499C14.2877 6.42499 14.525 6.52499 14.725 6.72499L19.3 11.3C19.4 11.4 19.471 11.5083 19.513 11.625C19.5543 11.7417 19.575 11.8667 19.575 12C19.575 12.1333 19.5543 12.2583 19.513 12.375C19.471 12.4917 19.4 12.6 19.3 12.7L14.7 17.3C14.5167 17.4833 14.2877 17.575 14.013 17.575C13.7377 17.575 13.5 17.475 13.3 17.275Z" fill="#096DB7" />
@@ -636,28 +637,7 @@ export default class Accounts extends React.Component {
             this.setState({ isPermissionPopupOpened: true });
         } else {
 
-            const accountNotLinkedHtml = '' +
-                        '<div class="">' +
-                        '<img src="/images/increase-plan-limit.png" class="img-fluid">' +
-                        '</div>';
-
-            swal.fire({
-                html: accountNotLinkedHtml,
-                width: 1000,
-                showCancelButton: true,
-                showCloseButton: true,
-                customClass: {
-                    popup: "themePlanAlertPopup",
-                    htmlContainer: "themePlanAlertPopupContent",
-                    closeButton: 'btn-closeplanAlertPopup',
-                },
-                cancelButtonClass: "btn-bookADemo",
-                cancelButtonText: "Book a Demo",
-                confirmButtonClass: "btn-subscribeNow",
-                confirmButtonText: "Subscribe now",
-            }).then(function (value) {
-                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-            });
+            this.props.upgradePopup('increase-limits')
         }
     }
 

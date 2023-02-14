@@ -89,29 +89,7 @@ const ApplePodcastConfig = (props) => {
 
     const addAnnotation = async (formData) => {
         if (props.limitReached) {
-            const accountNotLinkedHtml =
-                "" +
-                '<div class="">' +
-                '<img src="/images/annotation_limit_reached.png" class="img-fluid">' +
-                "</div>";
-
-            swal.fire({
-                html: accountNotLinkedHtml,
-                width: 1000,
-                showCancelButton: true,
-                showCloseButton: true,
-                customClass: {
-                    popup: "themePlanAlertPopup",
-                    htmlContainer: "themePlanAlertPopupContent",
-                    closeButton: 'btn-closeplanAlertPopup',
-                },
-                cancelButtonClass: "btn-bookADemo",
-                cancelButtonText: "Book a Demo",
-                confirmButtonClass: "btn-subscribeNow",
-                confirmButtonText: "Subscribe now",
-            }).then((value) => {
-                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-            });
+            this.props.upgradePopup('podcast-trackers')
         } else {
             Toast.fire({
                 icon: 'info',
@@ -189,8 +167,10 @@ const ApplePodcastConfig = (props) => {
                         {searchResult.map((t0a) => (
                             <Card className="cb-ap-search-card apple-card mb-0" body>
                                 <CardImg top width="100%" src={t0a.previewImage} alt={t0a.collectionName} />
-                                <CardTitle tag="h5">{t0a.collectionName}</CardTitle>
-                                <CardSubtitle tag="h6" className="mb-0 text-muted">{t0a.trackCount} episodes</CardSubtitle>
+                                <div className="">
+                                    <CardTitle className="text-truncate w-100" tag="h5">{t0a.collectionName}</CardTitle>
+                                    <CardSubtitle tag="h6" className="mb-0 text-muted">{t0a.trackCount} episodes</CardSubtitle>
+                                </div>
                                 <Button onClick={() => addAnnotation(t0a)}>Create Annotations</Button>
                             </Card>
                         ))}

@@ -37,7 +37,7 @@ class GithubAutomationController extends Controller
                  * */
                 $this->githubAutomationRepository->setupGithubAccount($user->token, $user->expiresIn, $user->id, $user->email, $user->avatar, $user->nickname, $user->refreshToken);
 
-                return redirect()->to('data-source')->with('Account connected. You can enable the automation now.');
+                return redirect()->to('data-source?show_github_popup=1')->with('Account connected. You can enable the automation now.');
 
             } else {
                 return redirect()->to('data-source')->with('Account not connected.');

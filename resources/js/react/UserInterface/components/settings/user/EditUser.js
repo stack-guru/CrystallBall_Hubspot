@@ -33,6 +33,8 @@ export default class EditUser extends Component {
                     let uGAAIds = response.data.user.user_ga_accounts.map(uGAAA => uGAAA.google_analytics_account_id);
                     if (uGAAIds[0] == null) uGAAIds = [""];
                     this.setState({ user: { ...response.data.user, google_analytics_account_id: uGAAIds } });
+                    this.props.getUsers();
+                    this.props.toggle();
                 }, (err) => {
                     this.setState({ errors: (err.response).data });
                 }).catch(err => {

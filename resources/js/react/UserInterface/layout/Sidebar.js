@@ -142,7 +142,7 @@ class Sidebar extends React.Component {
                                         </svg>
                                     </span>
                                     <span className="title flex-grow-1">
-                                        Annotations List
+                                        Annotations
                                     </span>
                                 </span>
                             </Link>
@@ -265,7 +265,7 @@ class Sidebar extends React.Component {
 
                         <li className="nav-item gaa-menu-item">
                             {/* <Link to="/analytics-and-business-intelligence"> */}
-                            <Link to="/settings/accounts">
+                            <Link to="/accounts">
                                 <span className="sidebar-link d-flex align-items-center justify-content-start">
                                     <span><svg width={26} height={26} viewBox="0 0 26 26" fill="none">
                                         <path

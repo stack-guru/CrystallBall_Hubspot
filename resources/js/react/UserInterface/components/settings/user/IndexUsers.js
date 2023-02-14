@@ -22,26 +22,31 @@ export default class IndexUsers extends Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.checkSearchText = this.checkSearchText.bind(this);
         this.saveRole = this.saveRole.bind(this);
+        this.getUsers = this.getUsers.bind(this);
     }
 
     componentDidMount() {
         document.title = "Users";
-        HttpClient.get(`/settings/user`)
-            .then(
-                (response) => {
-                    this.setState({ users: response.data.users });
-                },
-                (err) => {
-                    this.setState({ errors: err.response.data });
-                }
-            )
-            .catch((err) => {
-                this.setState({ errors: err });
-            });
+       this.getUsers();
     }
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    getUsers() {
+        HttpClient.get(`/settings/user`)
+        .then(
+            (response) => {
+                this.setState({ users: response.data.users });
+            },
+            (err) => {
+                this.setState({ errors: err.response.data });
+            }
+        )
+        .catch((err) => {
+            this.setState({ errors: err });
+        });
     }
 
     checkSearchText(user) {
@@ -65,6 +70,7 @@ export default class IndexUsers extends Component {
                     icon: 'success',
                     title: "User updated.",
                 });
+                this.getUsers();
             }, (err) => {
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
@@ -79,6 +85,8 @@ export default class IndexUsers extends Component {
                     this.setState({
                         users: this.state.users.filter((u) => u.id !== id),
                     });
+
+                    this.getUsers();
                 },
                 (err) => {
                     this.setState({ errors: err.response.data });
@@ -108,30 +116,7 @@ export default class IndexUsers extends Component {
                                             </a>
                                         ) : (
                                             <button onClick={() => {
-                                                const accountNotLinkedHtml =
-                                                    "" +
-                                                    '<div class="">' +
-                                                    '<img src="/images/banners/user_limit_banner.png" class="img-fluid">' +
-                                                    "</div>";
-
-                                                swal.fire({
-                                                    html: accountNotLinkedHtml,
-                                                    width: 1000,
-                                                    showCancelButton: true,
-                                                    showCloseButton: true,
-                                                    customClass: {
-                                                        popup: "themePlanAlertPopup",
-                                                        htmlContainer: "themePlanAlertPopupContent",
-                                                        closeButton: 'btn-closeplanAlertPopup',
-                                                    },
-                                                    cancelButtonClass: "btn-bookADemo",
-                                                    cancelButtonText: "Book a Demo",
-                                                    confirmButtonClass: "btn-subscribeNow",
-                                                    confirmButtonText: "Subscribe now",
-                                                }).then((value) => {
-                                                    if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                                                });
-
+                                                this.props.upgradePopup('more-users');
                                             }}
                                                 className="btn-adduser d-flex align-items-center justify-content-center"
                                             >
@@ -231,29 +216,7 @@ export default class IndexUsers extends Component {
                                             ) : (
                                                 <p className="mb-0" onClick={(ev) => {
                                                     ev.stopPropagation();
-                                                    const accountNotLinkedHtml =
-                                                        "" +
-                                                        '<div class="">' +
-                                                        '<img src="/images/banners/user_limit_banner.png" class="img-fluid">' +
-                                                        "</div>";
-
-                                                    swal.fire({
-                                                        html: accountNotLinkedHtml,
-                                                        width: 1000,
-                                                        showCancelButton: true,
-                                                        showCloseButton: true,
-                                                        customClass: {
-                                                            popup: "themePlanAlertPopup",
-                                                            htmlContainer: "themePlanAlertPopupContent",
-                                                            closeButton: 'btn-closeplanAlertPopup',
-                                                        },
-                                                        cancelButtonClass: "btn-bookADemo",
-                                                        cancelButtonText: "Book a Demo",
-                                                        confirmButtonClass: "btn-subscribeNow",
-                                                        confirmButtonText: "Subscribe now",
-                                                    }).then((value) => {
-                                                        if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                                                    });
+                                                    this.props.upgradePopup('more-users');
 
                                                 }}
                                                 >
@@ -282,7 +245,7 @@ export default class IndexUsers extends Component {
                                 </div>
                             </div>
 
-                            <CreateUser user={this.props.user} />
+                            <CreateUser toggle={() => { this.setState({ addUserPopup: false, }); }} getUsers={this.getUsers}  user={this.props.user} />
                         </div>
                     </AppsModal>
                     <AppsModal isOpen={this.state.editUserId} popupSize={'md'} toggle={() => { this.setState({ editUserId: '', }); }}>
@@ -296,7 +259,7 @@ export default class IndexUsers extends Component {
                                 </div>
                             </div>
 
-                            <EditUser editUserId={this.state.editUserId} />
+                            <EditUser toggle={() => { this.setState({ editUserId: '', }); }} getUsers={this.getUsers} editUserId={this.state.editUserId} />
                         </div>
                     </AppsModal>
                 </div>

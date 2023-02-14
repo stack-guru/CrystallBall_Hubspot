@@ -53,7 +53,8 @@ class Apple extends React.Component {
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Apple Podcast"}
-                    description={""}
+                    description={`Staying on top of the latest content and tracking changes to Apple podcasts can be a challenge\n
+                    Simply search for a channel or add a URL, and we'll automatically create annotations in your GA4 environment every time there is a new episode. This means you'll have a clear picture of what's new and how it's impacting your audience, all in one place.`}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
@@ -72,7 +73,7 @@ class Apple extends React.Component {
                     creditString={`${ this.state.applePodcast?.length } / ${ (this.props.user.price_plan.apple_podcast_monitor_count * 1) == -1 ? 0 : this.props.user.price_plan.apple_podcast_monitor_count}`}
                 />
 
-                <ApplePodcastConfig limitReached={this.state.applePodcast?.length >= (this.props.user.price_plan.apple_podcast_monitor_count * 1)} existingPodcast={this.state.applePodcast} getExistingPodcasts={this.getExistingPodcasts} gaPropertyId={this.props.ga_property_id}/>
+                <ApplePodcastConfig upgradePopup={this.props.upgradePopup} limitReached={this.state.applePodcast?.length >= (this.props.user.price_plan.apple_podcast_monitor_count * 1)} existingPodcast={this.state.applePodcast} getExistingPodcasts={this.getExistingPodcasts} gaPropertyId={this.props.ga_property_id}/>
                 </>
                 }
             </div>

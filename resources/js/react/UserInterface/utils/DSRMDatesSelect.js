@@ -52,6 +52,13 @@ export default class DSRMDatesSelect extends React.Component {
                     "retail_marketing_id"
                 ),
             });
+            
+            this.props.updateTrackingStatus(true)
+            this.props.updateUserService({ target: {
+                    name: "is_ds_retail_marketing_enabled",
+                    checked: true,
+                }, 
+            });
         } else {
             this.props.onUncheckCallback(e.target.id, "retail_marketings");
         }
@@ -71,6 +78,12 @@ export default class DSRMDatesSelect extends React.Component {
                 }
             }
         });
+        this.props.updateTrackingStatus(true)
+        this.props.updateUserService({ target: {
+                name: "is_ds_retail_marketing_enabled",
+                checked: true,
+            }, 
+        });
     }
 
     clearAll(e) {
@@ -79,6 +92,12 @@ export default class DSRMDatesSelect extends React.Component {
         userRMDateIds.forEach((rmDate, index) => {
             (this.props.onUncheckCallback)(userDSEvents[index], 'retail_marketings')
         })
+        this.props.updateTrackingStatus(false)
+        this.props.updateUserService({ target: {
+                name: "is_ds_retail_marketing_enabled",
+                checked: false,
+            }, 
+        });
     }
 
     checkSearchText(rmd) {
