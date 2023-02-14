@@ -142,7 +142,7 @@ class Sidebar extends React.Component {
                                         </svg>
                                     </span>
                                     <span className="title flex-grow-1">
-                                        Annotations List
+                                        Annotations
                                     </span>
                                 </span>
                             </Link>

@@ -162,7 +162,7 @@ export default class IndexDashboard extends Component {
                                         <div className="singleCol text-left">
                                             <span className='w-100 d-flex justify-content-start'>
                                                 {
-                                                    (gAP.google_analytics_account) ? 
+                                                    (gAP.google_analytics_account) ?
                                                     gAP.google_analytics_account.name :
                                                      ''
                                                 }
@@ -176,14 +176,14 @@ export default class IndexDashboard extends Component {
                                         <div className="singleCol text-left">
                                             <span className='d-flex justify-content-between w-100'>
                                                 <span>{gAP.name}</span>
-                                                {gAP.is_in_use ? <i><img src={'/icon-link-green.svg'} /></i> : <i><img src={'/icon-unlink-red.svg'} /></i>}
+                                                {gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> : <i><img src={'/icon-unlink-red.svg'} /></i>}
                                             </span>
                                         </div>
                                         <div className="singleCol text-left d-flex flex-column">
                                             <div className="themeNewInputStyle position-relative w-100">
                                                 <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                                <select name="" value={gAP.google_search_console_site_id} className="form-control selected" onChange={(event) => this.handleGAPUpdate(gAP, { google_search_console_site_id: event.target.value })}>
-                                                    <option>Select website</option>
+                                                <select name="" value={gAP.google_search_console_site_id} className={`form-control ${gAP.google_search_console_site_id ? 'selected' : null}`} onChange={(event) => this.handleGAPUpdate(gAP, { google_search_console_site_id: event.target.value })}>
+                                                    <option value="">Select website</option>
                                                     {
                                                         this.state.googleSearchConsoleSites.map(gSCS => <option value={gSCS.id} key={gSCS.id}>{gSCS.site_url} from {gSCS.google_account.name}</option>)
                                                     }
