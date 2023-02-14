@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Requests\GoogleAccountRequest;
+use App\Models\GoogleAdsAnnotation;
 use App\Models\GoogleAnalyticsProperty;
 use App\Models\GoogleSearchConsoleSite;
 use App\Models\PricePlan;
@@ -106,6 +107,8 @@ class GoogleAccountController extends Controller
             ]);
             $gSCS->delete();
         }
+        GoogleAdsAnnotation::destroy(GoogleAdsAnnotation::where('google_account_id', $googleAccount->id)->get());
+
         return ['success' => $googleAccount->delete()];
     }
 }
