@@ -25,6 +25,25 @@ export default class UploadAnnotation extends React.Component {
         this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
         this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
         this.checkIfCanCreateAnnotation = this.checkIfCanCreateAnnotation.bind(this)
+        this.onDragEnter = this.onDragEnter.bind(this)
+        this.onDragOver = this.onDragOver.bind(this)
+        this.onFileDrop = this.onFileDrop.bind(this)
+    }
+
+    onDragEnter (e) {
+        e.preventDefault();
+        $("#csv-caption").text("Drag and drop or click here")
+    }
+
+    onDragOver (e) {
+        e.preventDefault();
+        $("#csv-caption").text("Drop here")
+    }
+
+    onFileDrop (e) {
+        e.preventDefault();
+        $("#csv-caption").text("Dropped")
+        $("#csv")[0].files = e.dataTransfer.files;
     }
 
     checkIfCanCreateAnnotation(){
@@ -40,25 +59,7 @@ export default class UploadAnnotation extends React.Component {
                         // unlimited
                     }else{
                         if(response.data.user_total_annotations >= this.state.user.price_plan.annotations_count){
-                        // if(true){
-                            let url = document.location.origin + '/images/annotation_limit_reached.png';
-                            swal.fire({
-                                html: "<img src='"+url+"' style='width:100%;'>",
-                                width: 1000,
-                                showCancelButton: true,
-                                showCloseButton: false,
-                                customClass: {
-                                    popup: "themePlanAlertPopup",
-                                    htmlContainer: "themePlanAlertPopupContent",
-                                    closeButton: 'btn-closeplanAlertPopup',
-                                },
-                                cancelButtonClass: "btn-bookADemo",
-                                cancelButtonText: "Book a Demo",
-                                confirmButtonClass: "btn-subscribeNow",
-                                confirmButtonText: "Subscribe now",
-                            }).then(function(){
-                                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                            });
+                            this.props.upgradePopup('more-annotations')
                         }
                     }
 
@@ -144,10 +145,10 @@ export default class UploadAnnotation extends React.Component {
                     <ErrorAlert errors={this.state.errors}/>
 
                     <form className='form-csvUpload' onSubmit={this.handleSubmit} encType="multipart/form-data" id="csv-upload-form-container">
-                        <div className="themeNewInputGroup csvFileUpload mb-4">
+                        <div className="themeNewInputGroup csvFileUpload mb-4" onDragEnter={this.onDragEnter} onDragOver={this.onDragOver} onDrop={this.onFileDrop}>
                             <label htmlFor="csv">
                                 <i><img src={'/icon-csvUpload.svg'} alt={'CSV Upload Icon'} className="svg-inject" /></i>
-                                <strong>Drag and drop or click here</strong>
+                                <strong id='csv-caption'>Drag and drop or click here</strong>
                                 <span>.csv files only — 5mb max</span>
                                 <input type="file" className="form-control upload-csv-input" id="csv" name="csv" />
                             </label>
@@ -166,25 +167,7 @@ export default class UploadAnnotation extends React.Component {
                                     multiple
                                     onFocus={(e) => {
                                         if (this.props.currentPricePlan.ga_account_count == 1 || this.props.currentPricePlan.google_analytics_property_count == -1) {
-                                            const accountNotLinkedHtml = '' + '<div class="">' + '<img src="/images/property-upgrade-modal.png" class="img-fluid">' + '</div>'
-                                            swal.fire({
-                                                html: accountNotLinkedHtml,
-                                                width: 1000,
-                                                showCancelButton: true,
-                                                showCloseButton: false,
-                                                customClass: {
-                                                    popup: "themePlanAlertPopup",
-                                                    htmlContainer: "themePlanAlertPopupContent",
-                                                    closeButton: 'btn-closeplanAlertPopup',
-                                                },
-                                                cancelButtonClass: "btn-bookADemo",
-                                                cancelButtonText: "Book a Demo",
-                                                confirmButtonClass: "btn-subscribeNow",
-                                                confirmButtonText: "Subscribe now",
-
-                                            }).then(value => {
-                                                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                                            });
+                                            this.props.upgradePopup('add-more-property')
                                         }
                                     }}
                                 ></GoogleAnalyticsPropertySelect>

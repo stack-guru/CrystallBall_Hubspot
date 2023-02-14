@@ -55,12 +55,12 @@ export default class Accounts extends React.Component {
                 autoRedirectDelay = 10000;
                 this.fetchGSCSites(searchParams.get('google_account_id'))
                 this.fetchGAAccounts(searchParams.get('google_account_id'))
-                history.pushState({}, null, "/settings/accounts");
+                history.pushState({}, null, "/accounts");
             }
         }
 
         const redirectTo = localStorage.getItem('frontend_redirect_to');
-        if (redirectTo && redirectTo !== "/settings/accounts") {
+        if (redirectTo && redirectTo !== "/accounts") {
             localStorage.removeItem('frontend_redirect_to');
             Toast.fire({
                 icon: 'info',
@@ -637,28 +637,7 @@ export default class Accounts extends React.Component {
             this.setState({ isPermissionPopupOpened: true });
         } else {
 
-            const accountNotLinkedHtml = '' +
-                        '<div class="">' +
-                        '<img src="/images/increase-plan-limit.png" class="img-fluid">' +
-                        '</div>';
-
-            swal.fire({
-                html: accountNotLinkedHtml,
-                width: 1000,
-                showCancelButton: true,
-                showCloseButton: true,
-                customClass: {
-                    popup: "themePlanAlertPopup",
-                    htmlContainer: "themePlanAlertPopupContent",
-                    closeButton: 'btn-closeplanAlertPopup',
-                },
-                cancelButtonClass: "btn-bookADemo",
-                cancelButtonText: "Book a Demo",
-                confirmButtonClass: "btn-subscribeNow",
-                confirmButtonText: "Subscribe now",
-            }).then(function (value) {
-                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-            });
+            this.props.upgradePopup('increase-limits')
         }
     }
 

@@ -560,7 +560,7 @@ class IndexAnnotations extends React.Component {
                                             key={idx + anno.toString()}
                                             onClick={
                                                 () => {
-                                                    if (anno.id && this.state.enableSelect) {
+                                                    if (anno.id && this.state.enableSelect && anno.added_by == 'manual') {
                                                         this.handleOneSelection(anno.id)
                                                     } else {
                                                         // toast.error("This annotation can't be selected.");
@@ -649,7 +649,7 @@ class IndexAnnotations extends React.Component {
                     )}
                 </Container>
                 <AppsModal isOpen={!!this.state.editAnnotationId} popupSize={'md'} toggle={() => { this.setState({ editAnnotationId: '' }); }}>
-                    <AnnotationsUpdate togglePopup={() => this.setState({ editAnnotationId: '' })} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
+                    <AnnotationsUpdate upgradePopup={this.props.upgradePopup} togglePopup={() => this.setState({ editAnnotationId: '' })} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
                 </AppsModal>
                 <AppsModal isOpen={!!this.state.showChartAnnotationId} popupSize={'null'} toggle={() => { this.setState({ showChartAnnotationId: '' }); }}>
                     <ShowChartAnnotation togglePopup={() => this.setState({ showChartAnnotationId: '' })} showChartAnnotationId={this.state.showChartAnnotationId} currentPricePlan={this.props.user.price_plan} />

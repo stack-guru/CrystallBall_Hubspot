@@ -22,7 +22,7 @@ trait GoogleAnalyticsFour
      */
     public function getAccountGA4Properties(GoogleAccount $googleAccount, GoogleAnalyticsAccount $googleAnalyticsAccount, $repeatCall = false)
     {
-        $url = "https://analyticsadmin.googleapis.com/v1alpha/properties";
+        $url = "https://analyticsadmin.googleapis.com/v1beta/properties";
 
         Log::channel('google')->info("Getting GA4 Account Properties: ", ['GoogleAccount' => $googleAnalyticsAccount->ga_id]);
         $response = $this->executeRequestWithRefresh($googleAccount, 'get', $url, [
@@ -37,7 +37,11 @@ trait GoogleAnalyticsFour
 
         $respJson = $response->json();
         if (!array_key_exists('properties', $respJson)) {
-            if (array_key_exists('error', $respJson)) Log::channel('google')->error("Error fetching GA4 Properties: ", ['message' => $response->json()['error']['message']]);
+            if (array_key_exists('error', $respJson)) {
+                Log::channel('google')->error("Error fetching GA4 Properties: ", ['message' => $response->json()['error']['message']]);
+            } else {
+                Log::channel('google')->error("Error fetching GA4 Properties: ", ['data' => $response->json(), 'status' => $response->status()]);
+            }
             return false;
         }
 

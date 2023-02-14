@@ -101,12 +101,12 @@ class AppsMarket extends React.Component {
         this.checkUserGithubAccount();
         this.getRecommendedApps();
         var urlSearchParams = new URLSearchParams(window.location.search);
-        if (urlSearchParams.has('show_bit_bucket_popup')) {             
+        if (urlSearchParams.has('show_bit_bucket_popup')) {
             this.setState({
                 dsKey : "is_ds_bitbucket_tracking_enabled",
             });
         }
-        if (urlSearchParams.has('show_github_popup')) {             
+        if (urlSearchParams.has('show_github_popup')) {
             this.setState({
                 dsKey : "is_ds_github_tracking_enabled",
             });
@@ -289,6 +289,7 @@ class AppsMarket extends React.Component {
                 id: "01",
                 background: null,
                 dsKey: "is_ds_google_alerts_enabled",
+                connected: this.state.userServices["is_ds_google_alerts_enabled"],
                 premium: false,
                 brandName: "News Alerts",
                 brandLogo: "/newsAlerts.svg",
@@ -299,6 +300,7 @@ class AppsMarket extends React.Component {
                 id: "02",
                 background: "#00749a",
                 dsKey: "is_ds_wordpress_enabled",
+                connected: this.state.userServices["is_ds_wordpress_enabled"],
                 premium: false,
                 brandName: "Wordpress",
                 brandLogo: "/wordpress.svg",
@@ -309,56 +311,32 @@ class AppsMarket extends React.Component {
                 id: "30",
                 background: null,
                 dsKey: "is_ds_wordpress_updates_enabled",
+                connected: this.state.userServices["is_ds_wordpress_updates_enabled"],
                 premium: false,
                 brandName: "Wordpress System Core Updates",
                 brandLogo: "/wordpressSCU.svg",
                 width: 148,
                 height: 40,
             },
-            {
-                id: "03",
-                background: null,
-                dsKey: "is_ds_keyword_tracking_enabled",
-                premium: false,
-                brandName: "Rank Tracking SERP",
-                brandLogo: "/serp.svg",
-                width: 160,
-                height: 56,
-            },
-            {
-                id: "04",
-                background: null,
-                dsKey: "is_ds_weather_alerts_enabled",
-                premium: false,
-                brandName: "Weather Alerts",
-                brandLogo: "/weatherAlerts.svg",
-                width: 160,
-                height: 56,
-            },
+
+
             {
                 id: "05",
                 background: null,
                 dsKey: "is_ds_google_algorithm_updates_enabled",
+                connected: this.state.userServices["is_ds_google_algorithm_updates_enabled"],
                 premium: false,
                 brandName: "Google Updates",
                 brandLogo: "/googleUpdates.svg",
                 width: 156,
                 height: 26,
             },
-            {
-                id: "09",
-                background: "#1DA1F2",
-                dsKey: "is_ds_twitter_tracking_enabled",
-                premium: false,
-                brandName: "Twitter",
-                brandLogo: "/twitter.svg",
-                width: 100,
-                height: 26,
-            },
+
             {
                 id: "17",
                 background: null,
                 dsKey: "is_ds_apple_podcast_annotation_enabled",
+                connected: this.state.userServices["is_ds_apple_podcast_annotation_enabled"],
                 premium: false,
                 brandName: "Apple Podcast",
                 brandLogo: "/applePodcast.svg",
@@ -366,40 +344,24 @@ class AppsMarket extends React.Component {
                 height: 30,
             },
 
-            {
-                id: "19",
-                background: "#24292F",
-                dsKey: "is_ds_github_tracking_enabled",
-                premium: false,
-                brandName: "GitHub",
-                brandLogo: "/github.svg",
-                width: 116,
-                height: 34,
-            },
+
             {
                 id: "24",
                 background: null,
                 dsKey: "is_ds_retail_marketing_enabled",
+                connected: this.state.userServices["is_ds_retail_marketing_enabled"],
                 premium: false,
                 brandName: "Retail Marketing Dates",
                 brandLogo: "/retailMarketingDates.svg",
                 width: 218,
                 height: 26,
             },
-            {
-                id: "25",
-                background: "#253858",
-                dsKey: "is_ds_bitbucket_tracking_enabled",
-                premium: false,
-                brandName: "Bitbucket",
-                brandLogo: "/bitbucket.svg",
-                width: 142,
-                height: 40,
-            },
+
             {
                 id: "27",
                 background: null,
                 dsKey: "is_ds_holidays_enabled",
+                connected: this.state.userServices["is_ds_holidays_enabled"],
                 premium: false,
                 brandName: "Holidays",
                 brandLogo: "/holidays.svg",
@@ -410,6 +372,7 @@ class AppsMarket extends React.Component {
                 id: "28",
                 background: null,
                 dsKey: "is_ds_web_monitors_enabled",
+                connected: this.state.userServices["is_ds_web_monitors_enabled"],
                 premium: false,
                 brandName: "Website Monitoring",
                 brandLogo: "/websiteMonitoring.svg",
@@ -420,6 +383,7 @@ class AppsMarket extends React.Component {
                 id: "20",
                 background: null,
                 dsKey: "is_ds_shopify_annotation_enabled",
+                connected: this.state.userServices["is_ds_shopify_annotation_enabled"],
                 premium: false,
                 brandName: "Shopify",
                 brandLogo: "/shopify.svg",
@@ -666,7 +630,7 @@ class AppsMarket extends React.Component {
                                     <option>Sort by</option>
                                     <option value="brandName:asc">By Name</option>
                                     {/* <option value="brandName:desc">By Name: DESC</option> */}
-                                    <option value="enabled:asc">By Connected</option>
+                                    <option value="connected:desc">By Connected</option>
                                     {/* <option value="enabled:desc">By Not Connected</option> */}
                                 </Input>
                             </FormGroup>
@@ -791,7 +755,7 @@ class AppsMarket extends React.Component {
                                         item.background || "#e0e0e0",
                                 }}
                             >
-                                {this.state.userServices[item.dsKey] ? (
+                                {item.connected ? (
                                     <i className="active fa fa-check-circle"></i>
                                 ) : null}
                                 <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width} height={item.height} />
@@ -843,6 +807,17 @@ class AppsMarket extends React.Component {
                                     brandLogo: "/instagram.svg",
                                     width: 142,
                                     height: 32,
+                                },
+                                {
+                                    id: "09",
+                                    background: "#1DA1F2",
+                                    dsKey: "is_ds_twitter_tracking_enabled",
+                                    connected: this.state.userServices["is_ds_twitter_tracking_enabled"],
+                                    premium: false,
+                                    brandName: "Twitter",
+                                    brandLogo: "/twitter.svg",
+                                    width: 100,
+                                    height: 26,
                                 },
                                 {
                                     id: "29",
@@ -965,6 +940,28 @@ class AppsMarket extends React.Component {
                                     height: 28,
                                 },
                                 {
+                                    id: "25",
+                                    background: "#253858",
+                                    dsKey: "is_ds_bitbucket_tracking_enabled",
+                                    connected: this.state.userServices["is_ds_bitbucket_tracking_enabled"],
+                                    premium: false,
+                                    brandName: "Bitbucket",
+                                    brandLogo: "/bitbucket.svg",
+                                    width: 142,
+                                    height: 40,
+                                },
+                                {
+                                    id: "04",
+                                    background: null,
+                                    dsKey: "is_ds_weather_alerts_enabled",
+                                    connected: this.state.userServices["is_ds_weather_alerts_enabled"],
+                                    premium: false,
+                                    brandName: "Weather Alerts",
+                                    brandLogo: "/weatherAlerts.svg",
+                                    width: 160,
+                                    height: 56,
+                                },
+                                {
                                     id: "16",
                                     background: "#2EBD59",
                                     dsKey: "",
@@ -987,6 +984,28 @@ class AppsMarket extends React.Component {
                                     brandLogo: "/amazonPodcast.svg",
                                     width: 114,
                                     height: 30,
+                                },
+                                {
+                                    id: "19",
+                                    background: "#24292F",
+                                    dsKey: "is_ds_github_tracking_enabled",
+                                    connected: this.state.userServices["is_ds_github_tracking_enabled"],
+                                    premium: false,
+                                    brandName: "GitHub",
+                                    brandLogo: "/github.svg",
+                                    width: 116,
+                                    height: 34,
+                                },
+                                {
+                                    id: "03",
+                                    background: null,
+                                    dsKey: "is_ds_keyword_tracking_enabled",
+                                    connected: this.state.userServices["is_ds_keyword_tracking_enabled"],
+                                    premium: false,
+                                    brandName: "Rank Tracking SERP",
+                                    brandLogo: "/serp.svg",
+                                    width: 160,
+                                    height: 56,
                                 },
                             ].map((item, itemKey) => (
                                 <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color": item.background || "#e0e0e0", }}>
@@ -1684,25 +1703,41 @@ class AppsMarket extends React.Component {
                 (err) => {
                     this.setState({ isBusy: false, errors: err.response.data });
                     if (err.response.status == 402) {
-                        const accountNotLinkedHtml = '' +
-                            '<div class=""><img src="/images/increase-plan-limit.png" class="img-fluid"></div>';
-                        swal.fire({
-                            html: accountNotLinkedHtml,
-                            width: 1000,
-                            showCancelButton: true,
-                            showCloseButton: true,
-                            customClass: {
-                                popup: "themePlanAlertPopup",
-                                htmlContainer: "themePlanAlertPopupContent",
-                                closeButton: 'btn-closeplanAlertPopup',
-                            },
-                            cancelButtonClass: "btn-bookADemo",
-                            cancelButtonText: "Book a Demo",
-                            confirmButtonClass: "btn-subscribeNow",
-                            confirmButtonText: "Subscribe now",
-                        }).then(function (value) {
-                            if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                        });
+                        if(e.target.name === 'is_ds_google_alerts_enabled') {
+                            this.props.upgradePopup('news-alert')
+                        }
+
+                        if(e.target.name === 'is_ds_keyword_tracking_enabled') {
+                            this.props.upgradePopup('rank-tracking')
+                        }
+
+                        if(e.target.name === 'is_ds_weather_alerts_enabled' || e.target.name === 'is_ds_google_algorithm_updates_enabled') {
+                            this.props.upgradePopup('increase-limits')
+                        }
+
+                        if(e.target.name === 'is_ds_twitter_tracking_enabled') {
+                            this.props.upgradePopup('social-media')
+                        }
+
+                        if(e.target.name === 'is_ds_apple_podcast_annotation_enabled') {
+                            this.props.upgradePopup('podcast-trackers')
+                        }
+
+                        if(e.target.name === 'is_ds_github_tracking_enabled'  || e.target.name === 'is_ds_bitbucket_tracking_enabled') {
+                            this.props.upgradePopup('more-repositories')
+                        }
+
+                        if(e.target.name === 'is_ds_retail_marketing_enabled' || e.target.name === 'is_ds_holidays_enabled') {
+                            this.props.upgradePopup('more-annotations')
+                        }
+
+                        if(e.target.name === 'is_ds_web_monitors_enabled') {
+                            this.props.upgradePopup('website-monitoring-limit')
+                        }
+
+                        if(e.target.name === 'is_ds_shopify_annotation_enabled') {
+                            this.props.upgradePopup('more-annotations')
+                        }
                     }
                 }
             )
@@ -1973,29 +2008,44 @@ class AppsMarket extends React.Component {
                 );
             }
         } else {
-            const accountNotLinkedHtml =
-                "" +
-                '<div class="">' +
-                '<img src="/images/automation-upgrade-modal.png" class="img-fluid">' +
-                "</div>";
+            if(e.target.name === 'is_ds_keyword_tracking_enabled') {
+                this.props.upgradePopup('rank-tracking-access')
+            }
+            if(e.target.name === 'is_ds_google_alerts_enabled') {
+                this.props.upgradePopup('news-alert')
+            }
 
-            swal.fire({
-                html: accountNotLinkedHtml,
-                width: 1000,
-                showCancelButton: true,
-                showCloseButton: true,
-                customClass: {
-                    popup: "themePlanAlertPopup",
-                    htmlContainer: "themePlanAlertPopupContent",
-                    closeButton: 'btn-closeplanAlertPopup',
-                },
-                cancelButtonClass: "btn-bookADemo",
-                cancelButtonText: "Book a Demo",
-                confirmButtonClass: "btn-subscribeNow",
-                confirmButtonText: "Subscribe now",
-            }).then((value) => {
-                if (value.isConfirmed) window.location.href = '/settings/price-plans'
-            });
+            if(e.target.name === 'is_ds_keyword_tracking_enabled') {
+                this.props.upgradePopup('rank-tracking-access')
+            }
+
+            if(e.target.name === 'is_ds_weather_alerts_enabled' || e.target.name === 'is_ds_google_algorithm_updates_enabled') {
+                this.props.upgradePopup('integrations')
+            }
+
+            if(e.target.name === 'is_ds_twitter_tracking_enabled') {
+                this.props.upgradePopup('social-media')
+            }
+
+            if(e.target.name === 'is_ds_apple_podcast_annotation_enabled') {
+                this.props.upgradePopup('integrations')
+            }
+
+            if(e.target.name === 'is_ds_github_tracking_enabled'  || e.target.name === 'is_ds_bitbucket_tracking_enabled') {
+                this.props.upgradePopup('integrations')
+            }
+
+            if(e.target.name === 'is_ds_retail_marketing_enabled' || e.target.name === 'is_ds_holidays_enabled') {
+                this.props.upgradePopup('integrations')
+            }
+
+            if(e.target.name === 'is_ds_web_monitors_enabled') {
+                this.props.upgradePopup('website-monitoring-upgrade')
+            }
+
+            if(e.target.name === 'is_ds_shopify_annotation_enabled') {
+                this.props.upgradePopup('integrations')
+            }
         }
 
         if (
@@ -2061,42 +2111,41 @@ class AppsMarket extends React.Component {
                     this.setState({ isBusy: false, errors: err.response.data });
 
                     if (err.response.status === 422) {
-                        let imgSrc = "/images/new-api-modal.jpeg";
-                        switch (dataSource.code) {
-                            case "bitbucket_tracking":
-                            case "github_tracking":
-                                imgSrc = "/images/property-upgrade-modal.png";
-                                break;
-
-                            default:
-                                imgSrc = "/images/new-api-modal.jpeg";
-                                break;
+                        if(uds.ds_code === 'is_ds_google_alerts_enabled') {
+                            this.props.upgradePopup('news-alert')
                         }
-                        const accountNotLinkedHtml =
-                            "" +
-                            '<div class="">' +
-                            '<img src="' +
-                            imgSrc +
-                            '" class="img-fluid">' +
-                            "</div>";
 
-                        swal.fire({
-                            html: accountNotLinkedHtml,
-                            width: 1000,
-                            showCancelButton: true,
-                            showCloseButton: true,
-                            customClass: {
-                                popup: "themePlanAlertPopup",
-                                htmlContainer: "themePlanAlertPopupContent",
-                                closeButton: 'btn-closeplanAlertPopup',
-                            },
-                            cancelButtonClass: "btn-bookADemo",
-                            cancelButtonText: "Book a Demo",
-                            confirmButtonClass: "btn-subscribeNow",
-                            confirmButtonText: "Subscribe now",
-                        }).then((value) => {
-                            if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                        });
+                        if(uds.ds_code === 'is_ds_keyword_tracking_enabled') {
+                            this.props.upgradePopup('rank-tracking')
+                        }
+
+                        if(uds.ds_code === 'is_ds_weather_alerts_enabled' || uds.ds_code === 'is_ds_google_algorithm_updates_enabled') {
+                            this.props.upgradePopup('increase-limits')
+                        }
+
+                        if(uds.ds_code === 'is_ds_twitter_tracking_enabled') {
+                            this.props.upgradePopup('social-media')
+                        }
+
+                        if(uds.ds_code === 'is_ds_apple_podcast_annotation_enabled') {
+                            this.props.upgradePopup('podcast-trackers')
+                        }
+
+                        if(uds.ds_code === 'is_ds_github_tracking_enabled'  || uds.ds_code === 'is_ds_bitbucket_tracking_enabled') {
+                            this.props.upgradePopup('more-repositories')
+                        }
+
+                        if(uds.ds_code === 'is_ds_retail_marketing_enabled' || uds.ds_code === 'is_ds_holidays_enabled') {
+                            this.props.upgradePopup('more-annotations')
+                        }
+
+                        if(uds.ds_code === 'is_ds_web_monitors_enabled') {
+                            this.props.upgradePopup('website-monitoring-limit')
+                        }
+
+                        if(uds.ds_code === 'is_ds_shopify_annotation_enabled') {
+                            this.props.upgradePopup('more-annotations')
+                        }
                     }
                 }
             )

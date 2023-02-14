@@ -116,30 +116,7 @@ export default class IndexUsers extends Component {
                                             </a>
                                         ) : (
                                             <button onClick={() => {
-                                                const accountNotLinkedHtml =
-                                                    "" +
-                                                    '<div class="">' +
-                                                    '<img src="/images/banners/user_limit_banner.png" class="img-fluid">' +
-                                                    "</div>";
-
-                                                swal.fire({
-                                                    html: accountNotLinkedHtml,
-                                                    width: 1000,
-                                                    showCancelButton: true,
-                                                    showCloseButton: true,
-                                                    customClass: {
-                                                        popup: "themePlanAlertPopup",
-                                                        htmlContainer: "themePlanAlertPopupContent",
-                                                        closeButton: 'btn-closeplanAlertPopup',
-                                                    },
-                                                    cancelButtonClass: "btn-bookADemo",
-                                                    cancelButtonText: "Book a Demo",
-                                                    confirmButtonClass: "btn-subscribeNow",
-                                                    confirmButtonText: "Subscribe now",
-                                                }).then((value) => {
-                                                    if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                                                });
-
+                                                this.props.upgradePopup('more-users');
                                             }}
                                                 className="btn-adduser d-flex align-items-center justify-content-center"
                                             >
@@ -239,29 +216,7 @@ export default class IndexUsers extends Component {
                                             ) : (
                                                 <p className="mb-0" onClick={(ev) => {
                                                     ev.stopPropagation();
-                                                    const accountNotLinkedHtml =
-                                                        "" +
-                                                        '<div class="">' +
-                                                        '<img src="/images/banners/user_limit_banner.png" class="img-fluid">' +
-                                                        "</div>";
-
-                                                    swal.fire({
-                                                        html: accountNotLinkedHtml,
-                                                        width: 1000,
-                                                        showCancelButton: true,
-                                                        showCloseButton: true,
-                                                        customClass: {
-                                                            popup: "themePlanAlertPopup",
-                                                            htmlContainer: "themePlanAlertPopupContent",
-                                                            closeButton: 'btn-closeplanAlertPopup',
-                                                        },
-                                                        cancelButtonClass: "btn-bookADemo",
-                                                        cancelButtonText: "Book a Demo",
-                                                        confirmButtonClass: "btn-subscribeNow",
-                                                        confirmButtonText: "Subscribe now",
-                                                    }).then((value) => {
-                                                        if (value.isConfirmed) window.location.href = '/settings/price-plans'
-                                                    });
+                                                    this.props.upgradePopup('more-users');
 
                                                 }}
                                                 >

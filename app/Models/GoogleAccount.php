@@ -61,16 +61,17 @@ class GoogleAccount extends Model
 
     public function hasSearchConsoleScope(): bool
     {
-        return strpos($this->scopes, self::SCOPE_AUTH_WEBMASTERS_READONLY) && strpos($this->scopes, self::SCOPE_AUTH_WEBMASTERS);
+        return array_search(self::SCOPE_AUTH_WEBMASTERS_READONLY, json_decode($this->scopes)) !== false
+            && array_search(self::SCOPE_AUTH_WEBMASTERS, json_decode($this->scopes)) !== false;
     }
 
     public function hasGoogleAnalyticsScope(): bool
     {
-        return strpos($this->scopes, self::SCOPE_AUTH_ANALYTICS_READONLY);
+        return array_search(self::SCOPE_AUTH_ANALYTICS_READONLY, json_decode($this->scopes)) !== false;
     }
 
     public function hasGoogleAdsScope(): bool
     {
-        return strpos($this->scopes, self::SCOPE_AUTH_ADWORDS);
+        return array_search(self::SCOPE_AUTH_ADWORDS, json_decode($this->scopes)) !== false;
     }
 }
