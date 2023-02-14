@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Requests\GoogleAccountRequest;
+use App\Models\GoogleAnalyticsProperty;
+use App\Models\GoogleSearchConsoleSite;
 use App\Models\PricePlan;
 use App\Models\User;
 use App\Services\GoogleAPIService;
@@ -96,6 +98,14 @@ class GoogleAccountController extends Controller
     {
         (new GoogleAPIService)->revokeAccess($googleAccount);
 
+        GoogleAnalyticsProperty::destroy(GoogleAnalyticsProperty::where('google_account_id', $googleAccount->id)->get());
+        $googleSearchConsoleSites = GoogleSearchConsoleSite::where('google_account_id', $googleAccount->id)->get();
+        foreach ($googleSearchConsoleSites as $gSCS) {
+            GoogleAnalyticsProperty::where('google_search_console_site_id', $gSCS->id)->update([
+                'google_search_console_site_id' => null
+            ]);
+            $gSCS->delete();
+        }
         return ['success' => $googleAccount->delete()];
     }
 }

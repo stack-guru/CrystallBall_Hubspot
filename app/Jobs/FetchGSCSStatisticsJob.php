@@ -44,10 +44,8 @@ class FetchGSCSStatisticsJob implements ShouldQueue, ShouldBeUnique
     {
         $gSCS = new GoogleSearchConsoleService;
 
-        print ("Fetching satistics for " . $this->googleSearchConsoleSite->site_url . " site with permission level " . $this->googleSearchConsoleSite->permission_level . " under account " . $this->googleSearchConsoleSite->googleAccount->account_id) . "\n";
         $dataRows = $gSCS->getGSCStatistics($this->googleSearchConsoleSite->googleAccount, $this->googleSearchConsoleSite, $this->startDate, $this->endDate);
         if ($dataRows !== false) {
-            print (count($dataRows) . " rows fetched.") . "\n";
 
             // As we are dealing with table with +10000000 records, we need to delete data in chunks on 5000
             do {
@@ -99,7 +97,6 @@ class FetchGSCSStatisticsJob implements ShouldQueue, ShouldBeUnique
 
         $dataRows = $gSCS->getGSCSearchAppearance($this->googleSearchConsoleSite->googleAccount, $this->googleSearchConsoleSite, $this->endDate);
         if ($dataRows !== false) {
-            print (count($dataRows) . " rows fetched.") . "\n";
             foreach ($dataRows as  $dataRow) {
                 $gSCStatistics = new GoogleSearchConsoleStatistics;
                 $gSCStatistics->statistics_date = $this->startDate;

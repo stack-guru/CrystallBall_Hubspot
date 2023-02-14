@@ -3741,12 +3741,6 @@ body {
     left: 15px !important; */
     left: calc(50% - 7px) !important;
 }
-
-
-
-
-
-
 .modal-createAnnotation { padding: 0 10px 10px; }
 .modal-createUser .themeNewInputStyle .css-yk16xz-control,
 .modal-createUser .themeNewInputStyle .css-1pahdxg-control,
@@ -3805,27 +3799,18 @@ body {
 .themeNewInputStyle .css-2613qy-menu span,
 .themeNewInputStyle ul,
 .themeNewInputStyle ul li{margin: 0; padding: 0;} */
-
-
 .ga-analytics-property-selected h4 {
     font-size: 14px;
     margin-top: 16px;
     font-family: 'Source Sans Pro', Helvetica Neue, Arial, sans-serif;
     font-weight: 600;
 }
-
-.ga-analytics-property-selected h4 > span {
-    font-weight: 400;
-}
+.ga-analytics-property-selected h4 > span { font-weight: 400; }
 .ga-analytics-property-selected .ga-selected-label {
     font-size: 14px;
     line-height: 18px;
 }
-
-.keywordTags .mini-preview-anchor .mini-preview-wrapper {
-    left: -20px !important;
-}
-
+.keywordTags .mini-preview-anchor .mini-preview-wrapper { left: -20px !important; }
 .mini-preview-anchor .mini-preview-wrapper {
     bottom: 20px !important;
     top: auto !important;
@@ -3839,6 +3824,202 @@ body {
     font-weight: 600;
     line-height: 1.25;
 }
+.confirmConnectionTo {
+    overflow: hidden;
+    max-width: 1000px;
+    position: relative;
+    border-radius: 2rem;
+    flex-direction: column;
+    padding: 60px 42px 70px;
+    width: 100% !important;
+    display: flex !important;
+    box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.22);
+    background: #fff url('/images/bg-upgradePopup2x.jpeg') no-repeat top left;
+}
+.confirmConnectionToContent {
+    margin: 0 auto;
+    max-width: 56%;
+}
+.confirmConnectionToContent p {
+    margin: 0;
+    color: #666;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23px;
+    text-align: center;
+}
+.confirmConnectionToContent h2{
+    color: #333;
+    font-size: 28px;
+    line-height: 35px;
+    text-align: center;
+    margin: 0 0 1.5rem;
+    text-align: center;
+}
+.confirmConnectionTo .swal2-actions{ margin: 2rem 0 0; }
+.contentHolder .form-check-label{
+    color: #666;
+    display: flex;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 23px;
+    align-items: center;
+}
+.confirmConnectionTo .swal2-icon {
+    border: 0;
+    width: auto;
+    height: auto;
+    margin: 0 auto 2rem;
+    align-items: center;
+    justify-content: center;
+    display: flex !important;
+    background-color: transparent;
+}
+.confirmConnectionTo .swal2-actions .swal2-confirm {
+    color: #fff;
+    width: 245px;
+    height: 47px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: right;
+    flex-direction: row;
+    align-items: center;
+    border: 0 !important;
+    display: flex !important;
+    padding: 10px 24px !important;
+    border-radius: 100px !important;
+    background-image: none !important;
+    box-shadow: 0px 4px 12px rgba(0, 102, 213, 0.1);
+    background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%) !important;
+
+
+}
+.confirmConnectionTo .swal2-actions:not(.swal2-loading) .swal2-styled:hover,
+.confirmConnectionTo .swal2-actions .swal2-confirm:confirm,
+.confirmConnectionTo .swal2-actions .swal2-confirm:focus,
+.confirmConnectionTo .swal2-actions .swal2-confirm:hover {
+    color: #fff;
+    background-image: none !important;
+    background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%) !important;
+}
+.gaUpgradePopup {
+    height: auto;
+    min-height: auto;
+    overflow: hidden;
+    max-width: 1000px;
+    padding: 60px 42px;
+    position: relative;
+    border-radius: 2rem;
+    box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.22);
+    background: #fff url('/images/bg-upgradePopup2x.jpeg') no-repeat top left;
+}
+.btn-closeUpgradePopup {
+    top: 20px;
+    border: 0;
+    padding: 0;
+    right: 20px;
+    background: none;
+    position: absolute;
+}
+.gaUpgradePopup .modal-content {
+    border: 0;
+    border-radius: 0;
+    position: initial;
+    background: transparent;
+}
+.gaUpgradePopup .modal-content ga-upgrade-popup {
+    display: flex;
+    align-items: center;
+}
+.gaUpgradePopupContent {
+    flex-grow: 1;
+    padding-left: 1.5rem;
+}
+.gaUpgradePopupContent h1 {
+    color: #333;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 35px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.gaUpgradePopupContent h1 span {
+    font-weight: 600;
+    background: linear-gradient(90deg, #F7751E 39.06%, #F2480C 100%);
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.gaUpgradePopupContent p {
+    color: #666;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0 0 42px;
+    line-height: 23px;
+    text-align: center;
+}
+.keyPoints ul {
+    margin: 0;
+    color: #333;
+    font-size: 16px;
+    padding: 0 30px;
+    font-weight: 400;
+    list-style: none;
+    line-height: 20px;
+}
+.keyPoints ul li {
+    display: flex;
+    align-items: center;
+    padding-bottom: 1rem;
+    list-style-type: none;
+    justify-content: start;
+}
+.keyPoints ul li:last-child { padding-bottom: 0; }
+.keyPoints ul li span:first-child {margin: 0 10px 0 0;}
+.btns-upgradePopup {
+    display: flex;
+    padding-top: 42px;
+    justify-content: space-between;
+}
+.btn-bookAdemo {
+    color: #666;
+    width: 100%;
+    height: 43px;
+    font-size: 18px;
+    max-width: 220px;
+    font-weight: 600;
+    line-height: 18px;
+    text-align: center;
+    padding: 10px 24px;
+    background: #FFFFFF;
+    border-radius: 100px;
+    border: 2px solid #a6a6a6;
+}
+.btn-subscribeNow {
+    gap: 8px;
+    border: 0;
+    color: #fff;
+    width: 100%;
+    height: 43px;
+    font-size: 18px;
+    max-width: 220px;
+    font-weight: 600;
+    line-height: 23px;
+    padding: 10px 24px;
+    text-align: center;
+    border-radius: 100px;
+    box-shadow: 0px 4px 12px rgba(255, 120, 36, 0.2);
+    background: linear-gradient(90deg, #FF8534 33.33%, #FF630C 100%);
+}
+
+
+
+
+
+
+
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar { width: 110px; }
     .is-collapsed .sidebar .sidebar-inner .sidebar-menu>li>a .title {visibility: hidden;}
