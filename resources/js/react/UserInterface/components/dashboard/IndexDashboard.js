@@ -105,7 +105,7 @@ export default class IndexDashboard extends Component {
 
     render() {
 
-        if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
+        // if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
 
         let searchConsoleData = {};
         this.state.searchConsoleAnnotations.forEach(a => { searchConsoleData[a.show_at] = a; });
@@ -163,13 +163,13 @@ export default class IndexDashboard extends Component {
                                             <span className='w-100 d-flex justify-content-start'>
                                                 {
                                                     (gAP.google_analytics_account) ?
-                                                    gAP.google_analytics_account.name :
-                                                     ''
+                                                        gAP.google_analytics_account.name :
+                                                        ''
                                                 }
                                                 {
                                                     gAP.is_in_use ?
-                                                    <em className='tag-inuse'><i className='fa fa-check'></i><i>In use</i></em> :
-                                                    null
+                                                        <em className='tag-inuse'><i className='fa fa-check'></i><i>In use</i></em> :
+                                                        null
                                                 }
                                             </span>
                                         </div>
@@ -415,7 +415,7 @@ export default class IndexDashboard extends Component {
         </React.Fragment>;
     }
 
-    sort (e) {
+    sort(e) {
         this.setState({
             sortBy: e.target.value,
         }, this.getGAProperties);
