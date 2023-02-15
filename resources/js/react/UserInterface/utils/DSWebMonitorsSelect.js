@@ -126,6 +126,11 @@ export default class DSWebMonitorsSelect extends React.Component {
                             isBusy: false,
                             errors: err.response.data,
                         });
+
+                        if (err.response.status === 422) {
+                            this.props.upgradePopup('website-monitoring-limit')
+                        }
+
                     }
                 )
                 .catch((err) => {
@@ -318,7 +323,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                                             </a>
                                             &nbsp;
                                             {wM.name}
-                                            
+
                                         </button>
 
                                         <Popover

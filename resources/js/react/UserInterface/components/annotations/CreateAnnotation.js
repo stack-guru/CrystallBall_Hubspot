@@ -55,7 +55,7 @@ export default class CreateAnnotation extends React.Component {
                                 // unlimited
                             } else {
                                 if (response.data.user_total_annotations >= this.state.user.price_plan.annotations_count) {
-                                this.props.upgradePopup('more-annotations')
+                                    this.props.upgradePopup('more-annotations')
                                 }
                             }
 
@@ -135,6 +135,7 @@ export default class CreateAnnotation extends React.Component {
     submitHandler(e) {
         e.preventDefault();
 
+        this.props.togglePopup('');
         if (this.validate() && !this.state.isBusy) {
             this.setState({ isBusy: true });
             let fd = new FormData;
@@ -153,7 +154,6 @@ export default class CreateAnnotation extends React.Component {
                         title: "Annotation added."
                     });
                     this.setState({ redirectTo: "/annotation" });
-                    this.props.togglePopup('');
                     // this.setDefaultState();
                     // this.loadCategoriesList();
                 }, (err) => {

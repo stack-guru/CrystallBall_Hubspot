@@ -35,7 +35,10 @@ class GoogleAnalyticsProperty extends Model
 
         'color_hex_code',
 
-        'google_search_console_site_id'
+        'google_search_console_site_id',
+        'google_analytics_account_id',
+        'google_account_id',
+        'user_id',
     ];
 
     public function scopeOfCurrentUser($query)

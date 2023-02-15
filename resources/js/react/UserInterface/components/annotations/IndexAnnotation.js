@@ -605,7 +605,7 @@ class IndexAnnotations extends React.Component {
                                             <div className="flex-grow-1 d-flex justify-content-between align-items-center">
                                                 <ul className="d-flex list-unstyled">
                                                     <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
-                                                    {anno.added_by ? <li><span>{anno.added_by}</span></li> : null}
+                                                    <li><span>{anno.added_by === 'manual' ? this.props.user.name : anno.added_by || this.props.user.name}</span></li>
                                                     <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
                                                     {/* <li>
                                                     <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
