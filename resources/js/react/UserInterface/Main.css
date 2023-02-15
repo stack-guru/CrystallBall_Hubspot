@@ -4728,9 +4728,57 @@ body {
     align-items: center;
     text-decoration-line: underline;
 }
-.btn-addAnother i {
-    margin: 0 8px 0 0;
+.btn-addAnother i {margin: 0 8px 0 0;}
+.couponBox {
+    display: flex;
+    padding: 2rem 0 0;
 }
+.couponBox .input-group-text{
+    border-right: 0;
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+.couponBox .form-control{
+    height: 38px;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+}
+.couponBox .form-control:focus {
+    box-shadow: none;
+    border-color: #bdbdbd;
+}
+.couponBox .btn-apply{
+    border: 0;
+    width: 100px;
+    color: #fff;
+    height: 38px;
+    font-weight: 600;
+    line-height: 23px;
+    font-size: .875rem;
+    text-align: center;
+    padding: 4px 12px;
+    border-radius: 0 100px 100px 0;
+    box-shadow: 0px 4px 12px rgb(40 126 252 / 16%);
+    background: linear-gradient(90deg, #3d8bfd 39.06%, #1273ff 100%);
+}
+.themeNewInputStyle .themeNewInputStyle.changePhoneNumber {
+    margin-bottom: 0;
+    border-color: #bdbdbd;
+}
+.themeNewInputStyle .themeNewInputStyle.changePhoneNumber .form-control {
+    border-radius: 8px;
+    height: 38px !important;
+}
+.themeNewInputStyle .themeNewInputStyle.changePhoneNumber.react-tel-input .flag-dropdown,
+.themeNewInputStyle .themeNewInputStyle.changePhoneNumber.react-tel-input .flag-dropdown .selected-flag {border-radius: 8px 0 0 8px;}
+
+
+
+
+
+
+
+
 
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
