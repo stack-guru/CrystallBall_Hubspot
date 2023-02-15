@@ -1,4 +1,4 @@
-class TagComponent extends HTMLElement {
+class TagComponentGAPDUP extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `<figure class="m-0"><img src="${this.getAttribute(
             "bannerImg"
@@ -77,4 +77,4 @@ class TagComponent extends HTMLElement {
     }
 }
 
-customElements.define(`ga-plan-downgrade-upgrade-popup`, TagComponent);
+customElements.define(`ga-plan-downgrade-upgrade-popup`, TagComponentGAPDUP);

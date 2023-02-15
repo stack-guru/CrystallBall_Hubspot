@@ -39,6 +39,34 @@ export default class IndexPricingPlans extends React.Component {
                 }, 1 * 1000);
             }
         }
+
+        // swal.fire({
+        //     html: `<ga-plan-downgrade-upgrade-popup heading="<h1>Upgrade today to add more  <span>Ads Trackers</span></h1>"
+        //     subHeading=${`<p>and get access to all amazing features</p>`}
+        //     bannerImg="/images/trackers-ads.svg"></ga-plan-downgrade-upgrade-popup>`,
+        //     width: 600,
+        //     showCancelButton: true,
+        //     showCloseButton: false,
+        //     showConfirmButton: false,
+        //     customClass: {
+        //         popup: "gaErrorPopup",
+        //     },
+        //     cancelButtonClass: "btn-close",
+        //     cancelButtonText: "Close",
+        // })
+
+        // swal.fire({
+        //     html: `<ga-plan-downgrade-upgrade-popup heading="<h1>Error</h1>"
+        //     subHeading="<p>Invalid method tried for a route. See console for more information.</p>"
+        //     bannerImg="/images/error-popup-image.svg"></ga-plan-downgrade-upgrade-popup>`,
+        //     width: 600,
+        //     showCancelButton: false,
+        //     showCloseButton: false,
+        //     showConfirmButton: false,
+        //     customClass: {
+        //         popup: "gaUpgradePopup",
+        //     },
+        // })
     }
 
     changePricePlan(pricePlan) {

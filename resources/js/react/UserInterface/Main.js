@@ -370,9 +370,7 @@ class Main extends React.Component {
                     >
                     </ga-upgrade-popup> : null}
 
-                    {/* <ga-plan-downgrade-upgrade-popup heading={`<h1>Upgrade today to add more  <span>Ads Trackers</span></h1>`}
-                        subHeading={`<p>and get access to all amazing features</p>`}
-                        bannerImg="/images/trackers-ads.svg"></ga-plan-downgrade-upgrade-popup> */}
+
 
                 </Modal>
             </React.Fragment>

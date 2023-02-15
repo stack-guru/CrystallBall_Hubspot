@@ -1,4 +1,4 @@
-class TagComponent extends HTMLElement {
+class TagComponentGAEP extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `<figure class="m-0"><img src="${this.getAttribute(
             "bannerImg"
@@ -11,4 +11,4 @@ class TagComponent extends HTMLElement {
     }
 }
 
-customElements.define(`ga-error-popup`, TagComponent);
+customElements.define(`ga-error-popup`, TagComponentGAEP);
