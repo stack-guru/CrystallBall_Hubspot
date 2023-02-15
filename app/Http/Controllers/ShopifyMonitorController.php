@@ -38,7 +38,7 @@ class ShopifyMonitorController extends Controller
         $shopifyCount = ShopifyMonitor::ofCurrentUser()->count();
 
         if ($pricePlan->shopify_monitor_count <= $shopifyCount) {
-            return response()->json(['message' => 'Maximum number of monitors limit reached'], 402);
+            return response()->json(['message' => 'Maximum number of monitors limit reached'], 422);
         }
 
         if (ShopifyMonitor::where('url', $request->url)->ofCurrentUser()->count()) {
