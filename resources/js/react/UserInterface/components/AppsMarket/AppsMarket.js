@@ -2111,39 +2111,39 @@ class AppsMarket extends React.Component {
                     this.setState({ isBusy: false, errors: err.response.data });
 
                     if (err.response.status === 422) {
-                        if(uds.ds_code === 'is_ds_google_alerts_enabled') {
+                        if(this.state.dsKey === 'is_ds_google_alerts_enabled') {
                             this.props.upgradePopup('news-alert')
                         }
 
-                        if(uds.ds_code === 'is_ds_keyword_tracking_enabled') {
+                        if(this.state.dsKey === 'is_ds_keyword_tracking_enabled') {
                             this.props.upgradePopup('rank-tracking')
                         }
 
-                        if(uds.ds_code === 'is_ds_weather_alerts_enabled' || uds.ds_code === 'is_ds_google_algorithm_updates_enabled') {
+                        if(this.state.dsKey === 'is_ds_weather_alerts_enabled' || this.state.dsKey === 'is_ds_google_algorithm_updates_enabled') {
                             this.props.upgradePopup('increase-limits')
                         }
 
-                        if(uds.ds_code === 'is_ds_twitter_tracking_enabled') {
+                        if(this.state.dsKey === 'is_ds_twitter_tracking_enabled') {
                             this.props.upgradePopup('social-media')
                         }
 
-                        if(uds.ds_code === 'is_ds_apple_podcast_annotation_enabled') {
+                        if(this.state.dsKey === 'is_ds_apple_podcast_annotation_enabled') {
                             this.props.upgradePopup('podcast-trackers')
                         }
 
-                        if(uds.ds_code === 'is_ds_github_tracking_enabled'  || uds.ds_code === 'is_ds_bitbucket_tracking_enabled') {
+                        if(this.state.dsKey === 'is_ds_github_tracking_enabled'  || this.state.dsKey === 'is_ds_bitbucket_tracking_enabled') {
                             this.props.upgradePopup('more-repositories')
                         }
 
-                        if(uds.ds_code === 'is_ds_retail_marketing_enabled' || uds.ds_code === 'is_ds_holidays_enabled') {
+                        if(this.state.dsKey === 'is_ds_retail_marketing_enabled' || this.state.dsKey === 'is_ds_holidays_enabled') {
                             this.props.upgradePopup('more-annotations')
                         }
 
-                        if(uds.ds_code === 'is_ds_web_monitors_enabled') {
+                        if(this.state.dsKey === 'is_ds_web_monitors_enabled') {
                             this.props.upgradePopup('website-monitoring-limit')
                         }
 
-                        if(uds.ds_code === 'is_ds_shopify_annotation_enabled') {
+                        if(this.state.dsKey === 'is_ds_shopify_annotation_enabled') {
                             this.props.upgradePopup('more-annotations')
                         }
                     }

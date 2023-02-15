@@ -232,6 +232,7 @@ class Main extends React.Component {
                                 <CustomPricePlan upgradePopup={(popupType) => this.setState({showUpgradePopup: true, upgradePopupType: popupType})} routeParams={routeParams} currentPricePlan={this.state.user.price_plan} user={this.state.user} />}
                             ></Route>
                         </Switch>
+                        {/* <CreatePayment upgradePopup={(popupType) => this.setState({showUpgradePopup: true, upgradePopupType: popupType})} user={this.state.user} /> */}
                     </main>
                     <Footer />
                 </div>

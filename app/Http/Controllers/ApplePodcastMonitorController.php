@@ -38,7 +38,7 @@ class ApplePodcastMonitorController extends Controller
         $applePodcastsCount = ApplePodcastMonitor::ofCurrentUser()->count();
 
         if ($pricePlan->apple_podcast_monitor_count <= $applePodcastsCount) {
-            return response()->json(['message' => 'Maximum number of monitors limit reached'], 402);
+            return response()->json(['message' => 'Maximum number of monitors limit reached'], 422);
         }
 
         if (ApplePodcastMonitor::where('url', $request->url)->ofCurrentUser()->count()) {
