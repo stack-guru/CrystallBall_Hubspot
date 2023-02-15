@@ -56,10 +56,10 @@ export default class IndexPricingPlans extends React.Component {
         // })
 
         // swal.fire({
-        //     html: `<ga-plan-downgrade-upgrade-popup heading="<h1>Error</h1>"
-        //     subHeading="<p>Invalid method tried for a route. See console for more information.</p>"
-        //     bannerImg="/images/error-popup-image.svg"></ga-plan-downgrade-upgrade-popup>`,
-        //     width: 600,
+        //     html: `<ga-plan-downgrade-upgrade-popup heading="<h1 class='color-blue'>Congratulations!</h1>"
+        //     subHeading="<p>Your account has been upgraded to <span>Pro</span>.</p>"
+        //     bannerImg="/images/upgrade-congrats.svg"></ga-plan-downgrade-upgrade-popup>`,
+        //     width: 1000,
         //     showCancelButton: false,
         //     showCloseButton: false,
         //     showConfirmButton: false,

@@ -112,18 +112,21 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             return ''
         }
 
+        let finalSelectedProperty = []
         if (this.props.multiple) {
             const selectedVal = sOption;
-            this.setState({ selectedProperties: [...this.state.selectedProperties, ...selectedVal.map(itm => ({ ...itm, value: itm.value, label: itm.labelText }))] })
+            finalSelectedProperty = [...this.state.selectedProperties, ...selectedVal.map(itm => ({ ...itm, value: itm.value, label: itm.labelText }))];
+            this.setState({ selectedProperties:  finalSelectedProperty })
         } else {
             const selectedVal = sOption[0];
-            this.setState({ selectedProperties: [{ ...selectedVal, value: selectedVal.value, label: selectedVal.labelText, wasLastDataFetchingSuccessful: true }] })
+            finalSelectedProperty = [{ ...selectedVal, value: selectedVal.value, label: selectedVal.labelText, wasLastDataFetchingSuccessful: true }]
+            this.setState({ selectedProperties:  finalSelectedProperty })
         }
 
         if (
             (this.props.currentPricePlan.google_analytics_property_count < (
                 this.state.allProperties.filter(sO => sO.isInUse).length
-                + this.state.selectedProperties.filter(sO => !sO.isInUse).length)
+                + finalSelectedProperty.filter(sO => !sO.isInUse).length)
             )
             && (this.props.currentPricePlan.google_analytics_property_count !== 0)
         ) {
@@ -134,7 +137,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 this.props.onChangeCallback({
                     target: {
                         name: this.props.name,
-                        value: this.state.selectedProperties.map(sO => sO.value),
+                        value: finalSelectedProperty.map(sO => sO.value),
                         wasLastDataFetchingSuccessful: true
                     }
                 });
@@ -144,14 +147,14 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 this.props.onChangeCallback({
                     target: {
                         name: this.props.name,
-                        value: this.state.selectedProperties[0].value,
+                        value: finalSelectedProperty[0].value,
                         wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful
                     }
                 });
             }
 
             if (this.props.onChangeCallback2) {
-                this.props.onChangeCallback2(this.state.selectedProperties);
+                this.props.onChangeCallback2(finalSelectedProperty);
             }
         }
     }

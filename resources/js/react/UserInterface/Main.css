@@ -4773,7 +4773,13 @@ body {
 .themeNewInputStyle .themeNewInputStyle.changePhoneNumber.react-tel-input .flag-dropdown .selected-flag {border-radius: 8px 0 0 8px;}
 
 
+.color-premium {
+    color: #F7751E !important;
+}
 
+.color-blue {
+    color: #096DB7 !important;
+}
 
 
 
