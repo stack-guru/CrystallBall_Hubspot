@@ -6,6 +6,7 @@ import HttpClient from './HttpClient'
 import Select from 'react-select';
 import GooglePermissionPopup from './GooglePermissionPopup';
 import { Modal, Popover, PopoverBody } from 'reactstrap';
+import { uniqBy } from 'lodash';
 
 export default class GoogleAnalyticsPropertySelect extends Component {
 
@@ -73,7 +74,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             }
 
             if (this.props.onChangeCallback2) {
-                this.props.onChangeCallback2([{ value: "", label: "All Properties" }]);
+                this.props.onChangeCallback2([]);
             }
         }
     }
@@ -115,10 +116,10 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         let finalSelectedProperty = []
         if (this.props.multiple) {
             const selectedVal = sOption;
-            finalSelectedProperty = [...this.state.selectedProperties, ...selectedVal.map(itm => ({ ...itm, value: itm.value, label: itm.labelText }))];
+            finalSelectedProperty = uniqBy([...this.state.selectedProperties, ...selectedVal.map(itm => ({ ...itm, value: itm.value, label: itm.labelText }))], 'value');
             this.setState({ selectedProperties:  finalSelectedProperty })
         } else {
-            const selectedVal = sOption[0];
+            const selectedVal = sOption;
             finalSelectedProperty = [{ ...selectedVal, value: selectedVal.value, label: selectedVal.labelText, wasLastDataFetchingSuccessful: true }]
             this.setState({ selectedProperties:  finalSelectedProperty })
         }
@@ -188,7 +189,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                             name={this.props.name}
                             disabled={this.props.disabled}
                             // value={this.state.aProperties}
-                            value={[]}
+                            value={this.props.multiple ? [] : this.state.selectedProperties }
                             id={this.props.id}
                             isMulti={this.props.multiple}
                             isClearable={this.props.isClearable}
@@ -274,10 +275,10 @@ export default class GoogleAnalyticsPropertySelect extends Component {
 
 
                     <div className='ga-analytics-property-selected'>
-                        {this.state.selectedProperties.length ? <h4>
+                        {this.state.selectedProperties.length && this.props.multiple ? <h4>
                             Selected properties: <span>(Click to remove)</span>
                         </h4> : null}
-                        {this.state.selectedProperties.length ? <div className="d-flex keywordTags mt-3">
+                        {this.state.selectedProperties.length && this.props.multiple ? <div className="d-flex keywordTags mt-3">
                             {this.state.selectedProperties.map(itm => {
                                 return (<>
                                     <button
