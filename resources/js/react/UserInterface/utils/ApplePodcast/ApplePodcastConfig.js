@@ -89,7 +89,7 @@ const ApplePodcastConfig = (props) => {
 
     const addAnnotation = async (formData) => {
         if (props.limitReached) {
-            this.props.upgradePopup('podcast-trackers')
+            props.upgradePopup('podcast-trackers')
         } else {
             Toast.fire({
                 icon: 'info',
