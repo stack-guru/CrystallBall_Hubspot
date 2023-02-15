@@ -1942,7 +1942,7 @@ body {
 .supportPageHead {padding-bottom: 18px;}
 .supportPageHead h2{margin-bottom: 1rem;}
 .alert {
-    height: 52px;
+    min-height: 52px;
     padding: 16px;
     display: flex;
     font-size: 15px;
