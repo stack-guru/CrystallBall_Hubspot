@@ -204,8 +204,8 @@ export default class UploadAnnotation extends React.Component {
                         </div>
 
                         <div className="btns-csvUpload d-flex justify-content-center">
-                            <Button className='btn-cancel'>Cancel</Button>
-                            <Button className='btn-theme'>Save</Button>
+                            <Button className='btn-cancel' onClick={() => this.props.togglePopup('')}>Cancel</Button>
+                            <Button type='submit' className='btn-theme'>Save</Button>
                             {/* <a href="/csv/upload_sample.csv" target="_blank" download>Download sample CSV file</a>
                             <button type="submit" className="btn gaa-btn-primary btn-fab btn-round"><i className="fa fa-upload mr-3"></i>Upload</button> */}
                         </div>
