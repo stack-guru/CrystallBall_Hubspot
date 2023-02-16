@@ -27,7 +27,7 @@ export default class DiscountTopNotice extends Component {
         const secondsDiff = moment(this.state.offerExpiringTime).subtract(hoursDiff, 'hours').subtract(minutesDiff, 'minutes').diff(moment(), 'seconds');
 
         return (
-            <TopNoticeBar show={true} backgroundColor="linear-gradient(#002e60, #3093ff)"
+            <TopNoticeBar show={true} backgroundColor="linear-gradient(90deg, #FF8534 33.33%, #FF630C 100%)"
                 content={<p className="text-white" style={{ marginBottom: '0px' }}>50% off for next 48 hours.
                     {hoursDiff}:
                     {minutesDiff}:

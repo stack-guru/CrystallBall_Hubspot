@@ -11,7 +11,7 @@ export default function SiteRenamedTopNotice(props) {
         </p> : null;
 
     return (
-        <TopNoticeBar show={props.show} backgroundColor="linear-gradient(#0074E7, #0074E7)"
+        <TopNoticeBar show={props.show} backgroundColor="#096DB7"
             content={
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     { gannotations() } {" "}
