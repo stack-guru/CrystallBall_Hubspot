@@ -26,7 +26,7 @@ export default class UserRegistrationOffer extends Component {
         if (!this.props.userRegistrationOffer) return null;
         if (!this.props.show) return null;
 
-        return <TopNoticeBar show={true} backgroundColor="linear-gradient(#0074E7, #0074E7)"
+        return <TopNoticeBar show={true} backgroundColor="linear-gradient(90deg, #FF8534 33.33%, #FF630C 100%)"
             content={<a href={this.props.userRegistrationOffer.on_click_url}><p className="text-white" style={{ marginBottom: '0px' }}>
                 {manipulateRegistrationOfferText(this.props.userRegistrationOffer.heading, this.props.userRegistrationOffer)}
             </p></a>}
