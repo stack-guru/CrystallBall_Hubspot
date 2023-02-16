@@ -111,6 +111,11 @@ class AppsMarket extends React.Component {
                 dsKey: "is_ds_github_tracking_enabled",
             });
         }
+        if (urlSearchParams.has('show_twitter_popup')) {
+            this.setState({
+                dsKey: "is_ds_twitter_tracking_enabled",
+            });
+        }
         let alertMessage = new URLSearchParams(window.location.search).get(
             "alertMessage"
         );
