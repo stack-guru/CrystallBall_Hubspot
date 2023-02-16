@@ -352,7 +352,7 @@ export default class CreatePayment extends Component {
                                         <div className='grid2layout'>
                                             <div className='themeNewInputStyle'>
                                                 {/* <input type="text" className="form-control" placeholder="Phone Number" name="phone_number" id="phone_number" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number} /> */}
-                                                <PhoneInput className='themeNewInputStyle changePhoneNumber' name="phone_number" id="phone_number"  country={'us'} value={this.state.paymentDetails.phone_number} onChange={this.changeHandler} inputProps={{ name: 'phone', required: true, autoFocus: true }} />
+                                                <PhoneInput className='themeNewInputStyle changePhoneNumber' name="phone_number" id="phone_number"  country={'us'} value={this.state.paymentDetails.phone_number} onChange={(phone) => {this.setState({ isDirty: true, paymentDetails: { ...this.state.paymentDetails, phone_number: phone } });}} inputProps={{ name: 'phone', required: true, autoFocus: true }} />
                                             </div>
                                         </div>
                                     </div>

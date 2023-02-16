@@ -18,7 +18,7 @@ export default class CreateAnnotation extends React.Component {
             annotation: {
                 category: '',
                 event_name: '',
-                url: 'https://',
+                url: '',
                 description: '',
                 show_at: '',
                 google_analytics_property_id: [""]
@@ -135,7 +135,6 @@ export default class CreateAnnotation extends React.Component {
     submitHandler(e) {
         e.preventDefault();
 
-        this.props.togglePopup('');
         if (this.validate() && !this.state.isBusy) {
             this.setState({ isBusy: true });
             let fd = new FormData;
@@ -153,7 +152,9 @@ export default class CreateAnnotation extends React.Component {
                         icon: 'success',
                         title: "Annotation added."
                     });
+                    this.props.togglePopup('');
                     this.setState({ redirectTo: "/annotation" });
+
                     // this.setDefaultState();
                     // this.loadCategoriesList();
                 }, (err) => {
