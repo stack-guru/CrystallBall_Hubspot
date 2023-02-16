@@ -297,7 +297,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                                             style={{ background: "#2d9cdb" }}
                                             className="dot"
                                         ></span>
-                                        <span className="text-truncate ga-selected-label" style={{ maxWidth: 150 }}>{itm.labelText}</span>
+                                        <span className="text-truncate ga-selected-label" style={{ maxWidth: 150 }}>{itm.labelText || itm.label}</span>
                                     </button>
 
                                     <Popover
