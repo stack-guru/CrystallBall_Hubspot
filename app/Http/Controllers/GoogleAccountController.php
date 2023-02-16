@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Requests\GoogleAccountRequest;
+use App\Models\GoogleAdsAnnotation;
+use App\Models\GoogleAnalyticsProperty;
+use App\Models\GoogleSearchConsoleSite;
 use App\Models\PricePlan;
 use App\Models\User;
 use App\Services\GoogleAPIService;
@@ -40,12 +43,12 @@ class GoogleAccountController extends Controller
                 array_push($scopes, GoogleAccount::SCOPE_AUTH_ANALYTICS_READONLY);
             }
             if ($request->google_search_console_perm == 'true') {
-                array_push($scopes, GoogleAccount::SCOPE_AUTH_WEBMASTERS);
-                array_push($scopes, GoogleAccount::SCOPE_AUTH_WEBMASTERS_READONLY);
+                // array_push($scopes, GoogleAccount::SCOPE_AUTH_WEBMASTERS);
+                // array_push($scopes, GoogleAccount::SCOPE_AUTH_WEBMASTERS_READONLY);
             }
             if (config('app.env') == 'development' || config('app.env') == 'local') {
                 if ($request->google_ads_perm == 'true') {
-                    array_push($scopes, GoogleAccount::SCOPE_AUTH_ADWORDS);
+                    // array_push($scopes, GoogleAccount::SCOPE_AUTH_ADWORDS);
                 }
             }
         } else {
@@ -55,12 +58,12 @@ class GoogleAccountController extends Controller
 
                 GoogleAccount::SCOPE_AUTH_ANALYTICS_READONLY,
 
-                GoogleAccount::SCOPE_AUTH_WEBMASTERS,
-                GoogleAccount::SCOPE_AUTH_WEBMASTERS_READONLY,
+                // GoogleAccount::SCOPE_AUTH_WEBMASTERS,
+                // GoogleAccount::SCOPE_AUTH_WEBMASTERS_READONLY,
             ];
 
             if (config('app.env') == 'development' || config('app.env') == 'local') {
-                array_push($scopes, GoogleAccount::SCOPE_AUTH_ADWORDS);
+                // array_push($scopes, GoogleAccount::SCOPE_AUTH_ADWORDS);
             }
         }
 
@@ -82,7 +85,7 @@ class GoogleAccountController extends Controller
 
         $this->addGoogleAccount($user, $googleAccount, Auth::user());
 
-        return redirect()->route('google-account.index', ['google_account_id' => $googleAccount->id, 'do-refresh' => true]);
+        return redirect()->route('accounts', ['google_account_id' => $googleAccount->id, 'do-refresh' => true]);
     }
 
     public function update(GoogleAccountRequest $request, GoogleAccount $googleAccount)
@@ -95,6 +98,16 @@ class GoogleAccountController extends Controller
     public function destroy(GoogleAccount $googleAccount)
     {
         (new GoogleAPIService)->revokeAccess($googleAccount);
+
+        GoogleAnalyticsProperty::destroy(GoogleAnalyticsProperty::where('google_account_id', $googleAccount->id)->get());
+        $googleSearchConsoleSites = GoogleSearchConsoleSite::where('google_account_id', $googleAccount->id)->get();
+        foreach ($googleSearchConsoleSites as $gSCS) {
+            GoogleAnalyticsProperty::where('google_search_console_site_id', $gSCS->id)->update([
+                'google_search_console_site_id' => null
+            ]);
+            $gSCS->delete();
+        }
+        GoogleAdsAnnotation::destroy(GoogleAdsAnnotation::where('google_account_id', $googleAccount->id)->get());
 
         return ['success' => $googleAccount->delete()];
     }

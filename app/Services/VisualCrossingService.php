@@ -18,7 +18,7 @@ class VisualCrossingService
         $this->callURISuffix = '';
 
         // current,minutely,hourly,daily, alerts
-        $this->excludeParts = $excludeParts;
+        // $this->excludeParts = $excludeParts;
     }
 
 }

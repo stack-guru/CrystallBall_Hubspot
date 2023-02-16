@@ -7,8 +7,9 @@ use App\Services\BitbucketService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DateTime;
 use App\Models\BitbucketCommitAnnotation;
-
+use Bitbucket\Exception\RuntimeException as BitbucketRuntimeException;
 class FetchBitbucketCommits extends Command
+
 {
     /**
      * The name and signature of the console command.
@@ -69,12 +70,12 @@ class FetchBitbucketCommits extends Command
                     }
                     $message = $commit['message'];
                     $link = $commit['links']['html']['href'];
-                    $category = "Bitbucket";
+                    $category = $data_source->ds_name;
                     $date = $commit['date'];
 
                     $this->precessResult($user_id, $message, $category, $hash, $author, $date, $link);
                 }
-            } catch (Bitbucket\Exception\RuntimeException$e) {
+            } catch (BitbucketRuntimeException $e) {
                 print $e;
             }
 

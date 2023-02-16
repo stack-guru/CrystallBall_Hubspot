@@ -15,12 +15,12 @@
                 <div class="card-header">Users</div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="myTable" className="table table-hover gaa-hover table-bordered">
+                        <table aria-label="User Report" id="myTable" className="table table-hover gaa-hover table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Analytics Accounts</th>
-                                    <th>Properties &amp; Apps</th>
-                                    <th>Google Account</th>
+                                    <th scope="col">Analytics Accounts</th>
+                                    <th scope="col">Properties &amp; Apps</th>
+                                    <th scope="col">Google Account</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -1,6 +1,7 @@
-import React from 'react';
-import HttpClient from '../utils/HttpClient';
-import ErrorAlert from '../utils/ErrorAlert';
+import React from "react";
+import HttpClient from "../utils/HttpClient";
+import ErrorAlert from "../utils/ErrorAlert";
+import Select from "react-select";
 
 export default class DSOWMCitiesSelect extends React.Component {
     constructor(props) {
@@ -9,74 +10,111 @@ export default class DSOWMCitiesSelect extends React.Component {
             weather_alerts_cities: [],
             weather_alerts_countries: [],
             isBusy: false,
-            errors: '',
-            searchCountry: '',
-            searchText: '',
-        }
+            errors: "",
+            searchCountry: "",
+            searchText: "",
+        };
 
-        this.handleClick = this.handleClick.bind(this)
+        this.handleClick = this.handleClick.bind(this);
         this.selectAllShowing = this.selectAllShowing.bind(this);
         this.clearAll = this.clearAll.bind(this);
 
-        this.selectedCountryChanged = this.selectedCountryChanged.bind(this)
-        this.checkSearchText = this.checkSearchText.bind(this)
+        this.selectedCountryChanged = this.selectedCountryChanged.bind(this);
+        this.checkSearchText = this.checkSearchText.bind(this);
     }
 
     componentDidMount() {
         if (!this.state.isBusy) {
-            this.setState({ isBusy: true })
-            HttpClient.get('data-source/weather-alert/country').then(resp => {
-                this.setState({ isBusy: false, weather_alerts_countries: resp.data.countries })
-            }, (err) => {
-                this.setState({ isBusy: false, errors: err.response.data })
-            }).catch(err => {
-                this.setState({ isBusy: false, errors: err })
-            })
+            this.setState({ isBusy: true });
+            HttpClient.get("data-source/weather-alert/country")
+                .then(
+                    (resp) => {
+                        this.setState({
+                            isBusy: false,
+                            weather_alerts_countries: resp.data.countries,
+                        });
+                    },
+                    (err) => {
+                        this.setState({
+                            isBusy: false,
+                            errors: err.response.data,
+                        });
+                    }
+                )
+                .catch((err) => {
+                    this.setState({ isBusy: false, errors: err });
+                });
         }
     }
 
     handleClick(e) {
         if (e.target.checked) {
-            (this.props.onCheckCallback)({ code: 'open_weather_map_cities', name: 'OpenWeatherMapCity', country_name: null, retail_marketing_id: null, open_weather_map_city_id: e.target.getAttribute('open_weather_map_city_id') })
+            this.props.onCheckCallback({
+                code: "open_weather_map_cities",
+                name: "OpenWeatherMapCity",
+                country_name: null,
+                retail_marketing_id: null,
+                open_weather_map_city_id: e.target.getAttribute(
+                    "open_weather_map_city_id"
+                ),
+            });
         } else {
-            (this.props.onUncheckCallback)(e.target.id, 'open_weather_map_cities')
+            this.props.onUncheckCallback(
+                e.target.id,
+                "open_weather_map_cities"
+            );
         }
     }
 
     selectAllShowing(e) {
-        let userOWMCityIds = this.props.ds_data.map(ds => ds.open_weather_map_city_id);
-        this.state.weather_alerts_cities.map(owmCity => {
+        let userOWMCityIds = this.props.ds_data.forEach(ds => ds.open_weather_map_city_id);
+        this.state.weather_alerts_cities.forEach(owmCity => {
             if (userOWMCityIds.indexOf(owmCity.id) == -1) {
-                (this.props.onCheckCallback)({ code: 'open_weather_map_cities', name: 'OpenWeatherMapCity', country_name: null, open_weather_map_city_id: owmCity.id })
+                this.props.onCheckCallback({
+                    code: "open_weather_map_cities",
+                    name: "OpenWeatherMapCity",
+                    country_name: null,
+                    open_weather_map_city_id: owmCity.id,
+                });
             }
-        })
+        });
     }
 
     clearAll(e) {
         let userOWMCityIds = this.props.ds_data.map(ds => ds.open_weather_map_city_id);
         let userDSEvents = this.props.ds_data.map(ds => ds.id);
-        userOWMCityIds.map((owmEvent, index) => {
+        userOWMCityIds.forEach((owmEvent, index) => {
             (this.props.onUncheckCallback)(userDSEvents[index], 'open_weather_map_cities')
         })
     }
 
-    selectedCountryChanged(e) {
-        this.setState({ [e.target.name]: e.target.value });
-        HttpClient.get(`data-source/weather-alert/city?country_code=${e.target.value}`).then(resp => {
-            this.setState({ isBusy: false, weather_alerts_cities: resp.data.cities })
-        }, (err) => {
-
-            this.setState({ isBusy: false, errors: err.response.data })
-        }).catch(err => {
-
-            this.setState({ isBusy: false, errors: err })
-        })
+    selectedCountryChanged(data) {
+        this.setState({ searchCountry: data.value });
+        HttpClient.get(
+            `data-source/weather-alert/city?country_code=${data.value}`
+        )
+            .then(
+                (resp) => {
+                    this.setState({
+                        isBusy: false,
+                        weather_alerts_cities: resp.data.cities,
+                    });
+                },
+                (err) => {
+                    this.setState({ isBusy: false, errors: err.response.data });
+                }
+            )
+            .catch((err) => {
+                this.setState({ isBusy: false, errors: err });
+            });
     }
 
     checkSearchText(city) {
         if (this.state.searchText.length) {
             if (
-                city.name.toLowerCase().indexOf(this.state.searchText.toLowerCase()) > -1
+                city.name
+                    .toLowerCase()
+                    .indexOf(this.state.searchText.toLowerCase()) > -1
             ) {
                 return true;
             }
@@ -86,83 +124,188 @@ export default class DSOWMCitiesSelect extends React.Component {
     }
 
     render() {
-        let userOWMCIds = this.props.ds_data.map(ds => parseInt(ds.open_weather_map_city_id));
-        let userDSIds = this.props.ds_data.map(ds => ds.id);
+        let userOWMCIds = this.props.ds_data.map((ds) =>
+            parseInt(ds.open_weather_map_city_id)
+        );
+        let userDSIds = this.props.ds_data.map((ds) => ds.id);
 
         return (
-            <div className="switch-wrapper">
-                <div className="weather_alert_cities-form">
-                    <h4 className="gaa-text-primary">
-                        Select Cities for Weather Alerts
-                    </h4>
-                    <ErrorAlert errors={this.state.errors} />
-                    <div className="input-group mb-3">
-                        <select
-                            className="form-control"
-                            placeholder="Search"
-                            value={this.state.searchCountry}
-                            name="searchCountry"
-                            onChange={this.selectedCountryChanged}
-                        >
-                            {
-                                [{ country_name: 'Please select country', value: '' }].concat(this.state.weather_alerts_countries).map(wAC => { return <option value={wAC.country_code}>{wAC.country_name}</option> })
-                            }
-                        </select>
-                    </div>
-                    <div className="input-group search-input-box mb-3">
-                        <input
-                            type="text"
-                            className="form-control search-input"
-                            placeholder="Search"
-                            value={this.state.searchText}
-                            name="searchText"
-                            onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-                        />
-                        <div className="input-group-append">
-                            <i className="ti-search"></i>
-                        </div>
-                    </div>
-                    <div className="d-flex justify-content-between align-items-center border-bottom">
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="check-all"
-                                onChange={this.selectAllShowing}
+            <div
+                className={`weather_alert_cities-form ${
+                    this.props.showSelectedOnly ? "gray-box" : "white-box"
+                }`}
+            >
+                {this.props.showSelectedOnly ? (
+                    <></>
+                ) : (
+                    <>
+                        <h4 className="textblue">Select Cities</h4>
+                        <ErrorAlert errors={this.state.errors} />
+                    </>
+                )}
+
+                {this.props.showSelectedOnly ? (
+                    <></>
+                ) : (
+                    <>
+                        <div className="input-group mb-3 themeNewInputGroup themeNewselect flex-column">
+                            <Select
+                                value={this.state.searchCountry}
+                                name="searchCountry"
+                                onChange={this.selectedCountryChanged}
+                                options={[
+                                    {
+                                        value: "",
+                                        label: "Please select country",
+                                        default: true,
+                                    },
+                                    ...this.state.weather_alerts_countries.map(
+                                        (wAC) => {
+                                            return {
+                                                value: wAC.country_code,
+                                                label: (
+                                                    <>
+                                                        <span><img style={{width: 20, height: 20,}} src={`/flags/${wAC.country_name}.png`}/></span>
+                                                        <span className="pl-2">{wAC.country_name}</span>
+                                                    </>
+                                                ),
+                                                default: true,
+                                            };
+                                        }
+                                    ),
+                                ]}
                             />
+                            {/* <select className="form-control" placeholder="Search" value={this.state.searchCountry} name="searchCountry" onChange={this.selectedCountryChanged}>
+                                {[
+                                    {
+                                        country_name:
+                                            "Please select country",
+                                        value: "",
+                                    },
+                                ]
+                                    .concat(
+                                        this.state.weather_alerts_countries
+                                    )
+                                    .map((wAC) => {
+                                        return (
+                                            <option
+                                                value={wAC.country_code}
+                                            >
+                                             <img src={`/flags/${wAC.country_name}`} />   {wAC.country_name}
+                                            </option>
+                                        );
+                                    })}
+                            </select> */}
+                        </div>
+                        <div className="input-group search-input-box mb-3">
+                            <input
+                                type="text"
+                                className="form-control search-input"
+                                placeholder="Search"
+                                value={this.state.searchText}
+                                name="searchText"
+                                onChange={(e) =>
+                                    this.setState({
+                                        [e.target.name]: e.target.value,
+                                    })
+                                }
+                            />
+                            <div className="input-group-append">
+                                <i className="ti-search"></i>
+                            </div>
+                        </div>
+                    </>
+                )}
+                <div className="d-flex flex-column border-bottom pb-3 mb-3">
+                    {this.props.showSelectedOnly ? (
+                        <div className="boxTitleBtn d-flex justify-content-between">
+                            <h4 className="mb-0">Selected Cities</h4>
+                            <span
+                                className="btn-clearAll"
+                                onClick={this.clearAll}
+                            >
+                                Clear All
+                            </span>
+                        </div>
+                    ) : (
+                        <div className="checkBoxList">
                             <label
-                                className="form-check-label font-weight-bold"
+                                className="themeNewCheckbox d-flex align-items-center justify-content-start"
                                 htmlFor="check-all"
                             >
-                                Select All
-                        </label>
+                                <input
+                                    type="checkbox"
+                                    id="check-all"
+                                    onChange={this.selectAllShowing}
+                                />
+                                <span>Select All</span>
+                            </label>
                         </div>
-                        <div>
-                            <p className="font-weight-bold cursor m-0" onClick={this.clearAll}>Clear All</p>
-                        </div>
+                    )}
+                </div>
+                    
+                { (this.props.showSelectedOnly) ? <>
+                   
+                    <div className="checkBoxList">
+                        {this.props.ds_data.map((wAC) => {
+                                return (
+                                    <label
+                                        className="themeNewCheckbox d-flex align-items-center justify-content-start"
+                                        htmlFor="defaultCheck1"
+                                        key={wAC.open_weather_map_city_id}
+                                    >
+                                        <input
+                                            checked 
+                                            id={
+                                                userOWMCIds.indexOf(wAC.open_weather_map_city_id) !== -1
+                                                    ? userDSIds[
+                                                        userOWMCIds.indexOf(
+                                                            wAC.open_weather_map_city_id
+                                                        )
+                                                    ]
+                                                    : null
+                                            }
+                                            type="checkbox"
+                                            onChange={this.handleClick}
+                                            open_weather_map_city_id={wAC.open_weather_map_city_id}
+                                        />
+                                        <span>{wAC.open_weather_map_city.name}</span>
+                                    </label>
+                                );
+                            })}
                     </div>
-                    <div className="checkbox-box mt-3">
-                        {
-                            this.state.weather_alerts_cities.filter(this.checkSearchText).map(wAC => {
-                                return <div className="form-check wac" key={wAC.id}>
+                </> : null }
+                <div className="checkBoxList">
+                    {this.state.weather_alerts_cities
+                        .filter(this.checkSearchText)
+                        .map((wAC) => {
+                            return (
+                                <label
+                                    className="themeNewCheckbox d-flex align-items-center justify-content-start"
+                                    htmlFor="defaultCheck1"
+                                    key={wAC.id}
+                                >
                                     <input
-                                        className="form-check-input"
-                                        checked={userOWMCIds.indexOf(wAC.id) !== -1}
+                                        checked={
+                                            userOWMCIds.indexOf(wAC.id) !== -1
+                                        }
                                         type="checkbox"
-                                        id={userOWMCIds.indexOf(wAC.id) !== -1 ? userDSIds[userOWMCIds.indexOf(wAC.id)] : null}
+                                        id={
+                                            userOWMCIds.indexOf(wAC.id) !== -1
+                                                ? userDSIds[
+                                                      userOWMCIds.indexOf(
+                                                          wAC.id
+                                                      )
+                                                  ]
+                                                : null
+                                        }
                                         onChange={this.handleClick}
                                         open_weather_map_city_id={wAC.id}
                                     />
-                                    <label
-                                        className="form-check-label"
-                                        htmlFor="defaultCheck1"
-                                    >
-                                        {wAC.name}
-                                    </label>
-                                </div>
-                            })
-                        }
-                    </div>
+                                    <span>{wAC.name}</span>
+                                </label>
+                            );
+                        })}
                 </div>
             </div>
         );

@@ -13,32 +13,32 @@
                     <div class="card-header">Users</div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hoved table-bordered" id="myTable">
+                            <table aria-label="Users" class="table table-hoved table-bordered" id="myTable">
                                 <thead>
                                     <tr>
-                                        <th>User Name</th>
-                                        <th>Email</th>
-                                        <th>User Annotations</th>
-                                        <th>Registration Date</th>
-                                        <th>Plan</th>
-                                        <th>Login to the platform</th>
-                                        <th>open the extension in last 30 days</th>
-                                        <th>click on a red dot on chart</th>
+                                        <th scope="col">User Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">User Annotations</th>
+                                        <th scope="col">Registration Date</th>
+                                        <th scope="col">Plan</th>
+                                        <th scope="col">Login to the platform</th>
+                                        <th scope="col">open the extension in last 30 days</th>
+                                        <th scope="col">click on a red dot on chart</th>
                                         
-                                        <th>Manual Annotations Count</th>
-                                        <th>Total Annotations</th>
-                                        <th>Last Annotation added at</th>
-                                        <th>Data Sources</th>
-                                        <th>Total Logins</th>
+                                        <th scope="col">Manual Annotations Count</th>
+                                        <th scope="col">Total Annotations</th>
+                                        <th scope="col">Last Annotation added at</th>
+                                        <th scope="col">Data Sources</th>
+                                        <th scope="col">Total Logins</th>
 
-                                        <th>added an annotation via API</th>
-                                        <th>gets an email from Notifications feature</th>
-                                        <th>Active</th>
-                                        <th>Added Properties</th>
-                                        <th>Any Annotation by property</th>
-                                        <th>In Use Properties</th>
-                                        <th>Is Google Analytics/Search Console Connected</th>
-                                        <th>Has Data Studio connected?</th>
+                                        <th scope="col">added an annotation via API</th>
+                                        <th scope="col">gets an email from Notifications feature</th>
+                                        <th scope="col">Active</th>
+                                        <th scope="col">Added Properties</th>
+                                        <th scope="col">Any Annotation by property</th>
+                                        <th scope="col">In Use Properties</th>
+                                        <th scope="col">Is Google Analytics/Search Console Connected</th>
+                                        <th scope="col">Has Data Studio connected?</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -201,6 +201,7 @@
                 buttons: [
                     'csv'
                 ],
+                order: [],
                 "paging": true
             });
         });

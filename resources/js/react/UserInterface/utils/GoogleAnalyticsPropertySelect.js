@@ -5,26 +5,29 @@ import HttpClient from './HttpClient'
 
 import Select from 'react-select';
 import GooglePermissionPopup from './GooglePermissionPopup';
+import { Modal, Popover, PopoverBody } from 'reactstrap';
+import { uniqBy } from 'lodash';
 
 export default class GoogleAnalyticsPropertySelect extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            aProperties: [{ value: "", label: "All Properties" }],
             allProperties: [],
             isAccountLinked: true,
             isPermissionPopupOpened: false,
+            selectedProperties: [],
+            showUpgradePopup: false
         };
         this.searchGoogleAnalyticsProperties = this.searchGoogleAnalyticsProperties.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
+        this.deleteKeyword = this.deleteKeyword.bind(this);
     }
 
     componentDidMount() {
         this.searchGoogleAnalyticsProperties(' ', (options) => {
             if (options.length) {
                 if (this.props.autoSelectFirst) {
-                    this.setState({ aProperties: [{ value: "", label: "Loading..." }] });
                     setTimeout(() => {
                         this.onChangeHandler(options[0]);
                     }, 5000);
@@ -39,7 +42,39 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     componentDidUpdate(prevProps) {
         if (this.props != prevProps) {
             if (this.props.aProperties) {
-                this.setState({ aProperties: this.props.aProperties });
+                this.setState({ selectedProperties: this.props.aProperties });
+            }
+        }
+    }
+
+    deleteKeyword(propertyId) {
+        // this.onChangeHandler(null);
+        const filteredProperty = this.state.selectedProperties.filter(itm => itm.value != propertyId);
+        this.setState({ selectedProperties: filteredProperty });
+
+        if (filteredProperty.length === 0) {
+            if (this.props.multiple) {
+                this.props.onChangeCallback({
+                    target: {
+                        name: this.props.name,
+                        value: [""],
+                        wasLastDataFetchingSuccessful: true
+                    }
+                });
+            }
+
+            if (this.props.multiple) {
+                this.props.onChangeCallback({
+                    target: {
+                        name: this.props.name,
+                        value: [""],
+                        wasLastDataFetchingSuccessful: true
+                    }
+                });
+            }
+
+            if (this.props.onChangeCallback2) {
+                this.props.onChangeCallback2([]);
             }
         }
     }
@@ -51,9 +86,15 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 let options = gaps.map(gap => {
                     return {
                         value: gap.id,
-                        label: gap.name + ' ' + gap.google_analytics_account.name,
+                        labelText: gap.name + ' ' + gap.google_analytics_account.name,
                         wasLastDataFetchingSuccessful: gap.was_last_data_fetching_successful,
                         isInUse: gap.is_in_use,
+                        label: (
+                            <div className="d-flex propertyLabel">
+                                <span style={{ background: "#2d9cdb" }} className="dot"></span>
+                                <span className="text-truncate" style={{ maxWidth: 150 }}>{gap.name + ' ' + gap.google_analytics_account.name}</span>
+                            </div>
+                        )
                     };
                 });
                 callback(options);
@@ -68,139 +109,231 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     }
 
     onChangeHandler(sOption) {
-        if (sOption == null) {
-            this.setState({ aProperties: [{ value: "", label: "All Properties" }] });
-            if (this.props.multiple) this.props.onChangeCallback({
-                target: {
-                    name: this.props.name,
-                    value: [""],
-                    wasLastDataFetchingSuccessful: true
-                }
-            });
-            if (!this.props.multiple) this.props.onChangeCallback({
-                target: { name: this.props.name, value: "" },
-                wasLastDataFetchingSuccessful: true
-            });
-            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)([{ value: "", label: "All Properties" }]);
-        } else {
-            sOption = sOption
-            if (
-                (this.props.currentPricePlan.google_analytics_property_count < (
-                    this.state.allProperties.filter(sO => sO.isInUse).length
-                    + sOption.filter(sO => sO.value !== "").filter(sO => !sO.isInUse).length)
-                )
-                && (this.props.currentPricePlan.google_analytics_property_count !== 0)
-            ) {
-                const accountNotLinkedHtml = '' +
-                    '<div class="">' +
-                    '<img src="/images/property-upgrade-modal.jpg" class="img-fluid">' +
-                    '</div>'
-                /*
-                * Show new google analytics account popup
-                * */
-                swal.fire({
-                    html: accountNotLinkedHtml,
-                    width: 700,
-                    customClass: {
-                        popup: 'custom_bg pb-5',
-                        htmlContainer: 'm-0',
-                    },
-                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                    confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+        if (sOption.value === '') {
+            return ''
+        }
 
-                }).then(value => {
-                    this.setState({ redirectTo: "/settings/price-plans" });
+        let finalSelectedProperty = []
+        if (this.props.multiple) {
+            const selectedVal = sOption;
+            finalSelectedProperty = uniqBy([...this.state.selectedProperties, ...selectedVal.map(itm => ({ ...itm, value: itm.value, label: itm.labelText }))], 'value');
+            this.setState({ selectedProperties:  finalSelectedProperty })
+        } else {
+            const selectedVal = sOption;
+            finalSelectedProperty = [{ ...selectedVal, value: selectedVal.value, label: selectedVal.labelText, wasLastDataFetchingSuccessful: true }]
+            this.setState({ selectedProperties:  finalSelectedProperty })
+        }
+
+        if (
+            (this.props.currentPricePlan.google_analytics_property_count < (
+                this.state.allProperties.filter(sO => sO.isInUse).length
+                + finalSelectedProperty.filter(sO => !sO.isInUse).length)
+            )
+            && (this.props.currentPricePlan.google_analytics_property_count !== 0)
+        ) {
+            this.setState({ showUpgradePopup: true })
+
+        } else {
+            if (this.props.multiple) {
+                this.props.onChangeCallback({
+                    target: {
+                        name: this.props.name,
+                        value: finalSelectedProperty.map(sO => sO.value),
+                        wasLastDataFetchingSuccessful: true
+                    }
                 });
             }
-            let aProperties = null;
-            if (this.props.multiple) {
-                aProperties = sOption.filter(sO => sO.value !== "");
-            } else {
-                aProperties = sOption;
+
+            if (!this.props.multiple) {
+                this.props.onChangeCallback({
+                    target: {
+                        name: this.props.name,
+                        value: finalSelectedProperty[0].value,
+                        wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful
+                    }
+                });
             }
-            this.setState({ aProperties: aProperties });
-            if (this.props.multiple) (this.props.onChangeCallback)({
-                target: {
-                    name: this.props.name,
-                    value: sOption.filter(sO => sO.value !== "").map(sO => sO.value),
-                    wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful
-                }
-            });
-            if (!this.props.multiple) (this.props.onChangeCallback)({
-                target: {
-                    name: this.props.name,
-                    value: sOption.value,
-                    wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful
-                }
-            });
-            if (this.props.onChangeCallback2) (this.props.onChangeCallback2)(aProperties);
+
+            if (this.props.onChangeCallback2) {
+                this.props.onChangeCallback2(finalSelectedProperty);
+            }
         }
     }
 
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
-        let aProperties = this.state.aProperties;
+
         return (
-            <div>
+            <>
+                <div>
+                    <Modal isOpen={this.state.showUpgradePopup} centered className="gaUpgradePopup" toggle={() => this.setState({ showUpgradePopup: false, upgradePopupType: '' })}>
+                        <button onClick={() => this.setState({ showUpgradePopup: false, upgradePopupType: '' })} class="btn-closeUpgradePopup"><img src="/images/close.svg" alt="close icon" /></button>
+                        <ga-upgrade-popup
+                            heading={`<h1>Upgrade today to add <span>more properties</span></h1>`}
+                            subHeading={`<p>and get access to all amazing features</p>`}
+                            bannerImg="/images/more-property-upgrade.svg"
+                        >
+                        </ga-upgrade-popup>
 
-                <Select
-                    onFocus={this.props.onFocus}
-                    loadOptions={this.searchGoogleAnalyticsProperties}
-                    noOptionsMessage={() => {
-                        return "Enter chars to search"
-                    }}
-                    className={this.props.className}
-                    name={this.props.name}
-                    disabled={this.props.disabled}
-                    value={this.state.aProperties}
-                    id={this.props.id}
-                    isMulti={this.props.multiple}
-                    isClearable={this.props.isClearable}
-                    onChange={this.onChangeHandler}
-                    options={this.state.allProperties}
-                    isSearchable={true}
-                    placeholder={this.props.placeholder}
-                    components={this.props.components}
-                    onKeyDown={(e) => {
-                        if (!this.state.isAccountLinked) {
-                            const accountNotLinkedHtml = '' +
-                                '<div class="">' +
-                                '<img src="/images/imgpopup.png" class="img-fluid">' +
-                                '<div class="bg-light p-3">' +
-                                '<h1  class=" text-black mt-2 py-4">Let\'s Connect Your Google Account</h1>' +
-                                '<p style="line-height:23px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="px-5 text-dark">' +
-                                'Connect your Google Account to see all your data in one place, be able to filter data by property, see anomalies and analyze your data better.' +
-                                '</p>' +
-                                '<p style="font-size:14px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="text-dark">' +
-                                'We do not share any data from your Google Accounts (<span class="text-primary"><a href="https://www.crystalballinsight.com/privacy-policy" target="_blank">see Privacy Policy</a></span>)' +
-                                '</p>' +
-                                '</div>' +
-                                '</div>'
-                            /*
-                            * Show new google analytics account popup
-                            * */
-                            swal.fire({
-                                html: accountNotLinkedHtml,
-                                width: 700,
-                                customClass: {
-                                    popup: 'bg-light pb-5',
-                                    htmlContainer: 'm-0',
-                                },
-                                confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                confirmButtonText: "Connect" + "<i class='ml-2 fa fa-caret-right'> </i>",
+                    </Modal>
 
-                            }).then(value => {
-                                if (value.isConfirmed) {
-                                    this.setState({ isPermissionPopupOpened: true });
+                    <div className="themeNewInputStyle position-relative inputWithIcon">
+                        <i className="icon fa"><img src='/icon-plus.svg' /></i>
+                        <Select
+                            onFocus={this.props.onFocus}
+                            loadOptions={this.searchGoogleAnalyticsProperties}
+                            noOptionsMessage={() => {
+                                return "No Property"
+                            }}
+                            className={this.props.className}
+                            name={this.props.name}
+                            disabled={this.props.disabled}
+                            // value={this.state.aProperties}
+                            value={this.props.multiple ? [] : this.state.selectedProperties }
+                            id={this.props.id}
+                            isMulti={this.props.multiple}
+                            isClearable={this.props.isClearable}
+                            onChange={this.onChangeHandler}
+                            options={this.state.allProperties}
+                            isSearchable={true}
+                            placeholder={this.props.placeholder}
+                            components={this.props.components}
+                            onKeyDown={(e) => {
+                                if (!this.state.isAccountLinked) {
+
+
+                                    // const accountNotLinkedHtml = '' +
+                                    //     '<div class="">' +
+                                    //     '<img src="/images/imgpopup.png" class="img-fluid">' +
+                                    //     '<div class="bg-light p-3">' +
+                                    //     '<h1  class=" text-black mt-2 py-4">Let\'s Connect Your Google Account</h1>' +
+                                    //     '<p style="line-height:23px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="px-5 text-dark">' +
+                                    //     'Connect your Google Account to see all your data in one place, be able to filter data by property, see anomalies and analyze your data better.' +
+                                    //     '</p>' +
+                                    //     '<p style="font-size:14px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="text-dark">' +
+                                    //     'We do not share any data from your Google Accounts (<span class="text-primary"><a href="https://www.crystalballinsight.com/privacy-policy" target="_blank">see Privacy Policy</a></span>)' +
+                                    //     '</p>' +
+                                    //     '</div>' +
+                                    //     '</div>'
+                                    // /*
+                                    // * Show new google analytics account popup
+                                    // * */
+                                    // swal.fire({
+                                    //     html: accountNotLinkedHtml,
+                                    //     width: 700,
+                                    //     customClass: {
+                                    //         popup: 'bg-light pb-5',
+                                    //         htmlContainer: 'm-0',
+                                    //     },
+                                    //     confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                                    //     confirmButtonText: "Connect" + "<i class='ml-2 fa fa-caret-right'> </i>",
+
+                                    // }).then(value => {
+                                    //     if (value.isConfirmed) {
+                                    //         this.setState({ isPermissionPopupOpened: true });
+                                    //     }
+                                    // });
+
+                                    let googlePermissionsHtml = "<div class='contentHolder'>";
+                                    googlePermissionsHtml += '<h2>Let’s connect your Google Account</h2>';
+                                    googlePermissionsHtml += '<p>Connect your google account to see all your data at one place, be able to filter data by property, see anomalies and analyze your data better</p>';
+                                    googlePermissionsHtml += "</div>";
+
+                                    swal.fire({
+                                        iconHtml: '<figure class="m-0"><img src="/images/google-account.svg"></figure>',
+                                        html: googlePermissionsHtml,
+                                        width: 500,
+                                        // confirmButtonClass: "m-0 p-0 border-0 rounded-0 bg-white",
+                                        confirmButtonText: `Connect Google Account`,
+                                        focusConfirm: false,
+                                        // cancelButtonClass: "btn btn-secondary ml-5",
+                                        showCloseButton: false,
+                                        // showCancelButton: false,
+                                        // cancelButtonText: 'Cancel',
+                                        allowOutsideClick: true,
+                                        backdrop: true,
+                                        customClass: {
+                                            popup: "confirmConnectionTo",
+                                            htmlContainer: "confirmConnectionToContent",
+                                            closeButton: 'btn-closeplanAlertPopup',
+                                        },
+                                    }).then(value => {
+                                        if (value.isConfirmed) {
+                                            // this.setState({ isPermissionPopupOpened: true });
+                                            localStorage.setItem("frontend_redirect_to", window.location.pathname);
+                                            window.location = "/settings/google-account/create?google_analytics_perm=true";
+                                        }
+                                    });
+
                                 }
-                            });
+                            }}
+                        />
+                        {
+                            this.state.isPermissionPopupOpened ? <GooglePermissionPopup /> : ''
                         }
-                    }}
-                />
-                {
-                    this.state.isPermissionPopupOpened ? <GooglePermissionPopup /> : ''
-                }
-            </div>
+                    </div>
+
+
+                    <div className='ga-analytics-property-selected'>
+                        {this.state.selectedProperties.length && this.props.multiple ? <h4>
+                            Selected properties: <span>(Click to remove)</span>
+                        </h4> : null}
+                        {this.state.selectedProperties.length && this.props.multiple ? <div className="d-flex keywordTags mt-3">
+                            {this.state.selectedProperties.map(itm => {
+                                return (<>
+                                    <button
+                                        onClick={() =>
+                                            this.setState({
+                                                activeDeletePopover: itm.value,
+                                            })
+                                        }
+                                        id={"gAK-" + itm.value}
+                                        type="button"
+                                        className="keywordTag"
+                                        key={itm.value}
+                                        user_data_source_id={itm.value}
+                                    >
+                                        <span
+                                            style={{ background: "#2d9cdb" }}
+                                            className="dot"
+                                        ></span>
+                                        <span className="text-truncate ga-selected-label" style={{ maxWidth: 150 }}>{itm.labelText}</span>
+                                    </button>
+
+                                    <Popover
+                                        placement="top"
+                                        target={"gAK-" + itm.value}
+                                        isOpen={
+                                            this.state.activeDeletePopover ===
+                                            itm.value
+                                        }
+                                    >
+                                        <PopoverBody web_monitor_id={itm.value}>
+                                            Are you sure you want to remove "{itm.labelText || itm.label}"?.
+                                        </PopoverBody>
+                                        <button
+                                            onClick={() => this.deleteKeyword(itm.value)}
+                                            key={itm.value}
+                                            user_data_source_id={itm.value}
+                                        >
+                                            Yes
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                this.setState({
+                                                    activeDeletePopover: null,
+                                                })
+                                            }
+                                        >
+                                            No
+                                        </button>
+                                    </Popover>
+                                </>)
+                            })}
+                        </div> : null}
+                    </div>
+                </div>
+            </>
         )
     }
 }

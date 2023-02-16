@@ -15,24 +15,7 @@ export default class IntegrationsIndex extends React.Component {
 
         if (!this.props.user.price_plan.has_integrations) {
             setTimeout(() => {
-                const accountNotLinkedHtml = '' +
-                    '<div class="">' +
-                    '<img src="/images/integrations-upgrade-modal.jpg" class="img-fluid">' +
-                    '</div>'
-
-                swal.fire({
-                    html: accountNotLinkedHtml,
-                    width: 700,
-                    customClass: {
-                        popup: 'bg-light-red pb-5',
-                        htmlContainer: 'm-0',
-                    },
-                    confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                    confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
-
-                }).then(value => {
-                    this.setState({ redirectTo: '/settings/price-plans' });
-                });
+                this.props.upgradePopup('integrations')
             }, 10000);
         }
     }
@@ -45,7 +28,6 @@ export default class IntegrationsIndex extends React.Component {
                 <div className="row ml-0 mr-0">
                     <div className="col-12">
                         <h2 className="heading-section gaa-title">
-                            Integrations
                             <Link to="/my-integrations" className="btn gaa-btn-primary float-right">My Integrations</Link>
                         </h2>
                     </div>

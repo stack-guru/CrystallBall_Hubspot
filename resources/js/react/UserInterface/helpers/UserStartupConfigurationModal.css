@@ -1,4 +1,4 @@
-.mt-8{
+/*.mt-8{
     margin-top: 48px !important;
     margin-top: 3.0rem !important;
 }
@@ -10,7 +10,7 @@
 
 #scw-modal{
     font-size: 32pt;
-    font-family: 'Roboto Light';
+    font-family: 'Roboto Light', Tahoma, sans-serif;
 }
 #scw-modal-body{
     min-height: 300px;
@@ -32,4 +32,20 @@
 
 #scw-modal-body .image-button.active {
     box-shadow: 0 4px 8px 0 #002e60a6, 0 6px 20px 0 #002e60a6;
+}*/
+
+
+
+#scw-modal-body{
+    min-height: 420px;
+    display: flex;
+    align-items: center;
 }
+
+
+
+
+
+
+
+

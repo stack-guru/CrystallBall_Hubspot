@@ -18,7 +18,7 @@ class GoogleAnalyticsPropertyController extends Controller
             abort(400, "Please connect Google Analytics account before you use Google Analytics Properties.");
         }
 
-        $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::with(['googleAccount', 'googleAnalyticsAccount'])->orderBy('name');
+        $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::with(['googleAccount', 'googleAnalyticsAccount']);
         if ($request->has('keyword')) {
             $googleAnalyticsPropertiesQuery->select('id', 'name', 'google_account_id', 'google_analytics_account_id', 'was_last_data_fetching_successful', 'is_in_use')
                 ->with(['googleAccount:id,name', 'googleAnalyticsAccount:id,name'])
@@ -38,15 +38,39 @@ class GoogleAnalyticsPropertyController extends Controller
 
             $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get();
         } else {
-            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->ofCurrentUser()->get();
+            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->ofCurrentUser();
+
+            if ($request->has('sortBy') && $request->sortBy) {
+                $googleAnalyticsProperties = $googleAnalyticsProperties->orderByRaw("$request->sortBy * 1 desc");
+            }
+            // return $googleAnalyticsProperties->toSql();
+            $googleAnalyticsProperties = $googleAnalyticsProperties->get();
+
         }
         // if user's plan is trial or free new than only return 1 ga account with 1 property
-        
+
         // if (Auth::user()->price_plan_id == PricePlan::TRIAL || Auth::user()->price_plan_id == PricePlan::CODE_FREE_NEW) {
         //     $googleAccounts = $googleAccounts->first();
         // }
 
         return ['google_analytics_properties' => $googleAnalyticsProperties];
+    }
+
+    public function update(Request $request, GoogleAnalyticsProperty $googleAnalyticsProperty)
+    {
+        $this->validate($request, [
+            'google_search_console_site_id' => 'bail|required|numeric|exists:google_search_console_sites,id'
+        ]);
+
+        if (Auth::id() !== $googleAnalyticsProperty->user_id) {
+            abort(404, 'Unable to find referenced Google Analytics Property.');
+        }
+
+        if ($request->has('google_search_console_site_id')) $googleAnalyticsProperty->google_search_console_site_id = $request->google_search_console_site_id;
+        $googleAnalyticsProperty->save();
+
+        $googleAnalyticsProperty->load('googleAccount');
+        return ['google_analytics_property' => $googleAnalyticsProperty];
     }
 
     public function destroy(GoogleAnalyticsProperty $googleAnalyticsProperty)

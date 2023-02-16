@@ -1,5 +1,5 @@
 import React from 'react';
-import { toast } from "react-toastify";
+import Toast from "../../utils/Toast";
 import { Redirect } from "react-router-dom";
 
 import ErrorAlert from "../../utils/ErrorAlert";
@@ -7,6 +7,7 @@ import HttpClient from "../../utils/HttpClient";
 
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 import AnnotationCategorySelect from '../../utils/AnnotationCategorySelect';
+import ModalHeader from '../AppsMarket/common/ModalHeader';
 
 export default class EditAnnotation extends React.Component {
 
@@ -21,33 +22,36 @@ export default class EditAnnotation extends React.Component {
                 show_at: '',
                 google_analytics_property_id: [""]
             },
+            categories: [],
             validation: {},
             resp: '',
             error: '',
             isBusy: false,
             isDirty: false,
+            userAnnotationColors: {},
             redirectTo: null,
         }
         this.changeHandler = this.changeHandler.bind(this);
         this.gAPropertyChangeHandler = this.gAPropertyChangeHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
         this.setDefaultState = this.setDefaultState.bind(this);
-
+        this.loadCategoriesList = this.loadCategoriesList.bind(this)
+        this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
+        this.loadUserAnnotationColors = this.loadUserAnnotationColors.bind(this);
     }
 
     componentDidMount() {
-        document.title = 'Edit Annotation'
-        if (this.props.routeParams.match.params.id !== undefined) {
+        if (this.props.editAnnotationId) {
             this.setState({ isBusy: true });
-            HttpClient.get(`/annotation/${this.props.routeParams.match.params.id}`)
+            HttpClient.get(`/annotation/${this.props.editAnnotationId}`)
                 .then(response => {
                     let gAPs = [];
                     if (!response.data.annotation.annotation_ga_properties.length) {
-                        gAPs = [{ value: "", label: "All Properties" }];
+                        gAPs = [];
                     } else if (response.data.annotation.annotation_ga_properties[0].google_analytics_property_id == null) {
-                        gAPs = [{ value: "", label: "All properties" }];
+                        gAPs = [];
                     } else {
-                        gAPs = response.data.annotation.annotation_ga_properties.map(aGAP => { return { value: aGAP.google_analytics_property_id, label: aGAP.google_analytics_property.name }; });
+                        gAPs = response.data.annotation.annotation_ga_properties.map(aGAP => { return { value: aGAP.google_analytics_property_id, label: aGAP.google_analytics_property?.name }; });
                     }
 
                     let gAPIds = response.data.annotation.annotation_ga_properties.map(agAPA => agAPA.google_analytics_property_id);
@@ -61,6 +65,21 @@ export default class EditAnnotation extends React.Component {
                     this.setState({ isBusy: false, errors: err });
                 });
         }
+        this.loadUserAnnotationColors();
+        this.loadCategoriesList();
+    }
+
+    loadCategoriesList() {
+        HttpClient.get(`/annotation-categories`)
+            .then(response => {
+                this.setState({ isBusy: false, categories: response.data.categories.map(c => { return { label: c.category, value: c.category } }) });
+            }, (err) => {
+
+                this.setState({ isBusy: false, errors: (err.response).data });
+            }).catch(err => {
+
+                this.setState({ isBusy: false, errors: err });
+            });
     }
 
     setDefaultState() {
@@ -71,26 +90,7 @@ export default class EditAnnotation extends React.Component {
         switch (e.target.name) {
             case "google_analytics_property_id":
                 if ((this.props.currentPricePlan.google_analytics_property_count < e.target.value.length) && (this.props.currentPricePlan.google_analytics_property_count !== 0)) {
-                    const accountNotLinkedHtml = '' +
-                        '<div class="">' +
-                        '<img src="/images/property-upgrade-modal.jpg" class="img-fluid">' +
-                        '</div>'
-                    /*
-                    * Show new google analytics account popup
-                    * */
-                    swal.fire({
-                        html: accountNotLinkedHtml,
-                        width: 700,
-                        customClass: {
-                            popup: 'custom_bg pb-5',
-                            htmlContainer: 'm-0',
-                        },
-                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                        confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
-
-                    }).then(value => {
-                        this.setState({ redirectTo: "/settings/price-plans" });
-                    });
+                    this.props.upgradePopup('add-more-property')
                 } else {
                     this.setState({ isDirty: true, annotation: { ...this.state.annotation, [e.target.name]: e.target.value } });
                 }
@@ -117,13 +117,17 @@ export default class EditAnnotation extends React.Component {
             for (var key in this.state.annotation) {
                 if (key !== 'google_analytics_property_id') fd.append(key, this.state.annotation[key]);
             }
-            this.state.annotation.google_analytics_property_id.map(gAP => { fd.append('google_analytics_property_id[]', gAP) })
+            this.state.annotation.google_analytics_property_id.forEach((gAP) => { fd.append('google_analytics_property_id[]', gAP) })
 
             fd.append('_method', 'PUT');
             HttpClient.post(`/annotation/${this.state.annotation.id}`, fd)
                 .then(response => {
-                    toast.success("Annotation updated.");
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Annotation updated."
+                    });
                     this.setState({ redirectTo: "/annotation" });
+                    this.props.togglePopup('');
                 }, (err) => {
 
                     this.setState({ isBusy: false, errors: (err.response).data });
@@ -172,6 +176,19 @@ export default class EditAnnotation extends React.Component {
         return isValid;
     }
 
+    loadUserAnnotationColors() {
+        HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
+            this.setState({ isLoading: false, userAnnotationColors: resp.data.user_annotation_color });
+        }, (err) => {
+            this.setState({ isLoading: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isLoading: false, errors: err });
+        })
+
+    }
+    updateUserAnnotationColors(userAnnotationColors) {
+        this.setState({ userAnnotationColors: userAnnotationColors });
+    }
 
 
     render() {
@@ -180,112 +197,71 @@ export default class EditAnnotation extends React.Component {
 
         const validation = this.state.validation;
         return (
-            <div className="container-xl bg-white component-wrapper" >
-                <section className="ftco-section" id="buttons">
-                    <div className="container">
-                        <div className="row mb-5">
-                            <div className="col-md-12">
-                                <h2 className="heading-section gaa-title">Edit Annotation <br />
-                                    <small>Update your annotation details</small>
-                                </h2>
+            <div className="popupContent modal-editAnnotation">
+                <ModalHeader
+                    userAnnotationColors={this.state.userAnnotationColors}
+                    updateUserAnnotationColors={this.updateUserAnnotationColors}
+                    userServices={null}
+                    serviceStatusHandler={null}
+                    closeModal={() => this.props.togglePopup('')}
+                    serviceName={'Edit Annotation'}
+                    colorKeyName={this.state.annotation.added_by}
+                    dsKeyName={null}
+                    creditString={null}
+                />
+
+                <div className="apps-bodyContent">
+                    <form onSubmit={this.submitHandler} id="annotation-edit-form">
+                        <ErrorAlert errors={this.state.errors} />
+                        <div className='grid2layout'>
+                            <div className="themeNewInputStyle">
+                                <input type="text" className="form-control gray_clr" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" placeholder='Name the Annotation' />
+                                {validation.event_name ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : null}
+                            </div>
+                            <div className="themeNewInputStyle">
+                                <AnnotationCategorySelect categories={this.state.categories} className="gray_clr" name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
                             </div>
                         </div>
 
-                        <div className="row ml-0 mr-0">
-                            <div className="col-md-12">
-                                <ErrorAlert errors={this.state.errors} />
+                        <div className="themeNewInputStyle has-danger mb-3">
+                            <input type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control gray_clr" id="description" name="description" placeholder='Add descriptive info' />
+                            {validation.description ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : null}
+                        </div>
+
+                        <div className='grid2layout'>
+                            <div className="themeNewInputStyle position-relative inputWithIcon">
+                                <i className="fa fa-link"></i>
+                                <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control gray_clr" id="url" name="url" placeholder='https://example.com' />
+                                {validation.url ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.url}</span> : null}
+                            </div>
+                            <div className="themeNewInputStyle">
+                                <input type="date" onChange={this.changeHandler} value={moment(this.state.annotation.show_at).format('YYYY-MM-DD')} className="form-control gray_clr" id="show_at" name="show_at" />
+                                {validation.show_at ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.show_at}</span> : null}
                             </div>
                         </div>
 
-                        <form onSubmit={this.submitHandler}>
-                            <div className="row">
-
-
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group">
-                                        <label htmlFor="event_name" className="form-control-placeholder">Event Name *</label>
-                                        <input type="text" className="form-control gray_clr" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" placeholder='Name the Annotation' />
-
-                                        {
-                                            validation.event_name ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : null
-                                        }
-
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group ">
-                                        <label htmlFor="category" className="form-control-placeholder">Category *</label>
-                                        <AnnotationCategorySelect className="gray_clr" name="category" id="category" value={this.state.annotation.category} onChangeCallback={this.changeHandler} placeholder="Select Category or Create" />
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group  has-danger ">
-                                        <label htmlFor="description" className="form-control-placeholder">Description</label>
-                                        <textarea type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control gray_clr" id="description" name="description" placeholder='Add descriptive info'></textarea>
-                                        {
-                                            validation.description ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : null
-                                        }
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group">
-                                        <label htmlFor="url" className="form-control-placeholder">Link</label>
-                                        <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control gray_clr" id="url" name="url" placeholder='https://example.com' />
-
-                                        {
-                                            validation.url ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.url}</span> : null
-                                        }
-
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder">Show on this date</label>
-                                        <input type="date" onChange={this.changeHandler} value={moment(this.state.annotation.show_at).format('YYYY-MM-DD')} className="form-control gray_clr" id="show_at" name="show_at" />
-
-                                        {
-                                            validation.show_at ?
-                                                <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.show_at}</span> : null
-                                        }
-
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-sm-4">
-                                    <div className="form-group ">
-                                        <label htmlFor="show_at" className="form-control-placeholder">Assign Annotation to:</label>
-                                        <GoogleAnalyticsPropertySelect
-                                            aProperties={this.state.googleAnnotationProperties}
-                                            name="google_analytics_property_id"
-                                            id="google_analytics_property_id"
-                                            className="gray_clr"
-                                            value={this.state.annotation.google_analytics_property_id}
-                                            onChangeCallback={this.changeHandler}
-                                            onChangeCallback2={this.gAPropertyChangeHandler}
-                                            placeholder="Select GA Properties"
-                                            multiple
-                                            currentPricePlan={this.props.currentPricePlan}
-                                        ></GoogleAnalyticsPropertySelect>
-                                    </div>
-                                </div>
-
+                        <div className='grid2layout'>
+                            <div className="themeNewInputStyle">
+                                <GoogleAnalyticsPropertySelect
+                                    aProperties={this.state.googleAnnotationProperties}
+                                    name="google_analytics_property_id"
+                                    id="google_analytics_property_id"
+                                    className="gray_clr"
+                                    value={this.state.annotation.google_analytics_property_id}
+                                    onChangeCallback={this.changeHandler}
+                                    onChangeCallback2={this.gAPropertyChangeHandler}
+                                    placeholder="Select GA Properties"
+                                    multiple
+                                    currentPricePlan={this.props.currentPricePlan}
+                                ></GoogleAnalyticsPropertySelect>
                             </div>
-                            <div className="row ml-0 mr-0">
-                                <div className="col-12 text-right">
-                                    <button type="submit" className="btn gaa-btn-primary btn-fab btn-round" title="submit">
-                                        {/* <i className="ti-save mr-2"></i> */}
-                                        Save
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
 
-                    </div>
-                </section>
+                        <div className='d-flex pt-3'>
+                            <button type="submit" className="btn-theme" title="submit">Save</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }

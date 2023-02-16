@@ -9,13 +9,13 @@
 
                 <div class="card-body">
                     <a href="{{ route('admin.price-plan.create') }}" class="btn btn-primary">Add</a>
-                    <table class="table table-hoved table-bordered">
+                    <table aria-label="Price Plans" class="table table-hoved table-bordered">
                         <thead>
                             <tr>
-                                <th>Code</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Actions</th>
+                                <th scope="col">Code</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,10 +36,10 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Code</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Actions</th>
+                                <th scope="col">Code</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </tfoot>
                     </table>

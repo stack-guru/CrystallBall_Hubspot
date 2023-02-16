@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\MicrosoftPowerBI;
 
+use App\Helpers\AnnotationQueryHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,7 @@ class AnnotationController extends Controller
         $endDate = Carbon::parse($request->query('endDate'));
 
         $annotationsQuery = "SELECT TempTable.* FROM (";
-        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($user, $request->query('annotation_ga_property_id'), $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $request->query('annotation_ga_property_id') ? $request->query('annotation_ga_property_id') : '*', $userIdsArray);
         ////////////////////////////////////////////////////////////////////
         $annotationsQuery .= ") AS TempTable";
         // LEFT JOIN to load all properties selected in annotations

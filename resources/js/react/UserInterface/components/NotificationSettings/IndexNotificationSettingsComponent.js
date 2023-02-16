@@ -6,6 +6,7 @@ import HttpClient from "../../utils/HttpClient";
 import PhoneVerificationModal from '../../helpers/PhoneVerificationModal';
 import ChangePhoneModal from '../../helpers/ChangePhoneModal';
 import { getCompanyName } from '../../helpers/CommonFunctions';
+import { Container } from 'reactstrap';
 
 export default class IndexNotificationSettings extends Component {
 
@@ -44,24 +45,7 @@ export default class IndexNotificationSettings extends Component {
     }
 
     showPricePlanModal() {
-        const accountNotLinkedHtml = '' +
-            '<div class="">' +
-            '<img src="/images/notification-upgrade-modal.jpg" class="img-fluid">' +
-            '</div>'
-
-        swal.fire({
-            html: accountNotLinkedHtml,
-            width: 700,
-            customClass: {
-                popup: 'bg-light-red pb-5',
-                htmlContainer: 'm-0',
-            },
-            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-            confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
-
-        }).then(value => {
-            this.setState({ redirectTo: '/settings/price-plans' });
-        });
+        this.props.upgradePopup('get-notifications');
     }
 
     handleChange(e) {
@@ -120,74 +104,81 @@ export default class IndexNotificationSettings extends Component {
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         return (
-            <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
-                <section className="ftco-section" id="inputs">
-                    <div className="container-xl p-0">
-                        <div id="notification-settings-container">
-                            <div className="row ml-0 mr-0">
-                                <div className="col-12 text-right">
-                                    <PhoneVerificationModal show={this.state.showPhoneVerificationModal} phoneNumber={this.props.user.phone_number} toggleCallback={() => { this.setState({ showPhoneVerificationModal: !this.state.showPhoneVerificationModal }); this.props.reloadUser(); }} />
-                                    <p>{this.props.user.email_verified_at == null ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={this.sendVerificationEmail}>Verify now</button> : null}<strong>Email:</strong> {this.props.user.email} </p>
-                                    <p>{this.props.user.phone_verified_at == null && this.props.user.phone_number ? <button className="btn btn-sm btn-success p-3 mr-2" onClick={() => { this.setState({ showPhoneVerificationModal: true }); }}>Verify now</button> : null}<strong>Phone Number:</strong> {this.props.user.phone_number !== null ? this.props.user.phone_number : <button className="btn btn-sm gaa-btn-primary" onClick={() => { this.setState({ showChangePhoneModal: true }); }}>Add Phone Number</button>}</p>
-                                    <ChangePhoneModal show={this.state.showChangePhoneModal} toggleCallback={() => { this.setState({ showChangePhoneModal: false, showPhoneVerificationModal: true }); this.props.reloadUser(); }} />
-                                </div>
+            <div id="notificationPage" className="notificationPage pageWrapper">
+                <Container id="inputs">
+                    <div className="pageHeader notificationPageHead">
+                        <div className="d-flex justify-content-between">
+                            <div className='d-flex flex-column'>
+                                <h2 className="pageTitle mb-0">Notifications</h2>
+                                <p className='mt-3 mb-0'>Set notifications you want to receive for each app</p>
                             </div>
-                            <div className="row ml-0 mr-0">
-                                <div className="col-12">
-                                    <div className="table-responsive">
-                                        <table className="table table-hover gaa-hover table-borderless text-center">
-                                            <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th>SMS</th>
-                                                    <th>Browser Notification</th>
-                                                    <th colSpan="3">Email</th>
-                                                </tr>
-                                                <tr>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th className="border-top border-bottom dark-gray-border thin-border">Event day</th>
-                                                    <th className="border-top border-bottom dark-gray-border thin-border">Event day</th>
-                                                    <th className="border-top border-bottom dark-gray-border thin-border">Event day</th>
-                                                    <th className="border-top border-bottom dark-gray-border thin-border">1 Days Before</th>
-                                                    <th className="border-top border-bottom dark-gray-border thin-border">7 Days Before</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {this.state.notification_settings.map(notificationSetting => {
-                                                    return (<tr key={notificationSetting.id}>
-                                                        <td>
-                                                            <label className="trigger switch">
-                                                                <input type="checkbox"
-                                                                    checked={notificationSetting.is_enabled}
-                                                                    onChange={this.handleChange}
-                                                                    notification-setting-id={notificationSetting.id}
-                                                                    notification-setting-name={notificationSetting.name}
-                                                                    name="is_enabled"
-                                                                />
-                                                                <span className="slider round" />
-                                                            </label>
-                                                        </td>
-                                                        <td className="text-left">{notificationSetting.label}</td>
-                                                        <td className="border-left light-gray-border thin-border">{notificationSetting.sms_on_event_day !== -1 ? <input name="sms_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.sms_on_event_day} /> : null}</td>
-                                                        <td className="border-left light-gray-border thin-border">{notificationSetting.browser_notification_on_event_day !== -1 ? <input name="browser_notification_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.browser_notification_on_event_day} /> : null}</td>
-                                                        <td className="border-left light-gray-border thin-border">{notificationSetting.email_on_event_day !== -1 ? <input name="email_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_on_event_day} /> : null}</td>
-                                                        <td>{notificationSetting.email_one_days_before !== -1 ? <input name="email_one_days_before" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_one_days_before} /> : null}</td>
-                                                        <td className="border-right light-gray-border thin-border">{notificationSetting.email_seven_days_before !== -1 ? <input name="email_seven_days_before" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_seven_days_before} /> : null}</td>
-                                                    </tr>)
-                                                })}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
+                            {/* {this.props.user.phone_verified_at == null && this.props.user.phone_number ? <button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showPhoneVerificationModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Verify now</span></button> : null} */}
+                            {this.props.user.phone_number !== null ? <button className={`btn-theme-outline bg-white ${this.props.user.phone_verified_at == null ? "show-phone-un-verification-badge" : ""}`} onClick={() => { this.setState({ showChangePhoneModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Update Phone Number</span></button> : <button className='btn-theme-outline bg-white' onClick={() => { this.setState({ showChangePhoneModal: true }); }}><i><img src={'/icon-phone.svg'} /></i><span>Add Phone Number</span></button>}
                         </div>
                     </div>
 
-                </section>
-            </div >
+                    <div className="dataTable dataTableNotifiction d-flex flex-column">
+                        <div className="dataTableHolder text-center">
+                            <div className="tableHead singleRow justify-content-between align-items-center">
+                                <div className="singleCol text-left">&nbsp;</div>
+                                <div className="singleCol text-left">Event day</div>
+                                <div className="singleCol text-left">1 Days Before</div>
+                                <div className="singleCol text-left">7 Days Before</div>
+                            </div>
+                            <div className="tableBody">
+                                {this.state.notification_settings.map(notificationSetting => {
+                                    return (
+                                        <div key={notificationSetting.id} className={`singleRow justify-content-between align-items-stretch ${!notificationSetting.is_enabled ? 'disabled-notification': ''}`}>
+                                            <div className="singleCol text-left d-flex align-items-center justify-content-start">
+                                                <label className="themeSwitch">
+                                                    <input type="checkbox"
+                                                        checked={notificationSetting.is_enabled}
+                                                        onChange={this.handleChange}
+                                                        notification-setting-id={notificationSetting.id}
+                                                        notification-setting-name={notificationSetting.name}
+                                                        name="is_enabled"
+                                                    />
+                                                    <span className="themeSlider round" />
+                                                </label>
+                                                <span>{notificationSetting.label}</span>
+                                            </div>
+                                            <div className="singleCol text-left d-flex flex-column">
+                                                {notificationSetting.browser_notification_on_event_day !== -1 ? <label className='d-flex align-items justify-content-end serviceCheckBox'>
+                                                    <input name="browser_notification_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.browser_notification_on_event_day} />
+                                                    <span>Push</span>
+                                                </label> : null}
+                                                {notificationSetting.sms_on_event_day !== -1 ? <label className='d-flex align-items justify-content-end serviceCheckBox'>
+                                                    <input name="sms_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.sms_on_event_day} />
+                                                    <span>SMS</span>
+                                                </label>
+                                                    : null}
+                                                {notificationSetting.email_on_event_day !== -1 ? <label className='d-flex align-items justify-content-end serviceCheckBox'>
+                                                    <input name="email_on_event_day" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_on_event_day} />
+                                                    <span>Email</span>
+                                                </label> : null}
+                                            </div>
+                                            <div className="singleCol text-left">
+                                                {notificationSetting.email_one_days_before !== -1 ? <label className='d-flex align-items justify-content-end serviceCheckBox'>
+                                                    <input name="email_one_days_before" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_one_days_before} />
+                                                    <span>&nbsp;</span>
+                                                </label>
+                                                    : null}
+                                            </div>
+                                            <div className="singleCol text-left">
+                                                {notificationSetting.email_seven_days_before !== -1 ? <label className='d-flex align-items justify-content-end serviceCheckBox'>
+                                                    <input name="email_seven_days_before" notification-setting-id={notificationSetting.id} notification-setting-name={notificationSetting.name} onChange={this.handleChange} type="checkbox" checked={notificationSetting.email_seven_days_before} />
+                                                    <span>&nbsp;</span>
+                                                </label> : null}
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                    <ChangePhoneModal phone_verified_at={this.props.user.phone_verified_at} phoneNumber={this.props.user.phone_number} reloadUser={this.props.reloadUser} show={this.state.showChangePhoneModal} toggleCallback={() => { this.setState({ showChangePhoneModal: false, showPhoneVerificationModal: false }); this.props.reloadUser(); }} />
+                </Container>
+            </div>
         );
     }
 }

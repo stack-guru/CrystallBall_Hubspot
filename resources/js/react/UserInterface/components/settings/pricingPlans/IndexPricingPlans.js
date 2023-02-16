@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { UncontrolledPopover, PopoverHeader, PopoverBody, Row, Container, Col, Button } from 'reactstrap';
 import { calculatePricePlanPrice, manipulateRegistrationOfferText } from '../../../helpers/CommonFunctions';
-
 import HttpClient from "../../../utils/HttpClient";
 
 export default class IndexPricingPlans extends React.Component {
@@ -15,7 +14,6 @@ export default class IndexPricingPlans extends React.Component {
             planDuration: 12, // [1, 12]
             shownSeconds: 0,
         };
-
         this.freeSubscribe = this.freeSubscribe.bind(this);
         this.changePricePlan = this.changePricePlan.bind(this);
         this.togglePricingMode = this.togglePricingMode.bind(this);
@@ -28,13 +26,10 @@ export default class IndexPricingPlans extends React.Component {
             .then(response => {
                 this.setState({ pricePlans: response.data.price_plans });
             }, (err) => {
-
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-
                 this.setState({ isBusy: false, errors: err });
             });
-
         if (this.props.user.user_registration_offers) {
             if (this.props.user.user_registration_offers.length) {
                 setInterval(() => {
@@ -44,6 +39,34 @@ export default class IndexPricingPlans extends React.Component {
                 }, 1 * 1000);
             }
         }
+
+        // swal.fire({
+        //     html: `<ga-plan-downgrade-upgrade-popup heading="<h1>Upgrade today to add more  <span>Ads Trackers</span></h1>"
+        //     subHeading=${`<p>and get access to all amazing features</p>`}
+        //     bannerImg="/images/trackers-ads.svg"></ga-plan-downgrade-upgrade-popup>`,
+        //     width: 600,
+        //     showCancelButton: true,
+        //     showCloseButton: false,
+        //     showConfirmButton: false,
+        //     customClass: {
+        //         popup: "gaErrorPopup",
+        //     },
+        //     cancelButtonClass: "btn-close",
+        //     cancelButtonText: "Close",
+        // })
+
+        // swal.fire({
+        //     html: `<ga-plan-downgrade-upgrade-popup heading="<h1 class='color-blue'>Congratulations!</h1>"
+        //     subHeading="<p>Your account has been upgraded to <span>Pro</span>.</p>"
+        //     bannerImg="/images/upgrade-congrats.svg"></ga-plan-downgrade-upgrade-popup>`,
+        //     width: 1000,
+        //     showCancelButton: false,
+        //     showCloseButton: false,
+        //     showConfirmButton: false,
+        //     customClass: {
+        //         popup: "gaUpgradePopup",
+        //     },
+        // })
     }
 
     changePricePlan(pricePlan) {
@@ -53,12 +76,10 @@ export default class IndexPricingPlans extends React.Component {
             if (pricePlan.price == 0) {
                 this.freeSubscribe(pricePlan.id)
             } else if (pricePlan.is_available == false) {
-
             } else {
                 window.location.href = `/settings/price-plans/payment?price_plan_id=${pricePlan.id}&plan_duration=${this.state.planDuration}`;
             }
         }
-
     }
 
     freeSubscribe(id) {
@@ -81,10 +102,8 @@ export default class IndexPricingPlans extends React.Component {
                     }).catch(err => {
                         this.setState({ isBusy: false, errors: err });
                     });
-
             }
         })
-
     }
 
     togglePricingMode() {
@@ -97,236 +116,144 @@ export default class IndexPricingPlans extends React.Component {
 
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
-
         let userRegistrationOffer = undefined;
         if (this.props.user.user_registration_offers) if (this.props.user.user_registration_offers.length) userRegistrationOffer = this.props.user.user_registration_offers[0];
 
         return (
-            <div className=" bg-white component-wrapper">
-                <section className="pricing bg-white ">
-                    <div className="container" style={{ maxWidth: 'none' }}>
-                        <div className="row ml-0 mr-0 p-2">
-                            <div className="col-3">
-                            </div>
-                            <div className="col-6 text-center">
-                                <h2 className="gaa-title">{userRegistrationOffer ? 'Limited Time Offer' : 'Choose Your Plan'}</h2>
-                            </div>
-                            <div className="col-2 text-right" style={{ color: '#1a98f0', paddingTop: '12px' }}>
-                                Yearly - SAVE 20%
-                                {/* {this.state.pricePlans.length ?
-                                    (userRegistrationOffer ?
-                                        'Yearly' :
-                                        'Yearly - SAVE ' + parseFloat(this.state.pricePlans[0].yearly_discount_percent).toFixed(0) + '%')
-                                    : null} */}
-                            </div>
-                            <div className="col-1" style={{ paddingTop: '10px' }}>
-                                <label className="trigger switch">
-                                    <input
-                                        autocomplete="off"
-                                        type="checkbox"
-                                        onChange={this.togglePricingMode}
-                                        checked={this.state.planDuration == 12}
-                                    />
-                                    <span className="slider round" />
-                                </label>
-                            </div>
+            <>
+                <div id="planPage" className="planPage pageWrapper">
+                    <Container>
+                        <div className="pageHeader planPageHead">
+                            <h2 className="pageTitle">Manage plan</h2>
+                            {this.props.user.price_plan.name != "Free" && this.props.user.price_plan_expiry_date ?
+                                <p className='mb-0'>Your account will be automatically downgraded to the Free plan at {moment(this.props.user.price_plan_expiry_date || new Date()).format('ll')}. Upgrade your account to keep enjoying all the features.</p>
+                                : null}
                         </div>
+
                         {userRegistrationOffer ? <div className="row ml-0 mr-0 p-2"><div className="col-12 text-center"><h2 className="gaa-title">{manipulateRegistrationOfferText(userRegistrationOffer.description, userRegistrationOffer)}</h2></div></div> : null}
-                        <div className="row ml-0 mr-0 d-flex flex-row justify-content-center pt-3">
+
+
+                        <Row>
+                            <Col xs={12} className='d-flex justify-content-center'>
+                                <div className='plansType d-flex'>
+                                    <Button onClick={() => this.setState({ planDuration: 1 })} className={`${this.state.planDuration == 1 ? 'currentPlan' : null}`}>Monthly</Button>
+                                    <Button onClick={() => this.setState({ planDuration: 12 })} className={`${this.state.planDuration == 12 ? 'currentPlan' : null}`}>Yearly</Button>
+                                </div>
+                            </Col>
+
 
                             {this.state.pricePlans.map(pricePlan => {
+                                return <Col md={Math.round(12 / this.state.pricePlans.length)} className='d-flex flex-column my-3' key={pricePlan.id}>
+                                    <div className={`plan d-flex flex-column flex-grow-1 ${pricePlan.badge_text && 'bestplan'}`}>
+                                        {pricePlan.badge_text ? <Button className='btn-bestplan'>{pricePlan.badge_text}</Button> : null}
 
-                                return <div className={"col-lg-" + (12 / this.state.pricePlans.length)} key={pricePlan.id}>
+                                        <div className='planhead d-flex flex-column text-center'>
+                                            <h3>{pricePlan.name}</h3>
+                                            <p>{pricePlan.short_description.length > 35 ? <>{pricePlan.short_description}</> : pricePlan.short_description.length == 0 ? <></> : <>{pricePlan.short_description}</>}</p>
+                                            <h3>{userRegistrationOffer ? <><sup>$</sup>{pricePlan.price}</> : <><sup>$</sup>{calculatePricePlanPrice(pricePlan.price, this.state.planDuration, pricePlan.yearly_discount_percent, userRegistrationOffer)} /m</>}</h3>
+                                            {this.state.planDuration == 12 ? <span>Billed Annually</span> : <span>Billed Monthly</span>}
 
-                                    {/*<input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')} />*/}
-                                    {/*<input type="hidden" name="price_plan_id" value={pricePlan.id} />*/}
-
-                                    <div className={"card mb-5 mb-lg-0 " + (pricePlan.badge_text ? 'with-badge' : '')}>
-                                        <div className="card-body">
-                                            {pricePlan.badge_text ?
-                                                <span className="badge" style={{ position: 'absolute', right: '12px' }}>{pricePlan.badge_text}</span>
-                                                : null}
-                                            <h2 className="card-title w-100 text-center">
-                                                {pricePlan.name}
-                                            </h2>
-
-                                            {/* This line break logic is completely rubbish but it works.
-                                                If you have some better approach for it, don't hesitate
-                                                to comment this one and try yours. */}
-                                            {
-                                                pricePlan.short_description.length > 35 ? <p className="mb-0 card-text w-100 text-center minh-92px">{pricePlan.short_description}</p> :
-                                                    pricePlan.short_description.length == 0 ? <p className="mb-0 card-text w-100 text-center minh-92px"></p> :
-                                                        <p className="mb-0 card-text w-100 text-center minh-92px">{pricePlan.short_description}</p>
-                                            }
-                                            {/* Constants for Monthly and Annual values should have been used. But
-                                                it might have caused some compilation errors that's why I have
-                                                avoided them. If you can do it without any error feel free to do it. */}
-                                            <h6 className="card-price text-center w-100">
-                                                {userRegistrationOffer ? <span className="real-price" style={{ textDecoration: 'line-through' }}>${pricePlan.price}</span> : null}
-                                                ${calculatePricePlanPrice(pricePlan.price, this.state.planDuration, pricePlan.yearly_discount_percent, userRegistrationOffer)}
-                                                <span className="period">/per month</span>
-                                            </h6>
-                                            {this.state.planDuration == 12 ? <sub className="mt-2 w-100 text-center">Billed Annually</sub> : <sub className="mt-2 w-100 text-center">Billed Monthly</sub>}
-                                            {
-                                                pricePlan.google_analytics_property_count == 1 ?
-                                                    <p className="mt-3 w-100 ml-2" style={{ color: '#1a98f0' }}><i className="fa fa-check-circle-o" style={{ marginRight: '5px' }}></i> One Property/Website</p>
+                                            {<>
+                                                {this.props.user.price_plan.name == 'Trial' && pricePlan.price == 0 ?
+                                                    <Button className='btn-plan disabled'>Disabled</Button>
                                                     :
-                                                    pricePlan.google_analytics_property_count > 0 ?
-                                                        <p className="mt-3 w-100 ml-2" style={{ color: '#1a98f0' }}><i className="fa fa-check-circle-o" style={{ marginRight: '5px' }}></i> Up to {pricePlan.google_analytics_property_count} Properties</p>
+                                                    this.props.user.price_plan.id == pricePlan.id ? <Button className='btn-currentPlan'>Current plan</Button>
                                                         :
-                                                        (pricePlan.google_analytics_property_count == -1 ?
-                                                            <p className="mt-3 text-danger w-100 ml-2"><i className="fa fa-times-circle-o" style={{ marginRight: '5px' }}></i> No Property Filters</p>
+                                                        pricePlan.price == 0 ? <Button className='btn-plan' onClick={() => { this.changePricePlan(pricePlan); }} >Subscribe</Button>
                                                             :
-                                                            <p className="mt-3 text-success w-100 ml-2"><i className="fa fa-check-circle-o" style={{ marginRight: '5px' }}></i> Unlimited Property Filters</p>)
-                                            }
-                                            <hr />
-                                            <ul className="fa-ul">
-                                                {
-                                                    pricePlan.annotations_count > 0 ?
-                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span> Up to {pricePlan.annotations_count} Annotations</li>
-                                                        :
-                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span> Unlimited Annotations</li>
-                                                }
-                                                {
-                                                    pricePlan.has_chrome_extension == 1 ?
-                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span> Chrome extension</li>
-                                                        : null
-                                                }
-                                                {
-                                                    pricePlan.has_google_data_studio == 1 ?
-                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Data Studio Connector</li>
-                                                        : null
-                                                }
-                                                {
-                                                    pricePlan.user_per_ga_account_count == 0 ?
-                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited Users</li>
-                                                        : (
-                                                            pricePlan.user_per_ga_account_count == -1  ?
-                                                                <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to 1 User</li>
-                                                            : (
-                                                                pricePlan.user_per_ga_account_count >= 1 ?
-                                                                    <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to {pricePlan.user_per_ga_account_count+1} User</li>
-                                                                    : (<span></span>)
-                                                              )
-                                                          )
-                                                }
-                                                {
-                                                    pricePlan.ga_account_count == 0 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Unlimited GA accounts</li>
-                                                        :
-                                                        pricePlan.ga_account_count >= 1 ? <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Up to { pricePlan.ga_account_count == 1 ? <span>{pricePlan.ga_account_count} GA account</span> : <span>{pricePlan.ga_account_count} GA accounts</span> }</li>
-                                                            : ''
-
-                                                }
-                                                {/* {
-                                                    pricePlan.ga_account_count == 0 ?
-                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Annotations Properties Filtering</li>
-                                                        : null
-                                                } */}
-                                                {
-                                                    pricePlan.has_manual_add ?
-                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Manual Annotations</li>
-                                                        : null
-                                                }
-
-                                                {
-                                                    pricePlan.has_csv_upload ?
-                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>CSV Upload</li>
-                                                        : null
-                                                }
-
-                                                {
-                                                    pricePlan.has_api ?
-                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Annotations API</li>
-                                                        : null
-                                                }
-                                                {
-                                                    pricePlan.has_integrations ?
-                                                        <li><span className="fa-li"><i className="fa fa-check-circle-o"></i></span>Integrations</li>
-                                                        : null
-                                                }
-                                                {
-                                                    pricePlan.has_data_sources ?
-                                                        <li>
-                                                            <span className="fa-li"><i className="fa fa-check-circle-o"></i></span>
-                                                            Automations
-                                                            <img id={"automation-feature-hint-" + pricePlan.id} className="hint-button" src="/images/info-logo-grey.png" onClick={() => { this.setState({ showHintFor: 'automation-hint-' + pricePlan.id }) }} />
-                                                            <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'automation-hint-' + pricePlan.id} target={"automation-feature-hint-" + pricePlan.id} toggle={() => { this.setState({ showHintFor: null }) }} onClick={() => { this.changeShownHint(null) }}>
-                                                                <PopoverHeader>{pricePlan.name}</PopoverHeader>
-                                                                <PopoverBody>
-
-                                                                    {
-                                                                        pricePlan.keyword_tracking_count == -1 ?
-                                                                            null
-                                                                            : <span>Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count} Credits<br /></span>
-                                                                    }
-
-                                                                    Website Monitoring: {pricePlan.web_monitor_count} URLs<br />
-                                                                    Weather Alerts: {pricePlan.owm_city_count == 0 ? 'Unlimited' : (pricePlan.owm_city_count > 0 ? pricePlan.owm_city_count : 0)} cities<br />
-                                                                    News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : (pricePlan.google_alert_keyword_count > 0 ? pricePlan.google_alert_keyword_count : 0)} keywords<br />
-                                                                    Retail Marketing Dates<br />
-                                                                    Google Updates<br />
-                                                                    WordPress Updates<br />
-                                                                    Holidays<br />
-                                                                </PopoverBody>
-                                                            </UncontrolledPopover>
-                                                        </li>
-                                                        : null
-                                                }
-                                                {
-                                                    pricePlan.has_notifications ?
-                                                        <li>
-                                                            <span className="fa-li"><i className="fa fa-check-circle-o"></i></span>
-                                                            Notifications
-                                                            {/* <img id={"automation-feature-hint-" + pricePlan.id} className="hint-button" src="/images/info-logo-grey.png" onClick={() => { this.setState({ showHintFor: 'automation-hint-' + pricePlan.id }) }} />
-                                                            <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'automation-hint-' + pricePlan.id} target={"automation-feature-hint-" + pricePlan.id} toggle={() => { this.setState({ showHintFor: null }) }} onClick={() => { this.changeShownHint(null) }}>
-                                                                <PopoverHeader>{pricePlan.name}</PopoverHeader>
-                                                                <PopoverBody>
-                                                                    Website Monitoring: {pricePlan.web_monitor_count} URLs<br />
-                                                                    Weather Alerts: {pricePlan.owm_city_count == 0 ? 'Unlimited' : pricePlan.owm_city_count} cities<br />
-                                                                    News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : pricePlan.google_alert_keyword_count} keywords<br />
-                                                                    Retail Marketing Dates<br />
-                                                                    Google Updates<br />
-                                                                    WordPress Updates<br />
-                                                                    Holidays
-                                                                </PopoverBody>
-                                                            </UncontrolledPopover> */}
-                                                        </li>
-                                                        : null
-                                                }
-                                            </ul>
-
-                                            {
-                                                this.props.user.price_plan.name == 'Trial' && pricePlan.price == 0 ?
-                                                    <span value="subscribed" className="btn mx-auto pp-c-action btn-success text-uppercase mt-auto disabled">Disabled</span>
-                                                    : this.props.user.price_plan.id == pricePlan.id ?
-                                                        <span value="subscribed" className="btn mx-auto pp-c-action btn-success text-uppercase mt-auto">Subscribed</span>
-                                                        :
-                                                        pricePlan.price == 0 ?
-                                                            <button className="btn mx-auto gaa-btn-primary pp-c-action text-uppercase mt-auto " onClick={() => { this.changePricePlan(pricePlan); }} >Subscribe</button>
-                                                            :
-                                                            pricePlan.is_available == false ?
-                                                                <a href="#" className="btn pp-c-action mx-auto gaa-btn-primary text-uppercase mt-auto disabled">Coming Soon</a>
+                                                            pricePlan.is_available == false ? <Button className='btn-plan disabled'>Coming Soon</Button>
                                                                 :
-                                                                <a href="#" className="btn pp-c-action mx-auto gaa-btn-primary text-uppercase mt-auto" onClick={() => { this.changePricePlan(pricePlan); }}>Subscribe</a>
-                                            }
+                                                                <Button className='btn-plan' onClick={() => { this.changePricePlan(pricePlan); }}>Subscribe</Button>}
+                                            </>}
+                                        </div>
+                                        <div className='planbody'>
+                                            <ul>
+                                                <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i>
+                                                    <span>
+                                                        {pricePlan.google_analytics_property_count == 1 ?
+                                                            <> One Property/Website</>
+                                                            :
+                                                            pricePlan.google_analytics_property_count > 0 ? <> Up to {pricePlan.google_analytics_property_count} Properties</> : (pricePlan.google_analytics_property_count == -1 ? <> No Property Filters</> : <> Unlimited Property Filters</>)}</span>
+                                                </li>
+                                                <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i>
+                                                    <span>{pricePlan.annotations_count > 0 ? <> Up to {pricePlan.annotations_count} Annotations</> : <> Unlimited Annotations</>}</span>
+                                                </li>
+                                                <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i>
+                                                    <span>{pricePlan.user_per_ga_account_count == 0 ? <>Unlimited Users</> : (pricePlan.user_per_ga_account_count == -1 ? <>Up to 1 User</> : (pricePlan.user_per_ga_account_count >= 1 ? <>Up to {pricePlan.user_per_ga_account_count + 1} User</> : (<></>)))}</span>
+                                                </li>
+
+                                                {pricePlan.has_api ? <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i><span>Annotations API</span></li> : null}
+                                                {pricePlan.has_integrations ? <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i><span>Integrations</span></li> : null}
+                                                {pricePlan.has_notifications ? <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i><span>Notifications</span></li> : null}
+                                            </ul>
+                                        </div>
+
+                                        <div className='planfoot'>
+                                            <h4>Credits</h4>
+                                            <ul>
+
+                                                {pricePlan.keyword_tracking_count == -1 ? null : <li>Rank Tracking: <span>{pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count}</span> </li>}
+                                                <li>Website Monitoring: <span>{pricePlan.web_monitor_count}</span></li>
+                                                <li>Weather Alerts: <span>{pricePlan.owm_city_count == 0 ? 'Unlimited' : (pricePlan.owm_city_count > 0 ? pricePlan.owm_city_count : 0)}</span></li>
+                                                <li>News Alerts: <span>{pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : (pricePlan.google_alert_keyword_count > 0 ? pricePlan.google_alert_keyword_count : 0)}</span></li>
+                                                <li>Retail Marketing Dates: <span>∞</span></li>
+                                                <li>Google Updates: <span>∞</span></li>
+                                                <li>WordPress Updates: <span>∞</span></li>
+                                                <li>Holidays: <span>∞</span></li>
+                                                <li>Apple Poadcast: <span>{pricePlan.apple_podcast_monitor_count == 0 ? 'Unlimited' : (pricePlan.apple_podcast_monitor_count > 0 ? pricePlan.apple_podcast_monitor_count : 0)}</span></li>
+                                                <li>Bitbucket: <span>{pricePlan.bitbucket_credits_count == 0 ? 'Unlimited' : (pricePlan.bitbucket_credits_count > 0 ? pricePlan.bitbucket_credits_count : 0)}</span></li>
+                                                <li>Aws: <span>{pricePlan.aws_credits_count == 0 ? 'Unlimited' : (pricePlan.aws_credits_count > 0 ? pricePlan.aws_credits_count : 0)}</span></li>
+                                                <li>Github: <span>{pricePlan.github_credits_count == 0 ? 'Unlimited' : (pricePlan.github_credits_count > 0 ? pricePlan.github_credits_count : 0)}</span></li>
+                                                <li>Linkedin: <span>{pricePlan.linkedin_credits_count == 0 ? 'Unlimited' : (pricePlan.linkedin_credits_count > 0 ? pricePlan.linkedin_credits_count : 0)}</span></li>
+                                                <li>Shopify: <span>{pricePlan.shopify_monitor_count == 0 ? 'Unlimited' : (pricePlan.shopify_monitor_count > 0 ? pricePlan.shopify_monitor_count : 0)}</span></li>
+                                                <li>Twitter: <span>{pricePlan.twitter_credits_count == 0 ? 'Unlimited' : (pricePlan.twitter_credits_count > 0 ? pricePlan.twitter_credits_count : 0)}</span></li>
+
+
+                                                {/* {pricePlan.has_data_sources ? <li>
+                                                    <span className="fa-li"><i className="fa fa-check-circle-o"></i></span>
+                                                    Automations
+                                                    <img id={"automation-feature-hint-" + pricePlan.id} className="hint-button" src="/images/info-logo-grey.png" onClick={() => { this.setState({ showHintFor: 'automation-hint-' + pricePlan.id }) }} />
+                                                    <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'automation-hint-' + pricePlan.id} target={"automation-feature-hint-" + pricePlan.id} toggle={() => { this.setState({ showHintFor: null }) }} onClick={() => { this.changeShownHint(null) }}>
+                                                        <PopoverHeader>{pricePlan.name}</PopoverHeader>
+                                                        <PopoverBody>
+                                                            {pricePlan.keyword_tracking_count == -1 ? null : <span>Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count} Credits<br /></span>}
+                                                            Website Monitoring: {pricePlan.web_monitor_count} URLs<br />
+                                                            Weather Alerts: {pricePlan.owm_city_count == 0 ? 'Unlimited' : (pricePlan.owm_city_count > 0 ? pricePlan.owm_city_count : 0)} cities<br />
+                                                            News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : (pricePlan.google_alert_keyword_count > 0 ? pricePlan.google_alert_keyword_count : 0)} keywords<br />
+                                                            Retail Marketing Dates<br />
+                                                            Google Updates<br />
+                                                            WordPress Updates<br />
+                                                            Holidays<br />
+                                                        </PopoverBody>
+                                                    </UncontrolledPopover>
+                                                </li> : null} */}
+
+                                            </ul>
                                         </div>
                                     </div>
-
-                                </div>
+                                </Col>
                             })}
-                        </div>
+                        </Row>
 
-                        {
-                            this.props.user.price_plan.name != "Free" && this.props.user.is_billing_enabled == 0 ?
-                                <div className="p-5 mt-4 text-center">
-                                    <p>Your account will be automatically downgraded to the Free plan at {(new Date(this.props.user.price_plan_expiry_date)).getDay() + '-' + (new Date(this.props.user.price_plan_expiry_date)).getMonth() + '-' + (new Date(this.props.user.price_plan_expiry_date)).getFullYear()}.<br />
-                                        Upgrade your account to keep enjoying all the features.</p>
-                                </div>
-                                : null
-                        }
-                    </div>
-                </section >
-            </div >
+                        <div className='planDetail'>
+                            <h4>All packages include:</h4>
+                            <ul>
+                                <li><i><img src={'/tick-green.svg'} /></i><span>Chrome extension</span></li>
+                                <li><i><img src={'/tick-green.svg'} /></i><span>Data Studio connector</span></li>
+                                <li><i><img src={'/tick-green.svg'} /></i><span>Unlimited GA accounts</span></li>
+                                <li><i><img src={'/tick-green.svg'} /></i><span>Manual annotations</span></li>
+                                <li><i><img src={'/tick-green.svg'} /></i><span>CSV upload</span></li>
+                            </ul>
+                        </div>
+                    </Container>
+                </div>
+            </>
         );
     }
 

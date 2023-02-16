@@ -3,7 +3,7 @@ import HttpClient from "./HttpClient";
 import SearchEngineSelect from "./SearchEngineSelect";
 import LocationSelect from "./LocationSelect";
 import AnnotationCategorySelect from "./AnnotationCategorySelect";
-import {saveStateToLocalStorage} from "../helpers/CommonFunctions";
+import { saveStateToLocalStorage } from "../helpers/CommonFunctions";
 
 export default class DSKeywordTracking extends React.Component {
     constructor(props) {
@@ -49,11 +49,11 @@ export default class DSKeywordTracking extends React.Component {
                 ranking_places: resp.data.ranking_places,
                 tracking_of: resp.data.is_competitor_url
             });
-            this.state.tracking_of ? document.getElementById('tracking_of').value = this.state.tracking_of : '';
-            this.state.url ? document.getElementById('url').value = this.state.url : '';
-            this.state.lang ? document.getElementById('lang').value = this.state.lang : '';
-            this.state.ranking_direction ? document.getElementById('ranking_direction').value = this.state.ranking_direction : '';
-            this.state.ranking_places ? document.getElementById('ranking_places').value = this.state.ranking_places : '';
+            if (this.state.tracking_of) document.getElementById('tracking_of').value = this.state.tracking_of;
+            if (this.state.url) document.getElementById('url').value = this.state.url;
+            if (this.state.lang) document.getElementById('lang').value = this.state.lang;
+            if (this.state.ranking_direction) document.getElementById('ranking_direction').value = this.state.ranking_direction;
+            if (this.state.ranking_places) document.getElementById('ranking_places').value = this.state.ranking_places;
         }, (err) => {
             this.setState({ isLoading: false, errors: (err.response).data });
         }).catch(err => {
@@ -174,7 +174,7 @@ export default class DSKeywordTracking extends React.Component {
     render() {
 
         return (
-            <div className="switch-wrapper">
+            <div className="apps-bodyContent switch-wrapper">
 
                 <div className="weather_alert_cities-form">
                     <h4 className="gaa-text-primary">
@@ -189,7 +189,7 @@ export default class DSKeywordTracking extends React.Component {
                         </select>
                     </div>
                     <label>Website URL</label>
-                    <div className="input-group mb-3">
+                    <div className="input-group inputWithIcon mb-3 position-relative">
                         <input
                             type="text"
                             className="form-control"
@@ -207,6 +207,7 @@ export default class DSKeywordTracking extends React.Component {
                                 this.setState({ url: val });
                             }}
                         />
+                        <i className="fa fa-link"></i>
                     </div>
                     <label>Keywords</label>
                     <div className="input-group mb-1">

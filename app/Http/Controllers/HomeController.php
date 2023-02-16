@@ -37,14 +37,27 @@ class HomeController extends Controller
         $user = Auth::user();
         $user->load('pricePlan');
         $user->loadCount('googleAccounts');
-
+        $user->show_configuration_message = false;
         if ($user->last_login_at == null) {
             User::where('id', $user->id)
                 ->update([
                     'last_login_at' => new \DateTime,
                 ]);
         }
-
+        if($user->password === User::EMPTY_PASSWORD && $user->has_password == true)
+        {
+            $user->show_password_message = true;
+        }else
+        {
+            $user->show_password_message = false;
+            if($user->starterConfigurationChecklist()->count() != $user->userStarterConfigurationChecklist()->count())
+            {
+                $user->starter_configuration_checklist = $user->starterConfigurationChecklist();
+                $user->user_starter_configuration_checklist = $user->userStarterConfigurationChecklist();
+                $user->user_starter_configuration_checklist_count = $user->userStarterConfigurationChecklist()->count();   
+                $user->show_configuration_message = true; 
+            }
+        }
         // $user->annotations_count = $user->getTotalAnnotationsCount(true);
         $user->google_analytics_properties_in_use_count = $user->googleAnalyticsPropertiesInUse()->count();
         $user->do_require_password_change               = ($user->password == User::EMPTY_PASSWORD && !is_null($user->app_sumo_uuid));
@@ -182,6 +195,18 @@ class HomeController extends Controller
             $user->save();
         }
 
+        if ($request->has('is_ds_shopify_annotation_enabled')) {
+            $user->is_ds_shopify_annotation_enabled = $request->is_ds_shopify_annotation_enabled;
+            if ($request->is_ds_shopify_annotation_enabled) {
+                $this->checkPricePlanLimit($user);
+                $user->last_activated_any_data_source_at = Carbon::now();
+                event(new WebsiteMonitoringActivated($user));
+            } else {
+                event(new WebsiteMonitoringDeactivated($user));
+            }
+            $user->save();
+        }
+
         if ($request->has('is_ds_g_ads_history_change_enabled')) {
             $user->is_ds_g_ads_history_change_enabled = $request->is_ds_g_ads_history_change_enabled;
         }
@@ -228,6 +253,10 @@ class HomeController extends Controller
                 $user->is_ds_twitter_tracking_enabled = $request->is_ds_twitter_tracking_enabled;
             }
 
+        }
+
+        if ($request->has('is_ds_wordpress_enabled')) {
+            $user->is_ds_wordpress_enabled = $request->is_ds_wordpress_enabled;
         }
 
         $user->save();
@@ -297,5 +326,72 @@ class HomeController extends Controller
         $user->phone_number = $request->phone;
         $user->save();
         return response()->json(['success' => 'true', 'message' => 'Phone updated successfully'], 200);
+    }
+    
+    public function updateEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email|max:255',
+        ]);
+        $user = Auth::user();
+        if ($user->email !== $request->email) {
+            $user->email_verified_at = null;
+        }
+
+        $user->email = $request->email;
+        $user->save();
+        return response()->json(['success' => 'true', 'message' => 'Email updated successfully'], 200);
+    }
+
+    public function updateProfile (Request $request) {
+
+        $this->validate($request, [
+            'profile_image' => 'required',
+        ]);
+
+        $file = $request->file('profile_image');
+        $filename = time().'_'.$file->getClientOriginalName();
+
+        // File extension
+        $extension = $file->getClientOriginalExtension();
+        // File upload location
+        $location = 'profiles';
+        // Upload file
+        $file->move($location,$filename);
+        // File path
+        // $filepath = url('files/'.$filename);
+        // return $filepath;
+
+        $user = Auth::user();
+        $user->profile_image = 'profiles/'.$filename;
+        $user->save();
+        return response()->json(['success' => 'true', 'profile_image' => $user->profile_image, 'message' => 'Profile Image updated successfully'], 200);
+        
+      
+
+    }
+
+    public function updateUser (Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'phone' => 'nullable|string',
+            'timezone' => 'required',
+        ]);
+
+        $user = Auth::user();
+        if ($user->email !== $request->email) {
+            $user->email_verified_at = null;
+        }
+        if ($user->phone_number !== $request->phone) {
+            $user->phone_verified_at = null;
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone;
+        $user->timezone = $request->timezone;
+        $user->save();
+        return response()->json(['success' => 'true', 'message' => 'User updated successfully'], 200);
     }
 }

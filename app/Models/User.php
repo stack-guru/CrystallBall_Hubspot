@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
+use App\Helpers\AnnotationQueryHelper;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -56,6 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_ds_facebook_tracking_enabled',
         'is_ds_instagram_tracking_enabled',
         'is_ds_bitbucket_tracking_enabled',
+        'is_ds_shopify_annotation_enabled',
         'is_ds_github_tracking_enabled',
         'is_ds_apple_podcast_annotation_enabled',
         'is_ds_g_ads_history_change_enabled',
@@ -73,6 +75,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'startup_configuration_showed_at',
 
         'last_screenshot_of_report_at',
+        'is_ds_wordpress_enabled',
         // app_sumo_uuid
     ];
 
@@ -281,6 +284,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(UserChecklistItem::class);
     }
 
+    public function userStarterConfigurationChecklist()
+    {
+        return  $this->userChecklistItems->whereIn('checklist_item_id',['25','21','23']);
+    }
+
+    public function starterConfigurationChecklist()
+    {
+        return  ChecklistItem::whereIn('id',['25','21','23'])->get();
+    }
+
     public function notificationSettings()
     {
         return $this->hasMany(NotificationSetting::class);
@@ -342,7 +355,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $annotationsQuery = "SELECT COUNT(*) AS total_annotations_count FROM (";
         $annotationsQuery .= "SELECT TempTable.* FROM (";
-        $annotationsQuery .= Annotation::allAnnotationsUnionQueryString($this, '*', $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($this, '*', $userIdsArray, '*', true);
         $annotationsQuery .= ") AS TempTable";
 
         if ($userPricePlan->annotations_count > 0 && $applyLimit) {
@@ -611,5 +624,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(UserGithubAccount::class, 'user_id');
     }
-
 }

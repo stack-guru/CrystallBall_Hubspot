@@ -27,24 +27,79 @@ axiosInst.interceptors.response.use(function (response) {
 
     if (error.response.status === 401) {
         if (window.location.pathname !== "/") {
-            window.alert("Not logged in. We are redirecting you to the login page. You may login with an account and try the operation again.");
-            window.location.pathname = "/";
+            swal.fire({
+                html: `<ga-error-popup heading="<h1>Error</h1>"
+                    subHeading="<p>Not logged in. We are redirecting you to the login page. You may login with an account and try the operation again.</p>"
+                    bannerImg="/images/error-popup-image.svg"></ga-error-popup>`,
+                width: 600,
+                showCancelButton: true,
+                showCloseButton: false,
+                showConfirmButton: false,
+                customClass: {
+                    popup: "gaErrorPopup",
+                },
+                cancelButtonClass: "btn-close",
+                cancelButtonText: "Close",
+            }).then(() => {
+                window.location.pathname = "/";
+            });
         }
     }
 
     if (error.response.status === 403) {
         console.log(error);
-        window.alert("You tried to perform an operation you are not authorized of. See console for more information.");
+        swal.fire({
+            html: `<ga-error-popup heading="<h1>Error</h1>"
+                subHeading="<p>You tried to perform an operation you are not authorized of. See console for more information.</p>"
+                bannerImg="/images/error-popup-image.svg"></ga-error-popup>`,
+            width: 600,
+            showCancelButton: true,
+            showCloseButton: false,
+            showConfirmButton: false,
+            customClass: {
+                popup: "gaErrorPopup",
+            },
+            cancelButtonClass: "btn-close",
+            cancelButtonText: "Close",
+        })
     }
 
     if (error.response.status === 404) {
         console.log(error);
-        swal.fire("Error!", "Not found.", "error");
+
+        swal.fire({
+            html: `<ga-error-popup heading="<h1>Error</h1>"
+                subHeading="<p>We are not able to found the record.</p>"
+                bannerImg="/images/error-popup-image.svg"></ga-error-popup>`,
+            width: 600,
+            showCancelButton: true,
+            showCloseButton: false,
+            showConfirmButton: false,
+            customClass: {
+                popup: "gaErrorPopup",
+            },
+            cancelButtonClass: "btn-close",
+            cancelButtonText: "Close",
+        });
+
     }
 
     if (error.response.status === 405) {
         console.log(error);
-        window.alert("Invalid method tried for a route. See console for more information.");
+        swal.fire({
+            html: `<ga-error-popup heading="<h1>Error</h1>"
+                subHeading="<p>Invalid method tried for a route. See console for more information.</p>"
+                bannerImg="/images/error-popup-image.svg"></ga-error-popup>`,
+            width: 600,
+            showCancelButton: true,
+            showCloseButton: false,
+            showConfirmButton: false,
+            customClass: {
+                popup: "gaErrorPopup",
+            },
+            cancelButtonClass: "btn-close",
+            cancelButtonText: "Close",
+        })
     }
 
     if (error.response.status === 422) {
@@ -62,23 +117,26 @@ axiosInst.interceptors.response.use(function (response) {
 
         const accountNotLinkedHtml = '' +
             '<div class="">' +
-            '<img src="/images/banners/user_limit_banner.jpg" class="img-fluid">' +
+            '<img src="/images/banners/user_limit_banner.png" class="img-fluid">' +
             '</div>'
 
         swal.fire({
             html: accountNotLinkedHtml,
-            width: 700,
+            width: 1000,
+            showCancelButton: true,
+            showCloseButton: true,
             customClass: {
-                popup: 'bg-light-red pb-5',
-                htmlContainer: 'm-0',
+                popup: "themePlanAlertPopup",
+                htmlContainer: "themePlanAlertPopupContent",
+                closeButton: 'btn-closeplanAlertPopup',
             },
-            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-            confirmButtonText: "Upgrade Now" + "<i class='ml-2 fa fa-caret-right'> </i>",
+            cancelButtonClass: "btn-bookADemo",
+            cancelButtonText: "Book a Demo",
+            confirmButtonClass: "btn-subscribeNow",
+            confirmButtonText: "Subscribe now",
 
         }).then(value => {
-            window.location.href = "/settings/price-plans";
-            // <Redirect to="/settings/price-plans"/>
-            // this.setState({redirectTo: "/settings/price-plans"});
+            if (value.isConfirmed) window.location.href = '/settings/price-plans'
         });
 
 
