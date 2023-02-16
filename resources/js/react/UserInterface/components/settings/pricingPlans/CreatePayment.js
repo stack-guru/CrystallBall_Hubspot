@@ -18,23 +18,23 @@ export default class CreatePayment extends Component {
         this.state = {
             pricePlan: undefined,
             paymentDetails: {
-                company_name: ' ',
-                company_registration_number: ' ',
-                phone_number_prefix: ' ',
-                phone_number: ' ',
+                company_name: '',
+                company_registration_number: '',
+                phone_number_prefix: '',
+                phone_number: '',
 
-                city: ' ',
+                city: '',
                 country: 'Country',
-                billing_address: ' ',
-                zip_code: ' ',
+                billing_address: '',
+                zip_code: '',
 
-                first_name: ' ',
-                last_name: ' ',
+                first_name: '',
+                last_name: '',
 
-                cardNumber: ' ',
-                expirationMonth: ' ',
-                expirationYear: ' ',
-                securityCode: ' ',
+                cardNumber: '',
+                expirationMonth: '',
+                expirationYear: '',
+                securityCode: '',
             },
             isBusy: false,
             isDirty: false,
@@ -352,7 +352,7 @@ export default class CreatePayment extends Component {
                                         <div className='grid2layout'>
                                             <div className='themeNewInputStyle'>
                                                 {/* <input type="text" className="form-control" placeholder="Phone Number" name="phone_number" id="phone_number" onChange={this.changeHandler} value={this.state.paymentDetails.phone_number} /> */}
-                                                <PhoneInput className='themeNewInputStyle changePhoneNumber' country={'us'} value={this.state.phone} onChange={phone => this.setState({ phone })} inputProps={{ name: 'phone', required: true, autoFocus: true }} />
+                                                <PhoneInput className='themeNewInputStyle changePhoneNumber' name="phone_number" id="phone_number"  country={'us'} value={this.state.paymentDetails.phone_number} onChange={this.changeHandler} inputProps={{ name: 'phone', required: true, autoFocus: true }} />
                                             </div>
                                         </div>
                                     </div>
@@ -396,7 +396,7 @@ export default class CreatePayment extends Component {
 
                                         <div className='grid2layout'>
                                             <div className='themeNewInputStyle'>
-                                                <input type="text" className="form-control" placeolder="First Name" name="first_name" id="first_name" onChange={this.changeHandler} value={this.state.paymentDetails.first_name} />
+                                                <input type="text" className="form-control" placeholder="First Name" name="first_name" id="first_name" onChange={this.changeHandler} value={this.state.paymentDetails.first_name} />
                                             </div>
                                             <div className='themeNewInputStyle'>
                                                 <input type="text" className="form-control" placeholder="Last Name" name="last_name" id="last_name" onChange={this.changeHandler} value={this.state.paymentDetails.last_name} />
@@ -477,9 +477,10 @@ export default class CreatePayment extends Component {
                                             <button className="btn-apply" type="button" onClick={this.applyCoupon}>Apply</button>
                                         </div>
 
-                                        <button type="submit" data-bluesnap="submitButton" className={"btn-payNow" + (this.state.isBusy ? "disabled" : '')}>Pay now</button>
+                                        <button type="submit" data-bluesnap="submitButton" className={`btn-payNow ${this.state.isBusy ? "disabled" : ''}`}>Pay now</button>
                                         <div className='d-flex justify-content-center'>
-                                            <img className='d-block' src='/images/blueSnap.svg'/>
+                                            {/* <img className='d-block' src='/images/blueSnap.svg'/> */}
+                                            <a target="_blank" href="https://home.bluesnap.com/"><img className='d-block' style={{width: 200}} src="/images/blueSnap.png" /></a>
                                         </div>
                                     </div>
                                 </Col>
