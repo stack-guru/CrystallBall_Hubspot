@@ -430,7 +430,7 @@ export default class CreatePayment extends Component {
                                             </li>
                                             {annualDiscountAmount && annualDiscountAmount != "0.00" ?
                                                 <li>
-                                                    <span>Annual Discount ({this.state.pricePlan.yearly_discount_percent}%)</span>
+                                                    <span>Annual Discount ({Math.round(this.state.pricePlan.yearly_discount_percent * 1)}%)</span>
                                                     <span>${annualDiscountAmount}</span>
                                                 </li>
                                             :
