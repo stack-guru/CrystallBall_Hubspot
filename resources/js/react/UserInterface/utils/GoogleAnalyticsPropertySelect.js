@@ -6,6 +6,7 @@ import HttpClient from './HttpClient'
 import Select from 'react-select';
 import GooglePermissionPopup from './GooglePermissionPopup';
 import { Modal, Popover, PopoverBody } from 'reactstrap';
+import { uniqBy } from 'lodash';
 
 export default class GoogleAnalyticsPropertySelect extends Component {
 
@@ -73,7 +74,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             }
 
             if (this.props.onChangeCallback2) {
-                this.props.onChangeCallback2([{ value: "", label: "All Properties" }]);
+                this.props.onChangeCallback2([]);
             }
         }
     }
@@ -112,18 +113,21 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             return ''
         }
 
+        let finalSelectedProperty = []
         if (this.props.multiple) {
             const selectedVal = sOption;
-            this.setState({ selectedProperties: [...this.state.selectedProperties, ...selectedVal.map(itm => ({ ...itm, value: itm.value, label: itm.labelText }))] })
+            finalSelectedProperty = uniqBy([...this.state.selectedProperties, ...selectedVal.map(itm => ({ ...itm, value: itm.value, label: itm.labelText }))], 'value');
+            this.setState({ selectedProperties:  finalSelectedProperty })
         } else {
-            const selectedVal = sOption[0];
-            this.setState({ selectedProperties: [{ ...selectedVal, value: selectedVal.value, label: selectedVal.labelText, wasLastDataFetchingSuccessful: true }] })
+            const selectedVal = sOption;
+            finalSelectedProperty = [{ ...selectedVal, value: selectedVal.value, label: selectedVal.labelText, wasLastDataFetchingSuccessful: true }]
+            this.setState({ selectedProperties:  finalSelectedProperty })
         }
 
         if (
             (this.props.currentPricePlan.google_analytics_property_count < (
                 this.state.allProperties.filter(sO => sO.isInUse).length
-                + this.state.selectedProperties.filter(sO => !sO.isInUse).length)
+                + finalSelectedProperty.filter(sO => !sO.isInUse).length)
             )
             && (this.props.currentPricePlan.google_analytics_property_count !== 0)
         ) {
@@ -134,7 +138,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 this.props.onChangeCallback({
                     target: {
                         name: this.props.name,
-                        value: this.state.selectedProperties.map(sO => sO.value),
+                        value: finalSelectedProperty.map(sO => sO.value),
                         wasLastDataFetchingSuccessful: true
                     }
                 });
@@ -144,14 +148,14 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                 this.props.onChangeCallback({
                     target: {
                         name: this.props.name,
-                        value: this.state.selectedProperties[0].value,
+                        value: finalSelectedProperty[0].value,
                         wasLastDataFetchingSuccessful: sOption.wasLastDataFetchingSuccessful
                     }
                 });
             }
 
             if (this.props.onChangeCallback2) {
-                this.props.onChangeCallback2(this.state.selectedProperties);
+                this.props.onChangeCallback2(finalSelectedProperty);
             }
         }
     }
@@ -185,7 +189,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                             name={this.props.name}
                             disabled={this.props.disabled}
                             // value={this.state.aProperties}
-                            value={[]}
+                            value={this.props.multiple ? [] : this.state.selectedProperties }
                             id={this.props.id}
                             isMulti={this.props.multiple}
                             isClearable={this.props.isClearable}
@@ -271,10 +275,10 @@ export default class GoogleAnalyticsPropertySelect extends Component {
 
 
                     <div className='ga-analytics-property-selected'>
-                        {this.state.selectedProperties.length ? <h4>
+                        {this.state.selectedProperties.length && this.props.multiple ? <h4>
                             Selected properties: <span>(Click to remove)</span>
                         </h4> : null}
-                        {this.state.selectedProperties.length ? <div className="d-flex keywordTags mt-3">
+                        {this.state.selectedProperties.length && this.props.multiple ? <div className="d-flex keywordTags mt-3">
                             {this.state.selectedProperties.map(itm => {
                                 return (<>
                                     <button
@@ -293,7 +297,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                                             style={{ background: "#2d9cdb" }}
                                             className="dot"
                                         ></span>
-                                        <span className="text-truncate ga-selected-label" style={{ maxWidth: 150 }}>{itm.labelText}</span>
+                                        <span className="text-truncate ga-selected-label" style={{ maxWidth: 150 }}>{itm.labelText || itm.label}</span>
                                     </button>
 
                                     <Popover

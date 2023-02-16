@@ -104,6 +104,7 @@
     <script src="https://rawgit.com/shaneapen/Image-Preview-for-Links/master/image_preview_for_links.js" defer></script>
     <script type="text/javascript" src="{{asset('js/error-popup.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/upgrade-popup.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/plan-downgrade-upgrade-popup.js')}}"></script>
 </head>
 
 <body class="app is-collapsed">
