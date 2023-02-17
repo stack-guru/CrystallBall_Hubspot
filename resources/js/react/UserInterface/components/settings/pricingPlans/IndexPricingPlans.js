@@ -198,21 +198,21 @@ export default class IndexPricingPlans extends React.Component {
                                             <h4>Credits</h4>
                                             <ul>
 
-                                                {pricePlan.keyword_tracking_count == -1 ? null : <li>Rank Tracking: <span>{pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count}</span> </li>}
-                                                <li>Website Monitoring: <span>{pricePlan.web_monitor_count}</span></li>
-                                                <li>Weather Alerts: <span>{pricePlan.owm_city_count == 0 ? 'Unlimited' : (pricePlan.owm_city_count > 0 ? pricePlan.owm_city_count : 0)}</span></li>
-                                                <li>News Alerts: <span>{pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : (pricePlan.google_alert_keyword_count > 0 ? pricePlan.google_alert_keyword_count : 0)}</span></li>
+                                                {pricePlan.keyword_tracking_count == -1  || pricePlan.keyword_tracking_count == null ? null : <li>Rank Tracking: <span>{pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count}</span> </li>}
+                                                {pricePlan.web_monitor_count == -1 || pricePlan.web_monitor_count == null ? null : <li>Website Monitoring: <span>{pricePlan.web_monitor_count == 0 ? 'Unlimited' : pricePlan.web_monitor_count}</span> </li>}
+                                                {pricePlan.owm_city_count == -1  || pricePlan.owm_city_count == null ? null : <li>Weather Alerts: <span>{pricePlan.owm_city_count == 0 ? 'Unlimited' : pricePlan.owm_city_count}</span> </li>}
+                                                {pricePlan.google_alert_keyword_count == -1  || pricePlan.google_alert_keyword_count == null ? null : <li>News Alerts: <span>{pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : pricePlan.google_alert_keyword_count}</span> </li>}
+                                                {pricePlan.apple_podcast_monitor_count == -1  || pricePlan.apple_podcast_monitor_count == null ? null : <li>Apple Poadcast: <span>{pricePlan.apple_podcast_monitor_count == 0 ? 'Unlimited' : pricePlan.apple_podcast_monitor_count}</span> </li>}
+                                                {pricePlan.bitbucket_credits_count == -1 || pricePlan.bitbucket_credits_count == null? null : <li>Bitbucket: <span>{pricePlan.bitbucket_credits_count == 0 ? 'Unlimited' : pricePlan.bitbucket_credits_count}</span> </li>}
+                                                {pricePlan.aws_credits_count == -1  || pricePlan.aws_credits_count == null ? null : <li>Aws: <span>{pricePlan.aws_credits_count == 0 ? 'Unlimited' : pricePlan.aws_credits_count}</span> </li>}
+                                                {pricePlan.github_credits_count == -1  || pricePlan.github_credits_count == null ? null : <li>Github: <span>{pricePlan.github_credits_count == 0 ? 'Unlimited' : pricePlan.github_credits_count}</span> </li>}
+                                                {pricePlan.linkedin_credits_count == -1  || pricePlan.linkedin_credits_count == null ? null : <li>Linkedin: <span>{pricePlan.linkedin_credits_count == 0 ? 'Unlimited' : pricePlan.linkedin_credits_count}</span> </li>}
+                                                {pricePlan.shopify_monitor_count == -1  || pricePlan.shopify_monitor_count == null ? null : <li>Shopify: <span>{pricePlan.shopify_monitor_count == 0 ? 'Unlimited' : pricePlan.shopify_monitor_count}</span> </li>}
+                                                {pricePlan.twitter_credits_count == -1  || pricePlan.twitter_credits_count == null ? null : <li>Twitter: <span>{pricePlan.twitter_credits_count == 0 ? 'Unlimited' : pricePlan.twitter_credits_count}</span> </li>}
                                                 {/* <li>Retail Marketing Dates: <span>∞</span></li>
                                                 <li>Google Updates: <span>∞</span></li>
                                                 <li>WordPress Updates: <span>∞</span></li>
                                                 <li>Holidays: <span>∞</span></li> */}
-                                                <li>Apple Poadcast: <span>{pricePlan.apple_podcast_monitor_count == 0 ? 'Unlimited' : (pricePlan.apple_podcast_monitor_count > 0 ? pricePlan.apple_podcast_monitor_count : 0)}</span></li>
-                                                <li>Bitbucket: <span>{pricePlan.bitbucket_credits_count == 0 ? 'Unlimited' : (pricePlan.bitbucket_credits_count > 0 ? pricePlan.bitbucket_credits_count : 0)}</span></li>
-                                                <li>Aws: <span>{pricePlan.aws_credits_count == 0 ? 'Unlimited' : (pricePlan.aws_credits_count > 0 ? pricePlan.aws_credits_count : 0)}</span></li>
-                                                <li>Github: <span>{pricePlan.github_credits_count == 0 ? 'Unlimited' : (pricePlan.github_credits_count > 0 ? pricePlan.github_credits_count : 0)}</span></li>
-                                                <li>Linkedin: <span>{pricePlan.linkedin_credits_count == 0 ? 'Unlimited' : (pricePlan.linkedin_credits_count > 0 ? pricePlan.linkedin_credits_count : 0)}</span></li>
-                                                <li>Shopify: <span>{pricePlan.shopify_monitor_count == 0 ? 'Unlimited' : (pricePlan.shopify_monitor_count > 0 ? pricePlan.shopify_monitor_count : 0)}</span></li>
-                                                <li>Twitter: <span>{pricePlan.twitter_credits_count == 0 ? 'Unlimited' : (pricePlan.twitter_credits_count > 0 ? pricePlan.twitter_credits_count : 0)}</span></li>
 
 
                                                 {/* {pricePlan.has_data_sources ? <li>
