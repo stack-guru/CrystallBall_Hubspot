@@ -14,13 +14,9 @@ class ChangeShopifyTypeInPricePlans extends Migration
      */
     public function up()
     {
-        DB::statement(
-            "
-            ALTER TABLE `price_plans`
-                CHANGE `shopify_monitor_count` `shopify_monitor_count` INT(10) NOT NULL DEFAULT '0',
-            ;
-            "
-        );
+        Schema::table('price_plans', function (Blueprint $table) {
+            $table->integer('shopify_monitor_count')->default('-1')->change();
+        });
     }
 
     /**
@@ -30,12 +26,8 @@ class ChangeShopifyTypeInPricePlans extends Migration
      */
     public function down()
     {
-        DB::statement(
-            "
-            ALTER TABLE `price_plans`
-                CHANGE `shopify_monitor_count` `shopify_monitor_count` INT(10) UNSIGNED NULL DEFAULT '0',
-            ;
-            "
-        );
+        Schema::table('user_annotation_colors', function (Blueprint $table) {
+            $table->dropColumn('shopify_monitor_count');
+        });
     }
 }
