@@ -36,67 +36,67 @@
                         </div>
                         <div class="form-group">
                             <label>Number of annotations <sub>(0 means unlimited, -1 means not allowed)</sub></label>
-                            <input type="number" name="annotations_count" id="annotationsCount" class="form-control" value="{{ old('annotations_count',$pricePlan->annotations_count) }}" />
+                            <input type="number" min="-1" name="annotations_count" id="annotationsCount" class="form-control" value="{{ old('annotations_count',$pricePlan->annotations_count) }}" />
                         </div>
                         <div class="form-group">
                             <label>Ga Account Count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
-                            <input type="number" name="ga_account_count" id="ga_account_count" value="{{old('ga_account_count',$pricePlan->ga_account_count)}}" class="form-control" />
+                            <input type="number" min="-1" name="ga_account_count" id="ga_account_count" value="{{old('ga_account_count',$pricePlan->ga_account_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>User per ga-account count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
-                            <input type="number" name="user_per_ga_account_count" id="user_per_ga_account_count" value="{{old('user_per_ga_account_count',$pricePlan->user_per_ga_account_count)}}" class="form-control" />
+                            <input type="number" min="-1" name="user_per_ga_account_count" id="user_per_ga_account_count" value="{{old('user_per_ga_account_count',$pricePlan->user_per_ga_account_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Web monitor count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
-                            <input type="number" name="web_monitor_count" id="web_monitor_count" value="{{old('web_monitor_count',$pricePlan->web_monitor_count)}}" class="form-control" />
+                            <input type="number" min="-1" name="web_monitor_count" id="web_monitor_count" value="{{old('web_monitor_count',$pricePlan->web_monitor_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Keyword Tracking count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
-                            <input type="number" name="keyword_tracking_count" id="keyword_tracking_count" value="{{old('keyword_tracking_count',$pricePlan->keyword_tracking_count)}}" class="form-control" />
+                            <input type="number" min="-1" name="keyword_tracking_count" id="keyword_tracking_count" value="{{old('keyword_tracking_count',$pricePlan->keyword_tracking_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Open Weather Map City count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
-                            <input type="number" name="owm_city_count" id="owm_city_count" value="{{old('owm_city_count',$pricePlan->owm_city_count)}}" class="form-control" />
+                            <input type="number" min="-1" name="owm_city_count" id="owm_city_count" value="{{old('owm_city_count',$pricePlan->owm_city_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Google Alerts Keyword count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
-                            <input type="number" name="google_alert_keyword_count" id="google_alert_keyword_count" value="{{old('google_alert_keyword_count',$pricePlan->google_alert_keyword_count)}}" class="form-control" />
+                            <input type="number" min="-1" name="google_alert_keyword_count" id="google_alert_keyword_count" value="{{old('google_alert_keyword_count',$pricePlan->google_alert_keyword_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Google Analytics Property count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
-                            <input type="number" name="google_analytics_property_count" id="google_analytics_property_count" value="{{old('google_analytics_property_count',$pricePlan->google_analytics_property_count)}}" class="form-control" />
+                            <input type="number" min="-1"  name="google_analytics_property_count" id="google_analytics_property_count" value="{{old('google_analytics_property_count',$pricePlan->google_analytics_property_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Shopify Monitor count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
-                            <input type="number" name="shopify_monitor_count" id="shopify_monitor_count" value="{{old('shopify_monitor_count',$pricePlan->shopify_monitor_count)}}" class="form-control" />
+                            <input type="number" min="-1"  name="shopify_monitor_count" id="shopify_monitor_count" value="{{old('shopify_monitor_count',$pricePlan->shopify_monitor_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="users_devices_count">Devices/Browsers allowed per user <sub>(by default its 2 including extension)</sub></label>
                             <input type="number" value="{{old('users_devices_count', $pricePlan->users_devices_count)}}" name="users_devices_count" id="users_devices_count" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="bitbucket_credits_count">Bitbucket Credits count</label>
-                            <input type="number" min="1" name="bitbucket_credits_count" value="{{old('bitbucket_credits_count', $pricePlan->bitbucket_credits_count)}}" id="bitbucket_credits_count" class="form-control" />
+                            <label for="bitbucket_credits_count">Bitbucket Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" min="-1" name="bitbucket_credits_count" value="{{old('bitbucket_credits_count', $pricePlan->bitbucket_credits_count)}}" id="bitbucket_credits_count" class="form-control" />
                         </div>
 
                         <div class="form-group">
-                            <label for="github_credits_count">Github Credits count</label>
-                            <input type="number" min="1" name="github_credits_count" value="{{old('github_credits_count', $pricePlan->github_credits_count)}}" id="github_credits_count" class="form-control" />
+                            <label for="github_credits_count">Github Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" min="-1" name="github_credits_count" value="{{old('github_credits_count', $pricePlan->github_credits_count)}}" id="github_credits_count" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="apple_podcast_monitor_count">Apple Credits count</label>
-                            <input type="number" min="1" name="apple_podcast_monitor_count" value="{{old('apple_podcast_monitor_count', $pricePlan->apple_podcast_monitor_count)}}" id="apple_podcast_monitor_count" class="form-control" />
+                            <label for="apple_podcast_monitor_count">Apple Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" min="-1" name="apple_podcast_monitor_count" value="{{old('apple_podcast_monitor_count', $pricePlan->apple_podcast_monitor_count)}}" id="apple_podcast_monitor_count" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="aws_credits_count">AWS Credits count</label>
-                            <input type="number" min="1" name="aws_credits_count" value="{{old('aws_credits_count', $pricePlan->aws_credits_count)}}" id="aws_credits_count" class="form-control" />
+                            <label for="aws_credits_count">AWS Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" min="-1" name="aws_credits_count" value="{{old('aws_credits_count', $pricePlan->aws_credits_count)}}" id="aws_credits_count" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="linkedin_credits_count">Linkedin Credits count</label>
-                            <input type="number" min="1" name="linkedin_credits_count" value="{{old('linkedin_credits_count', $pricePlan->linkedin_credits_count)}}" id="linkedin_credits_count" class="form-control" />
+                            <label for="linkedin_credits_count">Linkedin Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" min="-1" name="linkedin_credits_count" value="{{old('linkedin_credits_count', $pricePlan->linkedin_credits_count)}}" id="linkedin_credits_count" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="twitter_credits_count">Twitter Credits count</label>
+                            <label for="twitter_credits_count">Twitter Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" min="1" name="twitter_credits_count" value="{{old('twitter_credits_count', $pricePlan->twitter_credits_count)}}" id="twitter_credits_count" class="form-control" />
                         </div>
 
