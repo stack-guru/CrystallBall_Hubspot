@@ -63,6 +63,10 @@
                             <input type="number" name="google_analytics_property_count" id="google_analytics_property_count" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label>Shopify Monitor count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" name="shopify_monitor_count" id="shopify_monitor_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label for="users_devices_count">Devices/Browsers allowed per user <sub>(by default its 2 including extension)</sub></label>
                             <input type="number" min="1" name="users_devices_count" id="users_devices_count" class="form-control" />
                         </div>
