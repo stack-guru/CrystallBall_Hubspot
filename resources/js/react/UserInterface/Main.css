@@ -968,6 +968,9 @@ body {
     height: auto;
     padding: 15px 40px;
 }
+.header .header-container h4 {
+    font-weight: 600;
+}
 .header .header-container:after {
     display: none;
 }

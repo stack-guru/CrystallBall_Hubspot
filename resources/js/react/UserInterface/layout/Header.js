@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ProgressBar from 'react-progressbar';
 import HttpClient from './../utils/HttpClient'
+import { IsDomain } from '../helpers/CommonFunctions';
 
 class header extends React.Component {
 
@@ -32,7 +33,14 @@ class header extends React.Component {
     render() {
         return (
             <div className="header-container d-flex justify-content-between align-items-center">
-                <strong><a className='d-block' href='/'><img src='/logo-new.svg' width='150' height='44' alt='Crystal Ball' /></a></strong>
+                <strong><a className='d-block' href='/'>
+                    {/* <img src="{{config('app.logo')}}" width='150' height='44' alt='Crystal Ball' /> */}
+                    {/* <img src="{{config('app.logo')}}" width='150' height='44' alt='Crystal Ball' /> */}
+                    <div className="d-flex justify-content-between align-items-center">
+                        <img src={`${IsDomain('app.gaannotations.com') || IsDomain('localhost') ? '/images/company_logo_gaa.png' : '/images/company_logo_cbi.png'}`} width="44" height="44" alt={`${IsDomain('app.gaannotations.com') || IsDomain('localhost') ? 'GAannotations' : 'Crystal Ball'}`} />
+                        <h4 className="m-0 pl-2 text-secondary">{`${IsDomain('app.gaannotations.com') || IsDomain('localhost') ? 'GAannotations' : 'Crystal Ball'}`}</h4>
+                    </div>
+                </a></strong>
                 {/* <form className='form-search'>
                     <fieldset className='position-relative'>
                         <input className="form-control" type="search" placeholder="Search anything..."/>
