@@ -143,7 +143,7 @@ export default class IndexPricingPlans extends React.Component {
 
 
                             {this.state.pricePlans.map(pricePlan => {
-                                return <Col md={Math.round(12 / this.state.pricePlans.length)} className='d-flex flex-column my-3' key={pricePlan.id}>
+                                return <Col md={Math.round(Math.max((12 / this.state.pricePlans.length), 3))} className='d-flex flex-column my-3' key={pricePlan.id}>
                                     <div className={`plan d-flex flex-column flex-grow-1 ${pricePlan.badge_text && 'bestplan'}`}>
                                         {pricePlan.badge_text ? <Button className='btn-bestplan'>{pricePlan.badge_text}</Button> : null}
 
@@ -202,10 +202,10 @@ export default class IndexPricingPlans extends React.Component {
                                                 <li>Website Monitoring: <span>{pricePlan.web_monitor_count}</span></li>
                                                 <li>Weather Alerts: <span>{pricePlan.owm_city_count == 0 ? 'Unlimited' : (pricePlan.owm_city_count > 0 ? pricePlan.owm_city_count : 0)}</span></li>
                                                 <li>News Alerts: <span>{pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : (pricePlan.google_alert_keyword_count > 0 ? pricePlan.google_alert_keyword_count : 0)}</span></li>
-                                                <li>Retail Marketing Dates: <span>∞</span></li>
+                                                {/* <li>Retail Marketing Dates: <span>∞</span></li>
                                                 <li>Google Updates: <span>∞</span></li>
                                                 <li>WordPress Updates: <span>∞</span></li>
-                                                <li>Holidays: <span>∞</span></li>
+                                                <li>Holidays: <span>∞</span></li> */}
                                                 <li>Apple Poadcast: <span>{pricePlan.apple_podcast_monitor_count == 0 ? 'Unlimited' : (pricePlan.apple_podcast_monitor_count > 0 ? pricePlan.apple_podcast_monitor_count : 0)}</span></li>
                                                 <li>Bitbucket: <span>{pricePlan.bitbucket_credits_count == 0 ? 'Unlimited' : (pricePlan.bitbucket_credits_count > 0 ? pricePlan.bitbucket_credits_count : 0)}</span></li>
                                                 <li>Aws: <span>{pricePlan.aws_credits_count == 0 ? 'Unlimited' : (pricePlan.aws_credits_count > 0 ? pricePlan.aws_credits_count : 0)}</span></li>
