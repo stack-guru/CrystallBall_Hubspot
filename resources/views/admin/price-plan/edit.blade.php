@@ -97,7 +97,7 @@
                         </div>
                         <div class="form-group">
                             <label for="twitter_credits_count">Twitter Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
-                            <input type="number" min="1" name="twitter_credits_count" value="{{old('twitter_credits_count', $pricePlan->twitter_credits_count)}}" id="twitter_credits_count" class="form-control" />
+                            <input type="number" min="-1" name="twitter_credits_count" value="{{old('twitter_credits_count', $pricePlan->twitter_credits_count)}}" id="twitter_credits_count" class="form-control" />
                         </div>
 
 
