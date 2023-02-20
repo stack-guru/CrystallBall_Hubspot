@@ -125,7 +125,7 @@ export default class IndexPricingPlans extends React.Component {
                     <Container>
                         <div className="pageHeader planPageHead">
                             <h2 className="pageTitle">Manage plan</h2>
-                            {this.props.user.price_plan.name == "Free" ?
+                            { this.props.user.price_plan.name == "Trial" ?
                                 <p className='mb-0'>Your account will be automatically downgraded to the Free plan at {moment(this.props.user.price_plan_expiry_date || new Date()).format('ll')}. Upgrade your account to keep enjoying all the features.</p>
                                 : null}
                         </div>
