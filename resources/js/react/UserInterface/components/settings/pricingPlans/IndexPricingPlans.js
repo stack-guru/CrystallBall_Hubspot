@@ -191,6 +191,23 @@ export default class IndexPricingPlans extends React.Component {
                                                     <i><img src={'/tick-green.svg'} /></i><span>Integrations</span></li> : null}
                                                 {pricePlan.has_notifications ? <li className='d-flex align-items-center'>
                                                     <i><img src={'/tick-green.svg'} /></i><span>Notifications</span></li> : null}
+
+                                                <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i>
+                                                    <span>Chrome extension</span>
+                                                </li>
+                                                <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i>
+                                                    <span>Unlimited GA accounts</span>
+                                                </li>
+                                                <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i>
+                                                    <span>Manual annotations</span>
+                                                </li>
+                                                <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i>
+                                                    <span>CSV upload</span>
+                                                </li>
                                             </ul>
                                         </div>
 
@@ -241,16 +258,15 @@ export default class IndexPricingPlans extends React.Component {
                             })}
                         </Row>
 
-                        <div className='planDetail'>
+                        {/* <div className='planDetail'>
                             <h4>All packages include:</h4>
                             <ul>
                                 <li><i><img src={'/tick-green.svg'} /></i><span>Chrome extension</span></li>
-                                {/* <li><i><img src={'/tick-green.svg'} /></i><span>Data Studio connector</span></li> */}
                                 <li><i><img src={'/tick-green.svg'} /></i><span>Unlimited GA accounts</span></li>
                                 <li><i><img src={'/tick-green.svg'} /></i><span>Manual annotations</span></li>
                                 <li><i><img src={'/tick-green.svg'} /></i><span>CSV upload</span></li>
                             </ul>
-                        </div>
+                        </div> */}
                     </Container>
                 </div>
             </>
