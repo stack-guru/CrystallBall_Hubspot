@@ -170,32 +170,28 @@ export default class IndexPricingPlans extends React.Component {
                                             <ul>
                                                 <li className='d-flex align-items-center'>
                                                     <i><img src={'/tick-green.svg'} /></i>
+                                                    <span>{pricePlan.annotations_count > 0 ? <> Up to {pricePlan.annotations_count} Annotations</> : <> Unlimited Annotations</>}</span>
+                                                </li>
+                                                <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i>
                                                     <span>
                                                         {pricePlan.google_analytics_property_count == 1 ?
                                                             <> One Property/Website</>
                                                             :
                                                             pricePlan.google_analytics_property_count > 0 ? <> Up to {pricePlan.google_analytics_property_count} Properties</> : (pricePlan.google_analytics_property_count == -1 ? <> No Property Filters</> : <> Unlimited Property Filters</>)}</span>
                                                 </li>
-                                                <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i>
-                                                    <span>{pricePlan.annotations_count > 0 ? <> Up to {pricePlan.annotations_count} Annotations</> : <> Unlimited Annotations</>}</span>
-                                                </li>
-                                                <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i>
-                                                    <span>{pricePlan.user_per_ga_account_count == 0 ? <>Unlimited Users</> : (pricePlan.user_per_ga_account_count == -1 ? <>Up to 1 User</> : (pricePlan.user_per_ga_account_count >= 1 ? <>Up to {pricePlan.user_per_ga_account_count + 1} User</> : (<></>)))}</span>
-                                                </li>
-
-                                                {pricePlan.has_api ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span>Annotations API</span></li> : null}
-                                                {pricePlan.has_integrations ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span>Integrations</span></li> : null}
-                                                {pricePlan.has_notifications ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span>Notifications</span></li> : null}
 
                                                 <li className='d-flex align-items-center'>
                                                     <i><img src={'/tick-green.svg'} /></i>
                                                     <span>Chrome extension</span>
                                                 </li>
+                                                {pricePlan.has_google_data_studio ? <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i><span>Data Studio Connector</span></li> : null}
+                                                <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i>
+                                                    <span>{pricePlan.user_per_ga_account_count == 0 ? <>Unlimited Users</> : (pricePlan.user_per_ga_account_count == -1 ? <>Up to 1 User</> : (pricePlan.user_per_ga_account_count >= 1 ? <>Up to {pricePlan.user_per_ga_account_count + 1} User</> : (<></>)))}</span>
+                                                </li>
+
                                                 <li className='d-flex align-items-center'>
                                                     <i><img src={'/tick-green.svg'} /></i>
                                                     <span>Unlimited GA accounts</span>
@@ -208,6 +204,21 @@ export default class IndexPricingPlans extends React.Component {
                                                     <i><img src={'/tick-green.svg'} /></i>
                                                     <span>CSV upload</span>
                                                 </li>
+
+
+
+
+
+
+                                                
+                                                {pricePlan.has_api ? <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i><span>Annotations API</span></li> : null}
+                                                {pricePlan.has_integrations ? <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i><span>Zapier Integrations</span></li> : null}
+                                                {pricePlan.has_notifications ? <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i><span>Notifications</span></li> : null}
+
+
                                             </ul>
                                         </div>
 
@@ -215,17 +226,17 @@ export default class IndexPricingPlans extends React.Component {
                                             <h4>Credits</h4>
                                             <ul>
 
-                                                {pricePlan.keyword_tracking_count == -1  || pricePlan.keyword_tracking_count == null ? null : <li>Rank Tracking: <span>{pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count}</span> </li>}
-                                                {pricePlan.web_monitor_count == -1 || pricePlan.web_monitor_count == null ? null : <li>Website Monitoring: <span>{pricePlan.web_monitor_count == 0 ? 'Unlimited' : pricePlan.web_monitor_count}</span> </li>}
-                                                {pricePlan.owm_city_count == -1  || pricePlan.owm_city_count == null ? null : <li>Weather Alerts: <span>{pricePlan.owm_city_count == 0 ? 'Unlimited' : pricePlan.owm_city_count}</span> </li>}
-                                                {pricePlan.google_alert_keyword_count == -1  || pricePlan.google_alert_keyword_count == null ? null : <li>News Alerts: <span>{pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : pricePlan.google_alert_keyword_count}</span> </li>}
-                                                {pricePlan.apple_podcast_monitor_count == -1  || pricePlan.apple_podcast_monitor_count == null ? null : <li>Apple Poadcast: <span>{pricePlan.apple_podcast_monitor_count == 0 ? 'Unlimited' : pricePlan.apple_podcast_monitor_count}</span> </li>}
-                                                {pricePlan.bitbucket_credits_count == -1 || pricePlan.bitbucket_credits_count == null? null : <li>Bitbucket: <span>{pricePlan.bitbucket_credits_count == 0 ? 'Unlimited' : pricePlan.bitbucket_credits_count}</span> </li>}
-                                                {pricePlan.aws_credits_count == -1  || pricePlan.aws_credits_count == null ? null : <li>Aws: <span>{pricePlan.aws_credits_count == 0 ? 'Unlimited' : pricePlan.aws_credits_count}</span> </li>}
-                                                {pricePlan.github_credits_count == -1  || pricePlan.github_credits_count == null ? null : <li>Github: <span>{pricePlan.github_credits_count == 0 ? 'Unlimited' : pricePlan.github_credits_count}</span> </li>}
-                                                {pricePlan.linkedin_credits_count == -1  || pricePlan.linkedin_credits_count == null ? null : <li>Linkedin: <span>{pricePlan.linkedin_credits_count == 0 ? 'Unlimited' : pricePlan.linkedin_credits_count}</span> </li>}
-                                                {pricePlan.shopify_monitor_count == -1  || pricePlan.shopify_monitor_count == null ? null : <li>Shopify: <span>{pricePlan.shopify_monitor_count == 0 ? 'Unlimited' : pricePlan.shopify_monitor_count}</span> </li>}
-                                                {pricePlan.twitter_credits_count == -1  || pricePlan.twitter_credits_count == null ? null : <li>Twitter: <span>{pricePlan.twitter_credits_count == 0 ? 'Unlimited' : pricePlan.twitter_credits_count}</span> </li>}
+                                                {pricePlan.keyword_tracking_count == -1 || pricePlan.keyword_tracking_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count}</span> </li>}
+                                                {pricePlan.web_monitor_count == -1 || pricePlan.web_monitor_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Website Monitoring: {pricePlan.web_monitor_count == 0 ? 'Unlimited' : pricePlan.web_monitor_count}</span> </li>}
+                                                {pricePlan.owm_city_count == -1 || pricePlan.owm_city_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Weather Alerts: {pricePlan.owm_city_count == 0 ? 'Unlimited' : pricePlan.owm_city_count}</span> </li>}
+                                                {pricePlan.google_alert_keyword_count == -1 || pricePlan.google_alert_keyword_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : pricePlan.google_alert_keyword_count}</span> </li>}
+                                                {pricePlan.apple_podcast_monitor_count == -1 || pricePlan.apple_podcast_monitor_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Apple Poadcast: {pricePlan.apple_podcast_monitor_count == 0 ? 'Unlimited' : pricePlan.apple_podcast_monitor_count}</span> </li>}
+                                                {pricePlan.bitbucket_credits_count == -1 || pricePlan.bitbucket_credits_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Bitbucket: {pricePlan.bitbucket_credits_count == 0 ? 'Unlimited' : pricePlan.bitbucket_credits_count}</span> </li>}
+                                                {pricePlan.aws_credits_count == -1 || pricePlan.aws_credits_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Aws: {pricePlan.aws_credits_count == 0 ? 'Unlimited' : pricePlan.aws_credits_count}</span> </li>}
+                                                {pricePlan.github_credits_count == -1 || pricePlan.github_credits_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Github: {pricePlan.github_credits_count == 0 ? 'Unlimited' : pricePlan.github_credits_count}</span> </li>}
+                                                {pricePlan.linkedin_credits_count == -1 || pricePlan.linkedin_credits_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Linkedin: {pricePlan.linkedin_credits_count == 0 ? 'Unlimited' : pricePlan.linkedin_credits_count}</span> </li>}
+                                                {pricePlan.shopify_monitor_count == -1 || pricePlan.shopify_monitor_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Shopify: {pricePlan.shopify_monitor_count == 0 ? 'Unlimited' : pricePlan.shopify_monitor_count}</span> </li>}
+                                                {pricePlan.twitter_credits_count == -1 || pricePlan.twitter_credits_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Twitter: {pricePlan.twitter_credits_count == 0 ? 'Unlimited' : pricePlan.twitter_credits_count}</span> </li>}
                                                 {/* <li>Retail Marketing Dates: <span>∞</span></li>
                                                 <li>Google Updates: <span>∞</span></li>
                                                 <li>WordPress Updates: <span>∞</span></li>
