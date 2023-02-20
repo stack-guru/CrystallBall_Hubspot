@@ -2440,6 +2440,20 @@ body {
     color: #096db7;
     line-height: 30px;
 }
+.modal-csvUpload table {
+    font-size: 14px;
+}
+
+.modal-csvUpload table thead{
+    background-color: #F0F6FF;
+}
+
+.modal-csvUpload table th {
+    padding: 8px;
+}
+.modal-csvUpload table td div {
+    padding: 4px;
+}
 .form-csvUpload {}
 .csvFileUpload > label {
     width: 100%;
@@ -2452,7 +2466,7 @@ body {
     padding: 32px 24px;
     align-items: center;
     border-radius: 12px;
-    background: #f0f6ff;
+    background: #e8e8e8;
     flex-direction: column;
     justify-content: center;
 }
