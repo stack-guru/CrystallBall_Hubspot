@@ -20,38 +20,14 @@ import {
 import GoogleAnalyticsPropertySelect from "../GoogleAnalyticsPropertySelect";
 
 const ShopifyStoreConfig = (props) => {
-    const [existingShopifyItems, setExistingShopifyItems] = useState([]);
     const [inputVale, setInputVale] = useState("");
     const [activeDeletePopover, setActiveDeletePopover] = useState("");
-
-    const getExistingShopifyStore = async () => {
-        HttpClient.get(
-            `/data-source/shopify-monitor?ga_property_id=${props.gaPropertyId}`
-        )
-            .then(
-                (result) => {
-                    setExistingShopifyItems(result.data.shopify_monitors);
-                },
-                (err) => {
-                    Toast.fire({
-                        icon: 'error',
-                        title: "Error while getting exists shopify urls.",
-                    });
-                }
-            )
-            .catch((err) => {
-                Toast.fire({
-                    icon: 'error',
-                    title: "Error while getting exists shopify urls.",
-                });
-            });
-    };
 
     const deletePodcasts = async (payload) => {
         HttpClient.delete(`/data-source/shopify-monitor/${payload.id}`)
             .then(
                 () => {
-                    getExistingShopifyStore();
+                    props.getExistingShopifyStore();
                     Toast.fire({
                         icon: 'success',
                         title: "Shopify url deleted successfully.",
@@ -72,11 +48,10 @@ const ShopifyStoreConfig = (props) => {
             });
     };
 
-    useEffect(() => {
-        getExistingShopifyStore();
-    }, []);
-
     const addAnnotation = async () => {
+        if (props.limitReached) {
+            props.upgradePopup('more-annotations')
+        } else {
         Toast.fire({
             icon: 'info',
             title: "Creating Annotations",
@@ -103,7 +78,13 @@ const ShopifyStoreConfig = (props) => {
                     title: "Error while adding Shopify Store.",
                 });
             });
+        }
     };
+
+    useEffect(() => {
+        props.getExistingShopifyStore();
+    }, [props.gaPropertyId]);
+
     return (
         <div className="apps-bodyContent">
             <div className="white-box">
@@ -156,7 +137,7 @@ const ShopifyStoreConfig = (props) => {
                     Active stores: <span>(Click to remove)</span>
                 </h4>
                 <div className="d-flex keywordTags">
-                    {existingShopifyItems?.map((gAK, index) => {
+                    {props.existingShopifyItems?.map((gAK, index) => {
                         return (
                             <>
                                 <button
