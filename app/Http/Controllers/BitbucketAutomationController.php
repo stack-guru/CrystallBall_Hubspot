@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\BitbucketAutomationRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class BitbucketAutomationController extends Controller
@@ -35,6 +36,8 @@ class BitbucketAutomationController extends Controller
                  * */
                 $this->bitbucketAutomationRepository->setupBitbucketAccount($user->token, $user->expiresIn, $user->id, $user->email, $user->avatar, $user->name, $user->refreshToken);
 
+                Auth::user()->is_ds_bitbucket_tracking_enabled = true;
+                Auth::user()->save();
                 return redirect()->to('data-source?show_bit_bucket_popup=1')->with('Account connected. You can enable the automation now.');
 
             } else {

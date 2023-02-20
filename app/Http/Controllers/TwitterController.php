@@ -29,9 +29,10 @@ class TwitterController extends Controller
             'token_secret'    => $user->tokenSecret,
             'payload'         => $user->user,
         ]);
-
+        Auth::user()->is_ds_twitter_tracking_enabled = true;
+        Auth::user()->save();
         $message = "<b>". $user->getName(). "</b> account connected successfully.";
 
-        return redirect()->to("/data-source?alertMessage=$message");
+        return redirect()->to("/data-source?show_twitter_popup=1&alertMessage=$message");
     }
 }

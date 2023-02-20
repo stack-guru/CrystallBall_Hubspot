@@ -145,15 +145,15 @@ export default class AddNewPasswordModal extends React.Component {
 
                                 <div className='my-4 d-flex gap-5 flex-column align-items-center'>
                                     <div className="form-group" style={{ width: "70%" }}>
-                                        <input type="text" className="form-control" value={this.state.user.name} onChange={this.changeHandler} id="name" name="name" placeholder='Full name' />
+                                        <input type="text" autocomplete="off" className="form-control" value={this.state.user.name} onChange={this.changeHandler} id="name" name="name" placeholder='Full name' />
                                         {validation.name ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.name}</span> : ''}
                                     </div>
                                     <div className="form-group" style={{ width: "70%" }}>
-                                        <input type="password" className="form-control" value={this.state.user.password} onChange={this.changeHandler} id="password" name="password" placeholder='Set password' />
+                                        <input type="password" autocomplete="off" className="form-control" value={this.state.user.password} onChange={this.changeHandler} id="password" name="password" placeholder='Set password' />
                                         {validation.password ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.password}</span> : ''}
                                     </div>
                                     <div className="form-group" style={{ width: "70%" }}>
-                                        <input type="password" className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" placeholder='Confirm password' />
+                                        <input type="password" autocomplete="off" className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" placeholder='Confirm password' />
                                         {validation.password_confirmation ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.password_confirmation}</span> : ''}
                                     </div>
                                 </div>

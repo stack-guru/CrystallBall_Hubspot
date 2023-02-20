@@ -27,32 +27,56 @@ axiosInst.interceptors.response.use(function (response) {
 
     if (error.response.status === 401) {
         if (window.location.pathname !== "/") {
-            window.alert("Not logged in. We are redirecting you to the login page. You may login with an account and try the operation again.");
-            window.location.pathname = "/";
+            swal.fire({
+                html: `<ga-error-popup heading="<h1>Error</h1>"
+                    subHeading="<p>Not logged in. We are redirecting you to the login page. You may login with an account and try the operation again.</p>"
+                    bannerImg="/images/error-popup-image.svg"></ga-error-popup>`,
+                width: 600,
+                showCancelButton: true,
+                showCloseButton: false,
+                showConfirmButton: false,
+                customClass: {
+                    popup: "gaErrorPopup",
+                },
+                cancelButtonClass: "btn-close",
+                cancelButtonText: "Close",
+            }).then(() => {
+                window.location.pathname = "/";
+            });
         }
     }
 
     if (error.response.status === 403) {
         console.log(error);
-        window.alert("You tried to perform an operation you are not authorized of. See console for more information.");
-    }
-
-    if (error.response.status === 404) {
-        console.log(error);
-
-        const imageHtml = '' +
-                    '<div class="">' +
-                    '<img src="/images/error.png" class="img-fluid">' +
-                    '</div>'
-
         swal.fire({
-            html: imageHtml,
+            html: `<ga-error-popup heading="<h1>Error</h1>"
+                subHeading="<p>You tried to perform an operation you are not authorized of. See console for more information.</p>"
+                bannerImg="/images/error-popup-image.svg"></ga-error-popup>`,
             width: 600,
             showCancelButton: true,
             showCloseButton: false,
             showConfirmButton: false,
             customClass: {
-                popup: "themePlanAlertPopup",
+                popup: "gaErrorPopup",
+            },
+            cancelButtonClass: "btn-close",
+            cancelButtonText: "Close",
+        })
+    }
+
+    if (error.response.status === 404) {
+        console.log(error);
+
+        swal.fire({
+            html: `<ga-error-popup heading="<h1>Error</h1>"
+                subHeading="<p>We are not able to found the record.</p>"
+                bannerImg="/images/error-popup-image.svg"></ga-error-popup>`,
+            width: 600,
+            showCancelButton: true,
+            showCloseButton: false,
+            showConfirmButton: false,
+            customClass: {
+                popup: "gaErrorPopup",
             },
             cancelButtonClass: "btn-close",
             cancelButtonText: "Close",
@@ -62,7 +86,20 @@ axiosInst.interceptors.response.use(function (response) {
 
     if (error.response.status === 405) {
         console.log(error);
-        window.alert("Invalid method tried for a route. See console for more information.");
+        swal.fire({
+            html: `<ga-error-popup heading="<h1>Error</h1>"
+                subHeading="<p>Invalid method tried for a route. See console for more information.</p>"
+                bannerImg="/images/error-popup-image.svg"></ga-error-popup>`,
+            width: 600,
+            showCancelButton: true,
+            showCloseButton: false,
+            showConfirmButton: false,
+            customClass: {
+                popup: "gaErrorPopup",
+            },
+            cancelButtonClass: "btn-close",
+            cancelButtonText: "Close",
+        })
     }
 
     if (error.response.status === 422) {

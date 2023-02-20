@@ -52,13 +52,16 @@ export default class DSRMDatesSelect extends React.Component {
                     "retail_marketing_id"
                 ),
             });
-            
-            this.props.updateTrackingStatus(true)
-            this.props.updateUserService({ target: {
-                    name: "is_ds_retail_marketing_enabled",
-                    checked: true,
-                }, 
-            });
+
+            if (!this.props.user.is_ds_retail_marketing_enabled) {
+                this.props.updateTrackingStatus(true)
+                this.props.updateUserService({
+                    target: {
+                        name: "is_ds_retail_marketing_enabled",
+                        checked: true,
+                    },
+                });
+            }
         } else {
             this.props.onUncheckCallback(e.target.id, "retail_marketings");
         }
@@ -79,10 +82,11 @@ export default class DSRMDatesSelect extends React.Component {
             }
         });
         this.props.updateTrackingStatus(true)
-        this.props.updateUserService({ target: {
+        this.props.updateUserService({
+            target: {
                 name: "is_ds_retail_marketing_enabled",
                 checked: true,
-            }, 
+            },
         });
     }
 
@@ -93,10 +97,11 @@ export default class DSRMDatesSelect extends React.Component {
             (this.props.onUncheckCallback)(userDSEvents[index], 'retail_marketings')
         })
         this.props.updateTrackingStatus(false)
-        this.props.updateUserService({ target: {
+        this.props.updateUserService({
+            target: {
                 name: "is_ds_retail_marketing_enabled",
                 checked: false,
-            }, 
+            },
         });
     }
 
@@ -127,12 +132,12 @@ export default class DSRMDatesSelect extends React.Component {
                     <div className="white-box">
                         <h4>Select Dates for Retail Marketing</h4>
                         <div className="input-group search-input-box mb-3">
-                            <input type="text" className="form-control search-input" placeholder="Search" value={this.state.searchText} name="searchText" onChange={(e) => this.setState({[e.target.name]: e.target.value,})}/>
+                            <input type="text" className="form-control search-input" placeholder="Search" value={this.state.searchText} name="searchText" onChange={(e) => this.setState({ [e.target.name]: e.target.value, })} />
                             <div className="input-group-append"><i className="ti-search"></i></div>
                         </div>
                         <div className="boxTitleBtn d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
                             <label className="themeNewCheckbox d-flex align-items-center justify-content-start m-0" htmlFor="check-all">
-                                <input type="checkbox" id="check-all" onChange={this.selectAllShowing}/>
+                                <input type="checkbox" id="check-all" onChange={this.selectAllShowing} />
                                 <span>Select All</span>
                             </label>
                             <span className="btn-clearAll" onClick={this.clearAll}>Clear All</span>
@@ -146,7 +151,7 @@ export default class DSRMDatesSelect extends React.Component {
                                     }
                                     return (
                                         <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="defaultCheck1" key={rmd.id}>
-                                            <input checked={userRMDIds.indexOf(rmd.id) !== -1} type="checkbox" id={userRMDIds.indexOf(rmd.id) !== -1 ? userDSIds[userRMDIds.indexOf(rmd.id)] : null} onChange={this.handleClick} retail_marketing_id={rmd.id}/>
+                                            <input checked={userRMDIds.indexOf(rmd.id) !== -1} type="checkbox" id={userRMDIds.indexOf(rmd.id) !== -1 ? userDSIds[userRMDIds.indexOf(rmd.id)] : null} onChange={this.handleClick} retail_marketing_id={rmd.id} />
                                             <span>{rmd.show_at} -{" "}{rmd.event_name}</span>
                                         </label>
                                     );
@@ -170,7 +175,7 @@ export default class DSRMDatesSelect extends React.Component {
                                     }
                                     return (
                                         <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="defaultCheck1" key={rmd.id}>
-                                            <input checked={userRMDIds.indexOf(rmd.id) !== -1} type="checkbox" id={userRMDIds.indexOf(rmd.id) !== -1 ? userDSIds[userRMDIds.indexOf(rmd.    id)] : null} onChange={this.handleClick} retail_marketing_id={rmd.id}/>
+                                            <input checked={userRMDIds.indexOf(rmd.id) !== -1} type="checkbox" id={userRMDIds.indexOf(rmd.id) !== -1 ? userDSIds[userRMDIds.indexOf(rmd.id)] : null} onChange={this.handleClick} retail_marketing_id={rmd.id} />
                                             <span>{rmd.show_at} - {rmd.event_name}</span>
                                         </label>
                                     );

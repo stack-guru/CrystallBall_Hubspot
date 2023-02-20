@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\GithubAutomationRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class GithubAutomationController extends Controller
@@ -37,6 +38,8 @@ class GithubAutomationController extends Controller
                  * */
                 $this->githubAutomationRepository->setupGithubAccount($user->token, $user->expiresIn, $user->id, $user->email, $user->avatar, $user->nickname, $user->refreshToken);
 
+                Auth::user()->is_ds_github_tracking_enabled = true;
+                Auth::user()->save();
                 return redirect()->to('data-source?show_github_popup=1')->with('Account connected. You can enable the automation now.');
 
             } else {

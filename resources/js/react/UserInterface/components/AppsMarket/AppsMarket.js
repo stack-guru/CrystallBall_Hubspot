@@ -103,12 +103,17 @@ class AppsMarket extends React.Component {
         var urlSearchParams = new URLSearchParams(window.location.search);
         if (urlSearchParams.has('show_bit_bucket_popup')) {
             this.setState({
-                dsKey : "is_ds_bitbucket_tracking_enabled",
+                dsKey: "is_ds_bitbucket_tracking_enabled",
             });
         }
         if (urlSearchParams.has('show_github_popup')) {
             this.setState({
-                dsKey : "is_ds_github_tracking_enabled",
+                dsKey: "is_ds_github_tracking_enabled",
+            });
+        }
+        if (urlSearchParams.has('show_twitter_popup')) {
+            this.setState({
+                dsKey: "is_ds_twitter_tracking_enabled",
             });
         }
         let alertMessage = new URLSearchParams(window.location.search).get(
@@ -138,6 +143,12 @@ class AppsMarket extends React.Component {
             });
             // this.setState({ dsKey: `is_ds_${ redirectedRepo.toLowerCase() }_tracking_enabled` });
             localStorage.removeItem("repo");
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.user.toString() !== this.props.user.toString()) {
+            this.setState({ userServices: this.props.user });
         }
     }
 
@@ -755,7 +766,7 @@ class AppsMarket extends React.Component {
                                         item.background || "#e0e0e0",
                                 }}
                             >
-                                {item.connected ? (
+                                {this.state.userServices[item.dsKey] ? (
                                     <i className="active fa fa-check-circle"></i>
                                 ) : null}
                                 <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width} height={item.height} />
@@ -1019,7 +1030,7 @@ class AppsMarket extends React.Component {
 
 
                     <AppsModal
-                        isOpen={this.state.dsKey}
+                        isOpen={!!this.state.dsKey}
                         toggle={() => {
                             this.setState({
                                 dsKey: "",
@@ -1173,6 +1184,7 @@ class AppsMarket extends React.Component {
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
                                 }
+                                updateUserService={this.updateUserService}
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
                                 updateGAPropertyId={(value) => {
@@ -1343,7 +1355,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_bitbucket_tracking_enabled"? (
+                            "is_ds_bitbucket_tracking_enabled" ? (
                             <Bitbucket
                                 {...this.state}
                                 {...this.props}
@@ -1703,39 +1715,39 @@ class AppsMarket extends React.Component {
                 (err) => {
                     this.setState({ isBusy: false, errors: err.response.data });
                     if (err.response.status == 402) {
-                        if(e.target.name === 'is_ds_google_alerts_enabled') {
+                        if (e.target.name === 'is_ds_google_alerts_enabled') {
                             this.props.upgradePopup('news-alert')
                         }
 
-                        if(e.target.name === 'is_ds_keyword_tracking_enabled') {
+                        if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                             this.props.upgradePopup('rank-tracking')
                         }
 
-                        if(e.target.name === 'is_ds_weather_alerts_enabled' || e.target.name === 'is_ds_google_algorithm_updates_enabled') {
+                        if (e.target.name === 'is_ds_weather_alerts_enabled' || e.target.name === 'is_ds_google_algorithm_updates_enabled') {
                             this.props.upgradePopup('increase-limits')
                         }
 
-                        if(e.target.name === 'is_ds_twitter_tracking_enabled') {
+                        if (e.target.name === 'is_ds_twitter_tracking_enabled') {
                             this.props.upgradePopup('social-media')
                         }
 
-                        if(e.target.name === 'is_ds_apple_podcast_annotation_enabled') {
+                        if (e.target.name === 'is_ds_apple_podcast_annotation_enabled') {
                             this.props.upgradePopup('podcast-trackers')
                         }
 
-                        if(e.target.name === 'is_ds_github_tracking_enabled'  || e.target.name === 'is_ds_bitbucket_tracking_enabled') {
+                        if (e.target.name === 'is_ds_github_tracking_enabled' || e.target.name === 'is_ds_bitbucket_tracking_enabled') {
                             this.props.upgradePopup('more-repositories')
                         }
 
-                        if(e.target.name === 'is_ds_retail_marketing_enabled' || e.target.name === 'is_ds_holidays_enabled') {
+                        if (e.target.name === 'is_ds_retail_marketing_enabled' || e.target.name === 'is_ds_holidays_enabled') {
                             this.props.upgradePopup('more-annotations')
                         }
 
-                        if(e.target.name === 'is_ds_web_monitors_enabled') {
+                        if (e.target.name === 'is_ds_web_monitors_enabled') {
                             this.props.upgradePopup('website-monitoring-limit')
                         }
 
-                        if(e.target.name === 'is_ds_shopify_annotation_enabled') {
+                        if (e.target.name === 'is_ds_shopify_annotation_enabled') {
                             this.props.upgradePopup('more-annotations')
                         }
                     }
@@ -2008,42 +2020,42 @@ class AppsMarket extends React.Component {
                 );
             }
         } else {
-            if(e.target.name === 'is_ds_keyword_tracking_enabled') {
+            if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                 this.props.upgradePopup('rank-tracking-access')
             }
-            if(e.target.name === 'is_ds_google_alerts_enabled') {
+            if (e.target.name === 'is_ds_google_alerts_enabled') {
                 this.props.upgradePopup('news-alert')
             }
 
-            if(e.target.name === 'is_ds_keyword_tracking_enabled') {
+            if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                 this.props.upgradePopup('rank-tracking-access')
             }
 
-            if(e.target.name === 'is_ds_weather_alerts_enabled' || e.target.name === 'is_ds_google_algorithm_updates_enabled') {
+            if (e.target.name === 'is_ds_weather_alerts_enabled' || e.target.name === 'is_ds_google_algorithm_updates_enabled') {
                 this.props.upgradePopup('integrations')
             }
 
-            if(e.target.name === 'is_ds_twitter_tracking_enabled') {
+            if (e.target.name === 'is_ds_twitter_tracking_enabled') {
                 this.props.upgradePopup('social-media')
             }
 
-            if(e.target.name === 'is_ds_apple_podcast_annotation_enabled') {
+            if (e.target.name === 'is_ds_apple_podcast_annotation_enabled') {
                 this.props.upgradePopup('integrations')
             }
 
-            if(e.target.name === 'is_ds_github_tracking_enabled'  || e.target.name === 'is_ds_bitbucket_tracking_enabled') {
+            if (e.target.name === 'is_ds_github_tracking_enabled' || e.target.name === 'is_ds_bitbucket_tracking_enabled') {
                 this.props.upgradePopup('integrations')
             }
 
-            if(e.target.name === 'is_ds_retail_marketing_enabled' || e.target.name === 'is_ds_holidays_enabled') {
+            if (e.target.name === 'is_ds_retail_marketing_enabled' || e.target.name === 'is_ds_holidays_enabled') {
                 this.props.upgradePopup('integrations')
             }
 
-            if(e.target.name === 'is_ds_web_monitors_enabled') {
+            if (e.target.name === 'is_ds_web_monitors_enabled') {
                 this.props.upgradePopup('website-monitoring-upgrade')
             }
 
-            if(e.target.name === 'is_ds_shopify_annotation_enabled') {
+            if (e.target.name === 'is_ds_shopify_annotation_enabled') {
                 this.props.upgradePopup('integrations')
             }
         }
@@ -2111,39 +2123,39 @@ class AppsMarket extends React.Component {
                     this.setState({ isBusy: false, errors: err.response.data });
 
                     if (err.response.status === 422) {
-                        if(this.state.dsKey === 'is_ds_google_alerts_enabled') {
+                        if (this.state.dsKey === 'is_ds_google_alerts_enabled') {
                             this.props.upgradePopup('news-alert')
                         }
 
-                        if(this.state.dsKey === 'is_ds_keyword_tracking_enabled') {
+                        if (this.state.dsKey === 'is_ds_keyword_tracking_enabled') {
                             this.props.upgradePopup('rank-tracking')
                         }
 
-                        if(this.state.dsKey === 'is_ds_weather_alerts_enabled' || this.state.dsKey === 'is_ds_google_algorithm_updates_enabled') {
+                        if (this.state.dsKey === 'is_ds_weather_alerts_enabled' || this.state.dsKey === 'is_ds_google_algorithm_updates_enabled') {
                             this.props.upgradePopup('increase-limits')
                         }
 
-                        if(this.state.dsKey === 'is_ds_twitter_tracking_enabled') {
+                        if (this.state.dsKey === 'is_ds_twitter_tracking_enabled') {
                             this.props.upgradePopup('social-media')
                         }
 
-                        if(this.state.dsKey === 'is_ds_apple_podcast_annotation_enabled') {
+                        if (this.state.dsKey === 'is_ds_apple_podcast_annotation_enabled') {
                             this.props.upgradePopup('podcast-trackers')
                         }
 
-                        if(this.state.dsKey === 'is_ds_github_tracking_enabled'  || this.state.dsKey === 'is_ds_bitbucket_tracking_enabled') {
+                        if (this.state.dsKey === 'is_ds_github_tracking_enabled' || this.state.dsKey === 'is_ds_bitbucket_tracking_enabled') {
                             this.props.upgradePopup('more-repositories')
                         }
 
-                        if(this.state.dsKey === 'is_ds_retail_marketing_enabled' || this.state.dsKey === 'is_ds_holidays_enabled') {
+                        if (this.state.dsKey === 'is_ds_retail_marketing_enabled' || this.state.dsKey === 'is_ds_holidays_enabled') {
                             this.props.upgradePopup('more-annotations')
                         }
 
-                        if(this.state.dsKey === 'is_ds_web_monitors_enabled') {
+                        if (this.state.dsKey === 'is_ds_web_monitors_enabled') {
                             this.props.upgradePopup('website-monitoring-limit')
                         }
 
-                        if(this.state.dsKey === 'is_ds_shopify_annotation_enabled') {
+                        if (this.state.dsKey === 'is_ds_shopify_annotation_enabled') {
                             this.props.upgradePopup('more-annotations')
                         }
                     }

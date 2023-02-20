@@ -51,7 +51,7 @@ export default class EditAnnotation extends React.Component {
                     } else if (response.data.annotation.annotation_ga_properties[0].google_analytics_property_id == null) {
                         gAPs = [];
                     } else {
-                        gAPs = response.data.annotation.annotation_ga_properties.map(aGAP => { return { value: aGAP.google_analytics_property_id, label: aGAP.google_analytics_property.name }; });
+                        gAPs = response.data.annotation.annotation_ga_properties.map(aGAP => { return { value: aGAP.google_analytics_property_id, label: aGAP.google_analytics_property?.name }; });
                     }
 
                     let gAPIds = response.data.annotation.annotation_ga_properties.map(agAPA => agAPA.google_analytics_property_id);
