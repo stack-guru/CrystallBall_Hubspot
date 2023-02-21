@@ -19,8 +19,11 @@ export default class UploadAnnotation extends React.Component {
             userAnnotationColors: {},
             redirectTo: null,
             review: false,
-            totalErrors: 0,
-            reviewData: [],
+            fieldErrorsCheck: false,
+            fieldErrorsCount: 0,
+            fieldErrors: [],
+            importReviewErrorCount: 0,
+            importReview: [],
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.saveCsv = this.saveCsv.bind(this)
@@ -40,7 +43,7 @@ export default class UploadAnnotation extends React.Component {
 
         const formData = new FormData();
         formData.append('date_format', this.state.date_format);
-        formData.append('reviewData', JSON.stringify(this.state.reviewData));
+        formData.append('fieldErrors', JSON.stringify(this.state.fieldErrors));
 
         this.state.google_analytics_property_id.forEach((gAA) => { 
             formData.append('google_analytics_property_id[]', gAA) }
@@ -57,7 +60,18 @@ export default class UploadAnnotation extends React.Component {
                     title: "CSV file uploaded."
                 });
             } else {
-                this.setState({review: true, reviewData: response.data.data, totalErrors: response.data.totalErrors})
+
+                const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount } = response.data;
+                this.setState(
+                    { 
+                        review: true, 
+                        fieldErrors, 
+                        fieldErrorsCount,
+                        importReview,
+                        importReviewErrorCount,
+
+                    }
+                )
             }
             
         }, (err) => {
@@ -142,9 +156,18 @@ export default class UploadAnnotation extends React.Component {
                     });
                 } else {
 
-                    console.log(response)
-                    this.setState({review: true, reviewData: response.data.data, totalErrors: response.data.totalErrors})
-                    // this.setState({ isBusy: false, errors: response.data.message });
+                    const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount } = response.data;
+                    this.setState(
+                        { 
+                            review: true, 
+                            fieldErrors, 
+                            fieldErrorsCount,
+                            importReview,
+                            importReviewErrorCount,
+
+                        }
+                    )
+
                 }
                 
             }, (err) => {
@@ -167,11 +190,11 @@ export default class UploadAnnotation extends React.Component {
 
     changeMapHandler (e, id) {
         const { name, value } = e.target;
-        const data = this.state.reviewData.map((list, index) => {
+        const data = this.state.fieldErrors.map((list, index) => {
             return (index === id ? { ...list, [name]: value} : list)
         })
 
-        this.setState({ reviewData: data })
+        this.setState({ fieldErrors: data })
     }
 
     loadUserAnnotationColors() {
@@ -198,9 +221,74 @@ export default class UploadAnnotation extends React.Component {
             <div className="popupContent modal-csvUpload">
                 { this.state.review ? 
                     <div>
+                        { !this.state.fieldErrorsCheck ? 
+                        <>
                         <div className="apps-modalHead">
                             <div className="d-flex justify-content-between align-items-center">
-                                <h2>Field errors | <span className='text-danger'>{this.state.totalErrors} errors</span></h2>
+                                <h2>Import review | <span className='text-danger'>{this.state.importReviewErrorCount} errors</span></h2>
+                                <span onClick={() => this.props.togglePopup('')} className="btn-close">
+                                    <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" />
+                                </span>
+                            </div>
+                        </div>
+
+                        <table className='table'>
+                            <thead>
+                                <tr>
+                                    <th>Column Name</th>
+                                    <th>Field</th>
+                                    <th>Sample Data</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Category</td>
+                                    <td>
+                                        <input className={`form-control ${this.state.importReview.category_error && "is-invalid"}`} name='category' value={this.state.importReview.category_error ? "" : "Category"} />
+                                    </td>
+                                    <td>Sales Event</td>
+                                </tr>
+                                <tr>
+                                    <td>Event Name</td>
+                                    <td>
+                                        <input className={`form-control ${this.state.importReview.event_name_error && "is-invalid"}`} name='category' value={this.state.importReview.event_name_error ? "" : "Event Name"} />
+                                    </td>
+                                    <td>Black Friday</td>
+                                </tr>
+                                <tr>
+                                    <td>Url</td>
+                                    <td>
+                                        <input className={`form-control ${this.state.importReview.url_error && "is-invalid"}`} name='category' value={this.state.importReview.url_error ? "" : "Url"} />
+                                    </td>
+                                    <td>https://gannotations.com</td>
+                                </tr>
+                                <tr>
+                                    <td>Description</td>
+                                    <td>
+                                        <input className={`form-control ${this.state.importReview.description_error && "is-invalid"}`} name='category' value={this.state.importReview.description_error ? "" : "Description"} />
+                                    </td>
+                                    <td>Black Friday Deals 2023</td>
+                                </tr>
+                                <tr>
+                                    <td>Show At</td>
+                                    <td>
+                                        <input className={`form-control ${this.state.importReview.show_at_error && "is-invalid"}`} name='category' value={this.state.importReview.show_at_error ? "" : "Show At"} />
+                                    </td>
+                                    <td>{ this.state.date_format }</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div className="text-right mt-3">
+                            <Button className='btn-submit btn-theme' onClick={() => this.setState({ fieldErrorsCheck: true })}>Continue</Button>
+                        </div>
+                        </>
+                        : 
+                        
+                        <>
+                        <div className="apps-modalHead">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <h2>Field errors | <span className='text-danger'>{this.state.fieldErrorsCount} errors</span></h2>
                                 <span onClick={() => this.props.togglePopup('')} className="btn-close">
                                     <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" />
                                 </span>
@@ -218,7 +306,7 @@ export default class UploadAnnotation extends React.Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                { this.state.reviewData.map((rd, i) => {
+                                { this.state.fieldErrors.map((rd, i) => {
 
                                     return (
                                         <tr>
@@ -268,6 +356,9 @@ export default class UploadAnnotation extends React.Component {
                         <div className="text-right mt-3">
                             <Button className='btn-submit btn-theme' onClick={this.saveCsv}>Submit</Button>
                         </div>
+                        </>
+
+                        }
 
                     </div>
                 : 

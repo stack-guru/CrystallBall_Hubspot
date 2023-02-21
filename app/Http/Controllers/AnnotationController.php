@@ -311,12 +311,12 @@ class AnnotationController extends Controller
 
     public function saveCSV (Request $request) {
 
-        $reviewData = json_decode($request->reviewData);
+        $fieldErrors = json_decode($request->fieldErrors);
         $format = $request->date_format;
 
         $error = false;
-        $totalErrors = 0;
-        foreach($reviewData as $dt) {
+        $fieldErrorsCount = 0;
+        foreach($fieldErrors as $dt) {
 
             try {
                 $date = Carbon::createFromFormat($format, $dt->show_at);
@@ -325,21 +325,21 @@ class AnnotationController extends Controller
                 $dt->show_at = $dt->show_at;
                 $dt->show_at_error = 'Please select correct date format according to your CSV file from the list below.';
                 $error = true;
-                $totalErrors = $totalErrors + 1;
+                $fieldErrorsCount = $fieldErrorsCount + 1;
             }
 
             if (!filter_var($dt->url, FILTER_VALIDATE_URL)) {
                 $dt->url_error = 'Please provide valid url';
                 $error = true;
-                $totalErrors = $totalErrors + 1;
+                $fieldErrorsCount = $fieldErrorsCount + 1;
             }
 
         }
 
         if ($error) {
-            return ['success' => false, 'data'=> $reviewData, 'totalErrors' => $totalErrors];
+            return ['success' => false, 'fieldErrors'=> $fieldErrors, 'fieldErrorsCount' => $fieldErrorsCount];
         } else {
-            $this->insertRows($reviewData, $request);
+            $this->insertRows($fieldErrors, $request);
         }
     }
 
@@ -371,18 +371,23 @@ class AnnotationController extends Controller
         //     return response()->json(['message' => 'Invalid number of columns'], 422);
         // }
 
+        $importReview = [];
+        $importReviewErrorCount = 0;
         // Checking if given headers contain non-printable  characters
-        foreach ($headers as $header) {
-            if (!ctype_print($header)) {
-                return response()->json(['message' => "Inappropriate character in header: " . json_encode($header)], 422);
-            }
-        }
+        // foreach ($headers as $header) {
+        //     if (!ctype_print($header)) {
+        //         $importReview[$header . "_error"] = 'Inappropriate character';
+        //         // return response()->json(['message' => "Inappropriate character in header: " . json_encode($header)], 422);
+        //     }
+        // }
 
         // Checking if given file contains all required headers
         $kHs = ['category', 'event_name', 'url', 'description', 'show_at'];
         foreach ($kHs as $kH) {
             if (!in_array($kH, $headers)) {
-                return response()->json(['message' => "Incomplete CSV file headers.\nMissing header '" . $kH . "'.\nReceived headers: " . json_encode($headers)], 422);
+                $importReviewErrorCount = $importReviewErrorCount + 1;
+                $importReview[$kH . "_error"] = 'Incomplete CSV file headers';
+                // return response()->json(['message' => "Incomplete CSV file headers.\nMissing header '" . $kH . "'.\nReceived headers: " . json_encode($headers)], 422);
             }
         }
 
@@ -394,7 +399,7 @@ class AnnotationController extends Controller
         try {
 
             $error = false;
-            $totalErrors = 0;
+            $fieldErrorsCount = 0;
             foreach ($filecontent as $line) {
                 if (strlen($line) < (6 + 7)) {
                     continue;
@@ -414,7 +419,7 @@ class AnnotationController extends Controller
                                     $row['show_at'] = $values[$i];
                                     $row['show_at_error'] = 'Please select correct date format according to your CSV file from the list below.';
                                     $error = true;
-                                    $totalErrors = $totalErrors + 1;
+                                    $fieldErrorsCount = $fieldErrorsCount + 1;
                                 }
                             } else if ($headers[$i] == 'url') {
                                 $url = $values[$i];
@@ -422,7 +427,7 @@ class AnnotationController extends Controller
                                 if (!filter_var($url, FILTER_VALIDATE_URL)) {
                                     $row['url_error'] = 'Please provide valid url';
                                     $error = true;
-                                    $totalErrors = $totalErrors + 1;
+                                    $fieldErrorsCount = $fieldErrorsCount + 1;
                                 }
                             } else if ($headers[$i] == 'category') {
                                 $row['category'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
@@ -445,24 +450,23 @@ class AnnotationController extends Controller
                     // }
                 }
 
-                if (count($rows) > 9000) {
+                // if (count($rows) > 9000) {
                     // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (7)
                     // I obviously rounded it to something human readable
-                    $this->insertRows($rows, $request);
-                    $rows = array();
-                }
+                //     $this->insertRows($rows, $request);
+                //     $rows = array();
+                // }
             }
 
-            if (count($rows) && !$error) {
-                $this->insertRows($rows, $request);
-                event(new NewCSVFileUploaded($user, $request->file('csv')->getClientOriginalName()));
-            }
+            // if (count($rows) && !$error) {
+            //     $this->insertRows($rows, $request);
+            // }
         } catch (\Exception $e) {
             Log::error($e);
             abort(422, "Error occured while processing your CSV. Please contact support for more information.");
         }
 
-        return ['success' => !$error, 'data'=> $rows, 'totalErrors' => $totalErrors];
+        return ['success' => !$error, 'fieldErrors'=> $rows, 'fieldErrorsCount' => $fieldErrorsCount, 'importReview'=> $importReview, 'importReviewErrorCount' => $importReviewErrorCount];
     }
 
     public function isNotDuplicate ($existingRecords, $row) {
@@ -495,6 +499,9 @@ class AnnotationController extends Controller
                 ";
             DB::statement($sql);
         }
+
+        event(new NewCSVFileUploaded($user, $request->file('csv')->getClientOriginalName()));
+
     }
 
     public function getCategories()
