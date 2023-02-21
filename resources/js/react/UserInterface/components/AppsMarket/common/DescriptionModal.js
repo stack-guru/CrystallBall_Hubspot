@@ -15,7 +15,7 @@ class DescrptionModal extends React.Component {
         const _this = this;
         this.props.closeModal();
         swal.fire({
-            iconHtml: `<img src="/${ this.props.serviceName }-small.svg">`,
+            iconHtml: `<img src="/${(this.props.serviceName || '').toLowerCase()}-small.svg">`,
             showCloseButton: true,
             title: `Connect with ${ this.props.serviceName }`,
             text: `Connect your ${ this.props.serviceName } account to create automatic annotations for commits`,
