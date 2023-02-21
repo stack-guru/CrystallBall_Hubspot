@@ -487,6 +487,9 @@ class IndexAnnotations extends React.Component {
                                     if(selectedIcon.toLowerCase().indexOf('google') > -1) {
                                         selectedIcon = 'Category Google Update'
                                     }
+                                    if(selectedIcon.toLowerCase().indexOf('product') > -1) {
+                                        selectedIcon = 'shopify-small'
+                                    }
                                     anno.description = anno.description || anno.event_name
 
                                     switch (anno.added_by) {

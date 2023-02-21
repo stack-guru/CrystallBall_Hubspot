@@ -105,7 +105,7 @@ class ShopifyMonitorController extends Controller
                 $monitor->save();
                 return response()->json(['success' => true], 200);
             } else {
-                return response()->json(['success' => false, 'message' => 'We already have this monitor setup.'], 402);
+                return response()->json(['success' => false, 'message' => 'You already have this store url setup.'], 402);
             }
         } else {
             return response()->json(['success' => false, 'message' => 'Please provide the valid store url'], 400);

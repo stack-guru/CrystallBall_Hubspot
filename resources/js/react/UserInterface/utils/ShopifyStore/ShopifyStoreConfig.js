@@ -68,7 +68,7 @@ const ShopifyStoreConfig = (props) => {
                 (err) => {
                     Toast.fire({
                         icon: 'error',
-                        title: "Error while adding Shopify Store.",
+                        title: err?.response?.data?.message || "Error while adding Shopify Store.",
                     });
                 }
             )
