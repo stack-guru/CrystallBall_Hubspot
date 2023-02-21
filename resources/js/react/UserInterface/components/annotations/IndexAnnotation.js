@@ -499,6 +499,19 @@ class IndexAnnotations extends React.Component {
                                     if(selectedIcon.toLowerCase().indexOf('dates') > -1) {
                                         selectedIcon = 'retails-marketing-dates-small'
                                     }
+                                    if(selectedIcon.toLowerCase().indexOf('day') > -1 ||
+                                    (anno.event_name || '').toLowerCase().indexOf('day') > -1 ||
+                                    (anno.description || '').toLowerCase().indexOf('day') > -1
+                                    ){
+                                        selectedIcon = 'holidays-small'
+                                    }
+                                    if(
+                                      ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => selectedIcon.toLowerCase().indexOf(item) > -1) ||
+                                      ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => (anno.event_name || '').toLowerCase().indexOf(item) > -1) ||
+                                      ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => (anno.description || '').toLowerCase().indexOf(item) > -1)
+                                    ){
+                                        selectedIcon = 'weather-small'
+                                    }
                                     if(selectedIcon.toLowerCase().indexOf('tracking') > -1) {
                                         selectedIcon = 'SERP-small'
                                     }
