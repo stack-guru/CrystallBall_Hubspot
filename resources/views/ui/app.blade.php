@@ -141,7 +141,7 @@
     <script type="text/javascript" src="{{ config('services.bluesnap.environment') == 'sandbox' ? 'https://sandbox.bluesnap.com' : 'https://ws.bluesnap.com' }}/web-sdk/4/bluesnap.js"></script>
     <script type="text/javascript" src="{{asset('js/bs.js')}}"></script>
 
-    <script type="text/javascript" src="{{asset('js/UI.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/UI.js')}}?version={{ md5(strtotime(now())) }}"></script>
 
 </body>
 
