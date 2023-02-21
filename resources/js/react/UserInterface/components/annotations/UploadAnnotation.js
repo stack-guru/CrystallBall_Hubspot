@@ -244,35 +244,51 @@ export default class UploadAnnotation extends React.Component {
                                 <tr>
                                     <td>Category</td>
                                     <td>
-                                        <input className={`form-control ${this.state.importReview.category_error && "is-invalid"}`} name='category' value={this.state.importReview.category_error ? "" : "Category"} />
+                                        <input 
+                                        className={`form-control ${this.state.importReview.category_error && "is-invalid"}`} 
+                                        name='review_category' 
+                                        value={this.state.importReview.category_error ? "" : "Category"} />
                                     </td>
                                     <td>Sales Event</td>
                                 </tr>
                                 <tr>
                                     <td>Event Name</td>
                                     <td>
-                                        <input className={`form-control ${this.state.importReview.event_name_error && "is-invalid"}`} name='category' value={this.state.importReview.event_name_error ? "" : "Event Name"} />
+                                        <input 
+                                        className={`form-control ${this.state.importReview.event_name_error && "is-invalid"}`} 
+                                        name='review_event_name' 
+                                        value={this.state.importReview.event_name_error ? "" : "Event Name"} />
                                     </td>
                                     <td>Black Friday</td>
                                 </tr>
                                 <tr>
                                     <td>Url</td>
                                     <td>
-                                        <input className={`form-control ${this.state.importReview.url_error && "is-invalid"}`} name='category' value={this.state.importReview.url_error ? "" : "Url"} />
+                                        <input 
+                                        className={`form-control ${this.state.importReview.url_error && "is-invalid"}`} 
+                                        name='review_url' 
+                                        value={this.state.importReview.url_error ? "" : "Url"} />
                                     </td>
                                     <td>https://gannotations.com</td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
                                     <td>
-                                        <input className={`form-control ${this.state.importReview.description_error && "is-invalid"}`} name='category' value={this.state.importReview.description_error ? "" : "Description"} />
+                                        <input 
+                                            className={`form-control ${this.state.importReview.description_error && "is-invalid"}`} 
+                                            value={this.state.importReview.description_error ? "" : "Description"} 
+                                            name='review_description' 
+                                            />
                                     </td>
                                     <td>Black Friday Deals 2023</td>
                                 </tr>
                                 <tr>
                                     <td>Show At</td>
                                     <td>
-                                        <input className={`form-control ${this.state.importReview.show_at_error && "is-invalid"}`} name='category' value={this.state.importReview.show_at_error ? "" : "Show At"} />
+                                        <input 
+                                        className={`form-control ${this.state.importReview.show_at_error && "is-invalid"}`} 
+                                        name='review_show_at' 
+                                        value={this.state.importReview.show_at_error ? "" : "Show At"} />
                                     </td>
                                     <td>{ this.state.date_format }</td>
                                 </tr>
