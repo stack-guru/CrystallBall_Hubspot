@@ -31,7 +31,8 @@ class AnnotationQueryHelper
         string $showGoogleAdsHistory = 'true',
         string $showBitBucketTrackings = 'true',
         string $showGitHubTrackings = 'true',
-        string $showApplePodcasts = 'true'
+        string $showApplePodcasts = 'true',
+        string $showShopify = 'true'
     ) {
         $annotationsQuery = "";
         // SELECT annotations from annotations table
@@ -110,6 +111,11 @@ class AnnotationQueryHelper
         if ($user->is_ds_apple_podcast_annotation_enabled && $showApplePodcasts == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::applePodcastQuery($userIdsArray);
+        }
+        // Add apple podcast annotations if it is enabled in user data source
+        if ($user->is_ds_shopify_annotation_enabled && $showShopify == 'true') {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::shopifyQuery($userIdsArray);
         }
         return $annotationsQuery;
     }
@@ -198,6 +204,11 @@ class AnnotationQueryHelper
     public static function webMonitorQuery(array $userIdsArray)
     {
         return "select 1, show_at, NULL, category, event_name, url, NULL as added_by, description, show_at from `web_monitor_annotations` WHERE `web_monitor_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+    }
+
+    public static function shopifyQuery(array $userIdsArray)
+    {
+        return "select 1, published_at AS show_at, NULL, category, title AS event_name, NULL AS url, NULL as added_by, body_html AS description, NULL AS show_at from `shopify_annotations` WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function holidaysQuery(User $user, string $googleAnalyticsPropertyId)
