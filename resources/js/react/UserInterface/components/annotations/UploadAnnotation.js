@@ -24,6 +24,15 @@ export default class UploadAnnotation extends React.Component {
             fieldErrors: [],
             importReviewErrorCount: 0,
             importReview: [],
+            fileHeaders: [],
+            csvFields: {
+                'Category': 'Category',
+                'Event Name':  'Event Name',
+                'Url': 'Url',
+                'Description': 'Description',
+                'Show At': 'Show At',
+
+            }
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.saveCsv = this.saveCsv.bind(this)
@@ -61,15 +70,14 @@ export default class UploadAnnotation extends React.Component {
                 });
             } else {
 
-                const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount } = response.data;
+                const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount } = response.data;                
                 this.setState(
                     { 
                         review: true, 
                         fieldErrors, 
                         fieldErrorsCount,
                         importReview,
-                        importReviewErrorCount,
-
+                        importReviewErrorCount,      
                     }
                 )
             }
@@ -164,6 +172,15 @@ export default class UploadAnnotation extends React.Component {
                             fieldErrorsCount,
                             importReview,
                             importReviewErrorCount,
+                            fileHeaders: [],
+                            csvFields: {
+                                ...this.state.csvFields,
+                                ...(importReview['Description'] ?  { 'Description': '' } : {}),
+                                ...(importReview['Category'] ?  { 'Category': '' } : {}),
+                                ...(importReview['Event Name'] ?  { 'Event Name': '' } : {}),
+                                ...(importReview['Url'] ?  { 'Url': '' } : {}),
+                                ...(importReview['Show At'] ?  { 'Show At': '' } : {}),
+                            }
 
                         }
                     )
@@ -244,10 +261,20 @@ export default class UploadAnnotation extends React.Component {
                                 <tr>
                                     <td>Category</td>
                                     <td>
-                                        <input 
+                                        <select onSelect={(ev)=> {
+                                            this.setState({
+                                                csvFields: {
+                                                    ...this.state.csvFields,
+                                                    'Category': ev.target.value
+                                                }
+                                            })
+                                        }}>
+                                            {fileHeaders.map(itm => <option value={itm}>{itm}</option>)}
+                                        </select>
+                                        {/* <input 
                                         className={`form-control ${this.state.importReview.category_error && "is-invalid"}`} 
                                         name='review_category' 
-                                        value={this.state.importReview.category_error ? "" : "Category"} />
+                                        value={this.state.importReview.category_error ? "" : "Category"} /> */}
                                     </td>
                                     <td>Sales Event</td>
                                 </tr>
