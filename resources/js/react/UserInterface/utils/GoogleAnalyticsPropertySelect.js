@@ -180,6 +180,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                     <div className="themeNewInputStyle position-relative inputWithIcon">
                         <i className="icon fa"><img src='/icon-plus.svg' /></i>
                         <Select
+                            menuPosition={'fixed'}
                             onFocus={(e) => {
                                 if(this.props.onFocus) {
                                     this.props.onFocus();
