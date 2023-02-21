@@ -622,7 +622,7 @@ class AppsMarket extends React.Component {
                                             this.setState({ dsKey: item.dsKey, dsKeySkip: item.dsKey });
                                         }
                                     }} className="btn btn-sm btn-primary flex-shrink-0">Add</button>
-                                    <a href="/" className="btn-learnmore">Learn more</a>
+                                    <a onClick={() => {this.setState({ dsKey: item.dsKey, dsKeySkip: '' });}} href="javascript:void(0);" className="btn-learnmore">Learn more</a>
                                 </div>))}
                             </Slider>
                             {/* <span>See the changes your </span><strong>R&D</strong>{" "}<span>makes and how they affect your</span>{" "}<strong>sales</strong> */}

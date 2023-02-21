@@ -172,17 +172,18 @@ export default class IndexUsers extends Component {
                                                 <div className="singleCol text-left"><span>{user.email}</span></div>
                                                 <div className="singleCol text-left"><span>{user.name}</span></div>
                                                 <div className="singleCol text-left">
-                                                    <span>
+                                                    {/* <span>
                                                         <div className="themeNewInputStyle">
                                                             <select name="user_level" className="form-control" onChange={(ev) => this.saveRole(ev.target.value, user)} value={user.user_level}>
                                                                 <option value="">User level</option>
                                                                 <option value="admin">Admin</option>
-                                                                <option value="team">Team Member</option>
-                                                                <option value="viewer">Viewer</option>
+                                                                <option value="team">Read & Write</option>
+                                                                <option value="viewer">Read</option>
                                                             </select>
                                                         </div>
-                                                        {/* {capitalizeFirstLetter(user.user_level)} */}
-                                                    </span>
+                                                    </span> */}
+                                                    {/* {capitalizeFirstLetter(`${user.user_level}` || '-')} */}
+                                                    {user.user_level === 'admin' ? 'Admin': user.user_level === 'team' ? 'Read & Write' : user.user_level === 'viewer' ? 'Read' :  '-' }
                                                 </div>
                                                 <div className="singleCol text-left"><span>{user.department}</span></div>
                                                 <div className="singleCol text-left"><span>{user.team_name}</span></div>

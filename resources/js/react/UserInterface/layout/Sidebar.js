@@ -408,15 +408,7 @@ class Sidebar extends React.Component {
                                     onClick={() => this.props.openAnnotationPopup('manual')}
                                 >
                                     <span>
-                                        <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-                                            <path
-                                                d="M8.857 4.571l2.571 2.572M2 14h2.571L14 4.571 11.428 2 2 11.429V14z"
-                                                stroke="#666"
-                                                strokeWidth={1.4}
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            />
-                                        </svg>
+                                    <img className='inject-me' src='/images/plus-icon.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/images/plus-icon.svg"; }} width='16' height='16' alt='menu icon' />
                                     </span>
                                     <span className="pl-2">Manual</span>
                                 </a>
