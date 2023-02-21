@@ -729,17 +729,6 @@ class AppsMarket extends React.Component {
                                 height: 40,
                             },
                             {
-                                id: "09",
-                                background: "#1DA1F2",
-                                dsKey: "is_ds_twitter_tracking_enabled",
-                                connected: this.state.userServices["is_ds_twitter_tracking_enabled"],
-                                premium: false,
-                                brandName: "Twitter",
-                                brandLogo: "/twitter.svg",
-                                width: 100,
-                                height: 26,
-                            },
-                            {
                                 id: "12",
                                 background: "#FF4A00",
                                 dsKey: "",
@@ -1017,6 +1006,18 @@ class AppsMarket extends React.Component {
                                     brandLogo: "/amazonPodcast.svg",
                                     width: 114,
                                     height: 30,
+                                },
+                                {
+                                    id: "09",
+                                    background: "#1DA1F2",
+                                    dsKey: "is_ds_twitter_tracking_enabled",
+                                    connected: this.state.userServices["is_ds_twitter_tracking_enabled"],
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Twitter",
+                                    brandLogo: "/twitter.svg",
+                                    width: 100,
+                                    height: 26,
                                 },
                             ].map((item, itemKey) => (
                                 <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color": item.background || "#e0e0e0", }}>
