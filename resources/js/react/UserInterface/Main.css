@@ -3862,7 +3862,7 @@ body {
 .propertyLabel {
     border: 0;
     color: #333;
-    padding: 2px;
+    padding: 2px 5px;
     display: flex;
     font-size: 16px;
     line-height: 20px;
@@ -3870,7 +3870,7 @@ body {
     border-radius: 0px;
     align-items: center;
     background: transparent;
-    justify-content: center;
+    justify-content: start;
 }
 .accountSetUpPopup {
     max-width: 910px;
