@@ -1760,7 +1760,10 @@ class AppsMarket extends React.Component {
 
     serviceStatusHandler(e) {
         if (this.props.user.price_plan.has_data_sources) {
-            e.persist();
+            if(e.persist) {
+                e.persist();
+            }
+            
             if (e.target.name == "is_ds_holidays_enabled" && e.target.checked) {
                 this.sectionToggler("holidays");
                 this.updateUserService(e);
