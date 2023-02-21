@@ -48,7 +48,7 @@ class ShopifyService {
             return true;
         } catch (\Exception $e) {
             Log::channel('shopify')->debug($e);
-            return $e;
+            return false;
         }
     }
 
