@@ -391,9 +391,8 @@ class AnnotationController extends Controller
             }
         }
 
-        $user_id = Auth::id();
-
-        $existingRecords = Annotation::where('user_id', $user_id)->get();
+        // $user_id = Auth::id();
+        // $existingRecords = Annotation::where('user_id', $user_id)->get();
 
         $rows = array();
         try {
@@ -410,41 +409,41 @@ class AnnotationController extends Controller
 
                 if ($headers !== $values && count($values) == count($headers)) {
                     for ($i = 0; $i < count($headers); $i++) {
-                        if (in_array($headers[$i], $kHs)) {
+                        // if (in_array($headers[$i], $kHs)) {
                             if ($headers[$i] == 'show_at') {
                                 try {
                                     $date = Carbon::createFromFormat($request->date_format, $values[$i]);
-                                    $row['show_at'] = $date->format('Y-m-d');
+                                    $row[$headers[$i]] = $date->format('Y-m-d');
                                 } catch (\Exception $e) {
-                                    $row['show_at'] = $values[$i];
+                                    $row[$headers[$i]] = $values[$i];
                                     $row['show_at_error'] = 'Please select correct date format according to your CSV file from the list below.';
                                     $error = true;
                                     $fieldErrorsCount = $fieldErrorsCount + 1;
                                 }
                             } else if ($headers[$i] == 'url') {
                                 $url = $values[$i];
-                                $row['url'] = $url;
+                                $row[$headers[$i]] = $url;
                                 if (!filter_var($url, FILTER_VALIDATE_URL)) {
                                     $row['url_error'] = 'Please provide valid url';
                                     $error = true;
                                     $fieldErrorsCount = $fieldErrorsCount + 1;
                                 }
-                            } else if ($headers[$i] == 'category') {
-                                $row['category'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
-                            } else if ($headers[$i] == 'event_type') {
-                                $row['event_type'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
-                            } else if ($headers[$i] == 'event_name') {
-                                $row['event_name'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
-                            } else if ($headers[$i] == 'title') {
-                                $row['title'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            // } else if ($headers[$i] == 'category') {
+                            //     $row['category'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            // } else if ($headers[$i] == 'event_type') {
+                            //     $row['event_type'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            // } else if ($headers[$i] == 'event_name') {
+                            //     $row['event_name'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            // } else if ($headers[$i] == 'title') {
+                            //     $row['title'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
                             } else {
                                 $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
                             }
-                        }
+                        // }
                     }
 
-                    $row['user_id'] = $user_id;
-                    $row['added_by'] = 'csv-upload';
+                    // $row['user_id'] = $user_id;
+                    // $row['added_by'] = 'csv-upload';
                     // if ($this->isNotDuplicate($existingRecords, $row)) {
                         array_push($rows, $row);
                     // }
@@ -466,7 +465,15 @@ class AnnotationController extends Controller
             abort(422, "Error occured while processing your CSV. Please contact support for more information.");
         }
 
-        return ['success' => !$error, 'fieldErrors'=> $rows, 'fieldErrorsCount' => $fieldErrorsCount, 'importReview'=> $importReview, 'importReviewErrorCount' => $importReviewErrorCount];
+        return [
+            'success' => !$error, 
+            'fieldErrors'=> $rows, 
+            'fieldErrorsCount' => $fieldErrorsCount, 
+            'importReview'=> $importReview, 
+            'importReviewErrorCount' => $importReviewErrorCount,
+            'fileHeaders' => $headers
+            
+        ];
     }
 
     public function isNotDuplicate ($existingRecords, $row) {

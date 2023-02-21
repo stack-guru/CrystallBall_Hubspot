@@ -46,6 +46,29 @@ export default class UploadAnnotation extends React.Component {
         this.onDragOver = this.onDragOver.bind(this)
         this.onFileDrop = this.onFileDrop.bind(this)
         this.onFileSelect = this.onFileSelect.bind(this)
+
+        this.prepareFieldErrorsData = this.prepareFieldErrorsData.bind(this)
+    }
+
+
+    prepareFieldErrorsData () {
+        if(!Object.values(this.state.importReview).find(x => x)) {
+            const data = this.state.fieldErrors
+            const csvFields = this.state.csvFields
+
+            console.log(csvFields)
+
+            const result = data.map(itm => ({
+                'category': itm[csvFields['Category']],
+                'event_name': itm[csvFields['Event Name']],
+                'description': itm[csvFields['Description']],
+                'show_at': itm[csvFields['Show At']],
+                'url': itm[csvFields['Url']],
+            
+            }))
+
+            console.log(result)
+        }
     }
 
     saveCsv () {
@@ -70,7 +93,7 @@ export default class UploadAnnotation extends React.Component {
                 });
             } else {
 
-                const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount } = response.data;                
+                const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount, fileHeaders } = response.data;                
                 this.setState(
                     { 
                         review: true, 
@@ -78,6 +101,15 @@ export default class UploadAnnotation extends React.Component {
                         fieldErrorsCount,
                         importReview,
                         importReviewErrorCount,      
+                        fileHeaders,
+                        csvFields: {
+                            ...this.state.csvFields,
+                            ...(importReview['Description'] ?  { 'Description': '' } : {}),
+                            ...(importReview['Category'] ?  { 'Category': '' } : {}),
+                            ...(importReview['Event Name'] ?  { 'Event Name': '' } : {}),
+                            ...(importReview['Url'] ?  { 'Url': '' } : {}),
+                            ...(importReview['Show At'] ?  { 'Show At': '' } : {}),
+                        }
                     }
                 )
             }
@@ -164,7 +196,7 @@ export default class UploadAnnotation extends React.Component {
                     });
                 } else {
 
-                    const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount } = response.data;
+                    const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount, fileHeaders } = response.data;
                     this.setState(
                         { 
                             review: true, 
@@ -172,7 +204,7 @@ export default class UploadAnnotation extends React.Component {
                             fieldErrorsCount,
                             importReview,
                             importReviewErrorCount,
-                            fileHeaders: [],
+                            fileHeaders,
                             csvFields: {
                                 ...this.state.csvFields,
                                 ...(importReview['Description'] ?  { 'Description': '' } : {}),
@@ -261,61 +293,85 @@ export default class UploadAnnotation extends React.Component {
                                 <tr>
                                     <td>Category</td>
                                     <td>
-                                        <select onSelect={(ev)=> {
+                                        <select className={`form-control ${this.state.importReview.category_error && 'is-invalid'}`} onChange={(ev)=> {
                                             this.setState({
                                                 csvFields: {
                                                     ...this.state.csvFields,
                                                     'Category': ev.target.value
-                                                }
+                                                },
+                                                importReview: {...this.state.importReview, category_error:"" }
                                             })
                                         }}>
-                                            {fileHeaders.map(itm => <option value={itm}>{itm}</option>)}
+                                            {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.category_error && idx == 0} value={itm}>{itm}</option>)}
                                         </select>
-                                        {/* <input 
-                                        className={`form-control ${this.state.importReview.category_error && "is-invalid"}`} 
-                                        name='review_category' 
-                                        value={this.state.importReview.category_error ? "" : "Category"} /> */}
                                     </td>
                                     <td>Sales Event</td>
                                 </tr>
                                 <tr>
                                     <td>Event Name</td>
                                     <td>
-                                        <input 
-                                        className={`form-control ${this.state.importReview.event_name_error && "is-invalid"}`} 
-                                        name='review_event_name' 
-                                        value={this.state.importReview.event_name_error ? "" : "Event Name"} />
+                                        <select className={`form-control ${this.state.importReview.event_name_error && 'is-invalid'}`} onChange={(ev)=> {
+                                            this.setState({
+                                                csvFields: {
+                                                    ...this.state.csvFields,
+                                                    'Event Name': ev.target.value
+                                                },
+                                                importReview: {...this.state.importReview, event_name_error:"" }
+                                            })
+                                        }}>
+                                            {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.event_name_error && idx == 1} value={itm}>{itm}</option>)}
+                                        </select>
                                     </td>
                                     <td>Black Friday</td>
                                 </tr>
                                 <tr>
                                     <td>Url</td>
                                     <td>
-                                        <input 
-                                        className={`form-control ${this.state.importReview.url_error && "is-invalid"}`} 
-                                        name='review_url' 
-                                        value={this.state.importReview.url_error ? "" : "Url"} />
+                                        <select className={`form-control ${this.state.importReview.url_error && 'is-invalid'}`} onChange={(ev)=> {
+                                            this.setState({
+                                                csvFields: {
+                                                    ...this.state.csvFields,
+                                                    'Url': ev.target.value
+                                                },
+                                                importReview: {...this.state.importReview, url_error:"" }
+                                            })
+                                        }}>
+                                            {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.url_error && idx == 2} value={itm}>{itm}</option>)}
+                                        </select>
                                     </td>
                                     <td>https://gannotations.com</td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
                                     <td>
-                                        <input 
-                                            className={`form-control ${this.state.importReview.description_error && "is-invalid"}`} 
-                                            value={this.state.importReview.description_error ? "" : "Description"} 
-                                            name='review_description' 
-                                            />
+                                        <select className={`form-control ${this.state.importReview.description_error && 'is-invalid'}`} onChange={(ev)=> {
+                                            this.setState({
+                                                csvFields: {
+                                                    ...this.state.csvFields,
+                                                    'Description': ev.target.value
+                                                },
+                                                importReview: {...this.state.importReview, description_error:"" }
+                                            })
+                                        }}>
+                                            {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.description_error && idx == 3} value={itm}>{itm}</option>)}
+                                        </select>
                                     </td>
                                     <td>Black Friday Deals 2023</td>
                                 </tr>
                                 <tr>
                                     <td>Show At</td>
                                     <td>
-                                        <input 
-                                        className={`form-control ${this.state.importReview.show_at_error && "is-invalid"}`} 
-                                        name='review_show_at' 
-                                        value={this.state.importReview.show_at_error ? "" : "Show At"} />
+                                        <select className={`form-control ${this.state.importReview.show_at_error && 'is-invalid'}`} onChange={(ev)=> {
+                                            this.setState({
+                                                csvFields: {
+                                                    ...this.state.csvFields,
+                                                    'Show At': ev.target.value
+                                                },
+                                                importReview: {...this.state.importReview, show_at_error:"" }
+                                            })
+                                        }}>
+                                            {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.show_at_error && idx == 4} value={itm}>{itm}</option>)}
+                                        </select>
                                     </td>
                                     <td>{ this.state.date_format }</td>
                                 </tr>
@@ -323,7 +379,7 @@ export default class UploadAnnotation extends React.Component {
                         </table>
 
                         <div className="text-right mt-3">
-                            <Button className='btn-submit btn-theme' onClick={() => this.setState({ fieldErrorsCheck: true })}>Continue</Button>
+                            <Button className='btn-submit btn-theme' onClick={this.prepareFieldErrorsData}>Continue</Button>
                         </div>
                         </>
                         : 
