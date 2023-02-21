@@ -490,6 +490,18 @@ class IndexAnnotations extends React.Component {
                                     if(selectedIcon.toLowerCase().indexOf('product') > -1) {
                                         selectedIcon = 'shopify-small'
                                     }
+                                    if(selectedIcon.toLowerCase().indexOf('site') > -1 
+                                    || selectedIcon.toLowerCase().indexOf('news') > -1
+                                    || selectedIcon.toLowerCase().indexOf('web') > -1
+                                    ) {
+                                        selectedIcon = 'web-monitoring-small'
+                                    }
+                                    if(selectedIcon.toLowerCase().indexOf('dates') > -1) {
+                                        selectedIcon = 'retails-marketing-dates-small'
+                                    }
+                                    if(selectedIcon.toLowerCase().indexOf('tracking') > -1) {
+                                        selectedIcon = 'SERP-small'
+                                    }
                                     anno.description = anno.description || anno.event_name
 
                                     switch (anno.added_by) {
