@@ -551,8 +551,8 @@ class IndexAnnotations extends React.Component {
                                             selectedIcon = 'SERP-small'
                                         }
                                         anno.description = anno.description || anno.event_name
-
-                                        switch (anno.added_by) {
+                                        const added_by = (anno.added_by || "").split('~~~~');
+                                        switch (added_by[1]) {
                                             case "manual":
                                                 borderLeftColor = this.state.userAnnotationColors.manual;
                                                 break;
@@ -671,7 +671,7 @@ class IndexAnnotations extends React.Component {
                                                 <div className="flex-grow-1 d-flex justify-content-between align-items-center">
                                                     <ul className="d-flex list-unstyled">
                                                         <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
-                                                        <li><span>{anno.added_by === 'manual' ? this.props.user.name : anno.added_by || this.props.user.name}</span></li>
+                                                        <li><span>{added_by[0] || 'System'}</span></li>
                                                         <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
                                                         {/* <li>
                                                     <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
