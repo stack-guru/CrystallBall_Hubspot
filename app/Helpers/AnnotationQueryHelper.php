@@ -133,10 +133,13 @@ class AnnotationQueryHelper
     public static function userAnnotationsQuery(User $user, array $userIdsArray, $showDisabled = false, string $googleAnalyticsPropertyId = null, string $userId = '*', string $showWebMonitoring = 'false', string $showManualAnnotations = 'false', string  $showCSVAnnotations = 'false', string $showAPIAnnotations = 'false')
     {
         $annotationsQuery = "";
-        $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, `added_by`, `description`, `annotations`.`created_at` FROM `annotations`";
+        $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, CONCAT(`users`.`name`, '~~~~', `annotations`.`added_by`) AS `added_by`, `description`, `annotations`.`created_at` FROM `annotations`";
+        $annotationsQuery .= " LEFT JOIN `users` ON `annotations`.`user_id` = `users`.`id`";
         if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
             $annotationsQuery .= " LEFT JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
         }
+
+        
         $annotationsQuery .= " WHERE (";
         if ($userId !== '*' && in_array($userId, $userIdsArray)) {
             $annotationsQuery .= " `annotations`.`user_id` = " . $userId;

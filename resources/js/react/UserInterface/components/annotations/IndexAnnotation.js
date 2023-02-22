@@ -551,8 +551,8 @@ class IndexAnnotations extends React.Component {
                                             selectedIcon = 'SERP-small'
                                         }
                                         anno.description = anno.description || anno.event_name
-
-                                        switch (anno.added_by) {
+                                        const added_by = (anno.added_by || "").split('~~~~');
+                                        switch (added_by[1]) {
                                             case "manual":
                                                 borderLeftColor = this.state.userAnnotationColors.manual;
                                                 break;
@@ -586,7 +586,7 @@ class IndexAnnotations extends React.Component {
                                             default:
                                                 borderLeftColor = '#1976fe';
                                         }
-                                        switch (anno.added_by) {
+                                        switch (added_by[1]) {
                                             case "manual":
                                                 borderLeftColor = this.state.userAnnotationColors.manual;
                                                 break;
@@ -626,7 +626,7 @@ class IndexAnnotations extends React.Component {
                                                 key={idx + anno.toString()}
                                                 onClick={
                                                     () => {
-                                                        if (anno.id && this.state.enableSelect && anno.added_by == 'manual') {
+                                                        if (anno.id && this.state.enableSelect && added_by[1] == 'manual') {
                                                             this.handleOneSelection(anno.id)
                                                         } else {
                                                             // toast.error("This annotation can't be selected.");
@@ -671,7 +671,7 @@ class IndexAnnotations extends React.Component {
                                                 <div className="flex-grow-1 d-flex justify-content-between align-items-center">
                                                     <ul className="d-flex list-unstyled">
                                                         <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
-                                                        <li><span>{anno.added_by === 'manual' ? this.props.user.name : anno.added_by || this.props.user.name}</span></li>
+                                                        <li><span>{added_by[0] || 'System'}</span></li>
                                                         <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
                                                         {/* <li>
                                                     <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
@@ -682,7 +682,7 @@ class IndexAnnotations extends React.Component {
                                                     </ul>
 
                                                     <ul className="d-flex list-unstyled">
-                                                        {anno.added_by == "manual" ? <>
+                                                        {added_by[1] == "manual" ? <>
                                                             <li>
                                                                 <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.toggleStatus(anno.id) }}>
                                                                     {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
