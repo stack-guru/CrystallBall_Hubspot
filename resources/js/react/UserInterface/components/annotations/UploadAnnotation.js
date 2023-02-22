@@ -26,11 +26,11 @@ export default class UploadAnnotation extends React.Component {
             importReview: [],
             fileHeaders: [],
             csvFields: {
-                'Category': 'Category',
-                'Event Name':  'Event Name',
-                'Url': 'Url',
-                'Description': 'Description',
-                'Show At': 'Show At',
+                'Category': 'category',
+                'Event Name':  'event_name',
+                'Url': 'url',
+                'Description': 'description',
+                'Show At': 'show_at',
 
             }
         }
@@ -50,9 +50,11 @@ export default class UploadAnnotation extends React.Component {
         this.prepareFieldErrorsData = this.prepareFieldErrorsData.bind(this)
     }
 
-    isValidURL(string) {
-        var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-        return (res != null)
+    isValidURL(urlString) {
+        // check is the string is the valid url
+        var a  = document.createElement('a');
+        a.href = urlString;
+        return (a.host && a.host != window.location.host);
     }
 
     prepareFieldErrorsData () {
@@ -74,7 +76,7 @@ export default class UploadAnnotation extends React.Component {
                 }
 
                 if (obj.show_at) {
-                    obj.url_error = 'Please provide a valid url';
+                    obj.show_at_error = 'Please provide a valid value';
                 }
                 if (!obj.category) {
                     obj.category_error = `Category Can't be empty`;
@@ -320,98 +322,108 @@ export default class UploadAnnotation extends React.Component {
                                     <th>Sample Data</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className='dataTableAnalyticsAccount'>
                                 <tr>
                                     <td>Category</td>
-                                    <td>
-                                        <select className={`form-control ${this.state.importReview.category_error && 'is-invalid'}`} onChange={(ev)=> {
+                                    <td className='themeNewInputStyle position-relative'>
+                                        <select value={this.state.csvFields['Category']} style={{height: 38}} className={`form-control ${this.state.importReview.category_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
                                             this.setState({
                                                 csvFields: {
                                                     ...this.state.csvFields,
                                                     'Category': ev.target.value
                                                 },
+                                                fieldErrorsCount: this.state.importReview.category_error ? this.state.fieldErrorsCount - 1 : this.state.fieldErrorsCount,
                                                 importReview: {...this.state.importReview, category_error:"" }
                                             })
                                         }}>
                                             <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.category_error && idx == 0} value={itm}>{itm}</option>)}
                                         </select>
+                                        <i className="btn-searchIcon left-0 fa fa-check-circle mt-2 ml-2"></i>
                                     </td>
                                     <td>Sales Event</td>
                                 </tr>
                                 <tr>
                                     <td>Event Name</td>
-                                    <td>
-                                        <select className={`form-control ${this.state.importReview.event_name_error && 'is-invalid'}`} onChange={(ev)=> {
+                                    <td className='themeNewInputStyle position-relative'>
+                                        <select value={this.state.csvFields['Event Name']} style={{height: 38}} className={`form-control ${this.state.importReview.event_name_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
                                             this.setState({
                                                 csvFields: {
                                                     ...this.state.csvFields,
                                                     'Event Name': ev.target.value
                                                 },
+                                                fieldErrorsCount: this.state.importReview.event_name_error ? this.state.fieldErrorsCount - 1 : this.state.fieldErrorsCount,
                                                 importReview: {...this.state.importReview, event_name_error:"" }
                                             })
                                         }}>
                                             <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.event_name_error && idx == 1} value={itm}>{itm}</option>)}
                                         </select>
+                                        <i className="btn-searchIcon left-0 fa fa-check-circle mt-2 ml-2"></i>
                                     </td>
                                     <td>Black Friday</td>
                                 </tr>
                                 <tr>
                                     <td>Url</td>
-                                    <td>
-                                        <select className={`form-control ${this.state.importReview.url_error && 'is-invalid'}`} onChange={(ev)=> {
+                                    <td className='themeNewInputStyle position-relative'>
+                                        <select value={this.state.csvFields['Url']} style={{height: 38}} className={`form-control ${this.state.importReview.url_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
                                             this.setState({
                                                 csvFields: {
                                                     ...this.state.csvFields,
                                                     'Url': ev.target.value
                                                 },
+                                                fieldErrorsCount: this.state.importReview.url_error ? this.state.fieldErrorsCount - 1 : this.state.fieldErrorsCount,
                                                 importReview: {...this.state.importReview, url_error:"" }
                                             })
                                         }}>
                                             <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.url_error && idx == 2} value={itm}>{itm}</option>)}
                                         </select>
+                                        <i className="btn-searchIcon left-0 fa fa-check-circle mt-2 ml-2"></i>
                                     </td>
                                     <td>https://gannotations.com</td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
-                                    <td>
-                                        <select className={`form-control ${this.state.importReview.description_error && 'is-invalid'}`} onChange={(ev)=> {
+                                    <td className='themeNewInputStyle position-relative'>
+                                        <select value={this.state.csvFields['Description']} style={{height: 38}} className={`form-control ${this.state.importReview.description_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
                                             this.setState({
                                                 csvFields: {
                                                     ...this.state.csvFields,
                                                     'Description': ev.target.value
                                                 },
+                                                fieldErrorsCount: this.state.importReview.description_error ? this.state.fieldErrorsCount - 1 : this.state.fieldErrorsCount,
                                                 importReview: {...this.state.importReview, description_error:"" }
                                             })
                                         }}>
                                             <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.description_error && idx == 3} value={itm}>{itm}</option>)}
                                         </select>
+                                        <i className="btn-searchIcon left-0 fa fa-check-circle mt-2 ml-2"></i>
                                     </td>
                                     <td>Black Friday Deals 2023</td>
                                 </tr>
                                 <tr>
                                     <td>Show At</td>
-                                    <td>
-                                        <select className={`form-control ${this.state.importReview.show_at_error && 'is-invalid'}`} onChange={(ev)=> {
+                                    <td className='themeNewInputStyle position-relative'>
+                                        <select value={this.state.csvFields['Show At']} style={{height: 38}} className={`form-control ${this.state.importReview.show_at_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
                                             this.setState({
                                                 csvFields: {
                                                     ...this.state.csvFields,
                                                     'Show At': ev.target.value
                                                 },
+                                                fieldErrorsCount: this.state.importReview.show_at_error ? this.state.fieldErrorsCount - 1 : this.state.fieldErrorsCount,
                                                 importReview: {...this.state.importReview, show_at_error:"" }
                                             })
                                         }}>
                                             <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.show_at_error && idx == 0} value={itm}>{itm}</option>)}
                                         </select>
+                                        <i className="btn-searchIcon left-0 fa fa-check-circle mt-3 ml-2"></i>
                                     </td>
                                     <td>
-                                        <div className="themeNewInputStyle">
-                                            <select name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
+                                        <div className="themeNewInputStyle position-relative">
+                                            <select style={{height: 38}} name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
                                                 <option value="">Select your date format</option>
                                                 <option value="j/n/Y">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
                                                 <option value="n-j-Y">{moment("2021-01-15").format('M-D-YYYY')}</option>
@@ -436,7 +448,7 @@ export default class UploadAnnotation extends React.Component {
                         </table>
 
                         <div className="text-right mt-3">
-                            <Button className='btn-submit btn-theme' onClick={this.prepareFieldErrorsData}>Continue</Button>
+                            <Button className='btn-submit btn-theme' disabled={this.props.fieldErrorsCount || this.state.date_format === ''} onClick={this.prepareFieldErrorsData}>Continue</Button>
                         </div>
                         </>
                         : 
@@ -545,8 +557,8 @@ export default class UploadAnnotation extends React.Component {
                                     </label>
                                 </div>
 
-                                <div className='grid2layout mb-3'>
-                                    <div className="themeNewInputStyle">
+                                <div className='px-8 mb-3'>
+                                    <div className="themeNewInputStyle position-relative">
                                         <GoogleAnalyticsPropertySelect
                                             currentPricePlan={this.props.currentPricePlan}
                                             name="google_analytics_property_id"

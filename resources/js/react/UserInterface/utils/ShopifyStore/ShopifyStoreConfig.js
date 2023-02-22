@@ -60,6 +60,7 @@ const ShopifyStoreConfig = (props) => {
             .then(
                 () => {
                     props.sectionToggler();
+                    props.serviceStatusHandler({ target: { name: 'is_ds_shopify_annotation_enabled', value: true, checked: true }})
                     Toast.fire({
                         icon: 'success',
                         title: "Shopify Store added successfully.",
