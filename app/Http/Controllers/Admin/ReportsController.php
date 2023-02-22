@@ -66,7 +66,7 @@ class ReportsController extends Controller
         $userIdsArray = $user->getAllGroupUserIdsArray();
 
         $annotationsQuery = "SELECT `TempTable`.*, `annotation_ga_properties`.`google_analytics_property_id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
-        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $request->query('annotation_ga_property_id'), $userIdsArray, '*', true);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, '*', $userIdsArray, '*', true);
         $annotationsQuery .= ") AS TempTable";
 
         // LEFT JOIN to load all properties selected in annotations
