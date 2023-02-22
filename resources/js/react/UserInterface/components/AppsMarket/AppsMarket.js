@@ -402,17 +402,6 @@ class AppsMarket extends React.Component {
                 height: 32,
             },
             {
-                id: "09",
-                background: "#1DA1F2",
-                dsKey: "is_ds_twitter_tracking_enabled",
-                connected: this.state.userServices["is_ds_twitter_tracking_enabled"],
-                premium: false,
-                brandName: "Twitter",
-                brandLogo: "/twitter.svg",
-                width: 100,
-                height: 26,
-            },
-            {
                 id: "19",
                 background: "#24292F",
                 dsKey: "is_ds_github_tracking_enabled",
@@ -1018,6 +1007,18 @@ class AppsMarket extends React.Component {
                                     width: 114,
                                     height: 30,
                                 },
+                                {
+                                    id: "09",
+                                    background: "#1DA1F2",
+                                    dsKey: "is_ds_twitter_tracking_enabled",
+                                    connected: this.state.userServices["is_ds_twitter_tracking_enabled"],
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Twitter",
+                                    brandLogo: "/twitter.svg",
+                                    width: 100,
+                                    height: 26,
+                                },
                             ].map((item, itemKey) => (
                                 <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color": item.background || "#e0e0e0", }}>
                                     {item.enabled ? (<i className="active fa fa-check-circle"></i>) : null}
@@ -1051,6 +1052,7 @@ class AppsMarket extends React.Component {
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
+                                updateUserService={this.updateUserService}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}
@@ -1760,7 +1762,10 @@ class AppsMarket extends React.Component {
 
     serviceStatusHandler(e) {
         if (this.props.user.price_plan.has_data_sources) {
-            e.persist();
+            if(e.persist) {
+                e.persist();
+            }
+            
             if (e.target.name == "is_ds_holidays_enabled" && e.target.checked) {
                 this.sectionToggler("holidays");
                 this.updateUserService(e);

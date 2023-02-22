@@ -40,7 +40,9 @@ class Shopify extends React.Component {
                 });
             });
     };
-
+    // if(result.data.shopify_monitors?.length > 0) {
+    //     this.props.serviceStatusHandler({ target: { name: 'is_ds_shopify_annotation_enabled', checked: true }})
+    // }
     changeModal() {
         this.setState({ isRead: true })
     }
@@ -112,6 +114,7 @@ class Shopify extends React.Component {
                             loadUserDataSources={this.props.loadUserDataSources}
                             updateGAPropertyId={this.props.updateGAPropertyId}
                             reloadWebMonitors={this.props.reloadWebMonitors}
+                            serviceStatusHandler={this.props.serviceStatusHandler}
                             gaPropertyId={this.props.ga_property_id} />
                     </>
                 }

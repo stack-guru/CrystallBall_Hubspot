@@ -12,6 +12,9 @@ import AnnotationsUpdate from './EditAnnotation';
 import ShowChartAnnotation from './ShowChartAnnotation';
 import Toast from "../../utils/Toast";
 import axios from 'axios';
+import InfiniteScroll from 'react-infinite-scroller';
+import { uniqBy } from "lodash";
+
 
 class IndexAnnotations extends React.Component {
 
@@ -43,8 +46,10 @@ class IndexAnnotations extends React.Component {
 
             // Table Infinite Scroll
             pageSize: 20,
-            pageNumber: 1,
-            enableSelect: false
+            pageNumber: 0,
+            enableSelect: false,
+            hideInfiniteScroll: false,
+            hasMore: true,
         };
         this.deleteAnnotation = this.deleteAnnotation.bind(this);
         this.toggleStatus = this.toggleStatus.bind(this);
@@ -53,17 +58,20 @@ class IndexAnnotations extends React.Component {
         this.sortByCategory = this.sortByCategory.bind(this);
 
         this.handleChange = this.handleChange.bind(this);
-        this.registerScrollEvent = this.registerScrollEvent.bind(this);
+        // this.registerScrollEvent = this.registerScrollEvent.bind(this);
 
         this.handleAllSelection = this.handleAllSelection.bind(this);
         this.handleOneSelection = this.handleOneSelection.bind(this);
         this.handleDeleteSelected = this.handleDeleteSelected.bind(this);
         this.seeCompleteDescription = this.seeCompleteDescription.bind(this);
+        this.loadMoreAnnotations = this.loadMoreAnnotations.bind(this);
+        this.loadInitAnnotations = this.loadInitAnnotations.bind(this);
     }
     componentDidMount() {
         this.axiosCancelToken = axios.CancelToken;
         document.title = "Annotation";
 
+        this.loadMoreAnnotations(0);
         this.setState({ isBusy: true, isLoading: true });
         HttpClient.get(`/data-source/user-annotation-color`)
             .then(
@@ -71,8 +79,8 @@ class IndexAnnotations extends React.Component {
                     this.setState({
                         userAnnotationColors: resp.data.user_annotation_color,
                     });
-                    this.registerScrollEvent()
-                    this.loadInitAnnotations()
+                    // this.registerScrollEvent()
+                    // this.loadInitAnnotations()
                     HttpClient.get(`/annotation-categories`)
                         .then(
                             (response) => {
@@ -101,24 +109,40 @@ class IndexAnnotations extends React.Component {
                 this.setState({ errors: err });
             });
 
-        setTimeout(() => {
-            const scrollableAnnotation = document.getElementById(
-                "scrollable-annotation"
-            );
-            const annotationTableBody = document.getElementById(
-                "annotation-table-body"
-            );
-            if (scrollableAnnotation && annotationTableBody) {
-                annotationTableBody.scrollTo(0, scrollableAnnotation.offsetTop);
-            }
-        }, 5000);
+        // setTimeout(() => {
+        //     const scrollableAnnotation = document.getElementById(
+        //         "scrollable-annotation"
+        //     );
+        //     const annotationTableBody = document.getElementById(
+        //         "annotation-table-body"
+        //     );
+        //     if (scrollableAnnotation && annotationTableBody) {
+        //         annotationTableBody.scrollTo(0, scrollableAnnotation.offsetTop);
+        //     }
+        // }, 5000);
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.mKeyAnnotation !== this.props.mKeyAnnotation) {
-            if (!this.props.mKeyAnnotation.length) {
-                this.setState({ isLoading: true, annotations: [] }, this.loadInitAnnotations);
+            if(prevProps.mKeyAnnotation === 'manual' && this.props.mKeyAnnotation === '') {
+                this.setState({
+                    annotations: [],
+                    pageNumber: 0,
+                    isLoading: false,
+                    hideInfiniteScroll: true
+                }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations()) });
             }
+            
+        }
+    }
+
+    loadMoreAnnotations(page) {
+        if (!this.state.isLoading) {
+            this.setState({
+                pageNumber: this.state.pageNumber + 1,
+                isLoading: true,
+                hideInfiniteScroll: false,
+            }, this.loadInitAnnotations)
         }
     }
 
@@ -216,8 +240,9 @@ class IndexAnnotations extends React.Component {
                 (response) => {
                     this.loadAnnotationsCancelToken = null;
                     this.setState({
-                        annotations: this.state.annotations.concat(response.data.annotations),
+                        annotations: uniqBy(this.state.annotations.concat(response.data.annotations), 'created_at'),
                         isLoading: false,
+                        hasMore: response.data.annotations.length >= pageSize,
                     });
 
                     setTimeout(() => {
@@ -243,11 +268,12 @@ class IndexAnnotations extends React.Component {
 
     handleChange(e) {
         this.setState({
-            [e.target.name]: e.target.value,
+            searchText: e.target.value,
             annotations: [],
-            pageNumber: 1,
-            isLoading: true
-        }, this.loadInitAnnotations);
+            pageNumber: 0,
+            isLoading: false,
+            hideInfiniteScroll: true
+        }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations(0)) });
     }
 
     handleAllSelection(e) {
@@ -475,187 +501,231 @@ class IndexAnnotations extends React.Component {
                         }
                     </div>
 
-                    {this.state.isLoading ? (
-                        <>Loading...</>
-                    ) : (
+
+                    {!this.state.hideInfiniteScroll ? <InfiniteScroll
+                        pageStart={1}
+                        loadMore={this.loadMoreAnnotations}
+                        hasMore={this.state.hasMore}
+                        initialLoad={false}
+                        loader={<>Loading...</>}
+                    >
                         <>
-                            {this.state.annotations
-                                // .filter(this.checkSearchText)
-                                .map((anno, idx) => {
-                                    let borderLeftColor = "rgba(0,0,0,.0625)";
-                                    let selectedIcon = anno.category || '';
-                                    if(selectedIcon.toLowerCase().indexOf('google') > -1) {
-                                        selectedIcon = 'Category Google Update'
-                                    }
-                                    if(selectedIcon.toLowerCase().indexOf('product') > -1) {
-                                        selectedIcon = 'shopify-small'
-                                    }
-                                    anno.description = anno.description || anno.event_name
+                            {/* {this.state.isLoading ? (
+                            <>Loading...</>
+                        ) : ( */}
+                            <>
+                                {this.state.annotations
+                                    // .filter(this.checkSearchText)
+                                    .map((anno, idx) => {
+                                        let borderLeftColor = "rgba(0,0,0,.0625)";
+                                        let selectedIcon = anno.category || '';
+                                        if (selectedIcon.toLowerCase().indexOf('google') > -1) {
+                                            selectedIcon = 'Category Google Update'
+                                        }
+                                        if (selectedIcon.toLowerCase().indexOf('product') > -1) {
+                                            selectedIcon = 'shopify-small'
+                                        }
+                                        if (selectedIcon.toLowerCase().indexOf('site') > -1
+                                            || selectedIcon.toLowerCase().indexOf('news') > -1
+                                            || selectedIcon.toLowerCase().indexOf('web') > -1
+                                        ) {
+                                            selectedIcon = 'web-monitoring-small'
+                                        }
+                                        if (selectedIcon.toLowerCase().indexOf('dates') > -1) {
+                                            selectedIcon = 'retails-marketing-dates-small'
+                                        }
+                                        if (selectedIcon.toLowerCase().indexOf('day') > -1 ||
+                                            (anno.event_name || '').toLowerCase().indexOf('day') > -1 ||
+                                            (anno.description || '').toLowerCase().indexOf('day') > -1
+                                        ) {
+                                            selectedIcon = 'holidays-small'
+                                        }
+                                        if (
+                                            ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => selectedIcon.toLowerCase().indexOf(item) > -1) ||
+                                            ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => (anno.event_name || '').toLowerCase().indexOf(item) > -1) ||
+                                            ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => (anno.description || '').toLowerCase().indexOf(item) > -1)
+                                        ) {
+                                            selectedIcon = 'weather-small'
+                                        }
+                                        if (selectedIcon.toLowerCase().indexOf('tracking') > -1) {
+                                            selectedIcon = 'SERP-small'
+                                        }
+                                        anno.description = anno.description || anno.event_name
+                                        const added_by = (anno.added_by || "").split('~~~~');
+                                        switch (added_by[1]) {
+                                            case "manual":
+                                                borderLeftColor = this.state.userAnnotationColors.manual;
+                                                break;
+                                            case "csv-upload":
+                                                borderLeftColor = this.state.userAnnotationColors.csv;
+                                                break;
+                                            case "api":
+                                                borderLeftColor = this.state.userAnnotationColors.api;
+                                                break;
+                                        }
 
-                                    switch (anno.added_by) {
-                                        case "manual":
-                                            borderLeftColor = this.state.userAnnotationColors.manual;
-                                            break;
-                                        case "csv-upload":
-                                            borderLeftColor = this.state.userAnnotationColors.csv;
-                                            break;
-                                        case "api":
-                                            borderLeftColor = this.state.userAnnotationColors.api;
-                                            break;
-                                    }
+                                        switch (anno.category) {
+                                            case "Google Updates":
+                                                borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates;
+                                                break;
+                                            case "Retail Marketing Dates":
+                                                borderLeftColor = this.state.userAnnotationColors.retail_marketings;
+                                                break;
+                                            case "Weather Alert":
+                                                borderLeftColor = this.state.userAnnotationColors.weather_alerts;
+                                                break;
+                                            case "Website Monitoring":
+                                                borderLeftColor = this.state.userAnnotationColors.web_monitors;
+                                                break;
+                                            case "WordPress Updates":
+                                                borderLeftColor = this.state.userAnnotationColors.wordpress_updates;
+                                                break;
+                                            case "News Alert":
+                                                borderLeftColor = this.state.userAnnotationColors.google_alerts;
+                                                break;
+                                            default:
+                                                borderLeftColor = '#1976fe';
+                                        }
+                                        switch (added_by[1]) {
+                                            case "manual":
+                                                borderLeftColor = this.state.userAnnotationColors.manual;
+                                                break;
+                                            case "csv-upload":
+                                                borderLeftColor = this.state.userAnnotationColors.csv;
+                                                break;
+                                            case "api":
+                                                borderLeftColor = this.state.userAnnotationColors.api;
+                                                break;
+                                        }
+                                        if (anno.category.indexOf("Holiday") !== -1)
+                                            borderLeftColor = this.state.userAnnotationColors.holidays;
 
-                                    switch (anno.category) {
-                                        case "Google Updates":
-                                            borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates;
-                                            break;
-                                        case "Retail Marketing Dates":
-                                            borderLeftColor = this.state.userAnnotationColors.retail_marketings;
-                                            break;
-                                        case "Weather Alert":
-                                            borderLeftColor = this.state.userAnnotationColors.weather_alerts;
-                                            break;
-                                        case "Website Monitoring":
-                                            borderLeftColor = this.state.userAnnotationColors.web_monitors;
-                                            break;
-                                        case "WordPress Updates":
-                                            borderLeftColor = this.state.userAnnotationColors.wordpress_updates;
-                                            break;
-                                        case "News Alert":
-                                            borderLeftColor = this.state.userAnnotationColors.google_alerts;
-                                            break;
-                                        default:
-                                            borderLeftColor = '#1976fe';
-                                    }
-                                    switch (anno.added_by) {
-                                        case "manual":
-                                            borderLeftColor = this.state.userAnnotationColors.manual;
-                                            break;
-                                        case "csv-upload":
-                                            borderLeftColor = this.state.userAnnotationColors.csv;
-                                            break;
-                                        case "api":
-                                            borderLeftColor = this.state.userAnnotationColors.api;
-                                            break;
-                                    }
-                                    if (anno.category.indexOf("Holiday") !== -1)
-                                        borderLeftColor = this.state.userAnnotationColors.holidays;
+                                        const currentDateTime =
+                                            new Date();
+                                        const annotationDateTime =
+                                            new Date(anno.show_at);
+                                        const diffTime =
+                                            annotationDateTime -
+                                            currentDateTime;
+                                        let rowId = null;
+                                        if (
+                                            diffTime < 0 &&
+                                            wasLastAnnotationInFuture ==
+                                            true
+                                        )
+                                            rowId =
+                                                "scrollable-annotation";
+                                        if (diffTime > 0) {
+                                            wasLastAnnotationInFuture = true;
+                                        } else {
+                                            wasLastAnnotationInFuture = false;
+                                        }
 
-                                    const currentDateTime =
-                                        new Date();
-                                    const annotationDateTime =
-                                        new Date(anno.show_at);
-                                    const diffTime =
-                                        annotationDateTime -
-                                        currentDateTime;
-                                    let rowId = null;
-                                    if (
-                                        diffTime < 0 &&
-                                        wasLastAnnotationInFuture ==
-                                        true
-                                    )
-                                        rowId =
-                                            "scrollable-annotation";
-                                    if (diffTime > 0) {
-                                        wasLastAnnotationInFuture = true;
-                                    } else {
-                                        wasLastAnnotationInFuture = false;
-                                    }
-
-                                    return (
-                                        <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId}
-                                            key={idx + anno.toString()}
-                                            onClick={
-                                                () => {
-                                                    if (anno.id && this.state.enableSelect && anno.added_by == 'manual') {
-                                                        this.handleOneSelection(anno.id)
-                                                    } else {
-                                                        // toast.error("This annotation can't be selected.");
+                                        return (
+                                            <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId}
+                                                key={idx + anno.toString()}
+                                                onClick={
+                                                    () => {
+                                                        if (anno.id && this.state.enableSelect && added_by[1] == 'manual') {
+                                                            this.handleOneSelection(anno.id)
+                                                        } else {
+                                                            // toast.error("This annotation can't be selected.");
+                                                        }
                                                     }
-                                                }
-                                            } data-anno_id={anno.id}>
+                                                } data-anno_id={anno.id}>
 
-                                            <span className="checkedIcon"><img src={`/icon-checked.svg`} /></span>
+                                                <span className="checkedIcon"><img src={`/icon-checked.svg`} /></span>
 
-                                            <span className="annotionRowIcon"><img src={`/${selectedIcon}.svg`} onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/annotation-default.svg"; }} /></span>
+                                                <span className="annotionRowIcon"><img src={`/${selectedIcon}.svg`} onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/annotation-default.svg"; }} /></span>
 
-                                            <div className="description d-flex flex-column flex-shrink-1">
-                                                <p className="titleCategory d-flex align-items-center">
-                                                    <span>{anno.event_name}</span>
-                                                    <a href="javascript:void(0)">{anno.category}</a>
-                                                    {anno.url && anno.url != "https://" && anno.url != "null" ? (
-                                                        <a href={anno.url} target="_blank" className="ml-1 miniPreview"><i className="icon"><img src={'/icon-chain.svg'} /></i></a>
-                                                    ) : (
-                                                        ""
-                                                    )}
-                                                </p>
-                                                <p className="annotationDesc mb-0 d-flex-inline">
-                                                    {anno.description &&
-                                                        !anno.show_complete_desc ? anno.description.substring(0, 150) : ""}
-                                                    {anno.description &&
-                                                        anno.description.length > 150 &&
-                                                        !anno.show_complete_desc ? (
-                                                        <span>...<a onClick={() => { this.seeCompleteDescription(anno, idx); }} target="_blank" className="ml-1">Read more</a></span>
-                                                    ) : (
-                                                        ""
-                                                    )}
+                                                <div className="description d-flex flex-column flex-shrink-1">
+                                                    <p className="titleCategory d-flex align-items-center">
+                                                        <span>{anno.event_name}</span>
+                                                        <a href="javascript:void(0)">{anno.category}</a>
+                                                        {anno.url && anno.url != "https://" && anno.url != "null" ? (
+                                                            <a href={anno.url} target="_blank" className="ml-1 miniPreview"><i className="icon"><img src={'/icon-chain.svg'} /></i></a>
+                                                        ) : (
+                                                            ""
+                                                        )}
+                                                    </p>
+                                                    <p className="annotationDesc mb-0 d-flex-inline">
+                                                        {anno.description &&
+                                                            !anno.show_complete_desc ? anno.description.substring(0, 150) : ""}
+                                                        {anno.description &&
+                                                            anno.description.length > 150 &&
+                                                            !anno.show_complete_desc ? (
+                                                            <span>...<a onClick={() => { this.seeCompleteDescription(anno, idx); }} target="_blank" className="ml-1">Read more</a></span>
+                                                        ) : (
+                                                            ""
+                                                        )}
 
-                                                    {anno.description && anno.description.length > 150 && anno.show_complete_desc ? (
-                                                        <div id="">{anno.description}</div>
-                                                    ) : (
-                                                        ""
-                                                    )}
+                                                        {anno.description && anno.description.length > 150 && anno.show_complete_desc ? (
+                                                            <div id="">{anno.description}</div>
+                                                        ) : (
+                                                            ""
+                                                        )}
 
-                                                </p>
-                                            </div>
+                                                    </p>
+                                                </div>
 
-                                            <div className="flex-grow-1 d-flex justify-content-between align-items-center">
-                                                <ul className="d-flex list-unstyled">
-                                                    <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
-                                                    <li><span>{anno.added_by === 'manual' ? this.props.user.name : anno.added_by || this.props.user.name}</span></li>
-                                                    <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
-                                                    {/* <li>
+                                                <div className="flex-grow-1 d-flex justify-content-between align-items-center">
+                                                    <ul className="d-flex list-unstyled">
+                                                        <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
+                                                        <li><span>{added_by[0] || 'System'}</span></li>
+                                                        <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
+                                                        {/* <li>
                                                     <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
                                                         <i className="mr-2">
                                                         <img src={"/icon-chart.svg"} /></i><span>open chart</span>
                                                         </a>
                                                     </li> */}
-                                                </ul>
+                                                    </ul>
 
-                                                <ul className="d-flex list-unstyled">
-                                                    {anno.added_by == "manual" ? <>
-                                                        <li>
-                                                            <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.toggleStatus(anno.id) }}>
-                                                                {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.setState({ editAnnotationId: anno.id }) }}>
-                                                                <img src={`icon-edit.svg`} />
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className="text-danger" onClick={(e) => { e.stopPropagation(); this.deleteAnnotation(anno.id); }}><img src={`icon-trash.svg`} /></span>
-                                                        </li>
-                                                    </> : null}
-                                                </ul>
+                                                    <ul className="d-flex list-unstyled">
+                                                        {added_by[1] == "manual" ? <>
+                                                            <li>
+                                                                <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.toggleStatus(anno.id) }}>
+                                                                    {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.setState({ editAnnotationId: anno.id }) }}>
+                                                                    <img src={`icon-edit.svg`} />
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <span className="text-danger" onClick={(e) => { e.stopPropagation(); this.deleteAnnotation(anno.id); }}><img src={`icon-trash.svg`} /></span>
+                                                            </li>
+                                                        </> : null}
+                                                    </ul>
+                                                </div>
+
                                             </div>
+                                        );
 
-                                        </div>
-                                    );
+                                    })}
 
-                                })}
-
-                            {!this.state.isLoading && !this.state.annotations.length ?
-                                <div className="nodata">
-                                    <p>No annotations added yet.</p>
-                                    <p className="mb-0">Suggestions: <a onClick={() => this.props.openAnnotationPopup('manual')} href="javascript:void(0);">Add manual annotation</a> {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (<>or <a onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">Upload CSV</a></>): null}</p>
-                                </div> : null
-                            }
+                                {!this.state.isLoading && !this.state.annotations.length && !this.state.hideInfiniteScroll ?
+                                    <div className="nodata">
+                                        <p>No annotations added yet.</p>
+                                        <p className="mb-0">Suggestions: <a onClick={() => this.props.openAnnotationPopup('manual')} href="javascript:void(0);">Add manual annotation</a> {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (<>or <a onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">Upload CSV</a></>) : null}</p>
+                                    </div> : null
+                                }
+                            </>
+                            {/* )} */}
                         </>
-                    )}
+                    </InfiniteScroll> : null}
                 </Container>
                 <AppsModal isOpen={!!this.state.editAnnotationId} popupSize={'md'} toggle={() => { this.setState({ editAnnotationId: '' }); }}>
-                    <AnnotationsUpdate upgradePopup={this.props.upgradePopup} togglePopup={() => this.setState({ editAnnotationId: '' })} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
+                    <AnnotationsUpdate upgradePopup={this.props.upgradePopup} togglePopup={() => {
+                        this.setState({
+                            editAnnotationId: '',
+                            annotations: [],
+                            pageNumber: 0,
+                            isLoading: false,
+                            hideInfiniteScroll: true
+                        }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations()) });
+                    }} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
                 </AppsModal>
                 <AppsModal isOpen={!!this.state.showChartAnnotationId} popupSize={'null'} toggle={() => { this.setState({ showChartAnnotationId: '' }); }}>
                     <ShowChartAnnotation togglePopup={() => this.setState({ showChartAnnotationId: '' })} showChartAnnotationId={this.state.showChartAnnotationId} currentPricePlan={this.props.user.price_plan} />
@@ -668,19 +738,20 @@ class IndexAnnotations extends React.Component {
         this.setState({
             sortBy: e.target.value,
             annotations: [],
-            pageNumber: 1,
-            isLoading: true,
-        }, this.loadInitAnnotations);
+            pageNumber: 0,
+            isLoading: false,
+            hideInfiniteScroll: true
+        }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations(0)) });
     }
 
-    registerScrollEvent() {
-        // $(window).off('scroll');
-        $(window).on('scroll', () => {
-            if (parseFloat($(window).scrollTop() + $(window).height()).toFixed(0) == $(document).height()) {
-                this.setState({ pageNumber: this.state.pageNumber + 1 }, this.loadInitAnnotations)
-            }
-        });
-    }
+    // registerScrollEvent() {
+    //     // $(window).off('scroll');
+    //     $(window).on('scroll', () => {
+    //         if (parseFloat($(window).scrollTop() + $(window).height()).toFixed(0) == $(document).height()) {
+    //             this.setState({ pageNumber: this.state.pageNumber + 1 }, this.loadInitAnnotations)
+    //         }
+    //     });
+    // }
 
     sortByProperty(gaPropertyId) {
         this.setState({ googleAnalyticsProperty: gaPropertyId });
@@ -713,9 +784,10 @@ class IndexAnnotations extends React.Component {
             isLoading: true,
             category: catName,
             annotations: [],
-            pageNumber: 1,
-            pageSize: 20
-        }, this.loadInitAnnotations);
+            pageNumber: 0,
+            isLoading: false,
+            hideInfiniteScroll: true
+        }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations(0)) });
     }
 
     seeCompleteDescription(anno, idx) {
