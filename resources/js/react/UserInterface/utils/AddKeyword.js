@@ -47,7 +47,6 @@ export default class AddKeyword extends React.Component {
     }
 
     addKeyword(e) {
-        console.log(document.getElementById("tracking_keywords").value);
         if (document.getElementById("tracking_keywords").value) {
             if (
                 this.canAddMoreConfigurations(
@@ -124,6 +123,7 @@ export default class AddKeyword extends React.Component {
 
     saveKeywords() {
         this.setState({ isBusy: true, errors: "" });
+        this.addKeyword();
         let params = {
             url: this.state.url,
             search_engine: this.state.search_engines,
