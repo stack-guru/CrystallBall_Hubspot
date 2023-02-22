@@ -52,7 +52,7 @@ export default class UploadAnnotation extends React.Component {
 
     isValidURL(string) {
         var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-        return (res !== null)
+        return (res != null)
     }
 
     prepareFieldErrorsData () {
@@ -69,14 +69,23 @@ export default class UploadAnnotation extends React.Component {
                     'url': itm[csvFields['Url']],
                 }
 
-                console.log(this.state.date_format)
-
                 if (!this.isValidURL(obj.url)) {
                     obj.url_error = 'Please provide a valid url';
                 }
 
                 if (obj.show_at) {
                     obj.url_error = 'Please provide a valid url';
+                }
+                if (!obj.category) {
+                    obj.category_error = `Category Can't be empty`;
+                }
+
+                if (!obj.event_name) {
+                    obj.event_name_error = `Event Name Can't be empty`;
+                }
+
+                if (!obj.description) {
+                    obj.description_error = `Description Can't be empty`;
                 }
 
                 return obj;
@@ -222,22 +231,6 @@ export default class UploadAnnotation extends React.Component {
                 this.setState(
                     { 
                         review: true, 
-                            review: true, 
-                        review: true, 
-                            review: true, 
-                        review: true, 
-                            review: true, 
-                        review: true, 
-                            review: true, 
-                        review: true, 
-                        fieldErrors, 
-                            fieldErrors, 
-                        fieldErrors, 
-                            fieldErrors, 
-                        fieldErrors, 
-                            fieldErrors, 
-                        fieldErrors, 
-                            fieldErrors, 
                         fieldErrors, 
                         fieldErrorsCount,
                         importReview,
