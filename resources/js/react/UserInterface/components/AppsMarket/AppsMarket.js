@@ -799,7 +799,7 @@ class AppsMarket extends React.Component {
                                         item.background || "#e0e0e0",
                                 }}
                             >
-                                {this.state.userServices[item.dsKey] ? (
+                                {this.state.userServices[item.dsKey] || this.state.userServices?.user?.[item.dsKey] ? (
                                     <i className="active fa fa-check-circle"></i>
                                 ) : null}
                                 <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width} height={item.height} />
