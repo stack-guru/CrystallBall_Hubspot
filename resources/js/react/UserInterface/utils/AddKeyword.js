@@ -160,6 +160,12 @@ export default class AddKeyword extends React.Component {
                     });
 
                     this.props.onAddCallback();
+                    this.props.updateTrackingStatus(true);
+                    this.props.updateUserService({ target: {
+                            name: "is_ds_keyword_tracking_enabled",
+                            checked: true,
+                        }, 
+                    });
                 },
                 (err) => {
                     this.setState({ isBusy: false, errors: err.response.data });
@@ -255,7 +261,7 @@ export default class AddKeyword extends React.Component {
                     </div>
 
                     <div className="themeNewInputGroup">
-                        <input type="text" className="form-control" placeholder="Add keywords" name="keywords" id="tracking_keywords" onKeyUp={(e) => {this.addKeyword(e);}}/>
+                        <input type="text" className="form-control" placeholder="Add keywords" name="keywords" id="tracking_keywords" onChange={(e) => {this.addKeyword(e);}}/>
                         <div className="input-group-append"><i className="ti-plus"></i></div>
 
                         {this.state.keywords.length > 0 ?
