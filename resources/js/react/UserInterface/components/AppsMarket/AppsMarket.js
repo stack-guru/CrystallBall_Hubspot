@@ -1338,6 +1338,7 @@ class AppsMarket extends React.Component {
                                         manage_keyword_show: flag,
                                     });
                                 }}
+                                updateUserService={this.updateUserService}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 editKeywordToggler={this.editKeywordToggler}
                                 changeShownHint={this.changeShownHint}
