@@ -124,7 +124,7 @@ class IndexAnnotations extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.mKeyAnnotation !== this.props.mKeyAnnotation) {
-            if(prevProps.mKeyAnnotation === 'manual') {
+            if(prevProps.mKeyAnnotation === 'manual' && this.props.mKeyAnnotation === '') {
                 this.setState({
                     annotations: [],
                     pageNumber: 0,
