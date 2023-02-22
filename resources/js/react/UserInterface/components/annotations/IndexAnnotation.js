@@ -355,7 +355,7 @@ class IndexAnnotations extends React.Component {
                                 <a data-toggle="tooltip" data-placement="top" title="Manual"
                                     href="javascript:void(0);"
                                     onClick={() => this.props.openAnnotationPopup('manual')} >
-                                    <img className='inject-me' src='/manual.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/manual.svg"; }} width='16' height='16' alt='menu icon' />
+                                    <img className='inject-me' src='/images/plus-icon.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/images/plus-icon.svg"; }} width='16' height='16' alt='menu icon' />
                                 </a>
                                 <a data-toggle="tooltip" data-placement="top" title="Apps Market" to="/data-source" href="/data-source">
                                     <img className='inject-me' src='/appMarket.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/appMarket.svg"; }} width='16' height='16' alt='menu icon' />
@@ -483,7 +483,13 @@ class IndexAnnotations extends React.Component {
                                 // .filter(this.checkSearchText)
                                 .map((anno, idx) => {
                                     let borderLeftColor = "rgba(0,0,0,.0625)";
-                                    let selectedIcon = anno.category;
+                                    let selectedIcon = anno.category || '';
+                                    if(selectedIcon.toLowerCase().indexOf('google') > -1) {
+                                        selectedIcon = 'Category Google Update'
+                                    }
+                                    if(selectedIcon.toLowerCase().indexOf('product') > -1) {
+                                        selectedIcon = 'shopify-small'
+                                    }
                                     anno.description = anno.description || anno.event_name
 
                                     switch (anno.added_by) {

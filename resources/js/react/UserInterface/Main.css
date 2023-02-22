@@ -2741,7 +2741,7 @@ body {
 .modal-csvUpload {
     margin: 0;
 }
-.selectGoogleAccount .css-1hb7zxy-IndicatorsContainer {
+.selectGoogleAccount .css-1hb7zxy-IndicatorsContainer, .modal-editAnnotation .css-1hb7zxy-IndicatorsContainer {
     display: none;
 }
 .css-tlfecz-indicatorContainer {
@@ -3874,7 +3874,7 @@ body {
 .propertyLabel {
     border: 0;
     color: #333;
-    padding: 2px;
+    padding: 2px 5px;
     display: flex;
     font-size: 16px;
     line-height: 20px;
@@ -3882,7 +3882,7 @@ body {
     border-radius: 0px;
     align-items: center;
     background: transparent;
-    justify-content: center;
+    justify-content: start;
 }
 .accountSetUpPopup {
     max-width: 910px;
@@ -4213,7 +4213,7 @@ body {
     font-style: normal;
     padding-left: 8px;
 }
-.themeTextSlider .slick-slide.slick-active.slick-current {
+.themeTextSlider .slick-slide.slick-active.slick-current, .themeTextSlider .slick-slide.slick-active.slick-current a {
     z-index: 3;
 }
 .goodWork {

@@ -11,6 +11,7 @@ export default class AnnotationCategorySelect extends React.Component {
         this.state = {
             isBusy: false,
             errors: '',
+            creatableValue: ''
         }
 
         this.onChangeHandler = this.onChangeHandler.bind(this)
@@ -37,6 +38,7 @@ export default class AnnotationCategorySelect extends React.Component {
                 className="gray_clr"
                 options={this.props.categories}
                 placeholder={this.props.placeholder || 'Category *'}
+                onInputChange={(newValue) => this.setState({creatableValue: newValue})}
             >
             </CreatableSelect>
         )

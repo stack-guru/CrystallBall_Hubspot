@@ -125,7 +125,7 @@ export default class IndexPricingPlans extends React.Component {
                     <Container>
                         <div className="pageHeader planPageHead">
                             <h2 className="pageTitle">Manage plan</h2>
-                            {this.props.user.price_plan.name == "Free" ?
+                            { this.props.user.price_plan.name == "Trial" ?
                                 <p className='mb-0'>Your account will be automatically downgraded to the Free plan at {moment(this.props.user.price_plan_expiry_date || new Date()).format('ll')}. Upgrade your account to keep enjoying all the features.</p>
                                 : null}
                         </div>
@@ -213,19 +213,27 @@ export default class IndexPricingPlans extends React.Component {
                                                 
                                                 {pricePlan.has_api ? <li className='d-flex align-items-center'>
                                                     <i><img src={'/tick-green.svg'} /></i><span>Annotations API</span></li> : null}
-                                                {pricePlan.has_integrations ? <li className='d-flex align-items-center'>
-                                                    <i><img src={'/tick-green.svg'} /></i><span>Zapier Integrations</span></li> : null}
+                                                {/* {pricePlan.has_integrations ? <li className='d-flex align-items-center'>
+                                                    <i><img src={'/tick-green.svg'} /></i><span>Zapier Integrations</span></li> : null} */}
                                                 {pricePlan.has_notifications ? <li className='d-flex align-items-center'>
                                                     <i><img src={'/tick-green.svg'} /></i><span>Notifications</span></li> : null}
-
-
                                             </ul>
                                         </div>
 
-                                        <div className='planfoot'>
+                                       {(pricePlan.keyword_tracking_count == -1 || pricePlan.keyword_tracking_count == null) &&
+                                        (pricePlan.web_monitor_count == -1 || pricePlan.web_monitor_count == null) &&
+                                        (pricePlan.owm_city_count == -1 || pricePlan.owm_city_count) &&
+                                        (pricePlan.owm_city_count == -1 || pricePlan.owm_city_count == null) &&
+                                        (pricePlan.google_alert_keyword_count == -1 || pricePlan.google_alert_keyword_count == null) &&
+                                        (pricePlan.apple_podcast_monitor_count == -1 || pricePlan.apple_podcast_monitor_count == null) &&
+                                        (pricePlan.bitbucket_credits_count == -1 || pricePlan.bitbucket_credits_count == null) &&
+                                        (pricePlan.aws_credits_count == -1 || pricePlan.aws_credits_count == null) &&
+                                        (pricePlan.github_credits_count == -1 || pricePlan.github_credits_count == null) &&
+                                        (pricePlan.linkedin_credits_count == -1 || pricePlan.linkedin_credits_count == null) &&
+                                        (pricePlan.shopify_monitor_count == -1 || pricePlan.shopify_monitor_count == null) &&
+                                        (pricePlan.twitter_credits_count == -1 || pricePlan.twitter_credits_count == null) ? null :   <div className='planfoot'>
                                             <h4>Credits</h4>
                                             <ul>
-
                                                 {pricePlan.keyword_tracking_count == -1 || pricePlan.keyword_tracking_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count}</span> </li>}
                                                 {pricePlan.web_monitor_count == -1 || pricePlan.web_monitor_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Website Monitoring: {pricePlan.web_monitor_count == 0 ? 'Unlimited' : pricePlan.web_monitor_count}</span> </li>}
                                                 {pricePlan.owm_city_count == -1 || pricePlan.owm_city_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Weather Alerts: {pricePlan.owm_city_count == 0 ? 'Unlimited' : pricePlan.owm_city_count}</span> </li>}
@@ -237,33 +245,8 @@ export default class IndexPricingPlans extends React.Component {
                                                 {pricePlan.linkedin_credits_count == -1 || pricePlan.linkedin_credits_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Linkedin: {pricePlan.linkedin_credits_count == 0 ? 'Unlimited' : pricePlan.linkedin_credits_count}</span> </li>}
                                                 {pricePlan.shopify_monitor_count == -1 || pricePlan.shopify_monitor_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Shopify: {pricePlan.shopify_monitor_count == 0 ? 'Unlimited' : pricePlan.shopify_monitor_count}</span> </li>}
                                                 {pricePlan.twitter_credits_count == -1 || pricePlan.twitter_credits_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Twitter: {pricePlan.twitter_credits_count == 0 ? 'Unlimited' : pricePlan.twitter_credits_count}</span> </li>}
-                                                {/* <li>Retail Marketing Dates: <span>∞</span></li>
-                                                <li>Google Updates: <span>∞</span></li>
-                                                <li>WordPress Updates: <span>∞</span></li>
-                                                <li>Holidays: <span>∞</span></li> */}
-
-
-                                                {/* {pricePlan.has_data_sources ? <li>
-                                                    <span className="fa-li"><i className="fa fa-check-circle-o"></i></span>
-                                                    Automations
-                                                    <img id={"automation-feature-hint-" + pricePlan.id} className="hint-button" src="/images/info-logo-grey.png" onClick={() => { this.setState({ showHintFor: 'automation-hint-' + pricePlan.id }) }} />
-                                                    <UncontrolledPopover trigger="legacy" placement="right" isOpen={this.state.showHintFor == 'automation-hint-' + pricePlan.id} target={"automation-feature-hint-" + pricePlan.id} toggle={() => { this.setState({ showHintFor: null }) }} onClick={() => { this.changeShownHint(null) }}>
-                                                        <PopoverHeader>{pricePlan.name}</PopoverHeader>
-                                                        <PopoverBody>
-                                                            {pricePlan.keyword_tracking_count == -1 ? null : <span>Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count} Credits<br /></span>}
-                                                            Website Monitoring: {pricePlan.web_monitor_count} URLs<br />
-                                                            Weather Alerts: {pricePlan.owm_city_count == 0 ? 'Unlimited' : (pricePlan.owm_city_count > 0 ? pricePlan.owm_city_count : 0)} cities<br />
-                                                            News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : (pricePlan.google_alert_keyword_count > 0 ? pricePlan.google_alert_keyword_count : 0)} keywords<br />
-                                                            Retail Marketing Dates<br />
-                                                            Google Updates<br />
-                                                            WordPress Updates<br />
-                                                            Holidays<br />
-                                                        </PopoverBody>
-                                                    </UncontrolledPopover>
-                                                </li> : null} */}
-
                                             </ul>
-                                        </div>
+                                        </div>}
                                     </div>
                                 </Col>
                             })}

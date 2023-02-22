@@ -92,19 +92,25 @@ class ShopifyMonitorController extends Controller
         $url = $req->shopifyUrl;
         $gaPropertyId = $req->gaPropertyId;
 
-        $exist = ShopifyMonitor::where('url', $url)->where('user_id', $userID)->first();
+        $shopifyService = new ShopifyService();
+        $status = $shopifyService->saveShopifyProducts($url, $userID);
 
-        if(!$exist) {
-            $monitor = new ShopifyMonitor();
-            $monitor->url = $url;
-            $monitor->user_id = $userID;
-            $monitor->ga_property_id = $gaPropertyId;
-            $monitor->save();
+        if ($status) {
+            $exist = ShopifyMonitor::where('url', $url)->where('user_id', $userID)->first();
+            if(!$exist) {
+                $monitor = new ShopifyMonitor();
+                $monitor->url = $url;
+                $monitor->user_id = $userID;
+                $monitor->ga_property_id = $gaPropertyId;
+                $monitor->save();
+                return response()->json(['success' => true], 200);
+            } else {
+                return response()->json(['success' => false, 'message' => 'You already have this store url setup.'], 402);
+            }
+        } else {
+            return response()->json(['success' => false, 'message' => 'Please provide the valid store url'], 400);
         }
 
-        $shopifyService = new ShopifyService();
-        $data = $shopifyService->saveShopifyProducts($url, $userID);
-        return $data;
     }
 
 }

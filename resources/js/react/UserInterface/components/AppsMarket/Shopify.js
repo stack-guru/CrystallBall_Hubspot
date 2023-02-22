@@ -4,18 +4,50 @@ import DSShopifySelect from "../../utils/DSShopifySelect";
 import ModalHeader from "./common/ModalHeader";
 import DescrptionModalNormal from "./common/DescriptionModalNormal";
 import { ShopifyStoreConfig } from "../../utils/ShopifyStore";
+import HttpClient from "../../utils/HttpClient";
+import Toast from "../../utils/Toast";
+
 class Shopify extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            shopifyStores: [],
             isRead: false
         }
+
+        this.getExistingShopifyStore = this.getExistingShopifyStore.bind(this)
     }
+
+    getExistingShopifyStore = async () => {
+        HttpClient.get(
+            `/data-source/shopify-monitor?ga_property_id=${this.props.ga_property_id}`
+        )
+            .then(
+                (result) => {
+                    this.setState({shopifyStores: result.data.shopify_monitors })
+                },
+                (err) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Error while getting exists shopify urls.",
+                    });
+                }
+            )
+            .catch((err) => {
+                Toast.fire({
+                    icon: 'error',
+                    title: "Error while getting exists shopify urls.",
+                });
+            });
+    };
 
     changeModal() {
         this.setState({ isRead: true })
     }
 
+    componentDidMount() {
+        this.getExistingShopifyStore();
+    }
     render() {
         return (
             <div className="popupContent modal-Shopify">
@@ -69,6 +101,10 @@ class Shopify extends React.Component {
                 /> */}
 
                         <ShopifyStoreConfig
+                            limitReached={this.state.shopifyStores?.length >= (this.props.user.price_plan.shopify_monitor_count * 1)}
+                            upgradePopup={this.props.upgradePopup}
+                            getExistingShopifyStore={this.getExistingShopifyStore}
+                            existingShopifyItems={this.state.shopifyStores}
                             sectionToggler={this.props.closeModal}
                             onCheckCallback={this.props.userDataSourceAddHandler}
                             onUncheckCallback={this.props.userDataSourceDeleteHandler}

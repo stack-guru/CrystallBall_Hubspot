@@ -120,15 +120,13 @@ export default class CreateAnnotation extends React.Component {
     }
 
     changeHandler(e) {
-        switch (e.target.name) {
-            default:
-                this.setState({ isDirty: true, annotation: { ...this.state.annotation, [e.target.name]: e.target.value } },
-                    () => {
-                        setTimeout(() => {
-                            saveStateToLocalStorage("CreateAnnotation", { annotation: this.state.annotation });
-                        }, 500);
-                    });
-                break;
+        if (e.target.name) {
+            this.setState({ isDirty: true, annotation: { ...this.state.annotation, [e.target.name]: e.target.value } },
+                () => {
+                    setTimeout(() => {
+                        saveStateToLocalStorage("CreateAnnotation", { annotation: this.state.annotation });
+                    }, 500);
+                });
         }
     }
 

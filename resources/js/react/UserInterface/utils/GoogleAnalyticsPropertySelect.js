@@ -180,7 +180,46 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                     <div className="themeNewInputStyle position-relative inputWithIcon">
                         <i className="icon fa"><img src='/icon-plus.svg' /></i>
                         <Select
-                            onFocus={this.props.onFocus}
+                            menuPosition={'fixed'}
+                            onFocus={(e) => {
+                                if(this.props.onFocus) {
+                                    this.props.onFocus();
+                                }
+                               
+                                if (!this.state.isAccountLinked) {
+                                    let googlePermissionsHtml = "<div class='contentHolder'>";
+                                    googlePermissionsHtml += '<h2>Let’s connect your Google Account</h2>';
+                                    googlePermissionsHtml += '<p>Connect your google account to see all your data at one place, be able to filter data by property, see anomalies and analyze your data better</p>';
+                                    googlePermissionsHtml += "</div>";
+
+                                    swal.fire({
+                                        iconHtml: '<figure class="m-0"><img src="/images/google-account.svg"></figure>',
+                                        html: googlePermissionsHtml,
+                                        width: 500,
+                                        // confirmButtonClass: "m-0 p-0 border-0 rounded-0 bg-white",
+                                        confirmButtonText: `Connect Google Account`,
+                                        focusConfirm: false,
+                                        // cancelButtonClass: "btn btn-secondary ml-5",
+                                        showCloseButton: false,
+                                        // showCancelButton: false,
+                                        // cancelButtonText: 'Cancel',
+                                        allowOutsideClick: true,
+                                        backdrop: true,
+                                        customClass: {
+                                            popup: "confirmConnectionTo",
+                                            htmlContainer: "confirmConnectionToContent",
+                                            closeButton: 'btn-closeplanAlertPopup',
+                                        },
+                                    }).then(value => {
+                                        if (value.isConfirmed) {
+                                            // this.setState({ isPermissionPopupOpened: true });
+                                            localStorage.setItem("frontend_redirect_to", window.location.pathname);
+                                            window.location = "/settings/google-account/create?google_analytics_perm=true";
+                                        }
+                                    });
+
+                                }
+                            }}
                             loadOptions={this.searchGoogleAnalyticsProperties}
                             noOptionsMessage={() => {
                                 return "No Property"
@@ -200,40 +239,6 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                             components={this.props.components}
                             onKeyDown={(e) => {
                                 if (!this.state.isAccountLinked) {
-
-
-                                    // const accountNotLinkedHtml = '' +
-                                    //     '<div class="">' +
-                                    //     '<img src="/images/imgpopup.png" class="img-fluid">' +
-                                    //     '<div class="bg-light p-3">' +
-                                    //     '<h1  class=" text-black mt-2 py-4">Let\'s Connect Your Google Account</h1>' +
-                                    //     '<p style="line-height:23px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="px-5 text-dark">' +
-                                    //     'Connect your Google Account to see all your data in one place, be able to filter data by property, see anomalies and analyze your data better.' +
-                                    //     '</p>' +
-                                    //     '<p style="font-size:14px; color: rgba(153,153,153,1.7) !important;font-family: \'Roboto\', sans-serif;" class="text-dark">' +
-                                    //     'We do not share any data from your Google Accounts (<span class="text-primary"><a href="https://www.crystalballinsight.com/privacy-policy" target="_blank">see Privacy Policy</a></span>)' +
-                                    //     '</p>' +
-                                    //     '</div>' +
-                                    //     '</div>'
-                                    // /*
-                                    // * Show new google analytics account popup
-                                    // * */
-                                    // swal.fire({
-                                    //     html: accountNotLinkedHtml,
-                                    //     width: 700,
-                                    //     customClass: {
-                                    //         popup: 'bg-light pb-5',
-                                    //         htmlContainer: 'm-0',
-                                    //     },
-                                    //     confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                                    //     confirmButtonText: "Connect" + "<i class='ml-2 fa fa-caret-right'> </i>",
-
-                                    // }).then(value => {
-                                    //     if (value.isConfirmed) {
-                                    //         this.setState({ isPermissionPopupOpened: true });
-                                    //     }
-                                    // });
-
                                     let googlePermissionsHtml = "<div class='contentHolder'>";
                                     googlePermissionsHtml += '<h2>Let’s connect your Google Account</h2>';
                                     googlePermissionsHtml += '<p>Connect your google account to see all your data at one place, be able to filter data by property, see anomalies and analyze your data better</p>';
