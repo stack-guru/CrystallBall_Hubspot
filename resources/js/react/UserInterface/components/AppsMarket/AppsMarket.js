@@ -390,17 +390,6 @@ class AppsMarket extends React.Component {
                 width: 194,
                 height: 26,
             },
-            {
-                id: "20",
-                background: null,
-                dsKey: "is_ds_shopify_annotation_enabled",
-                connected: this.state.userServices["is_ds_shopify_annotation_enabled"],
-                premium: false,
-                brandName: "Shopify",
-                brandLogo: "/shopify.svg",
-                width: 114,
-                height: 32,
-            },
             // {
             //     id: "19",
             //     background: "#24292F",
@@ -1018,6 +1007,18 @@ class AppsMarket extends React.Component {
                                     brandLogo: "/twitter.svg",
                                     width: 100,
                                     height: 26,
+                                },
+                                {
+                                    id: "20",
+                                    background: null,
+                                    dsKey: "is_ds_shopify_annotation_enabled",
+                                    connected: this.state.userServices["is_ds_shopify_annotation_enabled"],
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Shopify",
+                                    brandLogo: "/shopify.svg",
+                                    width: 114,
+                                    height: 32,
                                 },
                             ].map((item, itemKey) => (
                                 <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color": item.background || "#e0e0e0", }}>

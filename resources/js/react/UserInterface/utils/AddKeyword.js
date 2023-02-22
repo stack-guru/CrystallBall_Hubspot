@@ -47,8 +47,8 @@ export default class AddKeyword extends React.Component {
     }
 
     addKeyword(e) {
-        console.log(e.target.value);
-        // if (e.keyCode == 13) {
+        console.log(document.getElementById("tracking_keywords").value);
+        if (document.getElementById("tracking_keywords").value) {
             if (
                 this.canAddMoreConfigurations(
                     this.state.keywords.length,
@@ -70,7 +70,7 @@ export default class AddKeyword extends React.Component {
             else {
                 alert("credit limit reached");
             }
-        // }
+        }
     }
 
     canAddMoreConfigurations(
