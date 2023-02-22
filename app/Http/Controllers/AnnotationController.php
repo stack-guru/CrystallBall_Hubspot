@@ -397,8 +397,8 @@ class AnnotationController extends Controller
         $rows = array();
         try {
 
-            $error = false;
-            $fieldErrorsCount = 0;
+            // $error = false;
+            // $fieldErrorsCount = 0;
             foreach ($filecontent as $line) {
                 if (strlen($line) < (6 + 7)) {
                     continue;
@@ -410,24 +410,24 @@ class AnnotationController extends Controller
                 if ($headers !== $values && count($values) == count($headers)) {
                     for ($i = 0; $i < count($headers); $i++) {
                         // if (in_array($headers[$i], $kHs)) {
-                            if ($headers[$i] == 'show_at') {
-                                try {
-                                    $date = Carbon::createFromFormat($request->date_format, $values[$i]);
-                                    $row[$headers[$i]] = $date->format('Y-m-d');
-                                } catch (\Exception $e) {
-                                    $row[$headers[$i]] = $values[$i];
-                                    $row['show_at_error'] = 'Please select correct date format according to your CSV file from the list below.';
-                                    $error = true;
-                                    $fieldErrorsCount = $fieldErrorsCount + 1;
-                                }
-                            } else if ($headers[$i] == 'url') {
-                                $url = $values[$i];
-                                $row[$headers[$i]] = $url;
-                                if (!filter_var($url, FILTER_VALIDATE_URL)) {
-                                    $row['url_error'] = 'Please provide valid url';
-                                    $error = true;
-                                    $fieldErrorsCount = $fieldErrorsCount + 1;
-                                }
+                            // if ($headers[$i] == 'show_at') {
+                            //     try {
+                            //         $date = Carbon::createFromFormat($request->date_format, $values[$i]);
+                            //         $row[$headers[$i]] = $date->format('Y-m-d');
+                            //     } catch (\Exception $e) {
+                            //         $row[$headers[$i]] = $values[$i];
+                            //         $row['show_at_error'] = 'Please select correct date format according to your CSV file from the list below.';
+                            //         $error = true;
+                            //         $fieldErrorsCount = $fieldErrorsCount + 1;
+                            //     }
+                            // } else if ($headers[$i] == 'url') {
+                            //     $url = $values[$i];
+                            //     $row[$headers[$i]] = $url;
+                            //     if (!filter_var($url, FILTER_VALIDATE_URL)) {
+                            //         $row['url_error'] = 'Please provide valid url';
+                            //         $error = true;
+                            //         $fieldErrorsCount = $fieldErrorsCount + 1;
+                            //     }
                             // } else if ($headers[$i] == 'category') {
                             //     $row['category'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
                             // } else if ($headers[$i] == 'event_type') {
@@ -436,6 +436,8 @@ class AnnotationController extends Controller
                             //     $row['event_name'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
                             // } else if ($headers[$i] == 'title') {
                             //     $row['title'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            if ($headers[$i] == 'url') {
+                                $row[$headers[$i]] = $values[$i];
                             } else {
                                 $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
                             }
@@ -466,13 +468,11 @@ class AnnotationController extends Controller
         }
 
         return [
-            'success' => !$error, 
             'fieldErrors'=> $rows, 
-            'fieldErrorsCount' => $fieldErrorsCount, 
+            // 'fieldErrorsCount' => $fieldErrorsCount, 
             'importReview'=> $importReview, 
             'importReviewErrorCount' => $importReviewErrorCount,
             'fileHeaders' => $headers
-            
         ];
     }
 

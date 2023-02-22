@@ -50,31 +50,56 @@ export default class UploadAnnotation extends React.Component {
         this.prepareFieldErrorsData = this.prepareFieldErrorsData.bind(this)
     }
 
+    isValidURL(string) {
+        var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+        return (res !== null)
+    }
 
     prepareFieldErrorsData () {
         if(!Object.values(this.state.importReview).find(x => x)) {
             const data = this.state.fieldErrors
             const csvFields = this.state.csvFields
 
-            console.log(csvFields)
+            const result = data.map((itm) => {
+                const obj = {
+                    'category': itm[csvFields['Category']],
+                    'event_name': itm[csvFields['Event Name']],
+                    'description': itm[csvFields['Description']],
+                    'show_at': itm[csvFields['Show At']],
+                    'url': itm[csvFields['Url']],
+                }
 
-            const result = data.map(itm => ({
-                'category': itm[csvFields['Category']],
-                'event_name': itm[csvFields['Event Name']],
-                'description': itm[csvFields['Description']],
-                'show_at': itm[csvFields['Show At']],
-                'url': itm[csvFields['Url']],
-            
-            }))
+                console.log(this.state.date_format)
+
+                if (!this.isValidURL(obj.url)) {
+                    obj.url_error = 'Please provide a valid url';
+                }
+
+                if (obj.show_at) {
+                    obj.url_error = 'Please provide a valid url';
+                }
+
+                return obj;
+            })
+
+            // const result = data.map(itm => ({
+            //     'category': itm[csvFields['Category']],
+            //     'event_name': itm[csvFields['Event Name']],
+            //     'description': itm[csvFields['Description']],
+            //     'show_at': itm[csvFields['Show At']],
+            //     'url': itm[csvFields['Url']],
+            // }));
 
             console.log(result)
+
+            this.setState({ fieldErrors: result, fieldErrorsCheck: true })
         }
     }
 
     saveCsv () {
 
         const formData = new FormData();
-        formData.append('date_format', this.state.date_format);
+        // formData.append('date_format', this.state.date_format);
         formData.append('fieldErrors', JSON.stringify(this.state.fieldErrors));
 
         this.state.google_analytics_property_id.forEach((gAA) => { 
@@ -127,18 +152,21 @@ export default class UploadAnnotation extends React.Component {
         e.preventDefault();
         $(".csvFileUpload > label").css("background", "#e8e8e8");
         $("#csv-caption").text("Drag and drop or click here")
+        $(".csv-caption").text(".csv files only — 5mb max")
     }
 
     onDragOver (e) {
         e.preventDefault();
         $(".csvFileUpload > label").css("background", "#f0f6ff");
         $("#csv-caption").text("Drop here")
+        $(".csv-caption").text("\xA0")
     }
 
     onFileDrop (e) {
         e.preventDefault();
         const files = e.dataTransfer.files;
         $("#csv-caption").text(files[0].name)
+        $(".csv-caption").text('\xA0')
         $(".csvFileUpload > label").css("background", "#e8e8e8");
         $("#csv")[0].files = files;
     }
@@ -147,6 +175,7 @@ export default class UploadAnnotation extends React.Component {
         e.preventDefault();
         const files = e.target.files;
         $("#csv-caption").text(files[0].name)
+        $(".csv-caption").text('\xA0')
         $(".csvFileUpload > label").css("background", "#e8e8e8");
         $("#csv")[0].files = files;
     }
@@ -183,41 +212,48 @@ export default class UploadAnnotation extends React.Component {
 
             this.state.google_analytics_property_id.forEach((gAA) => { formData.append('google_analytics_property_id[]', gAA) })
 
-            formData.append('date_format', this.state.date_format);
+            // formData.append('date_format', this.state.date_format);
             HttpClient({
                 url: `/annotation/upload`, baseURL: "/", method: 'post', headers: { 'Content-Type': 'multipart/form-data' },
                 data: formData
             }).then(response => {
 
-                if (response.data.success) {
-                    Toast.fire({
-                        icon: 'success',
-                        title: "CSV file uploaded."
-                    });
-                } else {
-
-                    const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount, fileHeaders } = response.data;
-                    this.setState(
-                        { 
+                const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount, fileHeaders } = response.data;
+                this.setState(
+                    { 
+                        review: true, 
                             review: true, 
+                        review: true, 
+                            review: true, 
+                        review: true, 
+                            review: true, 
+                        review: true, 
+                            review: true, 
+                        review: true, 
+                        fieldErrors, 
                             fieldErrors, 
-                            fieldErrorsCount,
-                            importReview,
-                            importReviewErrorCount,
-                            fileHeaders,
-                            csvFields: {
-                                ...this.state.csvFields,
-                                ...(importReview['Description'] ?  { 'Description': '' } : {}),
-                                ...(importReview['Category'] ?  { 'Category': '' } : {}),
-                                ...(importReview['Event Name'] ?  { 'Event Name': '' } : {}),
-                                ...(importReview['Url'] ?  { 'Url': '' } : {}),
-                                ...(importReview['Show At'] ?  { 'Show At': '' } : {}),
-                            }
-
+                        fieldErrors, 
+                            fieldErrors, 
+                        fieldErrors, 
+                            fieldErrors, 
+                        fieldErrors, 
+                            fieldErrors, 
+                        fieldErrors, 
+                        fieldErrorsCount,
+                        importReview,
+                        importReviewErrorCount,
+                        fileHeaders,
+                        csvFields: {
+                            ...this.state.csvFields,
+                            ...(importReview['Description'] ?  { 'Description': '' } : {}),
+                            ...(importReview['Category'] ?  { 'Category': '' } : {}),
+                            ...(importReview['Event Name'] ?  { 'Event Name': '' } : {}),
+                            ...(importReview['Url'] ?  { 'Url': '' } : {}),
+                            ...(importReview['Show At'] ?  { 'Show At': '' } : {}),
                         }
-                    )
 
-                }
+                    }
+                )
                 
             }, (err) => {
 
@@ -281,6 +317,8 @@ export default class UploadAnnotation extends React.Component {
                             </div>
                         </div>
 
+                        <p>Please review the column mapping and map the columns that weren't found</p>
+
                         <table className='table'>
                             <thead>
                                 <tr>
@@ -302,6 +340,7 @@ export default class UploadAnnotation extends React.Component {
                                                 importReview: {...this.state.importReview, category_error:"" }
                                             })
                                         }}>
+                                            <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.category_error && idx == 0} value={itm}>{itm}</option>)}
                                         </select>
                                     </td>
@@ -319,6 +358,7 @@ export default class UploadAnnotation extends React.Component {
                                                 importReview: {...this.state.importReview, event_name_error:"" }
                                             })
                                         }}>
+                                            <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.event_name_error && idx == 1} value={itm}>{itm}</option>)}
                                         </select>
                                     </td>
@@ -336,6 +376,7 @@ export default class UploadAnnotation extends React.Component {
                                                 importReview: {...this.state.importReview, url_error:"" }
                                             })
                                         }}>
+                                            <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.url_error && idx == 2} value={itm}>{itm}</option>)}
                                         </select>
                                     </td>
@@ -353,6 +394,7 @@ export default class UploadAnnotation extends React.Component {
                                                 importReview: {...this.state.importReview, description_error:"" }
                                             })
                                         }}>
+                                            <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.description_error && idx == 3} value={itm}>{itm}</option>)}
                                         </select>
                                     </td>
@@ -370,10 +412,32 @@ export default class UploadAnnotation extends React.Component {
                                                 importReview: {...this.state.importReview, show_at_error:"" }
                                             })
                                         }}>
-                                            {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.show_at_error && idx == 4} value={itm}>{itm}</option>)}
+                                            <option>Select...</option>
+                                            {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.show_at_error && idx == 0} value={itm}>{itm}</option>)}
                                         </select>
                                     </td>
-                                    <td>{ this.state.date_format }</td>
+                                    <td>
+                                        <div className="themeNewInputStyle">
+                                            <select name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
+                                                <option value="">Select your date format</option>
+                                                <option value="j/n/Y">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
+                                                <option value="n-j-Y">{moment("2021-01-15").format('M-D-YYYY')}</option>
+                                                <option value="n-j-y">{moment("2021-01-15").format('M-D-YY')}</option>
+                                                <option value="m-d-y">{moment("2021-01-15").format('MM-DD-YY')}</option>
+                                                <option value="m-d-Y">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
+                                                <option value="y-m-d">{moment("2021-01-15").format('YY-MM-DD')}</option>
+                                                <option value="Y-m-d">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
+                                                <option value="d-M-y">{moment("2021-01-15").format('DD-MMM-YY')}</option>
+                                                <option value="n/j/Y">{moment("2021-01-15").format('M/D/YYYY')}</option>
+                                                <option value="n/j/y">{moment("2021-01-15").format('M/D/YY')}</option>
+                                                <option value="m/d/y">{moment("2021-01-15").format('MM/DD/YY')}</option>
+                                                <option value="m/d/Y">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
+                                                <option value="y/m/d">{moment("2021-01-15").format('YY/MM/DD')}</option>
+                                                <option value="Y/m/d">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
+                                                <option value="d/M/y">{moment("2021-01-15").format('DD/MMM/YY')}</option>
+                                            </select>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -483,7 +547,7 @@ export default class UploadAnnotation extends React.Component {
                                     <label htmlFor="csv">
                                         <i><img src={'/icon-csvUpload.svg'} alt={'CSV Upload Icon'} className="svg-inject" /></i>
                                         <strong id='csv-caption'>Drag and drop or click here</strong>
-                                        <span>.csv files only — 5mb max</span>
+                                        <span class='csv-caption'>.csv files only — 5mb max</span>
                                         <input type="file" onChange={this.onFileSelect} className="form-control upload-csv-input" id="csv" name="csv" />
                                     </label>
                                 </div>
@@ -505,26 +569,6 @@ export default class UploadAnnotation extends React.Component {
                                                 }
                                             }}
                                         ></GoogleAnalyticsPropertySelect>
-                                    </div>
-                                    <div className="themeNewInputStyle">
-                                        <select name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
-                                            <option value="">Select your date format</option>
-                                            <option value="j/n/Y">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
-                                            <option value="n-j-Y">{moment("2021-01-15").format('M-D-YYYY')}</option>
-                                            <option value="n-j-y">{moment("2021-01-15").format('M-D-YY')}</option>
-                                            <option value="m-d-y">{moment("2021-01-15").format('MM-DD-YY')}</option>
-                                            <option value="m-d-Y">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
-                                            <option value="y-m-d">{moment("2021-01-15").format('YY-MM-DD')}</option>
-                                            <option value="Y-m-d">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
-                                            <option value="d-M-y">{moment("2021-01-15").format('DD-MMM-YY')}</option>
-                                            <option value="n/j/Y">{moment("2021-01-15").format('M/D/YYYY')}</option>
-                                            <option value="n/j/y">{moment("2021-01-15").format('M/D/YY')}</option>
-                                            <option value="m/d/y">{moment("2021-01-15").format('MM/DD/YY')}</option>
-                                            <option value="m/d/Y">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
-                                            <option value="y/m/d">{moment("2021-01-15").format('YY/MM/DD')}</option>
-                                            <option value="Y/m/d">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
-                                            <option value="d/M/y">{moment("2021-01-15").format('DD/MMM/YY')}</option>
-                                        </select>
                                     </div>
                                 </div>
 
