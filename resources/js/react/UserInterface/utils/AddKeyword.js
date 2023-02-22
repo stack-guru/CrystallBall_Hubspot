@@ -47,7 +47,8 @@ export default class AddKeyword extends React.Component {
     }
 
     addKeyword(e) {
-        if (e.keyCode == 13) {
+        console.log(e.target.value);
+        // if (e.keyCode == 13) {
             if (
                 this.canAddMoreConfigurations(
                     this.state.keywords.length,
@@ -58,7 +59,7 @@ export default class AddKeyword extends React.Component {
                 let keywords_new = this.state.keywords;
                 keywords_new.push({
                     id: "",
-                    keyword: e.target.value,
+                    keyword: document.getElementById("tracking_keywords").value,
                 });
                 this.setState({
                     keywords: keywords_new,
@@ -69,7 +70,7 @@ export default class AddKeyword extends React.Component {
             else {
                 alert("credit limit reached");
             }
-        }
+        // }
     }
 
     canAddMoreConfigurations(
@@ -136,6 +137,12 @@ export default class AddKeyword extends React.Component {
         HttpClient.post("/data-source/save-keyword-tracking-keywords", params)
             .then(
                 (resp) => {
+                    this.props.updateTrackingStatus(true);
+                    this.props.updateUserService({ target: {
+                            name: "is_ds_keyword_tracking_enabled",
+                            checked: true,
+                        }, 
+                    });
                     const Toast = Swal.mixin({
                         toast: true,
                         position: "top-end",
@@ -160,12 +167,6 @@ export default class AddKeyword extends React.Component {
                     });
 
                     this.props.onAddCallback();
-                    this.props.updateTrackingStatus(true);
-                    this.props.updateUserService({ target: {
-                            name: "is_ds_keyword_tracking_enabled",
-                            checked: true,
-                        }, 
-                    });
                 },
                 (err) => {
                     this.setState({ isBusy: false, errors: err.response.data });
@@ -261,8 +262,8 @@ export default class AddKeyword extends React.Component {
                     </div>
 
                     <div className="themeNewInputGroup">
-                        <input type="text" className="form-control" placeholder="Add keywords" name="keywords" id="tracking_keywords" onKeyUp={(e) => {this.addKeyword(e);}}/>
-                        <div className="input-group-append"><i className="ti-plus"></i></div>
+                        <input type="text" className="form-control" placeholder="Add keywords" name="keywords" id="tracking_keywords"/>
+                        <div className="input-group-append"><a onClick={(e) => {this.addKeyword(e);}} href="#"><i className="ti-plus"></i></a></div>
 
                         {this.state.keywords.length > 0 ?
                             <div className="keywordTags pt-3">
