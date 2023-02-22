@@ -8,12 +8,17 @@ class WebsiteMonitoring extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isRead: false
+            isRead: false,
+            isActiveTracking: false,
         }
     }
 
     changeModal() {
         this.setState({isRead: true})
+    }
+    
+    updateTrackingStatus = status => {
+        this.setState({ isActiveTracking: status })
     }
 
     render() {
@@ -31,6 +36,7 @@ class WebsiteMonitoring extends React.Component {
                 <>
                 <ModalHeader
                     userAnnotationColors={this.props.userAnnotationColors}
+                    isActiveTracking={this.state.isActiveTracking}
                     updateUserAnnotationColors={
                         this.props.updateUserAnnotationColors
                     }
@@ -50,6 +56,8 @@ class WebsiteMonitoring extends React.Component {
                 />
 
                 <DSWebMonitorsSelect
+                    updateTrackingStatus={this.updateTrackingStatus.bind(this)}
+                    updateUserService={this.props.updateUserService}
                     onCheckCallback={this.props.userDataSourceAddHandler}
                     onUncheckCallback={this.props.userDataSourceDeleteHandler}
                     ga_property_id={this.props.ga_property_id}

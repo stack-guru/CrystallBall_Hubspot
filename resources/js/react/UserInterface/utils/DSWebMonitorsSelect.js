@@ -120,6 +120,12 @@ export default class DSWebMonitorsSelect extends React.Component {
                             },
                         });
                         this.props.reloadWebMonitors(this.props.ga_property_id);
+                        this.props.updateTrackingStatus(true)
+                        this.props.updateUserService({ target: {
+                                name: "is_ds_web_monitors_enabled",
+                                checked: true,
+                            }, 
+                        });
                     },
                     (err) => {
                         this.setState({
