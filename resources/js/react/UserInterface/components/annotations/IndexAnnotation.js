@@ -124,13 +124,15 @@ class IndexAnnotations extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.mKeyAnnotation !== this.props.mKeyAnnotation) {
-            if (!this.props.mKeyAnnotation.length) {
-                this.setState({ isLoading: true, annotations: [],
+            if(prevProps.mKeyAnnotation === 'manual') {
+                this.setState({
+                    annotations: [],
                     pageNumber: 0,
                     isLoading: false,
                     hideInfiniteScroll: true
-                }, () => { this.setState({ hideInfiniteScroll: false}, () => this.loadMoreAnnotations(0)) });
+                }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations()) });
             }
+            
         }
     }
 
@@ -271,7 +273,7 @@ class IndexAnnotations extends React.Component {
             pageNumber: 0,
             isLoading: false,
             hideInfiniteScroll: true
-        }, () => { this.setState({ hideInfiniteScroll: false}, () => this.loadMoreAnnotations(0)) });
+        }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations(0)) });
     }
 
     handleAllSelection(e) {
@@ -508,7 +510,7 @@ class IndexAnnotations extends React.Component {
                         loader={<>Loading...</>}
                     >
                         <>
-                        {/* {this.state.isLoading ? (
+                            {/* {this.state.isLoading ? (
                             <>Loading...</>
                         ) : ( */}
                             <>
@@ -710,12 +712,20 @@ class IndexAnnotations extends React.Component {
                                     </div> : null
                                 }
                             </>
-                        {/* )} */}
+                            {/* )} */}
                         </>
-                    </InfiniteScroll>: null}
+                    </InfiniteScroll> : null}
                 </Container>
                 <AppsModal isOpen={!!this.state.editAnnotationId} popupSize={'md'} toggle={() => { this.setState({ editAnnotationId: '' }); }}>
-                    <AnnotationsUpdate upgradePopup={this.props.upgradePopup} togglePopup={() => this.setState({ editAnnotationId: '' })} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
+                    <AnnotationsUpdate upgradePopup={this.props.upgradePopup} togglePopup={() => {
+                        this.setState({
+                            editAnnotationId: '',
+                            annotations: [],
+                            pageNumber: 0,
+                            isLoading: false,
+                            hideInfiniteScroll: true
+                        }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations()) });
+                    }} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
                 </AppsModal>
                 <AppsModal isOpen={!!this.state.showChartAnnotationId} popupSize={'null'} toggle={() => { this.setState({ showChartAnnotationId: '' }); }}>
                     <ShowChartAnnotation togglePopup={() => this.setState({ showChartAnnotationId: '' })} showChartAnnotationId={this.state.showChartAnnotationId} currentPricePlan={this.props.user.price_plan} />
@@ -731,7 +741,7 @@ class IndexAnnotations extends React.Component {
             pageNumber: 0,
             isLoading: false,
             hideInfiniteScroll: true
-        }, () => { this.setState({ hideInfiniteScroll: false}, () => this.loadMoreAnnotations(0)) });
+        }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations(0)) });
     }
 
     // registerScrollEvent() {
@@ -777,7 +787,7 @@ class IndexAnnotations extends React.Component {
             pageNumber: 0,
             isLoading: false,
             hideInfiniteScroll: true
-        }, () => { this.setState({ hideInfiniteScroll: false}, () => this.loadMoreAnnotations(0)) });
+        }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations(0)) });
     }
 
     seeCompleteDescription(anno, idx) {
