@@ -312,35 +312,13 @@ class AnnotationController extends Controller
     public function saveCSV (Request $request) {
 
         $fieldErrors = json_decode($request->fieldErrors);
-        $format = $request->date_format;
-
-        $error = false;
-        $fieldErrorsCount = 0;
-        foreach($fieldErrors as $dt) {
-
-            try {
-                $date = Carbon::createFromFormat($format, $dt->show_at);
-                $dt->show_at = $date->format('Y-m-d');
-            } catch (\Exception $e) {
-                $dt->show_at = $dt->show_at;
-                $dt->show_at_error = 'Please select correct date format according to your CSV file from the list below.';
-                $error = true;
-                $fieldErrorsCount = $fieldErrorsCount + 1;
-            }
-
-            if (!filter_var($dt->url, FILTER_VALIDATE_URL)) {
-                $dt->url_error = 'Please provide valid url';
-                $error = true;
-                $fieldErrorsCount = $fieldErrorsCount + 1;
-            }
-
-        }
-
-        if ($error) {
-            return ['success' => false, 'fieldErrors'=> $fieldErrors, 'fieldErrorsCount' => $fieldErrorsCount];
-        } else {
+        try {
             $this->insertRows($fieldErrors, $request);
+            return ['success' => true];
+        } catch( \Exception $e) {
+            return ['success' => false];
         }
+
     }
 
     public function upload(Request $request)
