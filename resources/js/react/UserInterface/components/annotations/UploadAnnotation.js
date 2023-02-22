@@ -50,9 +50,11 @@ export default class UploadAnnotation extends React.Component {
         this.prepareFieldErrorsData = this.prepareFieldErrorsData.bind(this)
     }
 
-    isValidURL(string) {
-        var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-        return (res != null)
+    isValidURL(urlString) {
+        // check is the string is the valid url
+        var a  = document.createElement('a');
+        a.href = urlString;
+        return (a.host && a.host != window.location.host);
     }
 
     prepareFieldErrorsData () {
@@ -74,7 +76,7 @@ export default class UploadAnnotation extends React.Component {
                 }
 
                 if (obj.show_at) {
-                    obj.url_error = 'Please provide a valid url';
+                    obj.show_at_error = 'Please provide a valid value';
                 }
                 if (!obj.category) {
                     obj.category_error = `Category Can't be empty`;
