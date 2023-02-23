@@ -102,7 +102,24 @@ export default class UploadAnnotation extends React.Component {
         const formData = new FormData();
         formData.append('date_format', this.state.date_format);
         formData.append('fileName', this.state.fileName);
-        formData.append('fieldErrors', JSON.stringify(this.state.fieldErrors));
+
+        const data = this.state.fieldErrors.map((list) => {
+            if (this.isValidURL(list.url)) {
+                delete list.url_error
+            }
+            if (list.category) {
+                delete list.category_error
+            }
+            if (list.event_name) {
+                delete list.event_name_error
+            }
+            if (list.description) {
+                delete list.description_error
+            }
+            return list;
+        })
+
+        formData.append('fieldErrors', JSON.stringify(data));
 
         this.state.google_analytics_property_id.forEach((gAA) => { 
             formData.append('google_analytics_property_id[]', gAA) }
