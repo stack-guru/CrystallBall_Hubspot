@@ -8,6 +8,7 @@ import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySe
 
 import ModalHeader from '../AppsMarket/common/ModalHeader';
 import { Button } from 'reactstrap';
+import moment from 'moment';
 
 export default class UploadAnnotation extends React.Component {
 
@@ -78,6 +79,10 @@ export default class UploadAnnotation extends React.Component {
                 if (!obj.show_at) {
                     obj.show_at_error = 'Please provide a valid date';
                 }
+                
+                if (!(moment(obj.show_at || "", this.state.date_format, true).isValid())) {
+                    obj.show_at_error = 'Please provide a valid date format';
+                }
                 if (!obj.category) {
                     obj.category_error = `Category Can't be empty`;
                 }
@@ -106,6 +111,9 @@ export default class UploadAnnotation extends React.Component {
         const data = this.state.fieldErrors.map((list) => {
             if (this.isValidURL(list.url)) {
                 delete list.url_error
+            }
+            if ((moment(list.show_at || "", this.state.date_format, true).isValid())) {
+                delete list.show_at_error
             }
             if (list.category) {
                 delete list.category_error
@@ -437,21 +445,21 @@ export default class UploadAnnotation extends React.Component {
                                         <div className="themeNewInputStyle position-relative">
                                             <select style={{height: 38}} name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
                                                 <option value="">Select your date format</option>
-                                                <option value="j/n/Y">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
-                                                <option value="n-j-Y">{moment("2021-01-15").format('M-D-YYYY')}</option>
-                                                <option value="n-j-y">{moment("2021-01-15").format('M-D-YY')}</option>
-                                                <option value="m-d-y">{moment("2021-01-15").format('MM-DD-YY')}</option>
-                                                <option value="m-d-Y">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
-                                                <option value="y-m-d">{moment("2021-01-15").format('YY-MM-DD')}</option>
-                                                <option value="Y-m-d">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
-                                                <option value="d-M-y">{moment("2021-01-15").format('DD-MMM-YY')}</option>
-                                                <option value="n/j/Y">{moment("2021-01-15").format('M/D/YYYY')}</option>
-                                                <option value="n/j/y">{moment("2021-01-15").format('M/D/YY')}</option>
-                                                <option value="m/d/y">{moment("2021-01-15").format('MM/DD/YY')}</option>
-                                                <option value="m/d/Y">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
-                                                <option value="y/m/d">{moment("2021-01-15").format('YY/MM/DD')}</option>
-                                                <option value="Y/m/d">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
-                                                <option value="d/M/y">{moment("2021-01-15").format('DD/MMM/YY')}</option>
+                                                <option value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
+                                                <option value="M-D-YYYY">{moment("2021-01-15").format('M-D-YYYY')}</option>
+                                                <option value="M-D-YY">{moment("2021-01-15").format('M-D-YY')}</option>
+                                                <option value="MM-DD-YY">{moment("2021-01-15").format('MM-DD-YY')}</option>
+                                                <option value="MM-DD-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
+                                                <option value="YY-MM-DD">{moment("2021-01-15").format('YY-MM-DD')}</option>
+                                                <option value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
+                                                <option value="DD-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
+                                                <option value="M/D/YYYY">{moment("2021-01-15").format('M/D/YYYY')}</option>
+                                                <option value="M/D/YY">{moment("2021-01-15").format('M/D/YY')}</option>
+                                                <option value="MM/DD/YY">{moment("2021-01-15").format('MM/DD/YY')}</option>
+                                                <option value="MM/DD/YYYY">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
+                                                <option value="YY/MM/DD">{moment("2021-01-15").format('YY/MM/DD')}</option>
+                                                <option value="YYYY/MM/DD">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
+                                                <option value="DD/MMM/YY">{moment("2021-01-15").format('DD/MMM/YY')}</option>
                                             </select>
                                         </div>
                                     </td>
