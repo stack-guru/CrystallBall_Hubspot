@@ -59,10 +59,9 @@ export default class UploadAnnotation extends React.Component {
 
     prepareFieldErrorsData () {
         if(!Object.values(this.state.importReview).find(x => x)) {
-            const data = this.state.fieldErrors
-            const csvFields = this.state.csvFields
+            const { fieldErrors, csvFields, date_format } = this.state;
 
-            const result = data.map((itm) => {
+            const result = fieldErrors.map((itm) => {
                 const obj = {
                     'category': itm[csvFields['Category']],
                     'event_name': itm[csvFields['Event Name']],
@@ -92,16 +91,6 @@ export default class UploadAnnotation extends React.Component {
 
                 return obj;
             })
-
-            // const result = data.map(itm => ({
-            //     'category': itm[csvFields['Category']],
-            //     'event_name': itm[csvFields['Event Name']],
-            //     'description': itm[csvFields['Description']],
-            //     'show_at': itm[csvFields['Show At']],
-            //     'url': itm[csvFields['Url']],
-            // }));
-
-            console.log(result)
 
             this.setState({ fieldErrors: result, fieldErrorsCheck: true })
         }
@@ -271,6 +260,20 @@ export default class UploadAnnotation extends React.Component {
     changeMapHandler (e, id) {
         const { name, value } = e.target;
         const data = this.state.fieldErrors.map((list, index) => {
+            if (e.key === 'Enter' && value) {
+                if (name === 'url' && this.isValidURL(value)) {
+                    delete list.url_error
+                }
+                if (name === 'category') {
+                    delete list.category_error
+                }
+                if (name === 'event_name') {
+                    delete list.event_name_error
+                }
+                if (name === 'description') {
+                    delete list.description_error
+                }
+            }
             return (index === id ? { ...list, [name]: value} : list)
         })
 
@@ -332,7 +335,7 @@ export default class UploadAnnotation extends React.Component {
                                                     ...this.state.csvFields,
                                                     'Category': ev.target.value
                                                 },
-                                                fieldErrorsCount: this.state.importReview.category_error ? this.state.fieldErrorsCount - 1 : this.state.fieldErrorsCount,
+                                                importReviewErrorCount: this.state.importReview.category_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
                                                 importReview: {...this.state.importReview, category_error:"" }
                                             })
                                         }}>
@@ -352,7 +355,7 @@ export default class UploadAnnotation extends React.Component {
                                                     ...this.state.csvFields,
                                                     'Event Name': ev.target.value
                                                 },
-                                                fieldErrorsCount: this.state.importReview.event_name_error ? this.state.fieldErrorsCount - 1 : this.state.fieldErrorsCount,
+                                                importReviewErrorCount: this.state.importReview.event_name_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
                                                 importReview: {...this.state.importReview, event_name_error:"" }
                                             })
                                         }}>
@@ -372,7 +375,7 @@ export default class UploadAnnotation extends React.Component {
                                                     ...this.state.csvFields,
                                                     'Url': ev.target.value
                                                 },
-                                                fieldErrorsCount: this.state.importReview.url_error ? this.state.fieldErrorsCount - 1 : this.state.fieldErrorsCount,
+                                                importReviewErrorCount: this.state.importReview.url_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
                                                 importReview: {...this.state.importReview, url_error:"" }
                                             })
                                         }}>
@@ -392,7 +395,7 @@ export default class UploadAnnotation extends React.Component {
                                                     ...this.state.csvFields,
                                                     'Description': ev.target.value
                                                 },
-                                                fieldErrorsCount: this.state.importReview.description_error ? this.state.fieldErrorsCount - 1 : this.state.fieldErrorsCount,
+                                                importReviewErrorCount: this.state.importReview.description_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
                                                 importReview: {...this.state.importReview, description_error:"" }
                                             })
                                         }}>
@@ -412,7 +415,7 @@ export default class UploadAnnotation extends React.Component {
                                                     ...this.state.csvFields,
                                                     'Show At': ev.target.value
                                                 },
-                                                fieldErrorsCount: this.state.importReview.show_at_error ? this.state.fieldErrorsCount - 1 : this.state.fieldErrorsCount,
+                                                importReviewErrorCount: this.state.importReview.show_at_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
                                                 importReview: {...this.state.importReview, show_at_error:"" }
                                             })
                                         }}>
@@ -480,35 +483,35 @@ export default class UploadAnnotation extends React.Component {
                                         <tr>
                                             <td>
                                                 { rd.category_error ? 
-                                                    <input title={rd.category_error} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='category' value={rd.category} />
+                                                    <input title={rd.category_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='category' value={rd.category} />
                                                 :
                                                     <div>{rd.category}</div>
                                                 }
                                             </td>
                                             <td>
                                                 { rd.event_name_error ? 
-                                                    <input title={rd.event_name_error} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='event_name' value={rd.event_name} />
+                                                    <input title={rd.event_name_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='event_name' value={rd.event_name} />
                                                 :
                                                     <div>{rd.event_name}</div>
                                                 }
                                             </td>
                                             <td>
                                                 { rd.url_error ? 
-                                                    <input title={rd.url_error} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='url' value={rd.url} />
+                                                    <input title={rd.url_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='url' value={rd.url} />
                                                 :
                                                     <div>{rd.url}</div>
                                                 }
                                             </td>
                                             <td>
                                                 { rd.description_error ? 
-                                                    <input title={rd.description_error} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='description' value={rd.description} />
+                                                    <input title={rd.description_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='description' value={rd.description} />
                                                 :
                                                     <div>{rd.description}</div>
                                                 }
                                             </td>
                                             <td>
                                                 { rd.show_at_error ? 
-                                                    <input title={rd.show_at_error} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='show_at' value={rd.show_at} />
+                                                    <input title={rd.show_at_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='show_at' value={rd.show_at} />
                                                 :
                                                     <div>{rd.show_at}</div>
                                                 }
