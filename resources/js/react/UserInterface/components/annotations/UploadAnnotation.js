@@ -25,6 +25,7 @@ export default class UploadAnnotation extends React.Component {
             importReviewErrorCount: 0,
             importReview: [],
             fileHeaders: [],
+            fileName: '',
             csvFields: {
                 'Category': 'category',
                 'Event Name':  'event_name',
@@ -74,8 +75,8 @@ export default class UploadAnnotation extends React.Component {
                     obj.url_error = 'Please provide a valid url';
                 }
 
-                if (obj.show_at) {
-                    obj.show_at_error = 'Please provide a valid value';
+                if (!obj.show_at) {
+                    obj.show_at_error = 'Please provide a valid date';
                 }
                 if (!obj.category) {
                     obj.category_error = `Category Can't be empty`;
@@ -99,7 +100,8 @@ export default class UploadAnnotation extends React.Component {
     saveCsv () {
 
         const formData = new FormData();
-        // formData.append('date_format', this.state.date_format);
+        formData.append('date_format', this.state.date_format);
+        formData.append('fileName', this.state.fileName);
         formData.append('fieldErrors', JSON.stringify(this.state.fieldErrors));
 
         this.state.google_analytics_property_id.forEach((gAA) => { 
@@ -114,29 +116,15 @@ export default class UploadAnnotation extends React.Component {
             if (response.data.success) {
                 Toast.fire({
                     icon: 'success',
-                    title: "CSV file uploaded."
+                    title: "CSV file uploaded. Duplicate records are ignored"
                 });
-            } else {
 
-                const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount, fileHeaders } = response.data;                
-                this.setState(
-                    { 
-                        review: true, 
-                        fieldErrors, 
-                        fieldErrorsCount,
-                        importReview,
-                        importReviewErrorCount,      
-                        fileHeaders,
-                        csvFields: {
-                            ...this.state.csvFields,
-                            ...(importReview['Description'] ?  { 'Description': '' } : {}),
-                            ...(importReview['Category'] ?  { 'Category': '' } : {}),
-                            ...(importReview['Event Name'] ?  { 'Event Name': '' } : {}),
-                            ...(importReview['Url'] ?  { 'Url': '' } : {}),
-                            ...(importReview['Show At'] ?  { 'Show At': '' } : {}),
-                        }
-                    }
-                )
+                this.props.togglePopup('')
+            } else {
+                Toast.fire({
+                    icon: 'error',
+                    title: "CSV file is not valid."
+                });
             }
             
         }, (err) => {
@@ -218,7 +206,7 @@ export default class UploadAnnotation extends React.Component {
                 data: formData
             }).then(response => {
 
-                const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount, fileHeaders } = response.data;
+                const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount, fileHeaders, fileName } = response.data;
                 this.setState(
                     { 
                         review: true, 
@@ -227,6 +215,7 @@ export default class UploadAnnotation extends React.Component {
                         importReview,
                         importReviewErrorCount,
                         fileHeaders,
+                        fileName,
                         csvFields: {
                             ...this.state.csvFields,
                             ...(importReview['Description'] ?  { 'Description': '' } : {}),

@@ -311,12 +311,40 @@ class AnnotationController extends Controller
 
     public function saveCSV (Request $request) {
 
-        $fieldErrors = json_decode($request->fieldErrors);
-        try {
-            $this->insertRows($fieldErrors, $request);
+        $user_id = Auth::id();
+        $fieldErrors = json_decode($request->fieldErrors, true);
+
+        $data = [];
+        foreach ($fieldErrors as &$fe) {
+
+            $showAt = Carbon::createFromFormat($request->date_format, $fe['show_at']);
+            $exists = Annotation::whereDate('show_at', $showAt)
+                ->where('user_id', $user_id)
+                ->where('category', $fe['category'])
+                ->where('event_name', $fe['event_name'])
+                ->where('description', $fe['description'])
+                ->where('url', $fe['url'])->first();
+
+            $fe['show_at'] = $showAt;
+            $fe['user_id'] = $user_id;
+            $fe['added_by'] = 'csv-upload';
+
+            if(!$exists) {
+                foreach($data as $dt) {
+                    $exists = $dt['description'] === $fe['description'] && $dt['event_name'] === $fe['event_name'] && $dt['category'] === $fe['category'] && $dt['url'] === $fe['url'];
+                }
+            }
+
+            if(!$exists) {
+                $data[] = $fe;
+            }
+        }
+
+        $resp = $this->insertRows($data, $request);
+        if ($resp === 'ok') {
             return ['success' => true];
-        } catch( \Exception $e) {
-            return ['success' => false];
+        } else {
+            return ['success' => false, 'error' => $resp];
         }
 
     }
@@ -370,6 +398,8 @@ class AnnotationController extends Controller
         }
 
         // $user_id = Auth::id();
+        // $row['user_id'] = $user_id;
+        // $row['added_by'] = 'csv-upload';
         // $existingRecords = Annotation::where('user_id', $user_id)->get();
 
         $rows = array();
@@ -447,6 +477,7 @@ class AnnotationController extends Controller
 
         return [
             'fieldErrors'=> $rows, 
+            'fileName' => $request->file('csv')->getClientOriginalName(),
             // 'fieldErrorsCount' => $fieldErrorsCount, 
             'importReview'=> $importReview, 
             'importReviewErrorCount' => $importReviewErrorCount,
@@ -454,38 +485,39 @@ class AnnotationController extends Controller
         ];
     }
 
-    public function isNotDuplicate ($existingRecords, $row) {
-
-
-
-    }
-
     public function insertRows ($rows, $request) {
-        Annotation::insert($rows);
-        $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
-        $totalNewRows = count($rows);
-        $lastInsertId = $firstInsertId + ($totalNewRows - 1);
-        if ($request->has('google_analytics_property_id') && !in_array("", $request->google_analytics_property_id)) {
-            foreach ($request->google_analytics_property_id as $googleAnalyticsPropertyId) {
+        try {
+            Annotation::insert($rows);
+            $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
+            $totalNewRows = count($rows);
+            $lastInsertId = $firstInsertId + ($totalNewRows - 1);
+            if ($request->has('google_analytics_property_id') && !in_array("", $request->google_analytics_property_id)) {
+                foreach ($request->google_analytics_property_id as $googleAnalyticsPropertyId) {
+                    $sql = "
+                    INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
+                        SELECT id, $googleAnalyticsPropertyId, user_id FROM annotations
+                            WHERE id BETWEEN $firstInsertId AND $lastInsertId
+                    ;
+                    ";
+                    DB::statement($sql);
+                }
+            } else {
                 $sql = "
-                INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
-                    SELECT id, $googleAnalyticsPropertyId, user_id FROM annotations
-                        WHERE id BETWEEN $firstInsertId AND $lastInsertId
-                ;
-                ";
+                    INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
+                        SELECT id, NULL, user_id FROM annotations
+                            WHERE id BETWEEN $firstInsertId AND $lastInsertId
+                    ;
+                    ";
                 DB::statement($sql);
             }
-        } else {
-            $sql = "
-                INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
-                    SELECT id, NULL, user_id FROM annotations
-                        WHERE id BETWEEN $firstInsertId AND $lastInsertId
-                ;
-                ";
-            DB::statement($sql);
-        }
 
-        event(new NewCSVFileUploaded($user, $request->file('csv')->getClientOriginalName()));
+            $user = Auth::user();
+            event(new NewCSVFileUploaded($user, $request->fileName));
+            return 'ok';
+        } catch (\Exception $e) {
+            dd($e);
+            return $e;
+        }
 
     }
 
