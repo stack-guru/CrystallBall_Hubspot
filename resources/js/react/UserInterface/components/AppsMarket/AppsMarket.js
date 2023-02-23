@@ -79,6 +79,7 @@ class AppsMarket extends React.Component {
             this.loadKeywordTrackingKeywords.bind(this);
 
         this.editKeywordToggler = this.editKeywordToggler.bind(this);
+        this.addKeywordToggler = this.addKeywordToggler.bind(this);
         this.checkUserFacebookAccount =
             this.checkUserFacebookAccount.bind(this);
         this.checkUserBitbucketAccount =
@@ -292,6 +293,17 @@ class AppsMarket extends React.Component {
         });
 
         this.sectionToggler("edit_keyword");
+    }
+
+    addKeywordToggler() {
+        // close popup
+        this.manage_keyword_popup_handler();
+
+        this.setState({
+            editKeyword: false,
+        });
+
+        this.sectionToggler("keyword_tracking");
     }
 
     getRecommendedAppsData() {
@@ -1345,6 +1357,7 @@ class AppsMarket extends React.Component {
                                 updateUserService={this.updateUserService}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 editKeywordToggler={this.editKeywordToggler}
+                                addKeywordToggler={this.addKeywordToggler}
                                 changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}
                                 userDataSourceAddHandler={

@@ -23,6 +23,9 @@ class RankTracking extends React.Component {
     updateTrackingStatus = status => {
         this.setState({ isActiveTracking: status })
     }
+    componentDidMount() {
+        this.props.addKeywordToggler();
+    }
     render() {
         return (
             <div className="popupContent modal-rankTracking">
@@ -76,6 +79,9 @@ class RankTracking extends React.Component {
                                 keyword_configuration_id={
                                     this.props
                                         .editKeyword_keyword_configuration_id
+                                }
+                                addKeywordCallback={
+                                    this.props.addKeywordToggler
                                 }
                             />
                         ) : (

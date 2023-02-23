@@ -131,7 +131,6 @@ export default class EditKeyword extends React.Component {
                         icon: "success",
                         title: "Updated successfully!",
                     });
-
                     this.props.onAddCallback();
                 },
                 (err) => {
@@ -141,6 +140,7 @@ export default class EditKeyword extends React.Component {
             .catch((err) => {
                 this.setState({ isBusy: false, errors: err });
             });
+            this.props.addKeywordCallback();
     }
 
     locationChangeCallback(option) {
