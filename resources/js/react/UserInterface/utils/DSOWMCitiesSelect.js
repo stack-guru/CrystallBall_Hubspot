@@ -58,6 +58,12 @@ export default class DSOWMCitiesSelect extends React.Component {
                     "open_weather_map_city_id"
                 ),
             });
+            this.props.updateTrackingStatus(true);
+            this.props.updateUserService({ target: {
+                    name: "is_ds_weather_alerts_enabled",
+                    checked: true,
+                }, 
+            });
         } else {
             this.props.onUncheckCallback(
                 e.target.id,
@@ -78,6 +84,12 @@ export default class DSOWMCitiesSelect extends React.Component {
                 });
             }
         });
+        this.props.updateTrackingStatus(true);
+        this.props.updateUserService({ target: {
+                name: "is_ds_weather_alerts_enabled",
+                checked: true,
+            }, 
+        });
     }
 
     clearAll(e) {
@@ -86,6 +98,12 @@ export default class DSOWMCitiesSelect extends React.Component {
         userOWMCityIds.forEach((owmEvent, index) => {
             (this.props.onUncheckCallback)(userDSEvents[index], 'open_weather_map_cities')
         })
+        this.props.updateTrackingStatus(false);
+        this.props.updateUserService({ target: {
+                name: "is_ds_weather_alerts_enabled",
+                checked: false,
+            }, 
+        });
     }
 
     selectedCountryChanged(data) {

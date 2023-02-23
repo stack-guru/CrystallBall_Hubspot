@@ -93,6 +93,9 @@ class RankTracking extends React.Component {
                                 ga_property_id={this.props.ga_property_id}
                                 reloadWebMonitors={this.props.reloadWebMonitors}
                                 user={this.props.user}
+                                loadKeywordsCallback={
+                                    this.props.loadKeywordTrackingKeywords
+                                }
                                 loadUserDataSources={
                                     this.props.loadUserDataSources
                                 }

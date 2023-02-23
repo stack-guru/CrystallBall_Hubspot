@@ -96,26 +96,34 @@ const ApplePodcastConfig = (props) => {
                 title: "Creating Annotations",
             });
             HttpClient.post("/data-source/apple_podcast_url", formData)
-                .then(
-                    () => {
-                        Toast.fire({
-                            icon: 'success',
-                            title: "Apple Podcast added successfully.",
-                        });
-                    },
-                    (err) => {
-                        Toast.fire({
-                            icon: 'error',
-                            title: "Error while adding Apple Podcast.",
-                        });
-                    }
-                )
-                .catch((err) => {
+            .then(
+                () => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Apple Podcast added successfully.",
+                    });
+                },
+                (err) => {
                     Toast.fire({
                         icon: 'error',
                         title: "Error while adding Apple Podcast.",
                     });
+                }
+            )
+            .catch((err) => {
+                Toast.fire({
+                    icon: 'error',
+                    title: "Error while adding Apple Podcast.",
                 });
+            });
+            props.getExistingPodcasts();
+            props.updateTrackingStatus(true);
+            props.updateUserService({ target: {
+                    name: "is_ds_apple_podcast_annotation_enabled",
+                    checked: true,
+                }, 
+            });
+
         }
 
     };

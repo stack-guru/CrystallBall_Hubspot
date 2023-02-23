@@ -423,6 +423,17 @@ class AppsMarket extends React.Component {
                 width: 142,
                 height: 40,
             },
+            {
+                id: "04",
+                background: null,
+                dsKey: "is_ds_weather_alerts_enabled",
+                connected: this.state.userServices["is_ds_weather_alerts_enabled"],
+                premium: false,
+                brandName: "Weather Alerts",
+                brandLogo: "/weatherAlerts.svg",
+                width: 160,
+                height: 56,
+            },
         ];
     }
 
@@ -962,17 +973,6 @@ class AppsMarket extends React.Component {
                                     height: 28,
                                 },
                                 {
-                                    id: "04",
-                                    background: null,
-                                    dsKey: "is_ds_weather_alerts_enabled",
-                                    connected: this.state.userServices["is_ds_weather_alerts_enabled"],
-                                    premium: false,
-                                    brandName: "Weather Alerts",
-                                    brandLogo: "/weatherAlerts.svg",
-                                    width: 160,
-                                    height: 56,
-                                },
-                                {
                                     id: "16",
                                     background: "#2EBD59",
                                     dsKey: "",
@@ -1240,6 +1240,7 @@ class AppsMarket extends React.Component {
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
+                                updateUserService={this.updateUserService}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}
@@ -1339,6 +1340,8 @@ class AppsMarket extends React.Component {
                                         manage_keyword_show: flag,
                                     });
                                 }}
+                                loadKeywordTrackingKeywords={this.loadKeywordTrackingKeywords}
+                                keywordAddHandler={this.keywordAddHandler}
                                 updateUserService={this.updateUserService}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 editKeywordToggler={this.editKeywordToggler}
@@ -1438,6 +1441,7 @@ class AppsMarket extends React.Component {
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
+                                updateUserService={this.updateUserService}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}

@@ -11,13 +11,18 @@ class Apple extends React.Component {
         super(props);
         this.state = {
             isRead: false,
-            applePodcast: []
+            applePodcast: [],
+            isActiveTracking: false
         }
         this.getExistingPodcasts = this.getExistingPodcasts.bind(this)
     }
 
     changeModal() {
         this.setState({isRead: true})
+    }
+
+    updateTrackingStatus = status => {
+        this.setState({ isActiveTracking: status })
     }
 
     getExistingPodcasts = async () => {
@@ -61,6 +66,7 @@ class Apple extends React.Component {
                 /> :
                 <>
                 <ModalHeader
+                    isActiveTracking={this.state.isActiveTracking}
                     userAnnotationColors={this.props.userAnnotationColors}
                     updateUserAnnotationColors={ this.props.updateUserAnnotationColors }
                     userServices={this.props.userServices}
@@ -73,7 +79,10 @@ class Apple extends React.Component {
                     creditString={`${ this.state.applePodcast?.length } / ${ (this.props.user.price_plan.apple_podcast_monitor_count * 1) == -1 ? 0 : this.props.user.price_plan.apple_podcast_monitor_count}`}
                 />
 
-                <ApplePodcastConfig upgradePopup={this.props.upgradePopup} limitReached={this.state.applePodcast?.length >= (this.props.user.price_plan.apple_podcast_monitor_count * 1)} existingPodcast={this.state.applePodcast} getExistingPodcasts={this.getExistingPodcasts} gaPropertyId={this.props.ga_property_id}/>
+                <ApplePodcastConfig 
+                    updateUserService={this.props.updateUserService}
+                    updateTrackingStatus={this.updateTrackingStatus.bind(this)}
+                    upgradePopup={this.props.upgradePopup} limitReached={this.state.applePodcast?.length >= (this.props.user.price_plan.apple_podcast_monitor_count * 1)} existingPodcast={this.state.applePodcast} getExistingPodcasts={this.getExistingPodcasts} gaPropertyId={this.props.ga_property_id}/>
                 </>
                 }
             </div>
