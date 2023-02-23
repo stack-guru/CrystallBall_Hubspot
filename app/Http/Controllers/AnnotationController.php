@@ -315,8 +315,37 @@ class AnnotationController extends Controller
         $fieldErrors = json_decode($request->fieldErrors, true);
 
         $data = [];
+        $error = false;
         foreach ($fieldErrors as &$fe) {
+            try {
+                $showAt = Carbon::createFromFormat($request->date_format, $fe['show_at']);
+            } catch(\Exception $e) {
+                $error = true;
+                $fe['show_at_error'] = "The date is not properly formatted";
+            }
 
+            if(!$fe['category']) {
+                $fe['category_error'] = "Category Can't be empty";
+            }
+
+            if(!$fe['url']) {
+                $fe['url_error'] = "url Can't be empty";
+            }
+            
+            if(!$fe['event_name']) {
+                $fe['event_name_error'] = "Event Name Can't be empty";
+            }
+            
+            if(!$fe['description']) {
+                $fe['description_error'] = "Description Can't be empty";
+            }
+        }
+
+        if ($error) {
+            return ['success' => false, 'error' => $e, 'fieldErrors' => $fieldErrors, 'message' => "The date is not properly formatted"];
+        }
+
+        foreach ($fieldErrors as &$fe) {
             $showAt = Carbon::createFromFormat($request->date_format, $fe['show_at']);
             $exists = Annotation::whereDate('show_at', $showAt)
                 ->where('user_id', $user_id)

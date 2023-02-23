@@ -140,8 +140,11 @@ export default class UploadAnnotation extends React.Component {
             } else {
                 Toast.fire({
                     icon: 'error',
-                    title: "CSV file is not valid."
+                    title: "CSV data is not valid."
                 });
+
+                this.setState({ fieldErrors: response.data.fieldErrors })
+                
             }
             
         }, (err) => {
