@@ -4220,7 +4220,7 @@ body {
 .goodWork p {
     margin: 0;
 }
-.colorPalette {
+/* .colorPalette {
     top: 28px;
     left: 24px;
     z-index: 2;
@@ -4230,6 +4230,10 @@ body {
     -ms-transform: translateX(-50%);
     -o-transform: translateX(-50%);
     transform: translateX(-50%);
+} */
+
+.colorPalettePopover .popover-inner {
+    padding: 0;
 }
 .colorPalette .github-picker {
     border: 0 !important;
