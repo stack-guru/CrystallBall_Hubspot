@@ -96,6 +96,7 @@ class RankTracking extends React.Component {
                                 updateTrackingStatus={this.updateTrackingStatus.bind(this)}
                                 updateUserService={this.props.updateUserService}
                                 onAddCallback={this.props.keywordAddHandler}
+                                upgradePopupForRankingTracking={this.props.upgradePopupForTracking}
                                 ga_property_id={this.props.ga_property_id}
                                 reloadWebMonitors={this.props.reloadWebMonitors}
                                 user={this.props.user}

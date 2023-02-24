@@ -20,7 +20,7 @@
                         </div>
                         <div class="form-group">
                             <label>Code</label>
-                            <input type="text" name="code" id="code" class="form-control" value="{{old('code',$pricePlan->code ) }}" />
+                            <input type="text" name="code" id="code" class="form-control" value="{{old('code',$pricePlan->code ) }}" readonly />
                         </div>
                         <div class="form-group">
                             <label>Price</label>
@@ -104,6 +104,10 @@
                         <div class="form-group">
                             <label>Yearly discount percent? <sub>(minimum 0, maximum 100)</sub></label>
                             <input type="number" name="yearly_discount_percent" id="yearly_discount_percent" value="{{old('yearly_discount_percent',$pricePlan->yearly_discount_percent)}}" class="form-control" step="0.01" />
+                        </div>
+                        <div class="form-group">
+                            <label>Reference Text</label>
+                            <textarea name="reference_text" id="reference_text" class="form-control" placeholder="">{{old('reference_text',$pricePlan->reference_text)}}</textarea>
                         </div>
 
                         @if ($pricePlan->custom_plan_code)

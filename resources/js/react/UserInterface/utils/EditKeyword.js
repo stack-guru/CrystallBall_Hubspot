@@ -164,7 +164,7 @@ export default class EditKeyword extends React.Component {
         return (
             <div className="apps-bodyContent switch-wrapper">
                 <div className="weather_alert_cities-form">
-                    <h4 className="gaa-text-primary">Manage keywords</h4>
+                    <h4 className="gaa-text-primary">Manage tracker</h4>
                     <label>Tracking</label>
                     <div className="grid2layout">
                         <div className="themeNewInputGroup themeNewselect flex-column">

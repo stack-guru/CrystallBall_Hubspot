@@ -12,6 +12,7 @@
                     <table aria-label="Price Plans" class="table table-hoved table-bordered">
                         <thead>
                             <tr>
+                                <th scope="col">Reference Text</th>
                                 <th scope="col">Code</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Price</th>
@@ -21,6 +22,7 @@
                         <tbody>
                             @foreach($pricePlans as $pricePlan)
                             <tr>
+                                <td>{{ $pricePlan->reference_text }}</td>
                                 <td>{{ $pricePlan->code }}</td>
                                 <td>{{ $pricePlan->name }}</td>
                                 <td>{{ $pricePlan->price }}</td>
@@ -36,6 +38,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
+                                <th scope="col">Reference Text</th>
                                 <th scope="col">Code</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Price</th>

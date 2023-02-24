@@ -67,7 +67,7 @@ export default class AddKeyword extends React.Component {
                 document.getElementById("tracking_keywords").value = "";
             }
             else {
-                alert("credit limit reached");
+                this.props.upgradePopupForRankingTracking();
             }
         }
     }
@@ -191,7 +191,7 @@ export default class AddKeyword extends React.Component {
             this.updateAvailableCredits(this.state.keywords.length, this.state.locations.length, search_engines.length);
             return true;
         } else {
-            alert("limit reached");
+            this.props.upgradePopupForRankingTracking();
             return false;
         }
     }
@@ -210,7 +210,7 @@ export default class AddKeyword extends React.Component {
             this.updateAvailableCredits(this.state.keywords.length, selectedLocations.length, this.state.search_engines.length);
             return true;
         } else {
-            alert("limit reached");
+            this.props.upgradePopupForRankingTracking();
             return false;
         }
     }
