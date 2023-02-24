@@ -63,6 +63,7 @@ export default class UploadAnnotation extends React.Component {
         if(!Object.values(this.state.importReview).find(x => x)) {
             const { fieldErrors, csvFields, date_format } = this.state;
 
+            let importReviewErrorCount = 0;
             const result = fieldErrors.map((itm) => {
                 const obj = {
                     'category': itm[csvFields['Category']],
@@ -72,27 +73,23 @@ export default class UploadAnnotation extends React.Component {
                     'url': itm[csvFields['Url']],
                 }
 
-                if (!this.isValidURL(obj.url)) {
+                if (obj.url && !this.isValidURL(obj.url)) {
+                    importReviewErrorCount++;
                     obj.url_error = 'Please provide a valid url';
                 }
 
-                if (!obj.show_at) {
-                    obj.show_at_error = 'Please provide a valid date';
-                }
-                
                 if (!(moment(obj.show_at || "", this.state.date_format, true).isValid())) {
+                    importReviewErrorCount++;
                     obj.show_at_error = 'Please provide a valid date format';
                 }
                 if (!obj.category) {
+                    importReviewErrorCount++;
                     obj.category_error = `Category Can't be empty`;
                 }
 
                 if (!obj.event_name) {
+                    importReviewErrorCount++;
                     obj.event_name_error = `Event Name Can't be empty`;
-                }
-
-                if (!obj.description) {
-                    obj.description_error = `Description Can't be empty`;
                 }
 
                 return obj;
@@ -234,16 +231,16 @@ export default class UploadAnnotation extends React.Component {
                 data: formData
             }).then(response => {
 
-                const { fieldErrors, fieldErrorsCount, importReview, importReviewErrorCount, fileHeaders, fileName } = response.data;
+                const { fieldErrors, importReview, importReviewErrorCount, fileHeaders, fileName, sampleDate } = response.data;
                 this.setState(
                     { 
                         review: true, 
                         fieldErrors, 
-                        fieldErrorsCount,
                         importReview,
                         importReviewErrorCount,
                         fileHeaders,
                         fileName,
+                        sampleDate,
                         csvFields: {
                             ...this.state.csvFields,
                             ...(importReview['Description'] ?  { 'Description': '' } : {}),
@@ -442,33 +439,40 @@ export default class UploadAnnotation extends React.Component {
                                         <i className="btn-searchIcon left-0 fa fa-check-circle mt-3 ml-2"></i>
                                     </td>
                                     <td>
-                                        <div className="themeNewInputStyle position-relative">
-                                            <select style={{height: 38}} name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
-                                                <option value="">Select your date format</option>
-                                                <option value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
-                                                <option value="M-D-YYYY">{moment("2021-01-15").format('M-D-YYYY')}</option>
-                                                <option value="M-D-YY">{moment("2021-01-15").format('M-D-YY')}</option>
-                                                <option value="MM-DD-YY">{moment("2021-01-15").format('MM-DD-YY')}</option>
-                                                <option value="MM-DD-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
-                                                <option value="YY-MM-DD">{moment("2021-01-15").format('YY-MM-DD')}</option>
-                                                <option value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
-                                                <option value="DD-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
-                                                <option value="M/D/YYYY">{moment("2021-01-15").format('M/D/YYYY')}</option>
-                                                <option value="M/D/YY">{moment("2021-01-15").format('M/D/YY')}</option>
-                                                <option value="MM/DD/YY">{moment("2021-01-15").format('MM/DD/YY')}</option>
-                                                <option value="MM/DD/YYYY">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
-                                                <option value="YY/MM/DD">{moment("2021-01-15").format('YY/MM/DD')}</option>
-                                                <option value="YYYY/MM/DD">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
-                                                <option value="DD/MMM/YY">{moment("2021-01-15").format('DD/MMM/YY')}</option>
-                                            </select>
-                                        </div>
+                                        {this.state.sampleDate}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Date Format</td>
+                                    <td className='themeNewInputStyle position-relative'>
+                                        <select style={{height: 38}} name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
+                                            <option value="">Select your date format</option>
+                                            <option value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
+                                            <option value="M-D-YYYY">{moment("2021-01-15").format('M-D-YYYY')}</option>
+                                            <option value="M-D-YY">{moment("2021-01-15").format('M-D-YY')}</option>
+                                            <option value="MM-DD-YY">{moment("2021-01-15").format('MM-DD-YY')}</option>
+                                            <option value="MM-DD-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
+                                            <option value="YY-MM-DD">{moment("2021-01-15").format('YY-MM-DD')}</option>
+                                            <option value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
+                                            <option value="DD-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
+                                            <option value="M/D/YYYY">{moment("2021-01-15").format('M/D/YYYY')}</option>
+                                            <option value="M/D/YY">{moment("2021-01-15").format('M/D/YY')}</option>
+                                            <option value="MM/DD/YY">{moment("2021-01-15").format('MM/DD/YY')}</option>
+                                            <option value="MM/DD/YYYY">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
+                                            <option value="YY/MM/DD">{moment("2021-01-15").format('YY/MM/DD')}</option>
+                                            <option value="YYYY/MM/DD">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
+                                            <option value="DD/MMM/YY">{moment("2021-01-15").format('DD/MMM/YY')}</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        {this.state.sampleDate}
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
 
                         <div className="text-right mt-3">
-                            <Button className='btn-submit btn-theme' disabled={this.props.fieldErrorsCount || this.state.date_format === ''} onClick={this.prepareFieldErrorsData}>Continue</Button>
+                            <Button className='btn-submit btn-theme' disabled={this.props.importReviewErrorCount || this.state.date_format === ''} onClick={this.prepareFieldErrorsData}>Continue</Button>
                         </div>
                         </>
                         : 
@@ -482,6 +486,8 @@ export default class UploadAnnotation extends React.Component {
                                 </span>
                             </div>
                         </div>
+
+                        <p>Please review the table and Fix the errors highlighted</p>
 
                         <table className='table-bordered'>
                             <thead>

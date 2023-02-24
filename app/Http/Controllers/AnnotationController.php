@@ -316,29 +316,87 @@ class AnnotationController extends Controller
 
         $data = [];
         $error = false;
+
+        $dateF = $request->date_format;
+        $dateFormat = '';
+        switch ($dateF) {
+        case 'DD/MM/YYYY':
+            $dateFormat = "j/n/Y";
+            break;
+        case 'M-D-YYYY':
+            $dateFormat = "n-j-Y";
+            break;
+        case "M-D-YY":
+            $dateFormat = "n-j-y";
+            break;
+        case "MM-DD-YY":
+            $dateFormat = "m-d-y";
+            break;
+        case "MM-DD-YYYY":
+            $dateFormat = "m-d-Y";
+            break;
+        case "YY-MM-DD":
+            $dateFormat = "y-m-d";
+            break;
+        case "YYYY-MM-DD":
+            $dateFormat = "Y-m-d";
+            break;
+        case "DD-MMM-YY":
+            $dateFormat = "d-M-y";
+            break;
+        case "M/D/YYYY":
+            $dateFormat = "n/j/Y";
+            break;
+        case "M/D/YY":
+            $dateFormat = "n/j/y";
+            break;
+        case "MM/DD/YY":
+            $dateFormat = "m/d/y";
+            break;
+        case "MM/DD/YYYY":
+            $dateFormat = "m/d/Y";
+            break;
+        case "YY/MM/DD":
+            $dateFormat = "y/m/d";
+            break;
+        case "YYYY/MM/DD":
+            $dateFormat = "Y/m/d";
+            break;
+        case "DD/MMM/YY":
+            $dateFormat = "d/M/y";
+            break;
+                                                
+        default:
+            $dateFormat = '';
+        }
+
         foreach ($fieldErrors as &$fe) {
             try {
-                $showAt = Carbon::createFromFormat($request->date_format, $fe['show_at']);
+                $showAt = Carbon::createFromFormat($dateFormat, $fe['show_at']);
+                unset($fe['show_at_error']);
             } catch(\Exception $e) {
                 $error = true;
-                $fe['show_at_error'] = "The date is not properly formatted";
+                $fe['show_at_error'] = "Please provide a valid date format";
             }
 
             if(!$fe['category']) {
                 $fe['category_error'] = "Category Can't be empty";
+            } else {
+                unset($fe['category_error']);
             }
 
-            if(!$fe['url']) {
-                $fe['url_error'] = "url Can't be empty";
+            if($fe['url'] && !filter_var($fe['url'], FILTER_VALIDATE_URL)) {
+                $fe['url_error'] = "Please provide a valid url";
+            } else {
+                unset($fe['url_error']);
             }
             
             if(!$fe['event_name']) {
                 $fe['event_name_error'] = "Event Name Can't be empty";
+            } else {
+                unset($fe['event_name_error']);
             }
             
-            if(!$fe['description']) {
-                $fe['description_error'] = "Description Can't be empty";
-            }
         }
 
         if ($error) {
@@ -346,7 +404,7 @@ class AnnotationController extends Controller
         }
 
         foreach ($fieldErrors as &$fe) {
-            $showAt = Carbon::createFromFormat($request->date_format, $fe['show_at']);
+            $showAt = Carbon::createFromFormat($dateFormat, $fe['show_at']);
             $exists = Annotation::whereDate('show_at', $showAt)
                 ->where('user_id', $user_id)
                 ->where('category', $fe['category'])
@@ -434,7 +492,7 @@ class AnnotationController extends Controller
         $rows = array();
         try {
 
-            // $error = false;
+            $sampleDate = '';
             // $fieldErrorsCount = 0;
             foreach ($filecontent as $line) {
                 if (strlen($line) < (6 + 7)) {
@@ -473,6 +531,11 @@ class AnnotationController extends Controller
                             //     $row['event_name'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
                             // } else if ($headers[$i] == 'title') {
                             //     $row['title'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+
+                            if ($headers[$i] == 'show_at' && !$sampleDate) {
+                                $sampleDate = $values[$i];
+                            }
+
                             if ($headers[$i] == 'url') {
                                 $row[$headers[$i]] = $values[$i];
                             } else {
@@ -507,7 +570,7 @@ class AnnotationController extends Controller
         return [
             'fieldErrors'=> $rows, 
             'fileName' => $request->file('csv')->getClientOriginalName(),
-            // 'fieldErrorsCount' => $fieldErrorsCount, 
+            'sampleDate' => $sampleDate, 
             'importReview'=> $importReview, 
             'importReviewErrorCount' => $importReviewErrorCount,
             'fileHeaders' => $headers
