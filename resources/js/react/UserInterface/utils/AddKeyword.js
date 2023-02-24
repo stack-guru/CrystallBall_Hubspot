@@ -165,8 +165,6 @@ export default class AddKeyword extends React.Component {
                         icon: "success",
                         title: "Stored successfully!",
                     });
-
-                    this.props.onAddCallback();
                 },
                 (err) => {
                     this.setState({ isBusy: false, errors: err.response.data });
@@ -175,6 +173,8 @@ export default class AddKeyword extends React.Component {
             .catch((err) => {
                 this.setState({ isBusy: false, errors: err });
             });
+        this.props.onAddCallback();
+        this.props.loadKeywordsCallback();
     }
 
     changeSearchEngineHandler(search_engines) {

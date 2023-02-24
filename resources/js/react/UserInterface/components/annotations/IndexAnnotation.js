@@ -600,6 +600,9 @@ class IndexAnnotations extends React.Component {
                                         if (anno.category.indexOf("Holiday") !== -1)
                                             borderLeftColor = this.state.userAnnotationColors.holidays;
 
+                                        if (anno.category.indexOf("Apple Podcast") !== -1)
+                                            selectedIcon = 'applePodcast-small'
+
                                         const currentDateTime =
                                             new Date();
                                         const annotationDateTime =
