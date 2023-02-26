@@ -131,7 +131,6 @@ export default class EditKeyword extends React.Component {
                         icon: "success",
                         title: "Updated successfully!",
                     });
-
                     this.props.onAddCallback();
                 },
                 (err) => {
@@ -141,6 +140,7 @@ export default class EditKeyword extends React.Component {
             .catch((err) => {
                 this.setState({ isBusy: false, errors: err });
             });
+            this.props.addKeywordCallback();
     }
 
     locationChangeCallback(option) {
@@ -164,129 +164,128 @@ export default class EditKeyword extends React.Component {
         return (
             <div className="apps-bodyContent switch-wrapper">
                 <div className="weather_alert_cities-form">
-                    <h4 className="gaa-text-primary">Manage keywords</h4>
+                    <h4 className="gaa-text-primary">Manage tracker</h4>
                     <label>Tracking</label>
-                    <div className="input-group mb-3">
-                        <select
-                            className="form-control"
-                            id="tracking_of"
-                            onChange={(e) => {
-                                this.setState({ is_url_competitors: e.target.value });
-                            }}
-                        >
-                            <option selected disabled>
-                                --Select--
-                            </option>
-                            <option value="false">My website</option>
-                            <option value="true">Competitor's website</option>
-                        </select>
-                    </div>
-                    <label>Website URL</label>
-                    <div className="input-group inputWithIcon mb-3 position-relative">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="your-company-domain.com"
-                            name="url"
-                            id="url"
-                            onChange={(e) => {
-                                let val = e.target.value;
-                                val = val.split(" ").join("");
-                                val = val.replace("/", "");
-                                val = val.replace("www.", "");
-                                val = val.replace("https://", "");
-                                val = val.replace("http://", "");
-                                e.target.value = val;
-                                this.setState({ url: val });
-                            }}
-                        />
-                        <i className="fa fa-link"></i>
-                    </div>
-                    <label>Keyword</label>
-                    <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Keyword"
-                            value=""
-                            name="keyword"
-                            id="keyword"
-                            disabled
-                            onChange={(e) => {
-                                this.setState({ keyword: e.target.value });
-                            }}
-                        />
-                        <div className="input-group-append">
-                            <i className="ti-plus"></i>
+                    <div className="grid2layout">
+                        <div className="themeNewInputGroup themeNewselect flex-column">
+                            <select className="form-control" id="tracking_of" 
+                                    onChange={(e) => {
+                                        this.setState({ is_url_competitors: e.target.value });
+                                    }}
+                                >
+                                <option selected disabled>Select tracking website</option>
+                                <option value="false">My website</option>
+                                <option value="true">Competitor's website</option>
+                            </select>
+                        </div>
+                        <div className="themeNewInputGroup inputWithIcon position-relative">
+                            <input type="text" className="form-control" placeholder="your-company-domain.com" name="url" id="url"  
+                                onChange={(e) => {
+                                    let val = e.target.value;
+                                    val = val.split(" ").join("");
+                                    val = val.replace("/", "");
+                                    val = val.replace("www.", "");
+                                    val = val.replace("https://", "");
+                                    val = val.replace("http://", "");
+                                    e.target.value = val;
+                                    this.setState({ url: val });
+                                }}
+                            />
+                            <i className="fa fa-link"></i>
+                        </div>
+                        <div className="themeNewInputGroup"> 
+                            {
+                            this.state.show_async_selects ? 
+                                <LocationSelect
+                                    className="gray_clr"
+                                    name="country"
+                                    id="country"
+                                    onChangeCallback={ this.locationChangeCallback }
+                                    selected={{
+                                        label: this.state.location_name,
+                                        value: this.state.location
+                                    }}
+                                    placeholder="Locations"
+                                />
+                                : null
+                            }
+                        </div>
+                        <div className="themeNewInputGroup themeNewselect">
+                            {
+                            this.state.show_async_selects ? 
+                                <SearchEngineSelect
+                                    className="gray_clr"
+                                    name="search_engine"
+                                    id="search_engine"
+                                    selected={{
+                                        label: this.state.search_engine.charAt(0).toUpperCase() + this.state.search_engine.slice(1),
+                                        value: this.state.search_engine
+                                    }}
+                                    onChangeCallback={this.searchEngineChangeCallback}
+                                    placeholder="Select Search Engine"
+                                />
+                                : null
+                            }
+                        </div>
+                        <div className="themeNewInputGroup">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Keyword"
+                                value=""
+                                name="keyword"
+                                id="keyword"
+                                disabled
+                                onChange={(e) => {
+                                    this.setState({ keyword: e.target.value });
+                                }}
+                            />
+                            <div className="input-group-append">
+                                <i className="ti-plus"></i>
+                            </div>
+                            {/* {this.state.keywords.length > 0 ?
+                                <div className="keywordTags pt-3">
+                                    {this.state.keywords.length > 0 ? this.state.keywords.map((keyword, index) => {
+                                        return (
+                                                <button type="button" className="keywordTag" key={keyword.id != "" ? keyword.id : index} data-keyword={keyword.keyword} data-keyword_id={keyword.id} onClick={(e) => {this.deleteKeyword(e);}}>{keyword.keyword}</button>
+                                        );})
+                                        : ""
+                                    }
+                                </div>
+                            : null} */}
                         </div>
                     </div>
-                    <label>Search Engine</label>
-                    <div className="input-group mb-3">
-                        {
-                        this.state.show_async_selects ? 
-                            <SearchEngineSelect
-                                className="gray_clr"
-                                name="search_engine"
-                                id="search_engine"
-                                selected={{
-                                    label: this.state.search_engine.charAt(0).toUpperCase() + this.state.search_engine.slice(1),
-                                    value: this.state.search_engine
-                                }}
-                                onChangeCallback={this.searchEngineChangeCallback}
-                                placeholder="Select Search Engine"
-                            />
-                            : null
-                        }
-                    </div>
-                    
-                    <label>Location</label>
-                    <div className="input-group mb-3">
-                        {
-                        this.state.show_async_selects ? 
-                            <LocationSelect
-                                className="gray_clr"
-                                name="country"
-                                id="country"
-                                onChangeCallback={ this.locationChangeCallback }
-                                selected={{
-                                    label: this.state.location_name,
-                                    value: this.state.location
-                                }}
-                                placeholder="Select Location"
-                            />
-                            : null
-                        }
-                    </div>
-                    <div className="mt-3">
-                        <label className="font-weight-bold">
-                            Threashold to create annotation:
-                        </label>
-                        <br />
-                        If ranking change
-                        <select
-                            className="form-control my-2"
-                            id="ranking_direction"
-                            onChange={(e) => {
-                                this.setState({ ranking_direction: e.target.value });
-                            }}
-                        >
-                            <option value="up">Up</option>
-                            <option value="down" selected>
-                                Down
-                            </option>
-                        </select>
-                        Places
-                        <input
-                            className="form-control"
-                            id="ranking_places"
-                            placeholder="Places"
-                            type="number"
-                            min="0"
-                            onChange={(e) => {
-                                this.setState({ ranking_places: e.target.value });
-                            }}
-                        />
-                        in search result, create annotation
+                    <div className="d-flex flex-column">
+                        <h4>Threashold to create annotation:</h4>
+                        <div className="grid2layout">
+                            <div className="themeNewInputGroup themeNewselect flex-column">
+                                <select
+                                    className="form-control"
+                                    id="ranking_direction"
+                                    onChange={(e) => {
+                                        this.setState({ ranking_direction: e.target.value });
+                                    }}
+                                >
+                                    <option value="up">Up</option>
+                                    <option value="down" selected>
+                                        Down
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div className="themeNewInputGroup">
+                                    <input
+                                        className="form-control"
+                                        id="ranking_places"
+                                        placeholder="Places moved in search engine"
+                                        type="number"
+                                        min="0"
+                                        onChange={(e) => {
+                                            this.setState({ ranking_places: e.target.value });
+                                        }}
+                                    />
+                            </div>
+                        </div>
                     </div>
                     <div className="my-1">
                         <strong>
@@ -299,6 +298,12 @@ export default class EditKeyword extends React.Component {
                             onClick={this.updateKeyword}
                         >
                             Update
+                        </button>
+                        <button
+                            className="btn btn-danger ml-2"
+                            onClick={this.props.addKeywordCallback}
+                        >
+                            Cancel
                         </button>
                     </div>
                 </div>

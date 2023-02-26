@@ -51,6 +51,7 @@ class PricePlanRequest extends FormRequest
             'yearly_discount_percent' => 'nullable|numeric|min:0|max:100',
             'sort_rank' => 'nullable|numeric',
             'custom_plan_code' => 'nullable',
+            'reference_text' => 'nullable',
             'users_devices_count' => 'required',
             'bitbucket_credits_count' => 'required',
             'github_credits_count' => 'required',

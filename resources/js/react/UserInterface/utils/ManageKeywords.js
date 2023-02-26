@@ -79,7 +79,7 @@ export default class ManageKeywords extends React.Component {
             ) {
                 return (<div className="singleRow">
                     <div className="singleCol colKeyword text-left"><span>{keyword_instance.keyword}</span></div>
-                    <div className="singleCol colUrl text-left"><a href="https://{configuration_instance.url}" className="fa fa-link"></a></div>
+                    <div className="singleCol colUrl text-left"><a href={configuration_instance.url} target="_blank" className="fa fa-link"></a></div>
                     <div className="singleCol colSearchEngine text-left"><span><img style={{ width: 20, height: 20,}} src={`/${configuration_instance.search_engine.charAt(0).toUpperCase() + configuration_instance.search_engine.slice(1)}.svg`} /> </span></div>
                     <div className="singleCol colLocation text-left"><span><img style={{ width: 20, height: 20,}} src={`/flags/${configuration_instance.location_name}.png`} /></span></div>
                     <div className="singleCol colAction text-right">
