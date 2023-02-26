@@ -13,7 +13,7 @@ import ShowChartAnnotation from './ShowChartAnnotation';
 import Toast from "../../utils/Toast";
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroller';
-import { uniqBy } from "lodash";
+import { capitalize, uniqBy } from "lodash";
 
 
 class IndexAnnotations extends React.Component {
@@ -124,7 +124,7 @@ class IndexAnnotations extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.mKeyAnnotation !== this.props.mKeyAnnotation) {
-            if(prevProps.mKeyAnnotation === 'manual' && this.props.mKeyAnnotation === '') {
+            if (prevProps.mKeyAnnotation === 'manual' && this.props.mKeyAnnotation === '') {
                 this.setState({
                     annotations: [],
                     pageNumber: 0,
@@ -132,7 +132,7 @@ class IndexAnnotations extends React.Component {
                     hideInfiniteScroll: true
                 }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations()) });
             }
-            
+
         }
     }
 
@@ -519,89 +519,156 @@ class IndexAnnotations extends React.Component {
                                     .map((anno, idx) => {
                                         let borderLeftColor = "rgba(0,0,0,.0625)";
                                         let selectedIcon = anno.category || '';
-                                        if (selectedIcon.toLowerCase().indexOf('google') > -1) {
-                                            selectedIcon = 'Category Google Update'
-                                        }
-                                        if (selectedIcon.toLowerCase().indexOf('product') > -1) {
-                                            selectedIcon = 'shopify-small'
-                                        }
-                                        if (selectedIcon.toLowerCase().indexOf('site') > -1
-                                            || selectedIcon.toLowerCase().indexOf('news') > -1
-                                            || selectedIcon.toLowerCase().indexOf('web') > -1
-                                        ) {
-                                            selectedIcon = 'web-monitoring-small'
-                                        }
-                                        if (selectedIcon.toLowerCase().indexOf('dates') > -1) {
-                                            selectedIcon = 'retails-marketing-dates-small'
-                                        }
-                                        if (selectedIcon.toLowerCase().indexOf('day') > -1 ||
-                                            (anno.event_name || '').toLowerCase().indexOf('day') > -1 ||
-                                            (anno.description || '').toLowerCase().indexOf('day') > -1
-                                        ) {
-                                            selectedIcon = 'holidays-small'
-                                        }
-                                        if (
-                                            ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => selectedIcon.toLowerCase().indexOf(item) > -1) ||
-                                            ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => (anno.event_name || '').toLowerCase().indexOf(item) > -1) ||
-                                            ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => (anno.description || '').toLowerCase().indexOf(item) > -1)
-                                        ) {
-                                            selectedIcon = 'weather-small'
-                                        }
-                                        if (selectedIcon.toLowerCase().indexOf('tracking') > -1) {
-                                            selectedIcon = 'SERP-small'
-                                        }
+                                        // if (selectedIcon.toLowerCase().indexOf('google') > -1) {
+                                        //     selectedIcon = 'Category Google Update'
+                                        // }
+                                        // if (selectedIcon.toLowerCase().indexOf('product') > -1) {
+                                        //     selectedIcon = 'shopify-small'
+                                        // }
+                                        // if (selectedIcon.toLowerCase().indexOf('site') > -1
+                                        //     || selectedIcon.toLowerCase().indexOf('news') > -1
+                                        //     || selectedIcon.toLowerCase().indexOf('web') > -1
+                                        // ) {
+                                        //     selectedIcon = 'web-monitoring-small'
+                                        // }
+                                        // if (selectedIcon.toLowerCase().indexOf('dates') > -1) {
+                                        //     selectedIcon = 'retails-marketing-dates-small'
+                                        // }
+                                        // if (selectedIcon.toLowerCase().indexOf('day') > -1 ||
+                                        //     (anno.event_name || '').toLowerCase().indexOf('day') > -1 ||
+                                        //     (anno.description || '').toLowerCase().indexOf('day') > -1
+                                        // ) {
+                                        //     selectedIcon = 'holidays-small'
+                                        // }
+                                        // if (
+                                        //     ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => selectedIcon.toLowerCase().indexOf(item) > -1) ||
+                                        //     ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => (anno.event_name || '').toLowerCase().indexOf(item) > -1) ||
+                                        //     ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => (anno.description || '').toLowerCase().indexOf(item) > -1)
+                                        // ) {
+                                        //     selectedIcon = 'weather-small'
+                                        // }
+                                        // if (selectedIcon.toLowerCase().indexOf('tracking') > -1) {
+                                        //     selectedIcon = 'SERP-small'
+                                        // }
                                         anno.description = anno.description || anno.event_name
                                         const added_by = (anno.added_by || "").split('~~~~');
-                                        switch (added_by[1]) {
-                                            case "manual":
-                                                borderLeftColor = this.state.userAnnotationColors.manual;
-                                                break;
-                                            case "csv-upload":
-                                                borderLeftColor = this.state.userAnnotationColors.csv;
-                                                break;
-                                            case "api":
-                                                borderLeftColor = this.state.userAnnotationColors.api;
-                                                break;
-                                        }
-
-                                        switch (anno.category) {
-                                            case "Google Updates":
-                                                borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates;
-                                                break;
-                                            case "Retail Marketing Dates":
-                                                borderLeftColor = this.state.userAnnotationColors.retail_marketings;
-                                                break;
-                                            case "Weather Alert":
-                                                borderLeftColor = this.state.userAnnotationColors.weather_alerts;
-                                                break;
-                                            case "Website Monitoring":
-                                                borderLeftColor = this.state.userAnnotationColors.web_monitors;
-                                                break;
-                                            case "WordPress Updates":
-                                                borderLeftColor = this.state.userAnnotationColors.wordpress_updates;
-                                                break;
-                                            case "News Alert":
-                                                borderLeftColor = this.state.userAnnotationColors.google_alerts;
-                                                break;
-                                            default:
-                                                borderLeftColor = '#1976fe';
-                                        }
-                                        switch (added_by[1]) {
-                                            case "manual":
-                                                borderLeftColor = this.state.userAnnotationColors.manual;
-                                                break;
-                                            case "csv-upload":
-                                                borderLeftColor = this.state.userAnnotationColors.csv;
-                                                break;
-                                            case "api":
-                                                borderLeftColor = this.state.userAnnotationColors.api;
-                                                break;
-                                        }
-                                        if (anno.category.indexOf("Holiday") !== -1)
+                                        const tableName = added_by[0];
+                                        const tableId = added_by[1];
+                                        const tableType = added_by[2];
+                                        const dataSource = added_by[3];
+                                        if (dataSource === 'manual' && tableName === 'annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.manual;
+                                            selectedIcon = '/manual.svg';
+                                        } else if (dataSource === 'csv-upload' && tableName === 'annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.csv;
+                                            selectedIcon = '/csv-upload.svg';
+                                        } else if (dataSource === 'api' && tableName === 'annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.api;
+                                            selectedIcon = '/api.svg';
+                                        } else if (dataSource === 'System' && tableName === 'google_algorithm_updates') {
+                                            borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates;
+                                            selectedIcon = '/google_algorithm_updates.svg';
+                                        } else if (dataSource === 'System' && tableName === 'web_monitor_annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.web_monitors;
+                                            selectedIcon = '/web_monitor_annotations.svg';
+                                        } else if (dataSource === 'System' && tableName === 'shopify_annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.shopify;
+                                            selectedIcon = '/shopify_annotations.svg';
+                                        } else if (dataSource === 'System' && tableName === 'holidays') {
                                             borderLeftColor = this.state.userAnnotationColors.holidays;
+                                            selectedIcon = '/holidays.svg';
+                                        } else if (dataSource === 'System' && tableName === 'retail_marketings') {
+                                            borderLeftColor = this.state.userAnnotationColors.retail_marketings;
+                                            selectedIcon = '/retail_marketings.svg';
+                                        } else if (dataSource === 'System' && tableName === 'open_weather_map_alerts') {
+                                            borderLeftColor = this.state.userAnnotationColors.weather_alerts;
+                                            selectedIcon = '/open_weather_map_alerts.svg';
+                                        } else if (dataSource === 'System' && tableName === 'google_alerts') {
+                                            borderLeftColor = this.state.userAnnotationColors.google_alerts;
+                                            selectedIcon = '/google_alerts.svg';
+                                        } else if (dataSource === 'System' && tableName === 'wordpress_updates') {
+                                            borderLeftColor = this.state.userAnnotationColors.wordpress_updates;
+                                            selectedIcon = '/wordpress_updates.svg';
+                                        } else if (dataSource === 'System' && tableName === 'keyword_tracking_annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.keyword_tracking;
+                                            selectedIcon = '/keyword_tracking_annotations.svg';
+                                        } else if (dataSource === 'System' && tableName === 'facebook_tracking_annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.facebook_tracking;
+                                            selectedIcon = '/facebook_tracking_annotations.svg';
+                                        } else if (dataSource === 'System' && tableName === 'instagram_tracking_annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.instagram_tracking;
+                                            selectedIcon = '/instagram_tracking_annotations.svg';
+                                        } else if (dataSource === 'System' && tableName === 'twitter_tracking_annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.twitter_tracking;
+                                            selectedIcon = '/twitter_tracking_annotations.svg';
+                                        } else if (dataSource === 'System' && tableName === 'bitbucket_commit_annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.bitbucket_tracking;
+                                            selectedIcon = '/bitbucket_commit_annotations.svg';
+                                        } else if (dataSource === 'System' && tableName === 'github_commit_annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.github_tracking;
+                                            selectedIcon = '/github_commit_annotations.svg';
+                                        } else if (dataSource === 'System' && tableName === 'google_ads_annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.g_ads_history_change;
+                                            selectedIcon = '/google_ads_annotations.svg';
+                                        } else if (dataSource === 'System' && tableName === 'apple_podcast_annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.apple_podcast;
+                                            selectedIcon = '/apple_podcast_annotations.svg';
+                                        }
 
-                                        if (anno.category.indexOf("Apple Podcast") !== -1)
-                                            selectedIcon = 'applePodcast-small'
+
+
+
+
+                                        // switch (added_by[3]) {
+                                        //     case "manual":
+                                        //         borderLeftColor = this.state.userAnnotationColors.manual;
+                                        //         break;
+                                        //     case "csv-upload":
+                                        //         borderLeftColor = this.state.userAnnotationColors.csv;
+                                        //         break;
+                                        //     case "api":
+                                        //         borderLeftColor = this.state.userAnnotationColors.api;
+                                        //         break;
+                                        // }
+
+                                        // switch (anno.category) {
+                                        //     case "Google Updates":
+                                        //         borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates;
+                                        //         break;
+                                        //     case "Retail Marketing Dates":
+                                        //         borderLeftColor = this.state.userAnnotationColors.retail_marketings;
+                                        //         break;
+                                        //     case "Weather Alert":
+                                        //         borderLeftColor = this.state.userAnnotationColors.weather_alerts;
+                                        //         break;
+                                        //     case "Website Monitoring":
+                                        //         borderLeftColor = this.state.userAnnotationColors.web_monitors;
+                                        //         break;
+                                        //     case "WordPress Updates":
+                                        //         borderLeftColor = this.state.userAnnotationColors.wordpress_updates;
+                                        //         break;
+                                        //     case "News Alert":
+                                        //         borderLeftColor = this.state.userAnnotationColors.google_alerts;
+                                        //         break;
+                                        //     default:
+                                        //         borderLeftColor = '#1976fe';
+                                        // }
+                                        // switch (added_by[3]) {
+                                        //     case "manual":
+                                        //         borderLeftColor = this.state.userAnnotationColors.manual;
+                                        //         break;
+                                        //     case "csv-upload":
+                                        //         borderLeftColor = this.state.userAnnotationColors.csv;
+                                        //         break;
+                                        //     case "api":
+                                        //         borderLeftColor = this.state.userAnnotationColors.api;
+                                        //         break;
+                                        // }
+                                        // if (anno.category.indexOf("Holiday") !== -1)
+                                        //     borderLeftColor = this.state.userAnnotationColors.holidays;
+
+                                        // if (anno.category.indexOf("Apple Podcast") !== -1)
+                                        //     selectedIcon = 'applePodcast-small'
 
                                         const currentDateTime =
                                             new Date();
@@ -629,7 +696,7 @@ class IndexAnnotations extends React.Component {
                                                 key={idx + anno.toString()}
                                                 onClick={
                                                     () => {
-                                                        if (anno.id && this.state.enableSelect && added_by[1] == 'manual') {
+                                                        if (anno.id && this.state.enableSelect && added_by[3] == 'manual') {
                                                             this.handleOneSelection(anno.id)
                                                         } else {
                                                             // toast.error("This annotation can't be selected.");
@@ -639,7 +706,7 @@ class IndexAnnotations extends React.Component {
 
                                                 <span className="checkedIcon"><img src={`/icon-checked.svg`} /></span>
 
-                                                <span className="annotionRowIcon"><img src={`/${selectedIcon}.svg`} onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/annotation-default.svg"; }} /></span>
+                                                <span className="annotionRowIcon"><img src={`${selectedIcon}`} onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/annotation-default.svg"; }} /></span>
 
                                                 <div className="description d-flex flex-column flex-shrink-1">
                                                     <p className="titleCategory d-flex align-items-center">
@@ -674,7 +741,7 @@ class IndexAnnotations extends React.Component {
                                                 <div className="flex-grow-1 d-flex justify-content-between align-items-center">
                                                     <ul className="d-flex list-unstyled">
                                                         <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
-                                                        <li><span>{added_by[0] || 'System'}</span></li>
+                                                        <li><span>{capitalize(added_by[3])}</span></li>
                                                         <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
                                                         {/* <li>
                                                     <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
@@ -685,7 +752,7 @@ class IndexAnnotations extends React.Component {
                                                     </ul>
 
                                                     <ul className="d-flex list-unstyled">
-                                                        {added_by[1] == "manual" ? <>
+                                                        {added_by[3] == "manual" ? <>
                                                             <li>
                                                                 <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.toggleStatus(anno.id) }}>
                                                                     {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
