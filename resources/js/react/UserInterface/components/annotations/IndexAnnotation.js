@@ -148,7 +148,10 @@ class IndexAnnotations extends React.Component {
 
     deleteAnnotation(id, tableName) {
         this.setState({ isBusy: true });
-        HttpClient.delete(`/annotation/${id}?table_name=${tableName}`)
+        HttpClient.post(`annotations/delete_annotations`, {
+            annotation_id: id,
+            table_name: tableName,
+        })
             .then(
                 (resp) => {
                     Toast.fire({
@@ -156,7 +159,7 @@ class IndexAnnotations extends React.Component {
                         title: "Annotation deleted."
                     });
                     let annotations = this.state.annotations;
-                    annotations = annotations.filter((a) => a.id != id);
+                    annotations = annotations.filter((a) => !(a.added_by.indexOf(`${tableName}~~~~${id}~~~~`) > -1));
                     this.setState({ isBusy: false, annotations: annotations });
                 },
                 (err) => {
