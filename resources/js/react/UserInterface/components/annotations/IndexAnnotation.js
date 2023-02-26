@@ -146,9 +146,9 @@ class IndexAnnotations extends React.Component {
         }
     }
 
-    deleteAnnotation(id) {
+    deleteAnnotation(id, tableName) {
         this.setState({ isBusy: true });
-        HttpClient.delete(`/annotation/${id}`)
+        HttpClient.delete(`/annotation/${id}?table_name=${tableName}`)
             .then(
                 (resp) => {
                     Toast.fire({
@@ -519,37 +519,7 @@ class IndexAnnotations extends React.Component {
                                     .map((anno, idx) => {
                                         let borderLeftColor = "rgba(0,0,0,.0625)";
                                         let selectedIcon = anno.category || '';
-                                        // if (selectedIcon.toLowerCase().indexOf('google') > -1) {
-                                        //     selectedIcon = 'Category Google Update'
-                                        // }
-                                        // if (selectedIcon.toLowerCase().indexOf('product') > -1) {
-                                        //     selectedIcon = 'shopify-small'
-                                        // }
-                                        // if (selectedIcon.toLowerCase().indexOf('site') > -1
-                                        //     || selectedIcon.toLowerCase().indexOf('news') > -1
-                                        //     || selectedIcon.toLowerCase().indexOf('web') > -1
-                                        // ) {
-                                        //     selectedIcon = 'web-monitoring-small'
-                                        // }
-                                        // if (selectedIcon.toLowerCase().indexOf('dates') > -1) {
-                                        //     selectedIcon = 'retails-marketing-dates-small'
-                                        // }
-                                        // if (selectedIcon.toLowerCase().indexOf('day') > -1 ||
-                                        //     (anno.event_name || '').toLowerCase().indexOf('day') > -1 ||
-                                        //     (anno.description || '').toLowerCase().indexOf('day') > -1
-                                        // ) {
-                                        //     selectedIcon = 'holidays-small'
-                                        // }
-                                        // if (
-                                        //     ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => selectedIcon.toLowerCase().indexOf(item) > -1) ||
-                                        //     ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => (anno.event_name || '').toLowerCase().indexOf(item) > -1) ||
-                                        //     ['haze', 'sky', 'cloud', 'mist', 'rain', 'clear', 'sunny', 'fog', 'foggy', 'snow', 'snowy', 'storm', 'stormy', 'windy', 'wind'].some((item) => (anno.description || '').toLowerCase().indexOf(item) > -1)
-                                        // ) {
-                                        //     selectedIcon = 'weather-small'
-                                        // }
-                                        // if (selectedIcon.toLowerCase().indexOf('tracking') > -1) {
-                                        //     selectedIcon = 'SERP-small'
-                                        // }
+
                                         anno.description = anno.description || anno.event_name
                                         const added_by = (anno.added_by || "").split('~~~~');
                                         const tableName = added_by[0];
@@ -615,61 +585,7 @@ class IndexAnnotations extends React.Component {
                                             selectedIcon = '/apple_podcast_annotations.svg';
                                         }
 
-
-
-
-
-                                        // switch (added_by[3]) {
-                                        //     case "manual":
-                                        //         borderLeftColor = this.state.userAnnotationColors.manual;
-                                        //         break;
-                                        //     case "csv-upload":
-                                        //         borderLeftColor = this.state.userAnnotationColors.csv;
-                                        //         break;
-                                        //     case "api":
-                                        //         borderLeftColor = this.state.userAnnotationColors.api;
-                                        //         break;
-                                        // }
-
-                                        // switch (anno.category) {
-                                        //     case "Google Updates":
-                                        //         borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates;
-                                        //         break;
-                                        //     case "Retail Marketing Dates":
-                                        //         borderLeftColor = this.state.userAnnotationColors.retail_marketings;
-                                        //         break;
-                                        //     case "Weather Alert":
-                                        //         borderLeftColor = this.state.userAnnotationColors.weather_alerts;
-                                        //         break;
-                                        //     case "Website Monitoring":
-                                        //         borderLeftColor = this.state.userAnnotationColors.web_monitors;
-                                        //         break;
-                                        //     case "WordPress Updates":
-                                        //         borderLeftColor = this.state.userAnnotationColors.wordpress_updates;
-                                        //         break;
-                                        //     case "News Alert":
-                                        //         borderLeftColor = this.state.userAnnotationColors.google_alerts;
-                                        //         break;
-                                        //     default:
-                                        //         borderLeftColor = '#1976fe';
-                                        // }
-                                        // switch (added_by[3]) {
-                                        //     case "manual":
-                                        //         borderLeftColor = this.state.userAnnotationColors.manual;
-                                        //         break;
-                                        //     case "csv-upload":
-                                        //         borderLeftColor = this.state.userAnnotationColors.csv;
-                                        //         break;
-                                        //     case "api":
-                                        //         borderLeftColor = this.state.userAnnotationColors.api;
-                                        //         break;
-                                        // }
-                                        // if (anno.category.indexOf("Holiday") !== -1)
-                                        //     borderLeftColor = this.state.userAnnotationColors.holidays;
-
-                                        // if (anno.category.indexOf("Apple Podcast") !== -1)
-                                        //     selectedIcon = 'applePodcast-small'
-
+                                        
                                         const currentDateTime =
                                             new Date();
                                         const annotationDateTime =
@@ -692,17 +608,17 @@ class IndexAnnotations extends React.Component {
                                         }
 
                                         return (
-                                            <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.id) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId}
+                                            <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(tableId) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId}
                                                 key={idx + anno.toString()}
                                                 onClick={
                                                     () => {
-                                                        if (anno.id && this.state.enableSelect && added_by[3] == 'manual') {
-                                                            this.handleOneSelection(anno.id)
+                                                        if (tableId && this.state.enableSelect) {
+                                                            this.handleOneSelection(tableId)
                                                         } else {
                                                             // toast.error("This annotation can't be selected.");
                                                         }
                                                     }
-                                                } data-anno_id={anno.id}>
+                                                } data-anno_id={tableId}>
 
                                                 <span className="checkedIcon"><img src={`/icon-checked.svg`} /></span>
 
@@ -744,7 +660,7 @@ class IndexAnnotations extends React.Component {
                                                         <li><span>{capitalize(added_by[3])}</span></li>
                                                         <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
                                                         {/* <li>
-                                                    <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :anno.id})}>
+                                                    <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :tableId})}>
                                                         <i className="mr-2">
                                                         <img src={"/icon-chart.svg"} /></i><span>open chart</span>
                                                         </a>
@@ -752,21 +668,21 @@ class IndexAnnotations extends React.Component {
                                                     </ul>
 
                                                     <ul className="d-flex list-unstyled">
-                                                        {added_by[3] == "manual" ? <>
-                                                            <li>
-                                                                <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.toggleStatus(anno.id) }}>
-                                                                    {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
-                                                                </span>
-                                                            </li>
-                                                            <li>
-                                                                <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.setState({ editAnnotationId: anno.id }) }}>
-                                                                    <img src={`icon-edit.svg`} />
-                                                                </span>
-                                                            </li>
-                                                            <li>
-                                                                <span className="text-danger" onClick={(e) => { e.stopPropagation(); this.deleteAnnotation(anno.id); }}><img src={`icon-trash.svg`} /></span>
-                                                            </li>
-                                                        </> : null}
+                                                        {/* {added_by[3] == "manual" ? <> */}
+                                                        <li>
+                                                            <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.toggleStatus(tableId) }}>
+                                                                {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.setState({ editAnnotationId: tableId }) }}>
+                                                                <img src={`icon-edit.svg`} />
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span className="text-danger" onClick={(e) => { e.stopPropagation(); this.deleteAnnotation(tableId, tableName); }}><img src={`icon-trash.svg`} /></span>
+                                                        </li>
+                                                        {/* </> : null} */}
                                                     </ul>
                                                 </div>
 
