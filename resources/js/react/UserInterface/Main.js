@@ -64,6 +64,7 @@ class Main extends React.Component {
             mKeyAnnotation: '',
             showUpgradePopup: false,
             upgradePopupType: '',
+            csvUploadPopupSize: 'md',
         }
         this.loadUser = this.loadUser.bind(this)
 
@@ -243,8 +244,8 @@ class Main extends React.Component {
                     </AppsModal>
                     :
                     this.state.mKeyAnnotation === 'upload' ?
-                        <AppsModal popupSize={'md csvupload'} isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka = '') => { this.setState({ mKeyAnnotation: mka, }); }}>
-                            <AnnotationsUpload upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} togglePopup={(mka) => { this.setState({ mKeyAnnotation: mka, }); }} currentPricePlan={this.state.user.price_plan} />
+                        <AppsModal popupSize={this.state.csvUploadPopupSize} isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka = '') => { this.setState({ mKeyAnnotation: mka, }); }}>
+                            <AnnotationsUpload updateCSVUploadStep={(csvUploadPopupSize) => this.setState({csvUploadPopupSize})} upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} togglePopup={(mka) => { this.setState({ mKeyAnnotation: mka, }); }} currentPricePlan={this.state.user.price_plan} />
                         </AppsModal>
                         :
                         null}

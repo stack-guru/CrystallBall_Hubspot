@@ -132,7 +132,7 @@ export default class UploadAnnotation extends React.Component {
 
         formData.append('fieldErrors', JSON.stringify(data));
 
-        this.state.google_analytics_property_id.forEach((gAA) => { 
+        this.state.google_analytics_property_id.forEach((gAA) => {
             formData.append('google_analytics_property_id[]', gAA) }
         )
 
@@ -162,9 +162,9 @@ export default class UploadAnnotation extends React.Component {
                 })
 
                 this.setState({ isBusy: false })
-                
+
             }
-            
+
         }, (err) => {
 
             this.setState({ isBusy: false, errors: (err.response).data });
@@ -246,10 +246,10 @@ export default class UploadAnnotation extends React.Component {
 
                 const { fieldErrors, importReview, importReviewErrorCount, fileHeaders, fileName, sampleDate } = response.data;
                 this.setState(
-                    { 
-                        isBusy: false, 
-                        review: true, 
-                        fieldErrors, 
+                    {
+                        isBusy: false,
+                        review: true,
+                        fieldErrors,
                         importReview,
                         importReviewErrorCount,
                         fileHeaders,
@@ -264,9 +264,12 @@ export default class UploadAnnotation extends React.Component {
                             ...(importReview['Show At'] ?  { 'Show At': '' } : {}),
                         }
 
+                    },
+                    () => {
+                        this.props.updateCSVUploadStep('lg')
                     }
                 )
-                
+
             }, (err) => {
 
                 this.setState({ isBusy: false, errors: (err.response).data });
@@ -340,9 +343,9 @@ export default class UploadAnnotation extends React.Component {
 
         return (
             <div className="popupContent modal-csvUpload">
-                { this.state.review ? 
-                    <div>
-                        { !this.state.fieldErrorsCheck ? 
+                {this.state.review ?
+                    <div className="csv-review-columns">
+                        {!this.state.fieldErrorsCheck ?
                         <>
                         <div className="apps-modalHead">
                             <div className="d-flex justify-content-between align-items-center">
@@ -351,9 +354,10 @@ export default class UploadAnnotation extends React.Component {
                                     <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" />
                                 </span>
                             </div>
+
+                            <p>Please review the column mapping and map the columns that weren't found</p>
                         </div>
 
-                        <p>Please review the column mapping and map the columns that weren't found</p>
 
                         <table className='table'>
                             <thead>
@@ -366,7 +370,8 @@ export default class UploadAnnotation extends React.Component {
                             <tbody className='dataTableAnalyticsAccount'>
                                 <tr>
                                     <td>Category</td>
-                                    <td className='themeNewInputStyle position-relative'>
+                                    <td>
+                                        <div className='themeNewInputStyle position-relative'>
                                         <select value={this.state.csvFields['Category']} style={{height: 38}} className={`form-control ${this.state.importReview.category_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
                                             this.setState({
                                                 csvFields: {
@@ -380,13 +385,15 @@ export default class UploadAnnotation extends React.Component {
                                             <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.category_error && idx == 0} value={itm}>{itm}</option>)}
                                         </select>
-                                        <i className="btn-searchIcon left-0 fa fa-check-circle mt-2 ml-2"></i>
+                                        <i className="btn-searchIcon fa fa-check-circle"></i>
+                                        </div>
                                     </td>
                                     <td>Sales Event</td>
                                 </tr>
                                 <tr>
                                     <td>Event Name</td>
-                                    <td className='themeNewInputStyle position-relative'>
+                                    <td>
+                                        <div className='themeNewInputStyle position-relative'>
                                         <select value={this.state.csvFields['Event Name']} style={{height: 38}} className={`form-control ${this.state.importReview.event_name_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
                                             this.setState({
                                                 csvFields: {
@@ -400,13 +407,15 @@ export default class UploadAnnotation extends React.Component {
                                             <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.event_name_error && idx == 1} value={itm}>{itm}</option>)}
                                         </select>
-                                        <i className="btn-searchIcon left-0 fa fa-check-circle mt-2 ml-2"></i>
+                                        <i className="btn-searchIcon fa fa-check-circle"></i>
+                                        </div>
                                     </td>
                                     <td>Black Friday</td>
                                 </tr>
                                 <tr>
                                     <td>Url</td>
-                                    <td className='themeNewInputStyle position-relative'>
+                                    <td>
+                                        <div className='themeNewInputStyle position-relative'>
                                         <select value={this.state.csvFields['Url']} style={{height: 38}} className={`form-control ${this.state.importReview.url_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
                                             this.setState({
                                                 csvFields: {
@@ -420,13 +429,15 @@ export default class UploadAnnotation extends React.Component {
                                             <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.url_error && idx == 2} value={itm}>{itm}</option>)}
                                         </select>
-                                        <i className="btn-searchIcon left-0 fa fa-check-circle mt-2 ml-2"></i>
+                                        <i className="btn-searchIcon fa fa-check-circle"></i>
+                                    </div>
                                     </td>
                                     <td>https://gannotations.com</td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
-                                    <td className='themeNewInputStyle position-relative'>
+                                    <td>
+                                        <div className='themeNewInputStyle position-relative'>
                                         <select value={this.state.csvFields['Description']} style={{height: 38}} className={`form-control ${this.state.importReview.description_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
                                             this.setState({
                                                 csvFields: {
@@ -440,13 +451,15 @@ export default class UploadAnnotation extends React.Component {
                                             <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.description_error && idx == 3} value={itm}>{itm}</option>)}
                                         </select>
-                                        <i className="btn-searchIcon left-0 fa fa-check-circle mt-2 ml-2"></i>
+                                        <i className="btn-searchIcon fa fa-check-circle"></i>
+                                        </div>
                                     </td>
                                     <td>Black Friday Deals 2023</td>
                                 </tr>
                                 <tr>
                                     <td>Show At</td>
-                                    <td className='themeNewInputStyle position-relative'>
+                                    <td>
+                                        <div className='themeNewInputStyle position-relative'>
                                         <select value={this.state.csvFields['Show At']} style={{height: 38}} className={`form-control ${this.state.importReview.show_at_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
                                             this.setState({
                                                 csvFields: {
@@ -460,7 +473,8 @@ export default class UploadAnnotation extends React.Component {
                                             <option>Select...</option>
                                             {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.show_at_error && idx == 0} value={itm}>{itm}</option>)}
                                         </select>
-                                        <i className="btn-searchIcon left-0 fa fa-check-circle mt-3 ml-2"></i>
+                                        <i className="btn-searchIcon fa fa-check-circle"></i>
+                                        </div>
                                     </td>
                                     <td>
                                         {this.state.sampleDate}
@@ -469,7 +483,7 @@ export default class UploadAnnotation extends React.Component {
                                 <tr>
                                     <td>Date Format</td>
                                     <td className='themeNewInputStyle position-relative'>
-                                        <select style={{height: 38}} name="date_format" id="date_format" className="form-control " value={this.state.date_format} onChange={this.changeHandler} required>
+                                        <select style={{height: 38}} name="date_format" id="date_format" className={`form-control ${!this.state.date_format ? 'is-invalid' : 'selected'}`} value={this.state.date_format} onChange={this.changeHandler} required>
                                             <option value="">Select your date format</option>
                                             <option value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
                                             <option value="M-D-YYYY">{moment("2021-01-15").format('M-D-YYYY')}</option>
@@ -499,8 +513,8 @@ export default class UploadAnnotation extends React.Component {
                             <Button className='btn-submit btn-theme' disabled={this.props.importReviewErrorCount || this.state.date_format === ''} onClick={this.prepareFieldErrorsData}>Continue</Button>
                         </div>
                         </>
-                        : 
-                        
+                        :
+
                         <>
                         <div className="apps-modalHead">
                             <div className="d-flex justify-content-between align-items-center">
@@ -509,9 +523,9 @@ export default class UploadAnnotation extends React.Component {
                                     <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" />
                                 </span>
                             </div>
+                            <p>Please review the table and Fix the errors highlighted</p>
                         </div>
 
-                        <p>Please review the table and Fix the errors highlighted</p>
 
                         <table className='table-bordered'>
                             <thead>
@@ -529,35 +543,35 @@ export default class UploadAnnotation extends React.Component {
                                     return (
                                         <tr>
                                             <td>
-                                                { rd.category_error ? 
+                                                { rd.category_error ?
                                                     <input title={rd.category_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='category' value={rd.category} />
                                                 :
                                                     <div>{rd.category}</div>
                                                 }
                                             </td>
                                             <td>
-                                                { rd.event_name_error ? 
+                                                { rd.event_name_error ?
                                                     <input title={rd.event_name_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='event_name' value={rd.event_name} />
                                                 :
                                                     <div>{rd.event_name}</div>
                                                 }
                                             </td>
                                             <td>
-                                                { rd.url_error ? 
+                                                { rd.url_error ?
                                                     <input title={rd.url_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='url' value={rd.url} />
                                                 :
                                                     <div>{rd.url}</div>
                                                 }
                                             </td>
                                             <td>
-                                                { rd.description_error ? 
+                                                { rd.description_error ?
                                                     <input title={rd.description_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='description' value={rd.description} />
                                                 :
                                                     <div>{rd.description}</div>
                                                 }
                                             </td>
                                             <td>
-                                                { rd.show_at_error ? 
+                                                { rd.show_at_error ?
                                                     <input title={rd.show_at_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='show_at' value={rd.show_at} />
                                                 :
                                                     <div>{rd.show_at}</div>
@@ -579,7 +593,7 @@ export default class UploadAnnotation extends React.Component {
                         }
 
                     </div>
-                : 
+                :
                     <div>
                         <ModalHeader
                             userAnnotationColors={this.state.userAnnotationColors}
@@ -635,7 +649,7 @@ export default class UploadAnnotation extends React.Component {
                                 </div>
                             </form>
                         </div>
-                    </div> 
+                    </div>
                 }
             </div>
         );
