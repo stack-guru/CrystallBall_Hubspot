@@ -171,11 +171,11 @@ class IndexAnnotations extends React.Component {
             });
     }
 
-    toggleStatus(id) {
+    toggleStatus(id, addedBy) {
         if (!this.state.isBusy) {
             this.setState({ isBusy: true });
             let prevAnnotation = this.state.annotations.find(
-                (an) => an.id == id
+                (an) => an.added_by == addedBy
             );
             let newStatus = 0;
             if (prevAnnotation.is_enabled) {
@@ -194,10 +194,10 @@ class IndexAnnotations extends React.Component {
                             icon: 'success',
                             title
                         });
-                        let newAnnotation = response.data.annotation;
+                        
                         let annotations = this.state.annotations.map((an) => {
-                            if (an.id == id) {
-                                return newAnnotation;
+                            if (an.added_by == addedBy) {
+                                return {...an, is_enabled: newStatus};
                             } else {
                                 return an;
                             }
@@ -687,7 +687,7 @@ class IndexAnnotations extends React.Component {
                                                             <li>
                                                                 <span className="cursor-pointer" onClick={(e) => {
                                                                     e.stopPropagation();
-                                                                    this.toggleStatus(tableId)
+                                                                    this.toggleStatus(tableId, anno.added_by)
                                                                 }}>
                                                                     {anno.is_enabled ?
                                                                         <img src={`/icon-eye-open.svg`}/> :

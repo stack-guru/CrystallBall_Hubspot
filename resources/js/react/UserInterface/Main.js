@@ -370,7 +370,7 @@ class Main extends React.Component {
                     >
                     </ga-upgrade-popup> : null}
                 </Modal>
-                <Modal isOpen={true} centered className="gaUpgradePopup" toggle={() => {}}>
+                {/* <Modal isOpen={true} centered className="gaUpgradePopup" toggle={() => {}}>
                     <button onClick={() => {}} class="btn-closeUpgradePopup"></button>
 
                     <ga-extend-trail-popup
@@ -378,7 +378,7 @@ class Main extends React.Component {
                         subHeading={`<p>and get access to all amazing features</p>`}
                         bannerImg="/images/more-property-upgrade.svg"
                     ></ga-extend-trail-popup>
-                </Modal>
+                </Modal> */}
             </React.Fragment>
         )
     }
