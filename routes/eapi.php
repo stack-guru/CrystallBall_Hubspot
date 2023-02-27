@@ -36,6 +36,8 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'eapi.', 'middlewar
             Route::get('memberships', 'API\UserController@extensionShowMembership');
             Route::get('users', 'API\ChromeExtension\UserController@index');
 
+            Route::get('annotation-categories', [App\Http\Controllers\API\ChromeExtension\AnnotationController::class, 'getCategories']);
+
             Route::post('log', 'API\ChromeExtension\ChromeExtensionLogController@store');
         });
     });

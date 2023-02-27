@@ -3319,6 +3319,7 @@ body {
     height: 10px;
     border-radius: 100px;
     background: #0bd25f;
+    max-width: 100%;
 }
 .dropdownFoot {
     padding: 1rem 1.5rem;

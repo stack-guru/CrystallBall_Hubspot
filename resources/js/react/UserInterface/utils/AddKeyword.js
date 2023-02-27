@@ -67,7 +67,7 @@ export default class AddKeyword extends React.Component {
                 document.getElementById("tracking_keywords").value = "";
             }
             else {
-                alert("credit limit reached");
+                this.props.upgradePopupForRankingTracking();
             }
         }
     }
@@ -191,7 +191,7 @@ export default class AddKeyword extends React.Component {
             this.updateAvailableCredits(this.state.keywords.length, this.state.locations.length, search_engines.length);
             return true;
         } else {
-            alert("limit reached");
+            this.props.upgradePopupForRankingTracking();
             return false;
         }
     }
@@ -210,7 +210,7 @@ export default class AddKeyword extends React.Component {
             this.updateAvailableCredits(this.state.keywords.length, selectedLocations.length, this.state.search_engines.length);
             return true;
         } else {
-            alert("limit reached");
+            this.props.upgradePopupForRankingTracking();
             return false;
         }
     }
@@ -250,7 +250,7 @@ export default class AddKeyword extends React.Component {
                     {/* <div className="my-1"><strong>Available Credits: {this.state.available_credits}</strong></div> */}
                     <div className="themeNewInputGroup themeNewselect flex-column">
                         <select className="form-control" id="tracking_of" onChange={(e) => {this.setState({is_url_competitors:e.target.options[e.target.selectedIndex].value,});}}>
-                            <option selected disabled>--Select--</option>
+                            <option selected disabled>Select tracking website</option>
                             <option value="false">My website</option>
                             <option value="true">Competitor's website</option>
                         </select>
@@ -260,7 +260,19 @@ export default class AddKeyword extends React.Component {
                         <input type="text" className="form-control" placeholder="your-company-domain.com" name="url" id="url" onChange={(e) => {this.setState({ url: e.target.value });}}/>
                         <i className="fa fa-link"></i>
                     </div>
+                    <div className="themeNewInputGroup">
+                        <LocationSelect className="gray_clr" name="country" id="country" selected={{label: '', value: ''}} onChangeCallback={this.changeLocationHandler} placeholder="Locations" multiple="true"/>
 
+                        {/* <select className='form-control' id="country" onChange={(e) => { this.setState({ country: e.target.options[e.target.selectedIndex].value }) }}>
+                            <option selected disabled>Select Country</option>
+                            <option value='2840'>USA</option>
+                        </select> */}
+                    </div>
+
+
+                    <div className="themeNewInputGroup themeNewselect">
+                        <SearchEngineSelect className="gray_clr" name="search_engine" id="search_engine" selected={{label: '', value: ''}} onChangeCallback={this.changeSearchEngineHandler} placeholder="Select search engines" multiple="true"/>
+                    </div>
                     <div className="themeNewInputGroup">
                         <input type="text" className="form-control" placeholder="Add keywords" name="keywords" id="tracking_keywords"/>
                         <div className="input-group-append"><a onClick={(e) => {this.addKeyword(e);}} href="#"><i className="ti-plus"></i></a></div>
@@ -277,32 +289,20 @@ export default class AddKeyword extends React.Component {
                         : null}
                     </div>
 
-                    <div className="themeNewInputGroup themeNewselect">
-                        <SearchEngineSelect className="gray_clr" name="search_engine" id="search_engine" selected={{label: '', value: ''}} onChangeCallback={this.changeSearchEngineHandler} placeholder="Select Search Engine" multiple="true"/>
-                    </div>
-
-                    <div className="themeNewInputGroup">
-                        <LocationSelect className="gray_clr" name="country" id="country" selected={{label: '', value: ''}} onChangeCallback={this.changeLocationHandler} placeholder="Select Location" multiple="true"/>
-
-                        {/* <select className='form-control' id="country" onChange={(e) => { this.setState({ country: e.target.options[e.target.selectedIndex].value }) }}>
-                            <option selected disabled>Select Country</option>
-                            <option value='2840'>USA</option>
-                        </select> */}
-                    </div>
                 </div>
                 <div className="d-flex flex-column">
                     <h4>Threashold to create annotation:</h4>
                     <div className="grid2layout">
                         <div className="themeNewInputGroup themeNewselect flex-column">
                             <select className="form-control" id="ranking_direction" onChange={(e) => {this.setState({ranking_direction:e.target.options[e.target.selectedIndex].value,});}}>
-                                <option value="" selected disabled>--Select--</option>
+                                <option value="" selected disabled>Ranking direction</option>
                                 <option value="up">Up</option>
                                 <option value="down">Down</option>
                             </select>
                         </div>
 
                         <div className="themeNewInputGroup">
-                            <input className="form-control" id="ranking_places" placeholder="Places" type="number" min="0" onChange={(e) => {this.setState({ranking_places: e.target.value,});}}/>
+                            <input className="form-control" id="ranking_places" placeholder="Places moved in search engine" type="number" min="0" onChange={(e) => {this.setState({ranking_places: e.target.value,});}}/>
                         </div>
                     </div>
                 </div>

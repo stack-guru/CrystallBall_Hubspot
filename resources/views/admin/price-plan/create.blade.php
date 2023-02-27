@@ -98,6 +98,10 @@
                             <label>Yearly discount percent? <sub>(minimum 0, maximum 100)</sub></label>
                             <input type="number" name="yearly_discount_percent" id="yearly_discount_percent" class="form-control" />
                         </div>
+                        <div class="form-group">
+                            <label>Reference Text</label>
+                            <textarea name="reference_text" id="reference_text" class="form-control" placeholder=""></textarea>
+                        </div>
 
 
                         <div class="form-group">

@@ -80,6 +80,7 @@ class AppsMarket extends React.Component {
 
         this.editKeywordToggler = this.editKeywordToggler.bind(this);
         this.addKeywordToggler = this.addKeywordToggler.bind(this);
+        this.upgradePopupForRankTracking = this.upgradePopupForRankTracking.bind(this);
         this.checkUserFacebookAccount =
             this.checkUserFacebookAccount.bind(this);
         this.checkUserBitbucketAccount =
@@ -375,7 +376,7 @@ class AppsMarket extends React.Component {
                 connected: this.state.userServices["is_ds_retail_marketing_enabled"],
                 premium: false,
                 brandName: "Retail Marketing Dates",
-                brandLogo: "/retailMarketingDates.svg",
+                brandLogo: "/retail_marketing_dates_full.svg",
                 width: 218,
                 height: 26,
             },
@@ -387,7 +388,7 @@ class AppsMarket extends React.Component {
                 connected: this.state.userServices["is_ds_holidays_enabled"],
                 premium: false,
                 brandName: "Holidays",
-                brandLogo: "/holidays.svg",
+                brandLogo: "/holidays_full.svg",
                 width: 106,
                 height: 26,
             },
@@ -1355,6 +1356,7 @@ class AppsMarket extends React.Component {
                                 loadKeywordTrackingKeywords={this.loadKeywordTrackingKeywords}
                                 keywordAddHandler={this.keywordAddHandler}
                                 updateUserService={this.updateUserService}
+                                upgradePopupForTracking={this.upgradePopupForRankTracking}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 editKeywordToggler={this.editKeywordToggler}
                                 addKeywordToggler={this.addKeywordToggler}
@@ -1778,7 +1780,9 @@ class AppsMarket extends React.Component {
                 this.setState({ isBusy: false, errors: err });
             });
     }
-
+    upgradePopupForRankTracking(){
+        this.props.upgradePopup('rank-tracking')
+    }
     serviceStatusHandler(e) {
         if (this.props.user.price_plan.has_data_sources) {
             if(e.persist) {

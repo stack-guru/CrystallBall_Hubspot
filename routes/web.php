@@ -189,6 +189,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
         Route::get('annotation/{annotation}', [App\Http\Controllers\AnnotationController::class, 'uiShow']);
         Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->only(['store', 'update', 'destroy']);
 
+        Route::post('annotations/delete_annotations', [App\Http\Controllers\AnnotationController::class, 'delete_annotations']);
         Route::post('annotations/bulk_delete', [App\Http\Controllers\AnnotationController::class, 'bulk_delete']);
 
         Route::get('team-name', [App\Http\Controllers\UserController::class, 'getTeamName']);

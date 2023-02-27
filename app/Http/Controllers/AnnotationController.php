@@ -6,6 +6,23 @@ use App\Events\NewCSVFileUploaded;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
+use App\Models\ApplePodcastAnnotation;
+use App\Models\GoogleAdsAnnotation;
+use App\Models\GithubCommitAnnotation;
+use App\Models\BitbucketCommitAnnotation;
+use App\Models\TwitterTrackingAnnotation;
+use App\Models\InstagramTrackingAnnotation;
+use App\Models\FacebookTrackingAnnotation;
+use App\Models\KeywordTrackingAnnotation;
+use App\Models\WordpressUpdate;
+use App\Models\GoogleAlert;
+use App\Models\OpenWeatherMapAlert;
+use App\Models\RetailMarketing;
+use App\Models\UserDataSource;
+use App\Models\Holiday;
+use App\Models\ShopifyAnnotation;
+use App\Models\GoogleAlgorithmUpdate;
+use App\Models\WebMonitorAnnotation;
 use App\Models\AnnotationGaProperty;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -483,6 +500,123 @@ class AnnotationController extends Controller
         return ['categories' => $categories];
     }
 
+    public function delete_annotations(Request $request)
+    {
+        $request->validate([
+            'annotation_id' => 'required',
+            'table_name' => 'required',
+        ]);
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+        if ($request->table_name == 'annotations') {
+            // working fine
+            $annotation = Annotation::find($request->annotation_id);
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $annotation->delete();
+        } else if ($request->table_name == 'google_algorithm_updates') {
+            // working fine
+            $annotation = GoogleAlgorithmUpdate::find($request->annotation_id);
+            $annotation->delete();
+        } else if ($request->table_name == 'web_monitor_annotations') {
+            $annotation = WebMonitorAnnotation::find($request->annotation_id);
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $annotation->delete();
+        } else if ($request->table_name == 'shopify_annotations') {
+            $annotation = ShopifyAnnotation::find($request->annotation_id);
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $annotation->delete();
+        } else if ($request->table_name == 'holidays') {
+            // working fine
+            $annotation = Holiday::find($request->annotation_id);
+            $annotation->delete();
+        } else if ($request->table_name == 'retail_marketings') {
+            // working fine
+            // Retrieve the RetailMarketing record
+            $retailMarketing = RetailMarketing::find($request->annotation_id);
+
+            // Check if the RetailMarketing record exists
+            if (!$retailMarketing) {
+                return response()->json(['message' => 'RetailMarketing record not found'], 404);
+            }
+
+            if ($retailMarketing) {
+                UserDataSource::where('retail_marketing_id', $retailMarketing->id)->delete();
+            }
+
+            // Delete the RetailMarketing record
+            $retailMarketing->delete();
+
+        } else if ($request->table_name == 'open_weather_map_alerts') {
+            // working fine
+            $annotation = OpenWeatherMapAlert::find($request->annotation_id);
+            $annotation->delete();
+        } else if ($request->table_name == 'google_alerts') {
+            $annotation = GoogleAlert::find($request->annotation_id);
+            $annotation->delete();
+        } else if ($request->table_name == 'wordpress_updates') {
+            $annotation = WordpressUpdate::find($request->annotation_id);
+
+            $annotation->delete();
+        } else if ($request->table_name == 'keyword_tracking_annotations') {
+            $annotation = KeywordTrackingAnnotation::find($request->annotation_id);
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $annotation->delete();
+        } else if ($request->table_name == 'facebook_tracking_annotations') {
+            $annotation = FacebookTrackingAnnotation::find($request->annotation_id);
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $annotation->delete();
+        } else if ($request->table_name == 'instagram_tracking_annotations') {
+            $annotation = InstagramTrackingAnnotation::find($request->annotation_id);
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $annotation->delete();
+        } else if ($request->table_name == 'twitter_tracking_annotations') {
+            $annotation = TwitterTrackingAnnotation::find($request->annotation_id);
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $annotation->delete();
+        } else if ($request->table_name == 'bitbucket_commit_annotations') {
+            $annotation = BitbucketCommitAnnotation::find($request->annotation_id);
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $annotation->delete();
+        } else if ($request->table_name == 'github_commit_annotations') {
+            $annotation = GithubCommitAnnotation::find($request->annotation_id);
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $annotation->delete();
+        } else if ($request->table_name == 'google_ads_annotations') {
+            $annotation = GoogleAdsAnnotation::find($request->annotation_id);
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $annotation->delete();
+        } else if ($request->table_name == 'apple_podcast_annotations') {
+            $annotation = ApplePodcastAnnotation::find($request->annotation_id);
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $annotation->delete();
+        }
+
+
+        return ["success" => true];
+    }
     public function bulk_delete(Request $request)
     {
         $request->validate([
