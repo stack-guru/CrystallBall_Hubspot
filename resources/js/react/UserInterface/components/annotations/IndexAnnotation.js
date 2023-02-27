@@ -194,7 +194,7 @@ class IndexAnnotations extends React.Component {
                             icon: 'success',
                             title
                         });
-                        
+
                         let annotations = this.state.annotations.map((an) => {
                             if (an.added_by == addedBy) {
                                 return {...an, is_enabled: newStatus};
@@ -343,7 +343,7 @@ class IndexAnnotations extends React.Component {
             const dataSource = added_by[3];
             this.deleteAnnotation(tableId, tableName);
         });
-       
+
 
 
         // HttpClient.post(`annotations/bulk_delete`, {
@@ -671,7 +671,7 @@ class IndexAnnotations extends React.Component {
                                                 <div className="flex-grow-1 d-flex justify-content-between align-items-center">
                                                     <ul className="d-flex list-unstyled">
                                                         <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
-                                                        <li><span>{capitalize(added_by[3])}</span></li>
+                                                        <li><span>{capitalize(added_by[2])}</span></li>
                                                         <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
                                                         {/* <li>
                                                     <a href="javascript:void(0);" className="cursor-pointer" onClick={() => this.setState({showChartAnnotationId :tableId})}>
