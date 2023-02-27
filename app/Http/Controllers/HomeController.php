@@ -106,163 +106,170 @@ class HomeController extends Controller
          * @var User
          */
         $user = Auth::user();
+        $this->enableDisableProperties($request);
 
-        $response = [];
-
-        if ($request->has('is_ds_holidays_enabled')) {
-            $user->is_ds_holidays_enabled = $request->is_ds_holidays_enabled;
-            if ($request->is_ds_holidays_enabled) {
-                $this->checkPricePlanLimit($user);
-                $user->last_activated_any_data_source_at = Carbon::now();
-                event(new HolidaysActivated($user));
-            } else {
-                event(new HolidaysDeactivatedManually($user));
-            }
-        }
-
-        if ($request->has('is_ds_google_algorithm_updates_enabled')) {
-            $user->is_ds_google_algorithm_updates_enabled = $request->is_ds_google_algorithm_updates_enabled;
-            if ($request->is_ds_google_algorithm_updates_enabled) {
-                $this->checkPricePlanLimit($user);
-                $user->last_activated_any_data_source_at = Carbon::now();
-                event(new GoogleUpdatesActivated($user));
-            } else {
-                event(new GoogleUpdatesDeactivatedManually($user));
-            }
-        }
-
-        if ($request->has('is_ds_retail_marketing_enabled')) {
-            $user->is_ds_retail_marketing_enabled = $request->is_ds_retail_marketing_enabled;
-            if ($request->is_ds_retail_marketing_enabled) {
-                $this->checkPricePlanLimit($user);
-                $user->last_activated_any_data_source_at = Carbon::now();
-                event(new RetailMarketingDatesActivated($user));
-            } else {
-                event(new RetailMarketingDatesDeactivated($user));
-            }
-        }
-
-        if ($request->has('is_ds_weather_alerts_enabled')) {
-            $user->is_ds_weather_alerts_enabled = $request->is_ds_weather_alerts_enabled;
-            if ($request->is_ds_weather_alerts_enabled) {
-                $this->checkPricePlanLimit($user);
-                $user->last_activated_any_data_source_at = Carbon::now();
-                event(new WeatherActivated($user));
-            } else {
-                event(new WeatherForCitiesDeactivatedManually($user));
-            }
-        }
-
-        if ($request->has('is_ds_google_alerts_enabled')) {
-            $user->is_ds_google_alerts_enabled = $request->is_ds_google_alerts_enabled;
-            if ($request->is_ds_google_alerts_enabled) {
-                $this->checkPricePlanLimit($user);
-                $user->last_activated_any_data_source_at = Carbon::now();
-                event(new GoogleAlertActivated($user));
-            } else {
-                event(new GoogleAlertDeactivatedManually($user));
-            }
-        }
-
-        if ($request->has('is_ds_wordpress_updates_enabled')) {
-            $user->is_ds_wordpress_updates_enabled = $request->is_ds_wordpress_updates_enabled;
-            if ($request->is_ds_wordpress_updates_enabled) {
-                $this->checkPricePlanLimit($user);
-                $user->last_activated_any_data_source_at = Carbon::now();
-                event(new WordPressActivated($user));
-            } else {
-                event(new WordPressDeactivatedManually($user));
-            }
-        }
-
-        if ($request->has('is_ds_web_monitors_enabled')) {
-            $user->is_ds_web_monitors_enabled = $request->is_ds_web_monitors_enabled;
-            if ($request->is_ds_web_monitors_enabled) {
-                $this->checkPricePlanLimit($user);
-                $user->last_activated_any_data_source_at = Carbon::now();
-                event(new WebsiteMonitoringActivated($user));
-            } else {
-                event(new WebsiteMonitoringDeactivated($user));
-            }
-        }
-
-        if ($request->has('is_ds_apple_podcast_annotation_enabled')) {
-            $user->is_ds_apple_podcast_annotation_enabled = $request->is_ds_apple_podcast_annotation_enabled;
-            if ($request->is_ds_apple_podcast_annotation_enabled) {
-                $this->checkPricePlanLimit($user);
-                $user->last_activated_any_data_source_at = Carbon::now();
-            }
-            $user->save();
-        }
-
-        if ($request->has('is_ds_shopify_annotation_enabled')) {
-            $user->is_ds_shopify_annotation_enabled = $request->is_ds_shopify_annotation_enabled;
-            if ($request->is_ds_shopify_annotation_enabled) {
-                $this->checkPricePlanLimit($user);
-                $user->last_activated_any_data_source_at = Carbon::now();
-                event(new WebsiteMonitoringActivated($user));
-            } else {
-                event(new WebsiteMonitoringDeactivated($user));
-            }
-            $user->save();
-        }
-
-        if ($request->has('is_ds_g_ads_history_change_enabled')) {
-            $user->is_ds_g_ads_history_change_enabled = $request->is_ds_g_ads_history_change_enabled;
-        }
-
-        if ($request->has('is_ds_anomolies_detection_enabled')) {
-            $user->is_ds_anomolies_detection_enabled = $request->is_ds_anomolies_detection_enabled;
-        }
-
-        if ($request->has('is_ds_budget_tracking_enabled')) {
-            $user->is_ds_budget_tracking_enabled = $request->is_ds_budget_tracking_enabled;
-        }
-
-        if ($request->has('is_ds_keyword_tracking_enabled')) {
-            $user->is_ds_keyword_tracking_enabled = $request->is_ds_keyword_tracking_enabled;
-        }
-
-        if ($request->has('is_ds_bitbucket_tracking_enabled')) {
-            $user->is_ds_bitbucket_tracking_enabled = $request->is_ds_bitbucket_tracking_enabled;
-            $user->save();
-        }
-
-        if ($request->has('is_ds_github_tracking_enabled')) {
-            $user->is_ds_github_tracking_enabled = $request->is_ds_github_tracking_enabled;
-            $user->save();
-        }
-
-        if ($request->has('is_ds_facebook_tracking_enabled')) {
-            $user->is_ds_facebook_tracking_enabled = $request->is_ds_facebook_tracking_enabled;
-        }
-
-        if ($request->has('is_ds_instagram_tracking_enabled')) {
-            $user->is_ds_instagram_tracking_enabled = $request->is_ds_instagram_tracking_enabled;
-        }
-
-        if ($request->has('is_ds_instagram_tracking_enabled')) {
-            $user->is_ds_instagram_tracking_enabled = $request->is_ds_instagram_tracking_enabled;
-        }
-
-        if ($request->has('is_ds_twitter_tracking_enabled')) {
-
-            $response['twitter_accounts'] = $user->twitterAccounts()->count();
-
-            if ($response['twitter_accounts'] > 0) {
-                $user->is_ds_twitter_tracking_enabled = $request->is_ds_twitter_tracking_enabled;
-            }
-
-        }
-
-        if ($request->has('is_ds_wordpress_enabled')) {
-            $user->is_ds_wordpress_enabled = $request->is_ds_wordpress_enabled;
-        }
-
-        $user->save();
-
-        $response['user_services'] = $user;
+        $response['twitter_accounts'] = $user->twitterAccounts()->count();
+        $response['user_services'] = User::find($user->id);
         return $response;
+    }
+
+    public function enableDisableProperties ($request) {
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+        foreach($userIdsArray as $userId) {
+            $user = User::find($userId);
+
+            $response = [];
+            if ($request->has('is_ds_holidays_enabled')) {
+                $user->is_ds_holidays_enabled = $request->is_ds_holidays_enabled;
+                if ($request->is_ds_holidays_enabled) {
+                    $this->checkPricePlanLimit($user);
+                    $user->last_activated_any_data_source_at = Carbon::now();
+                    event(new HolidaysActivated($user));
+                } else {
+                    event(new HolidaysDeactivatedManually($user));
+                }
+            }
+
+            if ($request->has('is_ds_google_algorithm_updates_enabled')) {
+                $user->is_ds_google_algorithm_updates_enabled = $request->is_ds_google_algorithm_updates_enabled;
+                if ($request->is_ds_google_algorithm_updates_enabled) {
+                    $this->checkPricePlanLimit($user);
+                    $user->last_activated_any_data_source_at = Carbon::now();
+                    event(new GoogleUpdatesActivated($user));
+                } else {
+                    event(new GoogleUpdatesDeactivatedManually($user));
+                }
+            }
+
+            if ($request->has('is_ds_retail_marketing_enabled')) {
+                $user->is_ds_retail_marketing_enabled = $request->is_ds_retail_marketing_enabled;
+                if ($request->is_ds_retail_marketing_enabled) {
+                    $this->checkPricePlanLimit($user);
+                    $user->last_activated_any_data_source_at = Carbon::now();
+                    event(new RetailMarketingDatesActivated($user));
+                } else {
+                    event(new RetailMarketingDatesDeactivated($user));
+                }
+            }
+
+            if ($request->has('is_ds_weather_alerts_enabled')) {
+                $user->is_ds_weather_alerts_enabled = $request->is_ds_weather_alerts_enabled;
+                if ($request->is_ds_weather_alerts_enabled) {
+                    $this->checkPricePlanLimit($user);
+                    $user->last_activated_any_data_source_at = Carbon::now();
+                    event(new WeatherActivated($user));
+                } else {
+                    event(new WeatherForCitiesDeactivatedManually($user));
+                }
+            }
+
+            if ($request->has('is_ds_google_alerts_enabled')) {
+                $user->is_ds_google_alerts_enabled = $request->is_ds_google_alerts_enabled;
+                if ($request->is_ds_google_alerts_enabled) {
+                    $this->checkPricePlanLimit($user);
+                    $user->last_activated_any_data_source_at = Carbon::now();
+                    event(new GoogleAlertActivated($user));
+                } else {
+                    event(new GoogleAlertDeactivatedManually($user));
+                }
+            }
+
+            if ($request->has('is_ds_wordpress_updates_enabled')) {
+                $user->is_ds_wordpress_updates_enabled = $request->is_ds_wordpress_updates_enabled;
+                if ($request->is_ds_wordpress_updates_enabled) {
+                    $this->checkPricePlanLimit($user);
+                    $user->last_activated_any_data_source_at = Carbon::now();
+                    event(new WordPressActivated($user));
+                } else {
+                    event(new WordPressDeactivatedManually($user));
+                }
+            }
+
+            if ($request->has('is_ds_web_monitors_enabled')) {
+                $user->is_ds_web_monitors_enabled = $request->is_ds_web_monitors_enabled;
+                if ($request->is_ds_web_monitors_enabled) {
+                    $this->checkPricePlanLimit($user);
+                    $user->last_activated_any_data_source_at = Carbon::now();
+                    event(new WebsiteMonitoringActivated($user));
+                } else {
+                    event(new WebsiteMonitoringDeactivated($user));
+                }
+            }
+
+            if ($request->has('is_ds_apple_podcast_annotation_enabled')) {
+                $user->is_ds_apple_podcast_annotation_enabled = $request->is_ds_apple_podcast_annotation_enabled;
+                if ($request->is_ds_apple_podcast_annotation_enabled) {
+                    $this->checkPricePlanLimit($user);
+                    $user->last_activated_any_data_source_at = Carbon::now();
+                }
+            }
+
+            if ($request->has('is_ds_shopify_annotation_enabled')) {
+                $user->is_ds_shopify_annotation_enabled = $request->is_ds_shopify_annotation_enabled;
+                if ($request->is_ds_shopify_annotation_enabled) {
+                    $this->checkPricePlanLimit($user);
+                    $user->last_activated_any_data_source_at = Carbon::now();
+                    event(new WebsiteMonitoringActivated($user));
+                } else {
+                    event(new WebsiteMonitoringDeactivated($user));
+                }
+            }
+
+            if ($request->has('is_ds_g_ads_history_change_enabled')) {
+                $user->is_ds_g_ads_history_change_enabled = $request->is_ds_g_ads_history_change_enabled;
+            }
+
+            if ($request->has('is_ds_anomolies_detection_enabled')) {
+                $user->is_ds_anomolies_detection_enabled = $request->is_ds_anomolies_detection_enabled;
+            }
+
+            if ($request->has('is_ds_budget_tracking_enabled')) {
+                $user->is_ds_budget_tracking_enabled = $request->is_ds_budget_tracking_enabled;
+            }
+
+            if ($request->has('is_ds_keyword_tracking_enabled')) {
+                $user->is_ds_keyword_tracking_enabled = $request->is_ds_keyword_tracking_enabled;
+            }
+
+            if ($request->has('is_ds_bitbucket_tracking_enabled')) {
+                $user->is_ds_bitbucket_tracking_enabled = $request->is_ds_bitbucket_tracking_enabled;
+            }
+
+            if ($request->has('is_ds_github_tracking_enabled')) {
+                $user->is_ds_github_tracking_enabled = $request->is_ds_github_tracking_enabled;
+            }
+
+            if ($request->has('is_ds_facebook_tracking_enabled')) {
+                $user->is_ds_facebook_tracking_enabled = $request->is_ds_facebook_tracking_enabled;
+            }
+
+            if ($request->has('is_ds_instagram_tracking_enabled')) {
+                $user->is_ds_instagram_tracking_enabled = $request->is_ds_instagram_tracking_enabled;
+            }
+
+            if ($request->has('is_ds_instagram_tracking_enabled')) {
+                $user->is_ds_instagram_tracking_enabled = $request->is_ds_instagram_tracking_enabled;
+            }
+
+            if ($request->has('is_ds_twitter_tracking_enabled')) {
+
+                $twitterAccounts = $user->twitterAccounts()->count();
+
+                if ($twitterAccounts > 0) {
+                    $user->is_ds_twitter_tracking_enabled = $request->is_ds_twitter_tracking_enabled;
+                }
+
+            }
+
+            if ($request->has('is_ds_wordpress_enabled')) {
+                $user->is_ds_wordpress_enabled = $request->is_ds_wordpress_enabled;
+            }
+
+            $user->save();
+
+        }
+
     }
 
     public function storeSupport(Request $request)
