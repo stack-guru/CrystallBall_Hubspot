@@ -2772,6 +2772,8 @@ body {
 
 .modal-csvUpload table th {
     padding: 8px;
+    text-align: left;
+    color: #096DB7;
 }
 .modal-csvUpload table td div {
     padding: 4px;
@@ -4799,6 +4801,10 @@ body {
 
 .color-blue {
     color: #096DB7 !important;
+}
+
+.text-gray {
+color: #E0E0E0;
 }
 
 

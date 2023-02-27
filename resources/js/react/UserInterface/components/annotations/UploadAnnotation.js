@@ -34,7 +34,8 @@ export default class UploadAnnotation extends React.Component {
                 'Description': 'description',
                 'Show At': 'show_at',
 
-            }
+            },
+            isBusy: false,
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.saveCsv = this.saveCsv.bind(this)
@@ -95,12 +96,17 @@ export default class UploadAnnotation extends React.Component {
                 return obj;
             })
 
-            this.setState({ fieldErrors: result, fieldErrorsCheck: true, fieldErrorsCount })
+            this.setState({ fieldErrors: result, fieldErrorsCheck: true, fieldErrorsCount }, () => {
+                const target = document.querySelector('.is-invalid');
+                target?.parentElement.scrollIntoView()
+                target?.focus()
+            })
         }
     }
 
     saveCsv () {
 
+        this.setState({ isBusy: true })
         const formData = new FormData();
         formData.append('date_format', this.state.date_format);
         formData.append('fileName', this.state.fileName);
@@ -149,7 +155,13 @@ export default class UploadAnnotation extends React.Component {
                 });
 
                 const { fieldErrors, fieldErrorsCount } = response.data;
-                this.setState({ fieldErrors, fieldErrorsCount })
+                this.setState({ fieldErrors, fieldErrorsCount }, () => {
+                    const target = document.querySelector('.is-invalid');
+                    target?.parentElement.scrollIntoView()
+                    target?.focus()
+                })
+
+                this.setState({ isBusy: false })
                 
             }
             
@@ -235,6 +247,7 @@ export default class UploadAnnotation extends React.Component {
                 const { fieldErrors, importReview, importReviewErrorCount, fileHeaders, fileName, sampleDate } = response.data;
                 this.setState(
                     { 
+                        isBusy: false, 
                         review: true, 
                         fieldErrors, 
                         importReview,
@@ -298,7 +311,11 @@ export default class UploadAnnotation extends React.Component {
             return (index === id ? { ...list, [name]: value} : list)
         })
 
-        this.setState({ fieldErrors: data, fieldErrorsCount })
+        this.setState({ fieldErrors: data, fieldErrorsCount }, () => {
+            const target = document.querySelector('.is-invalid');
+            target?.parentElement.scrollIntoView()
+            target?.focus()
+        })
     }
 
     loadUserAnnotationColors() {
@@ -329,7 +346,7 @@ export default class UploadAnnotation extends React.Component {
                         <>
                         <div className="apps-modalHead">
                             <div className="d-flex justify-content-between align-items-center">
-                                <h2>Import review | <span className='text-danger'>{this.state.importReviewErrorCount} errors</span></h2>
+                                <h2>Import review &nbsp; <span class="text-gray">|</span> &nbsp; <span className='text-danger'>{this.state.importReviewErrorCount} {this.state.importReviewErrorCount > 1 ? "errors" : "error"}</span></h2>
                                 <span onClick={() => this.props.togglePopup('')} className="btn-close">
                                     <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" />
                                 </span>
@@ -487,7 +504,7 @@ export default class UploadAnnotation extends React.Component {
                         <>
                         <div className="apps-modalHead">
                             <div className="d-flex justify-content-between align-items-center">
-                                <h2>Field errors | <span className='text-danger'>{this.state.fieldErrorsCount} errors</span></h2>
+                                <h2>Field errors &nbsp; <span class="text-gray">|</span> &nbsp; <span className='text-danger'>{this.state.fieldErrorsCount}  {this.state.fieldErrorsCount > 1 ? "errors" : "error"}</span></h2>
                                 <span onClick={() => this.props.togglePopup('')} className="btn-close">
                                     <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" />
                                 </span>
@@ -555,7 +572,7 @@ export default class UploadAnnotation extends React.Component {
                         </table>
 
                         <div className="text-right mt-3">
-                            <Button className='btn-submit btn-theme' onClick={this.saveCsv}>Submit</Button>
+                            <Button className='btn-submit btn-theme' disabled={this.state.isBusy} onClick={this.saveCsv}>Submit</Button>
                         </div>
                         </>
 
@@ -612,7 +629,7 @@ export default class UploadAnnotation extends React.Component {
 
                                 <div className="btns-csvUpload d-flex justify-content-center">
                                     <Button className='btn-cancel' onClick={() => this.props.togglePopup('')}>Cancel</Button>
-                                    <Button type='submit' className='btn-theme'>Upload and review</Button>
+                                    <Button type='submit' disabled={this.state.isBusy} className='btn-theme'>Upload and review</Button>
                                     {/* <a href="/csv/upload_sample.csv" target="_blank" download>Download sample CSV file</a>
                                     <button type="submit" className="btn gaa-btn-primary btn-fab btn-round"><i className="fa fa-upload mr-3"></i>Upload</button> */}
                                 </div>

@@ -396,7 +396,7 @@ class AnnotationController extends Controller
                 if($fe['show_at']) {
                     $error = true;
                     $fieldErrorsCount++;
-                    $fe['show_at_error'] = "Please provide a valid date format";
+                    $fe['show_at_error'] = "Date format is incorrect, use format [$dateF]";
                 } else {
                     unset($fe['show_at_error']);
                 }
