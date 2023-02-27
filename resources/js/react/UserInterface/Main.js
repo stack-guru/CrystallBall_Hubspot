@@ -369,9 +369,15 @@ class Main extends React.Component {
                         bannerImg="/images/trackers-ads.svg"
                     >
                     </ga-upgrade-popup> : null}
+                </Modal>
+                <Modal isOpen={true} centered className="gaUpgradePopup" toggle={() => {}}>
+                    <button onClick={() => {}} class="btn-closeUpgradePopup"></button>
 
-
-
+                    <ga-extend-trail-popup
+                        heading={`<h1>Trial Ended > <span>Upgrade Today</span></h1>`}
+                        subHeading={`<p>and get access to all amazing features</p>`}
+                        bannerImg="/images/more-property-upgrade.svg"
+                    ></ga-extend-trail-popup>
                 </Modal>
             </React.Fragment>
         )
