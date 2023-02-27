@@ -366,4 +366,21 @@ class AnnotationController extends Controller
             ];
         }
     }
+
+    public function getCategories()
+    {
+
+        $this->authorize('viewAny', Annotation::class);
+
+        $user = Auth::user();
+        $userIdsArray = $user->getAllGroupUserIdsArray();
+
+        $annotationsQuery = "SELECT DISTINCT `TempTable`.`category` FROM (";
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, '*', $userIdsArray, '*', true);
+        $annotationsQuery .= ") AS TempTable";
+        $annotationsQuery .= " ORDER BY category";
+
+        $categories = DB::select($annotationsQuery);
+        return ['categories' => collect($categories)->pluck('category')];
+    }
 }

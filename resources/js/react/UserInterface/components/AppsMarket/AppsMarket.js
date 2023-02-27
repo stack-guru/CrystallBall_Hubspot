@@ -79,6 +79,8 @@ class AppsMarket extends React.Component {
             this.loadKeywordTrackingKeywords.bind(this);
 
         this.editKeywordToggler = this.editKeywordToggler.bind(this);
+        this.addKeywordToggler = this.addKeywordToggler.bind(this);
+        this.upgradePopupForRankTracking = this.upgradePopupForRankTracking.bind(this);
         this.checkUserFacebookAccount =
             this.checkUserFacebookAccount.bind(this);
         this.checkUserBitbucketAccount =
@@ -294,6 +296,17 @@ class AppsMarket extends React.Component {
         this.sectionToggler("edit_keyword");
     }
 
+    addKeywordToggler() {
+        // close popup
+        this.manage_keyword_popup_handler();
+
+        this.setState({
+            editKeyword: false,
+        });
+
+        this.sectionToggler("keyword_tracking");
+    }
+
     getRecommendedAppsData() {
         return [
             {
@@ -391,17 +404,6 @@ class AppsMarket extends React.Component {
                 height: 26,
             },
             {
-                id: "20",
-                background: null,
-                dsKey: "is_ds_shopify_annotation_enabled",
-                connected: this.state.userServices["is_ds_shopify_annotation_enabled"],
-                premium: false,
-                brandName: "Shopify",
-                brandLogo: "/shopify.svg",
-                width: 114,
-                height: 32,
-            },
-            {
                 id: "19",
                 background: "#24292F",
                 dsKey: "is_ds_github_tracking_enabled",
@@ -433,6 +435,17 @@ class AppsMarket extends React.Component {
                 brandLogo: "/bitbucket.svg",
                 width: 142,
                 height: 40,
+            },
+            {
+                id: "04",
+                background: null,
+                dsKey: "is_ds_weather_alerts_enabled",
+                connected: this.state.userServices["is_ds_weather_alerts_enabled"],
+                premium: false,
+                brandName: "Weather Alerts",
+                brandLogo: "/weatherAlerts.svg",
+                width: 160,
+                height: 56,
             },
         ];
     }
@@ -799,7 +812,7 @@ class AppsMarket extends React.Component {
                                         item.background || "#e0e0e0",
                                 }}
                             >
-                                {this.state.userServices[item.dsKey] ? (
+                                {this.state.userServices[item.dsKey] || this.state.userServices?.user?.[item.dsKey] ? (
                                     <i className="active fa fa-check-circle"></i>
                                 ) : null}
                                 <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width} height={item.height} />
@@ -973,17 +986,6 @@ class AppsMarket extends React.Component {
                                     height: 28,
                                 },
                                 {
-                                    id: "04",
-                                    background: null,
-                                    dsKey: "is_ds_weather_alerts_enabled",
-                                    connected: this.state.userServices["is_ds_weather_alerts_enabled"],
-                                    premium: false,
-                                    brandName: "Weather Alerts",
-                                    brandLogo: "/weatherAlerts.svg",
-                                    width: 160,
-                                    height: 56,
-                                },
-                                {
                                     id: "16",
                                     background: "#2EBD59",
                                     dsKey: "",
@@ -1018,6 +1020,18 @@ class AppsMarket extends React.Component {
                                     brandLogo: "/twitter.svg",
                                     width: 100,
                                     height: 26,
+                                },
+                                {
+                                    id: "20",
+                                    background: null,
+                                    dsKey: "is_ds_shopify_annotation_enabled",
+                                    connected: this.state.userServices["is_ds_shopify_annotation_enabled"],
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Shopify",
+                                    brandLogo: "/shopify.svg",
+                                    width: 114,
+                                    height: 32,
                                 },
                             ].map((item, itemKey) => (
                                 <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color": item.background || "#e0e0e0", }}>
@@ -1239,6 +1253,7 @@ class AppsMarket extends React.Component {
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
+                                updateUserService={this.updateUserService}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}
@@ -1338,8 +1353,13 @@ class AppsMarket extends React.Component {
                                         manage_keyword_show: flag,
                                     });
                                 }}
+                                loadKeywordTrackingKeywords={this.loadKeywordTrackingKeywords}
+                                keywordAddHandler={this.keywordAddHandler}
+                                updateUserService={this.updateUserService}
+                                upgradePopupForTracking={this.upgradePopupForRankTracking}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 editKeywordToggler={this.editKeywordToggler}
+                                addKeywordToggler={this.addKeywordToggler}
                                 changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}
                                 userDataSourceAddHandler={
@@ -1436,6 +1456,7 @@ class AppsMarket extends React.Component {
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
+                                updateUserService={this.updateUserService}
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}
@@ -1759,7 +1780,9 @@ class AppsMarket extends React.Component {
                 this.setState({ isBusy: false, errors: err });
             });
     }
-
+    upgradePopupForRankTracking(){
+        this.props.upgradePopup('rank-tracking')
+    }
     serviceStatusHandler(e) {
         if (this.props.user.price_plan.has_data_sources) {
             if(e.persist) {

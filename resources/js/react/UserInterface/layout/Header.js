@@ -58,7 +58,7 @@ class header extends React.Component {
                             null
                     }
 
-                    {this.props.user.price_plan.code == "free new" ? <p className="trial-countdown m-0">You are on the Fee Plan</p> : null}
+                    {this.props.user.price_plan.code == "free new" ? <p className="trial-countdown m-0">You are on the Free Plan</p> : null}
 
                     {
                         this.props.user.price_plan.price == 0 ?

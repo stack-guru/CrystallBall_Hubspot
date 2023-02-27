@@ -11,7 +11,8 @@ class RankTracking extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isRead: false
+            isRead: false,
+            isActiveTracking: false,
         }
     }
 
@@ -19,6 +20,12 @@ class RankTracking extends React.Component {
         this.setState({isRead: true})
     }
 
+    updateTrackingStatus = status => {
+        this.setState({ isActiveTracking: status })
+    }
+    componentDidMount() {
+        this.props.addKeywordToggler();
+    }
     render() {
         return (
             <div className="popupContent modal-rankTracking">
@@ -37,6 +44,7 @@ class RankTracking extends React.Component {
                     updateUserAnnotationColors={
                         this.props.updateUserAnnotationColors
                     }
+                    isActiveTracking={this.state.isActiveTracking}
                     userServices={this.props.userServices}
                     serviceStatusHandler={this.props.serviceStatusHandler}
                     closeModal={this.props.closeModal}
@@ -72,6 +80,9 @@ class RankTracking extends React.Component {
                                     this.props
                                         .editKeyword_keyword_configuration_id
                                 }
+                                addKeywordCallback={
+                                    this.props.addKeywordToggler
+                                }
                             />
                         ) : (
                             <AddKeyword
@@ -82,10 +93,16 @@ class RankTracking extends React.Component {
                                     this.props.user.price_plan
                                         .keyword_tracking_count
                                 }
+                                updateTrackingStatus={this.updateTrackingStatus.bind(this)}
+                                updateUserService={this.props.updateUserService}
                                 onAddCallback={this.props.keywordAddHandler}
+                                upgradePopupForRankingTracking={this.props.upgradePopupForTracking}
                                 ga_property_id={this.props.ga_property_id}
                                 reloadWebMonitors={this.props.reloadWebMonitors}
                                 user={this.props.user}
+                                loadKeywordsCallback={
+                                    this.props.loadKeywordTrackingKeywords
+                                }
                                 loadUserDataSources={
                                     this.props.loadUserDataSources
                                 }

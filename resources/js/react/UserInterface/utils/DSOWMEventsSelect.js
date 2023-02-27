@@ -54,10 +54,17 @@ export default class DSOWMEventsSelect extends React.Component {
                 ),
             });
         } else {
-            this.props.onUncheckCallback(
-                e.target.id,
-                "open_weather_map_events"
-            );
+            let userDSEvents = this.props.ds_data.map((ds) => ds);
+            userDSEvents.forEach((owmEvent, index) => {
+                if(owmEvent.open_weather_map_event == e.target.getAttribute("open_weather_map_event"))
+                {
+                    this.props.onUncheckCallback(
+                        owmEvent.id,
+                        "open_weather_map_events"
+                    );
+                }
+            });
+
         }
     }
 
