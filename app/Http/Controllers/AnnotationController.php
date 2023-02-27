@@ -370,28 +370,40 @@ class AnnotationController extends Controller
             $dateFormat = '';
         }
 
+        $fieldErrorsCount = 0;
         foreach ($fieldErrors as &$fe) {
             try {
                 $showAt = Carbon::createFromFormat($dateFormat, $fe['show_at']);
                 unset($fe['show_at_error']);
             } catch(\Exception $e) {
-                $error = true;
-                $fe['show_at_error'] = "Please provide a valid date format";
+                if($fe['show_at']) {
+                    $error = true;
+                    $fieldErrorsCount++;
+                    $fe['show_at_error'] = "Please provide a valid date format";
+                } else {
+                    unset($fe['show_at_error']);
+                }
             }
 
             if(!$fe['category']) {
+                $error = true;
+                $fieldErrorsCount++;
                 $fe['category_error'] = "Category Can't be empty";
             } else {
                 unset($fe['category_error']);
             }
 
             if($fe['url'] && !filter_var($fe['url'], FILTER_VALIDATE_URL)) {
-                $fe['url_error'] = "Please provide a valid url";
+                $error = true;
+                $fieldErrorsCount++;
+                $fe['url_error'] = "Enter a valid URL";
             } else {
                 unset($fe['url_error']);
             }
             
             if(!$fe['event_name']) {
+                $error = true;
+                $fieldErrorsCount++;
                 $fe['event_name_error'] = "Event Name Can't be empty";
             } else {
                 unset($fe['event_name_error']);
@@ -400,7 +412,7 @@ class AnnotationController extends Controller
         }
 
         if ($error) {
-            return ['success' => false, 'error' => $e, 'fieldErrors' => $fieldErrors, 'message' => "The date is not properly formatted"];
+            return ['success' => false, 'error' => $e, 'fieldErrors' => $fieldErrors, 'fieldErrorsCount' => $fieldErrorsCount, 'message' => "The date is not properly formatted"];
         }
 
         foreach ($fieldErrors as &$fe) {

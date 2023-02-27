@@ -63,7 +63,7 @@ export default class UploadAnnotation extends React.Component {
         if(!Object.values(this.state.importReview).find(x => x)) {
             const { fieldErrors, csvFields, date_format } = this.state;
 
-            let importReviewErrorCount = 0;
+            let fieldErrorsCount = 0;
             const result = fieldErrors.map((itm) => {
                 const obj = {
                     'category': itm[csvFields['Category']],
@@ -74,28 +74,28 @@ export default class UploadAnnotation extends React.Component {
                 }
 
                 if (obj.url && !this.isValidURL(obj.url)) {
-                    importReviewErrorCount++;
-                    obj.url_error = 'Please provide a valid url';
+                    fieldErrorsCount++;
+                    obj.url_error = 'Enter a valid URL';
                 }
 
-                if (!(moment(obj.show_at || "", this.state.date_format, true).isValid())) {
-                    importReviewErrorCount++;
-                    obj.show_at_error = 'Please provide a valid date format';
+                if (obj.show_at && !(moment(obj.show_at || "", this.state.date_format, true).isValid())) {
+                    fieldErrorsCount++;
+                    obj.show_at_error = `Date format is incorrect, use format [${this.state.date_format}]`;
                 }
                 if (!obj.category) {
-                    importReviewErrorCount++;
+                    fieldErrorsCount++;
                     obj.category_error = `Category Can't be empty`;
                 }
 
                 if (!obj.event_name) {
-                    importReviewErrorCount++;
+                    fieldErrorsCount++;
                     obj.event_name_error = `Event Name Can't be empty`;
                 }
 
                 return obj;
             })
 
-            this.setState({ fieldErrors: result, fieldErrorsCheck: true })
+            this.setState({ fieldErrors: result, fieldErrorsCheck: true, fieldErrorsCount })
         }
     }
 
@@ -148,7 +148,8 @@ export default class UploadAnnotation extends React.Component {
                     title: "CSV data is not valid."
                 });
 
-                this.setState({ fieldErrors: response.data.fieldErrors })
+                const { fieldErrors, fieldErrorsCount } = response.data;
+                this.setState({ fieldErrors, fieldErrorsCount })
                 
             }
             
@@ -273,25 +274,31 @@ export default class UploadAnnotation extends React.Component {
 
     changeMapHandler (e, id) {
         const { name, value } = e.target;
+        let fieldErrorsCount = parseInt(this.state.fieldErrorsCount);
+
         const data = this.state.fieldErrors.map((list, index) => {
-            if (e.key === 'Enter' && value) {
-                if (name === 'url' && this.isValidURL(value)) {
+            if (e.key === 'Enter') {
+                if (name === 'url' && list.url_error && (!value || this.isValidURL(value))) {
+                    fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.url_error
                 }
-                if (name === 'category') {
+                if (name === 'category' && list.category_error && value) {
+                    fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.category_error
                 }
-                if (name === 'event_name') {
+                if (name === 'event_name' && list.event_name_error && value) {
+                    fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.event_name_error
                 }
-                if (name === 'description') {
-                    delete list.description_error
+                if (name === 'show_at' && list.show_at_error && (!value || (moment(value || "", this.state.date_format, true).isValid()))) {
+                    fieldErrorsCount = fieldErrorsCount - 1;
+                    delete list.show_at_error
                 }
             }
             return (index === id ? { ...list, [name]: value} : list)
         })
 
-        this.setState({ fieldErrors: data })
+        this.setState({ fieldErrors: data, fieldErrorsCount })
     }
 
     loadUserAnnotationColors() {
