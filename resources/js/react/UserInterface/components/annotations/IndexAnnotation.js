@@ -335,38 +335,49 @@ class IndexAnnotations extends React.Component {
 
     handleDeleteSelected() {
         this.setState({ isBusy: true });
-        HttpClient.post(`annotations/bulk_delete`, {
-            annotation_ids: this.state.selectedRows,
-        })
-            .then(
-                (resp) => {
-                    Toast.fire({
-                        icon: 'success',
-                        title: "Annotation(s) deleted."
-                    });
-                    let selected_annotations = this.state.selectedRows;
-                    let annotations = this.state.annotations;
+        this.state.selectedRows.forEach((anno) => {
+            const added_by = (anno || "").split('~~~~');
+            const tableName = added_by[0];
+            const tableId = added_by[1];
+            const tableType = added_by[2];
+            const dataSource = added_by[3];
+            this.deleteAnnotation(tableId, tableName);
+        });
+       
 
-                    for (let selected_annotation of selected_annotations) {
-                        annotations = annotations.filter(
-                            (a) => a.id != selected_annotation
-                        );
-                        this.setState({ annotations: annotations });
-                    }
 
-                    this.setState({ isBusy: false, selectedRows: [] });
+        // HttpClient.post(`annotations/bulk_delete`, {
+        //     annotation_ids: this.state.selectedRows,
+        // })
+        //     .then(
+        //         (resp) => {
+        //             Toast.fire({
+        //                 icon: 'success',
+        //                 title: "Annotation(s) deleted."
+        //             });
+        //             let selected_annotations = this.state.selectedRows;
+        //             let annotations = this.state.annotations;
 
-                    this.setState({
-                        allAnnotationsSelected: false,
-                    });
-                },
-                (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
-                }
-            )
-            .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
-            });
+        //             for (let selected_annotation of selected_annotations) {
+        //                 annotations = annotations.filter(
+        //                     (a) => a.id != selected_annotation
+        //                 );
+        //                 this.setState({ annotations: annotations });
+        //             }
+
+        //             this.setState({ isBusy: false, selectedRows: [] });
+
+        //             this.setState({
+        //                 allAnnotationsSelected: false,
+        //             });
+        //         },
+        //         (err) => {
+        //             this.setState({ isBusy: false, errors: err.response.data });
+        //         }
+        //     )
+        //     .catch((err) => {
+        //         this.setState({ isBusy: false, errors: err });
+        //     });
     }
 
     render() {
@@ -588,7 +599,7 @@ class IndexAnnotations extends React.Component {
                                             selectedIcon = '/apple_podcast_annotations.svg';
                                         }
 
-                                        
+
                                         const currentDateTime =
                                             new Date();
                                         const annotationDateTime =
@@ -611,17 +622,17 @@ class IndexAnnotations extends React.Component {
                                         }
 
                                         return (
-                                            <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(tableId) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId}
-                                                key={idx + anno.toString()}
+                                            <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.added_by) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId}
+                                                key={idx + (anno.added_by || "").toString()}
                                                 onClick={
                                                     () => {
-                                                        if (tableId && this.state.enableSelect) {
-                                                            this.handleOneSelection(tableId)
+                                                        if (anno.added_by && this.state.enableSelect) {
+                                                            this.handleOneSelection(anno.added_by)
                                                         } else {
                                                             // toast.error("This annotation can't be selected.");
                                                         }
                                                     }
-                                                } data-anno_id={tableId}>
+                                                } data-anno_id={anno.added_by}>
 
                                                 <span className="checkedIcon"><img src={`/icon-checked.svg`} /></span>
 
@@ -672,16 +683,26 @@ class IndexAnnotations extends React.Component {
 
                                                     <ul className="d-flex list-unstyled">
                                                         {/* {added_by[3] == "manual" ? <> */}
-                                                        <li>
-                                                            <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.toggleStatus(tableId) }}>
-                                                                {anno.is_enabled ? <img src={`/icon-eye-open.svg`} /> : <img src={`/icon-eye-close.svg`} />}
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className="cursor-pointer" onClick={(e) => { e.stopPropagation(); this.setState({ editAnnotationId: tableId }) }}>
-                                                                <img src={`icon-edit.svg`} />
-                                                            </span>
-                                                        </li>
+                                                        {tableName === 'annotations' ? <>
+                                                            <li>
+                                                                <span className="cursor-pointer" onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    this.toggleStatus(tableId)
+                                                                }}>
+                                                                    {anno.is_enabled ?
+                                                                        <img src={`/icon-eye-open.svg`}/> :
+                                                                        <img src={`/icon-eye-close.svg`}/>}
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <span className="cursor-pointer" onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    this.setState({editAnnotationId: tableId})
+                                                                }}>
+                                                                    <img src={`icon-edit.svg`}/>
+                                                                </span>
+                                                            </li>
+                                                        </> : null}
                                                         <li>
                                                             <span className="text-danger" onClick={(e) => { e.stopPropagation(); this.deleteAnnotation(tableId, tableName); }}><img src={`icon-trash.svg`} /></span>
                                                         </li>
