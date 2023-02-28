@@ -351,402 +351,464 @@ export default class UploadAnnotation extends React.Component {
                 {this.state.review ?
                     <div className="csv-review-columns">
                         {!this.state.fieldErrorsCheck ?
-                        <>
-                        <div className="apps-modalHead">
-                            <div className="d-flex justify-content-between align-items-center">
-                                <h2>Import review &nbsp; <span class="text-gray">|</span> &nbsp; <span className='text-danger'>{this.state.importReviewErrorCount} {this.state.importReviewErrorCount > 1 ? "errors" : "error"}</span></h2>
-                                <span onClick={() => this.props.togglePopup('')} className="btn-close">
-                                    <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" />
+                            <>
+                                <div className="apps-modalHead">
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <h2>Import review &nbsp; <span class="text-gray">|</span> &nbsp; <span
+                                            className='text-danger'>{this.state.importReviewErrorCount} {this.state.importReviewErrorCount > 1 ? "errors" : "error"}</span>
+                                        </h2>
+                                        <span onClick={() => this.props.togglePopup('')} className="btn-close">
+                                    <img className="inject-me" src="/close-icon.svg" width="26" height="26"
+                                         alt="menu icon"/>
                                 </span>
-                            </div>
-
-                            <p>Please review the column mapping and map the columns that weren't found</p>
-                        </div>
-
-
-                        <table className='table'>
-                            <thead>
-                                <tr>
-                                    <th>Column Name</th>
-                                    <th>Field</th>
-                                    <th>Sample Data</th>
-                                </tr>
-                            </thead>
-                            <tbody className='dataTableAnalyticsAccount'>
-                                <tr>
-                                    <td>Category</td>
-                                    <td>
-                                        <div className='themeNewInputStyle position-relative'>
-                                        <select value={this.state.csvFields['Category']} style={{height: 38}} className={`form-control ${this.state.importReview.category_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
-                                            this.setState({
-                                                csvFields: {
-                                                    ...this.state.csvFields,
-                                                    'Category': ev.target.value
-                                                },
-                                                importReviewErrorCount: this.state.importReview.category_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
-                                                importReview: {...this.state.importReview, category_error:"" }
-                                            })
-                                        }}>
-                                            <option>Select...</option>
-                                            {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.category_error && idx == 0} value={itm}>{itm}</option>)}
-                                        </select>
-                                        <i className="btn-searchIcon fa fa-check-circle"></i>
-                                        </div>
-                                    </td>
-                                    <td>Sales Event</td>
-                                </tr>
-                                <tr>
-                                    <td>Event Name</td>
-                                    <td>
-                                        <div className='themeNewInputStyle position-relative'>
-                                        <select value={this.state.csvFields['Event Name']} style={{height: 38}} className={`form-control ${this.state.importReview.event_name_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
-                                            this.setState({
-                                                csvFields: {
-                                                    ...this.state.csvFields,
-                                                    'Event Name': ev.target.value
-                                                },
-                                                importReviewErrorCount: this.state.importReview.event_name_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
-                                                importReview: {...this.state.importReview, event_name_error:"" }
-                                            })
-                                        }}>
-                                            <option>Select...</option>
-                                            {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.event_name_error && idx == 1} value={itm}>{itm}</option>)}
-                                        </select>
-                                        <i className="btn-searchIcon fa fa-check-circle"></i>
-                                        </div>
-                                    </td>
-                                    <td>Black Friday</td>
-                                </tr>
-                                <tr>
-                                    <td>Url</td>
-                                    <td>
-                                        <div className='themeNewInputStyle position-relative'>
-                                        <select value={this.state.csvFields['Url']} style={{height: 38}} className={`form-control ${this.state.importReview.url_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
-                                            this.setState({
-                                                csvFields: {
-                                                    ...this.state.csvFields,
-                                                    'Url': ev.target.value
-                                                },
-                                                importReviewErrorCount: this.state.importReview.url_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
-                                                importReview: {...this.state.importReview, url_error:"" }
-                                            })
-                                        }}>
-                                            <option>Select...</option>
-                                            {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.url_error && idx == 2} value={itm}>{itm}</option>)}
-                                        </select>
-                                        <i className="btn-searchIcon fa fa-check-circle"></i>
                                     </div>
-                                    </td>
-                                    <td>https://gannotations.com</td>
-                                </tr>
-                                <tr>
-                                    <td>Description</td>
-                                    <td>
-                                        <div className='themeNewInputStyle position-relative'>
-                                        <select value={this.state.csvFields['Description']} style={{height: 38}} className={`form-control ${this.state.importReview.description_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
-                                            this.setState({
-                                                csvFields: {
-                                                    ...this.state.csvFields,
-                                                    'Description': ev.target.value
-                                                },
-                                                importReviewErrorCount: this.state.importReview.description_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
-                                                importReview: {...this.state.importReview, description_error:"" }
-                                            })
-                                        }}>
-                                            <option>Select...</option>
-                                            {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.description_error && idx == 3} value={itm}>{itm}</option>)}
-                                        </select>
-                                        <i className="btn-searchIcon fa fa-check-circle"></i>
-                                        </div>
-                                    </td>
-                                    <td>Black Friday Deals 2023</td>
-                                </tr>
-                                <tr>
-                                    <td>Show At</td>
-                                    <td>
-                                        <div className='themeNewInputStyle position-relative'>
-                                        <select value={this.state.csvFields['Show At']} style={{height: 38}} className={`form-control ${this.state.importReview.show_at_error ? 'is-invalid' : 'selected'}`} onChange={(ev)=> {
-                                            this.setState({
-                                                csvFields: {
-                                                    ...this.state.csvFields,
-                                                    'Show At': ev.target.value
-                                                },
-                                                importReviewErrorCount: this.state.importReview.show_at_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
-                                                importReview: {...this.state.importReview, show_at_error:"" }
-                                            })
-                                        }}>
-                                            <option>Select...</option>
-                                            {this.state.fileHeaders.map((itm, idx) => <option selected={!this.state.importReview.show_at_error && idx == 0} value={itm}>{itm}</option>)}
-                                        </select>
-                                        <i className="btn-searchIcon fa fa-check-circle"></i>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {this.state.sampleDate}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Date Format</td>
-                                    <td>
-                                        <div className='themeNewInputStyle position-relative'>
-                                            <select style={{height: 38}} name="date_format" id="date_format" className={`form-control ${!this.state.date_format ? 'is-invalid' : 'selected'}`} value={this.state.date_format} onChange={this.changeHandler} required>
-                                                <option value="">Select your date format</option>
-                                                <option value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
-                                                <option value="M-D-YYYY">{moment("2021-01-15").format('M-D-YYYY')}</option>
-                                                <option value="M-D-YY">{moment("2021-01-15").format('M-D-YY')}</option>
-                                                <option value="MM-DD-YY">{moment("2021-01-15").format('MM-DD-YY')}</option>
-                                                <option value="MM-DD-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
-                                                <option value="YY-MM-DD">{moment("2021-01-15").format('YY-MM-DD')}</option>
-                                                <option value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
-                                                <option value="DD-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
-                                                <option value="M/D/YYYY">{moment("2021-01-15").format('M/D/YYYY')}</option>
-                                                <option value="M/D/YY">{moment("2021-01-15").format('M/D/YY')}</option>
-                                                <option value="MM/DD/YY">{moment("2021-01-15").format('MM/DD/YY')}</option>
-                                                <option value="MM/DD/YYYY">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
-                                                <option value="YY/MM/DD">{moment("2021-01-15").format('YY/MM/DD')}</option>
-                                                <option value="YYYY/MM/DD">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
-                                                <option value="DD/MMM/YY">{moment("2021-01-15").format('DD/MMM/YY')}</option>
-                                            </select>
-                                            <i className="btn-searchIcon fa fa-check-circle"></i>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {this.state.sampleDate}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
 
-                        <div className="text-right mt-3">
-                            <Button className='btn-submit btn-theme' disabled={this.props.importReviewErrorCount || this.state.date_format === ''} onClick={this.prepareFieldErrorsData}>Continue</Button>
-                        </div>
-                        </>
-                        :
+                                    <p>Please review the column mapping and map the columns that weren't found</p>
+                                </div>
 
-                        <>
-                        <div className="apps-modalHead">
-                            <div className="d-flex justify-content-between align-items-center">
-                                <h2>Field errors &nbsp; <span class="text-gray">|</span> &nbsp; <span className='text-danger'>{this.state.fieldErrorsCount}  {this.state.fieldErrorsCount > 1 ? "errors" : "error"}</span></h2>
-                                <span onClick={() => this.props.togglePopup('')} className="btn-close">
-                                    <img className="inject-me" src="/close-icon.svg" width="26" height="26" alt="menu icon" />
+
+                                <table className='table'>
+                                    <thead>
+                                    <tr>
+                                        <th>Column Name</th>
+                                        <th>Field</th>
+                                        <th>Sample Data</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody className='dataTableAnalyticsAccount'>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td>
+                                            <div className='themeNewInputStyle position-relative'>
+                                                <select value={this.state.csvFields['Category']} style={{height: 38}}
+                                                        className={`form-control ${this.state.importReview.category_error ? 'is-invalid' : 'selected'}`}
+                                                        onChange={(ev) => {
+                                                            this.setState({
+                                                                csvFields: {
+                                                                    ...this.state.csvFields,
+                                                                    'Category': ev.target.value
+                                                                },
+                                                                importReviewErrorCount: this.state.importReview.category_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
+                                                                importReview: {
+                                                                    ...this.state.importReview,
+                                                                    category_error: ""
+                                                                }
+                                                            })
+                                                        }}>
+                                                    <option>Select...</option>
+                                                    {this.state.fileHeaders.map((itm, idx) => <option
+                                                        selected={!this.state.importReview.category_error && idx == 0}
+                                                        value={itm}>{itm}</option>)}
+                                                </select>
+                                                <i className="btn-searchIcon fa fa-check-circle"></i>
+                                            </div>
+                                        </td>
+                                        <td>Sales Event</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Event Name</td>
+                                        <td>
+                                            <div className='themeNewInputStyle position-relative'>
+                                                <select value={this.state.csvFields['Event Name']} style={{height: 38}}
+                                                        className={`form-control ${this.state.importReview.event_name_error ? 'is-invalid' : 'selected'}`}
+                                                        onChange={(ev) => {
+                                                            this.setState({
+                                                                csvFields: {
+                                                                    ...this.state.csvFields,
+                                                                    'Event Name': ev.target.value
+                                                                },
+                                                                importReviewErrorCount: this.state.importReview.event_name_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
+                                                                importReview: {
+                                                                    ...this.state.importReview,
+                                                                    event_name_error: ""
+                                                                }
+                                                            })
+                                                        }}>
+                                                    <option>Select...</option>
+                                                    {this.state.fileHeaders.map((itm, idx) => <option
+                                                        selected={!this.state.importReview.event_name_error && idx == 1}
+                                                        value={itm}>{itm}</option>)}
+                                                </select>
+                                                <i className="btn-searchIcon fa fa-check-circle"></i>
+                                            </div>
+                                        </td>
+                                        <td>Black Friday</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Url</td>
+                                        <td>
+                                            <div className='themeNewInputStyle position-relative'>
+                                                <select value={this.state.csvFields['Url']} style={{height: 38}}
+                                                        className={`form-control ${this.state.importReview.url_error ? 'is-invalid' : 'selected'}`}
+                                                        onChange={(ev) => {
+                                                            this.setState({
+                                                                csvFields: {
+                                                                    ...this.state.csvFields,
+                                                                    'Url': ev.target.value
+                                                                },
+                                                                importReviewErrorCount: this.state.importReview.url_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
+                                                                importReview: {
+                                                                    ...this.state.importReview,
+                                                                    url_error: ""
+                                                                }
+                                                            })
+                                                        }}>
+                                                    <option>Select...</option>
+                                                    {this.state.fileHeaders.map((itm, idx) => <option
+                                                        selected={!this.state.importReview.url_error && idx == 2}
+                                                        value={itm}>{itm}</option>)}
+                                                </select>
+                                                <i className="btn-searchIcon fa fa-check-circle"></i>
+                                            </div>
+                                        </td>
+                                        <td>https://gannotations.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description</td>
+                                        <td>
+                                            <div className='themeNewInputStyle position-relative'>
+                                                <select value={this.state.csvFields['Description']} style={{height: 38}}
+                                                        className={`form-control ${this.state.importReview.description_error ? 'is-invalid' : 'selected'}`}
+                                                        onChange={(ev) => {
+                                                            this.setState({
+                                                                csvFields: {
+                                                                    ...this.state.csvFields,
+                                                                    'Description': ev.target.value
+                                                                },
+                                                                importReviewErrorCount: this.state.importReview.description_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
+                                                                importReview: {
+                                                                    ...this.state.importReview,
+                                                                    description_error: ""
+                                                                }
+                                                            })
+                                                        }}>
+                                                    <option>Select...</option>
+                                                    {this.state.fileHeaders.map((itm, idx) => <option
+                                                        selected={!this.state.importReview.description_error && idx == 3}
+                                                        value={itm}>{itm}</option>)}
+                                                </select>
+                                                <i className="btn-searchIcon fa fa-check-circle"></i>
+                                            </div>
+                                        </td>
+                                        <td>Black Friday Deals 2023</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Show At</td>
+                                        <td>
+                                            <div className='themeNewInputStyle position-relative'>
+                                                <select value={this.state.csvFields['Show At']} style={{height: 38}}
+                                                        className={`form-control ${this.state.importReview.show_at_error ? 'is-invalid' : 'selected'}`}
+                                                        onChange={(ev) => {
+                                                            this.setState({
+                                                                csvFields: {
+                                                                    ...this.state.csvFields,
+                                                                    'Show At': ev.target.value
+                                                                },
+                                                                importReviewErrorCount: this.state.importReview.show_at_error ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount,
+                                                                importReview: {
+                                                                    ...this.state.importReview,
+                                                                    show_at_error: ""
+                                                                }
+                                                            })
+                                                        }}>
+                                                    <option>Select...</option>
+                                                    {this.state.fileHeaders.map((itm, idx) => <option
+                                                        selected={!this.state.importReview.show_at_error && idx == 0}
+                                                        value={itm}>{itm}</option>)}
+                                                </select>
+                                                <i className="btn-searchIcon fa fa-check-circle"></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {this.state.sampleDate}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date Format</td>
+                                        <td>
+                                            <div className='themeNewInputStyle position-relative'>
+                                                <select style={{height: 38}} name="date_format" id="date_format"
+                                                        className={`form-control ${!this.state.date_format ? 'is-invalid' : 'selected'}`}
+                                                        value={this.state.date_format} onChange={this.changeHandler}
+                                                        required>
+                                                    <option value="">Select your date format</option>
+                                                    <option
+                                                        value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
+                                                    <option
+                                                        value="M-D-YYYY">{moment("2021-01-15").format('M-D-YYYY')}</option>
+                                                    <option
+                                                        value="M-D-YY">{moment("2021-01-15").format('M-D-YY')}</option>
+                                                    <option
+                                                        value="MM-DD-YY">{moment("2021-01-15").format('MM-DD-YY')}</option>
+                                                    <option
+                                                        value="MM-DD-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
+                                                    <option
+                                                        value="YY-MM-DD">{moment("2021-01-15").format('YY-MM-DD')}</option>
+                                                    <option
+                                                        value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
+                                                    <option
+                                                        value="DD-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
+                                                    <option
+                                                        value="M/D/YYYY">{moment("2021-01-15").format('M/D/YYYY')}</option>
+                                                    <option
+                                                        value="M/D/YY">{moment("2021-01-15").format('M/D/YY')}</option>
+                                                    <option
+                                                        value="MM/DD/YY">{moment("2021-01-15").format('MM/DD/YY')}</option>
+                                                    <option
+                                                        value="MM/DD/YYYY">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
+                                                    <option
+                                                        value="YY/MM/DD">{moment("2021-01-15").format('YY/MM/DD')}</option>
+                                                    <option
+                                                        value="YYYY/MM/DD">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
+                                                    <option
+                                                        value="DD/MMM/YY">{moment("2021-01-15").format('DD/MMM/YY')}</option>
+                                                </select>
+                                                <i className="btn-searchIcon fa fa-check-circle"></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {this.state.sampleDate}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <div className="text-right mt-3">
+                                    <Button className='btn-submit btn-theme'
+                                            disabled={this.props.importReviewErrorCount || this.state.date_format === ''}
+                                            onClick={this.prepareFieldErrorsData}>Continue</Button>
+                                </div>
+                            </>
+                            :
+
+                            <>
+                                <div className="apps-modalHead">
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <h2>Field errors &nbsp; <span class="text-gray">|</span> &nbsp; <span
+                                            className='text-danger'>{this.state.fieldErrorsCount} {this.state.fieldErrorsCount > 1 ? "errors" : "error"}</span>
+                                        </h2>
+                                        <span onClick={() => this.props.togglePopup('')} className="btn-close">
+                                    <img className="inject-me" src="/close-icon.svg" width="26" height="26"
+                                         alt="menu icon"/>
                                 </span>
-                            </div>
-                            <p>Please review the table and Fix the errors highlighted</p>
-                        </div>
+                                    </div>
+                                    <p>Please review the table and Fix the errors highlighted</p>
+                                </div>
 
-
-                        <table className='table-bordered'>
-                            <thead>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>Event Name</th>
-                                    <th>Url</th>
-                                    <th>Description</th>
-                                    <th>Show At</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                { this.state.fieldErrors.map((rd, i) => {
-
-                                    return (
+                                <div className="csv-review-data-container">
+                                    <table className='table-bordered'>
+                                        <thead>
                                         <tr>
-                                            <td>
-                                                { rd.category_error ?
-                                                    <>
-                                                    <input 
-                                                        onMouseOver={() =>
-                                                            this.setState({
-                                                                activeDeletePopover: 'category' + i,
-                                                            })
-                                                        } 
-                                                        onMouseLeave={() => 
-                                                            this.setState({
-                                                                activeDeletePopover: '',
-                                                            })
-                                                        }
-                                                        id={"gAK-" + 'category' + i} 
-                                                        onKeyUp={(e) => this.changeMapHandler(e, i)} 
-                                                        onChange={(e) => this.changeMapHandler(e, i)} 
-                                                        className='form-control is-invalid' 
-                                                        name='category' 
-                                                        value={rd.category} />
-                                                    <Popover className="bg-dark"
-                                                        placement="top"
-                                                        target={"gAK-" + 'category' + i}
-                                                        isOpen={
-                                                            this.state.activeDeletePopover === 'category' + i
-                                                        }
-                                                    >
-                                                        <PopoverBody className="w-100">
-                                                            {rd.category_error}
-                                                        </PopoverBody>
-                                                    </Popover>
-                                                    </>
-                                                :
-                                                    <div>{rd.category}</div>
-                                                }
-                                            </td>
-                                            <td>
-                                                { rd.event_name_error ?
-                                                    <>
-                                                    <input 
-                                                        onMouseOver={() =>
-                                                            this.setState({
-                                                                activeDeletePopover: 'event_name' + i,
-                                                            })
-                                                        }
-                                                        onMouseLeave={() => 
-                                                            this.setState({
-                                                                activeDeletePopover: '',
-                                                            })
-                                                        }
-                                                        id={"gAK-" + 'event_name' + i} 
-                                                        onKeyUp={(e) => this.changeMapHandler(e, i)} 
-                                                        onChange={(e) => this.changeMapHandler(e, i)} 
-                                                        className='form-control is-invalid' 
-                                                        name='event_name' 
-                                                        value={rd.event_name} />
-                                                    <Popover className="bg-dark"
-                                                        placement="top"
-                                                        target={"gAK-" + 'event_name' + i}
-                                                        isOpen={
-                                                            this.state.activeDeletePopover === 'event_name' + i
-                                                        }
-                                                    >
-                                                        <PopoverBody className="w-100">
-                                                            {rd.event_name_error}
-                                                        </PopoverBody>
-                                                    </Popover>
-                                                    </>
-                                                :
-                                                    <div>{rd.event_name}</div>
-                                                }
-                                            </td>
-                                            <td>
-                                                { rd.url_error ?
-                                                    <>
-                                                    <input 
-                                                        onMouseOver={() =>
-                                                            this.setState({
-                                                                activeDeletePopover: 'url' + i,
-                                                            })
-                                                        }
-                                                        onMouseLeave={() => 
-                                                            this.setState({
-                                                                activeDeletePopover: '',
-                                                            })
-                                                        }
-                                                        id={"gAK-" + 'url' + i} 
-                                                        onKeyUp={(e) => this.changeMapHandler(e, i)} 
-                                                        onChange={(e) => this.changeMapHandler(e, i)} 
-                                                        className='form-control is-invalid' 
-                                                        name='url' 
-                                                        value={rd.url} />
-                                                    <Popover className="bg-dark"
-                                                        placement="top-right"
-                                                        target={"gAK-" + 'url' + i}
-                                                        isOpen={
-                                                            this.state.activeDeletePopover === 'url' + i
-                                                        }
-                                                    >
-                                                        <PopoverBody className="w-100">
-                                                            {rd.url_error}
-                                                        </PopoverBody>
-                                                    </Popover>
-                                                    </>
-                                                :
-                                                    <div>{rd.url}</div>
-                                                }
-                                            </td>
-                                            <td>
-                                                { rd.description_error ?
-                                                    <>
-                                                    <input 
-                                                        onMouseOver={() =>
-                                                            this.setState({
-                                                                activeDeletePopover: 'description' + i,
-                                                            })
-                                                        }
-                                                        onMouseLeave={() => 
-                                                            this.setState({
-                                                                activeDeletePopover: '',
-                                                            })
-                                                        }
-                                                        id={"gAK-" + 'description' + i} 
-                                                        onKeyUp={(e) => this.changeMapHandler(e, i)} 
-                                                        onChange={(e) => this.changeMapHandler(e, i)} 
-                                                        className='form-control is-invalid' 
-                                                        name='description' 
-                                                        value={rd.description} />
-                                                    <Popover className="bg-dark"
-                                                        placement="top"
-                                                        target={"gAK-" + 'description' + i}
-                                                        isOpen={
-                                                            this.state.activeDeletePopover === 'description' + i
-                                                        }
-                                                    >
-                                                        <PopoverBody className="w-100">
-                                                            {rd.description_error}
-                                                        </PopoverBody>
-                                                    </Popover>
-                                                    </>
-                                                :
-                                                    <div>{rd.description}</div>
-                                                }
-                                            </td>
-                                            <td>
-                                                { rd.show_at_error ?
-                                                    <>
-                                                    <input 
-                                                        onMouseOver={() =>
-                                                            this.setState({
-                                                                activeDeletePopover: 'show_at' + i,
-                                                            })
-                                                        }
-                                                        onMouseLeave={() => 
-                                                            this.setState({
-                                                                activeDeletePopover: '',
-                                                            })
-                                                        }
-                                                        id={"gAK-" + 'show_at' + i} 
-                                                        onKeyUp={(e) => this.changeMapHandler(e, i)} 
-                                                        onChange={(e) => this.changeMapHandler(e, i)} 
-                                                        className='form-control is-invalid' 
-                                                        name='show_at' 
-                                                        value={rd.show_at} />
-                                                    <Popover className="bg-dark"
-                                                        placement="top"
-                                                        target={"gAK-" + 'show_at' + i}
-                                                        isOpen={
-                                                            this.state.activeDeletePopover === 'show_at' + i
-                                                        }
-                                                    >
-                                                        <PopoverBody className="w-100">
-                                                            {rd.show_at_error}
-                                                        </PopoverBody>
-                                                    </Popover>
-                                                    </>
-                                                :
-                                                    <div>{rd.show_at}</div>
-                                                }
-                                            </td>
+                                            <th>Category</th>
+                                            <th>Event Name</th>
+                                            <th>Url</th>
+                                            <th>Description</th>
+                                            <th>Show At</th>
                                         </tr>
-                                    );
+                                        </thead>
+                                        <tbody>
+                                        {this.state.fieldErrors.map((rd, i) => {
 
-                                    })
+                                            return (
+                                                <tr>
+                                                    <td>
+                                                        {rd.category_error ?
+                                                            <>
+                                                                <input
+                                                                    onMouseOver={() =>
+                                                                        this.setState({
+                                                                            activeDeletePopover: 'category' + i,
+                                                                        })
+                                                                    }
+                                                                    onMouseLeave={() =>
+                                                                        this.setState({
+                                                                            activeDeletePopover: '',
+                                                                        })
+                                                                    }
+                                                                    id={"gAK-" + 'category' + i}
+                                                                    onKeyUp={(e) => this.changeMapHandler(e, i)}
+                                                                    onChange={(e) => this.changeMapHandler(e, i)}
+                                                                    className='form-control is-invalid'
+                                                                    name='category'
+                                                                    value={rd.category}/>
+                                                                <Popover className="bg-dark"
+                                                                         placement="top"
+                                                                         target={"gAK-" + 'category' + i}
+                                                                         isOpen={
+                                                                             this.state.activeDeletePopover === 'category' + i
+                                                                         }
+                                                                >
+                                                                    <PopoverBody className="w-100">
+                                                                        {rd.category_error}
+                                                                    </PopoverBody>
+                                                                </Popover>
+                                                            </>
+                                                            :
+                                                            <div>{rd.category}</div>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {rd.event_name_error ?
+                                                            <>
+                                                                <input
+                                                                    onMouseOver={() =>
+                                                                        this.setState({
+                                                                            activeDeletePopover: 'event_name' + i,
+                                                                        })
+                                                                    }
+                                                                    onMouseLeave={() =>
+                                                                        this.setState({
+                                                                            activeDeletePopover: '',
+                                                                        })
+                                                                    }
+                                                                    id={"gAK-" + 'event_name' + i}
+                                                                    onKeyUp={(e) => this.changeMapHandler(e, i)}
+                                                                    onChange={(e) => this.changeMapHandler(e, i)}
+                                                                    className='form-control is-invalid'
+                                                                    name='event_name'
+                                                                    value={rd.event_name}/>
+                                                                <Popover className="bg-dark"
+                                                                         placement="top"
+                                                                         target={"gAK-" + 'event_name' + i}
+                                                                         isOpen={
+                                                                             this.state.activeDeletePopover === 'event_name' + i
+                                                                         }
+                                                                >
+                                                                    <PopoverBody className="w-100">
+                                                                        {rd.event_name_error}
+                                                                    </PopoverBody>
+                                                                </Popover>
+                                                            </>
+                                                            :
+                                                            <div>{rd.event_name}</div>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {rd.url_error ?
+                                                            <>
+                                                                <input
+                                                                    onMouseOver={() =>
+                                                                        this.setState({
+                                                                            activeDeletePopover: 'url' + i,
+                                                                        })
+                                                                    }
+                                                                    onMouseLeave={() =>
+                                                                        this.setState({
+                                                                            activeDeletePopover: '',
+                                                                        })
+                                                                    }
+                                                                    id={"gAK-" + 'url' + i}
+                                                                    onKeyUp={(e) => this.changeMapHandler(e, i)}
+                                                                    onChange={(e) => this.changeMapHandler(e, i)}
+                                                                    className='form-control is-invalid'
+                                                                    name='url'
+                                                                    value={rd.url}/>
+                                                                <Popover className="bg-dark"
+                                                                         placement="top-right"
+                                                                         target={"gAK-" + 'url' + i}
+                                                                         isOpen={
+                                                                             this.state.activeDeletePopover === 'url' + i
+                                                                         }
+                                                                >
+                                                                    <PopoverBody className="w-100">
+                                                                        {rd.url_error}
+                                                                    </PopoverBody>
+                                                                </Popover>
+                                                            </>
+                                                            :
+                                                            <div>{rd.url}</div>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {rd.description_error ?
+                                                            <>
+                                                                <input
+                                                                    onMouseOver={() =>
+                                                                        this.setState({
+                                                                            activeDeletePopover: 'description' + i,
+                                                                        })
+                                                                    }
+                                                                    onMouseLeave={() =>
+                                                                        this.setState({
+                                                                            activeDeletePopover: '',
+                                                                        })
+                                                                    }
+                                                                    id={"gAK-" + 'description' + i}
+                                                                    onKeyUp={(e) => this.changeMapHandler(e, i)}
+                                                                    onChange={(e) => this.changeMapHandler(e, i)}
+                                                                    className='form-control is-invalid'
+                                                                    name='description'
+                                                                    value={rd.description}/>
+                                                                <Popover className="bg-dark"
+                                                                         placement="top"
+                                                                         target={"gAK-" + 'description' + i}
+                                                                         isOpen={
+                                                                             this.state.activeDeletePopover === 'description' + i
+                                                                         }
+                                                                >
+                                                                    <PopoverBody className="w-100">
+                                                                        {rd.description_error}
+                                                                    </PopoverBody>
+                                                                </Popover>
+                                                            </>
+                                                            :
+                                                            <div>{rd.description}</div>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {rd.show_at_error ?
+                                                            <>
+                                                                <input
+                                                                    onMouseOver={() =>
+                                                                        this.setState({
+                                                                            activeDeletePopover: 'show_at' + i,
+                                                                        })
+                                                                    }
+                                                                    onMouseLeave={() =>
+                                                                        this.setState({
+                                                                            activeDeletePopover: '',
+                                                                        })
+                                                                    }
+                                                                    id={"gAK-" + 'show_at' + i}
+                                                                    onKeyUp={(e) => this.changeMapHandler(e, i)}
+                                                                    onChange={(e) => this.changeMapHandler(e, i)}
+                                                                    className='form-control is-invalid'
+                                                                    name='show_at'
+                                                                    value={rd.show_at}/>
+                                                                <Popover className="bg-dark"
+                                                                         placement="top"
+                                                                         target={"gAK-" + 'show_at' + i}
+                                                                         isOpen={
+                                                                             this.state.activeDeletePopover === 'show_at' + i
+                                                                         }
+                                                                >
+                                                                    <PopoverBody className="w-100">
+                                                                        {rd.show_at_error}
+                                                                    </PopoverBody>
+                                                                </Popover>
+                                                            </>
+                                                            :
+                                                            <div>{rd.show_at}</div>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            );
+
+                                        })
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                    <div className="text-right mt-3">
+                                        <Button className='btn-submit btn-theme' disabled={this.state.isBusy}
+                                                onClick={this.saveCsv}>Submit</Button>
+                                    </div>
+                                </>
+
                                 }
-                            </tbody>
-                        </table>
-
-                        <div className="text-right mt-3">
-                            <Button className='btn-submit btn-theme' disabled={this.state.isBusy} onClick={this.saveCsv}>Submit</Button>
-                        </div>
-                        </>
-
-                        }
 
                     </div>
-                :
+                    :
                     <div>
                         <ModalHeader
                             userAnnotationColors={this.state.userAnnotationColors}
@@ -764,13 +826,17 @@ export default class UploadAnnotation extends React.Component {
                         <div className='apps-bodyContent'>
                             <ErrorAlert errors={this.state.errors}/>
 
-                            <form className='form-csvUpload' onSubmit={this.handleSubmit} encType="multipart/form-data" id="csv-upload-form-container">
-                                <div className="themeNewInputGroup csvFileUpload mb-4" onDragLeave={this.onDragLeave} onDragOver={this.onDragOver} onDrop={this.onFileDrop}>
+                            <form className='form-csvUpload' onSubmit={this.handleSubmit} encType="multipart/form-data"
+                                  id="csv-upload-form-container">
+                                <div className="themeNewInputGroup csvFileUpload mb-4" onDragLeave={this.onDragLeave}
+                                     onDragOver={this.onDragOver} onDrop={this.onFileDrop}>
                                     <label htmlFor="csv">
-                                        <i><img src={'/icon-csvUpload.svg'} alt={'CSV Upload Icon'} className="svg-inject" /></i>
+                                        <i><img src={'/icon-csvUpload.svg'} alt={'CSV Upload Icon'}
+                                                className="svg-inject"/></i>
                                         <strong id='csv-caption'>Drag and drop or click here</strong>
                                         <span class='csv-caption'>.csv files only — 5mb max</span>
-                                        <input type="file" onChange={this.onFileSelect} className="form-control upload-csv-input" id="csv" name="csv" />
+                                        <input type="file" onChange={this.onFileSelect}
+                                               className="form-control upload-csv-input" id="csv" name="csv"/>
                                     </label>
                                 </div>
 
@@ -782,7 +848,7 @@ export default class UploadAnnotation extends React.Component {
                                             id="google_analytics_property_id"
                                             value={this.state.google_analytics_property_id}
                                             onChangeCallback={this.changeHandler}
-                                            components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
+                                            components={{DropdownIndicator: () => null, IndicatorSeparator: () => null}}
                                             placeholder="Select GA property"
                                             multiple
                                             onFocus={(e) => {
@@ -795,8 +861,10 @@ export default class UploadAnnotation extends React.Component {
                                 </div>
 
                                 <div className="btns-csvUpload d-flex justify-content-center">
-                                    <Button className='btn-cancel' onClick={() => this.props.togglePopup('')}>Cancel</Button>
-                                    <Button type='submit' disabled={this.state.isBusy} className='btn-theme'>Upload and review</Button>
+                                    <Button className='btn-cancel'
+                                            onClick={() => this.props.togglePopup('')}>Cancel</Button>
+                                    <Button type='submit' disabled={this.state.isBusy} className='btn-theme'>Upload and
+                                        review</Button>
                                     {/* <a href="/csv/upload_sample.csv" target="_blank" download>Download sample CSV file</a>
                                     <button type="submit" className="btn gaa-btn-primary btn-fab btn-round"><i className="fa fa-upload mr-3"></i>Upload</button> */}
                                 </div>

@@ -4862,10 +4862,20 @@ color: #E0E0E0;
     font-size: 16px;
     line-height: 20px;
 }
+
+.csv-review-data-container {
+    height: calc(100vh - 410px);
+    overflow-y: auto;
+}
+
 .csv-review-columns table.table-bordered {
     width: 100%;
     border: 1px solid #E0E0E0;
     border-radius: 8px;
+}
+.csv-review-columns table.table-bordered thead {
+    position: sticky;
+    top: 0px;
 }
 .csv-review-columns table.table-bordered tr th,
 .csv-review-columns table.table-bordered tr td {
