@@ -1,6 +1,7 @@
 import React from 'react';
 import Toast from "../../utils/Toast";
 import { Redirect } from "react-router-dom";
+import { Popover, PopoverBody } from "reactstrap";
 
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
@@ -251,7 +252,7 @@ export default class UploadAnnotation extends React.Component {
                         review: true,
                         fieldErrors,
                         importReview,
-                        importReviewErrorCount,
+                        importReviewErrorCount: importReviewErrorCount + 1,
                         fileHeaders,
                         fileName,
                         sampleDate,
@@ -286,6 +287,10 @@ export default class UploadAnnotation extends React.Component {
     }
     changeHandler(e) {
         this.setState({ [e.target.name]: e.target.value })
+        if(e.target.name === 'date_format') {
+            const importReviewErrorCount = e.target.value ? this.state.importReviewErrorCount - 1 : this.state.importReviewErrorCount + 1;
+            this.setState({ importReviewErrorCount })
+        }
     }
 
     changeMapHandler (e, id) {
@@ -482,25 +487,28 @@ export default class UploadAnnotation extends React.Component {
                                 </tr>
                                 <tr>
                                     <td>Date Format</td>
-                                    <td className='themeNewInputStyle position-relative'>
-                                        <select style={{height: 38}} name="date_format" id="date_format" className={`form-control ${!this.state.date_format ? 'is-invalid' : 'selected'}`} value={this.state.date_format} onChange={this.changeHandler} required>
-                                            <option value="">Select your date format</option>
-                                            <option value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
-                                            <option value="M-D-YYYY">{moment("2021-01-15").format('M-D-YYYY')}</option>
-                                            <option value="M-D-YY">{moment("2021-01-15").format('M-D-YY')}</option>
-                                            <option value="MM-DD-YY">{moment("2021-01-15").format('MM-DD-YY')}</option>
-                                            <option value="MM-DD-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
-                                            <option value="YY-MM-DD">{moment("2021-01-15").format('YY-MM-DD')}</option>
-                                            <option value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
-                                            <option value="DD-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
-                                            <option value="M/D/YYYY">{moment("2021-01-15").format('M/D/YYYY')}</option>
-                                            <option value="M/D/YY">{moment("2021-01-15").format('M/D/YY')}</option>
-                                            <option value="MM/DD/YY">{moment("2021-01-15").format('MM/DD/YY')}</option>
-                                            <option value="MM/DD/YYYY">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
-                                            <option value="YY/MM/DD">{moment("2021-01-15").format('YY/MM/DD')}</option>
-                                            <option value="YYYY/MM/DD">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
-                                            <option value="DD/MMM/YY">{moment("2021-01-15").format('DD/MMM/YY')}</option>
-                                        </select>
+                                    <td>
+                                        <div className='themeNewInputStyle position-relative'>
+                                            <select style={{height: 38}} name="date_format" id="date_format" className={`form-control ${!this.state.date_format ? 'is-invalid' : 'selected'}`} value={this.state.date_format} onChange={this.changeHandler} required>
+                                                <option value="">Select your date format</option>
+                                                <option value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
+                                                <option value="M-D-YYYY">{moment("2021-01-15").format('M-D-YYYY')}</option>
+                                                <option value="M-D-YY">{moment("2021-01-15").format('M-D-YY')}</option>
+                                                <option value="MM-DD-YY">{moment("2021-01-15").format('MM-DD-YY')}</option>
+                                                <option value="MM-DD-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
+                                                <option value="YY-MM-DD">{moment("2021-01-15").format('YY-MM-DD')}</option>
+                                                <option value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
+                                                <option value="DD-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
+                                                <option value="M/D/YYYY">{moment("2021-01-15").format('M/D/YYYY')}</option>
+                                                <option value="M/D/YY">{moment("2021-01-15").format('M/D/YY')}</option>
+                                                <option value="MM/DD/YY">{moment("2021-01-15").format('MM/DD/YY')}</option>
+                                                <option value="MM/DD/YYYY">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
+                                                <option value="YY/MM/DD">{moment("2021-01-15").format('YY/MM/DD')}</option>
+                                                <option value="YYYY/MM/DD">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
+                                                <option value="DD/MMM/YY">{moment("2021-01-15").format('DD/MMM/YY')}</option>
+                                            </select>
+                                            <i className="btn-searchIcon fa fa-check-circle"></i>
+                                        </div>
                                     </td>
                                     <td>
                                         {this.state.sampleDate}
@@ -544,35 +552,180 @@ export default class UploadAnnotation extends React.Component {
                                         <tr>
                                             <td>
                                                 { rd.category_error ?
-                                                    <input title={rd.category_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='category' value={rd.category} />
+                                                    <>
+                                                    <input 
+                                                        onMouseOver={() =>
+                                                            this.setState({
+                                                                activeDeletePopover: 'category' + i,
+                                                            })
+                                                        } 
+                                                        onMouseLeave={() => 
+                                                            this.setState({
+                                                                activeDeletePopover: '',
+                                                            })
+                                                        }
+                                                        id={"gAK-" + 'category' + i} 
+                                                        onKeyUp={(e) => this.changeMapHandler(e, i)} 
+                                                        onChange={(e) => this.changeMapHandler(e, i)} 
+                                                        className='form-control is-invalid' 
+                                                        name='category' 
+                                                        value={rd.category} />
+                                                    <Popover
+                                                        placement="top"
+                                                        target={"gAK-" + 'category' + i}
+                                                        isOpen={
+                                                            this.state.activeDeletePopover === 'category' + i
+                                                        }
+                                                    >
+                                                        <PopoverBody className="w-100">
+                                                            {rd.category_error}
+                                                        </PopoverBody>
+                                                    </Popover>
+                                                    </>
                                                 :
                                                     <div>{rd.category}</div>
                                                 }
                                             </td>
                                             <td>
                                                 { rd.event_name_error ?
-                                                    <input title={rd.event_name_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='event_name' value={rd.event_name} />
+                                                    <>
+                                                    <input 
+                                                        onMouseOver={() =>
+                                                            this.setState({
+                                                                activeDeletePopover: 'event_name' + i,
+                                                            })
+                                                        }
+                                                        onMouseLeave={() => 
+                                                            this.setState({
+                                                                activeDeletePopover: '',
+                                                            })
+                                                        }
+                                                        id={"gAK-" + 'event_name' + i} 
+                                                        onKeyUp={(e) => this.changeMapHandler(e, i)} 
+                                                        onChange={(e) => this.changeMapHandler(e, i)} 
+                                                        className='form-control is-invalid' 
+                                                        name='event_name' 
+                                                        value={rd.event_name} />
+                                                    <Popover
+                                                        placement="top"
+                                                        target={"gAK-" + 'event_name' + i}
+                                                        isOpen={
+                                                            this.state.activeDeletePopover === 'event_name' + i
+                                                        }
+                                                    >
+                                                        <PopoverBody className="w-100">
+                                                            {rd.event_name_error}
+                                                        </PopoverBody>
+                                                    </Popover>
+                                                    </>
                                                 :
                                                     <div>{rd.event_name}</div>
                                                 }
                                             </td>
                                             <td>
                                                 { rd.url_error ?
-                                                    <input title={rd.url_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='url' value={rd.url} />
+                                                    <>
+                                                    <input 
+                                                        onMouseOver={() =>
+                                                            this.setState({
+                                                                activeDeletePopover: 'url' + i,
+                                                            })
+                                                        }
+                                                        onMouseLeave={() => 
+                                                            this.setState({
+                                                                activeDeletePopover: '',
+                                                            })
+                                                        }
+                                                        id={"gAK-" + 'url' + i} 
+                                                        onKeyUp={(e) => this.changeMapHandler(e, i)} 
+                                                        onChange={(e) => this.changeMapHandler(e, i)} 
+                                                        className='form-control is-invalid' 
+                                                        name='url' 
+                                                        value={rd.url} />
+                                                    <Popover
+                                                        placement="top"
+                                                        target={"gAK-" + 'url' + i}
+                                                        isOpen={
+                                                            this.state.activeDeletePopover === 'url' + i
+                                                        }
+                                                    >
+                                                        <PopoverBody className="w-100">
+                                                            {rd.url_error}
+                                                        </PopoverBody>
+                                                    </Popover>
+                                                    </>
                                                 :
                                                     <div>{rd.url}</div>
                                                 }
                                             </td>
                                             <td>
                                                 { rd.description_error ?
-                                                    <input title={rd.description_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='description' value={rd.description} />
+                                                    <>
+                                                    <input 
+                                                        onMouseOver={() =>
+                                                            this.setState({
+                                                                activeDeletePopover: 'description' + i,
+                                                            })
+                                                        }
+                                                        onMouseLeave={() => 
+                                                            this.setState({
+                                                                activeDeletePopover: '',
+                                                            })
+                                                        }
+                                                        id={"gAK-" + 'description' + i} 
+                                                        onKeyUp={(e) => this.changeMapHandler(e, i)} 
+                                                        onChange={(e) => this.changeMapHandler(e, i)} 
+                                                        className='form-control is-invalid' 
+                                                        name='description' 
+                                                        value={rd.description} />
+                                                    <Popover
+                                                        placement="top"
+                                                        target={"gAK-" + 'description' + i}
+                                                        isOpen={
+                                                            this.state.activeDeletePopover === 'description' + i
+                                                        }
+                                                    >
+                                                        <PopoverBody className="w-100">
+                                                            {rd.description_error}
+                                                        </PopoverBody>
+                                                    </Popover>
+                                                    </>
                                                 :
                                                     <div>{rd.description}</div>
                                                 }
                                             </td>
                                             <td>
                                                 { rd.show_at_error ?
-                                                    <input title={rd.show_at_error} onKeyUp={(e) => this.changeMapHandler(e, i)} onChange={(e) => this.changeMapHandler(e, i)} className='form-control is-invalid' name='show_at' value={rd.show_at} />
+                                                    <>
+                                                    <input 
+                                                        onMouseOver={() =>
+                                                            this.setState({
+                                                                activeDeletePopover: 'show_at' + i,
+                                                            })
+                                                        }
+                                                        onMouseLeave={() => 
+                                                            this.setState({
+                                                                activeDeletePopover: '',
+                                                            })
+                                                        }
+                                                        id={"gAK-" + 'show_at' + i} 
+                                                        onKeyUp={(e) => this.changeMapHandler(e, i)} 
+                                                        onChange={(e) => this.changeMapHandler(e, i)} 
+                                                        className='form-control is-invalid' 
+                                                        name='show_at' 
+                                                        value={rd.show_at} />
+                                                    <Popover
+                                                        placement="top"
+                                                        target={"gAK-" + 'show_at' + i}
+                                                        isOpen={
+                                                            this.state.activeDeletePopover === 'show_at' + i
+                                                        }
+                                                    >
+                                                        <PopoverBody className="w-100">
+                                                            {rd.show_at_error}
+                                                        </PopoverBody>
+                                                    </Popover>
+                                                    </>
                                                 :
                                                     <div>{rd.show_at}</div>
                                                 }
