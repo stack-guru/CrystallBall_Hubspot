@@ -86,12 +86,12 @@ export default class UploadAnnotation extends React.Component {
                 }
                 if (!obj.category) {
                     fieldErrorsCount++;
-                    obj.category_error = `Category Can't be empty`;
+                    obj.category_error = `Category can't be empty`;
                 }
 
                 if (!obj.event_name) {
                     fieldErrorsCount++;
-                    obj.event_name_error = `Event Name Can't be empty`;
+                    obj.event_name_error = `Event Name can't be empty`;
                 }
 
                 return obj;
@@ -570,7 +570,7 @@ export default class UploadAnnotation extends React.Component {
                                                         className='form-control is-invalid' 
                                                         name='category' 
                                                         value={rd.category} />
-                                                    <Popover
+                                                    <Popover className="bg-dark"
                                                         placement="top"
                                                         target={"gAK-" + 'category' + i}
                                                         isOpen={
@@ -606,7 +606,7 @@ export default class UploadAnnotation extends React.Component {
                                                         className='form-control is-invalid' 
                                                         name='event_name' 
                                                         value={rd.event_name} />
-                                                    <Popover
+                                                    <Popover className="bg-dark"
                                                         placement="top"
                                                         target={"gAK-" + 'event_name' + i}
                                                         isOpen={
@@ -642,8 +642,8 @@ export default class UploadAnnotation extends React.Component {
                                                         className='form-control is-invalid' 
                                                         name='url' 
                                                         value={rd.url} />
-                                                    <Popover
-                                                        placement="top"
+                                                    <Popover className="bg-dark"
+                                                        placement="top-right"
                                                         target={"gAK-" + 'url' + i}
                                                         isOpen={
                                                             this.state.activeDeletePopover === 'url' + i
@@ -678,7 +678,7 @@ export default class UploadAnnotation extends React.Component {
                                                         className='form-control is-invalid' 
                                                         name='description' 
                                                         value={rd.description} />
-                                                    <Popover
+                                                    <Popover className="bg-dark"
                                                         placement="top"
                                                         target={"gAK-" + 'description' + i}
                                                         isOpen={
@@ -714,7 +714,7 @@ export default class UploadAnnotation extends React.Component {
                                                         className='form-control is-invalid' 
                                                         name='show_at' 
                                                         value={rd.show_at} />
-                                                    <Popover
+                                                    <Popover className="bg-dark"
                                                         placement="top"
                                                         target={"gAK-" + 'show_at' + i}
                                                         isOpen={
@@ -774,7 +774,7 @@ export default class UploadAnnotation extends React.Component {
                                     </label>
                                 </div>
 
-                                <div className='px-8 mb-3'>
+                                <div className='grid2layout mb-3'>
                                     <div className="themeNewInputStyle position-relative">
                                         <GoogleAnalyticsPropertySelect
                                             currentPricePlan={this.props.currentPricePlan}

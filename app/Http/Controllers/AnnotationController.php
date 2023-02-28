@@ -405,7 +405,7 @@ class AnnotationController extends Controller
             if(!$fe['category']) {
                 $error = true;
                 $fieldErrorsCount++;
-                $fe['category_error'] = "Category Can't be empty";
+                $fe['category_error'] = "Category can't be empty";
             } else {
                 unset($fe['category_error']);
             }
@@ -421,7 +421,7 @@ class AnnotationController extends Controller
             if(!$fe['event_name']) {
                 $error = true;
                 $fieldErrorsCount++;
-                $fe['event_name_error'] = "Event Name Can't be empty";
+                $fe['event_name_error'] = "Event Name can't be empty";
             } else {
                 unset($fe['event_name_error']);
             }
