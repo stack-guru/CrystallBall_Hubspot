@@ -226,7 +226,7 @@ class IndexAnnotations extends React.Component {
 
         if (sortBy) link += `&sort_by=${sortBy}`;
         if (searchText) link += `&search=${searchText}`;
-        if (category) link += `&cateogry=${category}`;
+        if (sortBy === 'category' && category) link += `&cateogry=${category}`;
         if (googleAnalyticsProperty) link += `&annotation_ga_property_id=${googleAnalyticsProperty}`;
         if (pageSize) link += `&page_size=${pageSize}`;
         if (pageNumber) link += `&page_number=${pageNumber}`;
@@ -458,7 +458,7 @@ class IndexAnnotations extends React.Component {
                                                 );
                                             }}
                                         >
-                                            <option value="select-category">
+                                            <option value="">
                                                 Select Category
                                             </option>
                                             {categories.map((cats) => (
