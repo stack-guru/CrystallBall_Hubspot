@@ -842,7 +842,7 @@ export default class UploadAnnotation extends React.Component {
                                         <i><img src={'/icon-csvUpload.svg'} alt={'CSV Upload Icon'}
                                                 className="svg-inject"/></i>
                                         <strong id='csv-caption'>Drag and drop or click here</strong>
-                                        <span class='csv-caption'>.csv files only — 5mb max</span>
+                                        <span class='csv-caption'>.csv files only</span>
                                         <input type="file" onChange={this.onFileSelect}
                                                className="form-control upload-csv-input" id="csv" name="csv"/>
                                     </label>
