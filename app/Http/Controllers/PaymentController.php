@@ -226,7 +226,7 @@ class PaymentController extends Controller
                 $sGS->addUserToMarketingList($user, "11 GAa Downgraded to Basic");
                 WebMonitor::removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
             }
-
+            DowngradedUserHelper::downgradingUser($user,$pricePlan);
             // Reflecting price plan purhcase to user's account
             $user->price_plan_id = $pricePlan->id;
             $user->price_plan_expiry_date = $pricePlanExpiryDate;
