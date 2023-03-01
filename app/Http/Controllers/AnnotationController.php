@@ -433,14 +433,15 @@ class AnnotationController extends Controller
         }
 
         foreach ($fieldErrors as &$fe) {
-            $showAt = Carbon::createFromFormat($dateFormat, $fe['show_at']);
-            $exists = Annotation::whereDate('show_at', $showAt)
-                ->where('user_id', $user_id)
+            $showAt = $fe['show_at'] ? Carbon::createFromFormat($dateFormat, $fe['show_at']) : null;
+            $exists = Annotation::where('user_id', $user_id)
                 ->where('category', $fe['category'])
                 ->where('event_name', $fe['event_name'])
                 ->where('description', $fe['description'])
+                ->when($showAt, function ($query) use ($showAt) {
+                    $query->whereDate('show_at', $showAt);
+                })
                 ->where('url', $fe['url'])->first();
-
             $fe['show_at'] = $showAt;
             $fe['user_id'] = $user_id;
             $fe['added_by'] = 'csv-upload';
@@ -568,7 +569,7 @@ class AnnotationController extends Controller
                             if ($headers[$i] == 'url') {
                                 $row[$headers[$i]] = $values[$i];
                             } else {
-                                $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+                                $row[trim(str_replace('"', "", $headers[$i]))] = $values[$i];
                             }
                         // }
                     }

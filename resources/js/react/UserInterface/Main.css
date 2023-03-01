@@ -1256,6 +1256,12 @@ body {
     max-width: 824px;
     max-height: calc(100% - 180px);
 }
+
+.apps-modal.upload-csv-lg, .apps-modal.upload-csv {
+    margin: 30px auto;
+    max-height: 100%;
+}
+
 .apps-modal .modal-content {
     border: 0;
     width: 100%;
@@ -1263,6 +1269,11 @@ body {
     border-radius: 1rem;
     max-height: calc(100vh - 180px);
 }
+
+.apps-modal.upload-csv-lg .modal-content, .apps-modal.upload-csv .modal-content {
+    max-height: calc(100vh - 80px);
+}
+
 .apps-modal .modal-body {
     padding: 32px 32px;
     height: 100%;
@@ -4864,7 +4875,7 @@ color: #E0E0E0 !important;
 }
 
 .csv-review-data-container {
-    height: calc(100vh - 410px);
+    height: calc(100vh - 308px);
     overflow-y: auto;
 }
 
