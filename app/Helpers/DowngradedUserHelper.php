@@ -19,12 +19,12 @@ class DowngradedUserHelper
             // User is downgrading to basic plan from pro plan
             $sGS->addUserToMarketingList($user, "11 GAa Downgraded to Basic");
         }
-        if($pricePlan->web_monitor_count == -1 || $pricePlan->web_monitor_count == null)
+        if($pricePlan->web_monitor_count != 0)
             WebMonitor::removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
-        if($pricePlan->google_analytics_property_count == -1 || $pricePlan->google_analytics_property_count == null)
+        if($pricePlan->google_analytics_property_count != 0)
             self::removeExtraAnnotationGaProperty($user, $pricePlan->web_monitor_count);
         self::disableDataSources($user,$pricePlan);
-        if($pricePlan->user_per_ga_account_count == -1 || $pricePlan->user_per_ga_account_count == null) 
+        if($pricePlan->user_per_ga_account_count == 0) 
             self::removeExtraUser($user,$pricePlan);
         if(!$pricePlan->has_notifications)
             NotificationSetting::disableNotifications($user);
@@ -165,5 +165,6 @@ class DowngradedUserHelper
                 $property->save();
             }
         }
+        // $properties = Ga::where('user_id',$user->id)->get();
     }
 }
