@@ -69,7 +69,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'department',
 
         'team_name',
-
         'data_source_tour_showed_at',
         'google_accounts_tour_showed_at',
         'startup_configuration_showed_at',
@@ -159,6 +158,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function pricePlan()
     {
         return $this->belongsTo('App\Models\PricePlan');
+    }
+
+    public function trailPlan()
+    {
+        return $this->belongsTo('App\Models\PricePlan','price_plan_id');
+    }
+    public function trailPlanStatus()
+    {
+        if($this->trailPlan->name == PricePlan::TRIAL && Carbon::parse($this->price_plan_expiry_date)->lt(Carbon::now()))
+            return true;
+        return false;
     }
 
     public function paymentDetails()

@@ -81,12 +81,16 @@ class UserController extends Controller
                 'message' => 'Action not allowed in your plan.'
             ], 455);
         } // if limit of users has reached
-        else if (count($parentUser->users) >= ($parentUser->pricePlan->user_per_ga_account_count)) {
+        else if ($parentUser->pricePlan->user_per_ga_account_count > 0 && count($parentUser->users) >= ($parentUser->pricePlan->user_per_ga_account_count)) {
             return response()->json([
                 'message' => 'To add more users, please upgrade your account.'
             ], 455);
+        }else if($parentUser->trailPlanStatus() == true)
+        {
+            return response()->json([
+                'message' => 'Your trial is ended.To add more users, please upgrade your account.'
+            ], 455);
         }
-
         $user = new User;
         $user->fill($request->validated());
         $user->password = Hash::make($request->password);
