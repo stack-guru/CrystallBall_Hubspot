@@ -595,8 +595,14 @@ export default class UploadAnnotation extends React.Component {
                             <>
                                 <div className="apps-modalHead">
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <h2>Field errors &nbsp; <span class="text-gray">|</span> &nbsp; <span
-                                            className='text-danger'>{this.state.fieldErrorsCount} {this.state.fieldErrorsCount > 1 ? "errors" : "error"}</span>
+                                        <h2>Field errors &nbsp; <span class="text-gray">|</span> &nbsp; 
+                                        {this.state.fieldErrorsCount ? 
+                                            <span className='text-danger'>
+                                                {this.state.fieldErrorsCount + (this.state.fieldErrorsCount > 1 ? " errors" : " error")}
+                                            </span>
+                                            : 
+                                                "Good job, Click Submit"
+                                        }
                                         </h2>
                                         <span onClick={() => this.props.togglePopup('')} className="btn-close">
                                     <img className="inject-me" src="/close-icon.svg" width="26" height="26"
