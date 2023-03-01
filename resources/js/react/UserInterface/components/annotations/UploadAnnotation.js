@@ -267,7 +267,7 @@ export default class UploadAnnotation extends React.Component {
 
                     },
                     () => {
-                        this.props.updateCSVUploadStep('lg')
+                        this.props.updateCSVUploadStep('lg upload-csv-lg')
                     }
                 )
 
