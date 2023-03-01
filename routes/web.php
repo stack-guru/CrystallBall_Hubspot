@@ -21,6 +21,9 @@ Route::get('test_fb', function () {
     (new \App\Services\FacebookService())->test();
 });
 
+Route::get('enableUserProperties', [App\Http\Controllers\HomeController::class, 'enableUserProperties']);
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

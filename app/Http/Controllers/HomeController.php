@@ -29,6 +29,272 @@ use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
+
+    public function enableUserProperties () {
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+        foreach($userIdsArray as $userId) {
+            $user = User::find($userId);
+            if ($user->is_ds_holidays_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_holidays_enabled) {
+                            $innerUser->is_ds_holidays_enabled = 1;
+                            $this->checkPricePlanLimit($innerUser);
+                            $innerUser->last_activated_any_data_source_at = Carbon::now();
+                            $innerUser->save();
+                            event(new HolidaysActivated($innerUser));
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_google_algorithm_updates_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_google_algorithm_updates_enabled) {
+                            $innerUser->is_ds_google_algorithm_updates_enabled = 1;
+                            $this->checkPricePlanLimit($innerUser);
+                            $innerUser->last_activated_any_data_source_at = Carbon::now();
+                            $innerUser->save();
+
+                            event(new GoogleUpdatesActivated($innerUser));
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_retail_marketing_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_retail_marketing_enabled) {
+                            $innerUser->is_ds_retail_marketing_enabled = 1;
+                            $this->checkPricePlanLimit($innerUser);
+                            $innerUser->last_activated_any_data_source_at = Carbon::now();
+                            $innerUser->save();
+                            event(new RetailMarketingDatesActivated($innerUser));
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_weather_alerts_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_weather_alerts_enabled) {
+                            $innerUser->is_ds_weather_alerts_enabled = 1;
+                            $this->checkPricePlanLimit($innerUser);
+                            $innerUser->last_activated_any_data_source_at = Carbon::now();
+                            $innerUser->save();
+                            event(new WeatherActivated($innerUser));
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_google_alerts_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_google_alerts_enabled) {
+                            $innerUser->is_ds_google_alerts_enabled = 1;
+                            $this->checkPricePlanLimit($innerUser);
+                            $innerUser->last_activated_any_data_source_at = Carbon::now();
+                            $innerUser->save();
+                            event(new GoogleAlertActivated($innerUser));
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_wordpress_updates_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_wordpress_updates_enabled) {
+                            $innerUser->is_ds_wordpress_updates_enabled = 1;
+                            $this->checkPricePlanLimit($innerUser);
+                            $innerUser->last_activated_any_data_source_at = Carbon::now();
+                            $innerUser->save();
+                            event(new WordPressActivated($innerUser));
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_web_monitors_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_web_monitors_enabled) {
+                            $innerUser->is_ds_web_monitors_enabled = 1;
+                            $this->checkPricePlanLimit($innerUser);
+                            $innerUser->last_activated_any_data_source_at = Carbon::now();
+                            $innerUser->save();
+                            event(new WebsiteMonitoringActivated($innerUser));
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_apple_podcast_annotation_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_apple_podcast_annotation_enabled) {
+                            $innerUser->is_ds_apple_podcast_annotation_enabled = 1;
+                            $this->checkPricePlanLimit($innerUser);
+                            $innerUser->save();
+                            $innerUser->last_activated_any_data_source_at = Carbon::now();
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_shopify_annotation_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_shopify_annotation_enabled) {
+                            $innerUser->is_ds_shopify_annotation_enabled = 1;
+                            $this->checkPricePlanLimit($innerUser);
+                            $innerUser->save();
+                            $innerUser->last_activated_any_data_source_at = Carbon::now();
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_g_ads_history_change_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_g_ads_history_change_enabled) {
+                            $innerUser->is_ds_g_ads_history_change_enabled = 1;
+                            $innerUser->save();
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_anomolies_detection_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_anomolies_detection_enabled) {
+                            $innerUser->is_ds_anomolies_detection_enabled = 1;
+                            $innerUser->save();
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_budget_tracking_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_budget_tracking_enabled) {
+                            $innerUser->is_ds_budget_tracking_enabled = 1;
+                            $innerUser->save();
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_keyword_tracking_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_keyword_tracking_enabled) {
+                            $innerUser->is_ds_keyword_tracking_enabled = 1;
+                            $innerUser->save();
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_bitbucket_tracking_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_bitbucket_tracking_enabled) {
+                            $innerUser->is_ds_bitbucket_tracking_enabled = 1;
+                            $innerUser->save();
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_github_tracking_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_github_tracking_enabled) {
+                            $innerUser->is_ds_github_tracking_enabled = 1;
+                            $innerUser->save();
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_facebook_tracking_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_facebook_tracking_enabled) {
+                            $innerUser->is_ds_facebook_tracking_enabled = 1;
+                            $innerUser->save();
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_instagram_tracking_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_instagram_tracking_enabled) {
+                            $innerUser->is_ds_instagram_tracking_enabled = 1;
+                            $innerUser->save();
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_twitter_tracking_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_twitter_tracking_enabled) {
+                            $innerUser->is_ds_twitter_tracking_enabled = 1;
+                            $innerUser->save();
+                        }
+                    }
+                }
+            }
+
+            if ($user->is_ds_wordpress_enabled) {
+                foreach($userIdsArray as $userInnerId) {
+                    if($userId !== $userInnerId) {
+                        $innerUser = User::find($userInnerId);
+                        if (!$innerUser->is_ds_wordpress_enabled) {
+                            $innerUser->is_ds_wordpress_enabled = 1;
+                            $innerUser->save();
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return 123;
+        
+    }
+
     public function uiUserShow()
     {
         /**
