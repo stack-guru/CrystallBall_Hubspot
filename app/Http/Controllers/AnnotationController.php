@@ -326,6 +326,145 @@ class AnnotationController extends Controller
         return ['annotation' => $annotation];
     }
 
+    public function saveCSV (Request $request) {
+
+        $user_id = Auth::id();
+        $fieldErrors = json_decode($request->fieldErrors, true);
+
+        $data = [];
+        $error = false;
+
+        $dateF = $request->date_format;
+        $dateFormat = '';
+        switch ($dateF) {
+        case 'DD/MM/YYYY':
+            $dateFormat = "j/n/Y";
+            break;
+        case 'M-D-YYYY':
+            $dateFormat = "n-j-Y";
+            break;
+        case "M-D-YY":
+            $dateFormat = "n-j-y";
+            break;
+        case "MM-DD-YY":
+            $dateFormat = "m-d-y";
+            break;
+        case "MM-DD-YYYY":
+            $dateFormat = "m-d-Y";
+            break;
+        case "YY-MM-DD":
+            $dateFormat = "y-m-d";
+            break;
+        case "YYYY-MM-DD":
+            $dateFormat = "Y-m-d";
+            break;
+        case "DD-MMM-YY":
+            $dateFormat = "d-M-y";
+            break;
+        case "M/D/YYYY":
+            $dateFormat = "n/j/Y";
+            break;
+        case "M/D/YY":
+            $dateFormat = "n/j/y";
+            break;
+        case "MM/DD/YY":
+            $dateFormat = "m/d/y";
+            break;
+        case "MM/DD/YYYY":
+            $dateFormat = "m/d/Y";
+            break;
+        case "YY/MM/DD":
+            $dateFormat = "y/m/d";
+            break;
+        case "YYYY/MM/DD":
+            $dateFormat = "Y/m/d";
+            break;
+        case "DD/MMM/YY":
+            $dateFormat = "d/M/y";
+            break;
+                                                
+        default:
+            $dateFormat = '';
+        }
+
+        $fieldErrorsCount = 0;
+        foreach ($fieldErrors as &$fe) {
+            try {
+                $showAt = Carbon::createFromFormat($dateFormat, $fe['show_at']);
+                unset($fe['show_at_error']);
+            } catch(\Exception $e) {
+                if($fe['show_at']) {
+                    $error = true;
+                    $fieldErrorsCount++;
+                    $fe['show_at_error'] = "Date format is incorrect, use format [$dateF]";
+                } else {
+                    unset($fe['show_at_error']);
+                }
+            }
+
+            if(!$fe['category']) {
+                $error = true;
+                $fieldErrorsCount++;
+                $fe['category_error'] = "Category can't be empty";
+            } else {
+                unset($fe['category_error']);
+            }
+
+            if($fe['url'] && !filter_var($fe['url'], FILTER_VALIDATE_URL)) {
+                $error = true;
+                $fieldErrorsCount++;
+                $fe['url_error'] = "Enter a valid URL";
+            } else {
+                unset($fe['url_error']);
+            }
+            
+            if(!$fe['event_name']) {
+                $error = true;
+                $fieldErrorsCount++;
+                $fe['event_name_error'] = "Event Name can't be empty";
+            } else {
+                unset($fe['event_name_error']);
+            }
+            
+        }
+
+        if ($error) {
+            return ['success' => false, 'error' => $e, 'fieldErrors' => $fieldErrors, 'fieldErrorsCount' => $fieldErrorsCount, 'message' => "The date is not properly formatted"];
+        }
+
+        foreach ($fieldErrors as &$fe) {
+            $showAt = Carbon::createFromFormat($dateFormat, $fe['show_at']);
+            $exists = Annotation::whereDate('show_at', $showAt)
+                ->where('user_id', $user_id)
+                ->where('category', $fe['category'])
+                ->where('event_name', $fe['event_name'])
+                ->where('description', $fe['description'])
+                ->where('url', $fe['url'])->first();
+
+            $fe['show_at'] = $showAt;
+            $fe['user_id'] = $user_id;
+            $fe['added_by'] = 'csv-upload';
+
+            if(!$exists) {
+                foreach($data as $dt) {
+                    $exists = $dt['description'] === $fe['description'] && $dt['event_name'] === $fe['event_name'] && $dt['category'] === $fe['category'] && $dt['url'] === $fe['url'];
+                }
+            }
+
+            if(!$exists) {
+                $data[] = $fe;
+            }
+        }
+
+        $resp = $this->insertRows($data, $request);
+        if ($resp === 'ok') {
+            return ['success' => true];
+        } else {
+            return ['success' => false, 'error' => $resp];
+        }
+
+    }
+
     public function upload(Request $request)
     {
         $this->authorize('create', Annotation::class);
@@ -340,7 +479,6 @@ class AnnotationController extends Controller
 
         $this->validate($request, [
             'csv' => 'required|file|mimetypes:text/csv,text/plain,text/html|mimes:csv,txt,html',
-            'date_format' => 'required',
             'google_analytics_property_id' => 'nullable|array',
             'google_analytics_property_id.*' => 'nullable|exists:google_analytics_properties,id',
         ]);
@@ -355,27 +493,36 @@ class AnnotationController extends Controller
         //     return response()->json(['message' => 'Invalid number of columns'], 422);
         // }
 
+        $importReview = [];
+        $importReviewErrorCount = 0;
         // Checking if given headers contain non-printable  characters
-        foreach ($headers as $header) {
-            if (!ctype_print($header)) {
-                return response()->json(['message' => "Inappropriate character in header: " . json_encode($header)], 422);
-            }
-        }
+        // foreach ($headers as $header) {
+        //     if (!ctype_print($header)) {
+        //         $importReview[$header . "_error"] = 'Inappropriate character';
+        //         // return response()->json(['message' => "Inappropriate character in header: " . json_encode($header)], 422);
+        //     }
+        // }
 
         // Checking if given file contains all required headers
         $kHs = ['category', 'event_name', 'url', 'description', 'show_at'];
         foreach ($kHs as $kH) {
             if (!in_array($kH, $headers)) {
-                return response()->json(['message' => "Incomplete CSV file headers.\nMissing header '" . $kH . "'.\nReceived headers: " . json_encode($headers)], 422);
+                $importReviewErrorCount = $importReviewErrorCount + 1;
+                $importReview[$kH . "_error"] = 'Incomplete CSV file headers';
+                // return response()->json(['message' => "Incomplete CSV file headers.\nMissing header '" . $kH . "'.\nReceived headers: " . json_encode($headers)], 422);
             }
         }
 
-        $user_id = Auth::id();
+        // $user_id = Auth::id();
+        // $row['user_id'] = $user_id;
+        // $row['added_by'] = 'csv-upload';
+        // $existingRecords = Annotation::where('user_id', $user_id)->get();
 
         $rows = array();
         try {
 
-            DB::beginTransaction();
+            $sampleDate = '';
+            // $fieldErrorsCount = 0;
             foreach ($filecontent as $line) {
                 if (strlen($line) < (6 + 7)) {
                     continue;
@@ -386,101 +533,113 @@ class AnnotationController extends Controller
 
                 if ($headers !== $values && count($values) == count($headers)) {
                     for ($i = 0; $i < count($headers); $i++) {
-                        if (in_array($headers[$i], $kHs)) {
-                            if ($headers[$i] == 'show_at') {
-                                try {
-                                    $date = Carbon::createFromFormat($request->date_format, $values[$i]);
-                                    $row['show_at'] = $date->format('Y-m-d');
-                                } catch (\Exception $e) {
-                                    DB::rollBack();
-                                    return response()->json(['message' => "Please select correct date format according to your CSV file from the list below."], 422);
-                                }
-                            } else if ($headers[$i] == 'url') {
-                                $row['url'] = $values[$i];
-                            } else if ($headers[$i] == 'category') {
-                                $row['category'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
-                            } else if ($headers[$i] == 'event_type') {
-                                $row['event_type'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
-                            } else if ($headers[$i] == 'event_name') {
-                                $row['event_name'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
-                            } else if ($headers[$i] == 'title') {
-                                $row['title'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                        // if (in_array($headers[$i], $kHs)) {
+                            // if ($headers[$i] == 'show_at') {
+                            //     try {
+                            //         $date = Carbon::createFromFormat($request->date_format, $values[$i]);
+                            //         $row[$headers[$i]] = $date->format('Y-m-d');
+                            //     } catch (\Exception $e) {
+                            //         $row[$headers[$i]] = $values[$i];
+                            //         $row['show_at_error'] = 'Please select correct date format according to your CSV file from the list below.';
+                            //         $error = true;
+                            //         $fieldErrorsCount = $fieldErrorsCount + 1;
+                            //     }
+                            // } else if ($headers[$i] == 'url') {
+                            //     $url = $values[$i];
+                            //     $row[$headers[$i]] = $url;
+                            //     if (!filter_var($url, FILTER_VALIDATE_URL)) {
+                            //         $row['url_error'] = 'Please provide valid url';
+                            //         $error = true;
+                            //         $fieldErrorsCount = $fieldErrorsCount + 1;
+                            //     }
+                            // } else if ($headers[$i] == 'category') {
+                            //     $row['category'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            // } else if ($headers[$i] == 'event_type') {
+                            //     $row['event_type'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            // } else if ($headers[$i] == 'event_name') {
+                            //     $row['event_name'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            // } else if ($headers[$i] == 'title') {
+                            //     $row['title'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+
+                            if ($headers[$i] == 'show_at' && !$sampleDate) {
+                                $sampleDate = $values[$i];
+                            }
+
+                            if ($headers[$i] == 'url') {
+                                $row[$headers[$i]] = $values[$i];
                             } else {
                                 $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
                             }
-                        }
+                        // }
                     }
 
-                    $row['user_id'] = $user_id;
-                    $row['added_by'] = 'csv-upload';
-                    array_push($rows, $row);
+                    // $row['user_id'] = $user_id;
+                    // $row['added_by'] = 'csv-upload';
+                    // if ($this->isNotDuplicate($existingRecords, $row)) {
+                        array_push($rows, $row);
+                    // }
                 }
 
-                if (count($rows) > 9000) {
+                // if (count($rows) > 9000) {
                     // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (7)
                     // I obviously rounded it to something human readable
-                    Annotation::insert($rows);
-                    $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
-                    $totalNewRows = count($rows);
-                    $lastInsertId = $firstInsertId + ($totalNewRows - 1);
-                    if ($request->has('google_analytics_property_id') && !in_array("", $request->google_analytics_property_id)) {
-                        foreach ($request->google_analytics_property_id as $googleAnalyticsPropertyId) {
-                            $sql = "
-                            INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
-                                SELECT id, $googleAnalyticsPropertyId, user_id FROM annotations
-                                    WHERE id BETWEEN $firstInsertId AND $lastInsertId
-                            ;
-                            ";
-                            DB::statement($sql);
-                        }
-                    } else {
-                        $sql = "
-                            INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
-                                SELECT id, NULL, user_id FROM annotations
-                                    WHERE id BETWEEN $firstInsertId AND $lastInsertId
-                            ;
-                            ";
-                        DB::statement($sql);
-                    }
-
-                    $rows = array();
-                }
+                //     $this->insertRows($rows, $request);
+                //     $rows = array();
+                // }
             }
 
-            if (count($rows)) {
-                Annotation::insert($rows);
-                $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
-                $totalNewRows = count($rows);
-                $lastInsertId = $firstInsertId + ($totalNewRows - 1);
-                if ($request->has('google_analytics_property_id') && !in_array("", $request->google_analytics_property_id)) {
-                    foreach ($request->google_analytics_property_id as $googleAnalyticsPropertyId) {
-                        $sql = "
-                        INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
-                            SELECT id, $googleAnalyticsPropertyId, user_id FROM annotations
-                                WHERE id BETWEEN $firstInsertId AND $lastInsertId
-                        ;
-                        ";
-                        DB::statement($sql);
-                    }
-                } else {
-                    $sql = "
-                        INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
-                            SELECT id, NULL, user_id FROM annotations
-                                WHERE id BETWEEN $firstInsertId AND $lastInsertId
-                        ;
-                        ";
-                    DB::statement($sql);
-                }
-            }
-            DB::commit();
+            // if (count($rows) && !$error) {
+            //     $this->insertRows($rows, $request);
+            // }
         } catch (\Exception $e) {
-            DB::rollBack();
             Log::error($e);
             abort(422, "Error occured while processing your CSV. Please contact support for more information.");
         }
-        event(new NewCSVFileUploaded($user, $request->file('csv')->getClientOriginalName()));
 
-        return ['success' => true];
+        return [
+            'fieldErrors'=> $rows, 
+            'fileName' => $request->file('csv')->getClientOriginalName(),
+            'sampleDate' => $sampleDate, 
+            'importReview'=> $importReview, 
+            'importReviewErrorCount' => $importReviewErrorCount,
+            'fileHeaders' => $headers
+        ];
+    }
+
+    public function insertRows ($rows, $request) {
+        try {
+            Annotation::insert($rows);
+            $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
+            $totalNewRows = count($rows);
+            $lastInsertId = $firstInsertId + ($totalNewRows - 1);
+            if ($request->has('google_analytics_property_id') && !in_array("", $request->google_analytics_property_id)) {
+                foreach ($request->google_analytics_property_id as $googleAnalyticsPropertyId) {
+                    $sql = "
+                    INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
+                        SELECT id, $googleAnalyticsPropertyId, user_id FROM annotations
+                            WHERE id BETWEEN $firstInsertId AND $lastInsertId
+                    ;
+                    ";
+                    DB::statement($sql);
+                }
+            } else {
+                $sql = "
+                    INSERT INTO annotation_ga_properties (annotation_id, google_analytics_property_id, user_id)
+                        SELECT id, NULL, user_id FROM annotations
+                            WHERE id BETWEEN $firstInsertId AND $lastInsertId
+                    ;
+                    ";
+                DB::statement($sql);
+            }
+
+            $user = Auth::user();
+            event(new NewCSVFileUploaded($user, $request->fileName));
+            return 'ok';
+        } catch (\Exception $e) {
+            dd($e);
+            return $e;
+        }
+
     }
 
     public function getCategories()
