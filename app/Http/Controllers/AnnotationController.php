@@ -569,7 +569,7 @@ class AnnotationController extends Controller
                             if ($headers[$i] == 'url') {
                                 $row[$headers[$i]] = $values[$i];
                             } else {
-                                $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+                                $row[trim(str_replace('"', "", $headers[$i]))] = $values[$i];
                             }
                         // }
                     }
