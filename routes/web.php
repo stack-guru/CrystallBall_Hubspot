@@ -268,6 +268,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('price-plan-detail', [PricePlanController::class, 'customPricePlanDetailsByCode']);
 
             Route::post('price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');
+            Route::post('price-plan/check-extra-apps', [App\Http\Controllers\PaymentController::class, 'checkExtraApps'])->name('payment.check-extra-apps');
             Route::get('price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
             Route::post('payment-detail', [App\Http\Controllers\PaymentDetailController::class, 'store']);
 

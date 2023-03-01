@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CheckUserUsageHelper;
 use App\Helpers\DowngradedUserHelper;
 use App\Jobs\MarkSalesInFirstPromoter;
 use App\Mail\AdminPlanUpgradedMail;
@@ -52,39 +53,6 @@ class PaymentController extends Controller
             ]);
             $blueSnapService = new BlueSnapService;
             $token = $blueSnapService->getToken();
-            $pricePlan = PricePlan::findOrFail($request->price_plan_id);
-            //Alert for google analytics Property Start
-            $propertyCount = GoogleAnalyticsProperty::where('user_id',$user->id)->where('is_in_use',1)->count();
-            if($pricePlan->google_analytics_property_count != 0 && $propertyCount > 0 && $pricePlan->google_analytics_property_count < $propertyCount)
-            {
-                if($pricePlan->google_analytics_property_count == -1 || $pricePlan->google_analytics_property_count == null)
-                    $properties_limit_of_selected_plan = 0;
-                else 
-                    $properties_limit_of_selected_plan = $pricePlan->google_analytics_property_count;
-                $text = "During the Trial you used ". $propertyCount ."properties and the plan you selected allows only ".$properties_limit_of_selected_plan.". Note that if you continue with ".$pricePlan->name." plan, we will unassign the properties of the annotations you made during the Trial, you can Edit them later.";
-                return response()->json(['success' => false, 'message' => $text], 422);
-            }
-            //Alert for google analytics Property End
-            //Alert for Apps Start
-            $app_in_use = DowngradedUserHelper::checkAppsInUse($user,$pricePlan);
-            if(count($app_in_use) > 0)
-            {  
-                $text = "During the Trial you activated ".implode(",",$app_in_use).". Note that if you continue with ".$pricePlan->name." we will deactivate the automations and you will no longer be able to view the annotations";
-                return response()->json(['success' => false, 'message' => $text], 422);
-            }
-            //Alert for Apps End
-            //Alert for Co-worker Invite Start
-            if($pricePlan->user_per_ga_account_count != 0)
-            {
-                $extra_users = DowngradedUserHelper::checkExtraUser($user,$pricePlan);
-                $total_co_users = User::where('user_id',$user->id)->count();
-                if(count($extra_users) > 0)
-                {  
-                    $text = "During the Trial ".$total_co_users." co-workers joined the account. Note that if you continue with Basic ".implode(",",$extra_users)." will lose access";
-                    return response()->json(['success' => false, 'message' => $text], 422);
-                }
-            }
-            //Alert for Co-worker Invite End
 
             return redirect()->route('settings.price-plan.payment', [
                 'price_plan_id' => $request->query('price_plan_id'),
@@ -95,7 +63,6 @@ class PaymentController extends Controller
 
         return view('ui/app');
     }
-
     public function subscribePlan(Request $request)
     {
         $user = Auth::user();
@@ -292,5 +259,52 @@ class PaymentController extends Controller
         if ($pricePlan->price) dispatch(new MarkSalesInFirstPromoter($user, $pricePlan, $price, $transactionId));
 
         return ['success' => true, 'transaction_id' => $transactionId];
+    }
+    public function checkExtraApps(Request $request)
+    {
+        $user = Auth::user();
+        $showAlerts = [];
+        $alertText = [];
+        $this->validate($request, [
+            'price_plan_id' => 'required|exists:price_plans,id'
+        ]);
+        $pricePlan = PricePlan::findOrFail($request->price_plan_id);
+        //Alert for google analytics Property Start
+        $propertyCount = GoogleAnalyticsProperty::where('user_id',$user->id)->where('is_in_use',1)->count();
+        if($pricePlan->google_analytics_property_count != 0 && $propertyCount > 0 && $pricePlan->google_analytics_property_count < $propertyCount)
+        {
+            if($pricePlan->google_analytics_property_count == -1 || $pricePlan->google_analytics_property_count == null)
+                $properties_limit_of_selected_plan = 0;
+            else 
+                $properties_limit_of_selected_plan = $pricePlan->google_analytics_property_count;
+            $text = "During the Trial you used ". $propertyCount ."properties and the plan you selected allows only ".$properties_limit_of_selected_plan.". Note that if you continue with ".$pricePlan->name." plan, we will unassign the properties of the annotations you made during the Trial, you can Edit them later.";
+            $showAlerts[] =  'property-alert';
+            $alertText[] =  $text;
+        }
+        //Alert for google analytics Property End
+        //Alert for Apps Start
+        $app_in_use = CheckUserUsageHelper::checkAppsInUse($user,$pricePlan);
+        if(count($app_in_use) > 0)
+        {  
+            $text = "During the Trial you activated ".implode(",",$app_in_use).". Note that if you continue with ".$pricePlan->name." we will deactivate the automations and you will no longer be able to view the annotations";
+            $showAlerts[] =  'apps-in-use-alert';
+            $alertText[] =  $text;
+            // return response()->json(['success' => false, 'message' => $text], 422);
+        }
+        //Alert for Apps End
+        //Alert for Co-worker Invite Start
+        if($pricePlan->user_per_ga_account_count != 0)
+        {
+            $extra_users = CheckUserUsageHelper::checkExtraUser($user,$pricePlan);
+            $total_co_users = User::where('user_id',$user->id)->count();
+            if(count($extra_users) > 0)
+            {  
+                $text = "During the Trial ".$total_co_users." co-workers joined the account. Note that if you continue with Basic ".implode(",",$extra_users)." will lose access";
+                $showAlerts[] =  'extra-users-alert';
+                $alertText[] =  $text;
+            }
+        }
+        //Alert for Co-worker Invite End
+        return ['success' => true, 'showAlerts' => $showAlerts, 'alertText' => $alertText];
     }
 }
