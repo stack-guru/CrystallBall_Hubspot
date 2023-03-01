@@ -451,11 +451,26 @@ class Main extends React.Component {
                 if (response.data.user.price_plan.name == 'Free') {
                     setTimeout(() => { this.setState({ showPromotionPopup: true }); }, 5000);
                 }
-            }, (err) => {
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-                this.setState({ isBusy: false, errors: err });
-            });
+                
+                HttpClient.post(`/settings/price-plan/check-extra-apps`, {
+                    '_token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'price_plan_id': response.data.user.price_plan.id,
+                })
+                .then(response => {
+                    this.setState({ isBusy: false, errors: undefined });
+                    response.data.alertText.forEach(text => {
+                        swal.fire('Oops...', text, 'info');
+                    });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
     }
 
     componentDidUpdate(prevProps) {
