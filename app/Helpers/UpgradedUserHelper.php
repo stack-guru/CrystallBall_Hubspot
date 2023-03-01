@@ -2,19 +2,18 @@
 
 namespace App\Helpers;
 
-use App\Models\AnnotationGaProperty;
 use App\Models\GoogleAnalyticsProperty;
-use App\Models\NotificationSetting;
-use App\Models\PricePlan;
 use App\Models\User;
 use App\Models\WebMonitor;
-use App\Services\SendGridService;
 
 class UpgradedUserHelper
 {
 
     public static function UpgradingUser($user,$pricePlan)
     {
+        
+        // Enabling user's web monitors accoridng to new limits.
+        WebMonitor::addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
         if($pricePlan->google_analytics_property_count != -1)
             self::addExtraAnnotationGaProperty($user, $pricePlan);
         if($pricePlan->user_per_ga_account_count != -1) 

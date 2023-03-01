@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\CheckUserUsageHelper;
 use App\Helpers\DowngradedUserHelper;
+use App\Helpers\UpgradedUserHelper;
 use App\Jobs\MarkSalesInFirstPromoter;
 use App\Mail\AdminPlanUpgradedMail;
 use App\Models\Admin;
@@ -221,11 +222,11 @@ class PaymentController extends Controller
             $pricePlanSubscription->save();
 
             // Sending email to user if downgraded
-            if ($user->pricePlan->name == PricePlan::PRO && $pricePlan->name == PricePlan::BASIC) {
-                // User is downgrading to basic plan from pro plan
-                $sGS->addUserToMarketingList($user, "11 GAa Downgraded to Basic");
-                WebMonitor::removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
-            }
+            // if ($user->pricePlan->name == PricePlan::PRO && $pricePlan->name == PricePlan::BASIC) {
+            //     // User is downgrading to basic plan from pro plan
+            //     $sGS->addUserToMarketingList($user, "11 GAa Downgraded to Basic");
+            //     WebMonitor::removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
+            // }
             DowngradedUserHelper::downgradingUser($user,$pricePlan);
             // Reflecting price plan purhcase to user's account
             $user->price_plan_id = $pricePlan->id;
@@ -250,9 +251,7 @@ class PaymentController extends Controller
                 break;
         }
 
-        // Enabling user's web monitors accoridng to new limits.
-        WebMonitor::addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
-
+        UpgradedUserHelper::UpgradingUser($user,$pricePlan);
         // A notification to system administrator of the purchase
         $admin = Admin::first();
         Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
@@ -269,6 +268,7 @@ class PaymentController extends Controller
             'price_plan_id' => 'required|exists:price_plans,id'
         ]);
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
+
         //Alert for google analytics Property Start
         $propertyCount = GoogleAnalyticsProperty::where('user_id',$user->id)->where('is_in_use',1)->count();
         if($pricePlan->google_analytics_property_count != 0 && $propertyCount > 0 && $pricePlan->google_analytics_property_count < $propertyCount)
