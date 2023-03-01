@@ -41,10 +41,8 @@ class HomeController extends Controller
                         $innerUser = User::find($userInnerId);
                         if (!$innerUser->is_ds_holidays_enabled) {
                             $innerUser->is_ds_holidays_enabled = 1;
-                            $this->checkPricePlanLimit($innerUser);
                             $innerUser->last_activated_any_data_source_at = Carbon::now();
                             $innerUser->save();
-                            event(new HolidaysActivated($innerUser));
                         }
                     }
                 }
@@ -56,11 +54,8 @@ class HomeController extends Controller
                         $innerUser = User::find($userInnerId);
                         if (!$innerUser->is_ds_google_algorithm_updates_enabled) {
                             $innerUser->is_ds_google_algorithm_updates_enabled = 1;
-                            $this->checkPricePlanLimit($innerUser);
                             $innerUser->last_activated_any_data_source_at = Carbon::now();
                             $innerUser->save();
-
-                            event(new GoogleUpdatesActivated($innerUser));
                         }
                     }
                 }
@@ -72,10 +67,8 @@ class HomeController extends Controller
                         $innerUser = User::find($userInnerId);
                         if (!$innerUser->is_ds_retail_marketing_enabled) {
                             $innerUser->is_ds_retail_marketing_enabled = 1;
-                            $this->checkPricePlanLimit($innerUser);
                             $innerUser->last_activated_any_data_source_at = Carbon::now();
                             $innerUser->save();
-                            event(new RetailMarketingDatesActivated($innerUser));
                         }
                     }
                 }
@@ -87,10 +80,8 @@ class HomeController extends Controller
                         $innerUser = User::find($userInnerId);
                         if (!$innerUser->is_ds_weather_alerts_enabled) {
                             $innerUser->is_ds_weather_alerts_enabled = 1;
-                            $this->checkPricePlanLimit($innerUser);
                             $innerUser->last_activated_any_data_source_at = Carbon::now();
                             $innerUser->save();
-                            event(new WeatherActivated($innerUser));
                         }
                     }
                 }
@@ -102,10 +93,8 @@ class HomeController extends Controller
                         $innerUser = User::find($userInnerId);
                         if (!$innerUser->is_ds_google_alerts_enabled) {
                             $innerUser->is_ds_google_alerts_enabled = 1;
-                            $this->checkPricePlanLimit($innerUser);
                             $innerUser->last_activated_any_data_source_at = Carbon::now();
                             $innerUser->save();
-                            event(new GoogleAlertActivated($innerUser));
                         }
                     }
                 }
@@ -117,10 +106,8 @@ class HomeController extends Controller
                         $innerUser = User::find($userInnerId);
                         if (!$innerUser->is_ds_wordpress_updates_enabled) {
                             $innerUser->is_ds_wordpress_updates_enabled = 1;
-                            $this->checkPricePlanLimit($innerUser);
                             $innerUser->last_activated_any_data_source_at = Carbon::now();
                             $innerUser->save();
-                            event(new WordPressActivated($innerUser));
                         }
                     }
                 }
@@ -132,10 +119,8 @@ class HomeController extends Controller
                         $innerUser = User::find($userInnerId);
                         if (!$innerUser->is_ds_web_monitors_enabled) {
                             $innerUser->is_ds_web_monitors_enabled = 1;
-                            $this->checkPricePlanLimit($innerUser);
                             $innerUser->last_activated_any_data_source_at = Carbon::now();
                             $innerUser->save();
-                            event(new WebsiteMonitoringActivated($innerUser));
                         }
                     }
                 }
@@ -147,9 +132,8 @@ class HomeController extends Controller
                         $innerUser = User::find($userInnerId);
                         if (!$innerUser->is_ds_apple_podcast_annotation_enabled) {
                             $innerUser->is_ds_apple_podcast_annotation_enabled = 1;
-                            $this->checkPricePlanLimit($innerUser);
-                            $innerUser->save();
                             $innerUser->last_activated_any_data_source_at = Carbon::now();
+                            $innerUser->save();
                         }
                     }
                 }
@@ -161,9 +145,8 @@ class HomeController extends Controller
                         $innerUser = User::find($userInnerId);
                         if (!$innerUser->is_ds_shopify_annotation_enabled) {
                             $innerUser->is_ds_shopify_annotation_enabled = 1;
-                            $this->checkPricePlanLimit($innerUser);
-                            $innerUser->save();
                             $innerUser->last_activated_any_data_source_at = Carbon::now();
+                            $innerUser->save();
                         }
                     }
                 }
