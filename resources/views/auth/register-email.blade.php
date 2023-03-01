@@ -29,7 +29,7 @@
                     <div class="py-2 mb-3 d-flex justify-content-center">
                         <label class="d-flex align-items justify-content-end serviceCheckBox m-0" for="read_confirmation">
                             <input type="checkbox" class="form-check-input @error('read_confirmation') is-invalid @enderror" name="read_confirmation" id="read_confirmation" />
-                            <span>By signing up, you agree to our <a href="{{config('app.base_url')}}/privacy-policy" target="_blank">Privacy Policy</a> and <a href="{{config('app.base_url')}}/terms-of-service" target="_blank">Term of Use</a></span>
+                            <span>By signing up, you agree to our <a href="{{config('app.base_url')}}/privacy-policy" target="_blank">Privacy Policy</a> and <a href="{{config('app.base_url')}}/terms-of-service" target="_blank">Terms of Service</a></span>
                         </label>
                         @error('read_confirmation')
                         <span class="invalid-feedback" role="alert">
