@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CheckUserUsageHelper;
+use App\Helpers\DowngradedUserHelper;
+use App\Helpers\UpgradedUserHelper;
 use App\Jobs\MarkSalesInFirstPromoter;
 use App\Mail\AdminPlanUpgradedMail;
 use App\Models\Admin;
 use App\Models\Coupon;
+use App\Models\GoogleAnalyticsProperty;
 use App\Models\PaymentDetail;
 use App\Models\PricePlan;
 use App\Models\WebMonitor;
 use App\Models\PricePlanSubscription;
+use App\Models\User;
 use App\Models\UserRegistrationOffer;
 use App\Services\BlueSnapService;
 use App\Services\SendGridService;
@@ -37,7 +42,6 @@ class PaymentController extends Controller
 
     public function show(Request $request)
     {
-
         $user = Auth::user();
         if ($user->user_id) {
             abort(403, "Only account owner is allowed to subscribe price plans.");
@@ -48,7 +52,6 @@ class PaymentController extends Controller
                 'price_plan_id' => 'required|exists:price_plans,id',
                 'plan_duration' => 'required|in:1,12',
             ]);
-
             $blueSnapService = new BlueSnapService;
             $token = $blueSnapService->getToken();
 
@@ -61,7 +64,6 @@ class PaymentController extends Controller
 
         return view('ui/app');
     }
-
     public function subscribePlan(Request $request)
     {
         $user = Auth::user();
@@ -73,7 +75,7 @@ class PaymentController extends Controller
             'price_plan_id' => 'required|exists:price_plans,id',
             'plan_duration' => 'required|in:1,12',
         ]);
-
+    
         // Putting values in variable for use
         $pricePlan = PricePlan::findOrFail($request->price_plan_id);
         $pricePlanExipryDuration = "+" . $request->plan_duration . " month";
@@ -220,12 +222,12 @@ class PaymentController extends Controller
             $pricePlanSubscription->save();
 
             // Sending email to user if downgraded
-            if ($user->pricePlan->name == PricePlan::PRO && $pricePlan->name == PricePlan::BASIC) {
-                // User is downgrading to basic plan from pro plan
-                $sGS->addUserToMarketingList($user, "11 GAa Downgraded to Basic");
-                WebMonitor::removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
-            }
-
+            // if ($user->pricePlan->name == PricePlan::PRO && $pricePlan->name == PricePlan::BASIC) {
+            //     // User is downgrading to basic plan from pro plan
+            //     $sGS->addUserToMarketingList($user, "11 GAa Downgraded to Basic");
+            //     WebMonitor::removeAdditionalWebMonitors($user, $pricePlan->web_monitor_count);
+            // }
+            DowngradedUserHelper::downgradingUser($user,$pricePlan);
             // Reflecting price plan purhcase to user's account
             $user->price_plan_id = $pricePlan->id;
             $user->price_plan_expiry_date = $pricePlanExpiryDate;
@@ -249,14 +251,60 @@ class PaymentController extends Controller
                 break;
         }
 
-        // Enabling user's web monitors accoridng to new limits.
-        WebMonitor::addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
-
+        UpgradedUserHelper::UpgradingUser($user,$pricePlan);
         // A notification to system administrator of the purchase
         $admin = Admin::first();
         Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
         if ($pricePlan->price) dispatch(new MarkSalesInFirstPromoter($user, $pricePlan, $price, $transactionId));
 
         return ['success' => true, 'transaction_id' => $transactionId];
+    }
+    public function checkExtraApps(Request $request)
+    {
+        $user = Auth::user();
+        $showAlerts = [];
+        $alertText = [];
+        $this->validate($request, [
+            'price_plan_id' => 'required|exists:price_plans,id'
+        ]);
+        $pricePlan = PricePlan::findOrFail($request->price_plan_id);
+
+        //Alert for google analytics Property Start
+        $propertyCount = GoogleAnalyticsProperty::where('user_id',$user->id)->where('is_in_use',1)->count();
+        if($pricePlan->google_analytics_property_count != 0 && $propertyCount > 0 && $pricePlan->google_analytics_property_count < $propertyCount)
+        {
+            if($pricePlan->google_analytics_property_count == -1 || $pricePlan->google_analytics_property_count == null)
+                $properties_limit_of_selected_plan = 0;
+            else 
+                $properties_limit_of_selected_plan = $pricePlan->google_analytics_property_count;
+            $text = "During the Trial you used ". $propertyCount ."properties and the plan you selected allows only ".$properties_limit_of_selected_plan.". Note that if you continue with ".$pricePlan->name." plan, we will unassign the properties of the annotations you made during the Trial, you can Edit them later.";
+            $showAlerts[] =  'property-alert';
+            $alertText[] =  $text;
+        }
+        //Alert for google analytics Property End
+        //Alert for Apps Start
+        $app_in_use = CheckUserUsageHelper::checkAppsInUse($user,$pricePlan);
+        if(count($app_in_use) > 0)
+        {  
+            $text = "During the Trial you activated ".implode(",",$app_in_use).". Note that if you continue with ".$pricePlan->name." we will deactivate the automations and you will no longer be able to view the annotations";
+            $showAlerts[] =  'apps-in-use-alert';
+            $alertText[] =  $text;
+            // return response()->json(['success' => false, 'message' => $text], 422);
+        }
+        //Alert for Apps End
+        //Alert for Co-worker Invite Start
+        if($pricePlan->user_per_ga_account_count != 0)
+        {
+            $extra_users = CheckUserUsageHelper::checkExtraUser($user,$pricePlan);
+            $total_co_users = User::where('user_id',$user->id)->count();
+            if(count($extra_users) > 0)
+            {  
+                $text = "During the Trial ".$total_co_users." co-workers joined the account. Note that if you continue with Basic ".implode(",",$extra_users)." will lose access";
+                $showAlerts[] =  'extra-users-alert';
+                $alertText[] =  $text;
+            }
+        }
+        //Alert for Co-worker Invite End
+        return ['success' => true, 'showAlerts' => $showAlerts, 'alertText' => $alertText];
     }
 }

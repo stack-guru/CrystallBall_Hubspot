@@ -370,6 +370,12 @@ class Main extends React.Component {
                         bannerImg="/images/trackers-ads.svg"
                     >
                     </ga-upgrade-popup> : null}
+                    {this.state.upgradePopupType === 'trial-ended' ?
+                        <ga-extend-trail-popup
+                            heading={`<h1>Trial Ended > <span>Upgrade Today</span></h1>`}
+                            subHeading={`<p>and get access to all amazing features</p>`}
+                            bannerImg="/images/more-property-upgrade.svg"
+                    ></ga-extend-trail-popup> : null}
                 </Modal>
                 {/* <Modal isOpen={true} centered className="gaUpgradePopup" toggle={() => {}}>
                     <button onClick={() => {}} class="btn-closeUpgradePopup"></button>
@@ -438,7 +444,11 @@ class Main extends React.Component {
                         uid: "{{ Auth::user()->id }}"
                     })
                 }
-
+                if(response.data.user.trail_plan_status == true)
+                {
+                    this.setState({ showUpgradePopup: true });
+                    this.setState({ upgradePopupType: 'trial-ended' });
+                }
                 if (response.data.user.price_plan.name == 'Free') {
                     setTimeout(() => { this.setState({ showPromotionPopup: true }); }, 5000);
                 }
