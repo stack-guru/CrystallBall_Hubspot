@@ -99,7 +99,7 @@ export default class UploadAnnotation extends React.Component {
 
             this.setState({ fieldErrors: result, fieldErrorsCheck: true, fieldErrorsCount }, () => {
                 const target = document.querySelector('.is-invalid');
-                target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoView()
+                target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
                 target?.focus()
             })
         }
@@ -158,7 +158,7 @@ export default class UploadAnnotation extends React.Component {
                 const { fieldErrors, fieldErrorsCount } = response.data;
                 this.setState({ fieldErrors, fieldErrorsCount }, () => {
                     const target = document.querySelector('.is-invalid');
-                    target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoView()
+                    target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
                     target?.focus()
                 })
 
@@ -299,19 +299,19 @@ export default class UploadAnnotation extends React.Component {
 
         const data = this.state.fieldErrors.map((list, index) => {
             if (e.key === 'Enter') {
-                if (name === 'url' && list.url_error && (!value || this.isValidURL(value))) {
+                if (name === 'url' && list.url_error && (!value || this.isValidURL(list.url))) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.url_error
                 }
-                if (name === 'category' && list.category_error && value) {
+                if (name === 'category' && list.category_error && list.category) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.category_error
                 }
-                if (name === 'event_name' && list.event_name_error && value) {
+                if (name === 'event_name' && list.event_name_error && list.event_name) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.event_name_error
                 }
-                if (name === 'show_at' && list.show_at_error && (!value || (moment(value || "", this.state.date_format, true).isValid()))) {
+                if (name === 'show_at' && list.show_at_error && (!value || (moment(list.show_at || "", this.state.date_format, true).isValid()))) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.show_at_error
                 }
@@ -320,9 +320,11 @@ export default class UploadAnnotation extends React.Component {
         })
 
         this.setState({ fieldErrors: data, fieldErrorsCount }, () => {
-            const target = document.querySelector('.is-invalid');
-            target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoView()
-            target?.focus()
+            if (e.key === 'Enter') {
+                const target = document.querySelector('.is-invalid');
+                target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
+                target?.focus()
+            }
         })
     }
 
@@ -354,8 +356,14 @@ export default class UploadAnnotation extends React.Component {
                             <>
                                 <div className="apps-modalHead">
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <h2>Import review &nbsp; <span class="text-gray">|</span> &nbsp; <span
-                                            className='text-danger'>{this.state.importReviewErrorCount} {this.state.importReviewErrorCount > 1 ? "errors" : "error"}</span>
+                                        <h2>Import review &nbsp; <span class="text-gray">|</span> &nbsp; 
+                                            {this.state.importReviewErrorCount ? 
+                                                <span className='text-danger'>
+                                                    {this.state.importReviewErrorCount + (this.state.importReviewErrorCount > 1 ? " errors" : " error")}
+                                                </span>
+                                                : 
+                                                    "Good job, Click Continue"
+                                            }
                                         </h2>
                                         <span onClick={() => this.props.togglePopup('')} className="btn-close">
                                     <img className="inject-me" src="/close-icon.svg" width="26" height="26"
