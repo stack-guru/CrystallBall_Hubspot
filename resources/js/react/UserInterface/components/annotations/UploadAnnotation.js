@@ -99,7 +99,7 @@ export default class UploadAnnotation extends React.Component {
 
             this.setState({ fieldErrors: result, fieldErrorsCheck: true, fieldErrorsCount }, () => {
                 const target = document.querySelector('.is-invalid');
-                target?.parentElement.parentElement.previousElementSibling.scrollIntoView()
+                target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoView()
                 target?.focus()
             })
         }
@@ -158,7 +158,7 @@ export default class UploadAnnotation extends React.Component {
                 const { fieldErrors, fieldErrorsCount } = response.data;
                 this.setState({ fieldErrors, fieldErrorsCount }, () => {
                     const target = document.querySelector('.is-invalid');
-                    target?.parentElement.parentElement.previousElementSibling.scrollIntoView()
+                    target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoView()
                     target?.focus()
                 })
 
@@ -321,7 +321,7 @@ export default class UploadAnnotation extends React.Component {
 
         this.setState({ fieldErrors: data, fieldErrorsCount }, () => {
             const target = document.querySelector('.is-invalid');
-            target?.parentElement.parentElement.previousElementSibling.scrollIntoView()
+            target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoView()
             target?.focus()
         })
     }
