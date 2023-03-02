@@ -460,7 +460,7 @@ class Main extends React.Component {
                 .then(response => {
                     this.setState({ isBusy: false, errors: undefined });
                     response.data.alertText.forEach(text => {
-                        swal.fire('Oops...', text, 'info');
+                        // swal.fire('Oops...', text, 'info');
                     });
                 }, (err) => {
                     this.setState({ isBusy: false, errors: (err.response).data });
