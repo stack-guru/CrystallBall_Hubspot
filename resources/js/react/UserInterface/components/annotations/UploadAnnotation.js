@@ -36,6 +36,7 @@ export default class UploadAnnotation extends React.Component {
                 'Show At': 'show_at',
 
             },
+            csvError: '',
             isBusy: false,
         }
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -179,7 +180,7 @@ export default class UploadAnnotation extends React.Component {
         e.preventDefault();
         $(".csvFileUpload > label").css("background", "#e8e8e8");
         $("#csv-caption").text("Drag and drop or click here")
-        $(".csv-caption").text(".csv files only — 5mb max")
+        $(".csv-caption").text(".csv files only")
     }
 
     onDragOver (e) {
@@ -245,6 +246,8 @@ export default class UploadAnnotation extends React.Component {
                 data: formData
             }).then(response => {
 
+                this.setState({ csvError: '', errors: [] })
+
                 const { fieldErrors, importReview, importReviewErrorCount, fileHeaders, fileName, sampleDate } = response.data;
                 this.setState(
                     {
@@ -274,9 +277,12 @@ export default class UploadAnnotation extends React.Component {
             }, (err) => {
 
                 const errors = (err.response).data;
-                if (errors.errors.csv) {
-                    errors.errors.csv = ["The csv must be a file of type: csv"];
-                }
+                
+                this.setState({ csvError: errors.errors.csv ? "File type must be CSV" : '' }, () => {
+                    if (errors.errors.csv) {
+                        delete errors.errors.csv;
+                    }
+                })
                 this.setState({ isBusy: false, errors });
             }).catch(err => {
                 this.setState({ isBusy: false, errors: err });
@@ -847,6 +853,11 @@ export default class UploadAnnotation extends React.Component {
 
                         <div className='apps-bodyContent'>
                             <ErrorAlert errors={this.state.errors}/>
+                            {
+                                this.state.csvError ? 
+                                <span class="errorList pl-4 pb-3 text-danger">{this.state.csvError}</span>
+                                : ""
+                            }
 
                             <form className='form-csvUpload' onSubmit={this.handleSubmit} encType="multipart/form-data"
                                   id="csv-upload-form-container">
