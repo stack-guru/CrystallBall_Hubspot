@@ -197,6 +197,8 @@ export default class UploadAnnotation extends React.Component {
         $(".csv-caption").text('\xA0')
         $(".csvFileUpload > label").css("background", "#e8e8e8");
         $("#csv")[0].files = files;
+        if (files[0].name.includes('.csv'))
+        this.setState({ csvError: '', errors: [] })
     }
 
     onFileSelect (e) {
@@ -206,6 +208,8 @@ export default class UploadAnnotation extends React.Component {
         $(".csv-caption").text('\xA0')
         $(".csvFileUpload > label").css("background", "#e8e8e8");
         $("#csv")[0].files = files;
+        if (files[0].name.includes('.csv'))
+        this.setState({ csvError: '', errors: [] })
     }
 
     checkIfCanCreateAnnotation(){
@@ -365,11 +369,14 @@ export default class UploadAnnotation extends React.Component {
                             <>
                                 <div className="apps-modalHead">
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <h2>Import review &nbsp; <span class="text-gray">|</span> &nbsp; 
-                                            {this.state.importReviewErrorCount ? 
+                                        <h2>
+                                            {this.state.importReviewErrorCount ?
+                                                <>
+                                                Import review &nbsp; <span class="text-gray">|</span> &nbsp; 
                                                 <span className='text-danger'>
                                                     {this.state.importReviewErrorCount + (this.state.importReviewErrorCount > 1 ? " errors" : " error")}
                                                 </span>
+                                                </>
                                                 : 
                                                     "Good job, Click Continue"
                                             }
@@ -550,6 +557,8 @@ export default class UploadAnnotation extends React.Component {
                                                         required>
                                                     <option value="">Select your date format</option>
                                                     <option
+                                                        value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
+                                                    <option
                                                         value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
                                                     <option
                                                         value="M-D-YYYY">{moment("2021-01-15").format('M-D-YYYY')}</option>
@@ -561,8 +570,6 @@ export default class UploadAnnotation extends React.Component {
                                                         value="MM-DD-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
                                                     <option
                                                         value="YY-MM-DD">{moment("2021-01-15").format('YY-MM-DD')}</option>
-                                                    <option
-                                                        value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
                                                     <option
                                                         value="DD-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
                                                     <option
@@ -601,11 +608,14 @@ export default class UploadAnnotation extends React.Component {
                             <>
                                 <div className="apps-modalHead">
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <h2>Field errors &nbsp; <span class="text-gray">|</span> &nbsp; 
+                                        <h2>
                                         {this.state.fieldErrorsCount ? 
+                                            <>
+                                            Field errors &nbsp; <span class="text-gray">|</span> &nbsp; 
                                             <span className='text-danger'>
                                                 {this.state.fieldErrorsCount + (this.state.fieldErrorsCount > 1 ? " errors" : " error")}
                                             </span>
+                                            </>
                                             : 
                                                 "Well done! Click on submit to upload the list"
                                         }
@@ -615,7 +625,7 @@ export default class UploadAnnotation extends React.Component {
                                          alt="menu icon"/>
                                 </span>
                                     </div>
-                                    <p>Please review the table and Fix the errors highlighted</p>
+                                    <p>Please review the table and fix the errors highlighted</p>
                                 </div>
 
                                 <div className="csv-review-data-container">

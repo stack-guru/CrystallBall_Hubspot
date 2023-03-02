@@ -289,7 +289,7 @@ class AnnotationController extends Controller
         } elseif ($request->query('google_account_id')) {
             $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
         } elseif ($request->query('sort_by') == "category") {
-            $annotationsQuery .= " ORDER BY TempTable.category ASC";
+            $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
         } elseif ($request->query('sort_by') == "added-by") {
             $annotationsQuery .= " ORDER BY TempTable.added_by ASC";
         } else {
