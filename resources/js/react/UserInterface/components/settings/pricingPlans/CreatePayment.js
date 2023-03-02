@@ -63,7 +63,21 @@ export default class CreatePayment extends Component {
 
         // Set Plan Duration
         this.setState({ planDuration: urlSearchParams.get('plan_duration') });
-
+        
+        HttpClient.post(`/settings/price-plan/check-extra-apps`, {
+            '_token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'price_plan_id': urlSearchParams.get('price_plan_id'),
+        })
+        .then(response => {
+            this.setState({ isBusy: false, errors: undefined });
+            response.data.alertText.forEach(text => {
+                swal.fire('Oops...', text, 'info');
+            });
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+        });
         // Get price plan
         HttpClient.get('/price-plan/' + urlSearchParams.get('price_plan_id'))
             .then(response => {
@@ -82,7 +96,6 @@ export default class CreatePayment extends Component {
             }
             this.setState({ taxPercent: tP, paymentDetails: { ...this.state.paymentDetails, city: response.data.city, country: response.data.country } });
         }).catch(error => {});
-
         setTimeout(this.attachFieldsToBlueSnap, 5000)
     }
 
