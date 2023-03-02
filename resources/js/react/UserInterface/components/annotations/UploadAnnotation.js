@@ -197,6 +197,7 @@ export default class UploadAnnotation extends React.Component {
         $(".csv-caption").text('\xA0')
         $(".csvFileUpload > label").css("background", "#e8e8e8");
         $("#csv")[0].files = files;
+        this.setState({ csvError: '', errors: [] })
     }
 
     onFileSelect (e) {
@@ -206,6 +207,7 @@ export default class UploadAnnotation extends React.Component {
         $(".csv-caption").text('\xA0')
         $(".csvFileUpload > label").css("background", "#e8e8e8");
         $("#csv")[0].files = files;
+        this.setState({ csvError: '', errors: [] })
     }
 
     checkIfCanCreateAnnotation(){
@@ -365,11 +367,14 @@ export default class UploadAnnotation extends React.Component {
                             <>
                                 <div className="apps-modalHead">
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <h2>Import review &nbsp; <span class="text-gray">|</span> &nbsp; 
-                                            {this.state.importReviewErrorCount ? 
+                                        <h2>
+                                            {this.state.importReviewErrorCount ?
+                                                <>
+                                                Import review &nbsp; <span class="text-gray">|</span> &nbsp; 
                                                 <span className='text-danger'>
                                                     {this.state.importReviewErrorCount + (this.state.importReviewErrorCount > 1 ? " errors" : " error")}
                                                 </span>
+                                                </>
                                                 : 
                                                     "Good job, Click Continue"
                                             }
@@ -601,11 +606,14 @@ export default class UploadAnnotation extends React.Component {
                             <>
                                 <div className="apps-modalHead">
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <h2>Field errors &nbsp; <span class="text-gray">|</span> &nbsp; 
+                                        <h2>
                                         {this.state.fieldErrorsCount ? 
+                                            <>
+                                            Field errors &nbsp; <span class="text-gray">|</span> &nbsp; 
                                             <span className='text-danger'>
                                                 {this.state.fieldErrorsCount + (this.state.fieldErrorsCount > 1 ? " errors" : " error")}
                                             </span>
+                                            </>
                                             : 
                                                 "Well done! Click on submit to upload the list"
                                         }
