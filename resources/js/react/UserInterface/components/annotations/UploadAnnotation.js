@@ -36,6 +36,7 @@ export default class UploadAnnotation extends React.Component {
                 'Show At': 'show_at',
 
             },
+            csvError: '',
             isBusy: false,
         }
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -179,7 +180,7 @@ export default class UploadAnnotation extends React.Component {
         e.preventDefault();
         $(".csvFileUpload > label").css("background", "#e8e8e8");
         $("#csv-caption").text("Drag and drop or click here")
-        $(".csv-caption").text(".csv files only — 5mb max")
+        $(".csv-caption").text(".csv files only")
     }
 
     onDragOver (e) {
@@ -245,6 +246,8 @@ export default class UploadAnnotation extends React.Component {
                 data: formData
             }).then(response => {
 
+                this.setState({ csvError: '', errors: [] })
+
                 const { fieldErrors, importReview, importReviewErrorCount, fileHeaders, fileName, sampleDate } = response.data;
                 this.setState(
                     {
@@ -274,9 +277,12 @@ export default class UploadAnnotation extends React.Component {
             }, (err) => {
 
                 const errors = (err.response).data;
-                if (errors.errors.csv) {
-                    errors.errors.csv = ["The csv must be a file of type: csv"];
-                }
+                
+                this.setState({ csvError: errors.errors.csv ? "File type must be CSV" : '' }, () => {
+                    if (errors.errors.csv) {
+                        delete errors.errors.csv;
+                    }
+                })
                 this.setState({ isBusy: false, errors });
             }).catch(err => {
                 this.setState({ isBusy: false, errors: err });
@@ -296,13 +302,13 @@ export default class UploadAnnotation extends React.Component {
         }
     }
 
-    changeMapHandler (e, id) {
+    changeMapHandler (e, id, focusOut = false) {
         const { name, value } = e.target;
         let fieldErrorsCount = parseInt(this.state.fieldErrorsCount);
 
         const data = this.state.fieldErrors.map((list, index) => {
-            if (e.key === 'Enter') {
-                if (name === 'url' && list.url_error && (!value || this.isValidURL(list.url))) {
+            if (e.key === 'Enter' || focusOut) {
+                if (name === 'url' && list.url_error && (!list.url || this.isValidURL(list.url))) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.url_error
                 }
@@ -314,7 +320,7 @@ export default class UploadAnnotation extends React.Component {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.event_name_error
                 }
-                if (name === 'show_at' && list.show_at_error && (!value || (moment(list.show_at || "", this.state.date_format, true).isValid()))) {
+                if (name === 'show_at' && list.show_at_error && (!list.show_at || (moment(list.show_at || "", this.state.date_format, true).isValid()))) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.show_at_error
                 }
@@ -323,7 +329,7 @@ export default class UploadAnnotation extends React.Component {
         })
 
         this.setState({ fieldErrors: data, fieldErrorsCount }, () => {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' || focusOut) {
                 const target = document.querySelector('.is-invalid');
                 target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
                 target?.focus()
@@ -595,8 +601,14 @@ export default class UploadAnnotation extends React.Component {
                             <>
                                 <div className="apps-modalHead">
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <h2>Field errors &nbsp; <span class="text-gray">|</span> &nbsp; <span
-                                            className='text-danger'>{this.state.fieldErrorsCount} {this.state.fieldErrorsCount > 1 ? "errors" : "error"}</span>
+                                        <h2>Field errors &nbsp; <span class="text-gray">|</span> &nbsp; 
+                                        {this.state.fieldErrorsCount ? 
+                                            <span className='text-danger'>
+                                                {this.state.fieldErrorsCount + (this.state.fieldErrorsCount > 1 ? " errors" : " error")}
+                                            </span>
+                                            : 
+                                                "Well done! Click on submit to upload the list"
+                                        }
                                         </h2>
                                         <span onClick={() => this.props.togglePopup('')} className="btn-close">
                                     <img className="inject-me" src="/close-icon.svg" width="26" height="26"
@@ -637,6 +649,7 @@ export default class UploadAnnotation extends React.Component {
                                                                         })
                                                                     }
                                                                     id={"gAK-" + 'category' + i}
+                                                                    onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
@@ -673,6 +686,7 @@ export default class UploadAnnotation extends React.Component {
                                                                         })
                                                                     }
                                                                     id={"gAK-" + 'event_name' + i}
+                                                                    onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
@@ -709,6 +723,7 @@ export default class UploadAnnotation extends React.Component {
                                                                         })
                                                                     }
                                                                     id={"gAK-" + 'url' + i}
+                                                                    onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
@@ -745,6 +760,7 @@ export default class UploadAnnotation extends React.Component {
                                                                         })
                                                                     }
                                                                     id={"gAK-" + 'description' + i}
+                                                                    onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
@@ -781,6 +797,7 @@ export default class UploadAnnotation extends React.Component {
                                                                         })
                                                                     }
                                                                     id={"gAK-" + 'show_at' + i}
+                                                                    onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
@@ -836,6 +853,11 @@ export default class UploadAnnotation extends React.Component {
 
                         <div className='apps-bodyContent'>
                             <ErrorAlert errors={this.state.errors}/>
+                            {
+                                this.state.csvError ? 
+                                <span class="errorList pl-4 pb-3 text-danger">{this.state.csvError}</span>
+                                : ""
+                            }
 
                             <form className='form-csvUpload' onSubmit={this.handleSubmit} encType="multipart/form-data"
                                   id="csv-upload-form-container">

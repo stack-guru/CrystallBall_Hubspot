@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,18 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'eapi.', 'middlewar
 
     Route::group(['prefix' => 'v1/chrome-extension', 'as' => 'v1.chrome-extension.'], function () {
 
-        Route::group(['middleware' => ['auth:api', 'verified']], function () {
+        Route::get('csrf-cookie', function (Request $request) {
+            if ($request->expectsJson()) {
+                return new JsonResponse(['token' => csrf_token()], 200);
+            }
+            return new Response(csrf_token(), 200);
+        });
+
+        Route::post('login', 'API\ChromeExtension\LoginController@login')->middleware(['prevent.cache', 'guest'])->name('login');
+        Route::post('login/google', 'API\ChromeExtension\LoginController@loginWithGoogle')->middleware(['prevent.cache', 'guest'])->name('login.google');
+        Route::post('logout', 'API\ChromeExtension\LoginController@logout')->middleware(['prevent.cache'])->name('logout');
+
+        Route::group(['middleware' => ['auth', 'verified']], function () {
 
             Route::get('user', function (Request $request) {
                 return $request->user();

@@ -13,7 +13,7 @@ export default function ErrorAlert(props) {
                                 {props.errors.message}
                             </span>
                         </div>
-                        <ul className='errorList m-0 pl-4 pb-3 text-danger'>
+                        <ul className={`errorList m-0 ${Object.keys(errors).length ?? "pl-4 pb-3"} text-danger`}>
                             {Object.keys(errors).map((field, fi) => {
                                 return (
                                     <li key={fi}>
