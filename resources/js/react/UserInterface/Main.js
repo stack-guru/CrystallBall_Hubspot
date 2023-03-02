@@ -64,7 +64,7 @@ class Main extends React.Component {
             mKeyAnnotation: '',
             showUpgradePopup: false,
             upgradePopupType: '',
-            csvUploadPopupSize: 'md',
+            csvUploadPopupSize: 'md upload-csv',
         }
         this.loadUser = this.loadUser.bind(this)
 
@@ -244,8 +244,8 @@ class Main extends React.Component {
                     </AppsModal>
                     :
                     this.state.mKeyAnnotation === 'upload' ?
-                        <AppsModal popupSize={this.state.csvUploadPopupSize} isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka = '') => { this.setState({ mKeyAnnotation: mka, }); }}>
-                            <AnnotationsUpload updateCSVUploadStep={(csvUploadPopupSize) => this.setState({csvUploadPopupSize})} upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} togglePopup={(mka) => { this.setState({ mKeyAnnotation: mka, }); }} currentPricePlan={this.state.user.price_plan} />
+                        <AppsModal popupSize={this.state.csvUploadPopupSize} isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka = '') => { this.setState({ mKeyAnnotation: mka, csvUploadPopupSize: 'md upload-csv'}); }}>
+                            <AnnotationsUpload updateCSVUploadStep={(csvUploadPopupSize) => this.setState({csvUploadPopupSize})} upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} togglePopup={(mka) => { this.setState({ mKeyAnnotation: mka, csvUploadPopupSize: 'md upload-csv' }); }} currentPricePlan={this.state.user.price_plan} />
                         </AppsModal>
                         :
                         null}
@@ -370,6 +370,12 @@ class Main extends React.Component {
                         bannerImg="/images/trackers-ads.svg"
                     >
                     </ga-upgrade-popup> : null}
+                    {this.state.upgradePopupType === 'trial-ended' ?
+                        <ga-extend-trail-popup
+                            heading={`<h1>Trial Ended > <span>Upgrade Today</span></h1>`}
+                            subHeading={`<p>and get access to all amazing features</p>`}
+                            bannerImg="/images/more-property-upgrade.svg"
+                    ></ga-extend-trail-popup> : null}
                 </Modal>
                 {/* <Modal isOpen={true} centered className="gaUpgradePopup" toggle={() => {}}>
                     <button onClick={() => {}} class="btn-closeUpgradePopup"></button>
@@ -438,15 +444,34 @@ class Main extends React.Component {
                         uid: "{{ Auth::user()->id }}"
                     })
                 }
-
+                if(response.data.user.trail_plan_status == true)
+                {
+                    this.setState({ showUpgradePopup: true });
+                    this.setState({ upgradePopupType: 'trial-ended' });
+                }
                 if (response.data.user.price_plan.name == 'Free') {
                     setTimeout(() => { this.setState({ showPromotionPopup: true }); }, 5000);
                 }
-            }, (err) => {
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-                this.setState({ isBusy: false, errors: err });
-            });
+                
+                HttpClient.post(`/settings/price-plan/check-extra-apps`, {
+                    '_token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'price_plan_id': response.data.user.price_plan.id,
+                })
+                .then(response => {
+                    this.setState({ isBusy: false, errors: undefined });
+                    response.data.alertText.forEach(text => {
+                        swal.fire('Oops...', text, 'info');
+                    });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
     }
 
     componentDidUpdate(prevProps) {

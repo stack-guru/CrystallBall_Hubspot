@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Events\UserTrialPricePlanEnded;
+use App\Helpers\DowngradedUserHelper;
 use App\Mail\AdminFailedPaymentTransactionMail;
 use App\Mail\UserFailedPaymentTransactionMail;
 use App\Models\Admin;
@@ -97,9 +98,10 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
             $trialUser->price_plan_expiry_date = $this->nextExpiryDate;
             $trialUser->price_plan_id = $this->downgradePricePlanId;
 
-            WebMonitor::removeAdditionalWebMonitors($trialUser, $this->downgradePricePlan->web_monitor_count);
-            UserDataSource::disableDataSources($trialUser);
-            NotificationSetting::disableNotifications($trialUser);
+            // WebMonitor::removeAdditionalWebMonitors($trialUser, $this->downgradePricePlan->web_monitor_count);
+            // UserDataSource::disableDataSources($trialUser);
+            // NotificationSetting::disableNotifications($trialUser);
+            DowngradedUserHelper::downgradingUser($trialUser,$this->downgradePricePlan);
 
             $trialUser->trial_ended_at = $this->currentDate;
 

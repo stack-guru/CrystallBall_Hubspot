@@ -311,6 +311,7 @@ class HomeController extends Controller
         $user->google_analytics_properties_in_use_count = $user->googleAnalyticsPropertiesInUse()->count();
         $user->do_require_password_change               = ($user->password == User::EMPTY_PASSWORD && !is_null($user->app_sumo_uuid));
         $user->user_registration_offers                 = $user->pricePlan->price == 0 ? UserRegistrationOffer::ofCurrentUser()->alive()->get() : [];
+        $user->trail_plan_status                        = $user->trailPlanStatus();
 
         return ['user' => $user];
     }
