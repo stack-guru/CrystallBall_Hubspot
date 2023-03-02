@@ -700,7 +700,7 @@ class AppsMarket extends React.Component {
                             </FormGroup>
                         </form>
 
-                        <h3 className="h3-title">Display on Analytics and BI Tools</h3>
+                        <h3 className="h3-title">Display Insights and Annotations on Analytics and BI Tools</h3>
                     </div>
 
                     <div className="items analyticsAndBITools">
@@ -785,7 +785,7 @@ class AppsMarket extends React.Component {
                     </div>
 
                     <div className="pageHeader">
-                        <h3 className="h3-title">Recommended For You</h3>
+                        <h3 className="h3-title">Connect Apps to Automate Insights</h3>
                     </div>
                     <div className="items recommendedForYou">
                         {this.state.recommendedApps.map((item, itemKey) => (
@@ -1788,7 +1788,7 @@ class AppsMarket extends React.Component {
             if(e.persist) {
                 e.persist();
             }
-            
+
             if (e.target.name == "is_ds_holidays_enabled" && e.target.checked) {
                 this.sectionToggler("holidays");
                 this.updateUserService(e);
