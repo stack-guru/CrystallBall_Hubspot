@@ -197,6 +197,7 @@ export default class UploadAnnotation extends React.Component {
         $(".csv-caption").text('\xA0')
         $(".csvFileUpload > label").css("background", "#e8e8e8");
         $("#csv")[0].files = files;
+        if (files[0].name.includes('.csv'))
         this.setState({ csvError: '', errors: [] })
     }
 
@@ -207,6 +208,7 @@ export default class UploadAnnotation extends React.Component {
         $(".csv-caption").text('\xA0')
         $(".csvFileUpload > label").css("background", "#e8e8e8");
         $("#csv")[0].files = files;
+        if (files[0].name.includes('.csv'))
         this.setState({ csvError: '', errors: [] })
     }
 
@@ -555,6 +557,8 @@ export default class UploadAnnotation extends React.Component {
                                                         required>
                                                     <option value="">Select your date format</option>
                                                     <option
+                                                        value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
+                                                    <option
                                                         value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
                                                     <option
                                                         value="M-D-YYYY">{moment("2021-01-15").format('M-D-YYYY')}</option>
@@ -566,8 +570,6 @@ export default class UploadAnnotation extends React.Component {
                                                         value="MM-DD-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
                                                     <option
                                                         value="YY-MM-DD">{moment("2021-01-15").format('YY-MM-DD')}</option>
-                                                    <option
-                                                        value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
                                                     <option
                                                         value="DD-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
                                                     <option
