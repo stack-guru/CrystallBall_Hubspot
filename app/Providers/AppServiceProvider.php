@@ -52,6 +52,12 @@ class AppServiceProvider extends ServiceProvider
                 config(['app.icon' => asset('/favicon-cbi.ico'), 'app.logo' => asset('/images/company_logo_cbi.png')]);
                 config(['mail.from' => ['address' => 'contact@crystalballinsight.com', 'name' => 'Crystal Ball']]);
                 break;
+
+            case 'lukionline.me':
+                config(['app.name' => 'Crystal Ball', 'app.url' => 'http://127.0.0.1', 'app.base_url' => 'https://www.crystalball.pro']);
+                config(['app.icon' => asset('/favicon-cbi.ico'), 'app.logo' => asset('/images/company_logo_cbi.png')]);
+                config(['mail.from' => ['address' => 'contact@crystalballinsight.com', 'name' => 'Crystal Ball']]);
+                break;
         }
 
         // Setting Google Sign-On Redirect URL to support both domain logins
