@@ -105,6 +105,7 @@
     <script type="text/javascript" src="{{asset('js/error-popup.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/upgrade-popup.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/plan-downgrade-upgrade-popup.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/extend-trail-popup.js')}}"></script>
 </head>
 
 <body class="app is-collapsed">

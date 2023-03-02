@@ -38,7 +38,7 @@ class header extends React.Component {
                     {/* <img src="{{config('app.logo')}}" width='150' height='44' alt='Crystal Ball' /> */}
                     <div className="d-flex justify-content-between align-items-center">
                         <img src={`${IsDomain('app.gaannotations.com') || IsDomain('localhost') ? '/images/company_logo_gaa.png' : '/images/company_logo_cbi.png'}`} width="44" height="44" alt={`${IsDomain('app.gaannotations.com') || IsDomain('localhost') ? 'GAannotations' : 'Crystal Ball'}`} />
-                        <h4 className="m-0 pl-2 text-secondary">{`${IsDomain('app.gaannotations.com') || IsDomain('localhost') ? 'GAannotations' : 'Crystal Ball'}`}</h4>
+                        <h4 style={(IsDomain('app.gaannotations.com') || IsDomain('localhost') ? {color: '#0a2a50'}: {color: '#056db4'})} className="m-0 pl-2">{`${IsDomain('app.gaannotations.com') || IsDomain('localhost') ? 'GAannotations' : 'Crystal Ball'}`}</h4>
                     </div>
                 </a></strong>
                 {/* <form className='form-search'>
@@ -58,7 +58,7 @@ class header extends React.Component {
                             null
                     }
 
-                    {this.props.user.price_plan.code == "free new" ? <p className="trial-countdown m-0">You are on the Fee Plan</p> : null}
+                    {this.props.user.price_plan.code == "free new" ? <p className="trial-countdown m-0">You are on the Free Plan</p> : null}
 
                     {
                         this.props.user.price_plan.price == 0 ?

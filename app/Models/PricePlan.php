@@ -44,6 +44,7 @@ class PricePlan extends Model
         'aws_credits_count',
         'linkedin_credits_count',
         'twitter_credits_count',
+        'reference_text',
     ];
 
     protected $hidden = [

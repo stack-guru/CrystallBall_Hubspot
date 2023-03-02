@@ -293,4 +293,9 @@ class AnnotationController extends Controller
         dd($request->all());
         # code...
     }
+    public function delete_annotations(Request $request)
+    {
+        dd($request->all());
+        # code...
+    }
 }

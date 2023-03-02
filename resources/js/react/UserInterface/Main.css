@@ -1256,6 +1256,12 @@ body {
     max-width: 824px;
     max-height: calc(100% - 180px);
 }
+
+.apps-modal.upload-csv-lg, .apps-modal.upload-csv {
+    margin: 30px auto;
+    max-height: 100%;
+}
+
 .apps-modal .modal-content {
     border: 0;
     width: 100%;
@@ -1263,6 +1269,11 @@ body {
     border-radius: 1rem;
     max-height: calc(100vh - 180px);
 }
+
+.apps-modal.upload-csv-lg .modal-content, .apps-modal.upload-csv .modal-content {
+    max-height: calc(100vh - 80px);
+}
+
 .apps-modal .modal-body {
     padding: 32px 32px;
     height: 100%;
@@ -2762,8 +2773,42 @@ body {
     color: #096db7;
     line-height: 30px;
 }
-.form-csvUpload {
+.modal-csvUpload table {
+    font-size: 14px;
 }
+
+.modal-csvUpload table thead{
+    background-color: #F0F6FF;
+}
+
+.modal-csvUpload table th {
+    padding: 8px;
+    text-align: left;
+    color: #096DB7;
+}
+.modal-csvUpload table td div {
+    padding: 4px;
+}
+.field-table {
+    max-height: calc(100vh - 450px);
+    overflow-y: scroll;
+    display: block;
+}
+
+.bg-dark .popover {
+    background-color: #000000;
+}
+.bg-dark .popover .arrow::after {
+    border-top-color: #000;
+    border-bottom-color: #000;
+}
+.bg-dark .popover .arrow::before {
+    border-bottom-color: #000;
+}
+.bg-dark .popover-body {
+    color: #ffffff;
+}
+
 .csvFileUpload > label {
     width: 100%;
     /* height: 276px; */
@@ -2775,7 +2820,7 @@ body {
     padding: 32px 24px;
     align-items: center;
     border-radius: 12px;
-    background: #f0f6ff;
+    background: #e8e8e8;
     flex-direction: column;
     justify-content: center;
 }
@@ -3319,6 +3364,7 @@ body {
     height: 10px;
     border-radius: 100px;
     background: #0bd25f;
+    max-width: 100%;
 }
 .dropdownFoot {
     padding: 1rem 1.5rem;
@@ -4788,6 +4834,101 @@ body {
     color: #096DB7 !important;
 }
 
+.text-gray {
+color: #E0E0E0 !important;
+}
+
+.csv-review-columns .apps-modalHead {
+    padding-bottom: 20px;
+}
+
+.csv-review-columns .apps-modalHead p {
+    margin: 0;
+    padding-top: 24px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #626A71;
+}
+
+.csv-review-columns h2 {
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 33px;
+    color: #096DB7;
+}
+
+.csv-review-columns h2 span {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    color: #F44C3D;
+}
+
+
+.csv-review-columns table tr th,
+.csv-review-columns table tr td {
+    padding: 15px 16px;
+    width: 33.33%;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.csv-review-data-container {
+    height: calc(100vh - 308px);
+    overflow-y: auto;
+}
+
+.csv-review-columns table.table-bordered {
+    width: 100%;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+}
+.csv-review-columns table.table-bordered thead {
+    position: sticky;
+    top: 0px;
+}
+.csv-review-columns table.table-bordered tr th,
+.csv-review-columns table.table-bordered tr td {
+    padding: 15px 16px;
+    width: auto;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.csv-review-columns table.table-bordered tr td {
+    padding: 6px 2px
+}
+
+.csv-review-columns table tr th {
+    font-weight: 600;
+    color: #096DB7;
+}
+
+.csv-review-columns table tr td:first-child {
+    font-weight: 600;
+    color: #626A71;
+}
+
+.csv-review-columns table tr td {
+    padding: 12px 16px;
+    color: #666666;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.csv-review-columns .fa-check-circle {
+    margin: 0;
+    left: 0;
+    top: 0;
+    width: 38px;
+    height: 38px;
+    z-index: 2;
+}
+
+.csv-review-columns .form-control.is-invalid{
+    border-color: #F44C3D;
+}
 
 
 

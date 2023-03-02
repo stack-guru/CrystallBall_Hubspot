@@ -81,12 +81,16 @@ class UserController extends Controller
                 'message' => 'Action not allowed in your plan.'
             ], 455);
         } // if limit of users has reached
-        else if (count($parentUser->users) >= ($parentUser->pricePlan->user_per_ga_account_count)) {
+        else if ($parentUser->pricePlan->user_per_ga_account_count > 0 && count($parentUser->users) >= ($parentUser->pricePlan->user_per_ga_account_count)) {
             return response()->json([
                 'message' => 'To add more users, please upgrade your account.'
             ], 455);
+        }else if($parentUser->trailPlanStatus() == true)
+        {
+            return response()->json([
+                'message' => 'Your trial is ended.To add more users, please upgrade your account.'
+            ], 455);
         }
-
         $user = new User;
         $user->fill($request->validated());
         $user->password = Hash::make($request->password);
@@ -94,6 +98,83 @@ class UserController extends Controller
         $user->price_plan_id = $parentUser->price_plan_id;
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
         $user->email_verified_at = now();
+
+        if ($parentUser->is_ds_holidays_enabled) {
+            $user->is_ds_holidays_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_google_algorithm_updates_enabled) {
+            $user->is_ds_google_algorithm_updates_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_retail_marketing_enabled) {
+            $user->is_ds_retail_marketing_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_weather_alerts_enabled) {
+            $user->is_ds_weather_alerts_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_google_alerts_enabled) {
+            $user->is_ds_google_alerts_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_wordpress_updates_enabled) {
+            $user->is_ds_wordpress_updates_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_web_monitors_enabled) {
+            $user->is_ds_web_monitors_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_apple_podcast_annotation_enabled) {
+            $user->is_ds_apple_podcast_annotation_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_shopify_annotation_enabled) {
+            $user->is_ds_shopify_annotation_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_g_ads_history_change_enabled) {
+            $user->is_ds_g_ads_history_change_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_anomolies_detection_enabled) {
+            $user->is_ds_anomolies_detection_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_budget_tracking_enabled) {
+            $user->is_ds_budget_tracking_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_keyword_tracking_enabled) {
+            $user->is_ds_keyword_tracking_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_bitbucket_tracking_enabled) {
+            $user->is_ds_bitbucket_tracking_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_github_tracking_enabled) {
+            $user->is_ds_github_tracking_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_facebook_tracking_enabled) {
+            $user->is_ds_facebook_tracking_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_instagram_tracking_enabled) {
+            $user->is_ds_instagram_tracking_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_twitter_tracking_enabled) {
+            $user->is_ds_twitter_tracking_enabled = 1;
+        }
+
+        if ($parentUser->is_ds_wordpress_enabled) {
+            $user->is_ds_wordpress_enabled = 1;
+        }
+
         $user->save();
 
         Mail::to($user)->send(new UserInviteMail($user, $request->password));

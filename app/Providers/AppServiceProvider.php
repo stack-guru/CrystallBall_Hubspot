@@ -30,28 +30,29 @@ class AppServiceProvider extends ServiceProvider
 
         switch (request()->getHost()) {
             case 'app.gaannotations.com':
-                config(['app.name' => 'GAannotations', 'app.url' => 'https://app.gaannotations.com']);
+                config(['app.name' => 'GAannotations', 'app.url' => 'https://app.gaannotations.com', 'app.base_url' => 'https://www.gaannotations.com', 'app.host' => request()->getHost()]);
                 config(['app.icon' => asset('/favicon-gaa.ico'), 'app.logo' => asset('/images/company_logo_gaa.png')]);
                 config(['mail.from' => ['address' => 'contact@gaannotations.com', 'name' => 'GAannotations']]);
                 break;
 
             case 'app.crystalballinsight.com':
-                config(['app.name' => 'Crystal Ball', 'app.url' => 'https://app.crystalballinsight.com']);
+                config(['app.name' => 'Crystal Ball', 'app.url' => 'https://app.crystalballinsight.com', 'app.base_url' => 'https://www.crystalball.pro', 'app.host' => request()->getHost()]);
                 config(['app.icon' => asset('/favicon-cbi.ico'), 'app.logo' => asset('/images/company_logo_cbi.png')]);
                 config(['mail.from' => ['address' => 'contact@crystalballinsight.com', 'name' => 'Crystal Ball']]);
                 break;
 
             case 'localhost':
-                config(['app.name' => 'GAannotations', 'app.url' => 'http://localhost']);
+                config(['app.name' => 'GAannotations', 'app.url' => 'http://localhost', 'app.base_url' => 'https://www.gaannotations.com', 'app.host' => request()->getHost()]);
                 config(['app.icon' => asset('/favicon-gaa.ico'), 'app.logo' => asset('/images/company_logo_gaa.png')]);
                 config(['mail.from' => ['address' => 'contact@gaannotations.com', 'name' => 'GAannotations']]);
                 break;
 
-            case '127.0.0.1':
-                config(['app.name' => 'Crystal Ball', 'app.url' => 'http://127.0.0.1']);
+            default:
+                config(['app.name' => 'Crystal Ball', 'app.url' => 'http://127.0.0.1', 'app.base_url' => 'https://www.crystalball.pro', 'app.host' => 'app.crystalballinsight.com']);
                 config(['app.icon' => asset('/favicon-cbi.ico'), 'app.logo' => asset('/images/company_logo_cbi.png')]);
                 config(['mail.from' => ['address' => 'contact@crystalballinsight.com', 'name' => 'Crystal Ball']]);
                 break;
+
         }
 
         // Setting Google Sign-On Redirect URL to support both domain logins
