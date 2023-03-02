@@ -296,13 +296,13 @@ export default class UploadAnnotation extends React.Component {
         }
     }
 
-    changeMapHandler (e, id) {
+    changeMapHandler (e, id, focusOut = false) {
         const { name, value } = e.target;
         let fieldErrorsCount = parseInt(this.state.fieldErrorsCount);
 
         const data = this.state.fieldErrors.map((list, index) => {
-            if (e.key === 'Enter') {
-                if (name === 'url' && list.url_error && (!value || this.isValidURL(list.url))) {
+            if (e.key === 'Enter' || focusOut) {
+                if (name === 'url' && list.url_error && (!list.url || this.isValidURL(list.url))) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.url_error
                 }
@@ -314,7 +314,7 @@ export default class UploadAnnotation extends React.Component {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.event_name_error
                 }
-                if (name === 'show_at' && list.show_at_error && (!value || (moment(list.show_at || "", this.state.date_format, true).isValid()))) {
+                if (name === 'show_at' && list.show_at_error && (!list.show_at || (moment(list.show_at || "", this.state.date_format, true).isValid()))) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.show_at_error
                 }
@@ -323,7 +323,7 @@ export default class UploadAnnotation extends React.Component {
         })
 
         this.setState({ fieldErrors: data, fieldErrorsCount }, () => {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' || focusOut) {
                 const target = document.querySelector('.is-invalid');
                 target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
                 target?.focus()
@@ -601,7 +601,7 @@ export default class UploadAnnotation extends React.Component {
                                                 {this.state.fieldErrorsCount + (this.state.fieldErrorsCount > 1 ? " errors" : " error")}
                                             </span>
                                             : 
-                                                "Good job, Click Submit"
+                                                "Well done! Click on submit to upload the list"
                                         }
                                         </h2>
                                         <span onClick={() => this.props.togglePopup('')} className="btn-close">
@@ -643,6 +643,7 @@ export default class UploadAnnotation extends React.Component {
                                                                         })
                                                                     }
                                                                     id={"gAK-" + 'category' + i}
+                                                                    onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
@@ -679,6 +680,7 @@ export default class UploadAnnotation extends React.Component {
                                                                         })
                                                                     }
                                                                     id={"gAK-" + 'event_name' + i}
+                                                                    onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
@@ -715,6 +717,7 @@ export default class UploadAnnotation extends React.Component {
                                                                         })
                                                                     }
                                                                     id={"gAK-" + 'url' + i}
+                                                                    onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
@@ -751,6 +754,7 @@ export default class UploadAnnotation extends React.Component {
                                                                         })
                                                                     }
                                                                     id={"gAK-" + 'description' + i}
+                                                                    onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
@@ -787,6 +791,7 @@ export default class UploadAnnotation extends React.Component {
                                                                         })
                                                                     }
                                                                     id={"gAK-" + 'show_at' + i}
+                                                                    onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
