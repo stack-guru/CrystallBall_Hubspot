@@ -114,7 +114,7 @@ class header extends React.Component {
                         </button>
                         <div className="dropdown-menu">
                             <div className="dropdownHead">
-                                <Link to="/settings">{/* {this.props.user.name} */}View Profile</Link>
+                                <Link to="/settings/profile">{/* {this.props.user.name} */}View Profile</Link>
                             </div>
 
                             <ul className='dropdownBody'>
