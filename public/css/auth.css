@@ -137,6 +137,16 @@
   padding: 18px 40px;
   border-bottom: 1px solid #e0e0e0;
 }
+
+.auth-header h5 {
+  color:  #056db4;
+}
+
+.auth-header .app\.gaannotations\.com h5,
+.auth-header .localhost h5 {
+    color: #0a2a50;
+}
+
 .auth-main {
   display: flex;
   flex: 1 1 auto;

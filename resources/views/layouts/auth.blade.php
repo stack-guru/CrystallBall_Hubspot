@@ -33,12 +33,12 @@
   <div class="auth-wrapper">
     <header id='auth-header' class="auth-header">
       <div class="container d-flex justify-content-between align-items-center">
-        <strong><a class="d-block" href="/">
+        <strong><a class="d-block {{config('app.host')}}" href="/">
             {{-- <img src="/logo-new.svg" width="150" height="44" alt="Crystal Ball"> --}}
             {{-- <img src="{{config('app.logo')}}" width="150" height="44" alt="{{config('app.name')}}"> --}}
             <div class="d-flex justify-content-between align-items-center logo-holder">
                 <img src="{{config('app.logo')}}" width="44" height="44" alt="{{config('app.name')}}">
-                <h5 class="m-0 pl-2 text-secondary">{{config('app.name')}}</h5>
+                <h5 class="m-0 pl-2">{{config('app.name')}}</h5>
             </div>
         </a></strong>
         <ul class='auth-nav'>
