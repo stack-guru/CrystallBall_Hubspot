@@ -623,7 +623,7 @@ export default class UploadAnnotation extends React.Component {
                                          alt="menu icon"/>
                                 </span>
                                     </div>
-                                    <p>Please review the table and Fix the errors highlighted</p>
+                                    <p>Please review the table and fix the errors highlighted</p>
                                 </div>
 
                                 <div className="csv-review-data-container">
