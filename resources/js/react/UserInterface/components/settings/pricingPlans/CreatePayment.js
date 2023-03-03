@@ -71,7 +71,21 @@ export default class CreatePayment extends Component {
         .then(response => {
             this.setState({ isBusy: false, errors: undefined });
             response.data.alertText.forEach(text => {
-                swal.fire('Oops...', text, 'info');
+                // swal.fire('Oops...', text, 'info');
+                swal.fire({
+                    html: `<ga-error-popup heading="<h1>Warning</h1>"
+                        subHeading="<p>`+text+`</p>"
+                        bannerImg="/images/error-popup-image.svg"></ga-error-popup>`,
+                    width: 600,
+                    showCancelButton: true,
+                    showCloseButton: false,
+                    showConfirmButton: false,
+                    customClass: {
+                        popup: "gaErrorPopup",
+                    },
+                    cancelButtonClass: "btn-close",
+                    cancelButtonText: "Close",
+                })
             });
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });

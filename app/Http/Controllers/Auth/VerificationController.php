@@ -46,6 +46,17 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
+        if(request()->expires)
+        {
+            foreach(request()->all() as $index => $input)
+            {
+                if($index == 'amp;signature')
+                {
+                    $url = request()->url().'?expires='.request()->expires.'&signature='.$input;
+                    return redirect()->to($url);
+                }
+            } 
+        }
         $this->middleware('auth')->except('verify');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend', 'verifyPhone', 'resendPhone');
