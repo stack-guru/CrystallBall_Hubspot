@@ -638,11 +638,11 @@ export default class UploadAnnotation extends React.Component {
                                     <table className='table-bordered'>
                                         <thead>
                                         <tr>
-                                            <th>Category</th>
-                                            <th>Event Name</th>
-                                            <th>Url</th>
-                                            <th>Description</th>
-                                            <th>Show At</th>
+                                            <th class="w20">Category</th>
+                                            <th class="w20">Event Name</th>
+                                            <th class="w20">Url</th>
+                                            <th class="w20">Description</th>
+                                            <th class="w20">Show At</th>
                                         </tr>
                                         </thead>
                                         <tbody>
