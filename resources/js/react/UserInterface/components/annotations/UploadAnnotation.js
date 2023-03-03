@@ -81,18 +81,23 @@ export default class UploadAnnotation extends React.Component {
                     obj.url_error = 'Enter a valid URL';
                 }
 
-                if (obj.show_at && !(moment(obj.show_at || "", this.state.date_format, true).isValid())) {
+                if (obj.show_at && !(moment(obj.show_at || "", date_format, true).isValid())) {
                     fieldErrorsCount++;
-                    obj.show_at_error = `Date format is incorrect, use format [${this.state.date_format}]`;
+                    obj.show_at_error = `Date format is incorrect, use format [${date_format}]`;
                 }
-                if (!obj.category) {
+                if (!obj.category || itm.category_error) {
                     fieldErrorsCount++;
-                    obj.category_error = `Category can't be empty`;
+                    obj.category_error = itm.category_error ? itm.category_error : `Category can't be empty`;
                 }
 
-                if (!obj.event_name) {
+                if (!obj.event_name || itm.event_name_error) {
                     fieldErrorsCount++;
-                    obj.event_name_error = `Event Name can't be empty`;
+                    obj.event_name_error = itm.event_name_error ? itm.event_name_error : `Event Name can't be empty`;
+                }
+
+                if (itm.description_error) {
+                    fieldErrorsCount++;
+                    obj.description_error = itm.description_error;
                 }
 
                 return obj;
@@ -307,11 +312,12 @@ export default class UploadAnnotation extends React.Component {
     }
 
     changeMapHandler (e, id, focusOut = false) {
+        const entered = this.state.entered;
         const { name, value } = e.target;
         let fieldErrorsCount = parseInt(this.state.fieldErrorsCount);
 
         const data = this.state.fieldErrors.map((list, index) => {
-            if (e.key === 'Enter' || focusOut) {
+            if ((e.key === 'Enter' || focusOut) && id === index) {
                 if (name === 'url' && list.url_error && (!list.url || this.isValidURL(list.url))) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.url_error
@@ -336,7 +342,7 @@ export default class UploadAnnotation extends React.Component {
             if (e.key === 'Enter' || focusOut) {
                 const target = document.querySelector('.is-invalid');
                 target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
-                target?.focus()
+                // target?.focus()
             }
         })
     }
@@ -632,11 +638,11 @@ export default class UploadAnnotation extends React.Component {
                                     <table className='table-bordered'>
                                         <thead>
                                         <tr>
-                                            <th>Category</th>
-                                            <th>Event Name</th>
-                                            <th>Url</th>
-                                            <th>Description</th>
-                                            <th>Show At</th>
+                                            <th class="w20">Category</th>
+                                            <th class="w20">Event Name</th>
+                                            <th class="w20">Url</th>
+                                            <th class="w20">Description</th>
+                                            <th class="w20">Show At</th>
                                         </tr>
                                         </thead>
                                         <tbody>

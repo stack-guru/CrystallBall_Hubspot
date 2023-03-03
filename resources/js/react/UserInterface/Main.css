@@ -4879,6 +4879,10 @@ color: #E0E0E0 !important;
     overflow-y: auto;
 }
 
+.w20 {
+    width: 20% !important;
+}
+
 .csv-review-columns table.table-bordered {
     width: 100%;
     border: 1px solid #E0E0E0;
