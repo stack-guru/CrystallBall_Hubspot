@@ -442,7 +442,7 @@ class AnnotationController extends Controller
                     $query->whereDate('show_at', $showAt);
                 })
                 ->where('url', $fe['url'])->first();
-            $fe['show_at'] = $showAt;
+            $fe['show_at'] = $showAt ? $showAt : Carbon::now();
             $fe['user_id'] = $user_id;
             $fe['added_by'] = 'csv-upload';
 
@@ -569,29 +569,22 @@ class AnnotationController extends Controller
                             if ($headers[$i] == 'url') {
                                 $row[$headers[$i]] = $values[$i];
                             } else {
-                                $row[trim(str_replace('"', "", $headers[$i]))] = $values[$i];
+                                $column = trim(str_replace('"', "", $headers[$i]));
+                                $validStr = mb_convert_encoding($values[$i], 'UTF-8', 'UTF-8');
+                                $row[$column] = $validStr;
+                                if ($validStr !== $values[$i]) {
+                                    $row[$column . "_error"] = "Please enter a valid value";
+                                }
+                                // $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
                             }
                         // }
                     }
 
-                    // $row['user_id'] = $user_id;
-                    // $row['added_by'] = 'csv-upload';
-                    // if ($this->isNotDuplicate($existingRecords, $row)) {
                         array_push($rows, $row);
-                    // }
                 }
 
-                // if (count($rows) > 9000) {
-                    // formula for ^ number is max no. of placeholders in mysql (65535) / no. of columns you have in insert statement (7)
-                    // I obviously rounded it to something human readable
-                //     $this->insertRows($rows, $request);
-                //     $rows = array();
-                // }
             }
 
-            // if (count($rows) && !$error) {
-            //     $this->insertRows($rows, $request);
-            // }
         } catch (\Exception $e) {
             Log::error($e);
             abort(422, "Error occured while processing your CSV. Please contact support for more information.");
