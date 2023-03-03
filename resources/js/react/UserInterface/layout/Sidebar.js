@@ -224,28 +224,12 @@ class Sidebar extends React.Component {
                                         </svg>
                                     </span>
                                     <span className="title flex-grow-1">
-                                        Manage Users
+                                        Manage Team
                                     </span>
                                 </span>
                             </Link>
                         </li>
-                        <li className="nav-item gaa-menu-item">
-                            <Link to="/notifications">
-                                <span className="sidebar-link d-flex align-items-center justify-content-start">
-                                    <span>
-                                        <svg width={26} height={26} viewBox="0 0 26 26" fill="none">
-                                            <path
-                                                d="M12.977 22.515c1.101 0 2.002-.901 2.002-2.002h-4.003c0 1.1.9 2.002 2.001 2.002zm6.005-6.005v-5.004c0-3.072-1.631-5.644-4.503-6.324v-.68A1.5 1.5 0 0012.977 3a1.5 1.5 0 00-1.5 1.501v.68c-2.863.681-4.504 3.243-4.504 6.325v5.004l-2.002 2.002v1h16.012v-1l-2.001-2.002zm-2.002 1H8.974v-6.004c0-2.482 1.512-4.503 4.003-4.503 2.492 0 4.003 2.021 4.003 4.503v6.005zM8.554 4.582l-1.43-1.43C4.72 4.98 3.14 7.803 3 11.005h2.001a8.451 8.451 0 013.553-6.425zm12.4 6.425h2a10.496 10.496 0 00-4.122-7.856L17.41 4.581a8.5 8.5 0 013.542 6.425z"
-                                                fill="currentColor"
-                                            />
-                                        </svg>
-                                    </span>
-                                    <span className="title flex-grow-1">
-                                        Notifications
-                                    </span>
-                                </span>
-                            </Link>
-                        </li>
+
                         {/* <li className="nav-item gaa-menu-item">
                             <Link to="/integrations">
                                 <span className="sidebar-link d-flex align-items-center justify-content-start">
@@ -353,8 +337,11 @@ class Sidebar extends React.Component {
                                     ) : null}
                                     <li className="nav-item dropdown">
                                         <Link to="/settings/profile">
-                                            My Account
+                                            My Profile
                                         </Link>
+                                    </li>
+                                    <li className="nav-item dropdown">
+                                        <Link to="/notifications">Notifications</Link>
                                     </li>
                                     <li className="nav-item dropdown">
                                         <Link to="/api-key">API Keys</Link>

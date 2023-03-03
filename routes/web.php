@@ -21,6 +21,9 @@ Route::get('test_fb', function () {
     (new \App\Services\FacebookService())->test();
 });
 
+Route::get('enableUserProperties', [App\Http\Controllers\HomeController::class, 'enableUserProperties']);
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -118,6 +121,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
     Route::view('annotation/upload', 'ui/app');
     Route::post('annotation/upload', [App\Http\Controllers\AnnotationController::class, 'upload']);
+    Route::post('annotation/saveCsv', [App\Http\Controllers\AnnotationController::class, 'saveCSV']);
 
     Route::view('data-source', 'ui/app');
     Route::view('integrations', 'ui/app');
@@ -268,6 +272,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('price-plan-detail', [PricePlanController::class, 'customPricePlanDetailsByCode']);
 
             Route::post('price-plan/payment', [App\Http\Controllers\PaymentController::class, 'subscribePlan'])->name('payment.check');
+            Route::post('price-plan/check-extra-apps', [App\Http\Controllers\PaymentController::class, 'checkExtraApps'])->name('payment.check-extra-apps');
             Route::get('price-plan-subscription', [App\Http\Controllers\PaymentController::class, 'indexPaymentHistory']);
             Route::post('payment-detail', [App\Http\Controllers\PaymentDetailController::class, 'store']);
 

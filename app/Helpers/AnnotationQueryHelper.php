@@ -139,7 +139,7 @@ class AnnotationQueryHelper
             $annotationsQuery .= " LEFT JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
         }
 
-        
+
         $annotationsQuery .= " WHERE (";
         if ($userId !== '*' && in_array($userId, $userIdsArray)) {
             $annotationsQuery .= " `annotations`.`user_id` = " . $userId;
@@ -229,7 +229,7 @@ class AnnotationQueryHelper
     public static function openWeatherMapQuery(User $user, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
-        return "select 1, alert_date, NULL, open_weather_map_cities.name, description, null, CONCAT('open_weather_map_alerts', '~~~~', `open_weather_map_alerts`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, alert_date from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` inner join `open_weather_map_cities` on `open_weather_map_cities`.id = `open_weather_map_alerts`.`open_weather_map_city_id` where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities')";
+        return "select 1, alert_date, NULL, open_weather_map_cities.name, description, null, CONCAT('open_weather_map_alerts', '~~~~', `uds`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, alert_date from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` inner join `open_weather_map_cities` on `open_weather_map_cities`.id = `open_weather_map_alerts`.`open_weather_map_city_id` where $gAPropertyCriteria AND (`uds`.`user_id` = " . $user->id . " and `uds`.`ds_code` = 'open_weather_map_cities')";
     }
 
     public static function googleAlertsQuery(User $user, string $googleAnalyticsPropertyId)

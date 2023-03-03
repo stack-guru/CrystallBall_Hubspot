@@ -77,7 +77,26 @@ export default class UserAnnotationColorPicker extends React.Component {
                             <GithubPicker
                                 width={199}
                                 color={this.props.value}
-                                colors={['#D96FFF', '#A00CE6', '#17DE6B', '#00BB4F', '#04D6E3', '#1976FE', '#1324B0', '#FFB8BF', '#FE4C3C', '#DE180E', '#FFE082', '#FFC514', '#FF9147', '#FF6600']}
+                                colors={[
+                                    '#D96FFF', 
+                                    '#A00CE6', 
+                                    '#17DE6B', 
+                                    '#00BB4F', 
+                                    '#04D6E3', 
+                                    '#1976FE', 
+                                    '#1324B0', 
+                                    '#FFB8BF', 
+                                    '#FE4C3C', 
+                                    '#DE180E', 
+                                    '#FFE082', 
+                                    '#FFC514', 
+                                    '#FF9147', 
+                                    '#FF6600',
+                                    '#e6e9ee',
+                                    '#24292f',
+                                    '#253858',
+                                    '#004f9d',
+                                ]}
                                 onChangeComplete={this.handleChange}
                             />
                         </div> 

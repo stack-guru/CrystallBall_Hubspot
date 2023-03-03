@@ -38,7 +38,7 @@ class header extends React.Component {
                     {/* <img src="{{config('app.logo')}}" width='150' height='44' alt='Crystal Ball' /> */}
                     <div className="d-flex justify-content-between align-items-center">
                         <img src={`${IsDomain('app.gaannotations.com') || IsDomain('localhost') ? '/images/company_logo_gaa.png' : '/images/company_logo_cbi.png'}`} width="44" height="44" alt={`${IsDomain('app.gaannotations.com') || IsDomain('localhost') ? 'GAannotations' : 'Crystal Ball'}`} />
-                        <h4 className="m-0 pl-2 text-secondary">{`${IsDomain('app.gaannotations.com') || IsDomain('localhost') ? 'GAannotations' : 'Crystal Ball'}`}</h4>
+                        <h4 style={(IsDomain('app.gaannotations.com') || IsDomain('localhost') ? {color: '#0a2a50'}: {color: '#056db4'})} className="m-0 pl-2">{`${IsDomain('app.gaannotations.com') || IsDomain('localhost') ? 'GAannotations' : 'Crystal Ball'}`}</h4>
                     </div>
                 </a></strong>
                 {/* <form className='form-search'>
@@ -114,7 +114,7 @@ class header extends React.Component {
                         </button>
                         <div className="dropdown-menu">
                             <div className="dropdownHead">
-                                <Link to="/settings">{/* {this.props.user.name} */}View Profile</Link>
+                                <Link to="/settings/profile">{/* {this.props.user.name} */}View Profile</Link>
                             </div>
 
                             <ul className='dropdownBody'>

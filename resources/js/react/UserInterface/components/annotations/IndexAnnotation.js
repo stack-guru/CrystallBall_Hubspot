@@ -16,6 +16,19 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { capitalize, uniqBy } from "lodash";
 
 
+function stripHtmlTags(str) {
+    if (!str) {
+        return '';
+    }
+
+    if (typeof str !== 'string') {
+        // throw new TypeError('stripHtmlTags() expects a string argument.');
+        return '';
+    }
+
+    return str.replace(/<[^>]*>/g, '');
+}
+
 class IndexAnnotations extends React.Component {
 
     axiosCancelToken = null;
@@ -226,7 +239,7 @@ class IndexAnnotations extends React.Component {
 
         if (sortBy) link += `&sort_by=${sortBy}`;
         if (searchText) link += `&search=${searchText}`;
-        if (category) link += `&cateogry=${category}`;
+        if (sortBy === 'category' && category) link += `&cateogry=${category}`;
         if (googleAnalyticsProperty) link += `&annotation_ga_property_id=${googleAnalyticsProperty}`;
         if (pageSize) link += `&page_size=${pageSize}`;
         if (pageNumber) link += `&page_number=${pageNumber}`;
@@ -243,7 +256,7 @@ class IndexAnnotations extends React.Component {
                 (response) => {
                     this.loadAnnotationsCancelToken = null;
                     this.setState({
-                        annotations: uniqBy(this.state.annotations.concat(response.data.annotations), 'created_at'),
+                        annotations: uniqBy(this.state.annotations.concat(response.data.annotations), 'added_by'),
                         isLoading: false,
                         hasMore: response.data.annotations.length >= pageSize,
                     });
@@ -458,7 +471,7 @@ class IndexAnnotations extends React.Component {
                                                 );
                                             }}
                                         >
-                                            <option value="select-category">
+                                            <option value="">
                                                 Select Category
                                             </option>
                                             {categories.map((cats) => (
@@ -649,18 +662,18 @@ class IndexAnnotations extends React.Component {
                                                         )}
                                                     </p>
                                                     <p className="annotationDesc mb-0 d-flex-inline">
-                                                        {anno.description &&
-                                                            !anno.show_complete_desc ? anno.description.substring(0, 150) : ""}
-                                                        {anno.description &&
-                                                            anno.description.length > 150 &&
+                                                        {stripHtmlTags(anno.description) &&
+                                                            !anno.show_complete_desc ? stripHtmlTags(anno.description).substring(0, 150) : ""}
+                                                        {stripHtmlTags(anno.description) &&
+                                                        stripHtmlTags(anno.description).length > 150 &&
                                                             !anno.show_complete_desc ? (
                                                             <span>...<a onClick={() => { this.seeCompleteDescription(anno, idx); }} target="_blank" className="ml-1">Read more</a></span>
                                                         ) : (
                                                             ""
                                                         )}
 
-                                                        {anno.description && anno.description.length > 150 && anno.show_complete_desc ? (
-                                                            <div id="">{anno.description}</div>
+                                                        {stripHtmlTags(anno.description) && stripHtmlTags(anno.description).length > 150 && anno.show_complete_desc ? (
+                                                            <div id="">{stripHtmlTags(anno.description)}</div>
                                                         ) : (
                                                             ""
                                                         )}
