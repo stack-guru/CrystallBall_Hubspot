@@ -299,11 +299,11 @@ export default class Profile extends React.Component {
                                 </div>
                                 <div className="themeNewInputStyle position-relative inputWithIcon mb-3">
                                     <i className='fa'><img src='/icon-chain-gray.svg'/></i>
-                                    <Input type='url' className="form-control" name='' placeholder='https://awesomecompany.com' value='' />
+                                    <Input type='url' className="form-control" name='' placeholder='https://your-company.com' value='' />
                                 </div>
                                 <div className="themeNewInputStyle mb-3 position-relative">
                                     <a className='btn-update' onClick={this.handlePhoneSubmit} href='javascript:void(0);'>Update</a>
-                                    <input type="text" className="form-control" name="phone" value={this.state.phone} onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} placeholder="(551) 456-1234" />
+                                    <input type="text" className="form-control" name="phone" value={this.state.phone} onChange={(e) => { this.setState({ [e.target.name]: e.target.value }); }} placeholder="(14) 12345678" />
                                 </div>
                                 <div className="themeNewInputStyle mb-4 pb-2">
                                     <TimezoneSelect className='form-control' value={this.state.timezone} name='timezone' onChange={(e) => { this.setState({ timezone: e.target.value }) }} />
