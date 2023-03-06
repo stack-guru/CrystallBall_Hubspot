@@ -9,7 +9,10 @@ use App\Services\GoogleAnalyticsService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Jobs\FetchGAMetricsAndDimensionsJob;
+use App\Models\AnnotationGaProperty;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class GoogleAnalyticsAccountController extends Controller
 {
@@ -110,6 +113,22 @@ class GoogleAnalyticsAccountController extends Controller
 
         $googleAnalyticsAccount->delete();
         return ['success' => true];
+    }
+    public function deleteProperty(Request $request)
+    {
+        $request->validate([
+            'property_id' => 'required'
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $property = GoogleAnalyticsProperty::find($request->property_id);
+            AnnotationGaProperty::where('google_analytics_property_id',$property->id)->delete();
+            $property->delete();
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     private function saveGoogleAnalyticsUAPropertyToDatabase($googleAnalyticsProperty, $googleAnalyticsAccount, $googleAccount, $user)
