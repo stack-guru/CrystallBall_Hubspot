@@ -33,10 +33,8 @@ class HomeController extends Controller
     public function enableUserProperties()
     {
         $users = User::all();
-
         foreach ($users as $user) {
             $userIdsArray = [];
-
             if (!$user->user_id) {
                 // Current user is not child, grab all child users, pluck ids
                 $userIdsArray = $user->users->pluck('id')->toArray();
@@ -45,47 +43,185 @@ class HomeController extends Controller
                 // Current user is child, find admin, grab all child users, pluck ids
                 $userIdsArray = $user->user->users->pluck('id')->toArray();
                 $userIdsArray[] = $user->user->id;
-                // Set Current User to Admin so that data source configuration which applies are that of admin
-                $user = $user->user;
             }
+
+            echo 'User Ids: ' . implode(', ', $userIdsArray) . ' $user->id ' . $user->id . '<br><br>';
 
             $usersToUpdate = User::whereIn('id', $userIdsArray)->get();
 
-            foreach ($usersToUpdate as $innerUser) {
-                $innerUserProperties = [
-                    'is_ds_holidays_enabled',
-                    'is_ds_google_algorithm_updates_enabled',
-                    'is_ds_retail_marketing_enabled',
-                    'is_ds_weather_alerts_enabled',
-                    'is_ds_google_alerts_enabled',
-                    'is_ds_wordpress_updates_enabled',
-                    'is_ds_web_monitors_enabled',
-                    'is_ds_apple_podcast_annotation_enabled',
-                    'is_ds_shopify_annotation_enabled',
-                    'is_ds_g_ads_history_change_enabled',
-                    'is_ds_anomolies_detection_enabled',
-                    'is_ds_budget_tracking_enabled',
-                    'is_ds_keyword_tracking_enabled',
-                    'is_ds_bitbucket_tracking_enabled',
-                    'is_ds_github_tracking_enabled',
-                    'is_ds_facebook_tracking_enabled',
-                    'is_ds_instagram_tracking_enabled',
-                    'is_ds_twitter_tracking_enabled',
-                    'is_ds_wordpress_enabled',
-                ];
+            $is_ds_google_algorithm_updates_enabled = false;
+            $is_ds_retail_marketing_enabled = false;
+            $is_ds_holidays_enabled = false;
+            $is_ds_weather_alerts_enabled = false;
+            $is_ds_google_alerts_enabled = false;
+            $is_ds_wordpress_updates_enabled = false;
+            $is_ds_web_monitors_enabled = false;
+            $is_ds_apple_podcast_annotation_enabled = false;
+            $is_ds_shopify_annotation_enabled = false;
+            $is_ds_g_ads_history_change_enabled = false;
+            $is_ds_anomolies_detection_enabled = false;
+            $is_ds_budget_tracking_enabled = false;
+            $is_ds_keyword_tracking_enabled = false;
+            $is_ds_bitbucket_tracking_enabled = false;
+            $is_ds_github_tracking_enabled = false;
+            $is_ds_facebook_tracking_enabled = false;
+            $is_ds_instagram_tracking_enabled = false;
+            $is_ds_twitter_tracking_enabled = false;
+            $is_ds_wordpress_enabled = false;
 
-                foreach ($innerUserProperties as $property) {
-                    if ($user->$property) {
-                        if (!$innerUser->$property) {
-                            $innerUser->$property = 1;
-                            $innerUser->last_activated_any_data_source_at = Carbon::now();
-                            $innerUser->save();
-                        }
-                    }
+            foreach ($usersToUpdate as $innerUser) {
+                if (!$is_ds_google_algorithm_updates_enabled && $innerUser->is_ds_google_algorithm_updates_enabled) {
+                    $is_ds_google_algorithm_updates_enabled = true;
+                }
+
+                if (!$is_ds_retail_marketing_enabled && $innerUser->is_ds_retail_marketing_enabled) {
+                    $is_ds_retail_marketing_enabled = true;
+                }
+
+                if (!$is_ds_holidays_enabled && $innerUser->is_ds_holidays_enabled) {
+                    $is_ds_holidays_enabled = true;
+                }
+
+                if (!$is_ds_weather_alerts_enabled && $innerUser->is_ds_weather_alerts_enabled) {
+                    $is_ds_weather_alerts_enabled = true;
+                }
+
+                if (!$is_ds_google_alerts_enabled && $innerUser->is_ds_google_alerts_enabled) {
+                    $is_ds_google_alerts_enabled = true;
+                }
+
+                if (!$is_ds_wordpress_updates_enabled && $innerUser->is_ds_wordpress_updates_enabled) {
+                    $is_ds_wordpress_updates_enabled = true;
+                }
+
+                if (!$is_ds_web_monitors_enabled && $innerUser->is_ds_web_monitors_enabled) {
+                    $is_ds_web_monitors_enabled = true;
+                }
+                if (!$is_ds_apple_podcast_annotation_enabled && $innerUser->is_ds_apple_podcast_annotation_enabled) {
+                    $is_ds_apple_podcast_annotation_enabled = true;
+                }
+                if (!$is_ds_shopify_annotation_enabled && $innerUser->is_ds_shopify_annotation_enabled) {
+                    $is_ds_shopify_annotation_enabled = true;
+                }
+                if (!$is_ds_g_ads_history_change_enabled && $innerUser->is_ds_g_ads_history_change_enabled) {
+                    $is_ds_g_ads_history_change_enabled = true;
+                }
+                if (!$is_ds_anomolies_detection_enabled && $innerUser->is_ds_anomolies_detection_enabled) {
+                    $is_ds_anomolies_detection_enabled = true;
+                }
+                if (!$is_ds_budget_tracking_enabled && $innerUser->is_ds_budget_tracking_enabled) {
+                    $is_ds_budget_tracking_enabled = true;
+                }
+                if (!$is_ds_keyword_tracking_enabled && $innerUser->is_ds_keyword_tracking_enabled) {
+                    $is_ds_keyword_tracking_enabled = true;
+                }
+                if (!$is_ds_bitbucket_tracking_enabled && $innerUser->is_ds_bitbucket_tracking_enabled) {
+                    $is_ds_bitbucket_tracking_enabled = true;
+                }
+                if (!$is_ds_github_tracking_enabled && $innerUser->is_ds_github_tracking_enabled) {
+                    $is_ds_github_tracking_enabled = true;
+                }
+
+                if (!$is_ds_facebook_tracking_enabled && $innerUser->is_ds_facebook_tracking_enabled) {
+                    $is_ds_facebook_tracking_enabled = true;
+                }
+                if (!$is_ds_instagram_tracking_enabled && $innerUser->is_ds_instagram_tracking_enabled) {
+                    $is_ds_instagram_tracking_enabled = true;
+                }
+                if (!$is_ds_twitter_tracking_enabled && $innerUser->is_ds_twitter_tracking_enabled) {
+                    $is_ds_twitter_tracking_enabled = true;
+                }
+                if (!$is_ds_wordpress_enabled && $innerUser->is_ds_wordpress_enabled) {
+                    $is_ds_wordpress_enabled = true;
+                }
+            }
+
+            foreach ($usersToUpdate as $innerUser) {
+                if ($is_ds_google_algorithm_updates_enabled && !$innerUser->is_ds_google_algorithm_updates_enabled) {
+                    $innerUser->is_ds_google_algorithm_updates_enabled = true;
+                    $innerUser->save();
+                }
+
+                if ($is_ds_retail_marketing_enabled && !$innerUser->is_ds_retail_marketing_enabled) {
+                    $innerUser->is_ds_retail_marketing_enabled = true;
+                    $innerUser->save();
+                }
+
+                if ($is_ds_holidays_enabled && !$innerUser->is_ds_holidays_enabled) {
+                    $innerUser->is_ds_holidays_enabled = true;
+                    $innerUser->save();
+                }
+
+                if ($is_ds_weather_alerts_enabled && !$innerUser->is_ds_weather_alerts_enabled) {
+                    $innerUser->is_ds_weather_alerts_enabled = true;
+                    $innerUser->save();
+                }
+
+                if ($is_ds_google_alerts_enabled && !$innerUser->is_ds_google_alerts_enabled) {
+                    $innerUser->is_ds_google_alerts_enabled = true;
+                    $innerUser->save();
+                }
+
+                if ($is_ds_wordpress_updates_enabled && !$innerUser->is_ds_wordpress_updates_enabled) {
+                    $innerUser->is_ds_wordpress_updates_enabled = true;
+                    $innerUser->save();
+                }
+
+                if ($is_ds_web_monitors_enabled && !$innerUser->is_ds_web_monitors_enabled) {
+                    $innerUser->is_ds_web_monitors_enabled = true;
+                    $innerUser->save();
+                }
+                if ($is_ds_apple_podcast_annotation_enabled && !$innerUser->is_ds_apple_podcast_annotation_enabled) {
+                    $innerUser->is_ds_apple_podcast_annotation_enabled = true;
+                    $innerUser->save();
+                }
+                if ($is_ds_shopify_annotation_enabled && !$innerUser->is_ds_shopify_annotation_enabled) {
+                    $innerUser->is_ds_shopify_annotation_enabled = true;
+                    $innerUser->save();
+                }
+                if ($is_ds_g_ads_history_change_enabled && !$innerUser->is_ds_g_ads_history_change_enabled) {
+                    $innerUser->is_ds_g_ads_history_change_enabled = true;
+                    $innerUser->save();
+                }
+                if ($is_ds_anomolies_detection_enabled && !$innerUser->is_ds_anomolies_detection_enabled) {
+                    $innerUser->is_ds_anomolies_detection_enabled = true;
+                    $innerUser->save();
+                }
+                if ($is_ds_budget_tracking_enabled && !$innerUser->is_ds_budget_tracking_enabled) {
+                    $innerUser->is_ds_budget_tracking_enabled = true;
+                    $innerUser->save();
+                }
+                if ($is_ds_keyword_tracking_enabled && !$innerUser->is_ds_keyword_tracking_enabled) {
+                    $innerUser->is_ds_keyword_tracking_enabled = true;
+                    $innerUser->save();
+                }
+                if ($is_ds_bitbucket_tracking_enabled && !$innerUser->is_ds_bitbucket_tracking_enabled) {
+                    $innerUser->is_ds_bitbucket_tracking_enabled = true;
+                    $innerUser->save();
+                }
+                if ($is_ds_github_tracking_enabled && !$innerUser->is_ds_github_tracking_enabled) {
+                    $innerUser->is_ds_github_tracking_enabled = true;
+                    $innerUser->save();
+                }
+
+                if ($is_ds_facebook_tracking_enabled && !$innerUser->is_ds_facebook_tracking_enabled) {
+                    $innerUser->is_ds_facebook_tracking_enabled = true;
+                    $innerUser->save();
+                }
+                if ($is_ds_instagram_tracking_enabled && !$innerUser->is_ds_instagram_tracking_enabled) {
+                    $innerUser->is_ds_instagram_tracking_enabled = true;
+                    $innerUser->save();
+                }
+                if ($is_ds_twitter_tracking_enabled && !$innerUser->is_ds_twitter_tracking_enabled) {
+                    $innerUser->is_ds_twitter_tracking_enabled = true;
+                    $innerUser->save();
+                }
+                if ($is_ds_wordpress_enabled && !$innerUser->is_ds_wordpress_enabled) {
+                    $innerUser->is_ds_wordpress_enabled = true;
+                    $innerUser->save();
                 }
             }
         }
-
         return 'All Users Updated Successfully.';
     }
 
