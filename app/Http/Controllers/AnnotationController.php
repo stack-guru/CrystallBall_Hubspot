@@ -52,7 +52,7 @@ class AnnotationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
 
@@ -135,8 +135,8 @@ class AnnotationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Annotation $annotation
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Annotation  $annotation
      * @return \Illuminate\Http\Response
      */
     public function update(AnnotationRequest $request, Annotation $annotation)
@@ -220,7 +220,7 @@ class AnnotationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Annotation $annotation
+     * @param  \App\Annotation  $annotation
      * @return \Illuminate\Http\Response
      */
     public function destroy(Annotation $annotation)
@@ -312,7 +312,6 @@ class AnnotationController extends Controller
 
         return ['annotations' => $annotations, 'query' => $annotationsQuery];
     }
-
     public function uiShow(Annotation $annotation)
     {
         $this->authorize('view', $annotation);
@@ -327,8 +326,7 @@ class AnnotationController extends Controller
         return ['annotation' => $annotation];
     }
 
-    public function saveCSV(Request $request)
-    {
+    public function saveCSV (Request $request) {
 
         $user_id = Auth::id();
         $fieldErrors = json_decode($request->fieldErrors, true);
@@ -339,54 +337,54 @@ class AnnotationController extends Controller
         $dateF = $request->date_format;
         $dateFormat = '';
         switch ($dateF) {
-            case 'DD/MM/YYYY':
-                $dateFormat = "j/n/Y";
-                break;
-            case 'M-D-YYYY':
-                $dateFormat = "n-j-Y";
-                break;
-            case "M-D-YY":
-                $dateFormat = "n-j-y";
-                break;
-            case "MM-DD-YY":
-                $dateFormat = "m-d-y";
-                break;
-            case "MM-DD-YYYY":
-                $dateFormat = "m-d-Y";
-                break;
-            case "YY-MM-DD":
-                $dateFormat = "y-m-d";
-                break;
-            case "YYYY-MM-DD":
-                $dateFormat = "Y-m-d";
-                break;
-            case "DD-MMM-YY":
-                $dateFormat = "d-M-y";
-                break;
-            case "M/D/YYYY":
-                $dateFormat = "n/j/Y";
-                break;
-            case "M/D/YY":
-                $dateFormat = "n/j/y";
-                break;
-            case "MM/DD/YY":
-                $dateFormat = "m/d/y";
-                break;
-            case "MM/DD/YYYY":
-                $dateFormat = "m/d/Y";
-                break;
-            case "YY/MM/DD":
-                $dateFormat = "y/m/d";
-                break;
-            case "YYYY/MM/DD":
-                $dateFormat = "Y/m/d";
-                break;
-            case "DD/MMM/YY":
-                $dateFormat = "d/M/y";
-                break;
+        case 'DD/MM/YYYY':
+            $dateFormat = "j/n/Y";
+            break;
+        case 'M-D-YYYY':
+            $dateFormat = "n-j-Y";
+            break;
+        case "M-D-YY":
+            $dateFormat = "n-j-y";
+            break;
+        case "MM-DD-YY":
+            $dateFormat = "m-d-y";
+            break;
+        case "MM-DD-YYYY":
+            $dateFormat = "m-d-Y";
+            break;
+        case "YY-MM-DD":
+            $dateFormat = "y-m-d";
+            break;
+        case "YYYY-MM-DD":
+            $dateFormat = "Y-m-d";
+            break;
+        case "DD-MMM-YY":
+            $dateFormat = "d-M-y";
+            break;
+        case "M/D/YYYY":
+            $dateFormat = "n/j/Y";
+            break;
+        case "M/D/YY":
+            $dateFormat = "n/j/y";
+            break;
+        case "MM/DD/YY":
+            $dateFormat = "m/d/y";
+            break;
+        case "MM/DD/YYYY":
+            $dateFormat = "m/d/Y";
+            break;
+        case "YY/MM/DD":
+            $dateFormat = "y/m/d";
+            break;
+        case "YYYY/MM/DD":
+            $dateFormat = "Y/m/d";
+            break;
+        case "DD/MMM/YY":
+            $dateFormat = "d/M/y";
+            break;
 
-            default:
-                $dateFormat = '';
+        default:
+            $dateFormat = '';
         }
 
         $fieldErrorsCount = 0;
@@ -394,8 +392,8 @@ class AnnotationController extends Controller
             try {
                 $showAt = Carbon::createFromFormat($dateFormat, $fe['show_at']);
                 unset($fe['show_at_error']);
-            } catch (\Exception $e) {
-                if ($fe['show_at']) {
+            } catch(\Exception $e) {
+                if($fe['show_at']) {
                     $error = true;
                     $fieldErrorsCount++;
                     $fe['show_at_error'] = "Date format is incorrect, use format [$dateF]";
@@ -404,7 +402,7 @@ class AnnotationController extends Controller
                 }
             }
 
-            if (!$fe['category']) {
+            if(!$fe['category']) {
                 $error = true;
                 $fieldErrorsCount++;
                 $fe['category_error'] = "Category can't be empty";
@@ -412,7 +410,7 @@ class AnnotationController extends Controller
                 unset($fe['category_error']);
             }
 
-            if ($fe['url'] && !filter_var($fe['url'], FILTER_VALIDATE_URL)) {
+            if($fe['url'] && !filter_var($fe['url'], FILTER_VALIDATE_URL)) {
                 $error = true;
                 $fieldErrorsCount++;
                 $fe['url_error'] = "Enter a valid URL";
@@ -420,7 +418,7 @@ class AnnotationController extends Controller
                 unset($fe['url_error']);
             }
 
-            if (!$fe['event_name']) {
+            if(!$fe['event_name']) {
                 $error = true;
                 $fieldErrorsCount++;
                 $fe['event_name_error'] = "Event Name can't be empty";
@@ -448,13 +446,13 @@ class AnnotationController extends Controller
             $fe['user_id'] = $user_id;
             $fe['added_by'] = 'csv-upload';
 
-            if (!$exists) {
-                foreach ($data as $dt) {
+            if(!$exists) {
+                foreach($data as $dt) {
                     $exists = $dt['description'] === $fe['description'] && $dt['event_name'] === $fe['event_name'] && $dt['category'] === $fe['category'] && $dt['url'] === $fe['url'];
                 }
             }
 
-            if (!$exists) {
+            if(!$exists) {
                 $data[] = $fe;
             }
         }
@@ -537,36 +535,36 @@ class AnnotationController extends Controller
                 if ($headers !== $values && count($values) == count($headers)) {
                     for ($i = 0; $i < count($headers); $i++) {
                         // if (in_array($headers[$i], $kHs)) {
-                        // if ($headers[$i] == 'show_at') {
-                        //     try {
-                        //         $date = Carbon::createFromFormat($request->date_format, $values[$i]);
-                        //         $row[$headers[$i]] = $date->format('Y-m-d');
-                        //     } catch (\Exception $e) {
-                        //         $row[$headers[$i]] = $values[$i];
-                        //         $row['show_at_error'] = 'Please select correct date format according to your CSV file from the list below.';
-                        //         $error = true;
-                        //         $fieldErrorsCount = $fieldErrorsCount + 1;
-                        //     }
-                        // } else if ($headers[$i] == 'url') {
-                        //     $url = $values[$i];
-                        //     $row[$headers[$i]] = $url;
-                        //     if (!filter_var($url, FILTER_VALIDATE_URL)) {
-                        //         $row['url_error'] = 'Please provide valid url';
-                        //         $error = true;
-                        //         $fieldErrorsCount = $fieldErrorsCount + 1;
-                        //     }
-                        // } else if ($headers[$i] == 'category') {
-                        //     $row['category'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
-                        // } else if ($headers[$i] == 'event_type') {
-                        //     $row['event_type'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
-                        // } else if ($headers[$i] == 'event_name') {
-                        //     $row['event_name'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
-                        // } else if ($headers[$i] == 'title') {
-                        //     $row['title'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            // if ($headers[$i] == 'show_at') {
+                            //     try {
+                            //         $date = Carbon::createFromFormat($request->date_format, $values[$i]);
+                            //         $row[$headers[$i]] = $date->format('Y-m-d');
+                            //     } catch (\Exception $e) {
+                            //         $row[$headers[$i]] = $values[$i];
+                            //         $row['show_at_error'] = 'Please select correct date format according to your CSV file from the list below.';
+                            //         $error = true;
+                            //         $fieldErrorsCount = $fieldErrorsCount + 1;
+                            //     }
+                            // } else if ($headers[$i] == 'url') {
+                            //     $url = $values[$i];
+                            //     $row[$headers[$i]] = $url;
+                            //     if (!filter_var($url, FILTER_VALIDATE_URL)) {
+                            //         $row['url_error'] = 'Please provide valid url';
+                            //         $error = true;
+                            //         $fieldErrorsCount = $fieldErrorsCount + 1;
+                            //     }
+                            // } else if ($headers[$i] == 'category') {
+                            //     $row['category'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            // } else if ($headers[$i] == 'event_type') {
+                            //     $row['event_type'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            // } else if ($headers[$i] == 'event_name') {
+                            //     $row['event_name'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                            // } else if ($headers[$i] == 'title') {
+                            //     $row['title'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
 
-                        if ($headers[$i] == 'show_at' && !$sampleDate) {
-                            $sampleDate = $values[$i];
-                        }
+                            if ($headers[$i] == 'show_at' && !$sampleDate) {
+                                $sampleDate = $values[$i];
+                            }
 
                             if ($headers[$i] == 'url') {
                                 $row[$headers[$i]] = $values[$i];
@@ -593,17 +591,16 @@ class AnnotationController extends Controller
         }
 
         return [
-            'fieldErrors' => $rows,
+            'fieldErrors'=> $rows,
             'fileName' => $request->file('csv')->getClientOriginalName(),
             'sampleDate' => $sampleDate,
-            'importReview' => $importReview,
+            'importReview'=> $importReview,
             'importReviewErrorCount' => $importReviewErrorCount,
             'fileHeaders' => $headers
         ];
     }
 
-    public function insertRows($rows, $request)
-    {
+    public function insertRows ($rows, $request) {
         try {
             Annotation::insert($rows);
             $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
@@ -711,10 +708,7 @@ class AnnotationController extends Controller
 
         } else if ($request->table_name == 'open_weather_map_alerts') {
             // working fine
-            $annotation = UserDataSource::find($request->annotation_id);
-            if (!in_array($annotation->user_id, $userIdsArray)) {
-                abort(404, "Unable to find annotation with the given id.");
-            }
+            $annotation = OpenWeatherMapAlert::find($request->annotation_id);
             $annotation->delete();
         } else if ($request->table_name == 'google_alerts') {
             $annotation = GoogleAlert::find($request->annotation_id);
@@ -776,7 +770,6 @@ class AnnotationController extends Controller
 
         return ["success" => true];
     }
-
     public function bulk_delete(Request $request)
     {
         $request->validate([
