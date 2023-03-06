@@ -563,6 +563,8 @@ export default class UploadAnnotation extends React.Component {
                                                         required>
                                                     <option value="">Select your date format</option>
                                                     <option
+                                                        value="MMM DD, YYYY">{moment("2021-01-15").format('MMM DD, YYYY')}</option>
+                                                    <option
                                                         value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
                                                     <option
                                                         value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>

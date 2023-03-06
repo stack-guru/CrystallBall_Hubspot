@@ -382,6 +382,9 @@ class AnnotationController extends Controller
         case "DD/MMM/YY":
             $dateFormat = "d/M/y";
             break;
+        case "MMM DD, YYYY":
+            $dateFormat = "M d, Y";
+            break;
                                                 
         default:
             $dateFormat = '';
