@@ -30,252 +30,63 @@ use Illuminate\Support\Facades\Mail;
 class HomeController extends Controller
 {
 
-    public function enableUserProperties () {
+    public function enableUserProperties()
+    {
+        $users = User::all();
 
-        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
-        foreach($userIdsArray as $userId) {
-            $user = User::find($userId);
-            if ($user->is_ds_holidays_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_holidays_enabled) {
-                            $innerUser->is_ds_holidays_enabled = 1;
+        foreach ($users as $user) {
+            $userIdsArray = [];
+
+            if (!$user->user_id) {
+                // Current user is not child, grab all child users, pluck ids
+                $userIdsArray = $user->users->pluck('id')->toArray();
+                $userIdsArray[] = $user->id;
+            } else {
+                // Current user is child, find admin, grab all child users, pluck ids
+                $userIdsArray = $user->user->users->pluck('id')->toArray();
+                $userIdsArray[] = $user->user->id;
+                // Set Current User to Admin so that data source configuration which applies are that of admin
+                $user = $user->user;
+            }
+
+            $usersToUpdate = User::whereIn('id', $userIdsArray)->get();
+
+            foreach ($usersToUpdate as $innerUser) {
+                $innerUserProperties = [
+                    'is_ds_holidays_enabled',
+                    'is_ds_google_algorithm_updates_enabled',
+                    'is_ds_retail_marketing_enabled',
+                    'is_ds_weather_alerts_enabled',
+                    'is_ds_google_alerts_enabled',
+                    'is_ds_wordpress_updates_enabled',
+                    'is_ds_web_monitors_enabled',
+                    'is_ds_apple_podcast_annotation_enabled',
+                    'is_ds_shopify_annotation_enabled',
+                    'is_ds_g_ads_history_change_enabled',
+                    'is_ds_anomolies_detection_enabled',
+                    'is_ds_budget_tracking_enabled',
+                    'is_ds_keyword_tracking_enabled',
+                    'is_ds_bitbucket_tracking_enabled',
+                    'is_ds_github_tracking_enabled',
+                    'is_ds_facebook_tracking_enabled',
+                    'is_ds_instagram_tracking_enabled',
+                    'is_ds_twitter_tracking_enabled',
+                    'is_ds_wordpress_enabled',
+                ];
+
+                foreach ($innerUserProperties as $property) {
+                    if ($user->$property) {
+                        if (!$innerUser->$property) {
+                            $innerUser->$property = 1;
                             $innerUser->last_activated_any_data_source_at = Carbon::now();
                             $innerUser->save();
                         }
                     }
                 }
             }
-
-            if ($user->is_ds_google_algorithm_updates_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_google_algorithm_updates_enabled) {
-                            $innerUser->is_ds_google_algorithm_updates_enabled = 1;
-                            $innerUser->last_activated_any_data_source_at = Carbon::now();
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_retail_marketing_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_retail_marketing_enabled) {
-                            $innerUser->is_ds_retail_marketing_enabled = 1;
-                            $innerUser->last_activated_any_data_source_at = Carbon::now();
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_weather_alerts_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_weather_alerts_enabled) {
-                            $innerUser->is_ds_weather_alerts_enabled = 1;
-                            $innerUser->last_activated_any_data_source_at = Carbon::now();
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_google_alerts_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_google_alerts_enabled) {
-                            $innerUser->is_ds_google_alerts_enabled = 1;
-                            $innerUser->last_activated_any_data_source_at = Carbon::now();
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_wordpress_updates_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_wordpress_updates_enabled) {
-                            $innerUser->is_ds_wordpress_updates_enabled = 1;
-                            $innerUser->last_activated_any_data_source_at = Carbon::now();
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_web_monitors_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_web_monitors_enabled) {
-                            $innerUser->is_ds_web_monitors_enabled = 1;
-                            $innerUser->last_activated_any_data_source_at = Carbon::now();
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_apple_podcast_annotation_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_apple_podcast_annotation_enabled) {
-                            $innerUser->is_ds_apple_podcast_annotation_enabled = 1;
-                            $innerUser->last_activated_any_data_source_at = Carbon::now();
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_shopify_annotation_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_shopify_annotation_enabled) {
-                            $innerUser->is_ds_shopify_annotation_enabled = 1;
-                            $innerUser->last_activated_any_data_source_at = Carbon::now();
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_g_ads_history_change_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_g_ads_history_change_enabled) {
-                            $innerUser->is_ds_g_ads_history_change_enabled = 1;
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_anomolies_detection_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_anomolies_detection_enabled) {
-                            $innerUser->is_ds_anomolies_detection_enabled = 1;
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_budget_tracking_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_budget_tracking_enabled) {
-                            $innerUser->is_ds_budget_tracking_enabled = 1;
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_keyword_tracking_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_keyword_tracking_enabled) {
-                            $innerUser->is_ds_keyword_tracking_enabled = 1;
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_bitbucket_tracking_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_bitbucket_tracking_enabled) {
-                            $innerUser->is_ds_bitbucket_tracking_enabled = 1;
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_github_tracking_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_github_tracking_enabled) {
-                            $innerUser->is_ds_github_tracking_enabled = 1;
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_facebook_tracking_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_facebook_tracking_enabled) {
-                            $innerUser->is_ds_facebook_tracking_enabled = 1;
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_instagram_tracking_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_instagram_tracking_enabled) {
-                            $innerUser->is_ds_instagram_tracking_enabled = 1;
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_twitter_tracking_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_twitter_tracking_enabled) {
-                            $innerUser->is_ds_twitter_tracking_enabled = 1;
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
-            if ($user->is_ds_wordpress_enabled) {
-                foreach($userIdsArray as $userInnerId) {
-                    if($userId !== $userInnerId) {
-                        $innerUser = User::find($userInnerId);
-                        if (!$innerUser->is_ds_wordpress_enabled) {
-                            $innerUser->is_ds_wordpress_enabled = 1;
-                            $innerUser->save();
-                        }
-                    }
-                }
-            }
-
         }
 
-        return 123;
-        
+        return 'All Users Updated Successfully.';
     }
 
     public function uiUserShow()
@@ -293,25 +104,22 @@ class HomeController extends Controller
                     'last_login_at' => new \DateTime,
                 ]);
         }
-        if($user->password === User::EMPTY_PASSWORD && $user->has_password == true)
-        {
+        if ($user->password === User::EMPTY_PASSWORD && $user->has_password == true) {
             $user->show_password_message = true;
-        }else
-        {
+        } else {
             $user->show_password_message = false;
-            if($user->starterConfigurationChecklist()->count() != $user->userStarterConfigurationChecklist()->count())
-            {
+            if ($user->starterConfigurationChecklist()->count() != $user->userStarterConfigurationChecklist()->count()) {
                 $user->starter_configuration_checklist = $user->starterConfigurationChecklist();
                 $user->user_starter_configuration_checklist = $user->userStarterConfigurationChecklist();
-                $user->user_starter_configuration_checklist_count = $user->userStarterConfigurationChecklist()->count();   
-                $user->show_configuration_message = true; 
+                $user->user_starter_configuration_checklist_count = $user->userStarterConfigurationChecklist()->count();
+                $user->show_configuration_message = true;
             }
         }
         // $user->annotations_count = $user->getTotalAnnotationsCount(true);
         $user->google_analytics_properties_in_use_count = $user->googleAnalyticsPropertiesInUse()->count();
-        $user->do_require_password_change               = ($user->password == User::EMPTY_PASSWORD && !is_null($user->app_sumo_uuid));
-        $user->user_registration_offers                 = $user->pricePlan->price == 0 ? UserRegistrationOffer::ofCurrentUser()->alive()->get() : [];
-        $user->trail_plan_status                        = $user->trailPlanStatus();
+        $user->do_require_password_change = ($user->password == User::EMPTY_PASSWORD && !is_null($user->app_sumo_uuid));
+        $user->user_registration_offers = $user->pricePlan->price == 0 ? UserRegistrationOffer::ofCurrentUser()->alive()->get() : [];
+        $user->trail_plan_status = $user->trailPlanStatus();
 
         return ['user' => $user];
     }
@@ -327,7 +135,7 @@ class HomeController extends Controller
             abort(403, 'Only the admin can delete the account.');
         }
 
-        $user->status                = User::STATUS_DELETED;
+        $user->status = User::STATUS_DELETED;
         $user->status_changed_reason = $request->deletion_reason ?? '';
         $user->save();
 
@@ -363,10 +171,11 @@ class HomeController extends Controller
         return $response;
     }
 
-    public function enableDisableProperties ($request) {
+    public function enableDisableProperties($request)
+    {
 
         $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
-        foreach($userIdsArray as $userId) {
+        foreach ($userIdsArray as $userId) {
             $user = User::find($userId);
 
             $response = [];
@@ -525,7 +334,7 @@ class HomeController extends Controller
     public function storeSupport(Request $request)
     {
         $this->validate($request, [
-            'details'    => 'required|string',
+            'details' => 'required|string',
             'attachment' => 'nullable|file',
         ]);
 
@@ -545,7 +354,7 @@ class HomeController extends Controller
         $request->validate([
             'timezone' => 'required',
         ]);
-        $user           = Auth::user();
+        $user = Auth::user();
         $user->timezone = $request->timezone;
         $user->save();
         return response()->json(['success' => 'true', 'message' => 'TimeZone updated successfully'], 200);
@@ -553,7 +362,7 @@ class HomeController extends Controller
 
     public function markDataSourceTourDone(Request $request)
     {
-        $user                             = Auth::user();
+        $user = Auth::user();
         $user->data_source_tour_showed_at = \Carbon\Carbon::now();
         $user->save();
 
@@ -562,7 +371,7 @@ class HomeController extends Controller
 
     public function markGoogleAccountsTourDone(Request $request)
     {
-        $user                                 = Auth::user();
+        $user = Auth::user();
         $user->google_accounts_tour_showed_at = \Carbon\Carbon::now();
         $user->save();
 
@@ -584,7 +393,7 @@ class HomeController extends Controller
         $user->save();
         return response()->json(['success' => 'true', 'message' => 'Phone updated successfully'], 200);
     }
-    
+
     public function updateEmail(Request $request)
     {
         $request->validate([
@@ -600,35 +409,36 @@ class HomeController extends Controller
         return response()->json(['success' => 'true', 'message' => 'Email updated successfully'], 200);
     }
 
-    public function updateProfile (Request $request) {
+    public function updateProfile(Request $request)
+    {
 
         $this->validate($request, [
             'profile_image' => 'required',
         ]);
 
         $file = $request->file('profile_image');
-        $filename = time().'_'.$file->getClientOriginalName();
+        $filename = time() . '_' . $file->getClientOriginalName();
 
         // File extension
         $extension = $file->getClientOriginalExtension();
         // File upload location
         $location = 'profiles';
         // Upload file
-        $file->move($location,$filename);
+        $file->move($location, $filename);
         // File path
         // $filepath = url('files/'.$filename);
         // return $filepath;
 
         $user = Auth::user();
-        $user->profile_image = 'profiles/'.$filename;
+        $user->profile_image = 'profiles/' . $filename;
         $user->save();
         return response()->json(['success' => 'true', 'profile_image' => $user->profile_image, 'message' => 'Profile Image updated successfully'], 200);
-        
-      
+
 
     }
 
-    public function updateUser (Request $request) {
+    public function updateUser(Request $request)
+    {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
