@@ -134,7 +134,7 @@ export default class AddNewPasswordModal extends React.Component {
 
         return (
             <div className="modal fade show" id="addNewPasswordModal" tabIndex="-1" role="dialog" aria-labelledby="adwordsClientCustomerIdSaverModalLabel" style={{ 'display': 'block', 'paddingRight': '12px' }}>
-                <div className="modal-dialog modal-dialog-centered " role="document">
+                <div className="modal-dialog " role="document">
                     <div className="modal-content  border-0 shadow " style={{ borderRadius: "5%" }}>
                         <div className='mt-4 text-center'>
                             <h3 style={{ color: "#2A74E7", fontWeight: "bolder" }} >Almost there...</h3>

@@ -293,6 +293,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
             Route::resource('google-analytics-account', App\Http\Controllers\GoogleAnalyticsAccountController::class)->only(['index', 'destroy']);
             Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);
+            Route::post('google-analytics-property/destroy', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'deleteProperty']);
 
             Route::resource('google-analytics-property', GoogleAnalyticsPropertyController::class)->only(['index', 'update', 'destroy']);
 
