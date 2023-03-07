@@ -21,6 +21,7 @@
                                         <th scope="col">User Annotations</th>
                                         <th scope="col">Registration Date</th>
                                         <th scope="col">Plan</th>
+                                        <th scope="col">Reference Text</th>
                                         <th scope="col">Login to the platform</th>
                                         <th scope="col">open the extension in last 30 days</th>
                                         <th scope="col">click on a red dot on chart</th>
@@ -63,6 +64,7 @@
                                             </td>
                                             <td>{{ $user->created_at }}</td>
                                             <td>{{ @$user->pricePlan->name }}</td>
+                                            <td>{{ @$user->pricePlan->reference_text }}</td>
                                             <td>
                                                 {{ $user->last_login_at }} + {{ $user->login_logs_count }}
                                                 <a class="btn btn-default btn-sm"
