@@ -423,6 +423,8 @@ class IndexAnnotations extends React.Component {
                                     <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
                                         <option value="">Sort By</option>
                                         <option value="added">Added</option>
+                                        <option value="user">By User</option>
+                                        <option value="today">By Today</option>
                                         <option value="date">By Date</option>
                                         <option value="category">By Category</option>
                                         <option value="ga-property">By GA Property</option>

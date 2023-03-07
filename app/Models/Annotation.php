@@ -24,7 +24,8 @@ class Annotation extends Model
      * @var array
      */
     protected $casts = [
-        'show_at' => 'date'
+        'show_at' => 'date',
+        'created_at' => 'date',
     ];
 
     const SAMPLE_ANNOTATION_EVENT_NAME = 'Sample Annotation';
