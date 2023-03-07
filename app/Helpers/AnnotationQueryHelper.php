@@ -133,7 +133,7 @@ class AnnotationQueryHelper
     public static function userAnnotationsQuery(User $user, array $userIdsArray, $showDisabled = false, string $googleAnalyticsPropertyId = null, string $userId = '*', string $showWebMonitoring = 'false', string $showManualAnnotations = 'false', string  $showCSVAnnotations = 'false', string $showAPIAnnotations = 'false')
     {
         $annotationsQuery = "";
-        $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, CONCAT('annotations', '~~~~', `annotations`.`id`,  '~~~~', `users`.`name`, '~~~~', `annotations`.`added_by`) AS `added_by`, `description`, `annotations`.`created_at` FROM `annotations`";
+        $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, CONCAT('annotations', '~~~~', `annotations`.`id`,  '~~~~', `users`.`name`, '~~~~', `annotations`.`added_by`) AS `added_by`, `description`, `users`.`name` AS `user_name`, `annotations`.`created_at` FROM `annotations`";
         $annotationsQuery .= " LEFT JOIN `users` ON `annotations`.`user_id` = `users`.`id`";
         if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
             $annotationsQuery .= " LEFT JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
@@ -206,12 +206,12 @@ class AnnotationQueryHelper
 
     public static function webMonitorQuery(array $userIdsArray)
     {
-        return "select 1, show_at, NULL, category, event_name, url, CONCAT('web_monitor_annotations', '~~~~', `id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, show_at from `web_monitor_annotations` WHERE `web_monitor_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, show_at, NULL, category, event_name, url, CONCAT('web_monitor_annotations', '~~~~', `web_monitor_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, show_at from `web_monitor_annotations` LEFT JOIN `users` ON `web_monitor_annotations`.`user_id` = `users`.`id` WHERE `web_monitor_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function shopifyQuery(array $userIdsArray)
     {
-        return "select 1, published_at AS show_at, NULL, category, title AS event_name, NULL AS url, CONCAT('shopify_annotations', '~~~~', `id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, body_html AS description, NULL AS show_at from `shopify_annotations` WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, published_at AS show_at, NULL, category, title AS event_name, NULL AS url, CONCAT('shopify_annotations', '~~~~', `shopify_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, body_html AS description, `users`.`name` AS `user_name`, NULL AS show_at from `shopify_annotations` LEFT JOIN `users` ON `shopify_annotations`.`user_id` = `users`.`id` WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function holidaysQuery(array $userIdsArray, string $googleAnalyticsPropertyId)
@@ -241,7 +241,7 @@ class AnnotationQueryHelper
     public static function wordPressQuery()
     {
         $annotationsQuery = "";
-        $annotationsQuery .= "select 1, update_date, NULL, category, event_name, url, CONCAT('wordpress_updates', '~~~~', `wordpress_updates`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, update_date from `wordpress_updates`";
+        $annotationsQuery .= "select 1, update_date, NULL, category, event_name, url, CONCAT('wordpress_updates', '~~~~', `wordpress_updates`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, update_date from `wordpress_updates`";
         if (UserDataSource::ofCurrentUser()->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count()) {
             $annotationsQuery .= " where (update_date BETWEEN " . Carbon::now()->subYear()->format('Y-m-d') . " AND " . Carbon::now()->format('Y-m-d') . " )";
         }
@@ -251,41 +251,41 @@ class AnnotationQueryHelper
 
     public static function keywordTrackingQuery(array $userIdsArray)
     {
-        return "select 1, created_at, NULL, category, event_name, url, CONCAT('keyword_tracking_annotations', '~~~~', `keyword_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, created_at from `keyword_tracking_annotations` WHERE `keyword_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, keyword_tracking_annotations.created_at, NULL, category, event_name, url, CONCAT('keyword_tracking_annotations', '~~~~', `keyword_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, keyword_tracking_annotations.created_at from `keyword_tracking_annotations` LEFT JOIN `users` ON `keyword_tracking_annotations`.`user_id` = `users`.`id` WHERE `keyword_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function facebookTrackingQuery(array $userIdsArray)
     {
-        return "select 1, created_at, NULL, category, event_name, url, CONCAT('facebook_tracking_annotations', '~~~~', `facebook_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, created_at from `facebook_tracking_annotations` WHERE `facebook_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, facebook_tracking_annotations.created_at, NULL, category, event_name, url, CONCAT('facebook_tracking_annotations', '~~~~', `facebook_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, facebook_tracking_annotations.created_at from `facebook_tracking_annotations` LEFT JOIN `users` ON `facebook_tracking_annotations`.`user_id` = `users`.`id` WHERE `facebook_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function instagramTrackingQuery(array $userIdsArray)
     {
-        return "select 1, created_at, NULL, category, event_name, url, CONCAT('instagram_tracking_annotations', '~~~~', `instagram_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, created_at from `instagram_tracking_annotations` WHERE `instagram_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, instagram_tracking_annotations.created_at, NULL, category, event_name, url, CONCAT('instagram_tracking_annotations', '~~~~', `instagram_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, instagram_tracking_annotations.created_at from `instagram_tracking_annotations` LEFT JOIN `users` ON `instagram_tracking_annotations`.`user_id` = `users`.`id` WHERE `instagram_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function twitterTrackingQuery(array $userIdsArray)
     {
-        return "select 1, created_at, NULL, category, event_name, url, CONCAT('twitter_tracking_annotations', '~~~~', `twitter_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, created_at from `twitter_tracking_annotations` WHERE `twitter_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, twitter_tracking_annotations.created_at, NULL, category, event_name, url, CONCAT('twitter_tracking_annotations', '~~~~', `twitter_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, twitter_tracking_annotations.created_at from `twitter_tracking_annotations` LEFT JOIN `users` ON `twitter_tracking_annotations`.`user_id` = `users`.`id` WHERE `twitter_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function bitbucketCommitQuery(array $userIdsArray)
     {
-        return "select 1, created_at, NULL, category, event_name, url, CONCAT('bitbucket_commit_annotations', '~~~~', `bitbucket_commit_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, created_at from `bitbucket_commit_annotations` WHERE `bitbucket_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, bitbucket_commit_annotations.created_at, NULL, category, event_name, url, CONCAT('bitbucket_commit_annotations', '~~~~', `bitbucket_commit_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, bitbucket_commit_annotations.created_at from `bitbucket_commit_annotations` LEFT JOIN `users` ON `bitbucket_commit_annotations`.`user_id` = `users`.`id` WHERE `bitbucket_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function gitHubCommitQuery(array $userIdsArray)
     {
-        return "select 1, created_at, NULL, category, event_name, url, CONCAT('github_commit_annotations', '~~~~', `github_commit_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, created_at from `github_commit_annotations` WHERE `github_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, github_commit_annotations.created_at, NULL, category, event_name, url, CONCAT('github_commit_annotations', '~~~~', `github_commit_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, github_commit_annotations.created_at from `github_commit_annotations` LEFT JOIN `users` ON `github_commit_annotations`.`user_id` = `users`.`id` WHERE `github_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function googleAdsQuery(array $userIdsArray)
     {
-        return "select 1, created_at, NULL, category, event_name, url, CONCAT('google_ads_annotations', '~~~~', `google_ads_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, created_at from `google_ads_annotations` WHERE `google_ads_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, google_ads_annotations.created_at, NULL, category, event_name, url, CONCAT('google_ads_annotations', '~~~~', `google_ads_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, google_ads_annotations.created_at from `google_ads_annotations` LEFT JOIN `users` ON `google_ads_annotations`.`user_id` = `users`.`id` WHERE `google_ads_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function applePodcastQuery(array $userIdsArray)
     {
-        return "select 1, podcast_date, NULL, category, event, url, CONCAT('apple_podcast_annotations', '~~~~', `apple_podcast_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, podcast_date from `apple_podcast_annotations` WHERE `apple_podcast_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, podcast_date, NULL, category, event, url, CONCAT('apple_podcast_annotations', '~~~~', `apple_podcast_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, podcast_date from `apple_podcast_annotations` LEFT JOIN `users` ON `apple_podcast_annotations`.`user_id` = `users`.`id` WHERE `apple_podcast_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 }

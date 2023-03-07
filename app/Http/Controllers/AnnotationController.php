@@ -246,7 +246,7 @@ class AnnotationController extends Controller
             'annotation_ga_property_id' => 'nullable|string',
             'category' => 'nullable|string',
             'search' => 'nullable|string',
-            'sort_by' => 'nullable|string|in:added,date,category,added-by,ga-property',
+            'sort_by' => 'nullable|string|in:added,user,date,category,added-by,today,ga-property',
             'page_size' => 'nullable|numeric|min:1|max:100',
             'page_number' => 'nullable|numeric|min:1',
         ]);
@@ -286,12 +286,18 @@ class AnnotationController extends Controller
             $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
         } elseif ($request->query('sort_by') == "date") {
             $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
+        } elseif ($request->query('ga-property')) {
+            $annotationsQuery .= " ORDER BY TempTable.annotation_ga_property_id ASC";
         } elseif ($request->query('google_account_id')) {
             $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
         } elseif ($request->query('sort_by') == "category") {
-            $annotationsQuery .= " ORDER BY TempTable.created_at DESC";
+            $annotationsQuery .= " ORDER BY TempTable.category ASC, TempTable.created_at DESC";
         } elseif ($request->query('sort_by') == "added-by") {
             $annotationsQuery .= " ORDER BY TempTable.added_by ASC";
+        } elseif ($request->query('sort_by') == "user") {
+            $annotationsQuery .= " ORDER BY TempTable.user_name ASC";
+        } elseif ($request->query('sort_by') == "today") {
+            $annotationsQuery .= " ORDER BY DATE(TempTable.created_at)=DATE(NOW()) DESC";
         } else {
             $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
         }
@@ -445,6 +451,7 @@ class AnnotationController extends Controller
             $fe['show_at'] = $showAt ? $showAt : Carbon::now();
             $fe['user_id'] = $user_id;
             $fe['added_by'] = 'csv-upload';
+            $fe['created_at'] = Carbon::now();
 
             if(!$exists) {
                 foreach($data as $dt) {

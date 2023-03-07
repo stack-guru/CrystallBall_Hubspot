@@ -346,6 +346,13 @@ class IndexAnnotations extends React.Component {
         // }
     }
 
+    isValidURL(urlString) {
+        // check is the string is the valid url
+        var a  = document.createElement('a');
+        a.href = urlString;
+        return (a.host && a.host != window.location.host);
+    }
+
     handleDeleteSelected() {
         this.setState({ isBusy: true });
         this.state.selectedRows.forEach((anno) => {
@@ -436,6 +443,8 @@ class IndexAnnotations extends React.Component {
                                     <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
                                         <option value="">Sort By</option>
                                         <option value="added">Added</option>
+                                        <option value="user">By User</option>
+                                        <option value="today">By Today</option>
                                         <option value="date">By Date</option>
                                         <option value="category">By Category</option>
                                         <option value="ga-property">By GA Property</option>
@@ -655,7 +664,7 @@ class IndexAnnotations extends React.Component {
                                                     <p className="titleCategory d-flex align-items-center">
                                                         <span>{anno.event_name}</span>
                                                         <a href="javascript:void(0)">{anno.category}</a>
-                                                        {anno.url && anno.url != "https://" && anno.url != "null" ? (
+                                                        {this.isValidURL(anno.url) ? (
                                                             <a href={anno.url} target="_blank" className="ml-1 miniPreview"><i className="icon"><img src={'/icon-chain.svg'} /></i></a>
                                                         ) : (
                                                             ""
