@@ -78,8 +78,7 @@ class Shopify extends React.Component {
                             creditString={
                                 this.props.userDataSources.shopify_annotation
                                     ? `${
-                                          this.props.userDataSources
-                                              .shopify_annotation.length
+                                        this.state.shopifyStores?.length
                                       } / ${
                                           this.props.user.price_plan
                                               .shopify_monitor_count > 0

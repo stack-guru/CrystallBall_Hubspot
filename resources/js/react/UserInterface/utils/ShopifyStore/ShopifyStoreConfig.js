@@ -52,10 +52,6 @@ const ShopifyStoreConfig = (props) => {
         if (props.limitReached) {
             props.upgradePopup('more-annotations')
         } else {
-        Toast.fire({
-            icon: 'info',
-            title: "Creating Annotations",
-        });
         HttpClient.post("/data-source/shopify_url", { shopifyUrl: inputVale, gaPropertyId: props.gaPropertyId || "" })
             .then(
                 () => {
