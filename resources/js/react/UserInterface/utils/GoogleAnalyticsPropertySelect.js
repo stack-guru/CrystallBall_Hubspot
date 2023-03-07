@@ -224,7 +224,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                             noOptionsMessage={() => {
                                 return "No Property"
                             }}
-                            className={this.props.className}
+                            className={`${this.props.className} ga-account-select-holder`}
                             name={this.props.name}
                             disabled={this.props.disabled}
                             // value={this.state.aProperties}

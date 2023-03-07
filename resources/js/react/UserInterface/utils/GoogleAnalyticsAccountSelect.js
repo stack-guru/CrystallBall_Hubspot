@@ -116,7 +116,7 @@ export default class GoogleAnalyticsAccountSelect extends React.Component {
                         // value={selectedOptions}
                         value={[]}
                         id={this.props.id}
-                        className="gray_clr"
+                        className="gray_clr ga-account-select-holder"
                         isMulti={this.props.multiple}
                         onChange={this.onChangeHandler}
                         options={this.state.aAccounts}
