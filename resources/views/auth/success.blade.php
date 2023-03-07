@@ -1,7 +1,7 @@
 @extends('layouts/auth')
 
-@section('page-title', 'Welome')
-@section('meta-description', 'Welome to ' . config('app.name') . ' and automate Google Analytics Annotations')
+@section('page-title', 'Welcome')
+@section('meta-description', 'Welcome to ' . config('app.name') . ' and automate Google Analytics Annotations')
 
 @section('content')
 <!-- Success! screen Code -->
