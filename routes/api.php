@@ -30,8 +30,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
             Route::post('login/google', 'API\ChromeExtension\LoginController@loginWithGoogle')->middleware(['prevent.cache', 'guest'])->name('login.google');
             Route::post('logout', 'API\ChromeExtension\LoginController@logout')->middleware(['prevent.cache'])->name('logout');
     
-            Route::group(['middleware' => ['auth', 'verified']], function () {
-        Route::group(['middleware' => ['auth:api', 'verified']], function () {
+        Route::group(['middleware' => ['auth', 'verified']], function () {
 
             Route::get('user', function (Request $request) {
                 return $request->user();
