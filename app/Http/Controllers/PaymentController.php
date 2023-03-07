@@ -277,7 +277,7 @@ class PaymentController extends Controller
                 $properties_limit_of_selected_plan = 0;
             else 
                 $properties_limit_of_selected_plan = $pricePlan->google_analytics_property_count;
-            $text = "During the Trial you used ". $propertyCount ."properties and the plan you selected allows only ".$properties_limit_of_selected_plan.". Note that if you continue with ".$pricePlan->name." plan, we will unassign the properties of the annotations you made during the Trial, you can Edit them later.";
+            $text = "During the ".$pricePlan->name." you used ". $propertyCount ."properties and the plan you selected allows only ".$properties_limit_of_selected_plan.". Note that if you continue with ".$pricePlan->name." plan, we will unassign the properties of the annotations you made during the Trial, you can Edit them later.";
             $showAlerts[] =  'property-alert';
             $alertText[] =  $text;
         }
@@ -286,7 +286,7 @@ class PaymentController extends Controller
         $app_in_use = CheckUserUsageHelper::checkAppsInUse($user,$pricePlan);
         if(count($app_in_use) > 0)
         {  
-            $text = "During the Trial you activated ".implode(",",$app_in_use).". Note that if you continue with ".$pricePlan->name." we will deactivate the automations and you will no longer be able to view the annotations";
+            $text = "During the ".$pricePlan->name." you activated ".implode(",",$app_in_use).". Note that if you continue with ".$pricePlan->name." we will deactivate the automations and you will no longer be able to view the annotations";
             $showAlerts[] =  'apps-in-use-alert';
             $alertText[] =  $text;
             // return response()->json(['success' => false, 'message' => $text], 422);
@@ -299,7 +299,7 @@ class PaymentController extends Controller
             $total_co_users = User::where('user_id',$user->id)->count();
             if(count($extra_users) > 0)
             {  
-                $text = "During the Trial ".$total_co_users." co-workers joined the account. Note that if you continue with Basic ".implode(",",$extra_users)." will lose access";
+                $text = "During the ".$pricePlan->name." ".$total_co_users." co-workers joined the account. Note that if you continue with Basic ".implode(",",$extra_users)." will lose access";
                 $showAlerts[] =  'extra-users-alert';
                 $alertText[] =  $text;
             }
