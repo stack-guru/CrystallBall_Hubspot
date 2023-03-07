@@ -185,7 +185,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                                 if(this.props.onFocus) {
                                     this.props.onFocus();
                                 }
-                               
+
                                 if (!this.state.isAccountLinked) {
                                     let googlePermissionsHtml = "<div class='contentHolder'>";
                                     googlePermissionsHtml += '<h2>Let’s connect your Google Account</h2>';
@@ -236,6 +236,12 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                             options={this.state.allProperties}
                             isSearchable={true}
                             placeholder={this.props.placeholder}
+                            filterOption={(option, inputValue) => {
+                                if (!inputValue) return true;
+
+                                const value = option.data.labelText.toLowerCase();
+                                return value.includes(inputValue.toLowerCase());
+                            }}
                             components={this.props.components}
                             onKeyDown={(e) => {
                                 if (!this.state.isAccountLinked) {

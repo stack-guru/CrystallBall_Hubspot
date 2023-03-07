@@ -110,6 +110,7 @@ export default class GoogleAnalyticsAccountSelect extends React.Component {
                 <div className="selectGoogleAccount themeNewInputStyle position-relative inputWithIcon">
                     <i className="icon fa"><img src='/icon-plus.svg' /></i>
                     <Select
+                        menuPosition={'fixed'}
                         name={this.props.name}
                         disabled={this.props.disabled}
                         // value={selectedOptions}
