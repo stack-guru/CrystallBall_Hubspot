@@ -174,20 +174,7 @@ export default class IndexUsers extends Component {
                                                 <div key={this.props.user.user.id} className="singleRow justify-content-between align-items-center">
                                                     <div className="singleCol text-left"><span>{this.props.user.user.email}</span></div>
                                                     <div className="singleCol text-left"><span>{this.props.user.user.name}</span></div>
-                                                    <div className="singleCol text-left">
-                                                        {/* <span>
-                                                            <div className="themeNewInputStyle">
-                                                                <select name="user_level" className="form-control" onChange={(ev) => this.saveRole(ev.target.value, user)} value={user.user_level}>
-                                                                    <option value="">User level</option>
-                                                                    <option value="admin">Admin</option>
-                                                                    <option value="team">Read & Write</option>
-                                                                    <option value="viewer">Read</option>
-                                                                </select>
-                                                            </div>
-                                                        </span> */}
-                                                        {/* {capitalizeFirstLetter(`${user.user_level}` || '-')} */}
-                                                        {this.props.user.user.user_level === 'admin' ? 'Admin': this.props.user.user.user_level === 'team' ? 'Read & Write' : this.props.user.user.user_level === 'viewer' ? 'Read' :  '-' }
-                                                    </div>
+                                                    <div className="singleCol text-left"><span>Super Admin</span> </div>
                                                     <div className="singleCol text-left"><span>{this.props.user.user.department}</span></div>
                                                     <div className="singleCol text-left"><span>{this.props.user.user.team_name}</span></div>
                                                     <div className="singleCol text-right">
@@ -202,20 +189,7 @@ export default class IndexUsers extends Component {
                                             <div key={this.props.user.id} className="singleRow justify-content-between align-items-center">
                                                 <div className="singleCol text-left"><span>{this.props.user.email}</span></div>
                                                 <div className="singleCol text-left"><span>{this.props.user.name}</span></div>
-                                                <div className="singleCol text-left">
-                                                    {/* <span>
-                                                        <div className="themeNewInputStyle">
-                                                            <select name="user_level" className="form-control" onChange={(ev) => this.saveRole(ev.target.value, user)} value={user.user_level}>
-                                                                <option value="">User level</option>
-                                                                <option value="admin">Admin</option>
-                                                                <option value="team">Read & Write</option>
-                                                                <option value="viewer">Read</option>
-                                                            </select>
-                                                        </div>
-                                                    </span> */}
-                                                    {/* {capitalizeFirstLetter(`${user.user_level}` || '-')} */}
-                                                    {this.props.user.user_level === 'admin' ? 'Admin': this.props.user.user_level === 'team' ? 'Read & Write' : this.props.user.user_level === 'viewer' ? 'Read' :  '-' }
-                                                </div>
+                                                <div className="singleCol text-left"><span>Super Admin</span> </div>
                                                 <div className="singleCol text-left"><span>{this.props.user.department}</span></div>
                                                 <div className="singleCol text-left"><span>{this.props.user.team_name}</span></div>
                                                 <div className="singleCol text-right">
