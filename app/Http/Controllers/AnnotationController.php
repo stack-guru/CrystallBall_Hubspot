@@ -343,6 +343,9 @@ class AnnotationController extends Controller
         $dateF = $request->date_format;
         $dateFormat = '';
         switch ($dateF) {
+        case 'MMM DD, YYYY':
+            $dateFormat = 'M d, Y';
+            break;
         case 'DD/MM/YYYY':
             $dateFormat = "j/n/Y";
             break;
@@ -402,7 +405,7 @@ class AnnotationController extends Controller
                 if($fe['show_at']) {
                     $error = true;
                     $fieldErrorsCount++;
-                    $fe['show_at_error'] = "Date format is incorrect, use format [$dateF]";
+                    $fe['show_at_error'] = "Date format is incorrect, use format [" . Carbon::createFromDate(2021, 01, 15)->format($dateFormat) . "]";
                 } else {
                     unset($fe['show_at_error']);
                 }

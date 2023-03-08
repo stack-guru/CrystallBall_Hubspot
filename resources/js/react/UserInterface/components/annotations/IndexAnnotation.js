@@ -79,6 +79,7 @@ class IndexAnnotations extends React.Component {
         this.seeCompleteDescription = this.seeCompleteDescription.bind(this);
         this.loadMoreAnnotations = this.loadMoreAnnotations.bind(this);
         this.loadInitAnnotations = this.loadInitAnnotations.bind(this);
+        this.loadAnnotationColors = this.loadAnnotationColors.bind(this);
     }
     componentDidMount() {
         this.axiosCancelToken = axios.CancelToken;
@@ -86,6 +87,51 @@ class IndexAnnotations extends React.Component {
 
         this.loadMoreAnnotations(0);
         this.setState({ isBusy: true, isLoading: true });
+        this.loadAnnotationColors ()
+        // setTimeout(() => {
+        //     const scrollableAnnotation = document.getElementById(
+        //         "scrollable-annotation"
+        //     );
+        //     const annotationTableBody = document.getElementById(
+        //         "annotation-table-body"
+        //     );
+        //     if (scrollableAnnotation && annotationTableBody) {
+        //         annotationTableBody.scrollTo(0, scrollableAnnotation.offsetTop);
+        //     }
+        // }, 5000);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.mKeyAnnotation !== this.props.mKeyAnnotation) {
+            if (prevProps.mKeyAnnotation === 'manual' && this.props.mKeyAnnotation === '') {
+                this.setState({
+                    annotations: [],
+                    pageNumber: 0,
+                    isLoading: false,
+                    hideInfiniteScroll: true
+                }, () => { 
+                    this.setState({ hideInfiniteScroll: false }, () => { 
+                        this.loadMoreAnnotations()
+                        this.loadAnnotationColors()
+                    }) 
+                });
+            }
+
+        }
+    }
+
+    loadMoreAnnotations(page) {
+        if (!this.state.isLoading) {
+            this.setState({
+                pageNumber: this.state.pageNumber + 1,
+                isLoading: true,
+                hideInfiniteScroll: false,
+            }, this.loadInitAnnotations)
+        }
+    }
+    
+    loadAnnotationColors () {
+
         HttpClient.get(`/data-source/user-annotation-color`)
             .then(
                 (resp) => {
@@ -122,41 +168,6 @@ class IndexAnnotations extends React.Component {
                 this.setState({ errors: err });
             });
 
-        // setTimeout(() => {
-        //     const scrollableAnnotation = document.getElementById(
-        //         "scrollable-annotation"
-        //     );
-        //     const annotationTableBody = document.getElementById(
-        //         "annotation-table-body"
-        //     );
-        //     if (scrollableAnnotation && annotationTableBody) {
-        //         annotationTableBody.scrollTo(0, scrollableAnnotation.offsetTop);
-        //     }
-        // }, 5000);
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.mKeyAnnotation !== this.props.mKeyAnnotation) {
-            if (prevProps.mKeyAnnotation === 'manual' && this.props.mKeyAnnotation === '') {
-                this.setState({
-                    annotations: [],
-                    pageNumber: 0,
-                    isLoading: false,
-                    hideInfiniteScroll: true
-                }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations()) });
-            }
-
-        }
-    }
-
-    loadMoreAnnotations(page) {
-        if (!this.state.isLoading) {
-            this.setState({
-                pageNumber: this.state.pageNumber + 1,
-                isLoading: true,
-                hideInfiniteScroll: false,
-            }, this.loadInitAnnotations)
-        }
     }
 
     deleteAnnotation(id, tableName) {
