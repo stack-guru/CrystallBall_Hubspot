@@ -47,7 +47,7 @@ class UserAnnotationColorController extends Controller
         !str_contains($userAnnotationColor->holidays, '#') ? $userAnnotationColor->holidays = $defaultColor : '';
         !str_contains($userAnnotationColor->google_algorithm_updates, '#') ? $userAnnotationColor->google_algorithm_updates = "#FFC514" : '';
         !str_contains($userAnnotationColor->retail_marketings, '#') ? $userAnnotationColor->retail_marketings = $defaultColor : '';
-        !str_contains($userAnnotationColor->weather_alerts, '#') ? $userAnnotationColor->weather_alerts = "#e6e9ee" : '';
+        !str_contains($userAnnotationColor->weather_alerts, '#') ? $userAnnotationColor->weather_alerts = "#FFC514" : '';
         !str_contains($userAnnotationColor->web_monitors, '#') ? $userAnnotationColor->web_monitors = $defaultColor : '';
         !str_contains($userAnnotationColor->wordpress_updates, '#') ? $userAnnotationColor->wordpress_updates = "#1976fe" : '';
         !str_contains($userAnnotationColor->google_alerts, '#') ? $userAnnotationColor->google_alerts = "#FFC514" : '';
