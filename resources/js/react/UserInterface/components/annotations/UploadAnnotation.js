@@ -652,27 +652,30 @@ export default class UploadAnnotation extends React.Component {
 
                                             return (
                                                 <tr>
-                                                    <td>
+                                                    <td className="position-relative">
                                                         {rd.category_error ?
                                                             <>
                                                                 <input
-                                                                    onMouseOver={() =>
-                                                                        this.setState({
-                                                                            activeDeletePopover: 'category' + i,
-                                                                        })
-                                                                    }
-                                                                    onMouseLeave={() =>
-                                                                        this.setState({
-                                                                            activeDeletePopover: '',
-                                                                        })
-                                                                    }
-                                                                    id={"gAK-" + 'category' + i}
                                                                     onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
                                                                     name='category'
                                                                     value={rd.category}/>
+                                                                    <span 
+                                                                        className="is-invalid"
+                                                                        onMouseOver={() =>
+                                                                            this.setState({
+                                                                                activeDeletePopover: 'category' + i,
+                                                                            })
+                                                                        }
+                                                                        onMouseLeave={() =>
+                                                                            this.setState({
+                                                                                activeDeletePopover: '',
+                                                                            })
+                                                                        }
+                                                                        id={"gAK-" + 'category' + i}
+                                                                    ></span>
                                                                 <Popover className="bg-dark"
                                                                          placement="top"
                                                                          target={"gAK-" + 'category' + i}
@@ -689,27 +692,30 @@ export default class UploadAnnotation extends React.Component {
                                                             <div>{rd.category}</div>
                                                         }
                                                     </td>
-                                                    <td>
+                                                    <td className="position-relative">
                                                         {rd.event_name_error ?
                                                             <>
                                                                 <input
-                                                                    onMouseOver={() =>
-                                                                        this.setState({
-                                                                            activeDeletePopover: 'event_name' + i,
-                                                                        })
-                                                                    }
-                                                                    onMouseLeave={() =>
-                                                                        this.setState({
-                                                                            activeDeletePopover: '',
-                                                                        })
-                                                                    }
-                                                                    id={"gAK-" + 'event_name' + i}
                                                                     onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
                                                                     name='event_name'
                                                                     value={rd.event_name}/>
+                                                                    <span 
+                                                                        className="is-invalid"
+                                                                        onMouseOver={() =>
+                                                                            this.setState({
+                                                                                activeDeletePopover: 'event_name' + i,
+                                                                            })
+                                                                        }
+                                                                        onMouseLeave={() =>
+                                                                            this.setState({
+                                                                                activeDeletePopover: '',
+                                                                            })
+                                                                        }
+                                                                        id={"gAK-" + 'event_name' + i}
+                                                                    ></span>
                                                                 <Popover className="bg-dark"
                                                                          placement="top"
                                                                          target={"gAK-" + 'event_name' + i}
@@ -726,27 +732,30 @@ export default class UploadAnnotation extends React.Component {
                                                             <div>{rd.event_name}</div>
                                                         }
                                                     </td>
-                                                    <td>
+                                                    <td className="position-relative">
                                                         {rd.url_error ?
                                                             <>
                                                                 <input
-                                                                    onMouseOver={() =>
-                                                                        this.setState({
-                                                                            activeDeletePopover: 'url' + i,
-                                                                        })
-                                                                    }
-                                                                    onMouseLeave={() =>
-                                                                        this.setState({
-                                                                            activeDeletePopover: '',
-                                                                        })
-                                                                    }
-                                                                    id={"gAK-" + 'url' + i}
                                                                     onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
                                                                     name='url'
                                                                     value={rd.url}/>
+                                                                    <span 
+                                                                        className="is-invalid"
+                                                                        onMouseOver={() =>
+                                                                            this.setState({
+                                                                                activeDeletePopover: 'url' + i,
+                                                                            })
+                                                                        }
+                                                                        onMouseLeave={() =>
+                                                                            this.setState({
+                                                                                activeDeletePopover: '',
+                                                                            })
+                                                                        }
+                                                                        id={"gAK-" + 'url' + i}
+                                                                    ></span>
                                                                 <Popover className="bg-dark"
                                                                          placement="top-right"
                                                                          target={"gAK-" + 'url' + i}
@@ -763,27 +772,30 @@ export default class UploadAnnotation extends React.Component {
                                                             <div>{rd.url}</div>
                                                         }
                                                     </td>
-                                                    <td>
+                                                    <td className="position-relative">
                                                         {rd.description_error ?
                                                             <>
                                                                 <input
-                                                                    onMouseOver={() =>
-                                                                        this.setState({
-                                                                            activeDeletePopover: 'description' + i,
-                                                                        })
-                                                                    }
-                                                                    onMouseLeave={() =>
-                                                                        this.setState({
-                                                                            activeDeletePopover: '',
-                                                                        })
-                                                                    }
-                                                                    id={"gAK-" + 'description' + i}
                                                                     onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
                                                                     name='description'
                                                                     value={rd.description}/>
+                                                                    <span 
+                                                                        className="is-invalid"
+                                                                        onMouseOver={() =>
+                                                                            this.setState({
+                                                                                activeDeletePopover: 'description' + i,
+                                                                            })
+                                                                        }
+                                                                        onMouseLeave={() =>
+                                                                            this.setState({
+                                                                                activeDeletePopover: '',
+                                                                            })
+                                                                        }
+                                                                        id={"gAK-" + 'description' + i}
+                                                                    ></span>
                                                                 <Popover className="bg-dark"
                                                                          placement="top"
                                                                          target={"gAK-" + 'description' + i}
@@ -800,27 +812,30 @@ export default class UploadAnnotation extends React.Component {
                                                             <div>{rd.description}</div>
                                                         }
                                                     </td>
-                                                    <td>
+                                                    <td className="position-relative">
                                                         {rd.show_at_error ?
                                                             <>
                                                                 <input
-                                                                    onMouseOver={() =>
-                                                                        this.setState({
-                                                                            activeDeletePopover: 'show_at' + i,
-                                                                        })
-                                                                    }
-                                                                    onMouseLeave={() =>
-                                                                        this.setState({
-                                                                            activeDeletePopover: '',
-                                                                        })
-                                                                    }
-                                                                    id={"gAK-" + 'show_at' + i}
                                                                     onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
                                                                     className='form-control is-invalid'
                                                                     name='show_at'
                                                                     value={rd.show_at}/>
+                                                                    <span 
+                                                                        className="is-invalid"
+                                                                        onMouseOver={() =>
+                                                                            this.setState({
+                                                                                activeDeletePopover: 'show_at' + i,
+                                                                            })
+                                                                        }
+                                                                        onMouseLeave={() =>
+                                                                            this.setState({
+                                                                                activeDeletePopover: '',
+                                                                            })
+                                                                        }
+                                                                        id={"gAK-" + 'show_at' + i}
+                                                                    ></span>
                                                                 <Popover className="bg-dark"
                                                                          placement="top"
                                                                          target={"gAK-" + 'show_at' + i}
