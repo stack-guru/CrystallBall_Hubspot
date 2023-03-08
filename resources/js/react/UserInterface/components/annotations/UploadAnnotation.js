@@ -83,7 +83,7 @@ export default class UploadAnnotation extends React.Component {
 
                 if (obj.show_at && !(moment(obj.show_at || "", date_format, true).isValid())) {
                     fieldErrorsCount++;
-                    obj.show_at_error = `Date format is incorrect, use format [${date_format}]`;
+                    obj.show_at_error = `Date format is incorrect, use format [${moment("2021-01-15").format(date_format)}]`;
                 }
                 if (!obj.category || itm.category_error) {
                     fieldErrorsCount++;
