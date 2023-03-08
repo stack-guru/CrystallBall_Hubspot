@@ -4905,6 +4905,9 @@ color: #E0E0E0 !important;
     overflow-y: auto;
 }
 
+.csv-review-data-container thead {
+    z-index: 9999;
+}
 .csv-review-data-container td input.is-invalid {
     background-image: none !important;
 }
