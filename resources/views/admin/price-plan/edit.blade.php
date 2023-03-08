@@ -157,12 +157,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Available? <sub>( means if this plan can be purchased by a user from the price plan page )</sub></</label>
+                            <label>Available? <sub>(if this plan can be purchased by a user from the price plan page )</sub></label>
                             <input type="checkbox" name="is_available" id="isAvailable" class="form-control" @if($pricePlan->is_available) checked @endif />
                         </div>
 
                         <div class="form-group">
-                            <label>Enabled? <sub>( means if the users can stay and show on this price plan page)</sub></label>
+                            <label>Enabled? <sub>(if the users can stay and show on this price plan page)</sub></label>
                             <input type="checkbox" name="is_enabled" id="isEnabled" class="form-control" @if($pricePlan->is_enabled) checked @endif />
                         </div>
 
