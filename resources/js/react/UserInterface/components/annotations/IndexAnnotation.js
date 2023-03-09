@@ -769,7 +769,7 @@ class IndexAnnotations extends React.Component {
                             hideInfiniteScroll: true
                         }, () => { this.setState({ hideInfiniteScroll: false }, () => { 
                                 this.loadMoreAnnotations()
-                                this.loadAnnotationColors ()
+                                this.loadAnnotationColors()
                             }) 
                         });
                     }} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
