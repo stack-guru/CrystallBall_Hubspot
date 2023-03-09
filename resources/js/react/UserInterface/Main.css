@@ -4984,7 +4984,7 @@ color: #E0E0E0 !important;
 }
 
 .ga-account-select-holder svg {
-    display: none;
+    display: none !important;
 }
 
 
