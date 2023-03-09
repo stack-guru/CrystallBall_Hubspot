@@ -52,6 +52,7 @@ export default class UploadAnnotation extends React.Component {
         this.onDragOver = this.onDragOver.bind(this)
         this.onFileDrop = this.onFileDrop.bind(this)
         this.onFileSelect = this.onFileSelect.bind(this)
+        this.checkDataErrors = this.checkDataErrors.bind(this)
 
         this.prepareFieldErrorsData = this.prepareFieldErrorsData.bind(this)
     }
@@ -63,7 +64,7 @@ export default class UploadAnnotation extends React.Component {
         return (a.host && a.host != window.location.host);
     }
 
-    prepareFieldErrorsData () {
+    checkDataErrors () {
         if(!Object.values(this.state.importReview).find(x => x)) {
             const { fieldErrors, csvFields, date_format } = this.state;
 
@@ -91,9 +92,19 @@ export default class UploadAnnotation extends React.Component {
                     obj.category_error = itm.category_error ? itm.category_error : `Category can't be empty`;
                 }
 
+                if(obj.category && obj.category.length > 70) {
+                    fieldErrorsCount++;
+                    obj.category_error = `Category can be of 70 charactor maximum`;
+                }
+
                 if (!obj.event_name || itm.event_name_error) {
                     fieldErrorsCount++;
                     obj.event_name_error = itm.event_name_error ? itm.event_name_error : `Event Name can't be empty`;
+                }
+
+                if(obj.event_name && obj.event_name.length > 70) {
+                    fieldErrorsCount++;
+                    obj.event_name_error = `Event name can be of 70 charactor maximum`;
                 }
 
                 if (itm.description_error) {
@@ -101,24 +112,39 @@ export default class UploadAnnotation extends React.Component {
                     obj.description_error = itm.description_error;
                 }
 
+                if(obj.description && obj.description.length > 70) {
+                    fieldErrorsCount++;
+                    obj.description_error = `Description can be of 70 charactor maximum`;
+                }
+
                 return obj;
             })
 
+            return { result, fieldErrorsCount }
+        } else {
+            return {};
+        }
+
+
+    }
+    prepareFieldErrorsData () {
+       const {result, fieldErrorsCount } =  this.checkDataErrors();
+       if(result) {
             this.setState({ fieldErrors: result, fieldErrorsCheck: true, fieldErrorsCount }, () => {
                 const target = document.querySelector('.is-invalid');
                 target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
                 target?.focus()
             })
-        }
+       }
     }
 
     saveCsv () {
 
-        this.setState({ isBusy: true })
         const formData = new FormData();
         formData.append('date_format', this.state.date_format);
         formData.append('fileName', this.state.fileName);
 
+        let hasError = false;
         const data = this.state.fieldErrors.map((list) => {
             if (this.isValidURL(list.url)) {
                 delete list.url_error
@@ -126,17 +152,27 @@ export default class UploadAnnotation extends React.Component {
             if ((moment(list.show_at || "", this.state.date_format, true).isValid())) {
                 delete list.show_at_error
             }
-            if (list.category) {
+            if (list.category && list.category.length < 70) {
                 delete list.category_error
             }
-            if (list.event_name) {
+            if (list.event_name && list.event_name.length < 70) {
                 delete list.event_name_error
             }
-            if (list.description) {
+            if (list.description && list.description.length < 70) {
                 delete list.description_error
+            }
+
+            if(list.show_at_error || list.category_error || list.event_name_error || list.description_error) {
+                hasError = true;
             }
             return list;
         })
+
+        if(hasError) {
+            return true;
+        }
+
+        this.setState({ isBusy: true })
 
         formData.append('fieldErrors', JSON.stringify(data));
 
@@ -167,6 +203,11 @@ export default class UploadAnnotation extends React.Component {
                     const target = document.querySelector('.is-invalid');
                     target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
                     target?.focus()
+
+                    const fResult =  this.checkDataErrors();
+                    if(fResult.result) {
+                        this.setState({ fieldErrors: fResult.result, fieldErrorsCount: fResult.fieldErrorsCount })
+                    }
                 })
 
                 this.setState({ isBusy: false })
@@ -323,13 +364,17 @@ export default class UploadAnnotation extends React.Component {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.url_error
                 }
-                if (name === 'category' && list.category_error && list.category) {
+                if (name === 'category' && list.category_error && list.category && list.category.length < 70) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.category_error
                 }
-                if (name === 'event_name' && list.event_name_error && list.event_name) {
+                if (name === 'event_name' && list.event_name_error && list.event_name && list.event_name.length < 70) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.event_name_error
+                }
+                if (name === 'description' && list.description_error && list.description && list.description.length < 70) {
+                    fieldErrorsCount = fieldErrorsCount - 1;
+                    delete list.description_error
                 }
                 if (name === 'show_at' && list.show_at_error && (!list.show_at || (moment(list.show_at || "", this.state.date_format, true).isValid()))) {
                     fieldErrorsCount = fieldErrorsCount - 1;
@@ -343,7 +388,6 @@ export default class UploadAnnotation extends React.Component {
             if (e.key === 'Enter' || focusOut) {
                 const target = document.querySelector('.is-invalid');
                 target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
-                // target?.focus()
             }
         })
     }
