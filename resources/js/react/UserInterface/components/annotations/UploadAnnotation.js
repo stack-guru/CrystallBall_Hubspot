@@ -28,6 +28,7 @@ export default class UploadAnnotation extends React.Component {
             importReview: [],
             fileHeaders: [],
             fileName: '',
+            sampleData: {},
             csvFields: {
                 'Category': 'category',
                 'Event Name':  'event_name',
@@ -433,7 +434,13 @@ export default class UploadAnnotation extends React.Component {
                                                 <i className="btn-searchIcon fa fa-check-circle"></i>
                                             </div>
                                         </td>
-                                        <td>Sales Event</td>
+                                        <td>
+                                            {
+                                                this.state.fieldErrors[0].category_error ? 
+                                                this.state.fieldErrors[1][this.state.csvFields['Category']] : 
+                                                this.state.fieldErrors[0][this.state.csvFields['Category']]
+                                            }
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Event Name</td>
@@ -462,7 +469,13 @@ export default class UploadAnnotation extends React.Component {
                                                 <i className="btn-searchIcon fa fa-check-circle"></i>
                                             </div>
                                         </td>
-                                        <td>Black Friday</td>
+                                        <td>
+                                            {
+                                                this.state.fieldErrors[0].event_name_error ? 
+                                                this.state.fieldErrors[1][this.state.csvFields['Event Name']] : 
+                                                this.state.fieldErrors[0][this.state.csvFields['Event Name']]
+                                            }
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Url</td>
@@ -491,7 +504,13 @@ export default class UploadAnnotation extends React.Component {
                                                 <i className="btn-searchIcon fa fa-check-circle"></i>
                                             </div>
                                         </td>
-                                        <td>https://gannotations.com</td>
+                                        <td>
+                                            {
+                                                this.state.fieldErrors[0].url_error ? 
+                                                this.state.fieldErrors[1][this.state.csvFields['Url']] : 
+                                                this.state.fieldErrors[0][this.state.csvFields['Url']]
+                                            }
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Description</td>
@@ -520,7 +539,13 @@ export default class UploadAnnotation extends React.Component {
                                                 <i className="btn-searchIcon fa fa-check-circle"></i>
                                             </div>
                                         </td>
-                                        <td>Black Friday Deals 2023</td>
+                                        <td>
+                                            {
+                                                this.state.fieldErrors[0].description_error ? 
+                                                this.state.fieldErrors[1][this.state.csvFields['Description']] : 
+                                                this.state.fieldErrors[0][this.state.csvFields['Description']]
+                                            }
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Show At</td>
@@ -550,7 +575,11 @@ export default class UploadAnnotation extends React.Component {
                                             </div>
                                         </td>
                                         <td>
-                                            {this.state.sampleDate}
+                                            {
+                                                this.state.fieldErrors[0].show_at_error ? 
+                                                this.state.fieldErrors[1][this.state.csvFields['Show At']] : 
+                                                this.state.fieldErrors[0][this.state.csvFields['Show At']]
+                                            }
                                         </td>
                                     </tr>
                                     <tr>
