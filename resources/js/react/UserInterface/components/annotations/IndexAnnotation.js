@@ -767,7 +767,11 @@ class IndexAnnotations extends React.Component {
                             pageNumber: 0,
                             isLoading: false,
                             hideInfiniteScroll: true
-                        }, () => { this.setState({ hideInfiniteScroll: false }, () => this.loadMoreAnnotations()) });
+                        }, () => { this.setState({ hideInfiniteScroll: false }, () => { 
+                                this.loadMoreAnnotations()
+                                this.loadAnnotationColors ()
+                            }) 
+                        });
                     }} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
                 </AppsModal>
                 <AppsModal isOpen={!!this.state.showChartAnnotationId} popupSize={'null'} toggle={() => { this.setState({ showChartAnnotationId: '' }); }}>
