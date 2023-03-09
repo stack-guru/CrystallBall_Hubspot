@@ -126,7 +126,7 @@ class HomeController extends Controller
                     $user->last_activated_any_data_source_at = Carbon::now();
                     event(new HolidaysActivated($user));
                 } else {
-                    event(new HolidaysDeactivatedManually($user));
+                    // event(new HolidaysDeactivatedManually($user));
                 }
             }
 
@@ -137,7 +137,7 @@ class HomeController extends Controller
                     $user->last_activated_any_data_source_at = Carbon::now();
                     event(new GoogleUpdatesActivated($user));
                 } else {
-                    event(new GoogleUpdatesDeactivatedManually($user));
+                    // event(new GoogleUpdatesDeactivatedManually($user));
                 }
             }
 
@@ -148,7 +148,7 @@ class HomeController extends Controller
                     $user->last_activated_any_data_source_at = Carbon::now();
                     event(new RetailMarketingDatesActivated($user));
                 } else {
-                    event(new RetailMarketingDatesDeactivated($user));
+                    // event(new RetailMarketingDatesDeactivated($user));
                 }
             }
 
@@ -159,7 +159,7 @@ class HomeController extends Controller
                     $user->last_activated_any_data_source_at = Carbon::now();
                     event(new WeatherActivated($user));
                 } else {
-                    event(new WeatherForCitiesDeactivatedManually($user));
+                    // event(new WeatherForCitiesDeactivatedManually($user));
                 }
             }
 
@@ -170,7 +170,7 @@ class HomeController extends Controller
                     $user->last_activated_any_data_source_at = Carbon::now();
                     event(new GoogleAlertActivated($user));
                 } else {
-                    event(new GoogleAlertDeactivatedManually($user));
+                    // event(new GoogleAlertDeactivatedManually($user));
                 }
             }
 
@@ -181,7 +181,7 @@ class HomeController extends Controller
                     $user->last_activated_any_data_source_at = Carbon::now();
                     event(new WordPressActivated($user));
                 } else {
-                    event(new WordPressDeactivatedManually($user));
+                    // event(new WordPressDeactivatedManually($user));
                 }
             }
 
@@ -192,7 +192,7 @@ class HomeController extends Controller
                     $user->last_activated_any_data_source_at = Carbon::now();
                     event(new WebsiteMonitoringActivated($user));
                 } else {
-                    event(new WebsiteMonitoringDeactivated($user));
+                    // event(new WebsiteMonitoringDeactivated($user));
                 }
             }
 
@@ -211,7 +211,7 @@ class HomeController extends Controller
                     $user->last_activated_any_data_source_at = Carbon::now();
                     event(new WebsiteMonitoringActivated($user));
                 } else {
-                    event(new WebsiteMonitoringDeactivated($user));
+                    // event(new WebsiteMonitoringDeactivated($user));
                 }
             }
 
