@@ -94,7 +94,7 @@ export default class UploadAnnotation extends React.Component {
 
                 if(obj.category && obj.category.length > 70) {
                     fieldErrorsCount++;
-                    obj.category_error = `Category can be of 70 charactor maximum`;
+                    obj.category_error = `Category can be up to 70 characters`;
                 }
 
                 if (!obj.event_name || itm.event_name_error) {
@@ -104,7 +104,7 @@ export default class UploadAnnotation extends React.Component {
 
                 if(obj.event_name && obj.event_name.length > 70) {
                     fieldErrorsCount++;
-                    obj.event_name_error = `Event name can be of 70 charactor maximum`;
+                    obj.event_name_error = `Event Name can be up to 70 characters`;
                 }
 
                 if (itm.description_error) {
@@ -114,7 +114,7 @@ export default class UploadAnnotation extends React.Component {
 
                 if(obj.description && obj.description.length > 70) {
                     fieldErrorsCount++;
-                    obj.description_error = `Description can be of 70 charactor maximum`;
+                    obj.description_error = `Description can be up to 70 characters`;
                 }
 
                 return obj;
@@ -636,37 +636,37 @@ export default class UploadAnnotation extends React.Component {
                                                         required>
                                                     <option value="">Select your date format</option>
                                                     <option
-                                                        value="MMM DD, YYYY">{moment("2021-01-15").format('MMM DD, YYYY')}</option>
+                                                        value="MMM D, YYYY">{moment("2021-01-15").format('MMM DD, YYYY')}</option>
                                                     <option
-                                                        value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
+                                                        value="YYYY-MM-D">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
                                                     <option
-                                                        value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
+                                                        value="D/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
                                                     <option
                                                         value="M-D-YYYY">{moment("2021-01-15").format('M-D-YYYY')}</option>
                                                     <option
                                                         value="M-D-YY">{moment("2021-01-15").format('M-D-YY')}</option>
                                                     <option
-                                                        value="MM-DD-YY">{moment("2021-01-15").format('MM-DD-YY')}</option>
+                                                        value="MM-D-YY">{moment("2021-01-15").format('MM-DD-YY')}</option>
                                                     <option
-                                                        value="MM-DD-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
+                                                        value="MM-D-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
                                                     <option
-                                                        value="YY-MM-DD">{moment("2021-01-15").format('YY-MM-DD')}</option>
+                                                        value="YY-MM-D">{moment("2021-01-15").format('YY-MM-DD')}</option>
                                                     <option
-                                                        value="DD-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
+                                                        value="D-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
                                                     <option
                                                         value="M/D/YYYY">{moment("2021-01-15").format('M/D/YYYY')}</option>
                                                     <option
                                                         value="M/D/YY">{moment("2021-01-15").format('M/D/YY')}</option>
                                                     <option
-                                                        value="MM/DD/YY">{moment("2021-01-15").format('MM/DD/YY')}</option>
+                                                        value="MM/D/YY">{moment("2021-01-15").format('MM/DD/YY')}</option>
                                                     <option
-                                                        value="MM/DD/YYYY">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
+                                                        value="MM/D/YYYY">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
                                                     <option
-                                                        value="YY/MM/DD">{moment("2021-01-15").format('YY/MM/DD')}</option>
+                                                        value="YY/MM/D">{moment("2021-01-15").format('YY/MM/DD')}</option>
                                                     <option
-                                                        value="YYYY/MM/DD">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
+                                                        value="YYYY/MM/D">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
                                                     <option
-                                                        value="DD/MMM/YY">{moment("2021-01-15").format('DD/MMM/YY')}</option>
+                                                        value="D/MMM/YY">{moment("2021-01-15").format('DD/MMM/YY')}</option>
                                                 </select>
                                                 <i className="btn-searchIcon fa fa-check-circle"></i>
                                             </div>

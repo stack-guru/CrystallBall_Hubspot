@@ -343,11 +343,11 @@ class AnnotationController extends Controller
         $dateF = $request->date_format;
         $dateFormat = '';
         switch ($dateF) {
-        case 'MMM DD, YYYY':
-            $dateFormat = 'M d, Y';
+        case 'MMM D, YYYY':
+            $dateFormat = 'M j, Y';
             break;
-        case 'DD/MM/YYYY':
-            $dateFormat = "d/n/Y";
+        case 'D/MM/YYYY':
+            $dateFormat = "j/n/Y";
             break;
         case 'M-D-YYYY':
             $dateFormat = "n-j-Y";
@@ -355,20 +355,20 @@ class AnnotationController extends Controller
         case "M-D-YY":
             $dateFormat = "n-j-y";
             break;
-        case "MM-DD-YY":
-            $dateFormat = "m-d-y";
+        case "MM-D-YY":
+            $dateFormat = "m-j-y";
             break;
-        case "MM-DD-YYYY":
-            $dateFormat = "m-d-Y";
+        case "MM-D-YYYY":
+            $dateFormat = "m-j-Y";
             break;
-        case "YY-MM-DD":
-            $dateFormat = "y-m-d";
+        case "YY-MM-D":
+            $dateFormat = "y-m-j";
             break;
-        case "YYYY-MM-DD":
-            $dateFormat = "Y-m-d";
+        case "YYYY-MM-D":
+            $dateFormat = "Y-m-j";
             break;
-        case "DD-MMM-YY":
-            $dateFormat = "d-M-y";
+        case "D-MMM-YY":
+            $dateFormat = "j-M-y";
             break;
         case "M/D/YYYY":
             $dateFormat = "n/j/Y";
@@ -376,20 +376,20 @@ class AnnotationController extends Controller
         case "M/D/YY":
             $dateFormat = "n/j/y";
             break;
-        case "MM/DD/YY":
-            $dateFormat = "m/d/y";
+        case "MM/D/YY":
+            $dateFormat = "m/j/y";
             break;
-        case "MM/DD/YYYY":
-            $dateFormat = "m/d/Y";
+        case "MM/D/YYYY":
+            $dateFormat = "m/j/Y";
             break;
-        case "YY/MM/DD":
-            $dateFormat = "y/m/d";
+        case "YY/MM/D":
+            $dateFormat = "y/m/j";
             break;
-        case "YYYY/MM/DD":
-            $dateFormat = "Y/m/d";
+        case "YYYY/MM/D":
+            $dateFormat = "Y/m/j";
             break;
-        case "DD/MMM/YY":
-            $dateFormat = "d/M/y";
+        case "D/MMM/YY":
+            $dateFormat = "j/M/y";
             break;
 
         default:
