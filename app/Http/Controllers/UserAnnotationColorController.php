@@ -52,10 +52,11 @@ class UserAnnotationColorController extends Controller
         !str_contains($userAnnotationColor->wordpress_updates, '#') ? $userAnnotationColor->wordpress_updates = "#253858" : '';
         !str_contains($userAnnotationColor->google_alerts, '#') ? $userAnnotationColor->google_alerts = $defaultColor : '';
         !str_contains($userAnnotationColor->keyword_tracking, '#') ? $userAnnotationColor->keyword_tracking = $defaultColor : '';
-        !str_contains($userAnnotationColor->facebook_tracking, '#') ? $userAnnotationColor->facebook_tracking = "#004f9d" : '';
+        !str_contains($userAnnotationColor->facebook_tracking, '#') ? $userAnnotationColor->facebook_tracking = "#004F9D" : '';
         !str_contains($userAnnotationColor->bitbucket_tracking, '#') ? $userAnnotationColor->bitbucket_tracking = '#253858' : '';
-        !str_contains($userAnnotationColor->github_tracking, '#') ? $userAnnotationColor->github_tracking = "#24292f" : '';
-        !str_contains($userAnnotationColor->wordpress, '#') ? $userAnnotationColor->wordpress = "#1976fe" : '';
+        !str_contains($userAnnotationColor->github_tracking, '#') ? $userAnnotationColor->github_tracking = "#24292F" : '';
+        !str_contains($userAnnotationColor->twitter_tracking, '#') ? $userAnnotationColor->twitter_tracking = "#1DA1F2" : '';
+        !str_contains($userAnnotationColor->wordpress, '#') ? $userAnnotationColor->wordpress = "#1976FE" : '';
         !str_contains($userAnnotationColor->shopify, '#') ? $userAnnotationColor->shopify = "#00BB4F" : '';
         !str_contains($userAnnotationColor->apple_podcast, '#') ? $userAnnotationColor->apple_podcast = "#A00CE6" : '';
         $userAnnotationColor->save();
