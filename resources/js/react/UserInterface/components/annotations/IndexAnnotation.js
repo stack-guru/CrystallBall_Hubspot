@@ -103,7 +103,7 @@ class IndexAnnotations extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.mKeyAnnotation !== this.props.mKeyAnnotation) {
-            if (prevProps.mKeyAnnotation === 'manual' && this.props.mKeyAnnotation === '') {
+            if (prevProps.mKeyAnnotation === 'manual' || prevProps.mKeyAnnotation === 'upload' && (this.props.mKeyAnnotation === '')) {
                 this.setState({
                     annotations: [],
                     pageNumber: 0,
@@ -769,7 +769,7 @@ class IndexAnnotations extends React.Component {
                             hideInfiniteScroll: true
                         }, () => { this.setState({ hideInfiniteScroll: false }, () => { 
                                 this.loadMoreAnnotations()
-                                this.loadAnnotationColors ()
+                                this.loadAnnotationColors()
                             }) 
                         });
                     }} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />

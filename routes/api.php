@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,7 +62,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'api.'], function (
         Route::post('open-weather-map/alert', 'OWMPushNotificationController@store');
         Route::get('event-sources', 'EventSourceController@index')->name('event-sources.index');
 
-        Route::group(['middleware' => ['auth:api','verified']], function () {
+        Route::group(['middleware' => ['auth:api', 'verified']], function () {
 
             Route::get('user', function (Request $request) {
                 return $request->user();

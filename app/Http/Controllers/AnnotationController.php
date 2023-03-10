@@ -343,10 +343,10 @@ class AnnotationController extends Controller
         $dateF = $request->date_format;
         $dateFormat = '';
         switch ($dateF) {
-        case 'MMM DD, YYYY':
-            $dateFormat = 'M d, Y';
+        case 'MMM D, YYYY':
+            $dateFormat = 'M j, Y';
             break;
-        case 'DD/MM/YYYY':
+        case 'D/MM/YYYY':
             $dateFormat = "j/n/Y";
             break;
         case 'M-D-YYYY':
@@ -355,20 +355,20 @@ class AnnotationController extends Controller
         case "M-D-YY":
             $dateFormat = "n-j-y";
             break;
-        case "MM-DD-YY":
-            $dateFormat = "m-d-y";
+        case "MM-D-YY":
+            $dateFormat = "m-j-y";
             break;
-        case "MM-DD-YYYY":
-            $dateFormat = "m-d-Y";
+        case "MM-D-YYYY":
+            $dateFormat = "m-j-Y";
             break;
-        case "YY-MM-DD":
-            $dateFormat = "y-m-d";
+        case "YY-MM-D":
+            $dateFormat = "y-m-j";
             break;
-        case "YYYY-MM-DD":
-            $dateFormat = "Y-m-d";
+        case "YYYY-MM-D":
+            $dateFormat = "Y-m-j";
             break;
-        case "DD-MMM-YY":
-            $dateFormat = "d-M-y";
+        case "D-MMM-YY":
+            $dateFormat = "j-M-y";
             break;
         case "M/D/YYYY":
             $dateFormat = "n/j/Y";
@@ -376,26 +376,27 @@ class AnnotationController extends Controller
         case "M/D/YY":
             $dateFormat = "n/j/y";
             break;
-        case "MM/DD/YY":
-            $dateFormat = "m/d/y";
+        case "MM/D/YY":
+            $dateFormat = "m/j/y";
             break;
-        case "MM/DD/YYYY":
-            $dateFormat = "m/d/Y";
+        case "MM/D/YYYY":
+            $dateFormat = "m/j/Y";
             break;
-        case "YY/MM/DD":
-            $dateFormat = "y/m/d";
+        case "YY/MM/D":
+            $dateFormat = "y/m/j";
             break;
-        case "YYYY/MM/DD":
-            $dateFormat = "Y/m/d";
+        case "YYYY/MM/D":
+            $dateFormat = "Y/m/j";
             break;
-        case "DD/MMM/YY":
-            $dateFormat = "d/M/y";
+        case "D/MMM/YY":
+            $dateFormat = "j/M/y";
             break;
 
         default:
             $dateFormat = '';
         }
 
+        $e = [];
         $fieldErrorsCount = 0;
         foreach ($fieldErrors as &$fe) {
             try {
@@ -499,20 +500,9 @@ class AnnotationController extends Controller
         $filecontent = file($filepath);
         $headers = str_getcsv($filecontent[0]);
 
-        // Checking if given file contains only required number of columns
-        // if (count($headers) !== 5) {
-        //     return response()->json(['message' => 'Invalid number of columns'], 422);
-        // }
 
         $importReview = [];
         $importReviewErrorCount = 0;
-        // Checking if given headers contain non-printable  characters
-        // foreach ($headers as $header) {
-        //     if (!ctype_print($header)) {
-        //         $importReview[$header . "_error"] = 'Inappropriate character';
-        //         // return response()->json(['message' => "Inappropriate character in header: " . json_encode($header)], 422);
-        //     }
-        // }
 
         // Checking if given file contains all required headers
         $kHs = ['category', 'event_name', 'url', 'description', 'show_at'];
@@ -520,20 +510,13 @@ class AnnotationController extends Controller
             if (!in_array($kH, $headers)) {
                 $importReviewErrorCount = $importReviewErrorCount + 1;
                 $importReview[$kH . "_error"] = 'Incomplete CSV file headers';
-                // return response()->json(['message' => "Incomplete CSV file headers.\nMissing header '" . $kH . "'.\nReceived headers: " . json_encode($headers)], 422);
             }
         }
-
-        // $user_id = Auth::id();
-        // $row['user_id'] = $user_id;
-        // $row['added_by'] = 'csv-upload';
-        // $existingRecords = Annotation::where('user_id', $user_id)->get();
 
         $rows = array();
         try {
 
             $sampleDate = '';
-            // $fieldErrorsCount = 0;
             foreach ($filecontent as $line) {
                 if (strlen($line) < (6 + 7)) {
                     continue;
@@ -544,53 +527,24 @@ class AnnotationController extends Controller
 
                 if ($headers !== $values && count($values) == count($headers)) {
                     for ($i = 0; $i < count($headers); $i++) {
-                        // if (in_array($headers[$i], $kHs)) {
-                            // if ($headers[$i] == 'show_at') {
-                            //     try {
-                            //         $date = Carbon::createFromFormat($request->date_format, $values[$i]);
-                            //         $row[$headers[$i]] = $date->format('Y-m-d');
-                            //     } catch (\Exception $e) {
-                            //         $row[$headers[$i]] = $values[$i];
-                            //         $row['show_at_error'] = 'Please select correct date format according to your CSV file from the list below.';
-                            //         $error = true;
-                            //         $fieldErrorsCount = $fieldErrorsCount + 1;
-                            //     }
-                            // } else if ($headers[$i] == 'url') {
-                            //     $url = $values[$i];
-                            //     $row[$headers[$i]] = $url;
-                            //     if (!filter_var($url, FILTER_VALIDATE_URL)) {
-                            //         $row['url_error'] = 'Please provide valid url';
-                            //         $error = true;
-                            //         $fieldErrorsCount = $fieldErrorsCount + 1;
-                            //     }
-                            // } else if ($headers[$i] == 'category') {
-                            //     $row['category'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
-                            // } else if ($headers[$i] == 'event_type') {
-                            //     $row['event_type'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
-                            // } else if ($headers[$i] == 'event_name') {
-                            //     $row['event_name'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
-                            // } else if ($headers[$i] == 'title') {
-                            //     $row['title'] = strlen($values[$i]) > 100 ? Str::limit($values[$i], 97) : $values[$i];
+                        if ($headers[$i] == 'show_at' && !$sampleDate) {
+                            $sampleDate = $values[$i];
+                        }
 
-                            if ($headers[$i] == 'show_at' && !$sampleDate) {
-                                $sampleDate = $values[$i];
+                        if ($headers[$i] == 'url') {
+                            $row[$headers[$i]] = $values[$i];
+                        } else {
+                            $column = trim(str_replace('"', "", $headers[$i]));
+                            $validStr = mb_convert_encoding($values[$i], 'UTF-8', 'UTF-8');
+                            $row[$column] = $validStr;
+                            if ($validStr !== $values[$i]) {
+                                $row[$column . "_error"] = "Please enter a valid value";
                             }
-
-                            if ($headers[$i] == 'url') {
-                                $row[$headers[$i]] = $values[$i];
-                            } else {
-                                $column = trim(str_replace('"', "", $headers[$i]));
-                                $validStr = mb_convert_encoding($values[$i], 'UTF-8', 'UTF-8');
-                                $row[$column] = $validStr;
-                                if ($validStr !== $values[$i]) {
-                                    $row[$column . "_error"] = "Please enter a valid value";
-                                }
-                                // $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
-                            }
-                        // }
+                            // $row[trim(str_replace('"', "", $headers[$i]))] = preg_replace("/[^A-Za-z0-9-_. ]/", '', trim(str_replace('"', "", $values[$i])));
+                        }
                     }
 
-                        array_push($rows, $row);
+                    array_push($rows, $row);
                 }
 
             }

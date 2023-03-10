@@ -103,7 +103,7 @@ const ShopifyStoreConfig = (props) => {
                                 }
                             }}
                         />
-                        <div className="input-group-append">
+                        <div onClick={(e) => addAnnotation(e)} className="input-group-append">
                             <i className="ti-plus"></i>
                         </div>
                     </div>

@@ -28,6 +28,7 @@ export default class UploadAnnotation extends React.Component {
             importReview: [],
             fileHeaders: [],
             fileName: '',
+            sampleData: {},
             csvFields: {
                 'Category': 'category',
                 'Event Name':  'event_name',
@@ -51,6 +52,7 @@ export default class UploadAnnotation extends React.Component {
         this.onDragOver = this.onDragOver.bind(this)
         this.onFileDrop = this.onFileDrop.bind(this)
         this.onFileSelect = this.onFileSelect.bind(this)
+        this.checkDataErrors = this.checkDataErrors.bind(this)
 
         this.prepareFieldErrorsData = this.prepareFieldErrorsData.bind(this)
     }
@@ -62,7 +64,7 @@ export default class UploadAnnotation extends React.Component {
         return (a.host && a.host != window.location.host);
     }
 
-    prepareFieldErrorsData () {
+    checkDataErrors () {
         if(!Object.values(this.state.importReview).find(x => x)) {
             const { fieldErrors, csvFields, date_format } = this.state;
 
@@ -90,9 +92,19 @@ export default class UploadAnnotation extends React.Component {
                     obj.category_error = itm.category_error ? itm.category_error : `Category can't be empty`;
                 }
 
+                if(obj.category && obj.category.length > 70) {
+                    fieldErrorsCount++;
+                    obj.category_error = `Category can be up to 70 characters`;
+                }
+
                 if (!obj.event_name || itm.event_name_error) {
                     fieldErrorsCount++;
                     obj.event_name_error = itm.event_name_error ? itm.event_name_error : `Event Name can't be empty`;
+                }
+
+                if(obj.event_name && obj.event_name.length > 70) {
+                    fieldErrorsCount++;
+                    obj.event_name_error = `Event Name can be up to 70 characters`;
                 }
 
                 if (itm.description_error) {
@@ -100,24 +112,39 @@ export default class UploadAnnotation extends React.Component {
                     obj.description_error = itm.description_error;
                 }
 
+                if(obj.description && obj.description.length > 70) {
+                    fieldErrorsCount++;
+                    obj.description_error = `Description can be up to 70 characters`;
+                }
+
                 return obj;
             })
 
+            return { result, fieldErrorsCount }
+        } else {
+            return {};
+        }
+
+
+    }
+    prepareFieldErrorsData () {
+       const {result, fieldErrorsCount } =  this.checkDataErrors();
+       if(result) {
             this.setState({ fieldErrors: result, fieldErrorsCheck: true, fieldErrorsCount }, () => {
                 const target = document.querySelector('.is-invalid');
                 target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
                 target?.focus()
             })
-        }
+       }
     }
 
     saveCsv () {
 
-        this.setState({ isBusy: true })
         const formData = new FormData();
         formData.append('date_format', this.state.date_format);
         formData.append('fileName', this.state.fileName);
 
+        let hasError = false;
         const data = this.state.fieldErrors.map((list) => {
             if (this.isValidURL(list.url)) {
                 delete list.url_error
@@ -125,17 +152,27 @@ export default class UploadAnnotation extends React.Component {
             if ((moment(list.show_at || "", this.state.date_format, true).isValid())) {
                 delete list.show_at_error
             }
-            if (list.category) {
+            if (list.category && list.category.length < 70) {
                 delete list.category_error
             }
-            if (list.event_name) {
+            if (list.event_name && list.event_name.length < 70) {
                 delete list.event_name_error
             }
-            if (list.description) {
+            if (list.description && list.description.length < 70) {
                 delete list.description_error
+            }
+
+            if(list.show_at_error || list.category_error || list.event_name_error || list.description_error) {
+                hasError = true;
             }
             return list;
         })
+
+        if(hasError) {
+            return true;
+        }
+
+        this.setState({ isBusy: true })
 
         formData.append('fieldErrors', JSON.stringify(data));
 
@@ -166,6 +203,11 @@ export default class UploadAnnotation extends React.Component {
                     const target = document.querySelector('.is-invalid');
                     target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
                     target?.focus()
+
+                    const fResult =  this.checkDataErrors();
+                    if(fResult.result) {
+                        this.setState({ fieldErrors: fResult.result, fieldErrorsCount: fResult.fieldErrorsCount })
+                    }
                 })
 
                 this.setState({ isBusy: false })
@@ -322,13 +364,17 @@ export default class UploadAnnotation extends React.Component {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.url_error
                 }
-                if (name === 'category' && list.category_error && list.category) {
+                if (name === 'category' && list.category_error && list.category && list.category.length < 70) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.category_error
                 }
-                if (name === 'event_name' && list.event_name_error && list.event_name) {
+                if (name === 'event_name' && list.event_name_error && list.event_name && list.event_name.length < 70) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.event_name_error
+                }
+                if (name === 'description' && list.description_error && list.description && list.description.length < 70) {
+                    fieldErrorsCount = fieldErrorsCount - 1;
+                    delete list.description_error
                 }
                 if (name === 'show_at' && list.show_at_error && (!list.show_at || (moment(list.show_at || "", this.state.date_format, true).isValid()))) {
                     fieldErrorsCount = fieldErrorsCount - 1;
@@ -342,7 +388,6 @@ export default class UploadAnnotation extends React.Component {
             if (e.key === 'Enter' || focusOut) {
                 const target = document.querySelector('.is-invalid');
                 target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
-                // target?.focus()
             }
         })
     }
@@ -433,7 +478,13 @@ export default class UploadAnnotation extends React.Component {
                                                 <i className="btn-searchIcon fa fa-check-circle"></i>
                                             </div>
                                         </td>
-                                        <td>Sales Event</td>
+                                        <td>
+                                            {
+                                                this.state.fieldErrors[0].category_error ? 
+                                                this.state.fieldErrors[1][this.state.csvFields['Category']] : 
+                                                this.state.fieldErrors[0][this.state.csvFields['Category']]
+                                            }
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Event Name</td>
@@ -462,7 +513,13 @@ export default class UploadAnnotation extends React.Component {
                                                 <i className="btn-searchIcon fa fa-check-circle"></i>
                                             </div>
                                         </td>
-                                        <td>Black Friday</td>
+                                        <td>
+                                            {
+                                                this.state.fieldErrors[0].event_name_error ? 
+                                                this.state.fieldErrors[1][this.state.csvFields['Event Name']] : 
+                                                this.state.fieldErrors[0][this.state.csvFields['Event Name']]
+                                            }
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Url</td>
@@ -491,7 +548,13 @@ export default class UploadAnnotation extends React.Component {
                                                 <i className="btn-searchIcon fa fa-check-circle"></i>
                                             </div>
                                         </td>
-                                        <td>https://gannotations.com</td>
+                                        <td>
+                                            {
+                                                this.state.fieldErrors[0].url_error ? 
+                                                this.state.fieldErrors[1][this.state.csvFields['Url']] : 
+                                                this.state.fieldErrors[0][this.state.csvFields['Url']]
+                                            }
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Description</td>
@@ -520,7 +583,13 @@ export default class UploadAnnotation extends React.Component {
                                                 <i className="btn-searchIcon fa fa-check-circle"></i>
                                             </div>
                                         </td>
-                                        <td>Black Friday Deals 2023</td>
+                                        <td>
+                                            {
+                                                this.state.fieldErrors[0].description_error ? 
+                                                this.state.fieldErrors[1][this.state.csvFields['Description']] : 
+                                                this.state.fieldErrors[0][this.state.csvFields['Description']]
+                                            }
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Show At</td>
@@ -550,7 +619,11 @@ export default class UploadAnnotation extends React.Component {
                                             </div>
                                         </td>
                                         <td>
-                                            {this.state.sampleDate}
+                                            {
+                                                this.state.fieldErrors[0].show_at_error ? 
+                                                this.state.fieldErrors[1][this.state.csvFields['Show At']] : 
+                                                this.state.fieldErrors[0][this.state.csvFields['Show At']]
+                                            }
                                         </td>
                                     </tr>
                                     <tr>
@@ -563,37 +636,37 @@ export default class UploadAnnotation extends React.Component {
                                                         required>
                                                     <option value="">Select your date format</option>
                                                     <option
-                                                        value="MMM DD, YYYY">{moment("2021-01-15").format('MMM DD, YYYY')}</option>
+                                                        value="MMM D, YYYY">{moment("2021-01-15").format('MMM DD, YYYY')}</option>
                                                     <option
-                                                        value="YYYY-MM-DD">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
+                                                        value="YYYY-MM-D">{moment("2021-01-15").format('YYYY-MM-DD')}</option>
                                                     <option
-                                                        value="DD/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
+                                                        value="D/MM/YYYY">{moment("2021-01-15").format('DD/MM/YYYY')}</option>
                                                     <option
                                                         value="M-D-YYYY">{moment("2021-01-15").format('M-D-YYYY')}</option>
                                                     <option
                                                         value="M-D-YY">{moment("2021-01-15").format('M-D-YY')}</option>
                                                     <option
-                                                        value="MM-DD-YY">{moment("2021-01-15").format('MM-DD-YY')}</option>
+                                                        value="MM-D-YY">{moment("2021-01-15").format('MM-DD-YY')}</option>
                                                     <option
-                                                        value="MM-DD-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
+                                                        value="MM-D-YYYY">{moment("2021-01-15").format('MM-DD-YYYY')}</option>
                                                     <option
-                                                        value="YY-MM-DD">{moment("2021-01-15").format('YY-MM-DD')}</option>
+                                                        value="YY-MM-D">{moment("2021-01-15").format('YY-MM-DD')}</option>
                                                     <option
-                                                        value="DD-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
+                                                        value="D-MMM-YY">{moment("2021-01-15").format('DD-MMM-YY')}</option>
                                                     <option
                                                         value="M/D/YYYY">{moment("2021-01-15").format('M/D/YYYY')}</option>
                                                     <option
                                                         value="M/D/YY">{moment("2021-01-15").format('M/D/YY')}</option>
                                                     <option
-                                                        value="MM/DD/YY">{moment("2021-01-15").format('MM/DD/YY')}</option>
+                                                        value="MM/D/YY">{moment("2021-01-15").format('MM/DD/YY')}</option>
                                                     <option
-                                                        value="MM/DD/YYYY">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
+                                                        value="MM/D/YYYY">{moment("2021-01-15").format('MM/DD/YYYY')}</option>
                                                     <option
-                                                        value="YY/MM/DD">{moment("2021-01-15").format('YY/MM/DD')}</option>
+                                                        value="YY/MM/D">{moment("2021-01-15").format('YY/MM/DD')}</option>
                                                     <option
-                                                        value="YYYY/MM/DD">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
+                                                        value="YYYY/MM/D">{moment("2021-01-15").format('YYYY/MM/DD')}</option>
                                                     <option
-                                                        value="DD/MMM/YY">{moment("2021-01-15").format('DD/MMM/YY')}</option>
+                                                        value="D/MMM/YY">{moment("2021-01-15").format('DD/MMM/YY')}</option>
                                                 </select>
                                                 <i className="btn-searchIcon fa fa-check-circle"></i>
                                             </div>
