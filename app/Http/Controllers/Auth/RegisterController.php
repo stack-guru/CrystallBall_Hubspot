@@ -57,62 +57,143 @@ class RegisterController extends Controller
         $this->middleware('guest')->except(['logoutAndDestroy']);
     }
 
+    private function isTemporaryEmail(string $email): bool
+    {
+        $filename = public_path('temp_email_domains.txt');
+        $tempEmailDomains = [];
+
+        // check if file is older than 6 hours
+        if (file_exists($filename) && time() - filemtime($filename) < 6 * 60 * 60) {
+            $tempEmailDomains = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        } else {
+            // download new list from GitHub
+            $url = 'https://raw.githubusercontent.com/andreis/disposable-email-domains/master/domains.txt';
+            $tempEmailDomains = file($url, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+            // save list to file
+            file_put_contents($filename, implode("\n", $tempEmailDomains));
+        }
+
+        $domain = explode('@', $email)[1];
+        return in_array($domain, $tempEmailDomains);
+    }
+
+    private function isFreeEmail(string $email): bool
+    {
+        $freeEmailDomains = [
+            'gmail.com',
+            'yahoo.com',
+            'ymail.com',
+            'rocketmail.com',
+            'hotmail.com',
+            'outlook.com',
+            'live.com',
+            'msn.com',
+            'aol.com',
+            'aim.com',
+            'mail.com',
+            'email.com',
+            'usa.com',
+            'myself.com',
+            'consultant.com',
+            'post.com',
+            'lawyer.com',
+            'techie.com',
+            'dr.com',
+            'engineer.com',
+            'accountant.com',
+            'journalist.com',
+            'zoho.com',
+            'protonmail.com',
+            'tutanota.com',
+            'gmx.com',
+            'gmx.us',
+            'hushmail.com',
+            'yandex.com',
+            'yandex.ru',
+            'mail.ru',
+            'inbox.ru',
+            'list.ru',
+            'inbox.lv',
+            'startmail.com',
+            'guerrillamail.com',
+            'icloud.com',
+            't-online.de',
+            'prodigy.net',
+            '163.com',
+            '126.com',
+            'qq.com',
+            'naver.com',
+            'daum.net',
+            'foxmail.com',
+            'gmf.fr',
+            'laposte.net',
+            'free.fr',
+            'rediffmail.com',
+            'zoho.com/workplace',
+            //  extra that were in the array
+            '10minutemail.com',
+            'mailnator.com',
+            'temp-mail.org',
+            'e4ward.com',
+            'guerrillamail.com',
+            'mohmal.com',
+            'throwawaymail.com',
+            'getnada.com',
+            'yopmail.com',
+            'spambox.xyz',
+            'trashmail.top',
+            'tempmail.win',
+            'postbox.cyou',
+            'msn.com',
+            'tutanota.com',
+            'posteo.com',
+            'startmail.com',
+            'runbox.com',
+            'countermail.com',
+            'protonmail.com',
+            'mailbox.org',
+            'mailfence.com'
+        ];
+
+        $domain = explode('@', $email)[1];
+        return in_array($domain, $freeEmailDomains);
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'                 => ['required', 'string', 'max:255'],
-            'email'                => [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => [
                 'required',
                 'string',
                 'email',
                 'max:255',
                 // email validation(only business email available.)
-                function ($attribute, $value, $fail){                                       
+                function ($attribute, $value, $fail) {
                     $domainPart = explode('@', $value)[1] ?? null;
                     if (!$domainPart) {
                         $fail('The ' . $attribute . ' is null.');
                     }
-                    if ($domainPart == 'gmail.com'
-                        || $domainPart == 'outlook.com'
-                        || $domainPart == 'yahoo.com'
-                        || $domainPart == '10minutemail.com'
-                        || $domainPart == 'mailnator.com'
-                        || $domainPart == 'temp-mail.org'
-                        || $domainPart == 'e4ward.com'
-                        || $domainPart == 'guerrillamail.com'
-                        || $domainPart == 'mohmal.com'
-                        || $domainPart == 'throwawaymail.com'
-                        || $domainPart == 'getnada.com'
-                        || $domainPart == 'yopmail.com'
-                        || $domainPart == 'spambox.xyz'
-                        || $domainPart == 'trashmail.top'
-                        || $domainPart == 'tempmail.win'
-                        || $domainPart == 'postbox.cyou'
-                        || $domainPart == 'msn.com'
-                        || $domainPart == 'tutanota.com'
-                        || $domainPart == 'posteo.com'
-                        || $domainPart == 'startmail.com'
-                        || $domainPart == 'runbox.com'
-                        || $domainPart == 'countermail.com'
-                        || $domainPart == 'protonmail.com'
-                        || $domainPart == 'mailbox.org'
-                        || $domainPart == 'mailfence.com') {
-                        $fail('The ' . $attribute . ' must be a business email address!');
-                    }          
-                    $userExist = User::where('email',$value)->first();
+
+                    if ($this->isTemporaryEmail($value) || $this->isFreeEmail($value)) {
+                        $fail('The ' . $attribute . ' must be a business email address!.');
+                    }
+
+                    $userExist = User::where('email', $value)->first();
                     // $userExist = User::where('email','LIKE','%'.$domainPart)->first();
                     if ($userExist) {
                         $fail('This user already exist with same company email.');
                     }
                     return true;
                 },
-                // 
+
                 function ($attribute, $value, $fail) {
 
                     $user = User::where('email', $value)->first();
@@ -123,10 +204,10 @@ class RegisterController extends Controller
                         } else {
                             $fail('The ' . $attribute . ' has already been taken.');
                         }
-                    }    
+                    }
                 },
             ],
-            'read_confirmation'    => ['required'],
+            'read_confirmation' => ['required'],
             'g-recaptcha-response' => [new ValidateCaptcha],
         ], [
             'read_confirmation.required' => 'Your confirmation is required.',
@@ -136,7 +217,7 @@ class RegisterController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function register(Request $request)
@@ -154,14 +235,14 @@ class RegisterController extends Controller
         }
 
         return $request->wantsJson()
-        ? new JsonResponse([], 201)
-        : redirect($this->redirectPath());
+            ? new JsonResponse([], 201)
+            : redirect($this->redirectPath());
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\Models\User
      */
     protected function create(array $data)
@@ -178,10 +259,10 @@ class RegisterController extends Controller
             $planExpiryDate = new \DateTime("+7 days");
         }
         $user = User::create([
-            'name'                   => $data['name'],
-            'email'                  => $data['email'],
-            'password'               => User::EMPTY_PASSWORD,
-            'price_plan_id'          => PricePlan::where('name', PricePlan::TRIAL)->first()->id,
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => User::EMPTY_PASSWORD,
+            'price_plan_id' => PricePlan::where('name', PricePlan::TRIAL)->first()->id,
             'price_plan_expiry_date' => $planExpiryDate,
         ]);
         $user->is_billing_enabled = false;
@@ -190,16 +271,16 @@ class RegisterController extends Controller
         // add device/browser
         try {
             UserActiveDevice::create([
-                'user_id'         => $user->id,
+                'user_id' => $user->id,
 
-                'browser_name'    => Browser::browserName(),
-                'platform_name'   => Browser::platformFamily(),
-                'device_type'     => Browser::platformName(),
+                'browser_name' => Browser::browserName(),
+                'platform_name' => Browser::platformFamily(),
+                'device_type' => Browser::platformName(),
 
-                'is_extension'    => false,
-                'ip'              => request()->ip(),
+                'is_extension' => false,
+                'ip' => request()->ip(),
 
-                'session_id'      => Session::getId() ?? null,
+                'session_id' => Session::getId() ?? null,
                 'access_token_id' => null,
 
             ]);
@@ -227,7 +308,7 @@ class RegisterController extends Controller
         $newUser = Socialite::driver('google')->redirectUrl(route('socialite.google.redirect'))->stateless()->user();
 
         $newUserEmail = $newUser->getEmail();
-        $user         = User::where('email', $newUserEmail)->first();
+        $user = User::where('email', $newUserEmail)->first();
 
         if (!$user) {
             if (!$newUserEmail) {
@@ -235,29 +316,29 @@ class RegisterController extends Controller
             } else {
                 $user = User::where('email', $newUserEmail)->first();
 
-                $user                         = new User;
-                $user->email                  = $newUserEmail;
-                $user->password               = User::EMPTY_PASSWORD;
-                $user->name                   = $newUser->getName();
-                $user->price_plan_id          = PricePlan::where('name', PricePlan::TRIAL)->first()->id;
+                $user = new User;
+                $user->email = $newUserEmail;
+                $user->password = User::EMPTY_PASSWORD;
+                $user->name = $newUser->getName();
+                $user->price_plan_id = PricePlan::where('name', PricePlan::TRIAL)->first()->id;
                 $user->price_plan_expiry_date = new \DateTime("+7 days");
-                $user->is_billing_enabled     = false;
-                $user->email_verified_at      = Carbon::now();
-                $user->has_password           = false;
+                $user->is_billing_enabled = false;
+                $user->email_verified_at = Carbon::now();
+                $user->has_password = false;
                 $user->save();
 
                 try {
                     UserActiveDevice::create([
-                        'user_id'         => $user->id,
+                        'user_id' => $user->id,
 
-                        'browser_name'    => Browser::browserName(),
-                        'platform_name'   => Browser::platformFamily(),
-                        'device_type'     => Browser::platformName(),
+                        'browser_name' => Browser::browserName(),
+                        'platform_name' => Browser::platformFamily(),
+                        'device_type' => Browser::platformName(),
 
-                        'is_extension'    => false,
-                        'ip'              => request()->ip(),
+                        'is_extension' => false,
+                        'ip' => request()->ip(),
 
-                        'session_id'      => Session::getId() ?? null,
+                        'session_id' => Session::getId() ?? null,
                         'access_token_id' => null,
 
                     ]);
@@ -279,15 +360,15 @@ class RegisterController extends Controller
         } else {
 
             $user->update([
-                'has_password'      => false,
+                'has_password' => false,
                 'email_verified_at' => now(),
             ]);
             // check if user is already logged in at 2 places (or there are more than 2 active sessions)
             Auth::login($user);
             $allowed = UserActiveDevice::allowedToLogin($user, request(), $type = 'web');
             if (!$allowed) {
-                $allowed_logins = (int) $user->pricePlan->users_devices_count ?? 2;
-                $message        = "Your plan allows " . $allowed_logins . " user/device. You can log in and disconnect existing devices or upgrade your plan. For support, <a target='_blank' href='mailto:contact@crystalballinsight.com'>contact us</a>.";
+                $allowed_logins = (int)$user->pricePlan->users_devices_count ?? 2;
+                $message = "Your plan allows " . $allowed_logins . " user/device. You can log in and disconnect existing devices or upgrade your plan. For support, <a target='_blank' href='mailto:contact@crystalballinsight.com'>contact us</a>.";
                 Auth::logout();
                 return redirect()->route('login')->with('message', $message);
             }
