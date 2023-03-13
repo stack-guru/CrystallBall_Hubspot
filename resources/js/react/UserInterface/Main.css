@@ -5750,6 +5750,9 @@ div[data-tour-elem="controls"]
     display: none !important;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
 
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
