@@ -20,7 +20,7 @@ export default class CreateAnnotation extends React.Component {
                 event_name: '',
                 url: '',
                 description: '',
-                show_at: '',
+                show_at: new Date().toISOString().substring(0, 10),
                 google_analytics_property_id: [""]
             },
             categories: [],
