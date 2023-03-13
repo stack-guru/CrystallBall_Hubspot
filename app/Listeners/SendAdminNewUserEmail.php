@@ -31,7 +31,7 @@ class SendAdminNewUserEmail
         $admins = Admin::get();
         try {
             foreach($admins as $admin) {
-                Mail::to($admin)->send(new AdminNewUserRegisterMail($admin, $event->user));
+                Mail::to($admin)->cc('ron@crystallball.pro')->send(new AdminNewUserRegisterMail($admin, $event->user));
             }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
