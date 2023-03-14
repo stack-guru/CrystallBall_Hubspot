@@ -623,6 +623,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(UserBitbucketAccount::class, 'user_id');
     }
+    public function bitbucket_annotations(): HasMany
+    {
+        return $this->hasMany(BitbucketCommitAnnotation::class, 'user_id');
+    }
 
     /*
      * Github automation relationships
