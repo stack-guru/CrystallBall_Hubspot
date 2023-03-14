@@ -6,18 +6,20 @@
 @section('content')
     @if ($errors->has('email') && $errors->first('email') === 'COMPANY_ALREADY_EXIST')
         <!-- Uh, oh... screen Code -->
-        <div class="container d-flex justify-content-center">
-            <div class="confirmationContent d-flex flex-column text-center">
-                <h1>Uh, oh...</h1>
-                <p>It appears that your company already has an active account, 
-                    <span style="color: #007bff; text-decoration: none; background-color: transparent; padding: 0" onclick="event.preventDefault();sendInvitation( '{{ old('email') }}' );">Request an invitation</span> to
-                    join the account now.</p>
-                <em>Or</em>
-                <button class='btn-theme-outline'>Create a new Workspace</button>
-                <hr/>
-                <span class='goback'>Incorrect email? <a href=''>Go back</a></span>
-            </div>
-        </div>
+{{--        <div class="container d-flex justify-content-center">--}}
+{{--            <div class="confirmationContent d-flex flex-column text-center">--}}
+{{--                <h1>Uh, oh...</h1>--}}
+{{--                <p>It appears that your company already has an active account,--}}
+{{--                    <span style="color: #007bff; text-decoration: none; background-color: transparent; padding: 0"--}}
+{{--                          onclick="event.preventDefault();sendInvitation( '{{ old('email') }}' );">Request an invitation</span>--}}
+{{--                    to--}}
+{{--                    join the account now.</p>--}}
+{{--                <em>Or</em>--}}
+{{--                <button class='btn-theme-outline'>Create a new Workspace</button>--}}
+{{--                <hr/>--}}
+{{--                <span class='goback'>Incorrect email? <a href=''>Go back</a></span>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <!-- Confirmation email sent! screen Code -->
         <!-- <div class="container d-flex justify-content-center">
             <div class="confirmationContent d-flex flex-column text-center">
@@ -56,7 +58,8 @@
                                 <span>By signing up, you agree to our <a
                                         href="{{config('app.base_url')}}/privacy-policy"
                                         target="_blank">Privacy Policy</a> and <a
-                                        href="{{config('app.base_url')}}/terms-of-service" target="_blank">Terms of Service</a></span>
+                                        href="{{config('app.base_url')}}/terms-of-service"
+                                        target="_blank">Terms of Service</a></span>
                             </label>
                             @error('read_confirmation')
                             <span class="invalid-feedback" role="alert">
@@ -75,7 +78,7 @@
                                  data-expired-callback="gRecaptchaExpireCallBack"></div>
                         </div>
                         <div class="mb-3">
-                            <button class="btn-theme" type="submit" id="registerButton" >Register</button>
+                            <button class="btn-theme" type="submit" id="registerButton">Register</button>
                         </div>
                         <div class="or text-center mb-3">
                             <span>or</span>
@@ -121,6 +124,12 @@
             <p>We have sent the account holder an email with your request to join. <a href='#'>Contact Us</a> if you have any query.</p>
         </div>
     </div> -->
+
+    <script>
+        @if ($errors->has('email') && $errors->first('email') === 'COMPANY_ALREADY_EXIST')
+            window.location.href = '{{ url("join-company") }}?email={{ old('email') }}';
+        @endif
+    </script>
 @endsection
 
 @section('javascript')
@@ -137,24 +146,6 @@
             document.getElementById('registerButton').setAttribute('disabled', true);
         }
 
-        function sendInvitation (email) {
-
-            let url = "{{ route('request.invite') }}";
-
-            $.ajax(url, {
-                type:'POST',
-                data:{email},
-                dataType: 'JSON',
-                cache: false,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success:function(data){
-                    alert(data.success);
-                }
-            });
-
-        }
 
         $('.signup-slider').slick({
             dots: true,

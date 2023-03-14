@@ -831,7 +831,6 @@ class IndexAnnotations extends React.Component {
     }
     sortByCategory(catName) {
         this.setState({
-            isLoading: true,
             category: catName,
             annotations: [],
             pageNumber: 0,

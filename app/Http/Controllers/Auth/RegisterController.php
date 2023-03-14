@@ -189,6 +189,18 @@ class RegisterController extends Controller
                         return false;
                     }
 
+                    $user = User::where('email', $value)->first();
+                    if ($user) {
+                        if (!$user->hasVerifiedEmail() || ($user->password === User::EMPTY_PASSWORD && $user->has_password == true)) {
+                            Mail::to($user->email)->send(new EmailVerificationMail($user));
+                            $fail('The ' . $attribute . ' has already been registered. Please check your email for confirmation!');
+                            return false;
+                        } else {
+                            $fail('The ' . $attribute . ' has already been taken.');
+                            return false;
+                        }
+                    }
+
                     $count = User::where('email', 'like', '%@' . $domain)->count();
 
                     if ($count > 0) {
@@ -203,21 +215,6 @@ class RegisterController extends Controller
                     }
                     return true;
                 },
-
-                function ($attribute, $value, $fail) {
-
-                    $user = User::where('email', $value)->first();
-                    if ($user) {
-                        if (!$user->hasVerifiedEmail() || ($user->password === User::EMPTY_PASSWORD && $user->has_password == true)) {
-                            Mail::to($user->email)->send(new EmailVerificationMail($user));
-                            $fail('The ' . $attribute . ' has already been registered. Please check your email for confirmation!');
-                            return false;
-                        } else {
-                            $fail('The ' . $attribute . ' has already been taken.');
-                            return false;
-                        }
-                    }
-                },
             ],
             'read_confirmation' => ['required'],
             'g-recaptcha-response' => [new ValidateCaptcha],
@@ -227,9 +224,10 @@ class RegisterController extends Controller
     }
 
 
-    public function requestInvitation (Request $request) {
+    public function requestInvitation(Request $request)
+    {
         $email = explode('@', $request->email)[1];
-        $admin = User::where('role', 'admin')->where('email', 'LIKE', '%'.$email.'%')->first();
+        $admin = User::where('role', 'admin')->where('email', 'LIKE', '%' . $email . '%')->first();
 
         $user = new User();
         $user->email = $request->email;
