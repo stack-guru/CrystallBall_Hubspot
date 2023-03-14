@@ -5,6 +5,18 @@ import HttpClient from '../utils/HttpClient';
 
 import './UserStartupConfigurationModal.css';
 
+
+
+// // background.js (in your Chrome extension)
+//
+// chrome.runtime.onMessageExternal.addListener(
+//     (request, sender, sendResponse) => {
+//         if (request.message === 'checkExtension') {
+//             sendResponse({ message: 'extensionInstalled', isLoggedIn: false });
+//         }
+//     }
+// );
+
 export default class UserStartupConfigurationModal extends Component {
     constructor(props) {
         super(props);
@@ -15,7 +27,8 @@ export default class UserStartupConfigurationModal extends Component {
             integrations: [],
             views: [],
             feedback: '',
-            user: props.user
+            user: props.user,
+            extensionInstalled: false,
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.incrementStep = this.incrementStep.bind(this);
@@ -25,6 +38,11 @@ export default class UserStartupConfigurationModal extends Component {
         this.toggleView = this.toggleView.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.checkExtensionInstalled = this.checkExtensionInstalled.bind(this);
+    }
+
+    componentDidMount() {
+        setInterval(this.checkExtensionInstalled, 5000);
     }
 
     handleChange(e) {
@@ -96,6 +114,28 @@ export default class UserStartupConfigurationModal extends Component {
         }
     }
 
+    checkExtensionInstalled() {
+        const extensionId = 'jfkimpgkmamkdhamnhabohpeaplbpmom';
+
+        // Check if running in Chrome
+        if (window.chrome && chrome.runtime && chrome.runtime.sendMessage) {
+            chrome.runtime.sendMessage(
+                extensionId,
+                {message: 'checkExtension'},
+                (response) => {
+                    if (response && response.message === 'extensionInstalled') {
+                        console.log('Extension is installed.');
+                        this.setState({extensionInstalled: true});
+                    } else {
+                        console.log('Extension is not installed.');
+                    }
+                }
+            );
+        } else {
+            console.log('Not running in Chrome or Chrome runtime is not available.');
+        }
+    };
+
     render() {
         const {stepNumber, automations, integrations, views} = this.state;
         const popupSidebar = <aside className="popupSidebar p-6">
@@ -113,10 +153,10 @@ export default class UserStartupConfigurationModal extends Component {
                 <ul>
                     <li>
                         <span
-                            className={`status-icon ${stepNumber === 1 ? 'current' : stepNumber > 1 ? 'checked' : 'icon-list'}`}>
+                            className={`status-icon ${stepNumber === 1 ? 'current' : (stepNumber > 1 && this.state.extensionInstalled) ? 'checked' : 'icon-list'}`}>
                             {stepNumber === 1 ?
                                 <img alt="Install Chrome Extension" className='loader' src="./icon-current.svg"/>
-                                : stepNumber > 1 ?
+                                : (stepNumber > 1 && this.state.extensionInstalled) ?
                                     <img alt="Install Chrome Extension" src="./icon-checked-green.svg"/> : null}
                         </span>
                         <span className='pl-2'>Install Chrome Extension</span>
