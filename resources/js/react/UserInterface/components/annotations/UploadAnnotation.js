@@ -374,7 +374,7 @@ export default class UploadAnnotation extends React.Component {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.event_name_error
                 }
-                if (name === 'description' && list.description_error && list.description && list.description.length < 100) {
+                if (name === 'description' && (!list.description || (list.description_error && list.description && list.description.length < 250))) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.description_error
                 }
