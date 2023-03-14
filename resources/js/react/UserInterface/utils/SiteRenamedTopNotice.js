@@ -9,7 +9,7 @@ export default function SiteRenamedTopNotice(props) {
     let gannotations = () => IsDomain('app.gaannotations.com') || IsDomain('localhost') ? <>
             🥳 We have a New Look 🥳  {' > '} GAannotations is now <a style={{ color: 'white', textDecoration: 'underline' }} href="https://app.crystalballinsight.com">Crystal Ball</a> - {' '}
         </> : <>
-            🥳 Try the New <a style={{ color: 'white', textDecoration: 'underline' }} href="/data-source">Apps Market</a> to <a style={{ color: 'white', textDecoration: 'underline' }} href="https://calendly.com/crystal-ball/30min" target="_blank">Add Automated Annotations</a>  - {' '}
+            🥳 Try the New <a style={{ color: 'white', textDecoration: 'underline' }} href="/data-source">Apps Market</a> to Add Automated Annotations - {' '}
         </>;
 
     return (
