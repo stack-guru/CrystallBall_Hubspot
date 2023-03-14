@@ -52,7 +52,7 @@ class UserController extends Controller
                     return $html;
                 })
                 ->editColumn('price_plan.name', function ($row) {
-                    $html = $row->pricePlan->name;
+                    $html = $row->pricePlan? $row->pricePlan->name: '';
                     if($row->price_plan_expiry_date){
                         $html .= ' (' . ($row->price_plan_expiry_date->format(config('app.format.date'))) . ')';
                     }

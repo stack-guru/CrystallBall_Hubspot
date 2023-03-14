@@ -9,7 +9,8 @@
         <div class="container d-flex justify-content-center">
             <div class="confirmationContent d-flex flex-column text-center">
                 <h1>Uh, oh...</h1>
-                <p>It appears that your company already has an active account, <a href='#'>Request an invitation</a> to
+                <p>It appears that your company already has an active account, 
+                    <span style="color: #007bff; text-decoration: none; background-color: transparent; padding: 0" onclick="event.preventDefault();sendInvitation( '{{ old('email') }}' );">Request an invitation</span> to
                     join the account now.</p>
                 <em>Or</em>
                 <button class='btn-theme-outline'>Create a new Workspace</button>
@@ -74,7 +75,7 @@
                                  data-expired-callback="gRecaptchaExpireCallBack"></div>
                         </div>
                         <div class="mb-3">
-                            <button class="btn-theme" type="submit" id="registerButton" disabled>Register</button>
+                            <button class="btn-theme" type="submit" id="registerButton" >Register</button>
                         </div>
                         <div class="or text-center mb-3">
                             <span>or</span>
@@ -134,6 +135,25 @@
 
         function gRecaptchaExpireCallBack() {
             document.getElementById('registerButton').setAttribute('disabled', true);
+        }
+
+        function sendInvitation (email) {
+
+            let url = "{{ route('request.invite') }}";
+
+            $.ajax(url, {
+                type:'POST',
+                data:{email},
+                dataType: 'JSON',
+                cache: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(data){
+                    alert(data.success);
+                }
+            });
+
         }
 
         $('.signup-slider').slick({

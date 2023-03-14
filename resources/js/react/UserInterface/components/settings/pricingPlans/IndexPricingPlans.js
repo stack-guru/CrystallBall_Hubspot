@@ -192,10 +192,10 @@ export default class IndexPricingPlans extends React.Component {
                                                     <span>{pricePlan.user_per_ga_account_count == 0 ? <>Unlimited Users</> : (pricePlan.user_per_ga_account_count == -1 ? <>Up to 1 User</> : (pricePlan.user_per_ga_account_count >= 1 ? <>Up to {pricePlan.user_per_ga_account_count + 1} User</> : (<></>)))}</span>
                                                 </li>
 
-                                                <li className='d-flex align-items-center'>
+                                                {/*<li className='d-flex align-items-center'>
                                                     <i><img src={'/tick-green.svg'} /></i>
                                                     <span>Unlimited GA accounts</span>
-                                                </li>
+                                                </li>*/}
                                                 <li className='d-flex align-items-center'>
                                                     <i><img src={'/tick-green.svg'} /></i>
                                                     <span>Manual annotations</span>
@@ -210,7 +210,7 @@ export default class IndexPricingPlans extends React.Component {
 
 
 
-                                                
+
                                                 {pricePlan.has_api ? <li className='d-flex align-items-center'>
                                                     <i><img src={'/tick-green.svg'} /></i><span>Annotations API</span></li> : null}
                                                 {/* {pricePlan.has_integrations ? <li className='d-flex align-items-center'>
@@ -232,9 +232,9 @@ export default class IndexPricingPlans extends React.Component {
                                         (pricePlan.linkedin_credits_count == -1 || pricePlan.linkedin_credits_count == null) &&
                                         (pricePlan.shopify_monitor_count == -1 || pricePlan.shopify_monitor_count == null) &&
                                         (pricePlan.twitter_credits_count == -1 || pricePlan.twitter_credits_count == null) ? null :   <div className='planfoot'>
-                                            <h4>Credits</h4>
+                                            <h4>Automated Annotations Credits</h4>
                                             <ul>
-                                                {pricePlan.keyword_tracking_count == -1 || pricePlan.keyword_tracking_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count}</span> </li>}
+                                                {pricePlan.keyword_tracking_count == -1 || pricePlan.keyword_tracking_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Rank Tracking: {pricePlan.keyword_tracking_count == 0 ? 'Unlimited' : pricePlan.keyword_tracking_count} API Calls/m</span> </li>}
                                                 {pricePlan.web_monitor_count == -1 || pricePlan.web_monitor_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Website Monitoring: {pricePlan.web_monitor_count == 0 ? 'Unlimited' : pricePlan.web_monitor_count}</span> </li>}
                                                 {pricePlan.owm_city_count == -1 || pricePlan.owm_city_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Weather Alerts: {pricePlan.owm_city_count == 0 ? 'Unlimited' : pricePlan.owm_city_count}</span> </li>}
                                                 {pricePlan.google_alert_keyword_count == -1 || pricePlan.google_alert_keyword_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>News Alerts: {pricePlan.google_alert_keyword_count == 0 ? 'Unlimited' : pricePlan.google_alert_keyword_count}</span> </li>}

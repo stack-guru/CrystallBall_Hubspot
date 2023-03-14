@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\EmailVerificationMail;
+use App\Mail\RequestInvitationMail;
 use App\Models\CookieCoupon;
 use App\Models\GoogleAccount;
 use App\Models\PricePlan;
@@ -218,6 +219,17 @@ class RegisterController extends Controller
         ], [
             'read_confirmation.required' => 'Your confirmation is required.',
         ]);
+    }
+
+
+    public function requestInvitation (Request $request) {
+        $email = explode('@', $request->email)[1];
+        $admin = User::where('role', 'admin')->where('email', 'LIKE', '%'.$email.'%')->first();
+
+        $user = new User();
+        $user->email = $request->email;
+        Mail::to($admin->email)->send(new RequestInvitationMail($user, $admin));
+        return response(['status' => true, 'message' => 'Success']);
     }
 
     /**
