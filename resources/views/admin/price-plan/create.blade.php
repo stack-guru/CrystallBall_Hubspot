@@ -149,12 +149,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Available? <sub>( if this plan can be purchased by a user from the price plan page )</sub></label>
+                            <label>Available? <sub>( This means? Show on pricing page? )</sub></label>
                             <input type="checkbox" name="is_available" id="isAvailable" class="form-control" />
                         </div>
 
                         <div class="form-group">
-                            <label>Enabled? <sub>( if the users can stay and show on this price plan page)</sub></label>
+                            <label>Enabled? <sub>( What is this means? stay where? )</sub></label>
                             <input type="checkbox" name="is_enabled" id="isEnabled" class="form-control" />
                         </div>
 
