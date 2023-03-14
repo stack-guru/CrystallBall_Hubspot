@@ -556,6 +556,11 @@ class AnnotationController extends Controller
             abort(422, "Error occured while processing your CSV. Please contact support for more information.");
         }
 
+        if ($importReviewErrorCount === 5){
+            Log::error("Incomplete CSV file headers");
+            return response()->json(['message' => 'Incomplete CSV file headers'], 422);
+        }
+
         return [
             'fieldErrors' => $rows,
             'fileName' => $request->file('csv')->getClientOriginalName(),

@@ -329,11 +329,13 @@ export default class UploadAnnotation extends React.Component {
 
                 const errors = (err.response).data;
                 
-                this.setState({ csvError: errors.errors.csv ? "File type must be CSV" : '' }, () => {
-                    if (errors.errors.csv) {
-                        delete errors.errors.csv;
-                    }
-                })
+                if (errors.errors) {
+                    this.setState({ csvError: errors.errors.csv ? "File type must be CSV" : '' }, () => {
+                        if (errors.errors.csv) {
+                            delete errors.errors.csv;
+                        }
+                    })
+                }
                 this.setState({ isBusy: false, errors });
             }).catch(err => {
                 this.setState({ isBusy: false, errors: err });
