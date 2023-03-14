@@ -403,9 +403,6 @@ class AnnotationController extends Controller
         foreach ($fieldErrors as &$fe) {
             try {
                 $showAt = Carbon::createFromFormat($dateFormat, $fe['show_at']);
-                if ($showAt->format($dateFormat) !== $fe['show_at']) {
-                    throw new \Exception();
-                }
                 unset($fe['show_at_error']);
             } catch (\Exception $e) {
                 if ($fe['show_at']) {

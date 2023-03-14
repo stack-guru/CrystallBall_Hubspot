@@ -18,6 +18,7 @@
                                     <tr>
                                         <th scope="col">User Name</th>
                                         <th scope="col">Email</th>
+                                        <th scope="col">Child User</th>
                                         <th scope="col">User Annotations</th>
                                         <th scope="col">Registration Date</th>
                                         <th scope="col">Plan</th>
@@ -50,9 +51,10 @@
                                                 {{ $user->email }}
                                                 @if ($user->user)
                                                     <span class="badge badge-primary">{{ $user->user->email }}</span>
-                                                @else
-                                                    (Child Users: {{ $user->users_count }})
                                                 @endif
+                                            </td>
+                                            <td>
+                                                {{ @$user->users_count }}
                                             </td>
                                             <td class="text-center">
                                                 <i onclick="takeUserAnnotationScreenshot(this)"
@@ -114,7 +116,7 @@
                                                 {{ $user->last90_days_api_annotation_created_logs_count }}
                                                 <a class="btn btn-default btn-sm"
                                                     href="{{ route('admin.api-log.index', ['user_id' => $user->id]) }}"
-                                                    target="_blank">More info</a>
+                                                    >More info</a>
                                             </td>
                                             <td>{{ $user->email_notification_logs_count }} time(s).</td>
                                             <td>
