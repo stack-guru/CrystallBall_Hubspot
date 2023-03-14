@@ -18,7 +18,7 @@
                                     <tr>
                                         <th scope="col">User Name</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Child User</th>
+                                        <th scope="col">Child / Parent User</th>
                                         <th scope="col">User Annotations</th>
                                         <th scope="col">Registration Date</th>
                                         <th scope="col">Plan</th>
@@ -49,12 +49,13 @@
                                             <td>{{ $user->name }}</td>
                                             <td>
                                                 {{ $user->email }}
-                                                @if ($user->user)
-                                                    <span class="badge badge-primary">{{ $user->user->email }}</span>
-                                                @endif
                                             </td>
                                             <td>
-                                                {{ @$user->users_count }}
+                                                @if ($user->user)
+                                                    <span class="badge badge-primary">{{ $user->user->email }}</span>
+                                                @else
+                                                    {{ @$user->users_count }}
+                                                @endif
                                             </td>
                                             <td class="text-center">
                                                 <i onclick="takeUserAnnotationScreenshot(this)"
@@ -162,7 +163,7 @@
                                                         <div class="mt-2 text-center">
                                                             <small><a
                                                                     href="{{ route('admin.reports.user-ga-info.show', ['user' => $user->id]) }}"
-                                                                    class="text-primary">More info</a></small>
+                                                                    target="_blank" class="text-primary">More info</a></small>
                                                         </div>
                                                     @endif
                                                 </div>

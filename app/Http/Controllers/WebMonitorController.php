@@ -36,7 +36,7 @@ class WebMonitorController extends Controller
         $pricePlan = $authUser->pricePlan;
         $webMonitorsCount = WebMonitor::ofCurrentUser()->count();
 
-        if ($pricePlan->web_monitor_count <= $webMonitorsCount) {
+        if ($pricePlan->web_monitor_count != 0 && $pricePlan->web_monitor_count <= $webMonitorsCount) {
             return response()->json(['message' => 'Maximum number of monitors limit reached'], 422);
         }
 
