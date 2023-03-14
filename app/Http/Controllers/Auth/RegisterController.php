@@ -181,10 +181,12 @@ class RegisterController extends Controller
                     $domain = explode('@', $value)[1] ?? null;
                     if (!$domain) {
                         $fail('The ' . $attribute . ' is null.');
+                        return false;
                     }
 
                     if ($this->isTemporaryEmail($value) || $this->isFreeEmail($value)) {
                         $fail('The ' . $attribute . ' must be a business email address!.');
+                        return false;
                     }
 
                     $count = User::where('email', 'like', '%@' . $domain)->count();
@@ -197,6 +199,7 @@ class RegisterController extends Controller
                     // $userExist = User::where('email','LIKE','%'.$domainPart)->first();
                     if ($userExist) {
                         $fail('This user already exist with same company email.');
+                        return false;
                     }
                     return true;
                 },
@@ -208,8 +211,10 @@ class RegisterController extends Controller
                         if (!$user->hasVerifiedEmail() || ($user->password === User::EMPTY_PASSWORD && $user->has_password == true)) {
                             Mail::to($user->email)->send(new EmailVerificationMail($user));
                             $fail('The ' . $attribute . ' has already been registered. Please check your email for confirmation!');
+                            return false;
                         } else {
                             $fail('The ' . $attribute . ' has already been taken.');
+                            return false;
                         }
                     }
                 },
