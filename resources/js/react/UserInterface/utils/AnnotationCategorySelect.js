@@ -15,6 +15,7 @@ export default class AnnotationCategorySelect extends React.Component {
         }
 
         this.onChangeHandler = this.onChangeHandler.bind(this)
+        this.handleCreateOption = this.handleCreateOption.bind(this)
     }
 
 
@@ -26,6 +27,9 @@ export default class AnnotationCategorySelect extends React.Component {
         this.props.onChangeCallback({ target: { name: this.props.name, value: sOption.value } });
     }
 
+    handleCreateOption() {
+        this.props.onChangeCallback({ target: { name: this.props.name, value: this.state.creatableValue } });
+    }
     render() {
         return (
             <CreatableSelect
@@ -36,9 +40,10 @@ export default class AnnotationCategorySelect extends React.Component {
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}
                 className="gray_clr"
-                options={this.props.categories}
+                options={[...this.props.categories, ...(this.state.creatableValue ? [{ label: `${this.state.creatableValue}`, value: this.state.creatableValue }]: [])]}
                 placeholder={this.props.placeholder || 'Category *'}
                 onInputChange={(newValue) => this.setState({creatableValue: newValue})}
+                onBlur={this.handleCreateOption}
             >
             </CreatableSelect>
         )

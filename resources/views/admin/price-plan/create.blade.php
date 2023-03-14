@@ -39,11 +39,11 @@
                             <input type="number" min="-1" name="annotations_count" id="annotationsCount" class="form-control" value="0" />
                         </div>
                         <div class="form-group">
-                            <label>Ga Account Count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <label>Google Accounts <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" min="-1" name="ga_account_count" id="ga_account_count" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label>User per ga-account count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <label>Users-Teamwork <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" min="-1" name="user_per_ga_account_count" id="user_per_ga_account_count" class="form-control" />
                         </div>
                         <div class="form-group">

@@ -95,6 +95,7 @@ Route::get('socialite/github', [GithubAutomationController::class, 'redirectGith
 Route::get('socialite/github/redirect', [GithubAutomationController::class, 'callbackGithub'])->name('github.callback');
 
 Route::view('documentation', 'documentation');
+Route::view('join-company', 'auth/join_company');
 Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
 Route::view('upgrade-plan-team', 'upgrade-plan-team')->name('upgrade-plan-team');
 
