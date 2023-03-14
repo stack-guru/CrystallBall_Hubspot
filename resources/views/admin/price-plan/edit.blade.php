@@ -157,12 +157,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Available? <sub>( This means? Show on pricing page? )</sub></label>
+                            <label>Available? <sub>( Plan can be purchased, otherwise coming soon )</sub></label>
                             <input type="checkbox" name="is_available" id="isAvailable" class="form-control" @if($pricePlan->is_available) checked @endif />
                         </div>
 
                         <div class="form-group">
-                            <label>Enabled? <sub>( What is this means? stay where? )</sub></label>
+                            <label>Enabled? <sub>( Show on pricing page, otherwise not display )</sub></label>
                             <input type="checkbox" name="is_enabled" id="isEnabled" class="form-control" @if($pricePlan->is_enabled) checked @endif />
                         </div>
 
