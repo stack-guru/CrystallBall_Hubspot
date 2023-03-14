@@ -177,8 +177,8 @@ class RegisterController extends Controller
                 'max:255',
                 // email validation(only business email available.)
                 function ($attribute, $value, $fail) {
-                    $domainPart = explode('@', $value)[1] ?? null;
-                    if (!$domainPart) {
+                    $domain = explode('@', $value)[1] ?? null;
+                    if (!$domain) {
                         $fail('The ' . $attribute . ' is null.');
                     }
 
@@ -186,6 +186,12 @@ class RegisterController extends Controller
                         $fail('The ' . $attribute . ' must be a business email address!.');
                     }
 
+                    $count = User::where('email', 'like', '%@' . $domain)->count();
+
+                    if ($count > 0) {
+                        $fail('COMPANY_ALREADY_EXIST');
+                        return false;
+                    }
                     $userExist = User::where('email', $value)->first();
                     // $userExist = User::where('email','LIKE','%'.$domainPart)->first();
                     if ($userExist) {
