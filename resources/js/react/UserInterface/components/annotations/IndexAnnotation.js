@@ -735,6 +735,9 @@ class IndexAnnotations extends React.Component {
                                                                     <img src={`icon-edit.svg`}/>
                                                                 </span>
                                                             </li>
+                                                            <li>
+                                                                <span className="text-danger" onClick={(e) => { e.stopPropagation(); this.deleteAnnotation(tableId, tableName); }}><img src={`icon-trash.svg`} /></span>
+                                                            </li>
                                                         </> : null}
                                                         <li>
                                                             {/*<span className="text-danger" onClick={(e) => { e.stopPropagation(); this.deleteAnnotation(tableId, tableName); }}><img src={`icon-trash.svg`} /></span>*/}
