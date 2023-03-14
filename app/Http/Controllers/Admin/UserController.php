@@ -192,7 +192,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->forceDelete();
+        $user->delete();
         return redirect()->route('admin.user.index')->with('success', true);
     }
 
