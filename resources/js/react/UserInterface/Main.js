@@ -147,7 +147,7 @@ class Main extends React.Component {
 
                     {/* <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} /> */}
 
-                    <UserStartupConfigurationModal
+                    {/*<UserStartupConfigurationModal
                         upgradePopup={(popupType) => this.setState({
                             showUpgradePopup: true,
                             upgradePopupType: popupType
@@ -156,7 +156,7 @@ class Main extends React.Component {
                         showDataSourceTour={this.state.showDataSourceTour}
                         toggleDataSourceTour={this.toggleDataSourceTour}
                         closeModal={() => this.setState({showStartupConfiguration: false})}
-                        isOpen={this.state.showStartupConfiguration} user={this.state.user}/>
+                        isOpen={this.state.showStartupConfiguration} user={this.state.user}/>*/}
 
                     <Sidebar openAnnotationPopup={(mka) => {
                         this.setState({mKeyAnnotation: mka});
