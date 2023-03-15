@@ -398,6 +398,8 @@ class AnnotationController extends Controller
 
         $e = [];
         $fieldErrorsCount = 0;
+
+        // Remove in future
         foreach ($fieldErrors as &$fe) {
             try {
                 $showAt = Carbon::createFromFormat($dateFormat, $fe['show_at']);

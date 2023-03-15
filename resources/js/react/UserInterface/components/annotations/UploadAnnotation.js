@@ -82,10 +82,10 @@ export default class UploadAnnotation extends React.Component {
                     fieldErrorsCount++;
                     obj.url_error = 'Enter a valid URL';
                 }
-
-                if (obj.show_at && !(moment(obj.show_at || "", date_format, true).isValid())) {
+                const date = this.validDate(obj.show_at, date_format);
+                if (obj.show_at && !date.isValid) {
                     fieldErrorsCount++;
-                    obj.show_at_error = `Date format is incorrect, use format [${moment("2021-01-15").format(date_format)}]`;
+                    obj.show_at_error = date.message ? date.message : `Date format is incorrect, use format [${moment("2021-01-15").format(date_format)}]`;
                 }
                 if (!obj.category || itm.category_error) {
                     fieldErrorsCount++;
@@ -149,7 +149,8 @@ export default class UploadAnnotation extends React.Component {
             if (this.isValidURL(list.url)) {
                 delete list.url_error
             }
-            if ((moment(list.show_at || "", this.state.date_format, true).isValid())) {
+            const date = this.validDate(list.show_at, this.state.date_format);
+            if (date.isValid) {
                 delete list.show_at_error
             }
             if (list.category && list.category.length < 100) {
@@ -199,6 +200,8 @@ export default class UploadAnnotation extends React.Component {
                 });
 
                 const { fieldErrors, fieldErrorsCount } = response.data;
+
+                console.log(fieldErrors);
                 this.setState({ fieldErrors, fieldErrorsCount }, () => {
                     const target = document.querySelector('.is-invalid');
                     target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
@@ -378,7 +381,8 @@ export default class UploadAnnotation extends React.Component {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.description_error
                 }
-                if (name === 'show_at' && list.show_at_error && (!list.show_at || (moment(list.show_at || "", this.state.date_format, true).isValid()))) {
+                const date = this.validDate(list.show_at, this.state.date_format);
+                if (name === 'show_at' && list.show_at_error && date.isValid) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.show_at_error
                 }
@@ -392,6 +396,20 @@ export default class UploadAnnotation extends React.Component {
                 target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
             }
         })
+    }
+
+    validDate (showAt, dateFormat) {
+
+        let isValid = true;
+        let message;
+        if (showAt) { 
+            isValid = moment(showAt, dateFormat, true).isValid();
+            if (isValid && moment(showAt, dateFormat).year() > 2037) {
+                message = 'Year allowed until 2037';
+                isValid = false;
+            }
+        }
+        return {isValid, message}
     }
 
     loadUserAnnotationColors() {
